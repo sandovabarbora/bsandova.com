@@ -45,3 +45,18 @@
 .text-head{max-width:none}
 @media (max-width:64rem){.text p{text-align:left;hyphens:manual}.refs ol{columns:1}}
 .text figure{max-width:56rem}
+
+/* facts: numbers stay right-aligned (the justify rule above had flipped them) */
+.facts dd,.facts dd small{text-align:right}
+/* wide screens: bigger type, wider measure (single column) */
+@media (min-width:100rem){
+  .text{padding:3rem 2.5rem 5rem}
+  .text p{font-size:1.15rem;line-height:1.62}
+  .text section,.text figure,.text figcaption,.text-foot,.refs,.text .tbl,.text .bars,.scroller,.tbl.wide,.scroller.wide,.text .wide{max-width:78rem}
+  .text figure img{width:100%;height:auto}
+  .text h2{font-size:2.3rem}
+  .refs ol{columns:2}.refs ol li{font-size:12px}
+  .text-head{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);margin-left:-2.5rem;margin-right:-2.5rem;padding-left:2.5rem;padding-right:2.5rem}
+  .text-head h1{font-size:clamp(3rem,4.2vw,5.4rem)}
+  .deck{font-size:1.6rem}
+}
