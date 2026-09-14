@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brand Reflection Series</title>
+<meta name="description" content="Four studies of Czech advertising, measured instead of asserted: 47 TV spots for colour and sound, 24 homepages for language, one tool that scores any spot URL. Plus a falsifiable prediction, checked late, that half-failed.">
+<meta name="theme-color" content="#161616">
+<link rel="canonical" href="https://bsandova.com/texts/brand-reflection.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css?v=793651f">
+<link rel="stylesheet" href="../text.css">
+<style>
+.tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
+.tbl th,.tbl td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th:first-child,.tbl td:first-child{padding-left:0}
+.tbl th{font-weight:400;color:var(--fg-2);letter-spacing:.12em;text-transform:uppercase;font-size:10px}
+.tbl td.n,.tbl th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl td b{color:var(--hot);font-weight:400}.tbl .hi{color:var(--coral)}.tbl .bad{color:#FF6A3D}.tbl .dim{color:var(--fg-2)}
+.tbl caption{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);padding:0 0 .5rem}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../">bsandova.com</a></b><nav><a href="../#works">Projects</a><a href="../#about">About</a><a href="../#contact">Contact</a></nav><span class="tr">advertising · brand reflection · 2026 · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Brand Reflection Series · four artifacts · spring 2026 · open source</p>
+  <h1>Strategy decks talk about brand. <em>This measures it.</em></h1>
+  <p class="deck">Forty-seven Czech TV spots from thirteen brands, read three ways: what colour the picture actually commits to, whether voice or music carries the sound, and what a language model sees when it reads the homepage instead of the brief. Then a tool that scores any spot URL against its sector, and one prediction I wrote down before the data came in.</p>
+  <dl class="facts">
+    <div><dt>spots · brands · frames</dt><dd>47 · 13 · 2 351 <small>one frame per second, K-means in CIE-LAB</small></dd></div>
+    <div><dt>colour: brand-led · muddle · world-led</dt><dd>16 · 20 · 11 <small>by hue distance to the brand anchor</small></dd></div>
+    <div><dt>sound: voice-led · music-led</dt><dd>44 · 3 <small>Pilsner, and two McDonald's image spots</small></dd></div>
+    <div><dt>homepages: banks + ČEZ + Škoda</dt><dd>one cluster <small>8 brands, 4 sectors, 1 register</small></dd></div>
+  </dl>
+</header>
+
+<section>
+<p>Brand positioning is usually asserted in a deck and never checked against what the brand puts on screen. The series checks. Each piece answers one question with one technique, each has a reproducible pipeline (fetch → extract → measure → render), each publishes its derived metrics, and none redistributes the source material<sup class="cite"><a href="#r1">1</a></sup>. It was built across a few weekends to see what competitive brand analysis looks like when it starts from public data instead of pitch decks.</p>
+</section>
+
+<section>
+<h2>Episode 1 · Brand colour, or world colour?</h2>
+<p>A spot's picture either commits to the brand colour or commits to a world. Sample every spot at one frame per second, take the five dominant colours per frame with K-means in CIE-LAB, find the spot's dominant chromatic hue, and measure the angle on the hue wheel between it and the brand's own anchor swatch. Beyond about 90° the two are, perceptually, different colours<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p>Sixteen spots sit under 20°: Lidl, Penny, T-Mobile, Vodafone flood the screen with their colour. Eleven sit over 100°: Albert's five spots at 150–178°, Komerční banka, AAA Auto, Pilsner Urquell, whose brand green occupies 0.2 % of the picture. Twenty sit in between, and that middle is the finding: most Czech spots are not choosing. AAA Auto's brand yellow occupies 0.001 % of screen time; the picture is a used-car catalogue in greys and browns, with a logo on it<sup class="cite"><a href="#r2">2</a></sup>.</p>
+</section>
+<figure>
+  <img src="../assets/brand/02-hue-distance.svg" alt="47 bars sorted by hue distance from the brand anchor; acid green under 20 degrees, violet over 100, grey in between, with a 90-degree threshold line." loading="lazy">
+  <figcaption><b>fig. 1</b> · Hue distance between brand anchor and dominant on-screen colour, one bar per spot, sorted. Recomputed for this page from the study's published metrics.</figcaption>
+</figure>
+<section>
+<p>Is that just sector? Hierarchical clustering on the energy distance between every pair of brands' weighted LAB palettes says no: brands cluster across sector boundaries by their colour signature, not by what they sell. Saturation tension, the spread of saturation across a spot, is a second axis that does split by category, banking and automotive flat, performative formats swinging<sup class="cite"><a href="#r2">2</a></sup>.</p>
+</section>
+
+<section>
+<h2>Episode 1.5 · Voice, or music?</h2>
+<p>Same 47 spots, audio only. Voice activity with silero-vad, tempo by beat tracking, key by Krumhansl–Schmuckler correlation, brightness and dynamics with librosa. Voice-led means more than half the runtime is speech<sup class="cite"><a href="#r3">3</a></sup>. The result is a cliff: 44 spots are voice-led, three are music-led, none is mixed. Pilsner Urquell's <i>Alfons</i> is 86 % music; two McDonald's image spots are 77 % and 76 %; the next spot down is 41 %. There is no music-led promotional spot in the corpus at all.</p>
+</section>
+<figure>
+  <img src="../assets/brand/03-voice-music.svg" alt="47 stacked bars of voice share and music share sorted by music share; three bars cross the 50 percent line." loading="lazy">
+  <figcaption><b>fig. 2</b> · Voice and music share of runtime, one bar per spot, sorted by music. Three cross the line. Recomputed from the study's metrics.</figcaption>
+</figure>
+<section>
+<p>The defaults are narrow in every other dimension too: tempo lives in one band (110–140 bpm holds 23 of 47), and the mode skews minor, 27 of 47, even for retail promos<sup class="cite"><a href="#r3">3</a></sup>. Czech advertising diversifies how it looks and converges on how it sounds. "Music carries the spot" is a normal creative variable elsewhere; here it is essentially unused, which makes it cheap to occupy.</p>
+</section>
+
+<section>
+<h2>Episode 2 · How many Czech brand templates are there? Three.</h2>
+<p>Scrape the homepages of thirty major Czech brands (title, description, first headings, first paragraphs; 24 succeeded, 6 were behind anti-bot walls or empty, which is reported rather than hidden), embed them with a multilingual sentence model, reduce with UMAP, cluster. Put rising Czech search queries into the same space<sup class="cite"><a href="#r4">4</a></sup>.</p>
+<p>The map's boundaries do not match the sectors. ČSOB, Česká spořitelna, Fio, Air Bank, Komerční banka, Generali, ČEZ and Škoda Auto land in one neighbourhood: five banks, an insurer, a utility and a carmaker, one institutional register. The words that define that neighbourhood against the other three are <i>banka, škoda, čez, fio, česká</i>. A challenger bank's positioning, "the bank that is different from Komerční", is decided in the campaign layer and quietly undone in the homepage layer. With 54 points UMAP coordinates are approximate topology, not distances; the opportunity scoring is done in the original 768 dimensions, and the page says so<sup class="cite"><a href="#r4">4</a></sup>.</p>
+</section>
+
+<section>
+<h2>The tool, and the one brand that commits twice</h2>
+<p>Spot Scorer takes the two pipelines and turns them into something a strategist can use on Monday: pick a spot, see its colour and audio metrics against the sector median, and the four or five numerical targets it would have to hit to leave its category default. Paste any YouTube, Facebook or Instagram URL and a Modal backend runs the full pipeline in about 25 seconds<sup class="cite"><a href="#r5">5</a></sup>.</p>
+<p>Put the two commitments on one plane and the corpus reads itself. Most spots commit on one axis and hedge on the other. Pilsner's <i>Alfons</i> is the one spot that commits to a world by picture (102°, brand green at 0.2 %) and by sound (86 % music, 81 bpm, F♯ major) at once, two pipelines agreeing about one brand. Albert is the opposite: five spots that commit to a world visually (150–178°) and to a voiceover audially (88 % speech). Each decision is extreme on its own axis; the pair does not reinforce. That is the muddle's stealthiest form, decisive metric by metric, conflicted in motion<sup class="cite"><a href="#r1">1</a></sup>.</p>
+</section>
+<figure>
+  <img src="../assets/brand/01-two-commitments.svg" alt="Scatter of 47 spots: hue distance on the x axis, music share on the y axis; Pilsner Urquell alone in the top right, Albert's five spots at the far right and bottom." loading="lazy">
+  <figcaption><b>fig. 3</b> · The two commitments on one plane. Top right is empty except for Pilsner; Albert commits on the picture and hedges on the sound. Joined from both studies' spot-level metrics.</figcaption>
+</figure>
+
+<section>
+<h2>The prediction, checked late</h2>
+<p>On 18 May I wrote down a falsifiable claim before the data could answer it: five spots, three "coherent" (Pilsner, a McDonald's promo, a Lidl brand-colour flood) and two "muddled" (Albert, a Vodafone telecom spot), with the claim that over thirty days the coherent set would gain more YouTube views in total (claim A) and hold the top three ranks (claim B). The confounds were listed in the same file: existing views, subscriber base, paid promotion, the algorithm, all of which matter more than creative coherence, and n = 5. The check was due on 17 June. I forgot it. I ran it while writing this page, 119 days after the baseline<sup class="cite"><a href="#r6">6</a></sup><sup class="cite"><a href="#r7">7</a></sup>.</p>
+</section>
+<table class="tbl"><caption>Views, 18 May → 14 September 2026 · baseline and check both via yt-dlp</caption>
+<thead><tr><th>spot</th><th>predicted</th><th class="n">18 May</th><th class="n">14 Sep</th><th class="n">Δ views</th></tr></thead>
+<tbody>
+<tr><td>Pilsner Urquell · <i>Alfons</i></td><td>top</td><td class="n">18 660</td><td class="n">18 704</td><td class="n bad">+44</td></tr>
+<tr><td>McDonald's · <i>Fakt si myslíš</i></td><td>top</td><td class="n">851 825</td><td class="n">855 594</td><td class="n hi">+3 769</td></tr>
+<tr><td>Lidl · <i>Vše pro skvělé grilování</i></td><td>top</td><td class="n">511 921</td><td class="n dim">private</td><td class="n dim">unmeasurable</td></tr>
+<tr><td>Albert · <i>Gourmet receptury</i></td><td>bottom</td><td class="n">272 017</td><td class="n">273 381</td><td class="n">+1 364</td></tr>
+<tr><td>Vodafone · <i>Nejlepší pevný internet</i></td><td>bottom</td><td class="n">509 694</td><td class="n">511 540</td><td class="n">+1 846</td></tr>
+</tbody></table>
+<section>
+<p>Claim A holds on paper, 3 813 against 3 210, and only because of McDonald's, whose spot rides the name of a television show and was flagged as confounded before the fact. Claim B fails: Pilsner, the most coherent spot in the corpus, gained 44 views in four months and finished last. The Lidl spot was taken private, which is its own answer about how long promo creative lives. The methodology measures the spot; YouTube measures the spot plus everything else. The series is descriptive, not predictive of reach, and the file said that too. What I would keep from the exercise is the habit, not the result: write the claim down first, with the ways it could be wrong, and run the check even when it is late.</p>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Šandová, B. (2026): <a href="https://sandovabarbora.github.io/brand-reflection-cz/">Brand Reflection Series</a>, hub with the worked Pilsner example and the Albert counter-example; <a href="https://github.com/sandovabarbora/brand-reflection-cz">repository</a>, MIT.</li>
+<li id="r2">Šandová, B. (2026): <a href="https://sandovabarbora.github.io/color-fingerprint-cz/">Brand color or world color: a field study of Czech TV advertising</a>; <a href="https://github.com/sandovabarbora/color-fingerprint-cz">color-fingerprint-cz</a>. 47 spots from 13 brand YouTube channels, 1 fps, K-means k = 5 in CIE-LAB, hue distance to the brand anchor, Székely energy distance between palettes. Derived metrics <code>data/processed/spots.parquet</code>, CC-BY-4.0.</li>
+<li id="r3">Šandová, B. (2026): <a href="https://sandovabarbora.github.io/sound-fingerprint-cz/">Voice or music: a field study of Czech TV advertising's audio</a>; <a href="https://github.com/sandovabarbora/sound-fingerprint-cz">sound-fingerprint-cz</a>. silero-vad, librosa, Krumhansl–Schmuckler key finding; <code>spots_audio.parquet</code>, CC-BY-4.0.</li>
+<li id="r4">Šandová, B. (2026): <a href="https://sandovabarbora.github.io/strategic-topography-cz/">Strategic topography of Czech brands</a>; <a href="https://github.com/sandovabarbora/strategic-topography-cz">strategic-topography-cz</a>. trafilatura, <code>intfloat/multilingual-e5-base</code>, UMAP (n_neighbors 10, min_dist 0.3, cosine), K-means k = 4; 24 of 30 homepages scraped, 30 trends via manual fallback when the unofficial Trends API rate-limited.</li>
+<li id="r5">Šandová, B. (2026): <a href="https://sandovabarbora.github.io/spot-scorer/">Spot Scorer</a>; <a href="https://github.com/sandovabarbora/spot-scorer">spot-scorer</a>. Static page with inline JSON; optional Modal backend for scoring any public video URL.</li>
+<li id="r6"><a href="https://github.com/sandovabarbora/brand-reflection-cz/blob/main/PREDICTIONS.md">PREDICTIONS.md</a> (18 May 2026): the two claims, the five spots, the confounds; <a href="https://github.com/sandovabarbora/brand-reflection-cz/blob/main/BASELINE_2026-05-18.txt">BASELINE_2026-05-18.txt</a>: view counts at prediction time.</li>
+<li id="r7">Check run 14 September 2026, 19:52 UTC, <code>yt-dlp --skip-download --print "%(id)s %(view_count)s"</code> on the five URLs; Lidl <code>Oz047619h6U</code> returned "Private video".</li>
+</ol>
+</section>
+
+<footer class="text-foot">
+  <p><b>Figures.</b> Recomputed for this page by <code>tools/brand_figures.py</code> from the two studies' published spot-level parquet files (joined on spot id, 47 of 47); counts match the reports: 16 / 20 / 11 by colour, 44 / 3 by sound, 27 of 47 minor.</p>
+  <p class="back"><a href="../#works">← projects</a></p>
+</footer>
+</article>
+</body>
+</html>
