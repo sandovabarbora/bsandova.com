@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barbora Šandová — Data & Cloud Engineer, Prague</title>
+<meta name="description" content="Data & Cloud Engineer in Prague. Cross-cloud data platforms at work; independent research with public, checkable artifacts: hockey and football player-pool atlases, Quaesitor, the Brand Reflection Series.">
+<link rel="canonical" href="https://bsandova.com/">
+<link rel="alternate" hreflang="en" href="https://bsandova.com/">
+<link rel="alternate" hreflang="cs" href="https://bsandova.com/cs/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#work">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="wordmark" href="/">bsandova<em>.com</em></a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#now">Now</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-ext">
+      <a href="https://github.com/sandovabarbora" rel="me">github</a>
+      <a href="https://www.linkedin.com/in/barbora-sandova" rel="me">linkedin</a>
+      <span class="lang"><b>en</b> / <a href="/cs/">cs</a></span>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <p class="kicker">Data &amp; Cloud Engineer · Prague</p>
+      <h1>Barbora Šandová</h1>
+      <p class="lede">I architect a cross-cloud data platform at Alma Career. The rest of the time I run independent research and publish the artifacts: <strong>atlases, reviews and tools you can check yourself.</strong></p>
+
+      <div class="figures">
+        <a class="fig" href="https://hockey.datasimply.eu">
+          <span class="fig-n">1.38</span>
+          <span class="fig-l">NHL players per million Czechs, sixth of six peers <b>→ hockey atlas</b></span>
+        </a>
+        <a class="fig" href="https://sandovabarbora.github.io/brand-reflection-cz/">
+          <span class="fig-n">47</span>
+          <span class="fig-l">Czech TV spots measured for colour and sound identity <b>→ brand reflection</b></span>
+        </a>
+        <a class="fig" href="https://github.com/sandovabarbora/delayed-all-the-time">
+          <span class="fig-n">5.7<small>M</small></span>
+          <span class="fig-l">Prague transit delay records, modelled and sonified <b>→ thesis</b></span>
+        </a>
+      </div>
+      <p class="footnote">Every figure on this page links to the run that produced it.</p>
+
+      <div class="hero-actions">
+        <a class="btn btn-ink" href="#work">Selected work</a>
+        <a class="btn btn-line" href="mailto:sandovabarb@gmail.com">Write to me</a>
+      </div>
+    </div>
+
+    <div class="relief" aria-hidden="true">
+      <figure class="relief-frame" style="margin:0">
+        <img src="assets/portrait-3tone.png" alt="" width="889" height="824" decoding="async" fetchpriority="high">
+        <figcaption class="relief-cap"><span>fig. 00 · the author</span><b>off duty</b></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<script>
+// parallax on the relief only; off for reduced motion (BRAND.md §6)
+(() => {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const el = document.querySelector('.relief-frame img'); if (!el) return;
+  (function tick() {
+    const vh = innerHeight, r = el.getBoundingClientRect();
+    const p = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2)));
+    el.style.transform = `translateY(${(p * 28).toFixed(1)}px)`;
+    requestAnimationFrame(tick);
+  })();
+})();
+</script>
+</body>
+</html>
