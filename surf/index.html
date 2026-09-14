@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Not worth the flight</title>
+<meta name="description" content="How good is the swell forecast for Portugal, by lead day, and when is booking the flight the right call? Three wave models, three spots, a forecast stored every day and checked against what arrived.">
+<meta name="theme-color" content="#161616">
+<link rel="canonical" href="https://bsandova.com/surf/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../text.css">
+<style>
+.chart{max-width:64rem;margin:1rem 0 .5rem;border:1px solid var(--line);background:var(--bg-2)}
+.chart svg{display:block;width:100%;height:auto;font-family:var(--mono);font-size:11px}
+.chart .grid{stroke:var(--line);stroke-width:1}.chart .axis{fill:var(--fg-2)}.chart .lbl{fill:var(--fg)}
+.legend{display:flex;gap:1.25rem;flex-wrap:wrap;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);margin:.5rem 0 1.5rem}
+.legend i{display:inline-block;width:.9rem;height:.9rem;vertical-align:-.15em;margin-right:.4rem}
+.tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
+.tbl th,.tbl td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top;white-space:nowrap}
+.tbl th:first-child,.tbl td:first-child{padding-left:0}
+.tbl th{font-weight:400;color:var(--fg-2);letter-spacing:.12em;text-transform:uppercase;font-size:10px}
+.tbl td.n,.tbl th.n{text-align:right;font-variant-numeric:tabular-nums}
+.tbl td b{color:var(--hot);font-weight:400}.tbl .hi{color:var(--coral)}.tbl .dim{color:var(--fg-2)}.tbl .go{color:var(--coral)}
+.scroller{overflow-x:auto;max-width:64rem}
+.tabs{display:flex;gap:0;margin:1rem 0;border:1px solid var(--line);width:max-content}
+.tabs button{background:none;border:0;border-right:1px solid var(--line);color:var(--fg-2);font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:.6rem 1rem;cursor:pointer}
+.tabs button:last-child{border-right:0}.tabs button.on{background:var(--hot);color:#161616}
+.gap{font-family:var(--mono);font-size:11px;color:var(--fg-2);border:1px dashed var(--line);padding:.8rem 1rem;max-width:44rem;margin:1rem 0}
+.ctl{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:1rem 2rem;max-width:44rem;margin:1rem 0;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-2)}
+.ctl label{display:flex;flex-direction:column;gap:.35rem}.ctl input{accent-color:var(--coral);width:100%}
+.ctl b{color:var(--fg);font-weight:400}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../">bsandova.com</a></b><nav><a href="../#works">Projects</a><a href="../#about">About</a><a href="../#contact">Contact</a></nav><span class="tr">surf · portugal · live · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Surf forecast verification · Ericeira · Peniche · Sagres · three wave models · stored every day since 14 September 2026</p>
+  <h1>Not worth <em>the flight</em></h1>
+  <p class="deck">The forecast says a swell is coming to Portugal in five days. How often is it still there when you land? Every morning this page stores the seven-day forecast from three wave models and, a day later, what actually arrived. Then it counts.</p>
+  <dl class="facts" id="facts">
+    <div><dt>forecasts stored</dt><dd id="f-days">…</dd></div>
+    <div><dt>surfable days, last 92</dt><dd id="f-clim">…</dd></div>
+    <div><dt>skill at lead 3</dt><dd id="f-skill">…</dd></div>
+    <div><dt>today's call</dt><dd id="f-call">…</dd></div>
+  </dl>
+</header>
+
+<section>
+<h2>The next seven days</h2>
+<p>Daily maximum swell height and mean period during daylight, per model, with the spread between models as the honest uncertainty. A day counts as surfable when the models agree it clears the rule below.</p>
+</section>
+<div class="tabs" id="spot-tabs"></div>
+<div class="scroller"><table class="tbl" id="fc"><thead><tr><th>date</th><th class="n">lead</th><th class="n">MFWAM</th><th class="n">GWAM</th><th class="n">EWAM</th><th class="n">spread</th><th class="n">period</th><th class="n">wind</th><th>models saying surfable</th></tr></thead><tbody></tbody></table></div>
+
+<section>
+<h2>How often it is on: the last 92 days</h2>
+<p>Share of surfable days per week from the model analysis. Summer on the Portuguese west coast is wind swell and the nortada; the ground swell that makes the rule easy to clear arrives in autumn, and this chart will show it arriving.</p>
+</section>
+<div class="chart" id="clim"></div>
+<div class="legend" id="clim-l"></div>
+
+<section>
+<h2>Skill by lead day</h2>
+<p>Mean absolute error of the daily maximum swell height, per lead day and model, against the analysis of the target date. Needs at least 14 pairs per lead before a number is shown; until then the section says how many it has.</p>
+</section>
+<div id="skill"></div>
+
+<section>
+<h2>When to book</h2>
+<p>A flight is worth booking when the probability that the day is surfable, given what the forecast says at that lead, exceeds the flight's cost divided by what a surf day is worth to you. Until the reliability table has enough pairs, the probability used is the base rate from the last 92 days, which is the honest prior and a low one.</p>
+</section>
+<div class="ctl">
+  <label>flight + two nights, EUR <b id="c-cost">180</b><input type="range" id="cost" min="60" max="600" step="10" value="180"></label>
+  <label>a surf day is worth, EUR <b id="c-val">120</b><input type="range" id="val" min="20" max="600" step="10" value="120"></label>
+  <label>days you would get if it is on <b id="c-n">2</b><input type="range" id="ndays" min="1" max="5" step="1" value="2"></label>
+</div>
+<div class="scroller"><table class="tbl" id="dec"><thead><tr><th class="n">lead</th><th>forecast says</th><th class="n">P(surfable)</th><th class="n">source</th><th class="n">expected value</th><th>call</th></tr></thead><tbody></tbody></table></div>
+
+<section>
+<h2>Method, and what is a proxy</h2>
+<p>Forecasts: Open-Meteo Marine (Météo-France MFWAM, DWD GWAM, DWD EWAM) and Open-Meteo Forecast for 10 m wind, hourly, aggregated to daylight (06–20 UTC) maxima and means per target date. Truth: the same API's analysis for the past day, which is the final model state a surfer sees the evening before, not a buoy; the Portuguese buoys are available on request only, and this is stated rather than hidden. Because the forecast and the truth share a model family, the skill numbers will read optimistically; the model spread and the rank correlation are the more honest columns. Rule, v1: daily max swell 1.0–2.5 m, mean period ≥ 8 s, wind ≤ 25 km/h or offshore (E ± 60°).</p>
+</section>
+
+<footer class="text-foot">
+  <p><b>Data.</b> <a href="data.json">data.json</a>, rebuilt daily by a GitHub Actions job from <code>surf/data/forecasts/&lt;date&gt;.json</code> and <code>surf/data/analysis.json</code> (<code>collect.py</code>, <code>verify.py</code>). Every number on this page is read from it.</p>
+  <p class="back"><a href="../#works">← projects</a></p>
+</footer>
+</article>
+
+<script>
+(async () => {
+  const D = await (await fetch('data.json', {cache:'no-store'})).json();
+  const MC = {meteofrance_wave:'#D6FF3A', gwam:'#B78CFF', ewam:'#7ED9A6'};
+  const spots = D.spots; let spot = spots[0];
+  const rule = D.surfable_rule;
+  const surf = r => r && r.swell_max!=null && r.period_mean!=null && r.swell_max>=rule.swell_max_m[0] && r.swell_max<=rule.swell_max_m[1] && r.period_mean>=rule.period_min_s && (r.wind_mean==null || r.wind_mean<=rule.wind_max_kmh || Math.abs(((r.wind_dir-rule.offshore_deg[0]+180)%360)-180)<=rule.offshore_deg[1]);
+  // facts
+  document.getElementById('f-days').innerHTML = D.issues.length + ' <small>since ' + D.issues[0] + ' · 3 spots × 3 models × 7 days</small>';
+  const c = D.climatology[spot];
+  document.getElementById('f-clim').innerHTML = Math.round(100*c.surfable_share) + ' % <small>' + spot + ' · ' + c.from + ' → ' + c.to + '</small>';
+  const sk = (D.skill[spot]||{}); const s3 = Object.values(sk).map(m => m['3']).filter(Boolean);
+  const n3 = s3.reduce((a,b)=>a+b.n,0); const ok3 = s3.filter(x=>x.mae_swell!=null);
+  document.getElementById('f-skill').innerHTML = ok3.length ? ('MAE ' + Math.min(...ok3.map(x=>x.mae_swell)).toFixed(2) + ' m <small>best model, ' + n3 + ' pairs</small>') : ('collecting <small>' + n3 + ' of ' + D.min_pairs + ' pairs</small>');
+  const today = D.latest[spot].days[0];
+  document.getElementById('f-call').innerHTML = (today.surfable_votes>=2 ? 'go' : 'not worth the flight') + ' <small>' + today.swell_max_mean + ' m · ' + today.period_mean + ' s · ' + today.surfable_votes + '/3 models</small>';
+  // tabs
+  const tabs = document.getElementById('spot-tabs');
+  tabs.innerHTML = spots.map(s => `<button data-s="${s}" class="${s===spot?'on':''}">${s}</button>`).join('');
+  tabs.addEventListener('click', e => { if (e.target.dataset.s) { spot = e.target.dataset.s; [...tabs.children].forEach(b=>b.classList.toggle('on', b.dataset.s===spot)); render(); } });
+  function render() {
+    const L = D.latest[spot];
+    document.querySelector('#fc tbody').innerHTML = L.days.map(d => {
+      const m = d.models; const v = k => m[k] && m[k].swell_max!=null ? m[k].swell_max.toFixed(2) : '—';
+      return `<tr><td>${d.date}</td><td class="n">${d.lead}</td><td class="n">${v('meteofrance_wave')}</td><td class="n">${v('gwam')}</td><td class="n">${v('ewam')}</td><td class="n dim">${d.swell_max_spread!=null?d.swell_max_spread.toFixed(2):'—'}</td><td class="n">${d.period_mean!=null?d.period_mean.toFixed(1)+' s':'—'}</td><td class="n">${d.wind_mean!=null?Math.round(d.wind_mean)+' km/h':'—'}</td><td class="${d.surfable_votes>=2?'go':'dim'}">${'●'.repeat(d.surfable_votes)}${'○'.repeat(3-d.surfable_votes)}</td></tr>`; }).join('');
+    // climatology chart
+    const C = D.climatology[spot], W=960, H=260, Lm=44, R=16, T=16, B=44, w = C.weeks;
+    const x = i => Lm + i*(W-Lm-R)/Math.max(1,w.length); const bw = (W-Lm-R)/Math.max(1,w.length) - 3;
+    let s = `<svg viewBox="0 0 ${W} ${H}">`;
+    for (const v of [0,25,50,75,100]) { const y = T + (100-v)*(H-T-B)/100; s += `<line class="grid" x1="${Lm}" x2="${W-R}" y1="${y}" y2="${y}"/><text class="axis" x="${Lm-6}" y="${y+4}" text-anchor="end">${v}%</text>`; }
+    w.forEach((k,i) => { const pct = 100*k.surfable/k.n, y = T + (100-pct)*(H-T-B)/100; s += `<rect x="${x(i)}" y="${y}" width="${bw}" height="${H-B-y}" fill="${pct>0?'#D6FF3A':'#3A3A36'}"><title>${k.week} · ${k.surfable}/${k.n} surfable · max swell ${k.swell_max_mean} m · period ${k.period_mean} s</title></rect>`; if (i%3===0) s += `<text class="axis" x="${x(i)+bw/2}" y="${H-14}" text-anchor="middle">${k.week.slice(5)}</text>`; });
+    s += '</svg>';
+    document.getElementById('clim').innerHTML = s;
+    document.getElementById('clim-l').innerHTML = `<span><i style="background:#D6FF3A"></i>share of surfable days per ISO week</span><span>${C.days} days · ${C.from} → ${C.to} · ${Math.round(100*C.surfable_share)} % overall</span>`;
+    // skill
+    const S = D.skill[spot] || {}; const leads = [0,1,2,3,4,5,6];
+    const models = D.models;
+    const any = models.some(m => S[m] && Object.values(S[m]).some(e => e.mae_swell!=null));
+    if (!any) {
+      const counts = leads.map(l => Math.max(...models.map(m => (S[m] && S[m][l]) ? S[m][l].n : 0)));
+      document.getElementById('skill').innerHTML = `<div class="gap">collecting · pairs per lead day 0…6: ${counts.join(' · ')} · a number appears at ${D.min_pairs}</div>`;
+    } else {
+      let rows = models.map(m => `<tr><td><b style="color:${MC[m]}">${m}</b></td>` + leads.map(l => { const e = S[m] && S[m][l]; return `<td class="n">${e && e.mae_swell!=null ? e.mae_swell.toFixed(2)+' m' : (e ? '<span class="dim">'+e.n+' pairs</span>' : '—')}</td>`; }).join('') + '</tr>').join('');
+      document.getElementById('skill').innerHTML = `<div class="scroller"><table class="tbl"><thead><tr><th>model</th>${leads.map(l=>`<th class="n">lead ${l}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>`;
+    }
+    decision();
+  }
+  function decision() {
+    const cost = +document.getElementById('cost').value, val = +document.getElementById('val').value, nd = +document.getElementById('ndays').value;
+    document.getElementById('c-cost').textContent = cost; document.getElementById('c-val').textContent = val; document.getElementById('c-n').textContent = nd;
+    const base = D.climatology[spot].surfable_share; const S = D.skill[spot] || {};
+    const rows = [];
+    for (const l of [1,2,3,4,5,6]) for (const says of ['surfable','not surfable']) {
+      let p = null, src = 'base rate';
+      const es = D.models.map(m => S[m] && S[m][l]).filter(e => e && e.p_surfable_given_forecast!=null);
+      if (es.length) { p = es.reduce((a,e)=>a+(says==='surfable'?e.p_surfable_given_forecast:e.p_surfable_given_not),0)/es.length; src = es.length + ' model' + (es.length>1?'s':''); }
+      else p = base;
+      const ev = p*val*nd - cost; const be = cost/(val*nd);
+      rows.push(`<tr><td class="n">${l}</td><td>${says}</td><td class="n">${Math.round(100*p)} %</td><td class="n dim">${src}</td><td class="n">${ev>=0?'+':''}${Math.round(ev)} EUR</td><td class="${ev>=0?'go':'dim'}">${ev>=0?'book it':'not worth the flight'} <span class="dim">· break-even ${Math.round(100*be)} %</span></td></tr>`);
+    }
+    document.querySelector('#dec tbody').innerHTML = rows.join('');
+  }
+  for (const id of ['cost','val','ndays']) document.getElementById(id).addEventListener('input', decision);
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+name: surf forecast collector
+on:
+  schedule:
+    - cron: "10 6 * * *"   # 06:10 UTC daily
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: python surf/collect.py
+      - run: python surf/verify.py
+      - run: |
+          git config user.name "surf-collector"
+          git config user.email "surf-collector@users.noreply.github.com"
+          git add surf/data surf/data.json
+          git commit -m "surf: $(date -u +%F)" || echo "nothing to commit"
+          git push
