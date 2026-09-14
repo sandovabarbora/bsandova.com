@@ -32,3 +32,16 @@
 .refs li:target{color:var(--fg)}
 
 .text-foot p{font-size:11px;line-height:1.7;color:var(--fg-2)}
+
+/* wider measure, justified (Bára: "v jednom sloupci vlevo a ani ne do bloku") */
+.text section{max-width:64rem}
+.text p{text-align:justify;hyphens:auto;-webkit-hyphens:auto;text-justify:inter-word}
+.text .deck,.text figcaption,.text-foot p,.facts dd,.facts dt{text-align:left;hyphens:manual}
+.text figure{width:100%;max-width:64rem}
+.text figcaption{max-width:64rem}
+.text-foot{max-width:64rem}
+.refs{max-width:64rem}.refs ol{columns:2;column-gap:3rem}.refs li{break-inside:avoid}
+.text .wide,.tbl.wide,.scroller.wide{max-width:64rem}
+.text-head{max-width:none}
+@media (max-width:64rem){.text p{text-align:left;hyphens:manual}.refs ol{columns:1}}
+.text figure{max-width:56rem}

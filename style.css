@@ -155,3 +155,15 @@ a.prj-t:hover{color:var(--coral)}
 a.chip:hover{background:var(--hot);color:#161616;border-color:var(--hot)}
 @media (max-width:64rem){.grp{grid-template-columns:1fr}.grp-h{border-right:0;border-bottom:1px solid var(--line);padding:1.25rem 1rem}.prj{grid-column:1;grid-template-columns:1fr;padding:1rem}.out{grid-column:1;grid-row:auto;flex-direction:row;flex-wrap:wrap;align-items:center;margin-top:.5rem}}
 
+
+/* projects: title + chips on one line, description below (fix for the stretched rows) */
+.grp{grid-template-columns:minmax(0,1fr) minmax(0,2.4fr)}
+.grp-h{padding:1.25rem 1.5rem}
+.grp-h h3{font-size:1.5rem;margin:.3rem 0 .5rem}
+.grp-h p{font-size:.82rem}
+.prj{grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto;gap:.4rem 1.5rem;align-items:baseline;padding:1rem 1.5rem}
+.prj-t{grid-column:1;grid-row:1}
+.out{grid-column:2;grid-row:1;flex-direction:row;align-items:center;gap:.4rem}
+.prj p{grid-column:1/-1;grid-row:2;max-width:52rem}
+.chip{padding:.3rem .55rem}
+@media (max-width:64rem){.prj{grid-template-columns:1fr}.prj-t,.out,.prj p{grid-column:1}.out{grid-row:3;margin-top:.25rem}.prj p{grid-row:2}}
