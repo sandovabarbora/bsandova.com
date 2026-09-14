@@ -10,8 +10,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css?v=425195f">
+<link rel="stylesheet" href="../style.css?v=f815c6b">
 <link rel="stylesheet" href="../text.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false})"></script>
+
 <style>
 .tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
 .tbl th,.tbl td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
@@ -103,7 +107,9 @@
 
 <section>
 <h2>Keeping small samples honest</h2>
-<p>Per-game rates lie when the sample is tiny. A player with four games and five points, 1.25 P/GP raw, would outrank Pastrňák. So rates are shrunk towards their league median with an empirical-Bayes prior: <code>(events + K · median) / (GP + K)</code>, K = 10. At one game the median dominates (about 91 %); at eighty the player's own data does (about 89 %). The four-game player drops to 0.59 P/GP, which is where a four-game sample belongs<sup class="cite"><a href="#r4">4</a></sup>.</p>
+<p>Per-game rates lie when the sample is tiny. A player with four games and five points, 1.25 P/GP raw, would outrank Pastrňák. So rates are shrunk towards their league median with an empirical-Bayes prior, \(K = 10\) phantom games:</p>
+<div class="eq">$$\hat r = \frac{\text{events} + K\,\tilde r_{\text{league}}}{\text{GP} + K}$$</div>
+<p> At one game the median dominates (about 91 %); at eighty the player's own data does (about 89 %). The four-game player drops to 0.59 P/GP, which is where a four-game sample belongs<sup class="cite"><a href="#r4">4</a></sup>.</p>
 <p>The league multipliers are the honest weak point: NHL 1.00, AHL 0.55, SHL 0.45, Liiga 0.42, NL 0.40, Extraliga 0.35, first league 0.20, approximations informed by public NHL-equivalency work<sup class="cite"><a href="#r5">5</a></sup>. So they were perturbed by ±20 % each and the quality ranking recomputed: the top ten changes by at most one player in any scenario, the mean rank shift in the top twenty stays under five places, and the NHL top four stay the top four everywhere<sup class="cite"><a href="#r4">4</a></sup>. The map is not sensitive to the thing I was least sure of.</p>
 </section>
 <table class="tbl"><caption style="text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);padding:0 0 .5rem">Sensitivity · ±20 % on league multipliers</caption>

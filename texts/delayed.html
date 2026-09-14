@@ -10,8 +10,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css?v=425195f">
+<link rel="stylesheet" href="../style.css?v=f815c6b">
 <link rel="stylesheet" href="../text.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false})"></script>
+
 <style>
 .tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
 .tbl th,.tbl td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
@@ -42,7 +46,9 @@
 </header>
 
 <section>
-<p>This is the companion piece to <a href="../#works">a master's thesis</a> on delay persistence in the Prague network, and it started as a way of hearing the thing the thesis was about. Delays are not noise. They are a slowly moving state you can watch; the morning peak builds, holds, and lets go. Statistically that is an AR(2) coefficient sum of 0.73. Musically it is a build-up, a chorus and a breakdown, and the ear hears it before the table does<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>This is the companion piece to <a href="../#works">a master's thesis</a> on delay persistence in the Prague network, and it started as a way of hearing the thing the thesis was about. Delays are not noise. They are a slowly moving state you can watch; the morning peak builds, holds, and lets go. Statistically it is an autoregression whose coefficients sum to 0.73:</p>
+<div class="eq">$$d_t = \phi_1 d_{t-1} + \phi_2 d_{t-2} + \varepsilon_t,\qquad \phi_1+\phi_2 = 0.727\ (\text{bus}),\ 0.715\ (\text{tram})$$</div>
+<p>A shock to the delay at one moment is still three-quarters there in the next. Musically it is a build-up, a chorus and a breakdown, and the ear hears it before the table does<sup class="cite"><a href="#r1">1</a></sup>.</p>
 <p>The player is one self-contained HTML file: no server, no build step, no external resources, all audio synthesised live with the Web Audio API from five days of aggregated stop-time data embedded verbatim. No raw records are redistributed; the aggregates are a derived work of Golemio's open data and say so<sup class="cite"><a href="#r2">2</a></sup>.</p>
 </section>
 

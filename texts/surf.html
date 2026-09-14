@@ -10,8 +10,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css?v=425195f">
+<link rel="stylesheet" href="../style.css?v=f815c6b">
 <link rel="stylesheet" href="../text.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false})"></script>
+
 <style>
 .tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
 .tbl th,.tbl td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
@@ -63,7 +67,9 @@
 
 <section>
 <h2>When to book: the arithmetic</h2>
-<p>Let <i>p</i> be the probability the day is surfable given the forecast at lead <i>d</i>, <i>v</i> the value of a surf day, <i>n</i> the number of days you would get if it is on, <i>c</i> the cost of the trip. Book when <i>p · v · n &gt; c</i>, i.e. when <i>p</i> exceeds the break-even <i>c / (v · n)</i>. At 180 EUR for a flight and two nights, 120 EUR a day and two days, the break-even is 75 %. Until the pairs exist, the page uses the base rate from the last 92 days as <i>p</i>, which is 5 %, so today every row says "not worth the flight". That is the honest prior, and it is why the page exists: the whole value of a forecast is how far it moves <i>p</i> away from 5 %<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>Let <i>p</i> be the probability the day is surfable given the forecast at lead <i>d</i>, <i>v</i> the value of a surf day, <i>n</i> the number of days you would get if it is on, <i>c</i> the cost of the trip. Book when the expected value of the trip is positive:</p>
+<div class="eq">$$\mathbb{E}[\text{trip}] = p\,v\,n - c > 0 \quad\Longleftrightarrow\quad p > p^{*} = \frac{c}{v\,n}$$</div>
+<p>At 180 EUR for a flight and two nights, 120 EUR a day and two days, the break-even is 75 %. Until the pairs exist, the page uses the base rate from the last 92 days as <i>p</i>, which is 5 %, so today every row says "not worth the flight". That is the honest prior, and it is why the page exists: the whole value of a forecast is how far it moves <i>p</i> away from 5 %<sup class="cite"><a href="#r1">1</a></sup>.</p>
 </section>
 <table class="tbl"><caption>The decision, as the page computes it</caption>
 <thead><tr><th>input</th><th>default on the page</th><th>where it comes from</th></tr></thead>
@@ -72,12 +78,15 @@
 <tr><td>trip cost c</td><td class="n">180 EUR</td><td>slider</td></tr>
 <tr><td>value of a surf day v</td><td class="n">120 EUR</td><td>slider</td></tr>
 <tr><td>days if it is on, n</td><td class="n">2</td><td>slider</td></tr>
-<tr><td>break-even p</td><td class="n">75 %</td><td>c / (v · n)</td></tr>
+<tr><td>break-even \(p^{*}\)</td><td class="n">75 %</td><td>\(c/(v\,n) = 180/(120\cdot 2)\)</td></tr>
 </tbody></table>
 
 <section>
 <h2>Methodology: what "good" means here</h2>
-<p>Every stored forecast is paired with the analysis of its target date, giving one pair per spot, model, lead day (0–6) and date. On each set of pairs, four things are computed<sup class="cite"><a href="#r3">3</a></sup>. <b>Continuous:</b> mean absolute error, bias and RMSE of the daily maximum swell height, MAE of the mean period, and Spearman's rank correlation, which survives the fact that the truth and the forecast share a model family better than the error in metres does. <b>Binary:</b> the "surfable" contingency table (hits, misses, false alarms, correct negatives), the probability of detection, the false-alarm ratio, and the two numbers the decision needs, P(surfable | forecast said yes) and P(surfable | forecast said no). <b>Probabilistic:</b> the share of the three models that call the day surfable is treated as a forecast probability and scored with the Brier score; the Brier skill score says how much better that is than climatology. <b>Baselines:</b> climatology (the base rate) and persistence (forecast for lead <i>d</i> = the analysis <i>d</i> days before the target). A forecast that does not beat persistence at lead 1 is not a forecast<sup class="cite"><a href="#r5">5</a></sup>.</p>
+<p>Every stored forecast is paired with the analysis of its target date, giving one pair per spot, model, lead day (0–6) and date. On each set of pairs, four things are computed<sup class="cite"><a href="#r3">3</a></sup>. <b>Continuous:</b> mean absolute error, bias and RMSE of the daily maximum swell height, MAE of the mean period, and Spearman's rank correlation, which survives the fact that the truth and the forecast share a model family better than the error in metres does. <b>Binary:</b> the "surfable" contingency table (hits, misses, false alarms, correct negatives), the probability of detection, the false-alarm ratio, and the two numbers the decision needs, P(surfable | forecast said yes) and P(surfable | forecast said no). <b>Probabilistic:</b> the share of the three models that call the day surfable is treated as a forecast probability \(f_i\) and scored with the Brier score against the outcome \(o_i \in \{0,1\}\); the Brier skill score says how much better that is than a reference forecast, climatology or persistence. <b>Baselines:</b> climatology (the base rate) and persistence (forecast for lead <i>d</i> = the analysis <i>d</i> days before the target). A forecast that does not beat persistence at lead 1 is not a forecast<sup class="cite"><a href="#r5">5</a></sup>.</p>
+<div class="eq">$$\mathrm{POD} = \frac{H}{H+M},\qquad \mathrm{FAR} = \frac{F}{H+F},\qquad P(\text{surfable}\mid\text{yes}) = \frac{H}{H+F} = 1-\mathrm{FAR}$$
+$$\mathrm{BS} = \frac{1}{N}\sum_{i=1}^{N}\left(f_i - o_i\right)^{2},\qquad \mathrm{BSS}_{\text{ref}} = 1 - \frac{\mathrm{BS}}{\mathrm{BS}_{\text{ref}}},\quad \text{ref} \in \{\text{climatology},\ \text{persistence}\}$$</div>
+<p>\(H\), \(M\), \(F\) are hits, misses and false alarms of the contingency table; climatology forecasts the base rate \(\bar o\) every day, persistence forecasts the analysis of \(d\) days earlier. A BSS of 0 is "no better than the reference", 1 is perfect, negative is worse than not forecasting.</p>
 <p><b>Uncertainty.</b> Consecutive days are not independent draws, so intervals come from a block bootstrap by ISO week (500 resamples), on MAE and on P(surfable | yes). <b>Gates.</b> No number is shown for a lead with fewer than 14 pairs; below 30 pairs it is marked descriptive. <b>Reliability.</b> For each forecast probability (0, ⅓, ⅔, 1) the page reports how often the day was actually surfable, which is the reliability diagram in table form.</p>
 </section>
 

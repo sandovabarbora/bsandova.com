@@ -144,6 +144,13 @@
     document.getElementById('c-cost').textContent = cost; document.getElementById('c-val').textContent = val; document.getElementById('c-n').textContent = nd;
     const base = D.climatology[spot].surfable_share; const S = D.skill[spot] || {};
     const rows = [];
+    const anyModel = [1,2,3,4,5,6].some(l => D.models.some(m => S[m] && S[m][l] && S[m][l].p_surfable_given_forecast!=null));
+    if (!anyModel) {
+      // No lead has passed the sample-size gate yet: every row would be the same base-rate row, so show it once.
+      const p = base, ev = p*val*nd - cost, be = cost/(val*nd);
+      document.querySelector('#dec tbody').innerHTML = `<tr><td class="n">1–6</td><td>anything</td><td class="n">${Math.round(100*p)} %</td><td class="n dim">base rate</td><td class="n">${ev>=0?'+':''}${Math.round(ev)} EUR</td><td class="${ev>=0?'go':'dim'}">${ev>=0?'book it':'not worth the flight'} <span class="dim">· break-even ${Math.round(100*be)} %</span></td></tr><tr><td colspan="6" class="dim">No lead has ${D.gates.min_pairs} verified pairs yet, so the forecast does not move the probability from the base rate at any lead, whatever it says. Rows per lead and per forecast appear once the reliability table fills.</td></tr>`;
+      return;
+    }
     for (const l of [1,2,3,4,5,6]) for (const says of ['surfable','not surfable']) {
       let p = null, src = 'base rate';
       const es = D.models.map(m => S[m] && S[m][l]).filter(e => e && e.p_surfable_given_forecast!=null);

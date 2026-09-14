@@ -60,3 +60,9 @@
   .text-head h1{font-size:clamp(3rem,4.2vw,5.4rem)}
   .deck{font-size:1.6rem}
 }
+/* equations (KaTeX, only on pages that load it) */
+.text .eq{margin:.2rem 0 1.2rem;max-width:64rem;overflow-x:auto;overflow-y:hidden}
+.text .eq .katex-display{margin:.6rem 0}
+.text .katex{font-size:1.06em;color:var(--fg)}
+@media (min-width:100rem){.text .eq{max-width:78rem}}
+.katex .text{padding:0;margin:0;max-width:none}

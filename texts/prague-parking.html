@@ -12,8 +12,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css?v=425195f">
+<link rel="stylesheet" href="../style.css?v=f815c6b">
 <link rel="stylesheet" href="../text.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false})"></script>
+
 </head>
 <body>
 <div class="top"><b><a href="../">bsandova.com</a></b><nav><a href="../#works">Works</a><a href="../#texts">Texts</a><a href="../#about">About</a><a href="../#contact">Contact</a></nav><span class="tr">text 01 · 2026 · en</span></div>
@@ -41,14 +45,18 @@
 <h2>Why the answer is a length, not an area</h2>
 <p>The natural calculation is area divided by footprint: take the zone area, divide by the outline of a car plus a manoeuvring gap, and see how many fewer cars fit today than in 2012. It gives 5 600 to 10 800 lost stalls, and it is wrong for most of Prague, because most of Prague parks parallel to the kerb.</p>
 
-<p>On a kerb, capacity is length divided by pitch, where pitch is the car's length plus the gap. Width does not enter the formula at all. A car that is 1.90 m wide instead of 1.75 m does not push its neighbour out, because its neighbours are behind and in front of it. It takes the extra width from the driving lane, which is a real cost, but a different one. The area model books that lane as lost parking. The difference between 2 745 and 8 237 stalls is not a data problem; it is a question problem.</p>
+<p>On a kerb, capacity is length divided by pitch, where pitch is the car's length \(L\) plus the gap \(g\):</p>
+<div class="eq">$$N = \frac{\ell_{\text{kerb}}}{L + g}$$</div>
+<p>Width does not enter the formula at all. A car that is 1.90 m wide instead of 1.75 m does not push its neighbour out, because its neighbours are behind and in front of it. It takes the extra width from the driving lane, which is a real cost, but a different one. The area model books that lane as lost parking. The difference between 2 745 and 8 237 stalls is not a data problem; it is a question problem.</p>
 
 <figure>
   <img src="../assets/parking/02-model-comparison.svg" alt="Horizontal bars: length model about 2 745 lost stalls, area model about 8 200, with ranges across assumptions." loading="lazy">
   <figcaption><b>fig. 1</b> · The choice of metric moves the answer more than the data does. Bars are central estimates; whiskers span the gap (0.5–1.0 m) and the parallel share (50–85 %) for the fleet scenario, and the two overhead conventions for the area model. For perpendicular stalls the opposite logic applies; Prague's zones are mostly parallel.</figcaption>
 </figure>
 
-<p>The length model needs no kerb length, which is fortunate because the server would not give it: with the kerb held constant, stalls in 2012 equal stalls today times the ratio of the two pitches. Today's count is the anchor. The gap is 0.82 m, not chosen by hand: T&amp;E reports a 5.20 m pitch for 2025 from Berlin traffic data and a 4.38 m car<sup class="cite"><a href="#r4">4</a></sup>, and the difference lands in the middle of the 0.5 to 1.0 m range the brief asked to test.</p>
+<p>The length model needs no kerb length, which is fortunate because the server would not give it: with the kerb held constant, stalls in 2012 equal stalls today times the ratio of the two pitches:</p>
+<div class="eq">$$N_{2012} = N_{2025}\cdot\frac{L_{2025}+g}{L_{2012}+g},\qquad g = 0.82\ \text{m}$$</div>
+<p>Today's count is the anchor. The gap is 0.82 m, not chosen by hand: T&amp;E reports a 5.20 m pitch for 2025 from Berlin traffic data and a 4.38 m car<sup class="cite"><a href="#r4">4</a></sup>, and the difference lands in the middle of the 0.5 to 1.0 m range the brief asked to test.</p>
 </section>
 
 <section>
