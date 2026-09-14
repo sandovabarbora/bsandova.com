@@ -1,6 +1,6 @@
 {
  "generated": "2026-09-14",
- "truth": "meteofrance_wave (analysis, lead 0)",
+ "truth": "meteofrance_wave analysis (lead 0) \u2014 a proxy, not a buoy",
  "spots": [
   "ericeira",
   "peniche",
@@ -10,6 +10,9 @@
   "meteofrance_wave",
   "gwam",
   "ewam"
+ ],
+ "issues": [
+  "2026-09-14"
  ],
  "surfable_rule": {
   "swell_max_m": [
@@ -23,16 +26,25 @@
    60.0
   ]
  },
- "issues": [
-  "2026-09-14"
- ],
- "min_pairs": 14,
+ "gates": {
+  "min_pairs": 14,
+  "descriptive_below": 30,
+  "bootstrap_reps": 500,
+  "bootstrap_block": "ISO week"
+ },
  "climatology": {
   "ericeira": {
    "days": 92,
    "from": "2026-06-14",
    "to": "2026-09-13",
    "surfable_share": 0.054,
+   "surfable_share_by_rule": {
+    "period 7 s": 0.185,
+    "period 9 s": 0.022,
+    "wind 20": 0.043,
+    "wind 30": 0.054,
+    "height 0.8\u20133.0": 0.109
+   },
    "weeks": [
     {
      "week": "2026-W24",
@@ -139,6 +151,13 @@
    "from": "2026-06-14",
    "to": "2026-09-13",
    "surfable_share": 0.076,
+   "surfable_share_by_rule": {
+    "period 7 s": 0.196,
+    "period 9 s": 0.022,
+    "wind 20": 0.065,
+    "wind 30": 0.076,
+    "height 0.8\u20133.0": 0.087
+   },
    "weeks": [
     {
      "week": "2026-W24",
@@ -245,6 +264,13 @@
    "from": "2026-06-14",
    "to": "2026-09-13",
    "surfable_share": 0.065,
+   "surfable_share_by_rule": {
+    "period 7 s": 0.152,
+    "period 9 s": 0.022,
+    "wind 20": 0.054,
+    "wind 30": 0.076,
+    "height 0.8\u20133.0": 0.076
+   },
    "weeks": [
     {
      "week": "2026-W24",
@@ -1184,5 +1210,35 @@
   }
  },
  "skill": {},
- "reliability": {}
+ "baselines": {},
+ "robustness": {},
+ "quality": {
+  "issues": 1,
+  "expected_issues": 1,
+  "missing_issue_dates": [],
+  "null_share_by_model": {
+   "meteofrance_wave": 0.0,
+   "gwam": 0.0,
+   "ewam": 0.429
+  },
+  "dropout_days_by_model": {
+   "meteofrance_wave": 0,
+   "gwam": 0,
+   "ewam": 0
+  },
+  "disagreement_gt_1m": {
+   "share": 0.095,
+   "n": 21
+  },
+  "analysis_days": {
+   "ericeira": 92,
+   "peniche": 92,
+   "sagres": 92
+  },
+  "analysis_gaps": {
+   "ericeira": [],
+   "peniche": [],
+   "sagres": []
+  }
+ }
 }

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Not worth the flight</title>
+<meta name="description" content="A surfer in Prague books flights to Portugal on a swell forecast five days out. How often is the swell still there? A forecast stored every morning, checked against what arrived, and a rule for when to book.">
+<meta name="theme-color" content="#161616">
+<link rel="canonical" href="https://bsandova.com/texts/surf.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css?v=425195f">
+<link rel="stylesheet" href="../text.css">
+<style>
+.tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
+.tbl th,.tbl td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th:first-child,.tbl td:first-child{padding-left:0}
+.tbl th{font-weight:400;color:var(--fg-2);letter-spacing:.12em;text-transform:uppercase;font-size:10px}
+.tbl td.n,.tbl th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl td b{color:var(--hot);font-weight:400}.tbl .hi{color:var(--coral)}.tbl .dim{color:var(--fg-2)}
+.tbl caption{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);padding:0 0 .5rem}
+.play{display:inline-block;background:var(--coral);color:#161616;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:.8rem 1.2rem;margin:.5rem 0 1rem}
+.play:hover{background:var(--hot);color:#161616}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../">bsandova.com</a></b><nav><a href="../#works">Projects</a><a href="../#about">About</a><a href="../#contact">Contact</a></nav><span class="tr">the atlantic · surf · 2026 · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Surf forecast verification · Portugal · started 14 September 2026 · a page that gets better every morning</p>
+  <h1>Not worth <em>the flight</em></h1>
+  <p class="deck">I live in Prague and surf in Portugal, which means every trip starts with a forecast five or six days out and a decision about a flight. The forecast is a model. Models are sometimes right. This is a page that counts how often, by lead day, and turns the count into a rule for when to book.</p>
+  <dl class="facts">
+    <div><dt>spots</dt><dd>3 <small>Ericeira · Peniche · Sagres</small></dd></div>
+    <div><dt>wave models, stored daily</dt><dd>3 <small>Météo-France MFWAM · DWD GWAM · DWD EWAM</small></dd></div>
+    <div><dt>surfable days, mid-June → mid-September</dt><dd>5 of 92 <small>Ericeira · by the rule below</small></dd></div>
+    <div><dt>first skill numbers</dt><dd>14 pairs <small>per lead · block bootstrap by week · 6 tests</small></dd></div>
+  </dl>
+  <a class="play" href="../surf/">→ the live page</a>
+</header>
+
+<section>
+<h2>The question, precisely</h2>
+<p>A forecast has two failure modes a surfer cares about: it promised a swell that never came (you flew for nothing), and it missed one that did (you stayed home). Both depend on the lead time: the evening before, the model is nearly reporting; six days out it is guessing with confidence. So the object to measure is not "is the forecast good" but <b>P(surfable on the day | what the forecast said d days before)</b>, for each d. With that in hand the flight is arithmetic: book when that probability, times what a surf day is worth to you, times the days you would get, exceeds what the trip costs<sup class="cite"><a href="#r1">1</a></sup>.</p>
+</section>
+
+<section>
+<h2>What gets stored, every morning</h2>
+<p>At 06:10 UTC a GitHub Actions job fetches the seven-day forecast for three spots from three wave models (swell height, period, direction; wave height) and the wind, aggregates each target day to daylight maxima and means, and commits the file. A day later it fetches the analysis for yesterday, the model's final state, and commits that too. From then on every stored forecast can be paired with what its target day turned out to be, at lead 0 through 6<sup class="cite"><a href="#r2">2</a></sup><sup class="cite"><a href="#r3">3</a></sup>. No keys, no server, no database; a folder of small JSON files in a public repository is the whole infrastructure, and anyone can re-run the pairing.</p>
+<p>The truth is a proxy and the page says so. The Portuguese buoys (Leixões, Nazaré, Sines) belong to the Instituto Hidrográfico and are released on request, not by API; the European in-situ portal has no Portuguese wave platforms<sup class="cite"><a href="#r4">4</a></sup>. So "what arrived" is the analysis of the same model family that made the forecast, which is what a surfer actually checks the night before, and which makes the skill numbers read optimistically. The spread between the three models and the rank correlation are the columns to trust more than the error in metres. If a buoy feed appears, it replaces the proxy without changing the code.</p>
+</section>
+
+<section>
+<h2>The rule, and why summer looks bleak</h2>
+<p>"Surfable", version one: daily maximum swell height between 1.0 and 2.5 m, mean period at least 8 s, wind at most 25 km/h or offshore (east ± 60°). Applied to the last 92 days of analysis at Ericeira, that clears five days. Mid-June to mid-September on the west coast is wind swell and the nortada: periods sit at 5–8 s and the afternoon wind is often over 25 km/h. Only eleven of the 92 days had a mean period of 8 s or more. The ground swell that clears the rule easily arrives in autumn, and the page will show it arriving<sup class="cite"><a href="#r3">3</a></sup>.</p>
+</section>
+<figure>
+  <img src="../assets/surf/01-ericeira-92-days.svg" alt="Three panels over 92 days at Ericeira: daily maximum swell height with the 1.0–2.5 m band and five surfable days marked; mean period with the 8-second line; wind with the 25 km/h line." loading="lazy">
+  <figcaption><b>fig. 1</b> · Ericeira, 14 June – 13 September 2026, from the analysis. Acid dots are the five days that clear the rule; most days fail on period, the rest on wind. Rendered from <code>surf/data/analysis.json</code>.</figcaption>
+</figure>
+
+<section>
+<h2>When to book: the arithmetic</h2>
+<p>Let <i>p</i> be the probability the day is surfable given the forecast at lead <i>d</i>, <i>v</i> the value of a surf day, <i>n</i> the number of days you would get if it is on, <i>c</i> the cost of the trip. Book when <i>p · v · n &gt; c</i>, i.e. when <i>p</i> exceeds the break-even <i>c / (v · n)</i>. At 180 EUR for a flight and two nights, 120 EUR a day and two days, the break-even is 75 %. Until the pairs exist, the page uses the base rate from the last 92 days as <i>p</i>, which is 5 %, so today every row says "not worth the flight". That is the honest prior, and it is why the page exists: the whole value of a forecast is how far it moves <i>p</i> away from 5 %<sup class="cite"><a href="#r1">1</a></sup>.</p>
+</section>
+<table class="tbl"><caption>The decision, as the page computes it</caption>
+<thead><tr><th>input</th><th>default on the page</th><th>where it comes from</th></tr></thead>
+<tbody>
+<tr><td>P(surfable | forecast, lead d)</td><td class="n">5 % <span class="dim">until 14 pairs</span></td><td>reliability table from the pairs; base rate before that</td></tr>
+<tr><td>trip cost c</td><td class="n">180 EUR</td><td>slider</td></tr>
+<tr><td>value of a surf day v</td><td class="n">120 EUR</td><td>slider</td></tr>
+<tr><td>days if it is on, n</td><td class="n">2</td><td>slider</td></tr>
+<tr><td>break-even p</td><td class="n">75 %</td><td>c / (v · n)</td></tr>
+</tbody></table>
+
+<section>
+<h2>Methodology: what "good" means here</h2>
+<p>Every stored forecast is paired with the analysis of its target date, giving one pair per spot, model, lead day (0–6) and date. On each set of pairs, four things are computed<sup class="cite"><a href="#r3">3</a></sup>. <b>Continuous:</b> mean absolute error, bias and RMSE of the daily maximum swell height, MAE of the mean period, and Spearman's rank correlation, which survives the fact that the truth and the forecast share a model family better than the error in metres does. <b>Binary:</b> the "surfable" contingency table (hits, misses, false alarms, correct negatives), the probability of detection, the false-alarm ratio, and the two numbers the decision needs, P(surfable | forecast said yes) and P(surfable | forecast said no). <b>Probabilistic:</b> the share of the three models that call the day surfable is treated as a forecast probability and scored with the Brier score; the Brier skill score says how much better that is than climatology. <b>Baselines:</b> climatology (the base rate) and persistence (forecast for lead <i>d</i> = the analysis <i>d</i> days before the target). A forecast that does not beat persistence at lead 1 is not a forecast<sup class="cite"><a href="#r5">5</a></sup>.</p>
+<p><b>Uncertainty.</b> Consecutive days are not independent draws, so intervals come from a block bootstrap by ISO week (500 resamples), on MAE and on P(surfable | yes). <b>Gates.</b> No number is shown for a lead with fewer than 14 pairs; below 30 pairs it is marked descriptive. <b>Reliability.</b> For each forecast probability (0, ⅓, ⅔, 1) the page reports how often the day was actually surfable, which is the reliability diagram in table form.</p>
+</section>
+
+<section>
+<h2>Robustness: does the rule drive the answer?</h2>
+<p>The binary results are recomputed under five alternative rules: period threshold 7 s and 9 s, wind cap 20 and 30 km/h, and a wider height band of 0.8–3.0 m. On the 92-day climatology alone the sensitivity is already large: 5 % of days are surfable at 8 s, 2 % at 9 s, 19 % at 7 s; 4 % at a 20 km/h wind cap, 5 % at 30; 11 % with the wider band<sup class="cite"><a href="#r3">3</a></sup>. The skill numbers will be shown under every one of these, and the conclusion has to hold across them or be reported as rule-dependent. Two further splits are built in: self-verification (MFWAM against its own analysis) is flagged separately from cross-model verification (GWAM and EWAM against the MFWAM analysis), because the first is the optimistic case; and every metric is per spot, since Sagres faces south-west and Ericeira north-west.</p>
+<p>What this cannot fix: the truth is a proxy. If the MFWAM analysis is itself wrong on a day, both forecast and truth are wrong together and the pair looks good. That is the direction of the bias, it is known, and a buoy feed is the only cure.</p>
+</section>
+
+<section>
+<h2>Data engineering: the boring part, done properly</h2>
+<p><b>Shape.</b> Two data products, both append-only: one file per issue date with the seven-day forecast for three spots and three models, aggregated to daily records with a fixed schema (max and mean swell height, mean period, circular-mean direction, max wave height, mean wind and direction; daylight window 06–20 UTC; units metres, seconds, degrees, km/h), and one analysis file keyed by spot and date. Aggregation happens at ingest so the repository stays small (8 KB a day) and the verifier only ever compares like with like. Raw hourly data is not kept; the aggregation is deterministic and the API call is reproducible.</p>
+<p><b>Idempotence and failure.</b> The collector overwrites the file for its own issue date and upserts analysis days by key, so a re-run is harmless and a missed run leaves a visible gap rather than a duplicate. A failed API call fails the job; nothing partial is written. The workflow commits only if something changed.</p>
+<p><b>Quality, counted.</b> The verifier reports what the stored files actually contain: issues stored against issues expected, missing issue dates, the share of null values per model, days a model dropped out, the share of target days where the models disagree by more than a metre, gaps in the analysis. On day one it already found something: EWAM returns no values beyond lead 3, so 43 % of its cells are null, and it will only ever be scored at leads 0–3. That is on the page, not in a footnote<sup class="cite"><a href="#r3">3</a></sup>.</p>
+<p><b>Tests.</b> A pytest suite builds a synthetic world (a fake analysis, 45 issues, error that grows with lead and a planted positive bias) and checks that the verifier says so: MAE monotone in lead, rank correlation falling, the bias recovered, bootstrap intervals bracketing the point estimate, the 14-pair gate holding, the skill scores beating both baselines, and the quality counts matching the files. Six tests, three seconds, run before the page trusts a number<sup class="cite"><a href="#r3">3</a></sup>.</p>
+<p><b>Lineage and cost.</b> <code>data.json</code> is built by one script from the two data products and the rule constants; the figure on this page reads the same constants, so the figure and the page cannot disagree. Infrastructure: a GitHub Actions cron, a public repository and a static page. Cost: zero. If a buoy feed appears, it is one more collector writing into the analysis file under a new key, and the verifier gains a second truth column.</p>
+</section>
+
+<section>
+<h2>What I expect, written down first</h2>
+<p>Three claims, dated 14 September 2026, to be checked against the page when the pairs exist. <b>One:</b> at lead 1–2 the three models will agree on swell height to within 0.3 m on most days and the rank correlation with the analysis will be above 0.9; the forecast is useful for deciding whether to drive to Ericeira tomorrow. <b>Two:</b> at lead 5–6 the mean absolute error of daily maximum swell height will exceed 0.5 m and the models will disagree by more than 0.5 m on at least a third of days; the forecast at flight-booking lead is a coin with a bias. <b>Three:</b> at long leads the models will over-forecast swell height more often than under-forecast it (positive bias), because a forecast swell that fades is more common than one that appears from nothing. If three is wrong, the rule for booking flips from "wait" to "trust the early call", which would be worth knowing. Results will be added here with the date they were read.</p>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Decision rule: expected value of booking, <i>p · v · n − c</i>; break-even probability <i>c / (v · n)</i>. Standard cost–loss framing of forecast value (Richardson, D. S. (2000), <a href="https://doi.org/10.1002/qj.49712664914">Skill and relative economic value of the ECMWF ensemble prediction system</a>, QJRMS 126).</li>
+<li id="r2">Open-Meteo <a href="https://open-meteo.com/en/docs/marine-weather-api">Marine Weather API</a> (models: Météo-France MFWAM, DWD GWAM, DWD EWAM; swell height, period, direction, wave height) and <a href="https://open-meteo.com/en/docs">Forecast API</a> (10 m wind). Hourly, aggregated to 06–20 UTC.</li>
+<li id="r3"><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/surf">bsandova.com/surf</a>: <code>collect.py</code>, <code>verify.py</code>, <code>data/forecasts/&lt;date&gt;.json</code>, <code>data/analysis.json</code> (analysis, lead 0, from 14 June 2026), <code>.github/workflows/surf.yml</code> (06:10 UTC daily). Every number on the live page is read from <code>surf/data.json</code>.</li>
+<li id="r4">Instituto Hidrográfico, <a href="https://www.hidrografico.pt/paginas-genericas/dt/dcdt/acesso-a-dados/">acesso a dados</a> (data on request); EMODnet Physics ERDDAP search returned no Portuguese wave platforms on 14 September 2026.</li>
+<li id="r5">Wilks, D. S. (2011): <i>Statistical Methods in the Atmospheric Sciences</i>, 3rd ed., ch. 8 (forecast verification: contingency tables, Brier score, reliability, skill against climatology and persistence).</li>
+</ol>
+</section>
+
+<footer class="text-foot">
+  <p><b>Figure.</b> Rendered by <code>tools/surf_figures.py</code> from the analysis file; the rule thresholds are read from <code>surf/data.json</code> so the figure and the page cannot disagree.</p>
+  <p class="back"><a href="../#works">← projects</a></p>
+</footer>
+</article>
+</body>
+</html>

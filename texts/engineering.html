@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data & cloud engineering</title>
+<meta name="description" content="What a data and cloud engineer actually does by day: a cross-cloud platform on AWS and GCP as code, keyless federation, scoped deployments, observability as code, least privilege for people and for AI agents, dbt cutovers proven to the byte, an LLM assistant rebuilt at a tenth of the size and then hardened after it burned $21 on one question. And what runs this site.">
+<meta name="theme-color" content="#161616">
+<link rel="canonical" href="https://bsandova.com/texts/engineering.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css?v=425195f">
+<link rel="stylesheet" href="../text.css">
+<style>
+.tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
+.tbl th,.tbl td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th:first-child,.tbl td:first-child{padding-left:0}
+.tbl th{font-weight:400;color:var(--fg-2);letter-spacing:.12em;text-transform:uppercase;font-size:10px}
+.tbl td.n,.tbl th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl td b{color:var(--hot);font-weight:400}.tbl .hi{color:var(--coral)}.tbl .dim{color:var(--fg-2)}
+.tbl caption{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);padding:0 0 .5rem}
+.stack{font-family:var(--mono);font-size:11px;line-height:1.8;color:var(--fg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:.8rem 0;margin:1rem 0 1.5rem;max-width:64rem}
+.stack b{color:var(--fg);font-weight:400}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../">bsandova.com</a></b><nav><a href="../#works">Projects</a><a href="../#about">About</a><a href="../#contact">Contact</a></nav><span class="tr">engineering · by day · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Data &amp; cloud engineering · Alma Career, Prague · 2025 → · and the four jobs before it</p>
+  <h1>The platform is code. <em>So is the trust.</em></h1>
+  <p class="deck">Everything else on this site is what I do after hours. This is the day job: a cross-cloud data platform for a group of international job portals, the infrastructure that provisions it, the observability that keeps it honest, the access control that keeps it safe, and an LLM assistant over the warehouse that gets measured before it gets trusted. Employer internals are left out; the engineering is not.</p>
+  <dl class="facts">
+    <div><dt>clouds, one platform</dt><dd>AWS + GCP <small>Workload Identity Federation, no long-lived keys</small></dd></div>
+    <div><dt>dbt cutover, parity proven</dt><dd>0 / 0 <small>mismatches across 20 columns, five years of history</small></dd></div>
+    <div><dt>NL→SQL service, rebuilt</dt><dd>4 500 → 400 lines <small>at parity on the golden sets</small></dd></div>
+    <div><dt>one unbounded question</dt><dd>$21 <small>4.07 M input tokens, no failure; then hard caps</small></dd></div>
+  </dl>
+</header>
+
+<section>
+<h2>Cloud architecture as code</h2>
+<p>The platform serves several job portals and HR products across AWS and GCP. The seam between the clouds is keyless: AWS Step Functions authenticate to BigQuery through <b>Workload Identity Federation</b>, so there is no service-account key to rotate, leak or forget. The whole stack is infrastructure as code, AWS CDK in Python and Terraform, across production and development accounts: ECS/Fargate services, Lambda, Step Functions, ECR, ALB routing, S3, IAM, Secrets Manager, SSM<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>Two design decisions I would make again. <b>Scoped deployments:</b> the deploy job derives which stacks a change touched from the live CDK construct tree rather than from a hand-maintained lookup table, so it is rename-proof and one broken app no longer blocks the deploy of every other app. <b>ECR + App stack pairs:</b> eight analytics apps, each one monolithic stack, refactored into an image stack and a runtime stack with shared constructs, the image tag handed across through SSM Parameter Store instead of CloudFormation exports, so container and runtime configuration deploy independently. Smaller pieces, too: a hand-built Windows bastion captured as IaC with SSM Session Manager only (no inbound rules, no exposed RDP, IMDSv2, encrypted root) to reach a partner MySQL behind an IP allowlist; cross-account backup on RDS and EFS so backups survive the loss of the source account, arguing against the documented S3 path in favour of versioning and replication.</p>
+</section>
+
+<section>
+<h2>Observability, reliability, security</h2>
+<p>Dashboards and alarms are CDK code: SLOs on latency and 4XX/5XX rates, wired to Slack. ECR vulnerability scanning and cross-account security audit workflows run on schedule. Access is least privilege by construction, in Terraform: per-project groups with read everywhere and write only in a personal sandbox, replacing the blanket "full analyst" role a new joiner used to get. Partner databases moved from static credentials to RDS IAM authentication through assume-role chains and short-lived tokens<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>The same discipline applies to AI agents. An autonomous agent is scoped so it cannot reach resources outside its remit; a service-account-backed assistant turned out to be a confused deputy, and the fix was per-domain protection enforced at BigQuery IAM, not in the prompt. A prompt is a suggestion. IAM is a wall.</p>
+</section>
+
+<section>
+<h2>Data platform: dbt, Dagster, and proving a cutover</h2>
+<p>dbt modernisation: Python models on Dataproc/Spark for latency-sensitive transformations such as NLP and language detection, a BigQuery materialisation and cost strategy, incremental models with unique keys over self-referential deltas. Dagster orchestrates extracts containerised as Docker images across many portal sources; multi-organisation CRM extraction was made resilient so that one organisation's missing entity skips instead of aborting the run<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>The cutover I am proudest of is boring on purpose. A legacy salary-recompute pipeline moved from a standalone extractor to an incremental dbt-python model. Before a single downstream consumer was repointed, the new model was proven byte-identical to the old one across five years of history: zero mismatches across twenty columns. Shipped with backups, freshness tests and a git-revert rollback path. Same habit on a production GA4 event-stream backfill: validated by full-row fingerprint, 62 of 62 days identical to the pre-backfill snapshot, dev ≡ prod, and the one-off operation kept out of the production codebase. The number that matters in a migration is the one that says nothing changed.</p>
+</section>
+
+<section>
+<h2>An LLM assistant, measured before it was trusted</h2>
+<p>The goal: non-technical staff self-serve BI questions and analysts stop being the bottleneck. The build: a LangGraph agent behind FastAPI on the Anthropic API, with MCP connectors to BigQuery, OpenMetadata and Metabase. The first decision was to replace a ~4 500-line bespoke NL→SQL service (Vanna, ChromaDB, a custom pipeline) with a ~400-line agent whose domain knowledge lives in the data catalogue instead of the codebase, chosen on maintenance cost per line, at parity on the golden question sets<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>Then the trust layer, which is the part <a href="quaesitor/">Quaesitor</a> is about: every figure the assistant returns is cross-checked against certified BI dashboards, lookup is catalogue-first, and protocol compliance is an explicit evaluation metric, not a hope. Then hardening after measuring: 40 exposed MCP tools, 18 of them write-capable, cut to a 15-tool read-only allowlist; a project-scoping wrapper that rejects out-of-scope queries before they reach BigQuery; and hard caps, added after a single unbounded question consumed 4.07 million input tokens and $21 without failing. Pseudonymous per-run tracing (fourteen fields, a salted user hash and team, never names, never tool outputs) and an eval harness over verified golden sets found a malformed output schema in a third-party MCP server that was silently discarding results, non-deterministically. The first business POC ran with the stakeholders in the room: their real questions became date-fixed golden cases, ambiguous definitions (category semantics, tier models, credit balances) were driven to authoritative answers and written into the OpenMetadata glossary, so the agent inherits them instead of re-deriving them per question.</p>
+</section>
+
+<section>
+<h2>Developer experience</h2>
+<p>A multi-app repository migrated from Poetry to uv, lockfile resolution from about thirty seconds to under one per app; shared libraries moved to a private AWS CodeArtifact registry as the single source of truth, which also fixed wheel metadata that had leaked local paths into published packages. Dependabot alerts cut from 792 to 332 across fifteen library manifests and eight apps. The internal documentation site rebuilt on Zensical with the Diátaxis structure, so an analyst can get a first app running without reading CDK internals<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup>.</p>
+</section>
+<div class="stack"><b>stack</b> · Python · SQL · AWS (CDK, ECS/Fargate, Lambda, Step Functions, S3, IAM, CloudWatch, ECR, CodeArtifact, Secrets Manager, SSM) · GCP/BigQuery · Terraform · dbt (SQL + Python/Spark) · Dagster · Docker · FastAPI · LangGraph · MCP · Anthropic API · OpenMetadata · Metabase · Streamlit · GitHub Actions · uv</div>
+
+<section>
+<h2>Before</h2>
+<p><b>Golemio, Prague's city data platform (2024–2025):</b> senior member of the three-person transport data team. Architected the ML platform, Kafka to dbt/Prefect to Docker/Kubernetes to API, and ran the production pipeline serving bus-arrival predictions to the city's apps; 2 TB a month through PostgreSQL/PostGIS on Azure. The vehicle-location records behind the <a href="delayed.html">record</a> and the thesis come from there. <b>Medicalc (2024):</b> statistical models for real-time patient monitoring in C++ with a zero-defect requirement, on the order of a hundred thousand points per second. <b>ČSFD, the Czech film database (2022–2024):</b> backend and data engineering for a site with over a million users: a five-million-record movie database, a collaborative-filtering recommender, an ETL pipeline over twenty external sources (VOD platforms, cinemas), and the migration from a monolith to microservices. <b>EY, forensics and fraud (2021–2022):</b> pattern recognition, anomaly detection and fuzzy entity resolution across financial datasets, presented to executives and regulators, which is where the habit of defending every figure line by line comes from<sup class="cite"><a href="#r1">1</a></sup>.</p>
+</section>
+
+<section>
+<h2>What runs this site</h2>
+<p>The same habits, in public, where they can be checked. The <a href="../watch/">model release watch</a> runs the Quaesitor harness (524 tests) monthly from a launchd job with the operator's own tool configuration stripped, indexes every report with its fingerprints and cost, and pushes a data file the page renders from. The <a href="../surf/">surf forecast verification</a> is a GitHub Actions cron with append-only JSON, idempotent collectors, data-quality counts that found a model dropout on day one, sample-size gates, block-bootstrap intervals and a six-test suite that has to pass before a number is shown. The <a href="hockey.html">hockey atlas</a>'s graph ingest is preceded by a read-only merge check that computes the ids it would write and counts collisions first, which caught a bug that would have created about 570 phantom players. The <a href="football.html">football atlas</a> was built spec → plan → task agents → reviews, with 163 tests and 23 dated rulings. And Quaesitor's site refused to build when a run stopped supporting a sentence. That rule is on every page here: no figure is typed<sup class="cite"><a href="#r3">3</a></sup>.</p>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Own account of work at Alma Career (October 2025 →), Golemio / Operátor ICT (May 2024 – September 2025), Medicalc Software (2024), ČSFD (2022–2024) and EY (2021–2022). Employer systems and data are not public; the figures quoted (parity counts, line counts, tool counts, token and dollar counts, alert counts) are from my own records of the work and are stated without client detail. Where a number cannot be checked from outside, it is presented as my account, not as a citation.</li>
+<li id="r2">Zensical (the maintained successor of Material for MkDocs) and the <a href="https://diataxis.fr/">Diátaxis</a> documentation framework.</li>
+<li id="r3">Public repositories: <a href="https://github.com/sandovabarbora/quaesitor-method">quaesitor-method</a> (harness, 524 tests, build refusals), <a href="https://github.com/sandovabarbora/czehockey-player-pool-atlas">czehockey-player-pool-atlas</a> (read-only merge check), <a href="https://github.com/sandovabarbora/czefootball-player-pool-atlas">czefootball-player-pool-atlas</a> (spec, plan, ledger, 163 tests), <a href="https://github.com/sandovabarbora/bsandova.com">bsandova.com</a> (surf collector and verifier with tests, watch indexer, build script).</li>
+</ol>
+</section>
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a></p>
+</footer>
+</article>
+</body>
+</html>
