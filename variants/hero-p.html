@@ -1,0 +1,50 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>P · Plakát, soft</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#141A1E;--bg-2:#1C242A;--fg:#ECE8DA;--fg-2:#9AA3A3;--acc:#D6FF3A;--line:rgba(236,232,218,.28);--mono:'JetBrains Mono',monospace;--sans:'Space Grotesk',sans-serif;--serif:'Fraunces',serif}
+*{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);color:var(--fg);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+body::after{content:"";position:fixed;inset:0;background:url(../assets/grain.png);opacity:.07;mix-blend-mode:screen;pointer-events:none;z-index:9}
+a{color:inherit;text-decoration:none}
+.top{display:flex;justify-content:space-between;align-items:center;padding:.85rem 1.5rem;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;position:relative;z-index:3}
+.top b{font-family:var(--sans);font-weight:700;font-size:15px;letter-spacing:0;text-transform:none}.top b i{font-style:normal;color:var(--acc)}
+.top nav{display:flex;gap:1.75rem}.top nav span::before{content:attr(data-n) " ";color:var(--acc)}
+.top .r{color:var(--fg-2)}.top .r b{font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:.16em;color:var(--fg)}
+.hero{position:relative;height:calc(100vh - 46px);min-height:680px;overflow:hidden;display:grid;grid-template-columns:auto 1fr}
+.rail{writing-mode:vertical-rl;transform:rotate(180deg);border-left:1px solid var(--line);padding:1.25rem .85rem;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;display:flex;justify-content:space-between;color:var(--fg-2);z-index:3;background:var(--bg)}
+.rail b{color:var(--fg);font-weight:400}.rail i{color:var(--acc);font-style:normal}
+.stage{position:relative}
+.glow{position:absolute;right:8%;top:6%;width:min(60vw,760px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(217,164,65,.28) 0%,rgba(217,164,65,.10) 38%,transparent 62%);z-index:0}
+.stage img{position:absolute;right:2%;bottom:0;height:92%;width:auto;max-width:none;z-index:1}
+.veil{position:absolute;inset:auto 0 0 0;height:46%;background:linear-gradient(180deg,transparent,rgba(20,26,30,.85) 70%);z-index:2}
+.name{position:absolute;left:2rem;bottom:8.5rem;z-index:3;margin:0;font-family:var(--serif);font-weight:900;font-variation-settings:"opsz" 144;font-size:clamp(4rem,12vw,12rem);line-height:.86;letter-spacing:-.055em;padding-top:.15em}
+.name em{display:block;font-style:italic;font-weight:300;font-size:.42em;letter-spacing:-.02em;margin:0 0 .12em .06em}
+.lede{position:absolute;right:2rem;top:2rem;z-index:3;max-width:22rem;font-size:1rem;line-height:1.45;color:var(--fg);margin:0;text-align:right}
+.lede b{font-weight:500;border-bottom:2px solid var(--acc)}
+.strip{position:absolute;left:0;right:0;bottom:0;z-index:4;display:grid;grid-template-columns:1fr 1fr 1fr auto;border-top:1px solid var(--line);background:rgba(20,26,30,.72);backdrop-filter:blur(6px)}
+.strip a{padding:.9rem 1.5rem;border-right:1px solid var(--line);display:flex;align-items:baseline;gap:.9rem;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--fg-2)}
+.strip a:hover{background:var(--fg);color:var(--bg)}.strip a:hover .n,.strip a:hover i{color:var(--bg)}
+.strip .n{font-family:var(--serif);font-weight:900;font-size:1.9rem;letter-spacing:-.03em;color:var(--fg);line-height:1}
+.strip .n small{font-family:var(--mono);font-size:.45em;letter-spacing:.1em;font-weight:400;margin-left:.15em}
+.strip i{font-style:normal;color:var(--acc);text-transform:uppercase;letter-spacing:.14em;margin-left:auto}
+.strip .cta{border-right:0;padding:0;display:flex;gap:0}
+.strip .cta span{padding:.9rem 1.4rem;letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center}
+.strip .cta span:first-child{background:var(--fg);color:var(--bg);font-weight:700}
+@media (max-width:64rem){.hero{grid-template-columns:1fr;height:auto;min-height:0}.rail{display:none}.stage{height:78vw}.stage img{right:-8%;height:100%}.name{bottom:1rem;font-size:15vw}.lede{position:static;text-align:left;padding:1.25rem 1.5rem 0;max-width:none}.strip{position:static;grid-template-columns:1fr;background:var(--bg)}.strip a{border-right:0;border-bottom:1px solid var(--line)}}
+</style></head><body>
+<div class="top"><b>bsandova<i>.com</i></b><nav><span data-n="I">Work</span><span data-n="II">Research</span><span data-n="III">Now</span><span data-n="IV">Contact</span></nav><span class="r">github · linkedin · <b>en</b> / cs</span></div>
+<section class="hero">
+<div class="rail"><span><b>Prague</b> 50.08° N 14.43° E <i>·</i> <b>Berlin</b> 52.52° N 13.40° E <i>·</i> wherever the swell is</span><span>fig. 00 · the author, with dog · two dogs · coffee, always</span></div>
+<div class="stage">
+<div class="glow" aria-hidden="true"></div>
+<img src="../assets/portrait-soft-dark.png" alt="" aria-hidden="true">
+<div class="veil" aria-hidden="true"></div>
+<p class="lede">Data &amp; Cloud Engineer, Prague. Cross-cloud platforms at Alma Career by day; independent research with <b>public artifacts</b> the rest of the time.</p>
+<h1 class="name"><em>Barbora</em>Šandová</h1>
+<div class="strip">
+<a href="#"><span class="n">1.38</span><span>NHL players per million Czechs</span><i>hockey atlas →</i></a>
+<a href="#"><span class="n">47</span><span>Czech TV spots measured</span><i>brand reflection →</i></a>
+<a href="#"><span class="n">121<small>M</small></span><span>Prague vehicle records; delays persist</span><i>thesis →</i></a>
+<a href="#" class="cta"><span>Selected work</span><span>Write to me</span></a>
+</div>
+</div>
+</section></body></html>

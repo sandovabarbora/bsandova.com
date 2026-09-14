@@ -1,0 +1,66 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>S · Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#E8E5DF;--fg:#151515;--fg-2:#6E6B66;--acc:#E8503F;--line:#151515;--mono:'JetBrains Mono',monospace;--sans:'Space Grotesk',sans-serif;--serif:'Fraunces',serif}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased}
+body::after{content:"";position:fixed;inset:0;background:url(../assets/grain.png);opacity:.12;mix-blend-mode:multiply;pointer-events:none;z-index:9}
+a{color:inherit;text-decoration:none}
+.top{display:flex;justify-content:space-between;align-items:baseline;padding:1.1rem 2rem;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-2)}
+.top b{color:var(--fg);font-weight:400}.top nav{display:flex;gap:1.75rem}.top nav a:hover{color:var(--acc)}
+.hero{padding:5rem 2rem 0;min-height:calc(100vh - 50px);display:flex;flex-direction:column;justify-content:space-between}
+.stmt{font-family:var(--serif);font-weight:300;font-variation-settings:"opsz" 144;font-size:clamp(2.6rem,6.2vw,6.2rem);line-height:1.04;letter-spacing:-.025em;margin:0;max-width:16em}
+.stmt em{font-style:italic;font-weight:300}
+.stmt i{font-style:normal;color:var(--acc)}
+.sub{display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;margin-top:2.5rem}
+.sub p{margin:0;max-width:34em;font-size:1.05rem;color:var(--fg)}
+.sub p b{font-weight:500}
+.now{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);text-align:right;line-height:1.9;white-space:nowrap}
+.now b{color:var(--fg);font-weight:400}.now i{font-style:normal;color:var(--acc)}
+.swell{position:relative;height:120px;margin:2rem -2rem 0}
+.swell canvas{display:block;width:100%;height:100%}
+.swell .lbl{position:absolute;left:2rem;bottom:.4rem;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-2)}
+.works{border-top:1px solid var(--line);margin:0 -2rem;padding:0 2rem}
+.w{display:grid;grid-template-columns:3rem 1.4fr 1fr 4rem 7rem;gap:1.5rem;align-items:baseline;padding:1.1rem 0;border-bottom:1px solid var(--line);transition:background .2s}
+.w:hover{background:var(--fg);color:var(--bg)}
+.w .i{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--fg-2)}.w:hover .i,.w:hover .m,.w:hover .y{color:var(--bg);opacity:.75}
+.w .t{font-family:var(--serif);font-weight:500;font-size:clamp(1.25rem,2vw,1.8rem);letter-spacing:-.015em;line-height:1.1}
+.w .t em{font-style:italic;font-weight:300}
+.w .m{font-size:.95rem;color:var(--fg-2)}
+.w .y{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--fg-2)}
+.w .go{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;text-align:right;color:var(--acc)}
+.w:hover .go{color:var(--acc)}
+@media (max-width:64rem){.w{grid-template-columns:2.5rem 1fr 4rem;grid-template-areas:"i t y" ". m go"}.w .i{grid-area:i}.w .t{grid-area:t}.w .y{grid-area:y}.w .m{grid-area:m}.w .go{grid-area:go}.sub{flex-direction:column;align-items:flex-start}.now{text-align:left}.hero{padding-top:3rem}}
+@media (prefers-reduced-motion:reduce){.swell canvas{display:none}}
+</style></head><body>
+<div class="top"><span><b>Barbora Šandová</b> · studio</span><nav><a href="#">Works</a><a href="#">Texts</a><a href="#">About</a><a href="#">Contact</a></nav><span>Prague ⇄ Berlin · en / cs</span></div>
+<section class="hero">
+<div>
+<h1 class="stmt">I make things out of data. Some you can <em>read</em>, some you can <em>hear</em>, all of them you can <i>check</i>.</h1>
+<div class="sub">
+<p>Data &amp; cloud engineer at Alma Career by day. This is the rest: atlases of who a country produces, a city played as a disco record, four studies of what advertising actually looks like, and a harness that catches AI when it lies about numbers.</p>
+<div class="now"><span>now <b>Prague</b> · 50.08° N</span><br><span>swell <i>flat</i> · so: <b>writing</b></span><br><span>two dogs · coffee, always</span></div>
+</div>
+</div>
+<div>
+<div class="swell"><canvas id="sw"></canvas><span class="lbl">horizon · 24 h of Prague transit delay, Tue 17 Jun 2025</span></div>
+<div class="works">
+<a class="w" href="#"><span class="i">01</span><span class="t">Delayed All the Time. <em>On Time, Occasionally.</em></span><span class="m">Prague transit, five days played as disco records, each in its own key</span><span class="y">2025</span><span class="go">listen ▶</span></a>
+<a class="w" href="#"><span class="i">02</span><span class="t">Player Pool Atlas <em>· hockey</em></span><span class="m">Czech pool vs five peers. One number: 1.38 NHL players per million</span><span class="y">2026</span><span class="go">view →</span></a>
+<a class="w" href="#"><span class="i">03</span><span class="t">Player Pool Atlas <em>· football</em></span><span class="m">Same method, Big-5 exports, a Bayesian model beside the multipliers</span><span class="y">2026</span><span class="go">view →</span></a>
+<a class="w" href="#"><span class="i">04</span><span class="t">Brand Reflection <em>Series</em></span><span class="m">47 spots, colour and sound; 24 homepages, one semantic cluster of banks</span><span class="y">2026</span><span class="go">view →</span></a>
+<a class="w" href="#"><span class="i">05</span><span class="t">Quaesitor</span><span class="m">Independent review of AI assistants over data warehouses. Retired, findings stay</span><span class="y">2026</span><span class="go">read →</span></a>
+<a class="w" href="#"><span class="i">06</span><span class="t">Persistence Dynamics <em>of Transport Delays</em></span><span class="m">Master's thesis, 121 197 794 records. Three hypotheses, all revised by the data</span><span class="y">2026</span><span class="go">read →</span></a>
+</div>
+</div>
+</section>
+<script>
+// the horizon: a slow swell drawn from a sine stack; delay curve would replace it in the build
+const c=document.getElementById('sw'),x=c.getContext('2d');let t=0;
+function draw(){const W=c.width=c.clientWidth*devicePixelRatio,H=c.height=c.clientHeight*devicePixelRatio;x.clearRect(0,0,W,H);x.lineWidth=1*devicePixelRatio;x.strokeStyle='#151515';x.beginPath();
+for(let i=0;i<=W;i+=2*devicePixelRatio){const u=i/W;const y=H*0.62+Math.sin(u*6.3+t)*H*.12+Math.sin(u*13.1-t*1.7)*H*.05+Math.sin(u*2.2+t*.4)*H*.08;i?x.lineTo(i,y):x.moveTo(i,y)}x.stroke();
+x.strokeStyle='#E8503F';x.beginPath();for(let i=0;i<=W;i+=2*devicePixelRatio){const u=i/W;const y=H*0.62+Math.sin(u*6.3+t+.6)*H*.12+Math.sin(u*13.1-t*1.7+.3)*H*.05+Math.sin(u*2.2+t*.4)*H*.08;i?x.lineTo(i,y):x.moveTo(i,y)}x.globalAlpha=.55;x.stroke();x.globalAlpha=1;
+t+=.006;requestAnimationFrame(draw)}
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches)draw();
+</script>
+</body></html>

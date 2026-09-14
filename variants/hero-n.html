@@ -1,0 +1,38 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>N · Plakát</title><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A0A0A;--fg:#E9E8E3;--fg-2:#8A8983;--acc:#D6FF3A;--line:#E9E8E3;--mono:'JetBrains Mono',monospace;--sans:'Space Grotesk',sans-serif;--serif:'Fraunces',serif}
+*{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);color:var(--fg);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+body::after{content:"";position:fixed;inset:0;background:url(../assets/grain.png);opacity:.12;mix-blend-mode:screen;pointer-events:none;z-index:9}
+a{color:inherit;text-decoration:none}
+.hero{position:relative;height:100vh;min-height:640px;overflow:hidden;display:grid;grid-template-columns:auto 1fr auto}
+.rail{writing-mode:vertical-rl;transform:rotate(180deg);border-left:1px solid var(--line);padding:1.25rem .9rem;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;display:flex;justify-content:space-between;color:var(--fg-2)}
+.rail b{color:var(--fg);font-weight:400}.rail i{color:var(--acc);font-style:normal}
+.stage{position:relative}
+.stage img{position:absolute;left:50%;bottom:0;height:100%;width:auto;max-width:none;transform:translateX(-46%)}
+.name{position:absolute;left:1.5rem;bottom:1.25rem;z-index:2;margin:0;font-family:var(--serif);font-weight:900;font-variation-settings:"opsz" 144;font-size:clamp(4rem,15vw,15rem);line-height:.8;letter-spacing:-.06em;padding-top:.15em;mix-blend-mode:difference}
+.name em{display:block;font-style:italic;font-weight:300;font-size:.42em;letter-spacing:-.02em;margin-bottom:.15em}
+.top{position:absolute;left:1.5rem;right:1.5rem;top:1rem;z-index:2;display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.top b{font-family:var(--sans);font-weight:700;font-size:15px;letter-spacing:0;text-transform:none}.top b i{font-style:normal;color:var(--acc)}
+.top nav{display:flex;gap:1.5rem}.top nav span::before{content:attr(data-n) " ";color:var(--acc)}
+.side{border-left:1px solid var(--line);width:min(26vw,360px);padding:1.25rem;display:flex;flex-direction:column;justify-content:flex-end;gap:1rem;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--fg-2)}
+.side p{font-family:var(--sans);font-size:1rem;line-height:1.4;color:var(--fg);letter-spacing:0;margin:0}
+.side a.f{display:block;border-top:1px solid var(--line);padding:.55rem 0}.side a.f:last-of-type{border-bottom:1px solid var(--line)}
+.side .n{font-family:var(--serif);font-weight:900;font-size:1.8rem;letter-spacing:-.03em;color:var(--fg);display:block;line-height:1}
+.side .go{color:var(--acc);text-transform:uppercase;letter-spacing:.14em}
+.cta{display:flex}.cta a{flex:1;text-align:center;border:1px solid var(--line);padding:.75rem;letter-spacing:.14em;text-transform:uppercase}.cta a:first-child{background:var(--fg);color:var(--bg)}
+@media (max-width:64rem){.hero{grid-template-columns:auto 1fr}.side{display:none}.name{font-size:20vw}}
+</style></head><body>
+<section class="hero">
+<div class="rail"><span><b>Prague</b> 50.08° N 14.43° E <i>·</i> <b>Berlin</b> 52.52° N 13.40° E <i>·</i> wherever the swell is</span><span>fig. 00 · the author, with dog · 2026</span></div>
+<div class="stage">
+<div class="top"><b>bsandova<i>.com</i></b><nav><span data-n="I">Work</span><span data-n="II">Research</span><span data-n="III">Now</span><span data-n="IV">Contact</span></nav><span>en / cs</span></div>
+<img src="../assets/portrait-xerox-white.png" alt="">
+<h1 class="name"><em>Barbora</em>Šandová</h1>
+</div>
+<aside class="side">
+<p>Data &amp; Cloud Engineer, Prague. Cross-cloud platforms at Alma Career; independent research with public artifacts the rest of the time.</p>
+<div><a class="f" href="#"><span class="n">1.38</span>NHL players per million Czechs <span class="go">→ hockey atlas</span></a><a class="f" href="#"><span class="n">47</span>Czech TV spots measured <span class="go">→ brand reflection</span></a><a class="f" href="#"><span class="n">121M</span>Prague vehicle records; delays persist <span class="go">→ thesis</span></a></div>
+<div class="cta"><a href="#">Work</a><a href="#">Write</a></div>
+<span>two dogs · coffee, always · github · linkedin</span>
+</aside>
+</section></body></html>

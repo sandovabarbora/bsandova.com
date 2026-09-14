@@ -1,0 +1,52 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>R · Work first</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0E1113;--fg:#E9E8E3;--fg-2:#8A8983;--acc:#D6FF3A;--line:rgba(233,232,227,.28);--mono:'JetBrains Mono',monospace;--sans:'Space Grotesk',sans-serif;--serif:'Fraunces',serif}
+*{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);color:var(--fg);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+body::after{content:"";position:fixed;inset:0;background:url(../assets/grain.png);opacity:.09;mix-blend-mode:screen;pointer-events:none;z-index:9}
+a{color:inherit;text-decoration:none}
+.bar{display:flex;justify-content:space-between;align-items:center;padding:.8rem 1.5rem;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.bar b{font-family:var(--sans);font-weight:700;font-size:15px;letter-spacing:0;text-transform:none}.bar b i{font-style:normal;color:var(--acc)}
+.bar nav{display:flex;gap:1.5rem}.bar nav span::before{content:attr(data-n) " ";color:var(--acc)}.bar .r{color:var(--fg-2)}
+.hero{position:relative;height:calc(100vh - 44px);min-height:640px;overflow:hidden;display:grid;grid-template-columns:auto 1fr minmax(280px,31%)}
+.rail{writing-mode:vertical-rl;transform:rotate(180deg);border-left:1px solid var(--line);padding:1.25rem .85rem;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;display:flex;justify-content:space-between;color:var(--fg-2)}
+.rail b{color:var(--fg);font-weight:400}.rail i{color:var(--acc);font-style:normal}
+.main{position:relative;padding:2rem 2.5rem 1.5rem 2rem;display:flex;flex-direction:column;justify-content:flex-start;gap:2.25rem}
+.name{margin:0;font-family:var(--serif);font-weight:900;font-variation-settings:"opsz" 144;font-size:clamp(3.6rem,10.5vw,10.5rem);line-height:.84;letter-spacing:-.055em;padding-top:.15em}
+.name em{display:block;font-style:italic;font-weight:300;font-size:.42em;letter-spacing:-.02em;margin:0 0 .1em .05em}
+.lede{max-width:34em;font-size:clamp(1rem,1.3vw,1.15rem);line-height:1.45;margin:1.25rem 0 0}
+.lede b{font-weight:500;border-bottom:2px solid var(--acc)}
+.work{border-top:1px solid var(--line)}
+.work a{display:grid;grid-template-columns:8rem 1fr auto;gap:1.25rem;align-items:baseline;padding:.85rem 0;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--fg-2)}
+.work a:hover{color:var(--fg)}.work a:hover i{color:var(--fg)}
+.work .n{font-family:var(--serif);font-weight:900;font-size:clamp(2rem,3.4vw,3rem);letter-spacing:-.04em;color:var(--fg);line-height:1}
+.work .n small{font-family:var(--mono);font-size:.4em;letter-spacing:.1em;font-weight:400;margin-left:.15em}
+.work i{font-style:normal;color:var(--acc);text-transform:uppercase;letter-spacing:.14em}
+.cta{display:flex;margin-top:1.25rem;width:max-content;border:1px solid var(--line)}
+.cta a{padding:.75rem 1.4rem;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase}.cta a:first-child{background:var(--fg);color:var(--bg);font-weight:700}
+.fig{position:relative;border-left:1px solid var(--line);overflow:hidden}
+.fig .glow{position:absolute;left:50%;top:8%;width:120%;aspect-ratio:1;border-radius:50%;transform:translateX(-50%);background:radial-gradient(circle,rgba(217,164,65,.2) 0%,rgba(217,164,65,.07) 40%,transparent 62%)}
+.fig img{position:absolute;left:50%;bottom:2.6rem;width:92%;height:auto;max-height:78%;object-fit:contain;transform:translateX(-50%)}
+.fig .cap{position:absolute;left:0;right:0;bottom:0;padding:.7rem 1rem;border-top:1px solid var(--line);background:rgba(14,17,19,.7);backdrop-filter:blur(4px);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);display:flex;justify-content:space-between}
+.fig .cap b{color:var(--fg);font-weight:400}
+@media (max-width:64rem){.hero{grid-template-columns:1fr;height:auto}.rail{display:none}.fig{border-left:0;border-top:1px solid var(--line);height:70vw}.work a{grid-template-columns:6rem 1fr}.work i{grid-column:2}}
+</style></head><body>
+<div class="bar"><b>bsandova<i>.com</i></b><nav><span data-n="I">Work</span><span data-n="II">Research</span><span data-n="III">Now</span><span data-n="IV">Contact</span></nav><span class="r">github · linkedin · en / cs</span></div>
+<section class="hero">
+<div class="rail"><span><b>Prague</b> 50.08° N 14.43° E <i>·</i> <b>Berlin</b> 52.52° N 13.40° E <i>·</i> wherever the swell is</span><span>two dogs · coffee, always</span></div>
+<div class="main">
+<div>
+<h1 class="name"><em>Barbora</em>Šandová</h1>
+<p class="lede">Data &amp; Cloud Engineer, Prague. Cross-cloud platforms at Alma Career by day; independent research with <b>public artifacts</b> the rest of the time: atlases, reviews and tools you can check yourself.</p>
+</div>
+<div>
+<div class="work">
+<a href="#"><span class="n">1.38</span><span>NHL players per million Czechs, sixth of six peers</span><i>hockey atlas →</i></a>
+<a href="#"><span class="n">47</span><span>Czech TV spots measured for colour and sound identity</span><i>brand reflection →</i></a>
+<a href="#"><span class="n">121<small>M</small></span><span>Prague vehicle-location records; delays persist, AR(2) 0.73</span><i>thesis →</i></a>
+</div>
+<div class="cta"><a href="#">Selected work</a><a href="#">Write to me</a></div>
+</div>
+</div>
+<div class="fig" aria-hidden="true"><div class="glow"></div><img src="../assets/portrait-mid.png" alt=""><div class="cap"><span>fig. 00 · <b>the author, with dog</b></span><span>2026</span></div></div>
+</section></body></html>

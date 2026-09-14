@@ -1,0 +1,67 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>G · Day villa</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+:root{--bg:#EFEBDF;--fg:#1C1A17;--fg-2:#6B655C;--acc:#C4862E;--line:#1C1A17}
+body{background:var(--bg);color:var(--fg)}
+body::after{content:"";position:fixed;inset:0;background:url(../assets/grain.png);opacity:.09;mix-blend-mode:multiply;pointer-events:none;z-index:9}
+a{color:var(--acc)} a:hover{color:var(--fg)}
+.nav{background:transparent;border-bottom:2px solid var(--line)}
+.wordmark{color:var(--fg)} .wordmark em{color:var(--acc)}
+.nav-links{font-family:var(--font-mono);font-size:var(--t-label);gap:2rem} .nav-links a{color:var(--fg)} .nav-links li::before{content:attr(data-n) " ";color:var(--acc)}
+.nav-ext a{color:var(--fg-2)} .lang{color:var(--fg-2)} .lang b{color:var(--fg)}
+.hero{padding:0;border-bottom:2px solid var(--line);min-height:calc(100vh - 66px);display:grid}
+.hero .wrap{max-width:none;grid-template-columns:1fr;gap:0;align-items:stretch}
+@media (min-width:64rem){.hero .wrap{grid-template-columns:1.1fr 1fr}}
+.left{padding:2.25rem 1.5rem 2.25rem clamp(1.5rem,calc((100vw - 1200px)/2 + 1.5rem),50vw);display:flex;flex-direction:column;justify-content:space-between;gap:1.5rem}
+.coords{font-family:var(--font-mono);font-size:var(--t-micro);letter-spacing:.18em;text-transform:uppercase;color:var(--fg-2);margin:0;display:flex;gap:1.75rem;flex-wrap:wrap}
+.coords b{color:var(--acc);font-weight:400}
+.name{font-family:'Fraunces',serif;font-weight:300;font-style:italic;font-variation-settings:"opsz" 144;font-size:clamp(4rem,10.5vw,9.5rem);line-height:.92;letter-spacing:-.02em;margin:.5rem 0 1.25rem -.03em}
+.name b{font-weight:600;font-style:normal}
+.lede{color:var(--fg);font-size:clamp(1.05rem,1.4vw,1.25rem);max-width:28em;margin:0 0 1.5rem}
+.figures{background:var(--line);gap:2px;border:2px solid var(--line);margin:0}
+.fig{background:var(--bg);color:var(--fg);padding:.9rem 1rem}
+.fig:hover{background:var(--fg);color:var(--bg)} .fig:hover .fig-l,.fig:hover .fig-l b{color:var(--bg)}
+.fig-n{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(2rem,3.4vw,2.8rem);letter-spacing:-.02em} .fig-l{color:var(--fg-2)} .fig-l b{color:var(--acc)}
+.hero-actions{margin-top:1.25rem} .btn{font-family:var(--font-mono);font-size:var(--t-small);letter-spacing:.06em;text-transform:uppercase}
+.btn-ink{background:var(--fg);color:var(--bg)} .btn-line{border:2px solid var(--fg);color:var(--fg)}
+.right{position:relative;border-left:2px solid var(--line);display:grid;grid-template-rows:1fr auto;overflow:hidden}
+@media (max-width:64rem){.right{border-left:0;border-top:2px solid var(--line);min-height:70vw}}
+.stage{position:relative;background:#33424A;display:flex;align-items:flex-end;justify-content:center;padding:2rem 2rem 0}
+.sun{position:absolute;left:50%;top:14%;width:min(58%,420px);aspect-ratio:1;border-radius:50%;background:#D9A441;transform:translateX(-50%);z-index:0}
+.stage img{position:relative;z-index:1;width:min(100%,560px);height:auto}
+.plate{border-top:2px solid var(--line);padding:1rem clamp(1.5rem,3vw,2.5rem);display:grid;grid-template-columns:1fr auto;gap:1rem 2rem;align-items:baseline;font-family:var(--font-mono);font-size:var(--t-micro);color:var(--fg-2);letter-spacing:.02em}
+.plate h2{margin:0;font-family:'Fraunces',serif;font-weight:500;font-style:italic;font-size:var(--t-sub);color:var(--fg);letter-spacing:0}
+.plate .medium b{color:var(--acc);font-weight:400}
+.plate .acc{text-align:right;letter-spacing:.18em;text-transform:uppercase}
+.ticker{border-top:2px solid var(--line);overflow:hidden;white-space:nowrap;font-family:var(--font-mono);font-size:var(--t-label);letter-spacing:.2em;text-transform:uppercase;padding:.7rem 0;color:var(--fg-2)}
+.ticker span{display:inline-block;padding-right:3rem;animation:tick 40s linear infinite} .ticker i{font-style:normal;color:var(--acc)}
+@keyframes tick{to{transform:translateX(-50%)}}
+</style></head><body>
+<header class="nav"><div class="wrap">
+<a class="wordmark" href="./">bsandova<em>.com</em></a>
+<ul class="nav-links"><li data-n="I"><a href="#work">Work</a></li><li data-n="II"><a href="#research">Research</a></li><li data-n="III"><a href="#now">Now</a></li><li data-n="IV"><a href="#contact">Contact</a></li></ul>
+<div class="nav-ext"><a href="#">github</a><a href="#">linkedin</a><span class="lang"><b>en</b> / <a href="#">cs</a></span></div>
+</div></header>
+<section class="hero"><div class="wrap">
+<div class="left">
+<p class="coords"><span>50.08° N 14.43° E <b>Prague</b></span><span>52.52° N 13.40° E <b>Berlin</b></span><span>wherever the swell is <b>surf</b></span></p>
+<div>
+<h1 class="name">Barbora<br><b>Šandová</b></h1>
+<p class="lede">Cross-cloud data platforms at Alma Career by day. Independent research with public artifacts the rest of the time: atlases, reviews and tools you can check yourself.</p>
+<div class="figures">
+<a class="fig" href="#"><span class="fig-n">1.38</span><span class="fig-l">NHL players per million Czechs <b>→ hockey atlas</b></span></a>
+<a class="fig" href="#"><span class="fig-n">47</span><span class="fig-l">Czech TV spots measured <b>→ brand reflection</b></span></a>
+<a class="fig" href="#"><span class="fig-n">121<small>M</small></span><span class="fig-l">Prague vehicle records; delays persist <b>→ thesis</b></span></a>
+</div>
+<div class="hero-actions"><a class="btn btn-ink" href="#work">Selected work</a><a class="btn btn-line" href="#">Write to me</a></div>
+</div>
+<p class="coords"><span>data &amp; cloud engineer</span><span>two dogs</span><span>coffee, always</span></p>
+</div>
+<div class="right" aria-hidden="true">
+<div class="stage"><div class="sun"></div><img src="../assets/portrait-soft.png" alt=""></div>
+<div class="plate"><h2>The author, with dog</h2><span class="acc">acc. no. 2026.001</span><span class="medium">mixed media: <b>Python</b>, <b>SQL</b>, <b>Terraform</b>, <b>BigQuery</b>, salt water, espresso</span><span class="acc">gift of the artist</span></div>
+</div>
+</div></section>
+</body></html>

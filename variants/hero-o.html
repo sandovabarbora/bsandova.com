@@ -1,0 +1,81 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>O · Terminál</title><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A0A0A;--fg:#E9E8E3;--fg-2:#8A8983;--acc:#D6FF3A;--line:#3a3a36;--mono:'JetBrains Mono',monospace;--serif:'Fraunces',serif}
+*{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);color:var(--fg);font-family:var(--mono);font-size:13px;line-height:1.5;padding:1rem 1.5rem;-webkit-font-smoothing:antialiased}
+body::after{content:"";position:fixed;inset:0;background:url(../assets/grain.png);opacity:.08;mix-blend-mode:screen;pointer-events:none;z-index:9}
+a{color:inherit;text-decoration:none}
+.top{display:flex;justify-content:space-between;color:var(--fg-2);border-bottom:1px dashed var(--line);padding-bottom:.5rem}
+.top b{color:var(--fg);font-weight:700}.top b i{font-style:normal;color:var(--acc)}
+.top nav span{margin-left:1.5rem}.top nav span::before{content:attr(data-n) " ";color:var(--acc)}
+.grid{display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:end;padding-top:1.5rem}
+pre{margin:0;font-size:9.5px;line-height:1.0;letter-spacing:.02em;color:var(--fg);white-space:pre}
+h1{font-family:var(--serif);font-weight:900;font-variation-settings:"opsz" 144;font-size:clamp(4rem,10vw,10rem);line-height:.86;letter-spacing:-.06em;margin:0 0 1.5rem;padding-top:.14em}
+h1 em{display:block;font-weight:300;font-style:italic;font-size:.45em;letter-spacing:-.02em}
+.kv{color:var(--fg-2);max-width:60ch}.kv div{display:grid;grid-template-columns:14ch 1fr;gap:1rem;padding:.25rem 0;border-bottom:1px dashed var(--line)}
+.kv b{color:var(--fg);font-weight:400}.kv i{color:var(--acc);font-style:normal}
+.prompt{margin-top:1.25rem;color:var(--fg-2)}.prompt b{color:var(--acc);font-weight:400}.cur{display:inline-block;width:.6em;height:1em;background:var(--fg);vertical-align:-.15em;animation:blink 1.1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+.cta{display:inline-flex;margin-top:1rem;border:1px solid var(--fg)}.cta a{padding:.6rem 1rem;letter-spacing:.14em;text-transform:uppercase}.cta a:first-child{background:var(--fg);color:var(--bg)}
+@media (max-width:64rem){.grid{grid-template-columns:1fr}pre{font-size:6px}}
+</style></head><body>
+<div class="top"><b>bsandova<i>.com</i></b><nav><span data-n="I">work</span><span data-n="II">research</span><span data-n="III">now</span><span data-n="IV">contact</span></nav><span>en / cs</span></div>
+<div class="grid">
+<div>
+<h1><em>Barbora</em>Šandová</h1>
+<div class="kv">
+<div><span>role</span><b>Data &amp; Cloud Engineer · Alma Career, Prague</b></div>
+<div><span>otherwise</span><b>independent research with public artifacts: atlases, reviews, tools you can check yourself</b></div>
+<div><span>coords</span><b>50.08° N 14.43° E Prague <i>·</i> 52.52° N 13.40° E Berlin <i>·</i> wherever the swell is</b></div>
+<div><span>household</span><b>two dogs · coffee, always</b></div>
+<div><span>1.38</span><b>NHL players per million Czechs <i>→ hockey atlas</i></b></div>
+<div><span>47</span><b>Czech TV spots measured <i>→ brand reflection</i></b></div>
+<div><span>121,197,794</span><b>Prague vehicle-location records; delays persist, AR(2) 0.73 <i>→ thesis</i></b></div>
+</div>
+<p class="prompt"><b>$</b> ls ./work <span class="cur"></span></p>
+<div class="cta"><a href="#">selected work</a><a href="#">write to me</a></div>
+</div>
+<pre aria-hidden="true">                                        =++++++++
+                                   ===++++==++++**++
+                                  ==-====+====+====+=+++=::::::
+                    ::-++       ==--::--=============-:.      .:
+            -  :...::-::+##--  =-::::--=----====--:::..        .:
+          --::-.....:--:::*#+--:.::-==-------::::::::-:.       .
+         -::.:.   ....-::-*@@#+=-::-:. ....:::::-=---:::::::..
+        ::. ..      ..:=*%@%#:..:::......-=+++=+=+++==###=---
+        ..     ..  .:::=##**=-:.:+=-::::-++++++++***+++=** =
+         ...... ...:..:=++==-:-=+++=-=+==++++++****###**+*=
+         :::  : .....-+***#****=..=++=+++++++*##%%#*****##
+               ---=++*****+%@%*=:  :=++-=++++*##%%%###**#%
+                ***+++*##+%@@%=:-.  :----=====+**##%%%%%%+
+                +*++++*##@@@@%:      -=-:----:::---=+***+-=
+                +*++++**%@@@@@@%+-:::-=-::--:.........:::-=-
+                 +*+++*#@@@@@@@@@@+---:------:.:----------=-
+                 +**+*#@@%##*++++++:::...:---:::-=----------
+                  +******+=++*########*+-..:-:.:::-----::::-:.-::::-:=
+                   *+====+#%@@@@@@@@@@@@@%*+=-...:::.... ...:--:--=--=--=
+                   -::=+%@@@@@@@@@@@@@@@@@@%%%%%##+=--:..-::-+-=--==----====
+                 ::..:=%@@@@@@@@@@@@@@@@@@@*--=++*#*+++=-=:-==-=----=-:----==-
+               :::....=%%%%%%@@@@@@@@@@@@@@%=..  .-=+==+++----==-=--=-:------=-=
+              :..:...:-*##%%%%%%%@@@@@@@@@@@%+:.:-===+++==+=-:-------..--------=-
+             :.....:.::-+**#######%%%@@@@@@@@@+:===++++-.:.:::----:--:.:-:--------:
+            ...    ::..:=**####%%@@@@@@@@@@@@@@#=======---+*###***==-::-:---------..:
+            *#%*+++*#*#%%@@@@@@@@@@@@@%%%##***+=------:=%%@@@@@@%%#*=::-::-------:...:
+           %@@%@@@@@@@@@@@%%#****++==----::::::::-:::--:#@@@@@%%%%%#*+-..::------:....::
+          #@%#%@%%#++++=----:::::::-:-------::::::-::--:=@@@@@@@%%%%@%%#+-::-:---.......:
+         #@%*#%@@#=::::::::::-:------::::::::::::::...:::#%%%%%%%%%%%%%%%%+::::-:........:-
+        #@@@##@@@+:-:::::::::::::::::::::::::::..:=+**+-.=##%%%%%%%%%##%%%%+.:::..........--
+       *@@@@%#@@@+::::::::::::::::::::::::::..:-+#@@@@@%*+**###%###*%%%###%%:.........  ...:-
+       %@%%#*%@@@+::::::..:...:::::::.......:+#@@@@@@@@@@@%#*++*#%%*-=##%#=##:.....         .--
+       #%#+==##%%+:::....:::::::::....     .+%@@@@@@@@@@@@@@@#*++*#%#-:=+##=+.    .........:.::-
+        :.. =###*+:.::::::::.... .....     :*%%@@@@@@@@@@@@@@@@@#*++#%= :+*+-:.:::.........:--::
+         .  :###=*+..:..            ...::::-*%%%@@@@@@@@@@@@@@@@@@#++*#+==**=:::::.........:::::
+          . =***##*.                 .:::::+##%%%%%%@@@@@@@@@@@@@@@@%##@@@@#----:.........::::::
+           .-**+=-:                  .-----*##%%%%###%%%@@@@@@@@@@@@@@@@%*=-----:....  ...:-----
+            .::.                     :=---=*#%%%%@@%%####%@@@@@@@@@@%#*=--------:.....  ..:-----
+              ====+:                 :==+***#%%%@@@@@@%##%%@@#=++++==----------:......  ...:::-:
+          . -%@@@@@: .              .:+++**=++**###%%%@@@@%%%=----------------:......   .....:::
+          -*%@@@@@= ...         .....:++: -==---:-==+##%%%%%%@@%+------------:. ....     .....:-
+        -*@@@@@@*: ..        .::::....-. .++++++--==+*######%%%@%=----------:. ......   ......:
+      +#@@@@@@#=:+#%%#+:...:::-:.    .  .+####**+==+++******###%%+.-=--:::::...  .--:.::::
+    *%@@@@@@@@%*.=%%%%@@%%*+=:....  ..:=#%%###*#*++++++++++++**##=..--::::.       .</pre>
+</div></body></html>

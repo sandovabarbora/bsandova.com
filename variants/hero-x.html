@@ -1,0 +1,92 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>X · Techno</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#161616;--bg-2:#1F1F1F;--fg:#DCDCD6;--fg-2:#7E7E78;--line:#3A3A36;--hot:#F2F2EE;--mono:'JetBrains Mono',monospace;--sans:'Space Grotesk',sans-serif;--serif:'Fraunces',serif}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+body::after{content:"";position:fixed;inset:0;background:url(../assets/grain.png);opacity:.13;mix-blend-mode:screen;pointer-events:none;z-index:9}
+a{color:inherit;text-decoration:none}
+.top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 1.5rem;height:44px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-2)}
+.top b{color:var(--fg);font-weight:400}.top nav{display:flex;gap:2rem}.top nav a:hover{color:var(--hot)}.top .r{text-align:right}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:calc(100vh - 45px)}
+.l{padding:2.5rem 1.5rem 2rem;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between}
+.name{font-family:var(--serif);font-weight:400;font-variation-settings:"opsz" 144;font-size:clamp(3rem,7.4vw,7.4rem);line-height:.98;letter-spacing:-.035em;margin:0;padding-top:.12em;color:var(--hot)}
+.name em{font-style:italic;font-weight:300}
+.role{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-2);margin:1rem 0 0}
+.stmt{font-family:var(--serif);font-weight:300;font-size:clamp(1.3rem,2.1vw,2rem);line-height:1.2;letter-spacing:-.015em;margin:0;max-width:22em;color:var(--fg)}
+.stmt em{font-style:italic}.stmt i{font-style:normal;color:var(--hot);border-bottom:1px solid var(--hot)}
+.meta{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);margin-top:2rem;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-2)}
+.meta div{padding:.7rem 0;border-right:1px solid var(--line);padding-right:1rem}.meta div:last-child{border:0}.meta b{display:block;color:var(--fg);font-weight:400;margin-top:.2rem}
+.r{position:relative;display:grid;grid-template-rows:auto 1fr auto}
+.card{padding:1.5rem;border-bottom:1px solid var(--line);display:grid;grid-template-columns:auto 1fr;gap:1.25rem;align-items:end}
+.card img{width:clamp(120px,14vw,190px);height:auto;display:block;filter:grayscale(1) contrast(1.15)}
+.card figcaption{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-2);line-height:1.8}
+.card figcaption b{color:var(--fg);font-weight:400}
+.seq{position:relative;padding:1.5rem 1.5rem 0;display:flex;flex-direction:column;justify-content:flex-end}
+.seq canvas{display:block;width:100%;height:100%;cursor:crosshair}
+.seq .lbl{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-2);padding:.6rem 0}
+.seq .lbl b{color:var(--hot);font-weight:400}
+.works{border-top:1px solid var(--line)}
+.w{display:grid;grid-template-columns:2.5rem 1fr auto auto;gap:1.25rem;align-items:baseline;padding:.8rem 1.5rem;border-bottom:1px solid var(--line)}
+.w:hover{background:var(--hot);color:var(--bg)}.w:hover .i,.w:hover .y,.w:hover .go{color:var(--bg)}
+.w .i,.w .y,.w .go{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-2)}
+.w .t{font-family:var(--serif);font-weight:400;font-size:clamp(1.05rem,1.5vw,1.35rem);letter-spacing:-.01em;line-height:1.15;color:var(--hot)}
+.w .t em{font-style:italic;font-weight:300}.w .t small{display:block;font-family:var(--sans);font-size:.8rem;color:var(--fg-2);margin-top:.15rem;letter-spacing:0}
+.w:hover .t,.w:hover .t small{color:var(--bg)}
+.w .go{color:var(--fg)}
+.deck{position:fixed;left:0;right:0;bottom:0;height:min(82vh,760px);background:#1a0a12;transform:translateY(102%);transition:transform .35s steps(6);z-index:20;border-top:1px solid var(--line)}
+.deck.open{transform:none}.deck iframe{width:100%;height:100%;border:0;display:block}
+.deck .x{position:absolute;right:1rem;top:-2.4rem;background:var(--hot);color:var(--bg);font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:.55rem .9rem;cursor:pointer;display:none;border:0}.deck.open .x{display:block}
+@media (max-width:64rem){.hero{grid-template-columns:1fr}.l{border-right:0;border-bottom:1px solid var(--line)}.seq{min-height:200px}.top{grid-template-columns:1fr auto}.top nav{display:none}}
+</style></head><body>
+<div class="top"><span><b>bsandova.com</b></span><nav><a href="#">Works</a><a href="#">Texts</a><a href="#">About</a><a href="#">Contact</a></nav><span class="tr">Prague ⇄ Berlin · <b id="clk">--:--</b> · en / cs</span></div>
+<section class="hero">
+<div class="l">
+<div>
+<h1 class="name">Barbora<br><em>Šandová</em></h1>
+<p class="role">Data &amp; cloud engineer · Prague · this is the rest</p>
+</div>
+<div>
+<p class="stmt">I make things out of data. Some you can <em>read</em>, some you can <em>hear</em>, all of them you can <i>check</i>.</p>
+<div class="meta"><div>now<b id="tod">—</b></div><div>swell<b>flat · so: writing</b></div><div>household<b>two dogs · coffee</b></div></div>
+</div>
+</div>
+<div class="r">
+<figure class="card" style="margin:0"><img src="../assets/portrait-mid.png" alt="Barbora Šandová with her dog"><figcaption><b>fig. 00</b> · the author, with dog<br>b. Prague · works in Prague and Berlin<br>2026</figcaption></figure>
+<div class="seq"><canvas id="sq"></canvas><div class="lbl"><span>sequencer · Prague transit delay · Tue 17 Jun 2025 · 288 steps × 5 min</span><span id="rd"></span></div></div>
+<div class="works">
+<a class="w" href="#" id="listen"><span class="i">01</span><span class="t">Delayed All the Time. <em>On Time, Occasionally.</em><small>Prague transit as a record. Five days, five keys.</small></span><span class="y">2025</span><span class="go">listen ▶</span></a>
+<a class="w" href="#"><span class="i">02</span><span class="t">Player Pool Atlas <em>· hockey</em><small>1.38 NHL players per million, sixth of six.</small></span><span class="y">2026</span><span class="go">view →</span></a>
+<a class="w" href="#"><span class="i">03</span><span class="t">Player Pool Atlas <em>· football</em><small>Same method, Big-5 exports, a Bayesian model as validation.</small></span><span class="y">2026</span><span class="go">view →</span></a>
+<a class="w" href="#"><span class="i">04</span><span class="t">Brand Reflection <em>Series</em><small>What Czech advertising looks and sounds like, measured.</small></span><span class="y">2026</span><span class="go">view →</span></a>
+<a class="w" href="#"><span class="i">05</span><span class="t">Quaesitor<small>When AI over a data warehouse lies. Measured.</small></span><span class="y">2026</span><span class="go">read →</span></a>
+<a class="w" href="#"><span class="i">06</span><span class="t">Persistence Dynamics <em>of Transport Delays</em><small>Master's thesis, 121 M records, three hypotheses revised by the data.</small></span><span class="y">2026</span><span class="go">read →</span></a>
+</div>
+</div>
+</section>
+<div class="deck" id="deck"><button class="x" id="dx">close ✕</button></div>
+<script>
+const V=[22.1, 23.2, 19.6, 19.2, 23.5, 24.5, 31.1, 31.8, 29.3, 24.2, 27.2, 34.8, 38.3, 29.3, 35.8, 35.9, 32.7, 36.8, 25.1, 24.4, 15.8, 32.7, 27.9, 31.9, 33.3, 37.0, 29.6, 29.9, 30.1, 38.6, 25.2, 28.6, 32.8, 29.2, 24.9, 29.8, 23.4, 27.7, 25.8, 20.8, 20.5, 21.6, 19.3, 24.2, 22.6, 23.2, 33.4, 39.4, 49.5, 44.9, 47.1, 39.3, 36.2, 33.9, 31.6, 33.2, 37.0, 36.6, 33.2, 30.9, 31.2, 31.5, 30.9, 31.0, 28.7, 34.3, 33.4, 31.2, 32.4, 33.2, 35.1, 36.8, 35.8, 35.7, 38.8, 39.4, 42.2, 43.6, 48.3, 53.9, 58.5, 64.7, 73.6, 75.5, 78.6, 79.4, 79.1, 84.9, 95.4, 104.2, 121.8, 124.8, 136.0, 140.6, 146.9, 146.8, 144.2, 144.6, 136.9, 141.9, 143.0, 138.8, 131.4, 131.3, 138.7, 143.7, 141.7, 142.5, 139.0, 136.6, 137.8, 132.7, 135.9, 126.5, 115.2, 107.1, 109.7, 106.7, 103.0, 101.9, 99.9, 95.4, 90.4, 89.1, 88.2, 79.1, 75.5, 74.9, 72.5, 72.8, 70.2, 69.8, 68.4, 67.9, 67.1, 70.8, 74.4, 74.7, 72.8, 72.8, 75.5, 77.1, 75.9, 80.9, 82.3, 82.4, 75.4, 77.2, 80.2, 73.6, 69.4, 71.6, 79.9, 79.6, 86.0, 84.9, 84.0, 80.5, 88.7, 88.7, 91.5, 91.7, 90.7, 89.0, 87.7, 86.5, 80.2, 83.6, 84.8, 88.2, 88.4, 89.4, 93.0, 91.2, 89.9, 94.1, 95.1, 100.4, 101.4, 102.9, 100.7, 102.7, 106.0, 110.1, 109.1, 110.8, 113.2, 118.3, 115.5, 120.7, 123.5, 125.0, 123.5, 124.5, 138.7, 130.3, 127.4, 120.7, 124.3, 123.0, 123.7, 124.3, 117.5, 113.7, 105.5, 107.8, 107.1, 106.6, 106.6, 102.5, 95.9, 97.5, 99.3, 97.6, 95.7, 88.2, 85.1, 86.3, 81.6, 77.0, 76.0, 69.9, 70.7, 71.4, 73.5, 69.6, 67.2, 66.3, 59.7, 61.5, 60.0, 58.4, 58.3, 54.6, 54.2, 51.6, 55.5, 47.5, 52.8, 56.6, 49.9, 49.9, 50.5, 49.7, 50.6, 47.6, 49.3, 47.1, 43.0, 40.0, 38.5, 37.8, 40.2, 47.0, 52.1, 55.6, 55.7, 55.6, 61.2, 69.2, 66.7, 60.0, 58.9, 64.6, 67.1, 65.7, 65.2, 66.1, 62.8, 61.3, 63.1, 63.7, 61.6, 60.1, 52.2, 49.0, 39.4, 67.6, 58.0, 52.7, 43.5, 37.1, 35.5, 37.2, 32.1, 28.3, 27.4, 22.9];const max=Math.max(...V);
+const c=document.getElementById('sq'),x=c.getContext('2d'),rd=document.getElementById('rd');let mx=-1,beat=0,last=0;
+c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();mx=(e.clientX-r.left)/r.width});c.addEventListener('mouseleave',()=>mx=-1);
+function draw(ts){const dpr=devicePixelRatio,W=c.width=c.clientWidth*dpr,H=c.height=c.clientHeight*dpr;x.clearRect(0,0,W,H);
+ if(ts-last>517){beat=(beat+1)%4;last=ts} // 116 BPM, the record's tempo
+ const now=new Date(),nb=Math.round((now.getHours()*60+now.getMinutes())/5);
+ const gap=1*dpr,bw=(W-gap*287)/288;
+ for(let i=0;i<288;i++){const h=(V[i]/max)*(H-8*dpr);const hi=i===nb;const hov=mx>=0&&Math.abs(i-mx*287)<1;
+  x.fillStyle=hi||hov?'#F2F2EE':(i%16===0?'#8A8A84':'#4A4A46');
+  if(hi&&beat===0)x.fillStyle='#FFFFFF';
+  x.fillRect(i*(bw+gap),H-h,Math.max(bw,1),h)}
+ // beat ticks along the bottom
+ for(let b=0;b<4;b++){x.fillStyle=b===beat?'#F2F2EE':'#3A3A36';x.fillRect(W-(4-b)*10*dpr,H-3*dpr,6*dpr,3*dpr)}
+ const bi=mx>=0?Math.round(mx*287):nb;const hh=String(Math.floor(bi*5/60)).padStart(2,'0'),mm=String(bi*5%60).padStart(2,'0');
+ rd.innerHTML=(mx>=0?'':'now · ')+hh+':'+mm+' · <b>'+Math.round(V[bi])+' s late</b>';
+ requestAnimationFrame(draw)}
+requestAnimationFrame(draw);
+function tick(){const d=new Date(),h=d.getHours();document.getElementById('clk').textContent=d.toTimeString().slice(0,5);document.getElementById('tod').textContent=(h<6?'night':h<10?'dawn':h<17?'day':h<21?'dusk':'night')+' · Prague'}
+tick();setInterval(tick,30000);
+const deck=document.getElementById('deck');
+document.getElementById('listen').addEventListener('click',e=>{e.preventDefault();if(!deck.querySelector('iframe')){const f=document.createElement('iframe');f.src='https://sandovabarbora.github.io/delayed-all-the-time/';f.title='Delayed All the Time';deck.appendChild(f)}deck.classList.add('open')});
+document.getElementById('dx').addEventListener('click',()=>deck.classList.remove('open'));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')deck.classList.remove('open')});
+</script></body></html>

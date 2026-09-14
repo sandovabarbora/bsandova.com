@@ -1,0 +1,55 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>M · Zeitung</title><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#E9E8E3;--fg:#0A0A0A;--fg-2:#5E5D58;--acc:#FF3D1A;--line:#0A0A0A;--mono:'JetBrains Mono',monospace;--sans:'Space Grotesk',sans-serif;--serif:'Fraunces',serif}
+*{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);color:var(--fg);font-family:var(--sans);-webkit-font-smoothing:antialiased;padding:0 1.5rem}
+body::after{content:"";position:fixed;inset:0;background:url(../assets/grain.png);opacity:.16;mix-blend-mode:multiply;pointer-events:none;z-index:9}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1280px;margin:0 auto}
+.ears{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:.6rem 0;border-bottom:1px solid var(--line)}
+.ears b{color:var(--acc);font-weight:400}
+.mast{display:flex;align-items:baseline;justify-content:space-between;gap:2rem;padding:1rem 0 .6rem;border-bottom:6px solid var(--line)}
+.mast h2{font-family:var(--serif);font-weight:900;font-size:clamp(2.4rem,6vw,4.5rem);letter-spacing:-.04em;margin:0;line-height:1}
+.mast h2 i{font-style:normal;color:var(--acc)}
+.mast nav{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;display:flex;gap:1.5rem}.mast nav span::before{content:attr(data-n) " ";color:var(--acc)}
+.sub{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:.45rem 0;border-bottom:1px solid var(--line);color:var(--fg-2)}
+.page{display:grid;grid-template-columns:1.25fr 1fr;gap:2rem;padding:1.5rem 0}
+h1{font-family:var(--serif);font-weight:900;font-variation-settings:"opsz" 144;font-size:clamp(3rem,7.5vw,7.5rem);line-height:.92;letter-spacing:-.05em;margin:0 0 1rem;padding-top:.12em}
+h1 em{font-weight:300;font-style:italic;letter-spacing:-.02em}
+.deck{font-family:var(--serif);font-style:italic;font-size:clamp(1.15rem,1.8vw,1.5rem);line-height:1.3;margin:0 0 1.25rem;max-width:30em}
+.cols{columns:2;column-gap:1.5rem;column-rule:1px solid var(--line);font-size:.95rem;line-height:1.5}
+.cols p{margin:0 0 .8rem}.cols p:first-child::first-letter{font-family:var(--serif);font-weight:900;font-size:3.2em;float:left;line-height:.8;margin:.05em .1em 0 0}
+.figs{border-top:1px solid var(--line);margin-top:1rem}
+.figs a{display:grid;grid-template-columns:6rem 1fr auto;gap:1rem;align-items:baseline;padding:.55rem 0;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--fg-2)}
+.figs .n{font-family:var(--serif);font-weight:900;font-size:1.9rem;letter-spacing:-.03em;color:var(--fg);line-height:1}
+.figs .go{color:var(--acc);text-transform:uppercase;letter-spacing:.14em}
+.photo{border:1px solid var(--line);padding:0;background:#0A0A0A;position:relative;overflow:hidden;min-height:420px}
+.photo img{position:absolute;left:50%;bottom:0;width:100%;transform:translateX(-50%)}
+.photo .cap{border-top:1px solid var(--line);background:var(--bg);padding:.6rem .8rem;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-2);position:absolute;left:0;right:0;bottom:0}
+.photo .cap b{color:var(--fg);font-weight:400}
+.side{display:flex;flex-direction:column;gap:1rem}
+.box{border:1px solid var(--line);padding:.8rem;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-2);display:flex;justify-content:space-between;gap:1rem}
+.box b{color:var(--fg);font-weight:400}
+.cta{display:flex}.cta a{flex:1;text-align:center;border:1px solid var(--line);padding:.8rem;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase}.cta a:first-child{background:var(--fg);color:var(--bg)}
+@media (max-width:64rem){.page{grid-template-columns:1fr}.cols{columns:1}}
+</style></head><body><div class="wrap">
+<div class="ears"><span>Prague · Berlin · wherever the swell is</span><span>Nr. <b>001</b> · 2026 · en / cs</span></div>
+<div class="mast"><h2>bsandova<i>.com</i></h2><nav><span data-n="I">Work</span><span data-n="II">Research</span><span data-n="III">Now</span><span data-n="IV">Contact</span></nav></div>
+<div class="sub"><span>Data &amp; Cloud Engineer · Alma Career</span><span>two dogs · coffee, always</span><span>github · linkedin</span></div>
+<div class="page">
+<div>
+<h1><em>Barbora</em><br>Šandová</h1>
+<p class="deck">Cross-cloud data platforms by day. Independent research with public artifacts the rest of the time.</p>
+<div class="cols"><p>Atlases, reviews and tools you can check yourself: a per-capita benchmark of the Czech hockey player pool, its football twin, a review harness for AI assistants over data warehouses, and four studies measuring what Czech advertising actually looks and sounds like.</p><p>Every figure on this site links to the run that produced it. Two analyses were rejected as misleading before publishing, and the site says so.</p></div>
+<div class="figs">
+<a href="#"><span class="n">1.38</span><span>NHL players per million Czechs, sixth of six peers</span><span class="go">hockey atlas →</span></a>
+<a href="#"><span class="n">47</span><span>Czech TV spots measured for colour and sound identity</span><span class="go">brand reflection →</span></a>
+<a href="#"><span class="n">121M</span><span>Prague vehicle-location records; delays persist, AR(2) 0.73</span><span class="go">thesis →</span></a>
+</div>
+</div>
+<div class="side">
+<div class="photo"><img src="../assets/portrait-xerox-white.png" alt=""><div class="cap"><b>fig. 00</b> · the author, with dog · mixed media: Python, SQL, Terraform, salt water, espresso</div></div>
+<div class="box"><span>50.08° N 14.43° E</span><b>Prague</b></div>
+<div class="box"><span>52.52° N 13.40° E</span><b>Berlin</b></div>
+<div class="cta"><a href="#">Selected work</a><a href="#">Write to me</a></div>
+</div>
+</div></div></body></html>

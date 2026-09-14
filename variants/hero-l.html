@@ -1,0 +1,41 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>L · Fasáda</title><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A0A0A;--fg:#E9E8E3;--fg-2:#8A8983;--acc:#D6FF3A;--line:#E9E8E3;--mono:'JetBrains Mono',monospace;--sans:'Space Grotesk',sans-serif;--serif:'Fraunces',serif}
+*{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);color:var(--fg);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+body::after{content:"";position:fixed;inset:0;background:url(../assets/grain.png);opacity:.1;mix-blend-mode:screen;pointer-events:none;z-index:9}
+a{color:inherit;text-decoration:none}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:minmax(120px,auto);gap:1px;background:var(--line);border-bottom:1px solid var(--line)}
+.c{background:var(--bg);padding:1rem;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);display:flex;flex-direction:column;justify-content:space-between;min-height:120px}
+.c b{color:var(--fg);font-weight:400}.c i{color:var(--acc);font-style:normal}
+.c .big{font-family:var(--serif);font-weight:900;font-size:clamp(2rem,4vw,3.6rem);letter-spacing:-.04em;color:var(--fg);line-height:1;text-transform:none;letter-spacing:-.03em}
+.c .big small{font-family:var(--mono);font-size:.3em;letter-spacing:.14em;margin-left:.3em}
+.wm{grid-column:span 2}.wm b{font-family:var(--sans);font-weight:700;font-size:16px;letter-spacing:0;text-transform:none}
+.nav{grid-column:span 3;flex-direction:row;align-items:center;gap:2rem}.nav span::before{content:attr(data-n) " ";color:var(--acc)}
+.name{grid-column:1/5;grid-row:2/4;padding:1.25rem;justify-content:flex-end}
+.name h1{font-family:var(--serif);font-weight:900;font-variation-settings:"opsz" 144;font-size:clamp(4rem,11.5vw,11.5rem);line-height:.86;letter-spacing:-.06em;margin:0;color:var(--fg);text-transform:none;padding-top:.14em}
+.name h1 em{font-style:italic;font-weight:300;letter-spacing:-.02em}
+.photo{grid-column:5/7;grid-row:2/5;padding:0;position:relative;overflow:hidden;background:#111}
+.photo img{position:absolute;right:-6%;bottom:0;width:112%;height:auto}
+.lede{grid-column:1/4;grid-row:4/5;font-family:var(--sans);font-size:clamp(1rem,1.3vw,1.15rem);text-transform:none;letter-spacing:0;color:var(--fg);line-height:1.4;justify-content:center}
+.cta{grid-column:4/5;grid-row:4/5;justify-content:center;gap:.5rem}.cta a{border:1px solid var(--line);padding:.7rem .9rem;text-align:center}.cta a:first-child{background:var(--fg);color:var(--bg)}
+.photo .cap{position:absolute;left:1rem;bottom:.8rem;z-index:2;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2)}
+@media (max-width:64rem){.grid{grid-template-columns:repeat(2,1fr)}.grid>*{grid-column:auto!important;grid-row:auto!important}.name{grid-column:1/3!important}.photo{grid-column:1/3!important;min-height:60vw}.lede{grid-column:1/3!important}}
+</style></head><body>
+<div class="grid">
+<div class="c wm"><b>bsandova<i>.com</i></b><span>portfolio · 2026</span></div>
+<div class="c nav"><span data-n="I">Work</span><span data-n="II">Research</span><span data-n="III">Now</span><span data-n="IV">Contact</span></div>
+<div class="c"><span>lang</span><span><b>en</b> / cs</span></div>
+<div class="c name"><h1><em>Barbora</em><br>Šandová</h1></div>
+<div class="c photo"><img src="../assets/portrait-xerox-white.png" alt=""><span class="cap">fig. 00 · the author, with dog</span></div>
+<div class="c lede">Cross-cloud data platforms at Alma Career by day. Independent research with public artifacts the rest of the time: atlases, reviews and tools you can check yourself.</div>
+<div class="c cta"><a href="#">Selected work</a><a href="#">Write to me</a></div>
+<div class="c"><span>50.08° N 14.43° E</span><b>Prague</b></div>
+<div class="c"><span>52.52° N 13.40° E</span><b>Berlin</b></div>
+<div class="c"><span>wherever the swell is</span><b>surf</b></div>
+<div class="c"><span>household</span><b>two dogs · coffee, always</b></div>
+<div class="c"><span>role</span><b>Data &amp; Cloud Engineer</b></div>
+<div class="c"><span>links</span><b>github · linkedin</b></div>
+<div class="c" style="grid-column:span 2"><span>NHL players per million Czechs <i>→ hockey atlas</i></span><span class="big">1.38</span></div>
+<div class="c" style="grid-column:span 2"><span>Czech TV spots measured <i>→ brand reflection</i></span><span class="big">47</span></div>
+<div class="c" style="grid-column:span 2"><span>Prague vehicle records; delays persist <i>→ thesis</i></span><span class="big">121<small>M</small></span></div>
+</div></body></html>

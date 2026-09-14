@@ -1,0 +1,66 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>D · Poster, hard</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+:root{--rule:#1C1A17}
+body{background:var(--ink);color:var(--parchment)}
+body::after{content:"";position:fixed;inset:0;background:url(../assets/grain.png);opacity:.07;mix-blend-mode:screen;pointer-events:none;z-index:9}
+.nav{background:var(--ink);border-bottom:3px solid var(--parchment)}
+.wordmark{color:var(--parchment)} .nav-links{font-family:var(--font-mono);font-size:var(--t-label);gap:2rem} .nav-links a{color:var(--parchment)} .nav-links li::before{content:attr(data-n) " ";color:var(--ochre)}
+.lang b{color:var(--parchment)}
+.hero{padding:0;border-bottom:3px solid var(--parchment);overflow:hidden}
+.hero .wrap{max-width:none;grid-template-columns:1fr;gap:0}
+@media (min-width:64rem){.hero .wrap{grid-template-columns:1.15fr 1fr}}
+.left{padding:2.5rem 1.5rem 2.5rem clamp(1.5rem,calc((100vw - 1200px)/2 + 1.5rem),50vw)}
+.coords{font-family:var(--font-mono);font-size:var(--t-micro);letter-spacing:.18em;text-transform:uppercase;color:#A8A296;margin:0 0 2rem;display:flex;gap:1.75rem;flex-wrap:wrap}
+.coords b{color:var(--ochre);font-weight:400}
+.poster-h1{font-size:clamp(4.5rem,14vw,13rem);line-height:.84;letter-spacing:-.055em;margin:0 0 2rem -.06em;font-weight:700}
+.poster-h1 em{font-style:normal;color:var(--ochre)}
+.lede{color:var(--parchment);font-size:clamp(1.1rem,1.6vw,1.35rem);max-width:26em;margin-bottom:2rem}
+.figures{background:var(--parchment);gap:3px;border:3px solid var(--parchment);margin:0}
+.fig{background:var(--ink);color:var(--parchment);padding:1rem 1.1rem}
+.fig:hover{background:var(--parchment);color:var(--ink)} .fig:hover .fig-l,.fig:hover .fig-l b{color:var(--ink)}
+.fig-n{font-size:clamp(2rem,3.6vw,3rem)} .fig-l{color:#A8A296} .fig-l b{color:var(--ochre)}
+.hero-actions{margin-top:2rem} .btn{font-family:var(--font-mono);font-size:var(--t-small);letter-spacing:.06em;text-transform:uppercase}
+.btn-ink{background:var(--ochre);color:var(--ink)} .btn-line{border:2px solid var(--parchment);color:var(--parchment)}
+.right{position:relative;background:var(--slate);border-left:3px solid var(--parchment);display:flex;flex-direction:column;justify-content:flex-end;min-height:520px}
+@media (max-width:64rem){.right{border-left:0;border-top:3px solid var(--parchment)}}
+.right img{width:100%;max-width:640px;margin:0 auto;display:block;filter:contrast(1.05)}
+.plate{position:absolute;left:1.5rem;top:1.5rem;background:var(--parchment);color:var(--ink);padding:1rem 1.15rem;max-width:22rem;border-left:6px solid var(--ochre);z-index:2}
+.plate h2{margin:0 0 .15rem;font-size:var(--t-sub);letter-spacing:-.01em}
+.plate .born{font-family:var(--font-mono);font-size:var(--t-micro);color:var(--ink-2);margin:0 0 .6rem}
+.plate .title{font-style:italic;margin:0 0 .3rem;font-size:var(--t-small)}
+.plate .medium{font-family:var(--font-mono);font-size:var(--t-micro);color:var(--ink-2);margin:0;line-height:1.6}
+.plate .medium b{color:var(--blue);font-weight:400}
+.ochre-bar{position:absolute;right:0;bottom:0;left:0;height:14px;background:var(--ochre)}
+.ticker{background:var(--parchment);color:var(--ink);overflow:hidden;white-space:nowrap;font-family:var(--font-mono);font-size:var(--t-label);letter-spacing:.2em;text-transform:uppercase;padding:.7rem 0;border-bottom:3px solid var(--ink)}
+.ticker span{display:inline-block;padding-right:3rem;animation:tick 40s linear infinite}
+.ticker i{font-style:normal;color:var(--blue)}
+@keyframes tick{to{transform:translateX(-50%)}}
+</style></head><body>
+<header class="nav"><div class="wrap">
+<a class="wordmark" href="./">bsandova<em>.com</em></a>
+<ul class="nav-links"><li data-n="I"><a href="#work">Work</a></li><li data-n="II"><a href="#research">Research</a></li><li data-n="III"><a href="#now">Now</a></li><li data-n="IV"><a href="#contact">Contact</a></li></ul>
+<div class="nav-ext"><a href="#">github</a><a href="#">linkedin</a><span class="lang"><b>en</b> / <a href="#">cs</a></span></div>
+</div></header>
+<section class="hero"><div class="wrap">
+<div class="left">
+<p class="coords"><span>50.08° N 14.43° E <b>Prague</b></span><span>52.52° N 13.40° E <b>Berlin</b></span><span>wherever the swell is <b>surf</b></span></p>
+<h1 class="poster-h1">Šan<br>dová<em>.</em></h1>
+<p class="lede">Cross-cloud data platforms at Alma Career by day. Independent research with public artifacts the rest of the time: atlases, reviews and tools you can check yourself.</p>
+<div class="figures">
+<a class="fig" href="#"><span class="fig-n">1.38</span><span class="fig-l">NHL players per million Czechs <b>→ hockey atlas</b></span></a>
+<a class="fig" href="#"><span class="fig-n">47</span><span class="fig-l">Czech TV spots measured <b>→ brand reflection</b></span></a>
+<a class="fig" href="#"><span class="fig-n">121<small>M</small></span><span class="fig-l">Prague vehicle records; delays persist <b>→ thesis</b></span></a>
+</div>
+<div class="hero-actions"><a class="btn btn-ink" href="#work">Selected work</a><a class="btn btn-line" href="#">Write to me</a></div>
+</div>
+<div class="right" aria-hidden="true">
+<div class="plate"><h2>Barbora Šandová</h2><p class="born">Czech, b. Prague · lives in Prague, sometimes Berlin</p><p class="title">Data &amp; Cloud Engineer, with dog · 2026</p><p class="medium">mixed media: <b>Python</b>, <b>SQL</b>, <b>Terraform</b>, <b>BigQuery</b>, salt water, espresso</p></div>
+<img src="../assets/portrait-3tone.png" alt="">
+<div class="ochre-bar"></div>
+</div>
+</div>
+<div class="ticker"><span>surf when the forecast allows <i>·</i> Berlin, often <i>·</i> coffee, always <i>·</i> two dogs <i>·</i> data platforms <i>·</i> public artifacts <i>·</i> surf when the forecast allows <i>·</i> Berlin, often <i>·</i> coffee, always <i>·</i> two dogs <i>·</i> data platforms <i>·</i> public artifacts <i>·</i> </span></div>
+</section></body></html>

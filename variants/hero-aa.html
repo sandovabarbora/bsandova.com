@@ -1,21 +1,54 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Barbora Šandová</title>
-<meta name="description" content="Barbora Šandová, data & cloud engineer in Prague. Things made out of data: player-pool atlases, a city played as a record, studies of Czech advertising, a review harness for AI over data warehouses.">
-<meta property="og:title" content="Barbora Šandová">
-<meta property="og:description" content="I make things out of data. Some you can read, some you can hear, all of them you can check.">
-<meta name="theme-color" content="#161616">
-<link rel="canonical" href="https://bsandova.com/">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AA · Z with a voice</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<div class="top"><span><b>bsandova.com</b></span><nav><a href="#works">Works</a><a href="#texts">Texts</a><a href="#about">Contact</a></nav><span class="tr"><a href="https://github.com/sandovabarbora" rel="me">github</a> · <a href="https://www.linkedin.com/in/barbora-sandova" rel="me">linkedin</a> · Prague ⇄ Berlin ⇄ Atlantic · <b id="clk">--:--</b></span></div>
+<style>
+:root{--bg:#161616;--bg-2:#1F1F1F;--fg:#DCDCD6;--fg-2:#7E7E78;--line:#3A3A36;--hot:#F2F2EE;--coral:#D6FF3A;--bus:#FF6A3D;--tram:#7ED9A6;--trol:#B78CFF;--sea:#D6FF3A;--mono:'JetBrains Mono',monospace;--sans:'Space Grotesk',sans-serif;--serif:'Fraunces',serif}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+body::after{content:"";position:fixed;inset:0;background:url(../assets/grain.png);opacity:.13;mix-blend-mode:screen;pointer-events:none;z-index:9}
+a{color:inherit;text-decoration:none}
+.top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 1.5rem;height:44px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-2)}
+.top b{color:var(--fg);font-weight:400}.top nav{display:flex;gap:2rem}.top nav a:hover{color:var(--coral)}.top .tr{text-align:right;white-space:nowrap}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:calc(100vh - 45px)}
+.l{min-width:0;padding:2.5rem 1.5rem 2rem;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between;gap:1rem}
+.name{font-family:var(--serif);font-weight:400;font-variation-settings:"opsz" 144;font-size:clamp(3rem,7.4vw,7.4rem);line-height:.98;letter-spacing:-.035em;margin:0;padding-top:.12em;color:var(--hot)}
+.name em{font-style:italic;font-weight:300}
+.role{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-2);margin:1rem 0 0}
+.stmt{font-family:var(--serif);font-weight:300;font-size:clamp(1.3rem,2.1vw,2rem);line-height:1.2;letter-spacing:-.015em;margin:0;max-width:22em;color:var(--fg)}
+.stmt em{font-style:italic}.stmt i{font-style:normal;color:var(--hot);border-bottom:2px solid var(--coral)}
+.sea{flex:1;display:flex;flex-direction:column;justify-content:center;margin:1.5rem 0;min-height:160px}
+.sea canvas{display:block;width:100%;height:150px}
+.sea .lbl{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-2);padding-top:.5rem;border-top:1px solid var(--line)}
+.sea .lbl b{color:var(--coral);font-weight:400}
+.meta{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);margin-top:2rem;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-2)}
+.meta div{padding:.7rem 0;border-right:1px solid var(--line);padding-right:1rem}.meta div:last-child{border:0}.meta b{display:block;color:var(--fg);font-weight:400;margin-top:.2rem}
+.r{position:relative;display:grid;grid-template-rows:auto 1fr auto;min-width:0}
+.card{padding:1.5rem;border-bottom:1px solid var(--line);display:grid;grid-template-columns:auto 1fr;gap:1.25rem;align-items:end}
+.card img{width:clamp(120px,14vw,190px);height:auto;display:block;filter:grayscale(1) contrast(1.15)}
+.card figcaption{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-2);line-height:1.8}
+.card figcaption b{color:var(--fg);font-weight:400}
+.seq{position:relative;padding:1.5rem 1.5rem 0;display:flex;flex-direction:column;justify-content:flex-end}
+.seq canvas{display:block;width:100%;height:100%;cursor:crosshair}
+.seq .lbl{display:flex;justify-content:space-between;gap:1rem;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-2);padding:.6rem 0}
+.seq .lbl b{color:var(--hot);font-weight:400}
+.works{border-top:1px solid var(--line)}
+.w{display:grid;grid-template-columns:2.5rem minmax(0,1fr) auto auto;gap:1.25rem;align-items:baseline;padding:.8rem 1.5rem;border-bottom:1px solid var(--line)}
+.w:hover{background:var(--hot);color:var(--bg)}.w:hover .i,.w:hover .y,.w:hover .go{color:var(--bg)}
+.w .i,.w .y,.w .go{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-2)}
+.w .t{font-family:var(--serif);font-weight:400;font-size:clamp(1.05rem,1.5vw,1.35rem);letter-spacing:-.01em;line-height:1.15;color:var(--hot)}
+.w .t em{font-style:italic;font-weight:300}.w .t small{display:block;font-family:var(--sans);font-size:.8rem;color:var(--fg-2);margin-top:.15rem;letter-spacing:0}
+.w:hover .t,.w:hover .t small{color:var(--bg)}
+.w .go{color:var(--fg)}
+#listen .go{color:var(--coral)}
+.meta b i{font-style:normal;color:var(--sea)}
+.seq .lbl b{color:var(--coral)}
+.seq .lbl i{font-style:normal}
+.deck{position:fixed;left:0;right:0;bottom:0;height:min(82vh,760px);background:#1a0a12;transform:translateY(102%);transition:transform .35s steps(6);z-index:20;border-top:1px solid var(--line)}
+.deck.open{transform:none}.deck iframe{width:100%;height:100%;border:0;display:block}
+.deck .x{position:absolute;right:1rem;top:-2.4rem;background:var(--hot);color:var(--bg);font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:.55rem .9rem;cursor:pointer;display:none;border:0}.deck.open .x{display:block}
+@media (max-width:64rem){.hero{grid-template-columns:1fr}.l{border-right:0;border-bottom:1px solid var(--line)}.seq{min-height:200px}.top{grid-template-columns:1fr auto}.top nav{display:none}}
+.w:hover{background:var(--coral);color:#161616}.w:hover .t,.w:hover .t small,.w:hover .i,.w:hover .y,.w:hover .go{color:#161616}
+</style></head><body>
+<div class="top"><span><b>bsandova.com</b></span><nav><a href="#">Works</a><a href="#">Texts</a><a href="#">About</a><a href="#">Contact</a></nav><span class="tr">Prague ⇄ Berlin ⇄ Atlantic · <b id="clk">--:--</b> · en / cs</span></div>
 <section class="hero">
 <div class="l">
 <div>
@@ -29,20 +62,16 @@
 </div>
 </div>
 <div class="r">
-<div class="cards">
-<figure class="card" style="margin:0"><img src="assets/portrait-mid.png" alt="Barbora Šandová with Varinka"><figcaption><b>fig. 00</b> · the author with Varinka<br>who was not asked and did not mind</figcaption></figure>
-<!-- fig. 01 · second dog: photo to come -->
-<p class="bio">b. Prague · works in Prague and Berlin · surfs in Portugal</p>
-</div>
+<figure class="card" style="margin:0"><img src="../assets/portrait-mid.png" alt="Barbora Šandová with her dog"><figcaption><b>fig. 00</b> · the author, with dog no. 1<br>dog no. 2 declined to be posterised<br>b. Prague · works in Prague and Berlin</figcaption></figure>
 <div class="seq"><canvas id="sq"></canvas><div class="lbl"><span>a Tuesday in Prague, as a sequencer · <i style="color:var(--bus)">bus</i> <i style="color:var(--tram)">tram</i> <i style="color:var(--trol)">trolley</i> · 288 steps</span><span id="rd"></span></div></div>
-<div class="works" id="works">
-<a class="w" href="https://sandovabarbora.github.io/delayed-all-the-time/" id="listen"><span class="i">01</span><span class="t">Delayed All the Time. <em>On Time, Occasionally.</em><small>Prague transit played as disco. The later the buses, the higher the city sings.</small></span><span class="y">2025</span><span class="go">listen ▶</span></a>
-<a class="w" href="https://hockey.datasimply.eu"><span class="i">02</span><span class="t">Player Pool Atlas <em>· hockey</em><small>1.38 NHL players per million Czechs. Sixth of six. Finland has four times as many.</small></span><span class="y">2026</span><span class="go">view →</span></a>
-<a class="w" href="https://football.datasimply.eu"><span class="i">03</span><span class="t">Player Pool Atlas <em>· football</em><small>Same method, football. A Bayesian model sits next to the multipliers to keep them honest.</small></span><span class="y">2026</span><span class="go">view →</span></a>
-<a class="w" href="https://sandovabarbora.github.io/brand-reflection-cz/"><span class="i">04</span><span class="t">Brand Reflection <em>Series</em><small>47 TV spots measured for colour and sound. Five banks turned out to be one bank.</small></span><span class="y">2026</span><span class="go">view →</span></a>
-<a class="w" href="https://github.com/sandovabarbora/quaesitor-zero"><span class="i">05</span><span class="t">Quaesitor<small>AI assistants over data warehouses, caught lying about numbers. Retired. The findings are not.</small></span><span class="y">2026</span><span class="go">read →</span></a>
-<a class="w" href="#texts"><span class="i">06</span><span class="t">Persistence Dynamics <em>of Transport Delays</em><small>121 million records, three hypotheses, all revised by the data. The dogs insisted on the walks.</small></span><span class="y">2026</span><span class="go">text · soon</span></a>
-<a class="w" href="#texts"><span class="i">07</span><span class="t">How many parking spaces <em>Prague lost to bigger cars</em><small>2 745 spaces since 2012. Not because cars got wider. Because they got longer.</small></span><span class="y">2026</span><span class="go">text · soon</span></a>
+<div class="works">
+<a class="w" href="#" id="listen"><span class="i">01</span><span class="t">Delayed All the Time. <em>On Time, Occasionally.</em><small>Prague transit played as disco. The later the buses, the higher the city sings.</small></span><span class="y">2025</span><span class="go">listen ▶</span></a>
+<a class="w" href="#"><span class="i">02</span><span class="t">Player Pool Atlas <em>· hockey</em><small>1.38 NHL players per million Czechs. Sixth of six. Finland has four times as many.</small></span><span class="y">2026</span><span class="go">view →</span></a>
+<a class="w" href="#"><span class="i">03</span><span class="t">Player Pool Atlas <em>· football</em><small>Same method, football. A Bayesian model sits next to the multipliers to keep them honest.</small></span><span class="y">2026</span><span class="go">view →</span></a>
+<a class="w" href="#"><span class="i">04</span><span class="t">Brand Reflection <em>Series</em><small>47 TV spots measured for colour and sound. Five banks turned out to be one bank.</small></span><span class="y">2026</span><span class="go">view →</span></a>
+<a class="w" href="#"><span class="i">05</span><span class="t">Quaesitor<small>AI assistants over data warehouses, caught lying about numbers. Retired. The findings are not.</small></span><span class="y">2026</span><span class="go">read →</span></a>
+<a class="w" href="#"><span class="i">06</span><span class="t">Persistence Dynamics <em>of Transport Delays</em><small>121 million records, three hypotheses, all revised by the data. The dogs insisted on the walks.</small></span><span class="y">2026</span><span class="go">read →</span></a>
+<a class="w" href="#"><span class="i">07</span><span class="t">How many parking spaces <em>Prague lost to bigger cars</em><small>2 745 spaces since 2012. Not because cars got wider. Because they got longer.</small></span><span class="y">2026</span><span class="go">read →</span></a>
 </div>
 </div>
 </section>
@@ -69,7 +98,6 @@ function draw(ts){const dpr=devicePixelRatio,W=c.width=c.clientWidth*dpr,H=c.hei
 requestAnimationFrame(draw);
 function tick(){const d=new Date(),h=d.getHours();document.getElementById('clk').textContent=d.toTimeString().slice(0,5);document.getElementById('tod').textContent=(h<6?'night':h<10?'dawn':h<17?'day':h<21?'dusk':'night')+' · Prague'}
 tick();setInterval(tick,30000);
-
 // live swell, Open-Meteo marine (no key). Spot: Ericeira, PT — placeholder until Barbora names hers.
 fetch('https://marine-api.open-meteo.com/v1/marine?latitude=38.96&longitude=-9.42&current=swell_wave_height,swell_wave_period,swell_wave_direction')
  .then(r=>r.json()).then(j=>{const c=j.current;const dir=['N','NE','E','SE','S','SW','W','NW'][Math.round(c.swell_wave_direction/45)%8];
@@ -88,5 +116,4 @@ const deck=document.getElementById('deck');
 document.getElementById('listen').addEventListener('click',e=>{e.preventDefault();if(!deck.querySelector('iframe')){const f=document.createElement('iframe');f.src='https://sandovabarbora.github.io/delayed-all-the-time/';f.title='Delayed All the Time';deck.appendChild(f)}deck.classList.add('open')});
 document.getElementById('dx').addEventListener('click',()=>deck.classList.remove('open'));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')deck.classList.remove('open')});
-</script></body>
-</html>
+</script></body></html>
