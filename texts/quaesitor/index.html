@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quaesitor — Barbora Šandová</title>
+<meta name="description" content="Quaesitor: an independent review of AI assistants over data warehouses. The service is retired; the findings, the method, the taxonomies and the open-source check are here.">
+<meta name="theme-color" content="#161616">
+<link rel="canonical" href="https://bsandova.com/texts/quaesitor/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="../../text.css">
+</head>
+<body>
+<div class="top"><b><a href="../../">bsandova.com</a></b><nav><a href="../../#works">Works</a><a href="../../#texts">Texts</a><a href="../../#about">About</a><a href="../../#contact">Contact</a></nav><span class="tr">Quaesitor · 2026 · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Quaesitor · independent review of AI assistants over data warehouses · 2026 · retired</p>
+  <h1>When the answer looks right <em>and is not</em></h1>
+  <p class="deck">Quaesitor was a one-person review service: put a data assistant in front of a warehouse, ask it questions with a known answer, and count how often it is wrong without saying so. The service is closed. The measurements, the method and the open-source check stay, as published.</p>
+  <dl class="facts">
+    <div><dt>silent-failure taxonomy</dt><dd>26 <small>ways a number comes back wrong and looks fine</small></dd></div>
+    <div><dt>access bypasses</dt><dd>12 <small>ways an assistant answers with rows it may not see</small></dd></div>
+    <div><dt>documentation, measured</dt><dd>2 / 26 <small>correct answers, with and without docs; unchanged</small></dd></div>
+    <div><dt>median error with docs</dt><dd>72 % → 23 % <small>smaller, not rarer</small></dd></div>
+  </dl>
+</header>
+
+<section>
+<h2>Measurements</h2>
+<p>Two published runs on the retail pack, 26 questions, three repeats each, Czech. Every cell on those pages is one question and one verdict; the numbers are the run's, not retyped.</p>
+</section>
+<div class="tx">
+<a class="tx-row" href="documentation-finding.html"><span class="i">01</span><span class="t">Plausible, not correct<small>Documentation did not make the answers right. It made them believable: implausible answers went to zero and the silent-failure rate went up. Exact McNemar p = 1.00 on correctness; exact sign test p = 0.0023 on error size.</small></span><span class="y">measurement</span><span class="go">read →</span></a>
+<a class="tx-row" href="silent-failure-rate.html"><span class="i">02</span><span class="t">Silent-failure rate<small>Two frontier models, the same questions, the same number of right answers and opposite failure behaviour. What the silent-failure rate measures and why accuracy does not.</small></span><span class="y">measurement</span><span class="go">read →</span></a>
+<a class="tx-row" href="abstention.html"><span class="i">03</span><span class="t">The query ran. The answer was zero. <em>Nobody had any customers that month.</em><small>Ten questions a warehouse cannot answer, where every column is present and only the data is missing: the query runs, returns zero, and the zero is not the answer.</small></span><span class="y">finding</span><span class="go">read →</span></a>
+</div>
+
+<section>
+<h2>Catalogues and method</h2>
+</section>
+<div class="tx">
+<a class="tx-row" href="traps.html"><span class="i">04</span><span class="t">Twenty-six ways a number comes back wrong and looks fine<small>A measured taxonomy of silent failure in analytics over a data warehouse, with the divergence each fault causes.</small></span><span class="y">taxonomy</span><span class="go">read →</span></a>
+<a class="tx-row" href="access.html"><span class="i">05</span><span class="t">Twelve ways an assistant answers with rows it was never allowed to see<small>Row scope, column policy and aggregate-only restrictions, and the shortcut that gets past each.</small></span><span class="y">taxonomy</span><span class="go">read →</span></a>
+<a class="tx-row" href="method.html"><span class="i">06</span><span class="t">Methodology<small>How a question becomes a verified one: the written definition, the query that implements it, the anchor it reconciles against, and the 26 traps the retail pack tests.</small></span><span class="y">method</span><span class="go">read →</span></a>
+<a class="tx-row" href="packs.html"><span class="i">07</span><span class="t">Five warehouses, and one pack that asks for what none of them holds<small>Retail, SaaS, the TPC-DS standard, real taxi trip records, and a CRM that disagrees with an ERP.</small></span><span class="y">packs</span><span class="go">read →</span></a>
+<a class="tx-row" href="report-built.html"><span class="i">08</span><span class="t">Findings of the review of the warehouse assistant<small>A page of a real review report, with the assistant's own figures beside the verified ones.</small></span><span class="y">sample</span><span class="go">read →</span></a>
+</div>
+
+<section>
+<h2>Argument</h2>
+</section>
+<div class="tx">
+<a class="tx-row" href="why.html"><span class="i">09</span><span class="t">Trust grows faster than accuracy<small>A model right nine times in ten is more dangerous than one right four, because you stop checking.</small></span><span class="y">essay</span><span class="go">read →</span></a>
+<a class="tx-row" href="silent-failures.html"><span class="i">10</span><span class="t">Does your AI data assistant know when it does not know?<small>Abstention, and why declining is the behaviour worth measuring.</small></span><span class="y">essay</span><span class="go">read →</span></a>
+<a class="tx-row" href="evidence.html"><span class="i">11</span><span class="t">None of this is our claim to make<small>Eight things this work depends on, established by people with no stake in it, and the one thing none of them does: run the measurement on your warehouse.</small></span><span class="y">literature</span><span class="go">read →</span></a>
+<a class="tx-row" href="about.html"><span class="i">12</span><span class="t">One person, and none of the argument rests on that<small>The method, the open-source tool and the runs are all published.</small></span><span class="y">about</span><span class="go">read →</span></a>
+</div>
+
+<footer class="text-foot">
+  <p><b>Code.</b> <a href="https://github.com/sandovabarbora/quaesitor-zero">quaesitor-zero</a>, a tiny offline check for abstention in text-to-SQL and RAG; <a href="https://github.com/sandovabarbora/quaesitor-method">quaesitor-method</a>, the harness behind the figures. Both MIT.</p>
+  <p><b>Provenance.</b> Pages ported from quaesitor.eu as published in August 2026 (<code>tools/port_quaesitor.py</code>): text, tables and footnotes unchanged, palette and chrome this site's. The service pages (offer, FAQ, booking) were not carried over.</p>
+  <p class="back"><a href="../../#texts">← back to texts</a></p>
+</footer>
+</article>
+</body>
+</html>
