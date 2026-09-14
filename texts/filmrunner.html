@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FilmRunner — the living call sheet</title>
+<meta name="description" content="A production-management platform for mid-budget films, built end to end and then cut down to the one document a 50-person crew needs before they leave home: the call sheet, revised at 5 am, readable with no signal.">
+<meta name="theme-color" content="#161616">
+<link rel="canonical" href="https://bsandova.com/texts/filmrunner.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css?v=2828977">
+<link rel="stylesheet" href="../text.css">
+</head>
+<body>
+<div class="top"><b><a href="../">bsandova.com</a></b><nav><a href="../#works">Projects</a><a href="../#about">About</a><a href="../#contact">Contact</a></nav><span class="tr">product · filmrunner · 2025–26 · en</span></div>
+<article class="text">
+
+<header class="text-head">
+  <p class="kicker">Product · FilmRunner · 2025–2026 · live demo · open source</p>
+  <h1>The living <em>call sheet</em></h1>
+  <p class="deck">I built a whole film-production platform, script to schedule to crew. Then I cut it down to the one document that actually decides whether a shoot day works: the call sheet, issued the night before, revised at five in the morning, opened in a parking structure with no signal.</p>
+  <dl class="facts">
+    <div><dt>the wedge</dt><dd>1 document <small>revisions A, B, C · offline-first · on every phone</small></dd></div>
+    <div><dt>full chain, first build</dt><dd>script → schedule → sheet <small>AI breakdown, stripboard, cascade engine</small></dd></div>
+    <div><dt>studio-readiness track</dt><dd>SSO · DPA · Sentry <small>SAML, PII scrubbing, Stripe, Twilio, Frame.io</small></dd></div>
+    <div><dt>skeleton, second build</dt><dd>5 ADRs <small>FastAPI · Postgres · React PWA · Fly.io</small></dd></div>
+  </dl>
+</header>
+
+<section>
+<h2>Why a call sheet</h2>
+<p>Film call sheets follow conventions that are decades old and load-bearing. Same-day revisions are the norm, named by colour or letter, so the sheet has to be a container of ordered revisions, not one mutable row, or "what changed since the version I printed" cannot be answered. Page counts are in eighths of a page, because scripts are timed that way, so they are stored as an integer eighth-count rather than a float an assistant director does arithmetic on by hand. Cast status codes (W, SW, WF, H, SWF, R) are a constrained enum. And offline is not a nice-to-have: call times are 5–6 am, locations are outside coverage, and this is the one document all 50 to 200 people need before they leave home<sup class="cite"><a href="#r1">1</a></sup>.</p>
+</section>
+
+<section>
+<h2>The first build</h2>
+<p>End-to-end production management for mid-budget films: script import, an AI-drafted breakdown, a stripboard schedule with a cascade engine, and the published call sheet in every crew member's pocket. Around it, the track a studio's procurement asks for: SSO/SAML with organisation domain mapping and post-login auto-provisioning, legal pages and a DPA, an in-app help hub, Sentry with a PII-scrubbing hook, opt-in PostHog analytics, and Stripe, Twilio, Resend, Frame.io and Google Calendar integrations. Real-time over WebSockets with unified subprotocol auth; an offline-first PWA for on-set conditions<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p>An independent security review found two things worth keeping as lessons: an <code>IS_DEV</code> blocklist that failed <em>open</em> on a blank environment variable, inverted into an explicit allowlist; and SSO auto-provisioning gated on a client assertion, moved to a server-side SAML claim<sup class="cite"><a href="#r2">2</a></sup>.</p>
+</section>
+
+<section>
+<h2>The second build: one thing, done well</h2>
+<p>The skeleton keeps only the call-sheet slice: creating, revising and distributing shoot-day sheets, viewable offline. No budgeting, no breakdowns, no scheduling optimiser, no billing; what was deferred and why is written down before the code<sup class="cite"><a href="#r1">1</a></sup>. FastAPI, SQLAlchemy 2.0, Alembic and PostgreSQL behind; a React + Vite + TypeScript PWA in front, IndexedDB cache and a Workbox service worker, so a published day still renders in airplane mode. Sign-in by e-mail code, no password; owners invite editors and viewers and the API enforces the role. The API runs on Fly.io in Frankfurt with Supabase as plain Postgres; five architecture decision records cover the frontend stack, hosting, the editor, auth and roles<sup class="cite"><a href="#r3">3</a></sup>.</p>
+<p>The company itself runs as one founder and an AI team, with an operating model, an approval contract and a rule that nothing with real-world effect happens without an approved item in an inbox file. That is written down too, in the repository, because a process that lives only in someone's head is not a process.</p>
+</section>
+
+<section>
+<h2>Try it</h2>
+<p>The <a href="https://sandovabarbora.github.io/filmrunner/">live demo</a> serves the PWA from GitHub Pages with a bundled sample shoot day. Open it on a phone, add it to the home screen, switch to airplane mode: the call sheet still renders from the cache. The <a href="https://sandovabarbora.github.io/filmrunner/editor.html">AD editor</a> is the other side of it.</p>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1"><a href="https://github.com/sandovabarbora/filmrunner/blob/main/DESIGN.md">FilmRunner — Call Sheet Module: Data Model</a> (DESIGN.md): scope note, industry conventions behind the schema, entities.</li>
+<li id="r2">First build (2025–2026): Next.js/TypeScript, FastAPI, Supabase/PostgreSQL, Docker, WebSockets, PWA, Sentry, PostHog, Stripe. Security review findings as recorded in the project; repository private.</li>
+<li id="r3"><a href="https://github.com/sandovabarbora/filmrunner">sandovabarbora/filmrunner</a>: README, <code>docs/adr/ADR-001</code>–<code>005</code> (frontend stack, hosting, editor, auth, roles), <code>docs/company/</code> (TEAM, BRIEF, BACKLOG, INBOX). Live demo and editor on GitHub Pages; API on Fly.io.</li>
+</ol>
+</section>
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a></p>
+</footer>
+</article>
+</body>
+</html>

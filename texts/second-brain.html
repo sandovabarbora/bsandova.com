@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>An agent-maintained wiki</title>
+<meta name="description" content="A 739-page, 8 144-link personal wiki compiled from 336 primary sources by an agent working to a written schema: knowledge compiled once and maintained, not re-derived per query. What it found in the sources, and the fabricated quotation it caught.">
+<meta name="theme-color" content="#161616">
+<link rel="canonical" href="https://bsandova.com/texts/second-brain.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css?v=2828977">
+<link rel="stylesheet" href="../text.css">
+</head>
+<body>
+<div class="top"><b><a href="../">bsandova.com</a></b><nav><a href="../#works">Projects</a><a href="../#about">About</a><a href="../#contact">Contact</a></nav><span class="tr">knowledge · second brain · 2026 · en</span></div>
+<article class="text">
+
+<header class="text-head">
+  <p class="kicker">Knowledge engineering · 2026 · private repository</p>
+  <h1>A wiki that an agent <em>keeps</em></h1>
+  <p class="deck">Not retrieval. Retrieval re-derives knowledge from raw documents on every question and nothing accumulates. Here the agent reads a source once, extracts what matters, and integrates it into a persistent, interlinked wiki: updating pages, strengthening claims, flagging contradictions. Obsidian is the IDE, the LLM is the programmer, the wiki is the codebase.</p>
+  <dl class="facts">
+    <div><dt>pages</dt><dd>739 <small>8 144 wikilinks · 1 September 2026</small></dd></div>
+    <div><dt>primary sources ingested</dt><dd>336 <small>books, papers, articles, transcripts</small></dd></div>
+    <div><dt>lint rules</dt><dd>orphans · sprawl · drift <small>contradictions recorded, never smoothed</small></dd></div>
+    <div><dt>caught</dt><dd>1 fabricated quote <small>and a tool so it cannot happen again</small></dd></div>
+  </dl>
+</header>
+
+<section>
+<h2>How it works</h2>
+<p>Three layers with different owners. Raw sources are mine and immutable; the agent reads them and never edits them. The wiki is the agent's: it creates, updates and prunes pages. The schema, the file that tells the agent what a page is, how to link, when to split, is co-evolved by both of us as we learn what works<sup class="cite"><a href="#r1">1</a></sup>. An index is generated from the pages rather than maintained by hand, and a log records every change, append-only. The pattern is Karpathy's LLM-wiki idea with a schema adapted from an open Obsidian second-brain layout<sup class="cite"><a href="#r2">2</a></sup><sup class="cite"><a href="#r3">3</a></sup>.</p>
+<p>Ingesting one source means reading it, writing a summary, updating five to fifteen existing pages, updating the index, appending to the log, and reporting what was touched and what contradicted what. Contradictions between sources are recorded on the page, never smoothed into a consensus, and coverage gaps have to be marked explicitly so they can be closed later from a different source<sup class="cite"><a href="#r1">1</a></sup>.</p>
+</section>
+
+<section>
+<h2>What it found that I did not</h2>
+<p>Two things from the standards-and-regulation shelf. NIST AI 600-1 frames memorisation-driven data leakage without mentioning decoding parameters anywhere, while the setting most likely to leak fine-tuned data is a decoding parameter. And the EU GPAI Code of Practice asks for reproducibility in one appendix and forbids reproducing training data in another. Neither is a contradiction inside one document; both only show up when two documents are on the same page with a link between them<sup class="cite"><a href="#r4">4</a></sup>.</p>
+</section>
+
+<section>
+<h2>The quotation that was not there</h2>
+<p>A quotation survived several passes because it matched what the brief was looking for. It was fabricated. The fix was a tool, not a rule: <code>quote.py</code> prints the surrounding sentence from the source's own text for every quotation on a page, so a quote either has a neighbourhood or it does not, and the fabrication is a regression test for it<sup class="cite"><a href="#r5">5</a></sup>. The wiki also lints itself: orphan pages, broken links, sprawl, stale seeds, index drift, all machine-checked.</p>
+<p>One build ran thirteen subagents in parallel and then had the wiki audit its own construction. The verdict, written by a page that had been compiled that morning from a database textbook, was that the single-writer discipline was correct and one layer too shallow. I have not had a better code review.</p>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Repository README and <code>CLAUDE.md</code> (the schema); private. Counts as of the last commit, 1 September 2026: 739 pages under <code>wiki/</code>, 8 144 wikilinks, 336 files under <code>raw/</code>.</li>
+<li id="r2">Karpathy, A. (2026): <a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f">LLM Wiki</a> (gist).</li>
+<li id="r3"><a href="https://github.com/evgenirusev/obsidian-second-brain">evgenirusev/obsidian-second-brain</a>: the vault schema this adapts.</li>
+<li id="r4">NIST AI 600-1, <i>Artificial Intelligence Risk Management Framework: Generative AI Profile</i> (2024); EU <i>General-Purpose AI Code of Practice</i> (2025). Findings as recorded on the wiki's pages for each.</li>
+<li id="r5"><code>scripts/quote.py</code>, <code>scripts/lint.py</code>, <code>scripts/build_index.py</code> in the repository; the fabricated quotation is the fixture of the citation-verification test.</li>
+</ol>
+</section>
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a></p>
+</footer>
+</article>
+</body>
+</html>
