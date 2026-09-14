@@ -1,0 +1,52 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>B · Museum label</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+.hero{padding-block:3rem 4rem;position:relative}
+.hero .wrap{grid-template-columns:1fr;gap:2.5rem;align-items:end}
+@media (min-width:64rem){.hero .wrap{grid-template-columns:5fr 6fr;gap:5rem}}
+.ghost{position:absolute;right:2vw;top:-1rem;font-weight:700;font-size:clamp(12rem,30vw,28rem);line-height:1;letter-spacing:-.06em;color:var(--paper);z-index:0;pointer-events:none;user-select:none}
+.hero .wrap{position:relative;z-index:1}
+.exhibit{display:flex;flex-direction:column;align-items:center}
+.exhibit img{width:min(100%,420px);height:auto}
+.plinth{width:min(100%,460px);height:2.25rem;background:var(--slate);border-top:3px solid var(--ochre);margin-top:-2px}
+.label{background:var(--paper);border:1px solid var(--rule);padding:1.5rem 1.75rem;max-width:34rem}
+.label h1{font-size:var(--t-h2);margin:0 0 .25rem;letter-spacing:-.01em}
+.label .born{font-family:var(--font-mono);font-size:var(--t-label);color:var(--ink-2);margin:0 0 1.25rem}
+.label .title{font-size:var(--t-lede);font-style:italic;margin:0 0 .35rem}
+.label .medium{font-family:var(--font-mono);font-size:var(--t-small);color:var(--ink-2);margin:0 0 1.25rem;line-height:1.6}
+.label .medium b{color:var(--blue);font-weight:400}
+.label p.desc{margin:0 0 1.25rem;font-size:var(--t-body)}
+.label .acc{font-family:var(--font-mono);font-size:var(--t-micro);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);display:flex;justify-content:space-between;border-top:1px solid var(--rule);padding-top:.75rem;margin:0}
+.cat{margin-top:2rem}
+.cat-h{font-family:var(--font-mono);font-size:var(--t-micro);letter-spacing:.22em;text-transform:uppercase;color:var(--blue);margin:0 0 .5rem}
+.figures{margin:0}
+.fig-l b{display:block;margin-top:.15rem}
+</style></head><body>
+<header class="nav"><div class="wrap">
+<a class="wordmark" href="./">bsandova<em>.com</em></a>
+<ul class="nav-links"><li><a href="#work">Work</a></li><li><a href="#research">Research</a></li><li><a href="#now">Now</a></li><li><a href="#contact">Contact</a></li></ul>
+<div class="nav-ext"><a href="#">github</a><a href="#">linkedin</a><span class="lang"><b>en</b> / <a href="#">cs</a></span></div>
+</div></header>
+<section class="hero"><div class="ghost" aria-hidden="true">I</div><div class="wrap">
+<div>
+<div class="label">
+<h1>Barbora Šandová</h1>
+<p class="born">Czech, b. Prague · lives and works in Prague, sometimes Berlin</p>
+<p class="title">Data &amp; Cloud Engineer, with dog</p>
+<p class="medium">2026 · mixed media: <b>Python</b>, <b>SQL</b>, <b>Terraform</b>, <b>BigQuery</b>, salt water, espresso</p>
+<p class="desc">Architects a cross-cloud data platform at Alma Career. Outside work, runs independent research and publishes the artifacts: atlases, reviews and tools anyone can check.</p>
+<p class="acc"><span>acc. no. 2026.001</span><span>gift of the artist</span></p>
+</div>
+<div class="cat">
+<p class="cat-h">Catalogue · selected figures</p>
+<div class="figures">
+<a class="fig" href="#"><span class="fig-n">1.38</span><span class="fig-l">NHL players per million Czechs<b>→ hockey atlas</b></span></a>
+<a class="fig" href="#"><span class="fig-n">47</span><span class="fig-l">Czech TV spots measured<b>→ brand reflection</b></span></a>
+<a class="fig" href="#"><span class="fig-n">121<small>M</small></span><span class="fig-l">Prague vehicle-location records; delays persist, AR(2) 0.73 <b>→ thesis</b></span></a>
+</div>
+</div>
+</div>
+<div class="exhibit" aria-hidden="true"><img src="../assets/portrait-3tone.png" alt=""><div class="plinth"></div></div>
+</div></section></body></html>

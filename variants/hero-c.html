@@ -1,0 +1,53 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C · Swell</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+.hero{padding-block:4rem 0;position:relative;min-height:82vh;display:flex;align-items:flex-end}
+.hero>.wrap{width:100%;position:relative;z-index:2;padding-bottom:3rem}
+.hero .wrap{align-items:end}
+.sea{position:absolute;inset:auto 0 0 0;height:46%;z-index:0;overflow:hidden}
+.sea svg{position:absolute;bottom:0;left:0;width:200%;height:100%}
+.sea .w1{animation:swell 14s ease-in-out infinite alternate}
+.sea .w2{animation:swell 22s ease-in-out infinite alternate-reverse;opacity:.55}
+@keyframes swell{from{transform:translateX(0)}to{transform:translateX(-25%)}}
+.sun{position:absolute;right:12%;top:8%;width:clamp(90px,12vw,170px);aspect-ratio:1;border-radius:50%;background:var(--ochre);z-index:0;opacity:.9}
+.coords{font-family:var(--font-mono);font-size:var(--t-micro);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);margin:0 0 1rem;display:flex;gap:1.5rem;flex-wrap:wrap}
+.coords b{color:var(--blue);font-weight:400}
+h1{font-size:clamp(3rem,7vw,6rem)}
+.lede{max-width:30em}
+.relief{align-self:end;justify-content:flex-end}
+.relief-frame{background:transparent;padding:0;max-width:520px}
+.relief-frame::before{display:none}
+.relief-cap{background:none;color:var(--ink-2);padding:.6rem 0}
+.relief-cap b{color:var(--ochre)}
+.figures{background:transparent;border:0;gap:1rem}
+.fig{border:1px solid var(--rule)}
+.hero-actions{margin-top:1.5rem}
+</style></head><body>
+<header class="nav"><div class="wrap">
+<a class="wordmark" href="./">bsandova<em>.com</em></a>
+<ul class="nav-links"><li><a href="#work">Work</a></li><li><a href="#research">Research</a></li><li><a href="#now">Now</a></li><li><a href="#contact">Contact</a></li></ul>
+<div class="nav-ext"><a href="#">github</a><a href="#">linkedin</a><span class="lang"><b>en</b> / <a href="#">cs</a></span></div>
+</div></header>
+<section class="hero">
+<div class="sun" aria-hidden="true"></div>
+<div class="sea" aria-hidden="true"><svg viewBox="0 0 2000 400" preserveAspectRatio="none">
+<path class="w2" fill="#33424A" d="M0 200 C 250 120 500 280 750 200 S 1250 120 1500 200 S 1900 260 2000 200 L2000 400 L0 400Z"/>
+<path class="w1" fill="#33424A" d="M0 260 C 200 200 400 320 600 260 S 1000 200 1200 260 S 1600 320 1800 260 S 1950 240 2000 260 L2000 400 L0 400Z"/>
+</svg></div>
+<div class="wrap">
+<div>
+<p class="coords"><span>50.08° N 14.43° E <b>Prague</b></span><span>52.52° N 13.40° E <b>Berlin</b></span><span>wherever the swell is <b>surf</b></span></p>
+<p class="kicker">Data &amp; Cloud Engineer</p>
+<h1>Barbora Šandová</h1>
+<p class="lede">Cross-cloud data platforms at Alma Career by day. Independent research with public artifacts the rest of the time: <strong>atlases, reviews and tools you can check yourself.</strong></p>
+<div class="figures">
+<a class="fig" href="#"><span class="fig-n">1.38</span><span class="fig-l">NHL players per million Czechs <b>→ hockey atlas</b></span></a>
+<a class="fig" href="#"><span class="fig-n">47</span><span class="fig-l">Czech TV spots measured <b>→ brand reflection</b></span></a>
+<a class="fig" href="#"><span class="fig-n">121<small>M</small></span><span class="fig-l">Prague vehicle-location records; delays persist, AR(2) 0.73 <b>→ thesis</b></span></a>
+</div>
+<div class="hero-actions"><a class="btn btn-ink" href="#work">Selected work</a><a class="btn btn-line" href="#">Write to me</a></div>
+</div>
+<div class="relief"><figure class="relief-frame" style="margin:0"><img src="../assets/portrait-3tone.png" alt=""><figcaption class="relief-cap"><span>fig. 00 · the author, with dog</span><b>coffee first</b></figcaption></figure></div>
+</div></section></body></html>
