@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Same score, opposite characters — Quaesitor</title>
+<meta name="description" content="Two frontier models, the same number of right answers, opposite failure behaviour. What happened when a warehouse assistant was asked 26 questions with a known answer, in fifteen languages, on five warehouses.">
+<meta name="theme-color" content="#161616">
+<link rel="canonical" href="https://bsandova.com/texts/quaesitor/measurements.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="../../text.css">
+<style>
+.tbl{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
+.tbl th,.tbl td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th:first-child,.tbl td:first-child{padding-left:0}
+.tbl th{font-weight:400;color:var(--fg-2);letter-spacing:.12em;text-transform:uppercase;font-size:10px}
+.tbl td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}.tbl th.n{text-align:right}
+.tbl td b{color:var(--hot);font-weight:400}.tbl .hi{color:var(--coral)}
+.scroller{overflow-x:auto;margin:1rem 0 .5rem}
+table.grid{border-collapse:separate;border-spacing:2px;font-family:var(--mono);font-size:10px;margin:0}
+table.grid caption{text-align:left;color:var(--fg-2);letter-spacing:.12em;text-transform:uppercase;padding:0 0 .5rem}
+table.grid th{font-weight:400;color:var(--fg-2);padding:.15rem .2rem;text-align:center}
+table.grid th.row-head{text-align:right;padding-right:.6rem;white-space:nowrap}
+table.grid td{padding:0}
+.cell{display:block;width:1.05rem;height:1.05rem;background:currentColor}
+.c-correct{color:#7ED9A6}.c-silent{color:#FF6A3D}.c-implausible{color:#B78CFF}.c-invalid{color:#8A8A84}.c-refused{color:#8A8A84}
+.legend{list-style:none;padding:0;margin:.5rem 0 1.5rem;display:flex;gap:1.25rem;flex-wrap:wrap;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-2)}
+.legend .cell{display:inline-block;vertical-align:-.2em;margin-right:.4rem}
+pre.sql{font-family:var(--mono);font-size:12px;line-height:1.55;color:var(--fg);background:#1F1F1F;border:1px solid var(--line);padding:1rem 1.25rem;overflow-x:auto;margin:1rem 0 1.5rem}
+.ex{display:grid;grid-template-columns:auto 1fr;gap:.4rem 1.25rem;font-family:var(--mono);font-size:12px;border:1px solid var(--line);padding:1rem 1.25rem;margin:1rem 0 1.5rem;max-width:36rem}
+.ex dt{color:var(--fg-2);letter-spacing:.1em;text-transform:uppercase;font-size:10px;padding-top:.15em}.ex dd{margin:0;color:var(--fg)}.ex dd.wrong{color:#FF6A3D;text-decoration:line-through}.ex dd.right{color:#7ED9A6}
+.text h3{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--coral);margin:1.5rem 0 .5rem;font-weight:400}
+.text .wide{max-width:60rem}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../../">bsandova.com</a></b><nav><a href="../../#works">Projects</a><a href="../../#about">About</a><a href="../../#contact">Contact</a></nav><span class="tr">Quaesitor · 1 of 3 · en</span></div>
+<article class="text">
+
+<header class="text-head">
+  <p class="kicker">Quaesitor · 1 of 3 · measurements · 2026</p>
+  <h1>Same score, <em>opposite characters</em></h1>
+  <p class="deck">I put two frontier models in front of a warehouse, asked them 26 questions I already knew the answers to, and counted. They got the same number right. Everything else about them was different.</p>
+  <dl class="facts">
+    <div><dt>measured answers</dt><dd>5 790 <small>15 languages · 5 warehouses · Aug 2026</small></dd></div>
+    <div><dt>retail pack, declined</dt><dd>55 vs 1 <small>same questions, same correct count</small></dd></div>
+    <div><dt>with documentation</dt><dd>2 / 26 → 2 / 26 <small>correct answers, unchanged</small></dd></div>
+    <div><dt>median error with docs</dt><dd>72 % → 23 % <small>smaller, not rarer</small></dd></div>
+  </dl>
+</header>
+
+<section>
+<p>A silent failure is an answer that runs without error, looks plausible and is wrong, with nothing downstream to say it should not be trusted. Every text-to-SQL benchmark reports accuracy. Accuracy folds two very different things, declining and being confidently wrong, into one "not correct", and for anyone actually deploying one of these assistants that is the one distinction that matters<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>So I built warehouses with the traps in known places (a null inside an aggregate here, a batch loaded twice there; the full list is <a href="taxonomy.html">the second text</a>), wrote a verified query for every question by hand, and let the models answer. Fifteen languages, three repeats each, one verdict per cell. The numbers on this page are the run's, not mine; the pages they were first published on carry the fingerprints<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup>.</p>
+</section>
+
+<section>
+<h2>Two models, one score, two personalities</h2>
+<p>Read the "correct" column first. The two models land within a few answers of each other on both packs, level on one. Now read the last column.</p>
+</section>
+<table class="tbl wide"><thead><tr><th>pack</th><th>model</th><th class="n">answers</th><th class="n">correct</th><th class="n">silently wrong</th><th class="n">declined</th></tr></thead>
+<tbody>
+<tr><td>Subscriptions</td><td>A · opus</td><td class="n">135</td><td class="n"><b>41</b></td><td class="n">54</td><td class="n hi">40</td></tr>
+<tr><td>Subscriptions</td><td>B · sonnet</td><td class="n">135</td><td class="n"><b>41</b></td><td class="n">91</td><td class="n hi">3</td></tr>
+<tr><td>Retail</td><td>A · opus</td><td class="n">390</td><td class="n"><b>40</b></td><td class="n">227</td><td class="n hi">55</td></tr>
+<tr><td>Retail</td><td>B · sonnet</td><td class="n">390</td><td class="n"><b>28</b></td><td class="n">272</td><td class="n hi">1</td></tr>
+</tbody></table>
+<section>
+<p>One declines 55 times, the other once. They do not differ in what they know. They differ in what they do when they do not know it<sup class="cite"><a href="#r1">1</a></sup>. A declined answer is friction: somebody notices, somebody asks. A confident wrong one is a number that looks exactly right and walks straight into a slide. Picking the "better" model does not fix this. It relocates it.</p>
+</section>
+
+<section>
+<h2>The fair objection, and five warehouses</h2>
+<p>You planted the traps, so of course they fell in. Fair. So the same method ran on a standard schema nobody designed for this, and on data nobody designed at all<sup class="cite"><a href="#r3">3</a></sup>.</p>
+</section>
+<table class="tbl wide"><thead><tr><th>warehouse</th><th>what it is</th><th class="n">silently wrong · A / B</th></tr></thead>
+<tbody>
+<tr><td><b>Retail</b></td><td>traps I planted · 390 answers · 15 languages</td><td class="n">70 % / 58 %</td></tr>
+<tr><td><b>Subscriptions</b></td><td>traps I planted · 135 answers · 15 languages</td><td class="n">67 % / 40 %</td></tr>
+<tr><td><b>TPC-DS</b></td><td>the 1990s standard, generated by DuckDB in one command<sup class="cite"><a href="#r4">4</a></sup> · 10 answers</td><td class="n">50 % / 20 %</td></tr>
+<tr><td><b>NYC taxi</b></td><td>real operations, 2.96 M trips<sup class="cite"><a href="#r5">5</a></sup> · 80 answers · 8 languages</td><td class="n hi">80 % / 70 %</td></tr>
+<tr><td><b>CRM + ERP</b></td><td>two systems that disagree · 20 answers</td><td class="n">55 % / 50 %</td></tr>
+</tbody></table>
+<section>
+<p>The cleaner and more designed the data, the better the models look. On a live taxi meter both models were silently wrong four times in five, and the cautious one that declined 59 times on my retail pack declined zero times here. My synthetic warehouse was not unfairly hard. It was easier than reality.</p>
+<p>The one worth sitting with, from TPC-DS. Asked how many distinct products exist in the catalogue:</p>
+<dl class="ex"><dt>assistant</dt><dd class="wrong">900</dd><dt>verified</dt><dd class="right">450</dd><dt>why</dt><dd>COUNT(DISTINCT i_item_sk), the surrogate key: one row per version of an item, so twice too many. Reaching for DISTINCT is what a careful person does. It was applied to the column that makes it wrong.</dd></dl>
+<p>On the taxi data one model answered a question that has no answer at all: the average tip across 439 191 cash journeys, where the meter never records a tip<sup class="cite"><a href="#r3">3</a></sup>.</p>
+</section>
+
+<section>
+<h2>The query ran. The answer was zero. Nobody had any customers that month.</h2>
+<p>Ten questions that reach past the edge of what the warehouse holds. Every column they need exists, so every query runs clean and returns a number, and the number answers "how many rows match", not the question<sup class="cite"><a href="#r6">6</a></sup>. The clearest: how many customers registered in July 2026? Orders run through August 2026, so the period looks safe. One model wrote this:</p>
+<pre class="sql">SELECT COUNT(*) AS new_customers
+FROM dim_customer
+WHERE registered_date &gt;= DATE '2026-07-01'
+  AND registered_date &lt;  DATE '2026-08-01'
+  AND is_test_account = FALSE</pre>
+<p>That is a careful query; it even excludes test accounts. It returns zero. What it does not know is that the customer dimension stopped being written to in February 2025, eighteen months earlier. Zero means the table is not being filled, not that nobody signed up, and nothing in the result tells the two apart. A dimension that quietly stops loading while the facts keep arriving is one of the most ordinary things that goes wrong in a warehouse. Both models answered both questions in that category with a number<sup class="cite"><a href="#r6">6</a></sup>.</p>
+<p>Declining is the right answer to all ten. In Czech, model A declined five of ten; model B, none. Across fifteen languages A declined two to five per language, B zero or one<sup class="cite"><a href="#r6">6</a></sup>. An earlier version of this pack asked for things with no column behind them (a gross margin where nothing records cost) and both models scored ten out of ten: noticing a missing column is a lookup, not a judgement. The hard version keeps every column and removes only the data. That is the version that separates them.</p>
+</section>
+
+<section>
+<h2>Documentation made the errors smaller, not rarer</h2>
+<p>The obvious fix is context: hand the model documentation of the schema and the metrics. So I did, on the retail pack, 26 questions, three repeats, Czech, one input changed and the digests of both runs recorded so that the "one input" claim is checkable rather than asserted<sup class="cite"><a href="#r2">2</a></sup>.</p>
+</section>
+<div class="scroller wide"><div class="scroller"><table class="grid">
+  <caption>claude-sonnet-5, Czech, 26 questions, three repeats each</caption>
+  <thead><tr><th class="row-head" scope="col">Q</th><th scope="col">01</th><th scope="col">02</th><th scope="col">03</th><th scope="col">04</th><th scope="col">05</th><th scope="col">06</th><th scope="col">07</th><th scope="col">08</th><th scope="col">09</th><th scope="col">10</th><th scope="col">11</th><th scope="col">12</th><th scope="col">13</th><th scope="col">14</th><th scope="col">15</th><th scope="col">16</th><th scope="col">17</th><th scope="col">18</th><th scope="col">19</th><th scope="col">20</th><th scope="col">21</th><th scope="col">22</th><th scope="col">23</th><th scope="col">24</th><th scope="col">25</th><th scope="col">26</th></tr></thead>
+  <tbody>
+    <tr><th scope="row" class="row-head">without docs</th><td><span class="cell c-refused"></span></td><td><span class="cell c-implausible"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-implausible"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-correct"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-implausible"></span></td><td><span class="cell c-correct"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td></tr>
+    <tr><th scope="row" class="row-head">with docs</th><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-correct"></span></td><td><span class="cell c-correct"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-invalid"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-refused"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td><td><span class="cell c-silent"></span></td></tr>
+  </tbody>
+</table></div></div>
+<ul class="legend"><li><span class="cell c-correct"></span>correct</li><li><span class="cell c-silent"></span>silently wrong</li><li><span class="cell c-implausible"></span>implausible</li><li><span class="cell c-invalid"></span>did not run, or no number</li></ul>
+<section>
+<p>Correct answers: 2 of 26 before, 2 of 26 after. Exact McNemar, p = 1.00. What moved was the size of the error: across the 22 questions measurable in both runs the median absolute error fell from 72 % to 23 %; 15 answers moved closer, 2 further; exact sign test p = 0.0023. It replicated three times, at p = 0.00008, 0.00073 and 0.0023<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p>Read that again from the reader's side. Every answer that had been obviously wrong came back plausible, and none went the other way. A revenue figure off by six hundred per cent returned off by seventy. The error did not shrink to nothing. It shrank to a size nobody queries. The prediction going in was that documentation would suppress refusals; it did not. The effect is real and it was not the predicted one.</p>
+<p>Limits, before anyone else states them: 26 questions, one warehouse, one model, one language, two runs. This is not evidence about documentation in general, and it does not show that documentation raised the silent-failure rate (77 % → 85 %, p = 0.73, noise at this size). It shows where the risk goes when the answers get better: out of the column a reader checks, into the one nobody does<sup class="cite"><a href="#r2">2</a></sup>.</p>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Quaesitor (2026): <a href="original/silent-failure-rate.html">Silent-failure rate</a>. Two models, retail and subscriptions packs, fifteen languages, three repeats. Table as published, with run fingerprints.</li>
+<li id="r2">Quaesitor (2026): <a href="original/documentation-finding.html">Plausible, not correct</a>. claude-sonnet-5, Czech, 26 questions × 3, with and without documentation; three replications; SHA-256 prefixes of both runs' inputs recorded on the page.</li>
+<li id="r3">Quaesitor (2026): <a href="original/packs.html">Five warehouses, and one pack that asks for what none of them holds</a>. Retail, Subscriptions, TPC-DS, NYC taxi, CRM + ERP; answer counts per warehouse.</li>
+<li id="r4">TPC-DS decision-support benchmark, generated with DuckDB's <a href="https://duckdb.org/docs/stable/core_extensions/tpcds">tpcds extension</a>.</li>
+<li id="r5">NYC Taxi &amp; Limousine Commission, <a href="https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page">TLC trip record data</a>; 2.96 M trips in the slice used.</li>
+<li id="r6">Quaesitor (2026): <a href="original/abstention.html">The query ran. The answer was zero.</a> Ten questions past the edge of the data, per model and per language.</li>
+<li id="r7">Quaesitor (2026): <a href="original/method.html">Methodology</a>. How a question becomes a verified one; the 26 traps; what is and is not claimed.</li>
+</ol>
+</section>
+
+<footer class="text-foot">
+  <p><b>Provenance.</b> Numbers come from the Quaesitor runs as published in August 2026; where a figure is quoted, the reference links the page it was first published on, with the run fingerprint. The original pages, chrome removed, are kept <a href="original/silent-failure-rate.html">as published</a>.</p>
+  <p class="back"><a href="index.html">← Quaesitor, the three texts</a> · <a href="../../#works">← projects</a></p>
+</footer>
+</article>
+</body>
+</html>

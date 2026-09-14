@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>plausible, not correct — Barbora Šandová</title>
-<meta name="description" content="Documentation did not make the answers right. It made them believable: implausible answers went to zero and the silent-failure rate went up.">
+<title>why this exists — Barbora Šandová</title>
+<meta name="description" content="Trust grows faster than accuracy. A model right nine times in ten is more dangerous than one right four, because you stop checking.">
 <meta name="theme-color" content="#161616">
-<link rel="canonical" href="https://bsandova.com/texts/quaesitor/documentation-finding.html">
+<link rel="canonical" href="https://bsandova.com/texts/quaesitor/why.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../style.css">
-<link rel="stylesheet" href="../../text.css">
+<link rel="stylesheet" href="../../../style.css">
+<link rel="stylesheet" href="../../../text.css">
 <style>
 /* quaesitor.eu stylesheet, palette remapped; see tools/port_quaesitor.py */
 html { scroll-behavior: smooth; }
@@ -62,8 +62,8 @@ html { scroll-behavior: smooth; }
         font-size: 13px !important; padding: 9px 14px !important;
         white-space: nowrap;
       }
-      nav a[href="/"] span:last-child { font-size: 17px !important; }
-      nav a[href="/"] > span:first-child { width: 30px !important; height: 30px !important; }
+      nav a[href="../"] span:last-child { font-size: 17px !important; }
+      nav a[href="../"] > span:first-child { width: 30px !important; height: 30px !important; }
     }
 
 
@@ -544,195 +544,70 @@ main.article > .wrap{max-width:60rem}
 </style>
 </head>
 <body>
-<div class="top"><b><a href="../../">bsandova.com</a></b><nav><a href="../../#works">Works</a><a href="../../#texts">Texts</a><a href="../../#about">About</a><a href="../../#contact">Contact</a></nav><span class="tr">Quaesitor · measurement 01 · en</span></div>
+<div class="top"><b><a href="../../../">bsandova.com</a></b><nav><a href="../../../#works">Works</a><a href="../../../#texts">Texts</a><a href="../../../#about">About</a><a href="../../../#contact">Contact</a></nav><span class="tr">Quaesitor · why · en</span></div>
 <p class="q-note"><b>Quaesitor</b> · independent review of AI assistants over data warehouses · first published at quaesitor.eu, 2026 · the service is retired, the findings are not</p>
-<main class="article"><h1 class="q-title">Plausible, not correct</h1>
-<div class="wrap">
+<main class="article">
+<main class="wrap">
+<p class="kicker">Why Quaesitor exists</p>
+<h1>Trust grows faster than accuracy</h1>
+<p class="dek">The better your data assistant gets, the less you check it.</p>
 
+<p>A model that is right nine times out of ten is more dangerous than one that is right four. Not less. At four in ten you check everything, because you have learned you have to. At nine in ten you stop, because checking is expensive and it has been right all week. The failure you were guarding against does not go away as the model improves. It goes quiet.</p>
 
+<p>Every benchmark of AI over a data warehouse reports accuracy. It is the number that gets quoted and put in datasheets, and for anyone actually deploying one of these systems it is close to useless on its own, because it cannot see the thing that will actually hurt you: the answer that ran without error, looks entirely plausible, and is wrong, with nothing downstream carrying a signal that it should not be trusted.</p>
 
-<section>
-  <p class="note">Every cell is one question, three repeats, one verdict.
-  The top row is the model working from the bare schema. The bottom row is the
-  same model with documentation.</p>
+<p>Ask how many customers made a second purchase within thirty days of their first. The right query counts thirty days from the first purchase and returns 621. A model that anchors the window to the registration date instead returns 684, which it did in ninety-five attempts across our runs. Both are valid SQL, both run, and the answer is ten per cent too high. Nobody notices, and the reason nobody notices is that ten per cent is a perfectly ordinary-looking number. An answer off by eighty-five per cent gets queried. This one gets used. That is a silent failure. It is not an edge case. It is the normal case, and it is the one accuracy averages away.</p>
 
-  <div class="scroller"><table class="grid">
-  <caption>claude-sonnet-5, Czech, 26 questions, three repeats each</caption>
-  <thead><tr><th class="row-head" scope="col">Q</th><th scope="col">01</th><th scope="col">02</th><th scope="col">03</th><th scope="col">04</th><th scope="col">05</th><th scope="col">06</th><th scope="col">07</th><th scope="col">08</th><th scope="col">09</th><th scope="col">10</th><th scope="col">11</th><th scope="col">12</th><th scope="col">13</th><th scope="col">14</th><th scope="col">15</th><th scope="col">16</th><th scope="col">17</th><th scope="col">18</th><th scope="col">19</th><th scope="col">20</th><th scope="col">21</th><th scope="col">22</th><th scope="col">23</th><th scope="col">24</th><th scope="col">25</th><th scope="col">26</th></tr></thead>
-  <tbody>
-    <tr><th scope="row" class="row-head">without docs</th><td><span class="cell c-refused" title="Q01 without docs: refused"></span></td><td><span class="cell c-implausible" title="Q02 without docs: implausible"></span></td><td><span class="cell c-silent" title="Q03 without docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q04 without docs: silently wrong"></span></td><td><span class="cell c-implausible" title="Q05 without docs: implausible"></span></td><td><span class="cell c-silent" title="Q06 without docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q07 without docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q08 without docs: silently wrong"></span></td><td><span class="cell c-correct" title="Q09 without docs: correct"></span></td><td><span class="cell c-silent" title="Q10 without docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q11 without docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q12 without docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q13 without docs: silently wrong"></span></td><td><span class="cell c-implausible" title="Q14 without docs: implausible"></span></td><td><span class="cell c-correct" title="Q15 without docs: correct"></span></td><td><span class="cell c-silent" title="Q16 without docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q17 without docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q18 without docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q19 without docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q20 without docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q21 without docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q22 without docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q23 without docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q24 without docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q25 without docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q26 without docs: silently wrong"></span></td></tr>
-    <tr><th scope="row" class="row-head">with docs</th><td><span class="cell c-silent" title="Q01 with docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q02 with docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q03 with docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q04 with docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q05 with docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q06 with docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q07 with docs: silently wrong"></span></td><td><span class="cell c-correct" title="Q08 with docs: correct"></span></td><td><span class="cell c-correct" title="Q09 with docs: correct"></span></td><td><span class="cell c-silent" title="Q10 with docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q11 with docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q12 with docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q13 with docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q14 with docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q15 with docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q16 with docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q17 with docs: silently wrong"></span></td><td><span class="cell c-invalid" title="Q18 with docs: query did not run"></span></td><td><span class="cell c-silent" title="Q19 with docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q20 with docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q21 with docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q22 with docs: silently wrong"></span></td><td><span class="cell c-refused" title="Q23 with docs: refused"></span></td><td><span class="cell c-silent" title="Q24 with docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q25 with docs: silently wrong"></span></td><td><span class="cell c-silent" title="Q26 with docs: silently wrong"></span></td></tr>
-  </tbody>
-</table></div>
+<h2>Why the gap is still open</h2>
+<p>Three kinds of tool sit next to this problem, and none of them is in it.</p>
+<p>Semantic layers define what a metric means. That is the best single thing you can do, and it still does not verify that the definition matches the data, or that the model used it. Eval and observability platforms measure consistency, latency, cost, and text-level hallucination; they cannot decide whether a number is factually right, because that needs the metric's definition, the grain, and the data model. Governance and security platforms, the newest and loudest of the three, watch how AI is used: who asked what, whether a policy broke, whether data left the building. Necessary, and a different question. They tell you the assistant stayed within the rules. They do not tell you the answer was true.</p>
+<p>The hole between them needs data engineering, metric definitions, and security at the same time, and almost nobody stands in all three.</p>
 
-  <ul class="legend">
-    <li><span class="cell c-correct"></span> correct</li>
-    <li><span class="cell c-silent"></span> silently wrong</li>
-    <li><span class="cell c-implausible"></span> implausible</li>
-    <li><span class="cell c-invalid"></span> query did not run, or ran and returned no number</li>
-  </ul>
+<h2>The reason nobody does it</h2>
+<p>There is a more honest reason than that. The compute is the cheapest part of checking an AI system. A full run of this measurement costs a couple of dollars, and the fingerprint that says so is published next to the numbers, awkward as that is.</p>
+<p>What takes the weeks is the verified query behind every question: written by hand against a real schema, reconciled against a number someone already trusts, and read clause by clause with the person who owns the definition. On your warehouse nobody knows the right answer in advance; if they did, there would be nothing to audit. That work cannot be automated, and it is exactly the work everyone skips. The expensive part was never the running. That is why the gap persists, and it is the whole moat.</p>
 
-  <dl class="figures">
-    <div>
-      <dt>Correct answers</dt>
-      <dd>2 of 26, unchanged</dd>
-      <p>Exact McNemar, p = 1.00</p>
-    </div>
-    <div>
-      <dt>Median absolute error</dt>
-      <dd class="hazard">72% &rarr; 23%</dd>
-      <p>Across 22 questions measurable in both runs</p>
-    </div>
-    <div>
-      <dt>Errors that shrank</dt>
-      <dd>15 closer, 2 further</dd>
-      <p>Exact sign test, p = 0.0023</p>
-    </div>
-  </dl>
-</section>
+<h2>Why it has to come from outside</h2>
+<p>No team independently verifies its own semantics. The people who wrote the definitions under test cannot check them without checking their own intent, which is not the same thing. This is not a claim to know your business better than you do. It is the same logic that makes you buy a penetration test from a third party rather than from the people who wrote the code.</p>
+<p>The name is older than the software. A <em>quaesitor</em> was the Roman examining magistrate who presided over a court of inquiry: the one who investigated the facts and signed the finding. The office is two thousand years older than the problem, and the job is the same one. Check the figures somebody else produced, and put your name to the result.</p>
 
-<section>
-  <p class="kicker">The test that does not depend on where a line is drawn</p>
-  <h2>The error did not shrink to nothing. It shrank to a size nobody queries.</h2>
-  <p>Counting how many answers stopped looking absurd means deciding what counts
-  as absurd, and that decision gets made after seeing which way the questions
-  moved. That is how a p-value is manufactured. The size of the error needs no
-  such decision, so it is what this page leads with.</p>
-  <p>On the 22 questions that produced a measurable error in both
-  runs, the median error fell from 72% to 23%.
-  15 answers moved closer to right, 2 moved further away,
-  and the number of correct answers did not move at all.</p>
+<h2>Why now</h2>
+<p>The assistants are already in production. The vendors themselves now say it out loud: text-to-SQL, in dbt's own words, will happily return a wrong number. The models keep getting better, which means trust keeps rising faster than correctness does, which means the day you stop checking is already behind most teams. And the regulation is on a fixed clock, even if a distant one.</p>
+<p>The moment to find out whether you can tell which answers are wrong is before you have stopped looking.</p>
+<p>Quaesitor is not a platform. It is an independent audit of the answers an AI system gives over a data warehouse, with the verified queries written by hand and a signature on the result. It does not measure whether your AI is accurate. That number ages with every release. It measures whether you could tell when it is not.</p>
 
-  <div class="scroller"><table class="ledger">
-  <caption>Questions with a measurable error in both runs</caption>
-  <thead><tr><th scope="col">Measure</th><th scope="col">First run<br><span class="sub">2026-08-12, n = 24</span></th><th scope="col">Repeat, 2026-08-20<br><span class="sub">2026-08-20, n = 24</span></th><th scope="col">Repeat, clean environment<br><span class="sub">2026-08-20, n = 22</span></th></tr></thead>
-  <tbody>
-    <tr><th scope="row">Median absolute error</th><td class="mono num">94.2% &rarr; 23.5%</td><td class="mono num">84.1% &rarr; 9.6%</td><td class="mono num">71.6% &rarr; 23.4%</td></tr>
-    <tr><th scope="row">Closer to right</th><td class="mono num">18</td><td class="mono num">17</td><td class="mono num">15</td></tr>
-    <tr><th scope="row">Further from right</th><td class="mono num">1</td><td class="mono num">2</td><td class="mono num">2</td></tr>
-    <tr><th scope="row">Unchanged</th><td class="mono num">5</td><td class="mono num">5</td><td class="mono num">5</td></tr>
-    <tr><th scope="row">Exact sign test</th><td class="mono num">p = 0.00008</td><td class="mono num">p = 0.00073</td><td class="mono num">p = 0.0023</td></tr>
-  </tbody>
-</table></div>
-</section>
+<p class="srcnote">The 621-vs-95 cohort is verified in the Quaesitor suite; the text-to-SQL benchmark is dbt Labs' 2026 Semantic Layer vs. Text-to-SQL update. Sources on request, which is the point.</p>
 
-<section>
-  <p class="kicker">Where the failures went</p>
-  <h2>Out of the column a reader checks, into the one nobody does.</h2>
-  <p>Every answer that had been obviously wrong came back plausible, and none
-  went the other way. A revenue figure off by six hundred percent returned off
-  by seventy. This is the readable version of the finding, and it is the weaker
-  one: it depends on treating an implausible answer as visible and a refusal as
-  something else, a boundary drawn after the fact.</p>
-
-  <div class="scroller"><table class="ledger">
-  <caption>Every answer documentation moved out of implausible, 2026-08-20</caption>
-  <thead><tr><th scope="col">Q</th><th scope="col">Trap</th><th scope="col">Error, no docs</th><th scope="col">Error, with docs</th><th scope="col">Became</th></tr></thead>
-  <tbody>
-    <tr><td class="mono">Q02</td><td>returns ignored</td><td class="mono num">-633%</td><td class="mono num">-72%</td><td>silently wrong</td></tr>
-    <tr><td class="mono">Q05</td><td>currency mixing</td><td class="mono num">-596%</td><td class="mono num">-73%</td><td>silently wrong</td></tr>
-    <tr><td class="mono">Q14</td><td>fx rate date</td><td class="mono num">-2266%</td><td class="mono num">+34%</td><td>silently wrong</td></tr>
-  </tbody>
-</table></div>
-</section>
-
-<section>
-  <p class="kicker">The replications</p>
-  <h2>It ran three times.</h2>
-  <p>They point the same way. The error shrank every time, at p = 0.00008, 0.00073 and 0.0023,
-  and correctness moved by at most a single question, which is the size this
-  method treats as noise. The category swap is weaker in the later runs than in
-  the first, which is what you would expect of a figure that depends on a
-  boundary. Across all of them 14
-  questions left the implausible column and 0 entered it; the
-  runs share their questions, warehouse and model, so pooling describes
-  consistency rather than adding evidence.</p>
-
-  <div class="scroller"><table class="ledger">
-  <caption>Every run of the experiment, 3 of them. No single one is the headline; the agreement between them is.</caption>
-  <thead><tr><th scope="col">Measure</th><th scope="col">First run<br><span class="sub">2026-08-12, n = 26</span></th><th scope="col">Repeat, 2026-08-20<br><span class="sub">2026-08-20, n = 26</span></th><th scope="col">Repeat, clean environment<br><span class="sub">2026-08-20, n = 26</span></th></tr></thead>
-  <tbody>
-    <tr><th scope="row">Correct</th><td class="mono num">2 &rarr; 2</td><td class="mono num">2 &rarr; 3</td><td class="mono num">2 &rarr; 2</td></tr>
-    <tr><th scope="row">Implausible</th><td class="mono num">6 &rarr; 0</td><td class="mono num">5 &rarr; 0</td><td class="mono num">3 &rarr; 0</td></tr>
-    <tr class="hazard-row"><th scope="row">Silently wrong</th><td class="mono num">18 &rarr; 23</td><td class="mono num">19 &rarr; 22</td><td class="mono num">20 &rarr; 22</td></tr>
-    <tr class="hazard-row"><th scope="row">Silent-failure rate</th><td class="mono num">69% &rarr; 88%</td><td class="mono num">73% &rarr; 85%</td><td class="mono num">77% &rarr; 85%</td></tr>
-    <tr><th scope="row">Exact McNemar, implausible</th><td class="mono num">p = 0.0312</td><td class="mono num">p = 0.0625</td><td class="mono num">p = 0.25</td></tr>
-    <tr><th scope="row">Exact McNemar, correct</th><td class="mono num">p = 1.00</td><td class="mono num">p = 1.00</td><td class="mono num">p = 1.00</td></tr>
-  </tbody>
-</table></div>
-  <p class="note">The first run carried the operator's session hook and an explanatory output style, so the model was handed unrelated material and wrote commentary after its SQL. The repeat ran with both switched off, which
-  is why it is the primary measurement here and the first run is support. The
-  two runs differ by one question, which is noise.</p>
-</section>
-
-<section>
-  <p class="kicker">What separated the two runs</p>
-  <h2>One input changed.</h2>
-  <p>A before-and-after is worth reading only if the reader can see that exactly
-  one thing moved. Each run records digests of what it was given, so the claim
-  is checkable rather than asserted.</p>
-
-  <div class="scroller"><table class="ledger">
-  <caption>SHA-256 prefixes the two runs recorded of their own inputs, 2026-08-20</caption>
-  <thead><tr><th scope="col">Input</th><th scope="col">Without docs</th><th scope="col">With docs</th><th scope="col"></th></tr></thead>
-  <tbody>
-    <tr><th scope="row">Questions</th><td class="mono">e06618417e5b</td><td class="mono">e06618417e5b</td><td>same</td></tr>
-    <tr><th scope="row">Warehouse</th><td class="mono">03517f517771</td><td class="mono">03517f517771</td><td>same</td></tr>
-    <tr><th scope="row">System prompt</th><td class="mono">b07cf35e9ef0</td><td class="mono">b07cf35e9ef0</td><td>same</td></tr>
-    <tr class="hazard-row"><th scope="row">Documentation</th><td class="mono">none</td><td class="mono">98172062a487</td><td>differs</td></tr>
-  </tbody>
-</table></div>
-</section>
-
-<section>
-  <p class="kicker">What this does not show</p>
-  <h2>The limits, stated before anyone else states them.</h2>
-  <p>26 questions, one warehouse, one model, one language, three
-  repeats per question, two runs. This is not evidence about documentation in
-  general, and it is not a claim that better documentation could not help. The
-  semantic layer used here carries deliberate defects, declared in the dataset,
-  because the point was to measure what a plausible wrong definition does, not
-  what a perfect one does.</p>
-  <p><b>This does not show that documentation raised the silent-failure rate.</b>
-  It went from 77% to 85%, and at this sample size
-  that difference is not separable from noise: 26 questions, a handful moving
-  each way, p = 0.73. The rate is reported because it is what the runs
-  recorded, not because it is a result.</p>
-  <p>Nor does it show anything about refusals. The prediction going in was that
-  documentation would suppress them. It did not. The effect measured here is
-  real and it was not the predicted one.</p>
-  <p>The measurement says nothing about other vendors, other schemas, or other
-  languages, and no result here should be read as one.</p>
-</section>
-
-
-
-
+<div class="end">
+  <p>Quaesitor audits AI systems that answer business questions over data warehouses, independently, with the verified queries written by hand and a signature on the result.</p>
+  <p><a class="cta" href="mailto:barbora@quaesitor.eu?subject=Quaesitor%3A%20a%20review">Email me for a 30-minute review</a></p>
+  <p class="stamp">quaesitor.eu &middot; why</p>
 </div>
+</main>
+</body>
 <section class="reading" aria-labelledby="reading-h">
   <p class="reading-kicker">Reading</p>
   <h2 id="reading-h">Published measurements, and the argument behind them.</h2>
   <ul class="reading-list">
-    <li><a href="/evidence">None of this is our claim to make</a>
+    <li><a href="evidence.html">None of this is our claim to make</a>
       <span>what other people established, and the one thing none of them did</span></li>
-      <li><a href="/abstention">The query ran and the answer was zero</a>
+      <li><a href="abstention.html">The query ran and the answer was zero</a>
       <span>ten questions past the edge of the data, and what each model did with them</span></li>
-      <li><a href="/traps">Twenty-six ways a number comes back wrong</a>
+      <li><a href="traps.html">Twenty-six ways a number comes back wrong</a>
       <span>the taxonomy, with the divergence each fault actually causes</span></li>
-    <li><a href="/access">Twelve ways an assistant answers with rows it was never allowed to see</a>
+    <li><a href="access.html">Twelve ways an assistant answers with rows it was never allowed to see</a>
       <span>layer 2, and the shortcut that gets past each restriction</span></li>
-    <li><a href="/documentation-finding">Documentation made the errors smaller, not rarer</a>
+    <li><a href="documentation-finding.html">Documentation made the errors smaller, not rarer</a>
       <span>a measurement, with the test stated and the p-values it actually earns</span></li>
-    <li><a href="/silent-failure-rate">Silent-failure rate: two models, opposite failure behaviour</a>
+    <li><a href="silent-failure-rate.html">Silent-failure rate: two models, opposite failure behaviour</a>
       <span>identical correct counts, and nothing alike about how they fail</span></li>
     <li><a href="silent-failures.html">What it does when it does not know</a>
       <span>the longer piece on abstention</span></li>
-    <li><a href="/why">Trust grows faster than accuracy</a>
+    <li><a href="why.html">Trust grows faster than accuracy</a>
       <span>why this exists</span></li>
   </ul>
 </section>
-
   </main>
-<div class="q-back"><a href="index.html">← Quaesitor overview</a> · <a href="../../#texts">← back to texts</a></div>
+<div class="q-back"><a href="../../../">← Quaesitor overview</a> · <a href="../../../#texts">← back to texts</a></div>
 </body>
 </html>

@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>who is behind this — Barbora Šandová</title>
-<meta name="description" content="Who is behind Quaesitor, and why the argument for a finding does not rest on that: the method, the open-source tool and the runs are all published.">
+<title>what it does when it does not know — Barbora Šandová</title>
+<meta name="description" content="What a data assistant does when it does not know: abstention, and why declining is the behaviour worth measuring.">
 <meta name="theme-color" content="#161616">
-<link rel="canonical" href="https://bsandova.com/texts/quaesitor/about.html">
+<link rel="canonical" href="https://bsandova.com/texts/quaesitor/silent-failures.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../style.css">
-<link rel="stylesheet" href="../../text.css">
+<link rel="stylesheet" href="../../../style.css">
+<link rel="stylesheet" href="../../../text.css">
 <style>
 /* quaesitor.eu stylesheet, palette remapped; see tools/port_quaesitor.py */
 html { scroll-behavior: smooth; }
@@ -62,8 +62,8 @@ html { scroll-behavior: smooth; }
         font-size: 13px !important; padding: 9px 14px !important;
         white-space: nowrap;
       }
-      nav a[href="/"] span:last-child { font-size: 17px !important; }
-      nav a[href="/"] > span:first-child { width: 30px !important; height: 30px !important; }
+      nav a[href="../"] span:last-child { font-size: 17px !important; }
+      nav a[href="../"] > span:first-child { width: 30px !important; height: 30px !important; }
     }
 
 
@@ -544,84 +544,80 @@ main.article > .wrap{max-width:60rem}
 </style>
 </head>
 <body>
-<div class="top"><b><a href="../../">bsandova.com</a></b><nav><a href="../../#works">Works</a><a href="../../#texts">Texts</a><a href="../../#about">About</a><a href="../../#contact">Contact</a></nav><span class="tr">Quaesitor · about · en</span></div>
+<div class="top"><b><a href="../../../">bsandova.com</a></b><nav><a href="../../../#works">Works</a><a href="../../../#texts">Texts</a><a href="../../../#about">About</a><a href="../../../#contact">Contact</a></nav><span class="tr">Quaesitor · essay · en</span></div>
 <p class="q-note"><b>Quaesitor</b> · independent review of AI assistants over data warehouses · first published at quaesitor.eu, 2026 · the service is retired, the findings are not</p>
 <main class="article">
 <main class="wrap">
-<p class="kicker">Who is behind this</p>
-<h1>One person, and none of the argument rests on that</h1>
-<p class="dek">Quaesitor is a sole practice. That is the least interesting reason to believe a finding, and the easiest thing to check.</p>
+<article>
 
-<p>A stranger tells you the answer your assistant gave your board was wrong. The reasonable first question is who they are. It is the wrong question to have to rely on, and this page is arranged so that you do not have to: everything the finding stands on is published, and most of it can be checked without me in the room.</p>
+<p class="kicker">Silent failure &middot; text-to-SQL</p>
+<h1>Does your AI data assistant know when it does not know?</h1>
+<p class="dek">Silent failure in AI answers over a data warehouse, and how to find out whether yours has it.</p>
 
-<h2>What does not depend on me</h2>
+<p>Ask a modern AI data assistant a question about your warehouse and you usually get a clean answer: a number, a sentence of explanation, sometimes the SQL it ran. It looks right. That is exactly the problem.</p>
 
-<p><b>The method is written down.</b> How a question becomes a verified one — the definition stated in writing by whoever owns the metric, the query read against it clause by clause, the reconciliation against a figure the business already trusts — is <a href="/method">on the method page</a>, in the order it happens. Nothing in it requires taking my word for a step.</p>
+<h2>A real one</h2>
+<p>The public New York City taxi dataset records a tip on every trip, and how each trip was paid. For cash trips the tip is handed over in the car, so the meter never sees it: the tip column is zero for essentially every cash ride. Ask an assistant &ldquo;what is the average tip on cash trips&rdquo; and it will run a correct-looking <code>AVG(tip_amount)</code>, return a small positive number, and say nothing else. The query ran. The number is formatted. It is also wrong, because the tip is not recorded for cash at all, and averaging the zeros answers a different question than the one you asked. Nothing in the answer tells you any of that.</p>
+<p>That is a <strong>silent failure</strong>: an answer that runs without error, looks plausible, and is wrong, with no signal attached that it should not be trusted. It is not a crash, which you notice. It is not &ldquo;the model is inaccurate,&rdquo; which you can benchmark. It is the failure you do not see, and it is the one that reaches a slide.</p>
 
-<p><b>The tool runs without me.</b> <a href="https://github.com/sandovabarbora/quaesitor-zero">quaesitor-zero</a> generates questions your schema cannot answer and scores whether your assistant admits it. Version 0.1.4, Apache-2.0, installable <a href="https://pypi.org/project/quaesitor-zero/">from PyPI</a>. It has no network code, no telemetry and no model access, so it cannot report to me what it found on your data — you run it, and you keep the result. Replies are classified mechanically and every classification prints the rule that fired, because a service arguing that confident output needs a signal should not rest its own number on a model's judgement.</p>
+<h2>It gets worse as models improve</h2>
+<p>The comforting assumption is that better models fix this. They do not. What improves fastest is not accuracy, it is your trust in the output. A model that is right nine times in ten is more dangerous than one that is right four times in ten, because at nine you stop checking. So the failure that matters is not &ldquo;the model cannot answer.&rdquo; It is &ldquo;the model cannot answer, and answers anyway.&rdquo;</p>
+<p>I measured the two halves of that. On one subscription-style warehouse, across eight languages, three runs each, I put the same set of questions, each with a verified answer, to two frontier models. They got the <strong>same number of answers right.</strong> The difference was entirely in what they did when they were unsure: one model declined twenty times out of seventy-two; the other declined once, and produced a confident, plausible, wrong number for many of the rest. Same knowledge, opposite disposition. No leaderboard shows that gap, and it is the only thing that decides whether the system is safe to put in front of people who cannot read the SQL underneath it.</p>
 
-<p><b>The measurements are published with the run behind them.</b> 5,790 measured answers as of August 2026, across fifteen languages, against a fixed set of 26 questions, each built around a different way a number comes back wrong. Each figure on this site is injected from those runs at build time rather than typed, and each carries the fingerprint of the run it came from. The build refuses when the runs stop supporting a sentence, which has happened and is the point.</p>
+<h2>The wrong number that looks ordinary</h2>
+<p>Silent failure is not only about unanswerable questions. It hides in definitions too. Ask &ldquo;how many customers made a second purchase within thirty days of the first.&rdquo; The obvious first query counts thirty days from the signup date. The correct one counts from the first purchase. On a real retail warehouse those two queries returned two different integers, both valid SQL, and nothing in either answer saying which reading it used:</p>
+<div class="caught">
+  <div class="caught-row"><span>The assistant answered</span><span class="wrong">95</span></div>
+  <div class="caught-row"><span>Verified answer</span><span class="right">621</span></div>
+  <div class="caught-foot"><span>Anchored to signup, not first purchase</span><span>6&times; too low</span></div>
+</div>
+<p>A number like that does not announce itself. It goes into a board pack as retention, and the meeting moves on.</p>
 
-<p><b>The load-bearing claims are somebody else's.</b> Of the things this work depends on, eight were established by people with no stake in it — that benchmark accuracy does not transfer to a private warehouse, that the failure arrives looking plausible, that declining beats guessing. They are <a href="/evidence">set out with who established what</a>, along with the strongest measured objection to this service, which is also somebody else's work.</p>
+<h2>Why the tools you already have do not catch it</h2>
+<p>Three kinds of tooling sit near this problem and none of them closes it.</p>
+<p>Your <strong>dbt tests</strong> check the data: uniqueness, not-null, referential integrity, freshness. They pass on every example above, because none of them is a broken row. The query was fine. It answered the wrong question.</p>
+<p><strong>Eval and observability platforms</strong> measure the model&rsquo;s text: latency, cost, consistency, generic hallucination. They cannot decide whether a number is factually right, because that needs the metric definition, the grain, and the data model.</p>
+<p><strong>Semantic layers</strong> define what a metric means. Useful, and necessary, but nobody independently checks that the definition matches the data, or that the assistant actually used it.</p>
+<p>The gap in the middle needs data engineering, metric knowledge, and a way to prove the right answer, all at once. That is where the wrong numbers live.</p>
 
-<h2>What &ldquo;we&rdquo; means on this site</h2>
+<h2>How to find out whether you have it</h2>
+<p>You can test the cheapest half yourself, today, for nothing. The open tool <strong>quaesitor-zero</strong> reads your schema and writes a set of questions the data cannot answer: an attribute that was never recorded, a period outside the data, a segment where the value is structurally absent, like those cash tips. You ask your assistant those questions the way you normally would, paste the answers back, and it scores one thing: <strong>did the assistant decline what it could not know, or did it invent something.</strong> Nothing is sent anywhere. The tool has no network access, no telemetry, and it never uses a model to judge a model. You read every answer yourself, which is the entire point.</p>
+<p>That measures whether the system says &ldquo;I do not know&rdquo; when it should. It does <strong>not</strong> tell you whether the answers it does give are numerically correct. That needs the definitions your business owns, an anchor you already trust, and a person who owns the metric, and it is honest to keep the free claim that small.</p>
 
-<p>It means one registered practice, not a team behind a curtain. There are no colleagues to meet, no bench of reviewers, and nobody to escalate to. If that is disqualifying for your procurement, it is better to find out on the scoping call than after an invoice, and I will say so there.</p>
-
-<p>What replaces a second pair of eyes is that the work is handed over rather than asserted. Every verified query goes to your team to be read, not trusted. A verified query can be wrong — that is this method's own silent failure — and one such correction was stated in a customer's report before they could find it.</p>
-
-<h2>Who</h2>
-
-<figure style="float:right; margin:6px 0 18px 28px; width:180px"></figure>
-
-<p>Ing. Barbora Šandová, MFDA &mdash; Master of Finance and Data Analytics at the Institute of Economic Studies, Charles University, with a minor in artificial intelligence at prg.ai. The practice is registered in Prague, Czech Republic, under Company ID (I&Ccaron;O) 17423830, and works in English and Czech.</p>
-
-<p><b>I build the systems this service reviews.</b> By day a data and cloud engineer at Alma Career, architecting a cross-cloud warehouse platform for international job portals: dbt models, Dagster orchestration, BigQuery materialisation and cost, infrastructure as code across production. That work included the internal assistant that answers analysts&rsquo; questions over that warehouse &mdash; the same class of system this review is pointed at, seen from the side that has to build it.</p>
-
-<p>Before that, production machine learning at Prague&rsquo;s smart-city data operator: a transport prediction pipeline serving over a hundred million predictions a month, and econometric work on 5.7 million delay records. Before that, fraud and forensic analytics at Ernst &amp; Young, where a finding was something you took to executives and to a regulator and then had to defend line by line.</p>
-
-<p>That last part is the habit this practice is built on. The measurements behind these pages are bounded with Wilson intervals and tested with McNemar and permutation tests in the harness rather than quoted flat, and the research is written up as a preprint on how the silent-failure rate moves across fifteen languages. The harness, the question sets and this site&rsquo;s own build are in the open; where a figure came from someone else&rsquo;s work, it is attributed on <a href="/evidence">the evidence page</a>.</p>
-
-<p>Outside the practice: training assistance dogs &mdash; the one in the photograph is Varinka &mdash; and, before Prague, two years in Berlin, a year in New York and a year in Copenhagen. That last part is most of why this site explains what Act 93/2009 Coll. is rather than assuming you already know, and why the research asks what happens to the silent-failure rate when the question is not in English.</p>
-
-<h2>What I will not claim</h2>
-
-<p>Not an accredited certification, not a conformity assessment under the AI Act, and not a statutory audit under Act 93/2009 Coll. — those words name accredited activities and this is not one. What is issued is a verification statement: a finding, signed and dated, with the queries attached so that somebody who disagrees can show where.</p>
-
-<p>Nor that a clean result means the system is safe. A review measures whether you could tell when an answer is wrong. It does not make the answers right, and it ages the moment the model or the schema changes.</p>
-
-<p class="srcnote">The figures on this page are injected from the runs in this repository at build time; the colophon at the foot of the page names the build they came from.</p>
+<h2>The uncomfortable part</h2>
+<p>If you run an AI assistant over your warehouse and its answers reach a decision, a report, a forecast, or an invoice, then somewhere in there is a number that looks right and is not, and right now nothing in your stack would flag it. The good news is that it is measurable. The first step is to stop treating a clean-looking answer as a correct one, and to ask the system, on purpose, the questions it cannot answer.</p>
 
 <div class="end">
-  <p>Quaesitor audits AI systems that answer business questions over data warehouses, independently, with the verified queries written by hand and a signature on the result.</p>
-  <p><a class="cta" href="mailto:barbora@quaesitor.eu?subject=Quaesitor%3A%20a%20scoping%20call">Email me for a 30-minute call</a></p>
-  <p class="stamp">quaesitor.eu &middot; about</p>
+  <p>Quaesitor is an independent audit of AI answers over a data warehouse. The open tool, <a href="silent-failure-rate.html">the benchmark</a>, and a sample report are at <a href="https://quaesitor.eu/">quaesitor.eu</a>.</p>
+  <p><a class="cta" href="mailto:barbora@quaesitor.eu?subject=Quaesitor%3A%20silent%20failures">Email me for a 30-minute review</a></p>
+  <p class="stamp">quaesitor.eu &middot; silent-failures &middot; 0beeefda</p>
 </div>
+
+</article>
 </main>
-</body>
 <section class="reading" aria-labelledby="reading-h">
   <p class="reading-kicker">Reading</p>
   <h2 id="reading-h">Published measurements, and the argument behind them.</h2>
   <ul class="reading-list">
-    <li><a href="/evidence">None of this is our claim to make</a>
+    <li><a href="evidence.html">None of this is our claim to make</a>
       <span>what other people established, and the one thing none of them did</span></li>
-      <li><a href="/abstention">The query ran and the answer was zero</a>
+      <li><a href="abstention.html">The query ran and the answer was zero</a>
       <span>ten questions past the edge of the data, and what each model did with them</span></li>
-      <li><a href="/traps">Twenty-six ways a number comes back wrong</a>
+      <li><a href="traps.html">Twenty-six ways a number comes back wrong</a>
       <span>the taxonomy, with the divergence each fault actually causes</span></li>
-    <li><a href="/access">Twelve ways an assistant answers with rows it was never allowed to see</a>
+    <li><a href="access.html">Twelve ways an assistant answers with rows it was never allowed to see</a>
       <span>layer 2, and the shortcut that gets past each restriction</span></li>
-    <li><a href="/documentation-finding">Documentation made the errors smaller, not rarer</a>
+    <li><a href="documentation-finding.html">Documentation made the errors smaller, not rarer</a>
       <span>a measurement, with the test stated and the p-values it actually earns</span></li>
-    <li><a href="/silent-failure-rate">Silent-failure rate: two models, opposite failure behaviour</a>
+    <li><a href="silent-failure-rate.html">Silent-failure rate: two models, opposite failure behaviour</a>
       <span>identical correct counts, and nothing alike about how they fail</span></li>
     <li><a href="silent-failures.html">What it does when it does not know</a>
       <span>the longer piece on abstention</span></li>
-    <li><a href="/why">Trust grows faster than accuracy</a>
+    <li><a href="why.html">Trust grows faster than accuracy</a>
       <span>why this exists</span></li>
   </ul>
 </section>
   </main>
-<div class="q-back"><a href="index.html">← Quaesitor overview</a> · <a href="../../#texts">← back to texts</a></div>
+<div class="q-back"><a href="../../../">← Quaesitor overview</a> · <a href="../../../#texts">← back to texts</a></div>
 </body>
 </html>

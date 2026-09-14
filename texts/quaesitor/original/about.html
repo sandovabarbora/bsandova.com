@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>silent-failure rate — Barbora Šandová</title>
-<meta name="description" content="Two frontier models, the same questions, the same number of right answers and opposite failure behaviour. What the silent-failure rate measures and why accuracy does not.">
+<title>who is behind this — Barbora Šandová</title>
+<meta name="description" content="Who is behind Quaesitor, and why the argument for a finding does not rest on that: the method, the open-source tool and the runs are all published.">
 <meta name="theme-color" content="#161616">
-<link rel="canonical" href="https://bsandova.com/texts/quaesitor/silent-failure-rate.html">
+<link rel="canonical" href="https://bsandova.com/texts/quaesitor/about.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../style.css">
-<link rel="stylesheet" href="../../text.css">
+<link rel="stylesheet" href="../../../style.css">
+<link rel="stylesheet" href="../../../text.css">
 <style>
 /* quaesitor.eu stylesheet, palette remapped; see tools/port_quaesitor.py */
 html { scroll-behavior: smooth; }
@@ -62,8 +62,8 @@ html { scroll-behavior: smooth; }
         font-size: 13px !important; padding: 9px 14px !important;
         white-space: nowrap;
       }
-      nav a[href="/"] span:last-child { font-size: 17px !important; }
-      nav a[href="/"] > span:first-child { width: 30px !important; height: 30px !important; }
+      nav a[href="../"] span:last-child { font-size: 17px !important; }
+      nav a[href="../"] > span:first-child { width: 30px !important; height: 30px !important; }
     }
 
 
@@ -544,63 +544,58 @@ main.article > .wrap{max-width:60rem}
 </style>
 </head>
 <body>
-<div class="top"><b><a href="../../">bsandova.com</a></b><nav><a href="../../#works">Works</a><a href="../../#texts">Texts</a><a href="../../#about">About</a><a href="../../#contact">Contact</a></nav><span class="tr">Quaesitor · measurement 02 · en</span></div>
+<div class="top"><b><a href="../../../">bsandova.com</a></b><nav><a href="../../../#works">Works</a><a href="../../../#texts">Texts</a><a href="../../../#about">About</a><a href="../../../#contact">Contact</a></nav><span class="tr">Quaesitor · about · en</span></div>
 <p class="q-note"><b>Quaesitor</b> · independent review of AI assistants over data warehouses · first published at quaesitor.eu, 2026 · the service is retired, the findings are not</p>
 <main class="article">
 <main class="wrap">
-<p class="kicker">Silent-failure rate &middot; text-to-SQL</p>
-<h1>Silent-failure rate</h1>
-<p class="dek">Two frontier models, the same number of right answers, opposite failure behaviour.</p>
+<p class="kicker">Who is behind this</p>
+<h1>One person, and none of the argument rests on that</h1>
+<p class="dek">Quaesitor is a sole practice. That is the least interesting reason to believe a finding, and the easiest thing to check.</p>
 
-<p>A <strong>silent failure</strong> is an answer that runs without error, looks plausible, and is wrong, with nothing downstream carrying the signal that it should not be trusted. The <strong>silent-failure rate</strong> is the share of answers that fail this way. It is not accuracy, and it gets worse as models improve, because trust grows faster than correctness.</p>
+<p>A stranger tells you the answer your assistant gave your board was wrong. The reasonable first question is who they are. It is the wrong question to have to rely on, and this page is arranged so that you do not have to: everything the finding stands on is published, and most of it can be checked without me in the room.</p>
 
-<p>Every benchmark of text-to-SQL reports accuracy. For anyone deploying one of these systems it is close to useless on its own, because it collapses two very different failures (declining, and being confidently wrong) into the same &ldquo;not correct&rdquo;.</p>
+<h2>What does not depend on me</h2>
 
-<h2>Two models, same correctness, opposite behaviour</h2>
-<p>Two frontier models (A and B), the same questions over a warehouse, a hand-written verified query behind every one. fifteen languages, three repeats each.</p>
+<p><b>The method is written down.</b> How a question becomes a verified one — the definition stated in writing by whoever owns the metric, the query read against it clause by clause, the reconciliation against a figure the business already trusts — is <a href="method.html">on the method page</a>, in the order it happens. Nothing in it requires taking my word for a step.</p>
 
-<div class="scroller"><table class="tbl"><thead><tr><th>Pack</th><th>Model</th><th class="n">Answers</th><th class="n">Correct</th><th class="n">Silently wrong</th><th class="n">Declined</th></tr></thead><tbody><tr><td>Subscriptions</td><td>opus</td><td class="n">135</td><td class="n">41</td><td class="n sw">54</td><td class="n">40</td></tr><tr><td>Subscriptions</td><td>sonnet</td><td class="n">135</td><td class="n">41</td><td class="n sw">91</td><td class="n">3</td></tr><tr><td>Retail</td><td>opus</td><td class="n">390</td><td class="n">40</td><td class="n sw">227</td><td class="n">55</td></tr><tr><td>Retail</td><td>sonnet</td><td class="n">390</td><td class="n">28</td><td class="n sw">272</td><td class="n">1</td></tr></tbody></table></div>
+<p><b>The tool runs without me.</b> <a href="https://github.com/sandovabarbora/quaesitor-zero">quaesitor-zero</a> generates questions your schema cannot answer and scores whether your assistant admits it. Version 0.1.4, Apache-2.0, installable <a href="https://pypi.org/project/quaesitor-zero/">from PyPI</a>. It has no network code, no telemetry and no model access, so it cannot report to me what it found on your data — you run it, and you keep the result. Replies are classified mechanically and every classification prints the rule that fired, because a service arguing that confident output needs a signal should not rest its own number on a model's judgement.</p>
 
-<p>Read the correct column first: the two models land within a few answers of each other on both packs, and on one of them they are level. Now read the last column. One of them declines 55 times and the other 1. They do not differ in what they know. They differ in what they do when they do not know it: one answers anyway, the other stops.</p>
+<p><b>The measurements are published with the run behind them.</b> 5,790 measured answers as of August 2026, across fifteen languages, against a fixed set of 26 questions, each built around a different way a number comes back wrong. Each figure on this site is injected from those runs at build time rather than typed, and each carries the fingerprint of the run it came from. The build refuses when the runs stop supporting a sentence, which has happened and is the point.</p>
 
-<p>A declined answer is visible friction: someone notices and escalates. A confident wrong one is a number that looks exactly right and walks straight into a slide, a board pack, a decision. Choosing the &ldquo;better&rdquo; model does not fix this. It relocates it.</p>
+<p><b>The load-bearing claims are somebody else's.</b> Of the things this work depends on, eight were established by people with no stake in it — that benchmark accuracy does not transfer to a private warehouse, that the failure arrives looking plausible, that declining beats guessing. They are <a href="evidence.html">set out with who established what</a>, along with the strongest measured objection to this service, which is also somebody else's work.</p>
 
-<h2>Five warehouses, and the pattern across them</h2>
-<p>The fair objection is that we designed those two warehouses and planted those traps. So the same method ran against a standard schema, and against data nobody designed at all.</p>
+<h2>What &ldquo;we&rdquo; means on this site</h2>
 
-<table class="tbl">
-<thead><tr><th>Warehouse</th><th>What it is</th><th class="n">Silently wrong (A / B)</th></tr></thead>
-<tbody>
-<tr><td>Retail</td><td>traps we planted</td><td>70% / 58%</td></tr>
-<tr><td>Subscriptions</td><td>traps we planted</td><td>67% / 40%</td></tr>
-<tr><td>TPC-DS</td><td>standard schema, generated</td><td>50% / 20%</td></tr>
-<tr><td>NYC taxi</td><td>real operations, 2.96M trips</td><td>80% / 70%</td></tr>
-<tr><td>CRM + ERP</td><td>two systems disagreeing</td><td>55% / 50%</td></tr>
-</tbody></table>
-<p class="note">A / B are the same two models, and the figure in brackets is how many answers each warehouse carries per model: Retail (390) and Subscriptions (135) in fifteen languages; NYC taxi (80) in eight languages; TPC-DS (10) and CRM + ERP (20) in Czech only. Directional, not like-for-like.</p>
+<p>It means one registered practice, not a team behind a curtain. There are no colleagues to meet, no bench of reviewers, and nobody to escalate to. If that is disqualifying for your procurement, it is better to find out on the scoping call than after an invoice, and I will say so there.</p>
 
-<p><strong>The cleaner and more designed the data, the better the models look.</strong> On TPC-DS (standardised in the 1990s, generated by DuckDB with one command), 50%, with no excuse attached. On a live taxi meter, 80%, both models, and the cautious one that declined 59 times on our retail pack declined zero times here. The synthetic warehouse was not unfairly hard. It was easier than reality.</p>
+<p>What replaces a second pair of eyes is that the work is handed over rather than asserted. Every verified query goes to your team to be read, not trusted. A verified query can be wrong — that is this method's own silent failure — and one such correction was stated in a customer's report before they could find it.</p>
 
-<h2>The one worth sitting with</h2>
-<p>Asked how many distinct products exist in the TPC-DS catalogue:</p>
-<div class="caught">
-  <div class="caught-row"><span>The assistant answered</span><span class="wrong">900</span></div>
-  <div class="caught-row"><span>Distinct products</span><span class="right">450</span></div>
-  <div class="caught-foot"><span>COUNT(DISTINCT i_item_sk), the surrogate key, one row per version</span><span>2&times; too high</span></div>
-</div>
-<p>The model reached for <code>DISTINCT</code>, which is what a careful person does, and applied it to the column that makes it wrong. On the taxi data it answered a question with no answer at all: the average tip, across the 439,191 cash journeys where the meter never records one.</p>
+<h2>Who</h2>
 
-<h2>Honest limits</h2>
-<p>This measures <strong>bare models</strong> given a schema and a question: no semantic layer, no tools, no retrieval, no retry. A deployed product sits on exactly that scaffolding and should score considerably better. That does not make the finding go away; it moves it. &ldquo;15% silently wrong in a production tool&rdquo; is a stronger claim than 70% on a bare model, because it has no excuse attached.</p>
-<p>Some of the packs&rsquo; traps were found to be absent from the data during construction, which would have scored a wrong query as correct. They are now checked by tests rather than by intention. A benchmark whose gold answers cannot be challenged is just a different kind of confident number.</p>
+<figure style="float:right; margin:6px 0 18px 28px; width:180px"></figure>
 
-<h2>Check it</h2>
-<p>Three of the five warehouses are public and named: TPC-DS is generated by DuckDB with one command, the NYC taxi records are published by the city&rsquo;s Taxi and Limousine Commission, and the CRM and ERP extracts come from a public medallion project. Anyone can stand them up and ask their own model the same questions. The suite (the questions, both queries behind each one, the builders, and the runs with their fingerprints) is what a client is handed at the end of an audit. If you find a verified query that is wrong, that is the most useful thing you could tell us; it has happened, and where it did, the fix is in the material.</p>
+<p>Ing. Barbora Šandová, MFDA &mdash; Master of Finance and Data Analytics at the Institute of Economic Studies, Charles University, with a minor in artificial intelligence at prg.ai. The practice is registered in Prague, Czech Republic, under Company ID (I&Ccaron;O) 17423830, and works in English and Czech.</p>
+
+<p><b>I build the systems this service reviews.</b> By day a data and cloud engineer at Alma Career, architecting a cross-cloud warehouse platform for international job portals: dbt models, Dagster orchestration, BigQuery materialisation and cost, infrastructure as code across production. That work included the internal assistant that answers analysts&rsquo; questions over that warehouse &mdash; the same class of system this review is pointed at, seen from the side that has to build it.</p>
+
+<p>Before that, production machine learning at Prague&rsquo;s smart-city data operator: a transport prediction pipeline serving over a hundred million predictions a month, and econometric work on 5.7 million delay records. Before that, fraud and forensic analytics at Ernst &amp; Young, where a finding was something you took to executives and to a regulator and then had to defend line by line.</p>
+
+<p>That last part is the habit this practice is built on. The measurements behind these pages are bounded with Wilson intervals and tested with McNemar and permutation tests in the harness rather than quoted flat, and the research is written up as a preprint on how the silent-failure rate moves across fifteen languages. The harness, the question sets and this site&rsquo;s own build are in the open; where a figure came from someone else&rsquo;s work, it is attributed on <a href="evidence.html">the evidence page</a>.</p>
+
+<p>Outside the practice: training assistance dogs &mdash; the one in the photograph is Varinka &mdash; and, before Prague, two years in Berlin, a year in New York and a year in Copenhagen. That last part is most of why this site explains what Act 93/2009 Coll. is rather than assuming you already know, and why the research asks what happens to the silent-failure rate when the question is not in English.</p>
+
+<h2>What I will not claim</h2>
+
+<p>Not an accredited certification, not a conformity assessment under the AI Act, and not a statutory audit under Act 93/2009 Coll. — those words name accredited activities and this is not one. What is issued is a verification statement: a finding, signed and dated, with the queries attached so that somebody who disagrees can show where.</p>
+
+<p>Nor that a clean result means the system is safe. A review measures whether you could tell when an answer is wrong. It does not make the answers right, and it ages the moment the model or the schema changes.</p>
+
+<p class="srcnote">The figures on this page are injected from the runs in this repository at build time; the colophon at the foot of the page names the build they came from.</p>
 
 <div class="end">
-  <p>Quaesitor audits AI systems that answer business questions over data warehouses, independently, with the verified queries written by hand, and a signature on the result. The measurement above is what an audit does to your own warehouse instead of a synthetic one.</p>
-  <p><a class="cta" href="mailto:barbora@quaesitor.eu?subject=Quaesitor%3A%20silent-failure%20rate">Email me for a 30-minute review</a></p>
-  <p class="stamp">quaesitor.eu &middot; silent-failure-rate</p>
+  <p>Quaesitor audits AI systems that answer business questions over data warehouses, independently, with the verified queries written by hand and a signature on the result.</p>
+  <p><a class="cta" href="mailto:barbora@quaesitor.eu?subject=Quaesitor%3A%20a%20scoping%20call">Email me for a 30-minute call</a></p>
+  <p class="stamp">quaesitor.eu &middot; about</p>
 </div>
 </main>
 </body>
@@ -608,25 +603,25 @@ main.article > .wrap{max-width:60rem}
   <p class="reading-kicker">Reading</p>
   <h2 id="reading-h">Published measurements, and the argument behind them.</h2>
   <ul class="reading-list">
-    <li><a href="/evidence">None of this is our claim to make</a>
+    <li><a href="evidence.html">None of this is our claim to make</a>
       <span>what other people established, and the one thing none of them did</span></li>
-      <li><a href="/abstention">The query ran and the answer was zero</a>
+      <li><a href="abstention.html">The query ran and the answer was zero</a>
       <span>ten questions past the edge of the data, and what each model did with them</span></li>
-      <li><a href="/traps">Twenty-six ways a number comes back wrong</a>
+      <li><a href="traps.html">Twenty-six ways a number comes back wrong</a>
       <span>the taxonomy, with the divergence each fault actually causes</span></li>
-    <li><a href="/access">Twelve ways an assistant answers with rows it was never allowed to see</a>
+    <li><a href="access.html">Twelve ways an assistant answers with rows it was never allowed to see</a>
       <span>layer 2, and the shortcut that gets past each restriction</span></li>
-    <li><a href="/documentation-finding">Documentation made the errors smaller, not rarer</a>
+    <li><a href="documentation-finding.html">Documentation made the errors smaller, not rarer</a>
       <span>a measurement, with the test stated and the p-values it actually earns</span></li>
-    <li><a href="/silent-failure-rate">Silent-failure rate: two models, opposite failure behaviour</a>
+    <li><a href="silent-failure-rate.html">Silent-failure rate: two models, opposite failure behaviour</a>
       <span>identical correct counts, and nothing alike about how they fail</span></li>
     <li><a href="silent-failures.html">What it does when it does not know</a>
       <span>the longer piece on abstention</span></li>
-    <li><a href="/why">Trust grows faster than accuracy</a>
+    <li><a href="why.html">Trust grows faster than accuracy</a>
       <span>why this exists</span></li>
   </ul>
 </section>
   </main>
-<div class="q-back"><a href="index.html">← Quaesitor overview</a> · <a href="../../#texts">← back to texts</a></div>
+<div class="q-back"><a href="../../../">← Quaesitor overview</a> · <a href="../../../#texts">← back to texts</a></div>
 </body>
 </html>

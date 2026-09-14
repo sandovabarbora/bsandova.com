@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>the evidence, and the gap in it — Barbora Šandová</title>
-<meta name="description" content="Eight things this work depends on, established by people with no stake in it, and the one thing none of them does: run the measurement on your warehouse.">
+<title>silent-failure rate — Barbora Šandová</title>
+<meta name="description" content="Two frontier models, the same questions, the same number of right answers and opposite failure behaviour. What the silent-failure rate measures and why accuracy does not.">
 <meta name="theme-color" content="#161616">
-<link rel="canonical" href="https://bsandova.com/texts/quaesitor/evidence.html">
+<link rel="canonical" href="https://bsandova.com/texts/quaesitor/silent-failure-rate.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../style.css">
-<link rel="stylesheet" href="../../text.css">
+<link rel="stylesheet" href="../../../style.css">
+<link rel="stylesheet" href="../../../text.css">
 <style>
 /* quaesitor.eu stylesheet, palette remapped; see tools/port_quaesitor.py */
 html { scroll-behavior: smooth; }
@@ -62,8 +62,8 @@ html { scroll-behavior: smooth; }
         font-size: 13px !important; padding: 9px 14px !important;
         white-space: nowrap;
       }
-      nav a[href="/"] span:last-child { font-size: 17px !important; }
-      nav a[href="/"] > span:first-child { width: 30px !important; height: 30px !important; }
+      nav a[href="../"] span:last-child { font-size: 17px !important; }
+      nav a[href="../"] > span:first-child { width: 30px !important; height: 30px !important; }
     }
 
 
@@ -544,200 +544,89 @@ main.article > .wrap{max-width:60rem}
 </style>
 </head>
 <body>
-<div class="top"><b><a href="../../">bsandova.com</a></b><nav><a href="../../#works">Works</a><a href="../../#texts">Texts</a><a href="../../#about">About</a><a href="../../#contact">Contact</a></nav><span class="tr">Quaesitor · literature · en</span></div>
+<div class="top"><b><a href="../../../">bsandova.com</a></b><nav><a href="../../../#works">Works</a><a href="../../../#texts">Texts</a><a href="../../../#about">About</a><a href="../../../#contact">Contact</a></nav><span class="tr">Quaesitor · measurement 02 · en</span></div>
 <p class="q-note"><b>Quaesitor</b> · independent review of AI assistants over data warehouses · first published at quaesitor.eu, 2026 · the service is retired, the findings are not</p>
 <main class="article">
+<main class="wrap">
+<p class="kicker">Silent-failure rate &middot; text-to-SQL</p>
+<h1>Silent-failure rate</h1>
+<p class="dek">Two frontier models, the same number of right answers, opposite failure behaviour.</p>
 
-    <p class="kicker">The evidence</p>
-    <h1>None of this is our claim to make</h1>
-    <p class="lede">Eight things this work depends on were established by people
-    with no stake in it. We did not discover that these systems answer
-    confidently and wrongly over real data, and a service that implied otherwise
-    would be worth less, not more. What follows is who established what, and the
-    one thing none of them did.</p>
+<p>A <strong>silent failure</strong> is an answer that runs without error, looks plausible, and is wrong, with nothing downstream carrying the signal that it should not be trusted. The <strong>silent-failure rate</strong> is the share of answers that fail this way. It is not accuracy, and it gets worse as models improve, because trust grows faster than correctness.</p>
 
-    <h2>That a benchmark number does not transfer to your warehouse</h2>
+<p>Every benchmark of text-to-SQL reports accuracy. For anyone deploying one of these systems it is close to useless on its own, because it collapses two very different failures (declining, and being confidently wrong) into the same &ldquo;not correct&rdquo;.</p>
 
-    <p>This is the load-bearing one. If accuracy measured on a public schema
-    predicted accuracy on yours, there would be no reason to measure yours, and
-    no reason for this company to exist.</p>
+<h2>Two models, same correctness, opposite behaviour</h2>
+<p>Two frontier models (A and B), the same questions over a warehouse, a hand-written verified query behind every one. fifteen languages, three repeats each.</p>
 
-    <p>It does not. The same class of model that scores in the eighties on
-    public benchmarks reaches <b>10.8%</b> on questions taken from real private
-    warehouses, and <b>30.1%</b> even when handed oracle hints about the
-    subtasks. That is not a small correction; it is a different measurement.
-    Whatever number a vendor quotes you was not taken on your schema.</p>
+<div class="scroller"><table class="tbl"><thead><tr><th>Pack</th><th>Model</th><th class="n">Answers</th><th class="n">Correct</th><th class="n">Silently wrong</th><th class="n">Declined</th></tr></thead><tbody><tr><td>Subscriptions</td><td>opus</td><td class="n">135</td><td class="n">41</td><td class="n sw">54</td><td class="n">40</td></tr><tr><td>Subscriptions</td><td>sonnet</td><td class="n">135</td><td class="n">41</td><td class="n sw">91</td><td class="n">3</td></tr><tr><td>Retail</td><td>opus</td><td class="n">390</td><td class="n">40</td><td class="n sw">227</td><td class="n">55</td></tr><tr><td>Retail</td><td>sonnet</td><td class="n">390</td><td class="n">28</td><td class="n sw">272</td><td class="n">1</td></tr></tbody></table></div>
 
-    <ol class="lit"><li class="lit-row">
-          <p class="lit-ref">Chen, P.B. <i>et al.</i> (2026) &lsquo;<a class="lit-title" href="https://arxiv.org/abs/2409.02038">BEAVER: an enterprise benchmark for text-to-SQL</a>&rsquo;, <i>arXiv</i>:2409.02038 [cs.DB]. Available at: <a href="https://arxiv.org/abs/2409.02038">arxiv.org</a> (Accessed: 24 August 2026).</p>
-          <p class="lit-why"><b>Establishes that a benchmark number does not transfer.</b> The same class of model that scores in the eighties on public benchmarks reaches 10.8% on 9,128 question and query pairs taken from real private warehouses, across 812 tables and 19 domains, and 30.1% even when handed oracle hints. Whatever accuracy a vendor quotes you was not measured on your schema, and this is how far apart the two numbers can be.</p>
-        </li><li class="lit-row">
-          <p class="lit-ref">Stonebraker, M. and Chen, P.B. (2026) &lsquo;<a class="lit-title" href="https://cacm.acm.org/blogcacm/if-you-think-you-can-do-real-world-text-to-sql/">If you think you can do real-world text-to-SQL</a>&rsquo;, <i>BLOG@CACM</i>, 20 July. Available at: <a href="https://cacm.acm.org/blogcacm/if-you-think-you-can-do-real-world-text-to-sql/">cacm.acm.org</a> (Accessed: 24 August 2026).</p>
-          <p class="lit-why"><b>The same finding, argued rather than tabulated,</b> by one of the authors above. A benchmark built on a tidy public schema, on data the models have already trained on, measures something other than production.</p>
-        </li></ol>
+<p>Read the correct column first: the two models land within a few answers of each other on both packs, and on one of them they are level. Now read the last column. One of them declines 55 times and the other 1. They do not differ in what they know. They differ in what they do when they do not know it: one answers anyway, the other stops.</p>
 
-    <h2>That the failure arrives looking plausible</h2>
+<p>A declined answer is visible friction: someone notices and escalates. A confident wrong one is a number that looks exactly right and walks straight into a slide, a board pack, a decision. Choosing the &ldquo;better&rdquo; model does not fix this. It relocates it.</p>
 
-    <p>A system that failed loudly would need no review. The reason this work
-    exists is that the failure returns a number, formatted correctly, in the
-    range a reader expects.</p>
+<h2>Five warehouses, and the pattern across them</h2>
+<p>The fair objection is that we designed those two warehouses and planted those traps. So the same method ran against a standard schema, and against data nobody designed at all.</p>
 
-    <p>Across <b>4,602</b> incorrect queries, <b>81.2%</b> are schema-level
-    errors: the wrong column, the wrong sense of a term. Worked through on a
-    single schema, one such error returns <b>271,049</b> where <b>154,050</b> is
-    correct, an overstatement of <b>76%</b>, and in the author's own words
-    nothing flags it.</p>
+<table class="tbl">
+<thead><tr><th>Warehouse</th><th>What it is</th><th class="n">Silently wrong (A / B)</th></tr></thead>
+<tbody>
+<tr><td>Retail</td><td>traps we planted</td><td>70% / 58%</td></tr>
+<tr><td>Subscriptions</td><td>traps we planted</td><td>67% / 40%</td></tr>
+<tr><td>TPC-DS</td><td>standard schema, generated</td><td>50% / 20%</td></tr>
+<tr><td>NYC taxi</td><td>real operations, 2.96M trips</td><td>80% / 70%</td></tr>
+<tr><td>CRM + ERP</td><td>two systems disagreeing</td><td>55% / 50%</td></tr>
+</tbody></table>
+<p class="note">A / B are the same two models, and the figure in brackets is how many answers each warehouse carries per model: Retail (390) and Subscriptions (135) in fifteen languages; NYC taxi (80) in eight languages; TPC-DS (10) and CRM + ERP (20) in Czech only. Directional, not like-for-like.</p>
 
-    <ol class="lit"><li class="lit-row">
-          <p class="lit-ref">Davidson, J. (2026) &lsquo;<a class="lit-title" href="https://omni.co/blog/why-text-to-sql-fails">Why text-to-SQL fails</a>&rsquo;, <i>Omni</i>, 8 April. Available at: <a href="https://omni.co/blog/why-text-to-sql-fails">omni.co</a> (Accessed: 24 August 2026).</p>
-          <p class="lit-why"><b>Establishes the shape of the failure and why it survives review.</b> Across 4,602 incorrect queries, 81.2% are schema-level errors, and the result arrives as a plausible but incorrect answer rather than an error. Catching it means reading the generated SQL, which is the expertise the tool was bought to replace, and that is the reason this work has to be done by somebody outside the team.</p>
-        </li><li class="lit-row">
-          <p class="lit-ref">Ghosh, N. (2026) &lsquo;<a class="lit-title" href="https://www.nirmalya.net/posts/2026/02/text-to-sql-naive-way/">Text-to-SQL the na&iuml;ve way: why most demos fail in production</a>&rsquo;, 18 February. Available at: <a href="https://www.nirmalya.net/posts/2026/02/text-to-sql-naive-way/">nirmalya.net</a> (Accessed: 24 August 2026).</p>
-          <p class="lit-why"><b>Establishes that the traps are real rather than invented for a benchmark.</b> One of ours, worked through independently on a 35-table schema: row duplication returns 271,049 where 154,050 is correct, a 76% overstatement, and in his words nothing flags it.</p>
-        </li></ol>
+<p><strong>The cleaner and more designed the data, the better the models look.</strong> On TPC-DS (standardised in the 1990s, generated by DuckDB with one command), 50%, with no excuse attached. On a live taxi meter, 80%, both models, and the cautious one that declined 59 times on our retail pack declined zero times here. The synthetic warehouse was not unfairly hard. It was easier than reality.</p>
 
-    <h2>That it is the majority of what goes wrong, not an edge case</h2>
+<h2>The one worth sitting with</h2>
+<p>Asked how many distinct products exist in the TPC-DS catalogue:</p>
+<div class="caught">
+  <div class="caught-row"><span>The assistant answered</span><span class="wrong">900</span></div>
+  <div class="caught-row"><span>Distinct products</span><span class="right">450</span></div>
+  <div class="caught-foot"><span>COUNT(DISTINCT i_item_sk), the surrogate key, one row per version</span><span>2&times; too high</span></div>
+</div>
+<p>The model reached for <code>DISTINCT</code>, which is what a careful person does, and applied it to the column that makes it wrong. On the taxi data it answered a question with no answer at all: the average tip, across the 439,191 cash journeys where the meter never records one.</p>
 
-    <p>Silent failure is easy to dismiss as a corner case that careful teams
-    avoid. Somebody has now counted. A taxonomy validated against fifty
-    real-world incidents, taken from court documents and regulatory filings
-    rather than from anecdote, finds that most of them were silent.</p>
+<h2>Honest limits</h2>
+<p>This measures <strong>bare models</strong> given a schema and a question: no semantic layer, no tools, no retrieval, no retry. A deployed product sits on exactly that scaffolding and should score considerably better. That does not make the finding go away; it moves it. &ldquo;15% silently wrong in a production tool&rdquo; is a stronger claim than 70% on a bare model, because it has no excuse attached.</p>
+<p>Some of the packs&rsquo; traps were found to be absent from the data during construction, which would have scored a wrong query as correct. They are now checked by tests rather than by intention. A benchmark whose gold answers cannot be challenged is just a different kind of confident number.</p>
 
-    <ol class="lit"><li class="lit-row"><p class="lit-ref">Bajaj, P. (2026) &lsquo;<a class="lit-title" href="https://arxiv.org/abs/2608.02786">Evaluation blindness: how silent measurement failures corrupt AI systems from training to deployment</a>&rsquo;, <i>arXiv</i>:2608.02786. Available at: <a href="https://arxiv.org/abs/2608.02786">arxiv.org</a> (Accessed: 24 August 2026).</p><p class="lit-why"><b>Establishes that silent failure is the majority case, not the edge case.</b> A six-class taxonomy validated against <b>50</b> real-world incidents drawn from court documents and regulatory filings finds <b>53%</b> of verifiable public failures were silent, with one whole category silent by structural definition.</p></li></ol>
+<h2>Check it</h2>
+<p>Three of the five warehouses are public and named: TPC-DS is generated by DuckDB with one command, the NYC taxi records are published by the city&rsquo;s Taxi and Limousine Commission, and the CRM and ERP extracts come from a public medallion project. Anyone can stand them up and ask their own model the same questions. The suite (the questions, both queries behind each one, the builders, and the runs with their fingerprints) is what a client is handed at the end of an audit. If you find a verified query that is wrong, that is the most useful thing you could tell us; it has happened, and where it did, the fix is in the material.</p>
 
-    <h2>That catching it means reading the SQL</h2>
-
-    <p>This is the commercial fact, and it is why the work cannot be handed back
-    to the team that bought the tool. Verifying an answer means reading the query
-    that produced it, which is the expertise the tool was bought to replace. The
-    person best placed to check is the person the system was meant to make
-    unnecessary.</p>
-
-    <p>It is the same argument as an external penetration test, and it is not
-    ours: it is stated plainly in the work above, by people selling a semantic
-    layer rather than a review.</p>
-
-    <h2>That declining is correct behaviour, not a shortfall</h2>
-
-    <p>An assistant that says it cannot answer is not underperforming. In a
-    different setting entirely, dataset retrieval on the open web rather than SQL
-    over a warehouse, the conclusion is the same: an empty state beats a
-    probabilistic guess. The broader agent there answers <b>40%</b> more
-    questions and is <b>65.7%</b> less precise for it.</p>
-
-    <p>We measure that axis directly at <a href="/abstention">the abstention
-    finding</a>, and it separates two models further than anything else we have
-    run.</p>
-
-    <p>One qualification, since it cuts against us as much as for us. That paper
-    argues richer context is the fix. Our own replications complicate exactly
-    that: schema documentation did not make the answers more correct, it made the
-    errors more plausible. Both results are on this site, at
-    <a href="/documentation-finding">the documentation finding</a>.</p>
-
-    <ol class="lit"><li class="lit-row">
-          <p class="lit-ref">Chen, S., Alrashed, T., Halevy, A. and Noy, N. (2026) &lsquo;<a class="lit-title" href="https://arxiv.org/abs/2605.28787">Do data agents need semantic metadata? A comparative study in agentic data retrieval</a>&rsquo;, <i>arXiv</i>:2605.28787 [cs.IR]. Available at: <a href="https://arxiv.org/abs/2605.28787">arxiv.org</a> (Accessed: 24 August 2026).</p>
-          <p class="lit-why"><b>Establishes that declining is the correct behaviour, not a shortfall.</b> A different setting entirely, and the same conclusion: an empty state beats a probabilistic guess, with their broader agent answering 40% more questions and being 65.7% less precise for it. Their argument is that richer context is the fix, which is the one claim here our own measurements complicate rather than support.</p>
-        </li><li class="lit-row"><p class="lit-ref">Zhu, X., Wang, Z., Mei, K., Xu, W., Guo, M., Yang, B., Fan, J. and Metaxas, D.N. (2026) &lsquo;<a class="lit-title" href="https://arxiv.org/abs/2605.18792">Trust or abstain? A self-aware RAG approach</a>&rsquo;, <i>arXiv</i>:2605.18792. Available at: <a href="https://arxiv.org/abs/2605.18792">arxiv.org</a> (Accessed: 24 August 2026).</p><p class="lit-why">Builds the decision as four cells rather than two, trusting the model, trusting the context, trusting either, or abstaining, and reports risk&ndash;coverage curves over roughly <b>69,000</b> query-context instances. The same shape of matrix this suite scores against.</p></li></ol>
-
-    <h2>That a model agreeing with itself is not evidence it is right</h2>
-
-    <p>The cheapest way to check an answer is to ask again and see whether the
-    same thing comes back. If that worked, none of this would need a service.</p>
-
-    <p>It does not work, and two independent measurements now say so. In
-    retrieval, a large share of errors show no disagreement at all across
-    repeated sampling. In our own runs, restricting answers to those where all
-    three attempts agreed leaves the error rate at <b>84.9%</b> against
-    <b>85.1%</b> across everything, while costing twenty points of coverage.
-    Agreement is free to measure and worth almost nothing.</p>
-
-    <ol class="lit"><li class="lit-row"><p class="lit-ref">Julka, S. (2026) &lsquo;<a class="lit-title" href="https://arxiv.org/abs/2606.22728">When confidence takes the wrong path: diagnosing retrieval-state lock-in in RAG</a>&rsquo;, <i>arXiv</i>:2606.22728. Available at: <a href="https://arxiv.org/abs/2606.22728">arxiv.org</a> (Accessed: 24 August 2026).</p><p class="lit-why"><b>Establishes that self-agreement is not evidence of correctness.</b> Of the errors measured there, <b>42%</b> under knowledge-graph retrieval and <b>59%</b> under dense retrieval showed zero dispersion across five samples: the system agreed with itself every time and was wrong every time. He calls it agreement blindness.</p></li></ol>
-
-    <h2>That the language of the question is a measurable variable</h2>
-
-    <p>Not an assumption. An <b>8.79%</b> accuracy gap outside English is
-    reported and reproducible, which is why we measure fifteen languages rather
-    than claiming an answer. Our own result there is a null one, and published as
-    such.</p>
-
-    <ol class="lit"><li class="lit-row">
-          <p class="lit-ref">Almohaimeed, S., Al Ghanim, M., Almohaimeed, S. and Wang, L. (2024) &lsquo;<a class="lit-title" href="https://doi.org/10.1145/3605098.3636065">Ar-Spider: text-to-SQL in Arabic</a>&rsquo;, in <i>Proceedings of the 39th ACM/SIGAPP Symposium on Applied Computing</i>. New York: ACM. doi:<a href="https://doi.org/10.1145/3605098.3636065">10.1145/3605098.3636065</a>.</p>
-          <p class="lit-why"><b>Establishes that the language a question is asked in is a measurable variable,</b> with an 8.79% accuracy gap outside English. One of the few places it is measured rather than assumed, which is why we measure it too rather than claiming the answer.</p>
-        </li></ol>
-
-    <h2>That the bill arrives at the organisation, not the pipeline</h2>
-
-    <p>A wrong number is an engineering event for about a day. After that it is
-    a decision somebody made, a figure somebody published, and a question
-    somebody cannot answer when asked where it came from. The accumulating
-    version of that has a name and a proposed measure.</p>
-
-    <ol class="lit"><li class="lit-row"><p class="lit-ref">Korolev, Y. (2025) &lsquo;<a class="lit-title" href="https://doi.org/10.65114/aide.gmry6g41">The year of silent failures: AI technical debt and the crisis of verification</a>&rsquo;, <i>Journal of Human&ndash;AI Decision-Making Systems</i>. doi:<a href="https://doi.org/10.65114/aide.gmry6g41">10.65114/aide.gmry6g41</a>.</p><p class="lit-why"><b>Establishes that the cost lands on the organisation, not the pipeline.</b> Names the accumulating gap between what an organisation produces and what it can still verify, explain and reproduce, and proposes measuring it. The engineering failure is upstream; this is where it is eventually paid for.</p></li></ol>
-
-    <h2>And the objection: that a semantic layer fixes it</h2>
-
-    <p>The fair reading of the work below is that this problem has a product
-    answer. Give the model your metric definitions rather than just your tables
-    and accuracy rises by seventeen to twenty-three points across three frontier
-    models. If that closed the gap, there would be nothing here worth buying.</p>
-
-    <p>It does not close it. It moves roughly half of the wrong answers into the
-    right column and leaves <b>about a third of every answer still wrong</b>.
-    Sixty-eight per cent is not the accuracy at which people check; it is the
-    accuracy at which they stop. That is the argument at
-    <a href="/why">why this exists</a>, and this benchmark installs it rather
-    than refuting it.</p>
-
-    <p>The second thing is what the benchmark did not measure. It reports
-    accuracy and does not classify the errors, so it cannot say whether the
-    remaining third became easier or harder to notice. Our own replications say
-    that is exactly where the risk moves: documentation left correctness
-    unchanged and made the surviving errors more plausible. Nobody has run that
-    measurement on a semantic layer.</p>
-
-    <p>And a semantic layer is itself a claim. Somebody wrote those definitions.
-    Whether they match the data, and whether the model used them rather than
-    going around them, is unverified by construction: the layer is the thing
-    doing the checking. The benchmark below used a document its authors wrote
-    for a clean public dataset, which is the most favourable case there is.</p>
-
-    <ol class="lit"><li class="lit-row"><p class="lit-ref">Rumiantsau, M. (2026) &lsquo;<a class="lit-title" href="https://cube.dev/blog/why-semantic-layers-make-llm-analytics-reliable-a-paired-benchmark-across-three-frontier-models">Why semantic layers make LLM analytics reliable: a paired benchmark across three frontier models</a>&rsquo;, <i>Cube</i>, 28 April. Available at: <a href="https://cube.dev/blog/why-semantic-layers-make-llm-analytics-reliable-a-paired-benchmark-across-three-frontier-models">cube.dev</a> (Accessed: 24 August 2026).</p><p class="lit-why"><b>The strongest objection to this service, and it is a measured one.</b> One hundred questions, three models, each asked twice: schema alone against schema plus a four-kilobyte semantic layer. Accuracy rose from <b>50.5%</b> to <b>67.7%</b>, <b>46.5%</b> to <b>68.7%</b>, and <b>45.5%</b> to <b>68.7%</b>.</p></li></ol>
-
-    <h2>What none of them does</h2>
-
-    <p>Every one of these establishes a piece of the problem. Not one of them
-    runs on your warehouse, against your definitions, with your access rules, and
-    hands you the queries afterwards. That is the entire difference between
-    reading about this and knowing your own number, and it is the only thing we
-    sell.</p>
-
-    <p>The method is described in full at <a href="/method">the method</a>, and
-    what we do not claim is on the same page.</p>
-
+<div class="end">
+  <p>Quaesitor audits AI systems that answer business questions over data warehouses, independently, with the verified queries written by hand, and a signature on the result. The measurement above is what an audit does to your own warehouse instead of a synthetic one.</p>
+  <p><a class="cta" href="mailto:barbora@quaesitor.eu?subject=Quaesitor%3A%20silent-failure%20rate">Email me for a 30-minute review</a></p>
+  <p class="stamp">quaesitor.eu &middot; silent-failure-rate</p>
+</div>
+</main>
+</body>
 <section class="reading" aria-labelledby="reading-h">
   <p class="reading-kicker">Reading</p>
   <h2 id="reading-h">Published measurements, and the argument behind them.</h2>
   <ul class="reading-list">
-    <li><a href="/evidence">None of this is our claim to make</a>
+    <li><a href="evidence.html">None of this is our claim to make</a>
       <span>what other people established, and the one thing none of them did</span></li>
-      <li><a href="/abstention">The query ran and the answer was zero</a>
+      <li><a href="abstention.html">The query ran and the answer was zero</a>
       <span>ten questions past the edge of the data, and what each model did with them</span></li>
-      <li><a href="/traps">Twenty-six ways a number comes back wrong</a>
+      <li><a href="traps.html">Twenty-six ways a number comes back wrong</a>
       <span>the taxonomy, with the divergence each fault actually causes</span></li>
-    <li><a href="/access">Twelve ways an assistant answers with rows it was never allowed to see</a>
+    <li><a href="access.html">Twelve ways an assistant answers with rows it was never allowed to see</a>
       <span>layer 2, and the shortcut that gets past each restriction</span></li>
-    <li><a href="/documentation-finding">Documentation made the errors smaller, not rarer</a>
+    <li><a href="documentation-finding.html">Documentation made the errors smaller, not rarer</a>
       <span>a measurement, with the test stated and the p-values it actually earns</span></li>
-    <li><a href="/silent-failure-rate">Silent-failure rate: two models, opposite failure behaviour</a>
+    <li><a href="silent-failure-rate.html">Silent-failure rate: two models, opposite failure behaviour</a>
       <span>identical correct counts, and nothing alike about how they fail</span></li>
     <li><a href="silent-failures.html">What it does when it does not know</a>
       <span>the longer piece on abstention</span></li>
-    <li><a href="/why">Trust grows faster than accuracy</a>
+    <li><a href="why.html">Trust grows faster than accuracy</a>
       <span>why this exists</span></li>
   </ul>
 </section>
   </main>
-<div class="q-back"><a href="index.html">← Quaesitor overview</a> · <a href="../../#texts">← back to texts</a></div>
+<div class="q-back"><a href="../../../">← Quaesitor overview</a> · <a href="../../../#texts">← back to texts</a></div>
 </body>
 </html>

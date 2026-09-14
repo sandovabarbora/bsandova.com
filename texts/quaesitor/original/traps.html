@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>sample report — Barbora Šandová</title>
-<meta name="description" content="A page of a real review report, with the assistant&#x27;s own figures beside the verified ones.">
+<title>the silent failure taxonomy — Barbora Šandová</title>
+<meta name="description" content="Twenty-six ways a number comes back wrong and looks fine: a measured taxonomy of silent failure in analytics over a data warehouse, with the divergence each fault causes.">
 <meta name="theme-color" content="#161616">
-<link rel="canonical" href="https://bsandova.com/texts/quaesitor/report-built.html">
+<link rel="canonical" href="https://bsandova.com/texts/quaesitor/traps.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../style.css">
-<link rel="stylesheet" href="../../text.css">
+<link rel="stylesheet" href="../../../style.css">
+<link rel="stylesheet" href="../../../text.css">
 <style>
 /* quaesitor.eu stylesheet, palette remapped; see tools/port_quaesitor.py */
 html { scroll-behavior: smooth; }
@@ -62,8 +62,8 @@ html { scroll-behavior: smooth; }
         font-size: 13px !important; padding: 9px 14px !important;
         white-space: nowrap;
       }
-      nav a[href="/"] span:last-child { font-size: 17px !important; }
-      nav a[href="/"] > span:first-child { width: 30px !important; height: 30px !important; }
+      nav a[href="../"] span:last-child { font-size: 17px !important; }
+      nav a[href="../"] > span:first-child { width: 30px !important; height: 30px !important; }
     }
 
 
@@ -544,78 +544,80 @@ main.article > .wrap{max-width:60rem}
 </style>
 </head>
 <body>
-<div class="top"><b><a href="../../">bsandova.com</a></b><nav><a href="../../#works">Works</a><a href="../../#texts">Texts</a><a href="../../#about">About</a><a href="../../#contact">Contact</a></nav><span class="tr">Quaesitor · sample report · en</span></div>
+<div class="top"><b><a href="../../../">bsandova.com</a></b><nav><a href="../../../#works">Works</a><a href="../../../#texts">Texts</a><a href="../../../#about">About</a><a href="../../../#contact">Contact</a></nav><span class="tr">Quaesitor · catalogue · en</span></div>
 <p class="q-note"><b>Quaesitor</b> · independent review of AI assistants over data warehouses · first published at quaesitor.eu, 2026 · the service is retired, the findings are not</p>
-<main class="article"><div class="wrap">
-<div style="min-height:100vh; padding-bottom:80px">
-  
-  <div style="max-width:760px; margin:56px auto 0; background:#1F1F1F; border:1px solid #3A3A36; box-shadow:0 24px 60px rgba(220,220,214,.16); padding:clamp(28px,6vw,60px) clamp(20px,7vw,64px)">
-    <div style="display:flex; justify-content:space-between; border-bottom:1px solid #3A3A36; padding-bottom:14px; margin-bottom:32px; font-family:'JetBrains Mono',monospace; font-size:11px">
-      <span style="letter-spacing:.22em; text-transform:uppercase; color:#D6FF3A">Review report · sample extract</span>
-      <span style="color:#8A8A84">Q-2026-041</span>
-    </div>
-    <h1 style="margin:0 0 8px">Findings of the review of the warehouse assistant</h1>
-    <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#8A8A84; margin-bottom:36px">anonymised composite · 26 questions · 3 repeats · queries handed over</div>
+<main class="article">
 
-    <h2 style="text-transform:uppercase; margin:0 0 10px">1. Summary</h2>
-    <p style="font-size:15.5px; margin:0 0 28px">The assistant's correct answers are not the story; both models tested return the same number of them. They differ in what they do when they cannot answer: one declines, the other returns a well-formatted wrong number. The findings below are the second kind.</p>
+    <p class="kicker">The taxonomy</p>
+    <h1>Twenty-six ways a number comes back wrong and looks fine</h1>
+    <p class="lede">Each one is planted in a warehouse built for the purpose,
+    with a verified query and a naive one that differ in exactly that place, so
+    the divergence beside it can be attributed to that fault and not to a
+    mixture of them.</p>
 
-    <h2 style="text-transform:uppercase; margin:0 0 10px">2. Representative finding: F-07</h2>
-    <div style="display:flex; gap:8px; margin-bottom:14px">
-      <span style="font-family:'JetBrains Mono',monospace; font-size:12px; padding:4px 10px; background:#FF6A3D; color:#161616">silent failure</span>
-      <span style="font-family:'JetBrains Mono',monospace; font-size:12px; padding:4px 10px; background:#232323; color:#161616">cohort definition</span>
-    </div>
-    <div style="border:1px solid #3A3A36; margin-bottom:28px; font-size:14.5px">
-      <div style="display:grid; grid-template-columns:140px 1fr; border-bottom:1px solid #3A3A36"><div style="padding:12px 16px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#8A8A84">QUESTION</div><div style="padding:12px 16px">"How many customers made a second purchase within 30 days of their first?"</div></div>
-      <div style="display:grid; grid-template-columns:140px 1fr; border-bottom:1px solid #3A3A36"><div style="padding:12px 16px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#8A8A84">ASSISTANT</div><div style="padding:12px 16px; color:#FF6A3D">684 customers. The cohort was anchored on the registration date, not the first purchase. The SQL is syntactically correct and ran without error.</div></div>
-      <div style="display:grid; grid-template-columns:140px 1fr; border-bottom:1px solid #3A3A36"><div style="padding:12px 16px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#8A8A84">VERIFIED</div><div style="padding:12px 16px">621 customers. Definition owned by Head of BI, stated in writing; query read against it clause by clause; anchored to the closed-month retention report.</div></div>
-      <div style="display:grid; grid-template-columns:140px 1fr"><div style="padding:12px 16px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#8A8A84">DIVERGENCE</div><div style="padding:12px 16px">10.1%, reproducible across repeats. Nothing downstream carried a signal that the number should not be trusted.</div></div>
-    </div>
+    <p>Failure modes in analytics get discussed as anecdotes. Somebody double
+    counted a join, somebody forgot the cancelled orders. Naming them is not
+    difficult and several of these names already exist in the trade. What is
+    missing is how large each one is when it happens, because that is what
+    decides whether anybody notices.</p>
 
-    <h2 style="text-transform:uppercase; margin:0 0 10px">3. Fix and retest</h2>
-    <ol style="font-size:15.5px; margin:0 0 36px; padding-left:22px; line-height:1.7">
-      <li>Anchor cohort questions in the semantic layer to the first-purchase date; the written definition is included as Appendix A.</li>
-      <li>Add the naive/verified query pair to your regression suite; both are handed over with this report.</li>
-      <li>The retest of remediated findings is included in the engagement.</li>
-    </ol>
+    <p>So every row carries a measured divergence: the median distance between
+    what the assistant answered and what the verified query returns, across the
+    finished runs in which that trap produced a silently wrong answer. The
+    figures come from the runs at build time. Nothing here is estimated.</p>
 
-    <div style="display:flex; justify-content:space-between; align-items:flex-end; border-top:1px solid #3A3A36; padding-top:22px">
-      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#8A8A84">
-        <div style="font-weight:700; font-size:18px; color:#DCDCD6; font-family:'Space Grotesk',sans-serif; margin-bottom:6px">Ing. Barbora Šandová, MFDA</div>
-        reviewer of record · queries handed over to be read
-      </div>
-      <div style="width:110px; height:110px; border-radius:50%; background:#D6FF3A; color:#161616; display:flex; flex-direction:column; align-items:center; justify-content:center; transform:rotate(-8deg); font-weight:700">REVIEWED<small style="font-family:'JetBrains Mono',monospace; font-size:8px; color:#8A8A84; font-weight:400">Q·MMXXVI</small></div>
-    </div>
-    <p style="margin:28px 0 0; font-family:'JetBrains Mono',monospace; font-size:11px; color:#8A8A84">this sample is an anonymised composite. the cohort example is verifiable in our repository, not quoted from a blog.</p>
-  </div>
-  <div style="text-align:center; margin-top:36px; font-family:'JetBrains Mono',monospace; font-size:13px"><a href="/#pricing">Commission a review like this one →</a></div>
-</div>
+    <div class="scroller"><table class="tbl"><thead><tr><th>Trap</th><th>What it does</th><th class="n">Median error</th><th class="n">Runs</th></tr></thead><tbody><tr><td><b>active customer</b></td><td>Defined one way in one department and another way elsewhere</td><td class="n">74.1%</td><td class="n">25</td></tr><tr><td><b>cohort definition</b></td><td>First purchase against registration against first visit</td><td class="n">10.1%</td><td class="n">43</td></tr><tr><td><b>currency mixing</b></td><td>Currencies summed together without conversion</td><td class="n">73.2%</td><td class="n">6</td></tr><tr><td><b>dirty categories</b></td><td>The same category written three ways</td><td class="n">94.4%</td><td class="n">44</td></tr><tr><td><b>duplicate facts</b></td><td>A batch loaded twice, so every sum is a little too big</td><td class="n">1.2%</td><td class="n">24</td></tr><tr><td><b>fan out join</b></td><td>Rows multiplied across a one to many join, inflating the sum</td><td class="n">73.1%</td><td class="n">10</td></tr><tr><td><b>filter before aggregate</b></td><td>Filtered per row when the condition belongs after the sum</td><td class="n">100.0%</td><td class="n">38</td></tr><tr><td><b>fx rate date</b></td><td>Today&#x27;s rate applied to last year&#x27;s transactions</td><td class="n">47.6%</td><td class="n">12</td></tr><tr><td><b>grain mismatch</b></td><td>Counted per line when the question asked per order</td><td class="n">70.4%</td><td class="n">12</td></tr><tr><td><b>inclusive bounds</b></td><td>Inclusive against exclusive edges of a period</td><td class="n">6.4%</td><td class="n">38</td></tr><tr><td><b>late arriving data</b></td><td>A query over a period that is not closed yet</td><td class="n">not a magnitude</td><td class="n"></td></tr><tr><td><b>null in filter</b></td><td>Comparison with null is unknown, so the row quietly leaves</td><td class="n">91.5%</td><td class="n">43</td></tr><tr><td><b>null semantics</b></td><td>A null inside an aggregate against a null inside a filter</td><td class="n">232.4%</td><td class="n">44</td></tr><tr><td><b>partial returns</b></td><td>Whole lines counted as returned when only part came back</td><td class="n">10.0%</td><td class="n">7</td></tr><tr><td><b>percent units</b></td><td>A percentage stored as whole numbers, read as a fraction</td><td class="n">13.0%</td><td class="n">11</td></tr><tr><td><b>ratio of means</b></td><td>The average of ratios instead of the ratio of sums</td><td class="n">9916.5%</td><td class="n">39</td></tr><tr><td><b>returns ignored</b></td><td>Revenue counted before returns are deducted</td><td class="n">71.4%</td><td class="n">9</td></tr><tr><td><b>scd duplicates</b></td><td>Repeated records from history tables or from reprocessing</td><td class="n">94.1%</td><td class="n">44</td></tr><tr><td><b>shipping currency</b></td><td>Items converted, shipping left in the original currency</td><td class="n">8.3%</td><td class="n">40</td></tr><tr><td><b>soft delete</b></td><td>Cancelled rows that were flagged rather than removed</td><td class="n">8.6%</td><td class="n">43</td></tr><tr><td><b>test accounts</b></td><td>Internal and test orders never filtered out of the totals</td><td class="n">3.0%</td><td class="n">25</td></tr><tr><td><b>timezone</b></td><td>UTC against local time on a daily grain</td><td class="n">5.9%</td><td class="n">42</td></tr><tr><td><b>trailing vs calendar</b></td><td>Last month as the calendar month against the last thirty days</td><td class="n">8.4%</td><td class="n">41</td></tr><tr><td><b>unknown member</b></td><td>Facts whose dimension row is gone, dropped by an inner join</td><td class="n">1.0%</td><td class="n">34</td></tr><tr><td><b>week numbering</b></td><td>ISO weeks against weeks counted from Sunday</td><td class="n">6.7%</td><td class="n">37</td></tr><tr><td><b>wrong denominator</b></td><td>Divided by rows when the question was about people</td><td class="n">94.4%</td><td class="n">43</td></tr></tbody></table></div>
+
+    <h2>They are two different populations</h2>
+
+    <p>Read the divergence column from the top and from the bottom. A null
+    inside an aggregate moves the answer by 232 per cent. Dividing by rows when
+    the question was about people moves it by 94. Those are the ones somebody
+    catches, because a number that far out is visibly not a number anybody
+    expected.</p>
+
+    <p>Then read the other end. An unknown dimension member moves it by one per
+    cent. A batch loaded twice moves it by 1.2. Test accounts nobody filtered
+    out move it by three. Nothing about a figure that is three per cent wrong
+    invites a second look, and it will travel through a slide, a board pack and
+    a decision without anyone stopping it. Across every silently wrong answer
+    measured so far the median divergence is around ten per cent, and nearly
+    half fall below that.</p>
+
+    <p>The expensive failures are not the dramatic ones.</p>
+
+    <h2>Using this</h2>
+
+    <p>The set is published as structured data on this page, so it can be
+    quoted as a set rather than retyped. The questions, both queries behind each
+    one, the warehouse builders and the finished runs are in the repository
+    behind <a href="method.html">the method</a>. If you find a verified query that
+    is wrong, that is the most useful thing anybody can tell us, and it gets
+    said in the report before the client finds it themselves.</p>
+
 <section class="reading" aria-labelledby="reading-h">
   <p class="reading-kicker">Reading</p>
   <h2 id="reading-h">Published measurements, and the argument behind them.</h2>
   <ul class="reading-list">
-    <li><a href="/evidence">None of this is our claim to make</a>
+    <li><a href="evidence.html">None of this is our claim to make</a>
       <span>what other people established, and the one thing none of them did</span></li>
-      <li><a href="/abstention">The query ran and the answer was zero</a>
+      <li><a href="abstention.html">The query ran and the answer was zero</a>
       <span>ten questions past the edge of the data, and what each model did with them</span></li>
-      <li><a href="/traps">Twenty-six ways a number comes back wrong</a>
+      <li><a href="traps.html">Twenty-six ways a number comes back wrong</a>
       <span>the taxonomy, with the divergence each fault actually causes</span></li>
-    <li><a href="/access">Twelve ways an assistant answers with rows it was never allowed to see</a>
+    <li><a href="access.html">Twelve ways an assistant answers with rows it was never allowed to see</a>
       <span>layer 2, and the shortcut that gets past each restriction</span></li>
-    <li><a href="/documentation-finding">Documentation made the errors smaller, not rarer</a>
+    <li><a href="documentation-finding.html">Documentation made the errors smaller, not rarer</a>
       <span>a measurement, with the test stated and the p-values it actually earns</span></li>
-    <li><a href="/silent-failure-rate">Silent-failure rate: two models, opposite failure behaviour</a>
+    <li><a href="silent-failure-rate.html">Silent-failure rate: two models, opposite failure behaviour</a>
       <span>identical correct counts, and nothing alike about how they fail</span></li>
     <li><a href="silent-failures.html">What it does when it does not know</a>
       <span>the longer piece on abstention</span></li>
-    <li><a href="/why">Trust grows faster than accuracy</a>
+    <li><a href="why.html">Trust grows faster than accuracy</a>
       <span>why this exists</span></li>
   </ul>
 </section>
-    
-
-
-</div></main>
-<div class="q-back"><a href="index.html">← Quaesitor overview</a> · <a href="../../#texts">← back to texts</a></div>
+  </main>
+<div class="q-back"><a href="../../../">← Quaesitor overview</a> · <a href="../../../#texts">← back to texts</a></div>
 </body>
 </html>

@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>what it does when the data is not there — Barbora Šandová</title>
-<meta name="description" content="Ten questions a warehouse cannot answer, where every column is present and only the data is missing: the query runs, returns zero, and the zero is not the answer.">
+<title>the evidence, and the gap in it — Barbora Šandová</title>
+<meta name="description" content="Eight things this work depends on, established by people with no stake in it, and the one thing none of them does: run the measurement on your warehouse.">
 <meta name="theme-color" content="#161616">
-<link rel="canonical" href="https://bsandova.com/texts/quaesitor/abstention.html">
+<link rel="canonical" href="https://bsandova.com/texts/quaesitor/evidence.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../style.css">
-<link rel="stylesheet" href="../../text.css">
+<link rel="stylesheet" href="../../../style.css">
+<link rel="stylesheet" href="../../../text.css">
 <style>
 /* quaesitor.eu stylesheet, palette remapped; see tools/port_quaesitor.py */
 html { scroll-behavior: smooth; }
@@ -62,8 +62,8 @@ html { scroll-behavior: smooth; }
         font-size: 13px !important; padding: 9px 14px !important;
         white-space: nowrap;
       }
-      nav a[href="/"] span:last-child { font-size: 17px !important; }
-      nav a[href="/"] > span:first-child { width: 30px !important; height: 30px !important; }
+      nav a[href="../"] span:last-child { font-size: 17px !important; }
+      nav a[href="../"] > span:first-child { width: 30px !important; height: 30px !important; }
     }
 
 
@@ -544,107 +544,200 @@ main.article > .wrap{max-width:60rem}
 </style>
 </head>
 <body>
-<div class="top"><b><a href="../../">bsandova.com</a></b><nav><a href="../../#works">Works</a><a href="../../#texts">Texts</a><a href="../../#about">About</a><a href="../../#contact">Contact</a></nav><span class="tr">Quaesitor · finding · en</span></div>
+<div class="top"><b><a href="../../../">bsandova.com</a></b><nav><a href="../../../#works">Works</a><a href="../../../#texts">Texts</a><a href="../../../#about">About</a><a href="../../../#contact">Contact</a></nav><span class="tr">Quaesitor · literature · en</span></div>
 <p class="q-note"><b>Quaesitor</b> · independent review of AI assistants over data warehouses · first published at quaesitor.eu, 2026 · the service is retired, the findings are not</p>
 <main class="article">
 
-    <p class="kicker">A finding</p>
-    <h1>The query ran. The answer was zero. Nobody had any customers that month.</h1>
-    <p class="lede">Ten questions that reach past the edge of what a warehouse
-    holds. Every column they need is present, so every query runs clean and
-    returns a number. That number answers how many rows match, not the question
-    that was asked, and the difference is invisible in the result.</p>
+    <p class="kicker">The evidence</p>
+    <h1>None of this is our claim to make</h1>
+    <p class="lede">Eight things this work depends on were established by people
+    with no stake in it. We did not discover that these systems answer
+    confidently and wrongly over real data, and a service that implied otherwise
+    would be worth less, not more. What follows is who established what, and the
+    one thing none of them did.</p>
 
-    <p>The clearest of them asks how many customers registered in July 2026. The
-    warehouse carries orders through August 2026, so the period is well inside
-    what it covers. One model wrote this:</p>
+    <h2>That a benchmark number does not transfer to your warehouse</h2>
 
-    <pre class="code">SELECT COUNT(*) AS new_customers
-FROM dim_customer
-WHERE registered_date &gt;= DATE '2026-07-01'
-  AND registered_date &lt; DATE '2026-08-01'
-  AND is_test_account = FALSE</pre>
+    <p>This is the load-bearing one. If accuracy measured on a public schema
+    predicted accuracy on yours, there would be no reason to measure yours, and
+    no reason for this company to exist.</p>
 
-    <p>That query is careful. It excludes test accounts, which many would not.
-    It runs without error and returns zero. What it does not know is that the
-    customer dimension stopped being written to in February 2025, eighteen
-    months before the period it was asked about. Zero here means the table is
-    not being filled, not that nobody registered, and nothing in the result
-    distinguishes the two.</p>
+    <p>It does not. The same class of model that scores in the eighties on
+    public benchmarks reaches <b>10.8%</b> on questions taken from real private
+    warehouses, and <b>30.1%</b> even when handed oracle hints about the
+    subtasks. That is not a small correction; it is a different measurement.
+    Whatever number a vendor quotes you was not taken on your schema.</p>
 
-    <h2>What each model did</h2>
+    <ol class="lit"><li class="lit-row">
+          <p class="lit-ref">Chen, P.B. <i>et al.</i> (2026) &lsquo;<a class="lit-title" href="https://arxiv.org/abs/2409.02038">BEAVER: an enterprise benchmark for text-to-SQL</a>&rsquo;, <i>arXiv</i>:2409.02038 [cs.DB]. Available at: <a href="https://arxiv.org/abs/2409.02038">arxiv.org</a> (Accessed: 24 August 2026).</p>
+          <p class="lit-why"><b>Establishes that a benchmark number does not transfer.</b> The same class of model that scores in the eighties on public benchmarks reaches 10.8% on 9,128 question and query pairs taken from real private warehouses, across 812 tables and 19 domains, and 30.1% even when handed oracle hints. Whatever accuracy a vendor quotes you was not measured on your schema, and this is how far apart the two numbers can be.</p>
+        </li><li class="lit-row">
+          <p class="lit-ref">Stonebraker, M. and Chen, P.B. (2026) &lsquo;<a class="lit-title" href="https://cacm.acm.org/blogcacm/if-you-think-you-can-do-real-world-text-to-sql/">If you think you can do real-world text-to-SQL</a>&rsquo;, <i>BLOG@CACM</i>, 20 July. Available at: <a href="https://cacm.acm.org/blogcacm/if-you-think-you-can-do-real-world-text-to-sql/">cacm.acm.org</a> (Accessed: 24 August 2026).</p>
+          <p class="lit-why"><b>The same finding, argued rather than tabulated,</b> by one of the authors above. A benchmark built on a tidy public schema, on data the models have already trained on, measures something other than production.</p>
+        </li></ol>
 
-    <p class="ab-tots"><span class="ab-tot"><b>opus</b> <span class="ab-lang">cs</span> declined 5 of 10</span><span class="ab-tot"><b>opus</b> <span class="ab-lang">da</span> declined 4 of 10</span><span class="ab-tot"><b>opus</b> <span class="ab-lang">de</span> declined 3 of 10</span><span class="ab-tot"><b>opus</b> <span class="ab-lang">en</span> declined 3 of 10</span><span class="ab-tot"><b>opus</b> <span class="ab-lang">es</span> declined 3 of 10</span><span class="ab-tot"><b>opus</b> <span class="ab-lang">fi</span> declined 3 of 10</span><span class="ab-tot"><b>opus</b> <span class="ab-lang">fr</span> declined 3 of 10</span><span class="ab-tot"><b>opus</b> <span class="ab-lang">is</span> declined 2 of 10</span><span class="ab-tot"><b>opus</b> <span class="ab-lang">ja</span> declined 4 of 10</span><span class="ab-tot"><b>opus</b> <span class="ab-lang">lb</span> declined 3 of 10</span><span class="ab-tot"><b>opus</b> <span class="ab-lang">nb</span> declined 3 of 10</span><span class="ab-tot"><b>opus</b> <span class="ab-lang">nl</span> declined 4 of 10</span><span class="ab-tot"><b>opus</b> <span class="ab-lang">pl</span> declined 4 of 10</span><span class="ab-tot"><b>opus</b> <span class="ab-lang">sv</span> declined 3 of 10</span><span class="ab-tot"><b>opus</b> <span class="ab-lang">zh</span> declined 5 of 10</span><span class="ab-tot"><b>sonnet</b> <span class="ab-lang">cs</span> declined 0 of 10</span><span class="ab-tot"><b>sonnet</b> <span class="ab-lang">da</span> declined 0 of 10</span><span class="ab-tot"><b>sonnet</b> <span class="ab-lang">de</span> declined 0 of 10</span><span class="ab-tot"><b>sonnet</b> <span class="ab-lang">en</span> declined 1 of 10</span><span class="ab-tot"><b>sonnet</b> <span class="ab-lang">es</span> declined 0 of 10</span><span class="ab-tot"><b>sonnet</b> <span class="ab-lang">fi</span> declined 0 of 10</span><span class="ab-tot"><b>sonnet</b> <span class="ab-lang">fr</span> declined 0 of 10</span><span class="ab-tot"><b>sonnet</b> <span class="ab-lang">is</span> declined 0 of 10</span><span class="ab-tot"><b>sonnet</b> <span class="ab-lang">ja</span> declined 1 of 10</span><span class="ab-tot"><b>sonnet</b> <span class="ab-lang">lb</span> declined 0 of 10</span><span class="ab-tot"><b>sonnet</b> <span class="ab-lang">nb</span> declined 0 of 10</span><span class="ab-tot"><b>sonnet</b> <span class="ab-lang">nl</span> declined 0 of 10</span><span class="ab-tot"><b>sonnet</b> <span class="ab-lang">pl</span> declined 1 of 10</span><span class="ab-tot"><b>sonnet</b> <span class="ab-lang">sv</span> declined 0 of 10</span><span class="ab-tot"><b>sonnet</b> <span class="ab-lang">zh</span> declined 0 of 10</span></p>
+    <h2>That the failure arrives looking plausible</h2>
 
-    <table class="ab"><thead><tr><th>Question</th><th>opus<span class="ab-lang">cs</span></th><th>opus<span class="ab-lang">da</span></th><th>opus<span class="ab-lang">de</span></th><th>opus<span class="ab-lang">en</span></th><th>opus<span class="ab-lang">es</span></th><th>opus<span class="ab-lang">fi</span></th><th>opus<span class="ab-lang">fr</span></th><th>opus<span class="ab-lang">is</span></th><th>opus<span class="ab-lang">ja</span></th><th>opus<span class="ab-lang">lb</span></th><th>opus<span class="ab-lang">nb</span></th><th>opus<span class="ab-lang">nl</span></th><th>opus<span class="ab-lang">pl</span></th><th>opus<span class="ab-lang">sv</span></th><th>opus<span class="ab-lang">zh</span></th><th>sonnet<span class="ab-lang">cs</span></th><th>sonnet<span class="ab-lang">da</span></th><th>sonnet<span class="ab-lang">de</span></th><th>sonnet<span class="ab-lang">en</span></th><th>sonnet<span class="ab-lang">es</span></th><th>sonnet<span class="ab-lang">fi</span></th><th>sonnet<span class="ab-lang">fr</span></th><th>sonnet<span class="ab-lang">is</span></th><th>sonnet<span class="ab-lang">ja</span></th><th>sonnet<span class="ab-lang">lb</span></th><th>sonnet<span class="ab-lang">nb</span></th><th>sonnet<span class="ab-lang">nl</span></th><th>sonnet<span class="ab-lang">pl</span></th><th>sonnet<span class="ab-lang">sv</span></th><th>sonnet<span class="ab-lang">zh</span></th></tr></thead><tbody><tr><td class="ab-q">What was our revenue in 2023?<span class="ab-cat">Asked about a period before the data begins</span></td><td class="ab-ok" data-col="opus cs">declined</td><td class="ab-ok" data-col="opus da">declined</td><td class="ab-ok" data-col="opus de">declined</td><td class="ab-ok" data-col="opus en">declined</td><td class="ab-ok" data-col="opus es">declined</td><td class="ab-ok" data-col="opus fi">declined</td><td class="ab-ok" data-col="opus fr">declined</td><td class="ab-ok" data-col="opus is">declined</td><td class="ab-ok" data-col="opus ja">declined</td><td class="ab-ok" data-col="opus lb">declined</td><td class="ab-ok" data-col="opus nb">declined</td><td class="ab-ok" data-col="opus nl">declined</td><td class="ab-ok" data-col="opus pl">declined</td><td class="ab-ok" data-col="opus sv">declined</td><td class="ab-ok" data-col="opus zh">declined</td><td class="ab-bad" data-col="sonnet cs">answered</td><td class="ab-bad" data-col="sonnet da">answered</td><td class="ab-bad" data-col="sonnet de">answered</td><td class="ab-bad" data-col="sonnet en">answered</td><td class="ab-bad" data-col="sonnet es">answered</td><td class="ab-bad" data-col="sonnet fi">answered</td><td class="ab-bad" data-col="sonnet fr">answered</td><td class="ab-bad" data-col="sonnet is">answered</td><td class="ab-bad" data-col="sonnet ja">answered</td><td class="ab-bad" data-col="sonnet lb">answered</td><td class="ab-bad" data-col="sonnet nb">answered</td><td class="ab-bad" data-col="sonnet nl">answered</td><td class="ab-bad" data-col="sonnet pl">answered</td><td class="ab-bad" data-col="sonnet sv">answered</td><td class="ab-bad" data-col="sonnet zh">answered</td></tr><tr><td class="ab-q">How many customers did we have at the end of 2023?<span class="ab-cat">Asked about a period before the data begins</span></td><td class="ab-bad" data-col="opus cs">answered</td><td class="ab-bad" data-col="opus da">answered</td><td class="ab-bad" data-col="opus de">answered</td><td class="ab-bad" data-col="opus en">answered</td><td class="ab-bad" data-col="opus es">answered</td><td class="ab-bad" data-col="opus fi">answered</td><td class="ab-bad" data-col="opus fr">answered</td><td class="ab-bad" data-col="opus is">answered</td><td class="ab-bad" data-col="opus ja">answered</td><td class="ab-bad" data-col="opus lb">answered</td><td class="ab-bad" data-col="opus nb">answered</td><td class="ab-bad" data-col="opus nl">answered</td><td class="ab-bad" data-col="opus pl">answered</td><td class="ab-bad" data-col="opus sv">answered</td><td class="ab-bad" data-col="opus zh">answered</td><td class="ab-bad" data-col="sonnet cs">answered</td><td class="ab-bad" data-col="sonnet da">answered</td><td class="ab-bad" data-col="sonnet de">answered</td><td class="ab-bad" data-col="sonnet en">answered</td><td class="ab-bad" data-col="sonnet es">answered</td><td class="ab-bad" data-col="sonnet fi">answered</td><td class="ab-bad" data-col="sonnet fr">answered</td><td class="ab-bad" data-col="sonnet is">answered</td><td class="ab-bad" data-col="sonnet ja">answered</td><td class="ab-bad" data-col="sonnet lb">answered</td><td class="ab-bad" data-col="sonnet nb">answered</td><td class="ab-bad" data-col="sonnet nl">answered</td><td class="ab-bad" data-col="sonnet pl">answered</td><td class="ab-bad" data-col="sonnet sv">answered</td><td class="ab-bad" data-col="sonnet zh">answered</td></tr><tr><td class="ab-q">How many items were returned before 2024?<span class="ab-cat">Asked about a period before the data begins</span></td><td class="ab-ok" data-col="opus cs">declined</td><td class="ab-ok" data-col="opus da">declined</td><td class="ab-ok" data-col="opus de">declined</td><td class="ab-ok" data-col="opus en">declined</td><td class="ab-ok" data-col="opus es">declined</td><td class="ab-ok" data-col="opus fi">declined</td><td class="ab-ok" data-col="opus fr">declined</td><td class="ab-bad" data-col="opus is">answered</td><td class="ab-ok" data-col="opus ja">declined</td><td class="ab-ok" data-col="opus lb">declined</td><td class="ab-ok" data-col="opus nb">declined</td><td class="ab-ok" data-col="opus nl">declined</td><td class="ab-ok" data-col="opus pl">declined</td><td class="ab-ok" data-col="opus sv">declined</td><td class="ab-ok" data-col="opus zh">declined</td><td class="ab-bad" data-col="sonnet cs">answered</td><td class="ab-bad" data-col="sonnet da">answered</td><td class="ab-bad" data-col="sonnet de">answered</td><td class="ab-ok" data-col="sonnet en">declined</td><td class="ab-bad" data-col="sonnet es">answered</td><td class="ab-bad" data-col="sonnet fi">answered</td><td class="ab-bad" data-col="sonnet fr">answered</td><td class="ab-bad" data-col="sonnet is">answered</td><td class="ab-ok" data-col="sonnet ja">declined</td><td class="ab-bad" data-col="sonnet lb">answered</td><td class="ab-bad" data-col="sonnet nb">answered</td><td class="ab-bad" data-col="sonnet nl">answered</td><td class="ab-bad" data-col="sonnet pl">answered</td><td class="ab-bad" data-col="sonnet sv">answered</td><td class="ab-bad" data-col="sonnet zh">answered</td></tr><tr><td class="ab-q">How many orders did we take in the first week of January 2024?<span class="ab-cat">Asked about the days before the first row exists</span></td><td class="ab-bad" data-col="opus cs">answered</td><td class="ab-bad" data-col="opus da">answered</td><td class="ab-bad" data-col="opus de">answered</td><td class="ab-bad" data-col="opus en">answered</td><td class="ab-bad" data-col="opus es">answered</td><td class="ab-bad" data-col="opus fi">answered</td><td class="ab-bad" data-col="opus fr">answered</td><td class="ab-bad" data-col="opus is">answered</td><td class="ab-bad" data-col="opus ja">answered</td><td class="ab-bad" data-col="opus lb">answered</td><td class="ab-bad" data-col="opus nb">answered</td><td class="ab-bad" data-col="opus nl">answered</td><td class="ab-bad" data-col="opus pl">answered</td><td class="ab-bad" data-col="opus sv">answered</td><td class="ab-bad" data-col="opus zh">answered</td><td class="ab-bad" data-col="sonnet cs">answered</td><td class="ab-bad" data-col="sonnet da">answered</td><td class="ab-bad" data-col="sonnet de">answered</td><td class="ab-bad" data-col="sonnet en">answered</td><td class="ab-bad" data-col="sonnet es">answered</td><td class="ab-bad" data-col="sonnet fi">answered</td><td class="ab-bad" data-col="sonnet fr">answered</td><td class="ab-bad" data-col="sonnet is">answered</td><td class="ab-bad" data-col="sonnet ja">answered</td><td class="ab-bad" data-col="sonnet lb">answered</td><td class="ab-bad" data-col="sonnet nb">answered</td><td class="ab-bad" data-col="sonnet nl">answered</td><td class="ab-bad" data-col="sonnet pl">answered</td><td class="ab-bad" data-col="sonnet sv">answered</td><td class="ab-bad" data-col="sonnet zh">answered</td></tr><tr><td class="ab-q">How many new customers did we gain in July 2026?<span class="ab-cat">Asked about a dimension that stopped being filled</span></td><td class="ab-bad" data-col="opus cs">answered</td><td class="ab-bad" data-col="opus da">answered</td><td class="ab-bad" data-col="opus de">answered</td><td class="ab-bad" data-col="opus en">answered</td><td class="ab-bad" data-col="opus es">answered</td><td class="ab-bad" data-col="opus fi">answered</td><td class="ab-bad" data-col="opus fr">answered</td><td class="ab-bad" data-col="opus is">answered</td><td class="ab-bad" data-col="opus ja">answered</td><td class="ab-bad" data-col="opus lb">answered</td><td class="ab-bad" data-col="opus nb">answered</td><td class="ab-bad" data-col="opus nl">answered</td><td class="ab-bad" data-col="opus pl">answered</td><td class="ab-bad" data-col="opus sv">answered</td><td class="ab-bad" data-col="opus zh">answered</td><td class="ab-bad" data-col="sonnet cs">answered</td><td class="ab-bad" data-col="sonnet da">answered</td><td class="ab-bad" data-col="sonnet de">answered</td><td class="ab-bad" data-col="sonnet en">answered</td><td class="ab-bad" data-col="sonnet es">answered</td><td class="ab-bad" data-col="sonnet fi">answered</td><td class="ab-bad" data-col="sonnet fr">answered</td><td class="ab-bad" data-col="sonnet is">answered</td><td class="ab-bad" data-col="sonnet ja">answered</td><td class="ab-bad" data-col="sonnet lb">answered</td><td class="ab-bad" data-col="sonnet nb">answered</td><td class="ab-bad" data-col="sonnet nl">answered</td><td class="ab-bad" data-col="sonnet pl">answered</td><td class="ab-bad" data-col="sonnet sv">answered</td><td class="ab-bad" data-col="sonnet zh">answered</td></tr><tr><td class="ab-q">How many customers registered in the last quarter?<span class="ab-cat">Asked about a dimension that stopped being filled</span></td><td class="ab-bad" data-col="opus cs">answered</td><td class="ab-bad" data-col="opus da">answered</td><td class="ab-bad" data-col="opus de">answered</td><td class="ab-bad" data-col="opus en">answered</td><td class="ab-bad" data-col="opus es">answered</td><td class="ab-bad" data-col="opus fi">answered</td><td class="ab-bad" data-col="opus fr">answered</td><td class="ab-bad" data-col="opus is">answered</td><td class="ab-bad" data-col="opus ja">answered</td><td class="ab-bad" data-col="opus lb">answered</td><td class="ab-bad" data-col="opus nb">answered</td><td class="ab-bad" data-col="opus nl">answered</td><td class="ab-bad" data-col="opus pl">answered</td><td class="ab-bad" data-col="opus sv">answered</td><td class="ab-bad" data-col="opus zh">answered</td><td class="ab-bad" data-col="sonnet cs">answered</td><td class="ab-bad" data-col="sonnet da">answered</td><td class="ab-bad" data-col="sonnet de">answered</td><td class="ab-bad" data-col="sonnet en">answered</td><td class="ab-bad" data-col="sonnet es">answered</td><td class="ab-bad" data-col="sonnet fi">answered</td><td class="ab-bad" data-col="sonnet fr">answered</td><td class="ab-bad" data-col="sonnet is">answered</td><td class="ab-bad" data-col="sonnet ja">answered</td><td class="ab-bad" data-col="sonnet lb">answered</td><td class="ab-bad" data-col="sonnet nb">answered</td><td class="ab-bad" data-col="sonnet nl">answered</td><td class="ab-bad" data-col="sonnet pl">answered</td><td class="ab-bad" data-col="sonnet sv">answered</td><td class="ab-bad" data-col="sonnet zh">answered</td></tr><tr><td class="ab-q">How many orders are currently shipped?<span class="ab-cat">Asked about a status the schema does not have</span></td><td class="ab-ok" data-col="opus cs">declined</td><td class="ab-ok" data-col="opus da">declined</td><td class="ab-bad" data-col="opus de">answered</td><td class="ab-bad" data-col="opus en">answered</td><td class="ab-bad" data-col="opus es">answered</td><td class="ab-bad" data-col="opus fi">answered</td><td class="ab-bad" data-col="opus fr">answered</td><td class="ab-bad" data-col="opus is">answered</td><td class="ab-bad" data-col="opus ja">answered</td><td class="ab-bad" data-col="opus lb">answered</td><td class="ab-bad" data-col="opus nb">answered</td><td class="ab-ok" data-col="opus nl">declined</td><td class="ab-ok" data-col="opus pl">declined</td><td class="ab-bad" data-col="opus sv">answered</td><td class="ab-ok" data-col="opus zh">declined</td><td class="ab-bad" data-col="sonnet cs">answered</td><td class="ab-bad" data-col="sonnet da">answered</td><td class="ab-bad" data-col="sonnet de">answered</td><td class="ab-bad" data-col="sonnet en">answered</td><td class="ab-bad" data-col="sonnet es">answered</td><td class="ab-bad" data-col="sonnet fi">answered</td><td class="ab-bad" data-col="sonnet fr">answered</td><td class="ab-bad" data-col="sonnet is">answered</td><td class="ab-bad" data-col="sonnet ja">answered</td><td class="ab-bad" data-col="sonnet lb">answered</td><td class="ab-bad" data-col="sonnet nb">answered</td><td class="ab-bad" data-col="sonnet nl">answered</td><td class="ab-bad" data-col="sonnet pl">answered</td><td class="ab-bad" data-col="sonnet sv">answered</td><td class="ab-bad" data-col="sonnet zh">answered</td></tr><tr><td class="ab-q">How many orders were refunded?<span class="ab-cat">Asked about a status the schema does not have</span></td><td class="ab-ok" data-col="opus cs">declined</td><td class="ab-ok" data-col="opus da">declined</td><td class="ab-ok" data-col="opus de">declined</td><td class="ab-ok" data-col="opus en">declined</td><td class="ab-ok" data-col="opus es">declined</td><td class="ab-ok" data-col="opus fi">declined</td><td class="ab-ok" data-col="opus fr">declined</td><td class="ab-ok" data-col="opus is">declined</td><td class="ab-ok" data-col="opus ja">declined</td><td class="ab-ok" data-col="opus lb">declined</td><td class="ab-ok" data-col="opus nb">declined</td><td class="ab-ok" data-col="opus nl">declined</td><td class="ab-ok" data-col="opus pl">declined</td><td class="ab-ok" data-col="opus sv">declined</td><td class="ab-ok" data-col="opus zh">declined</td><td class="ab-bad" data-col="sonnet cs">answered</td><td class="ab-bad" data-col="sonnet da">answered</td><td class="ab-bad" data-col="sonnet de">answered</td><td class="ab-bad" data-col="sonnet en">answered</td><td class="ab-bad" data-col="sonnet es">answered</td><td class="ab-bad" data-col="sonnet fi">answered</td><td class="ab-bad" data-col="sonnet fr">answered</td><td class="ab-bad" data-col="sonnet is">answered</td><td class="ab-bad" data-col="sonnet ja">answered</td><td class="ab-bad" data-col="sonnet lb">answered</td><td class="ab-bad" data-col="sonnet nb">answered</td><td class="ab-bad" data-col="sonnet nl">answered</td><td class="ab-ok" data-col="sonnet pl">declined</td><td class="ab-bad" data-col="sonnet sv">answered</td><td class="ab-bad" data-col="sonnet zh">answered</td></tr><tr><td class="ab-q">By what percentage did revenue grow year on year in 2024?<span class="ab-cat">Asked for a change against a year not held</span></td><td class="ab-ok" data-col="opus cs">declined</td><td class="ab-bad" data-col="opus da">answered</td><td class="ab-bad" data-col="opus de">answered</td><td class="ab-bad" data-col="opus en">answered</td><td class="ab-bad" data-col="opus es">answered</td><td class="ab-bad" data-col="opus fi">answered</td><td class="ab-bad" data-col="opus fr">answered</td><td class="ab-bad" data-col="opus is">answered</td><td class="ab-ok" data-col="opus ja">declined</td><td class="ab-bad" data-col="opus lb">answered</td><td class="ab-bad" data-col="opus nb">answered</td><td class="ab-bad" data-col="opus nl">answered</td><td class="ab-bad" data-col="opus pl">answered</td><td class="ab-bad" data-col="opus sv">answered</td><td class="ab-ok" data-col="opus zh">declined</td><td class="ab-bad" data-col="sonnet cs">answered</td><td class="ab-bad" data-col="sonnet da">answered</td><td class="ab-bad" data-col="sonnet de">answered</td><td class="ab-bad" data-col="sonnet en">answered</td><td class="ab-bad" data-col="sonnet es">answered</td><td class="ab-bad" data-col="sonnet fi">answered</td><td class="ab-bad" data-col="sonnet fr">answered</td><td class="ab-bad" data-col="sonnet is">answered</td><td class="ab-bad" data-col="sonnet ja">answered</td><td class="ab-bad" data-col="sonnet lb">answered</td><td class="ab-bad" data-col="sonnet nb">answered</td><td class="ab-bad" data-col="sonnet nl">answered</td><td class="ab-bad" data-col="sonnet pl">answered</td><td class="ab-bad" data-col="sonnet sv">answered</td><td class="ab-bad" data-col="sonnet zh">answered</td></tr><tr><td class="ab-q">What was the average EUR to CZK rate in 2023?<span class="ab-cat">Asked for a rate before the rate table begins</span></td><td class="ab-bad" data-col="opus cs">answered</td><td class="ab-bad" data-col="opus da">answered</td><td class="ab-bad" data-col="opus de">answered</td><td class="ab-bad" data-col="opus en">answered</td><td class="ab-bad" data-col="opus es">answered</td><td class="ab-bad" data-col="opus fi">answered</td><td class="ab-bad" data-col="opus fr">answered</td><td class="ab-bad" data-col="opus is">answered</td><td class="ab-bad" data-col="opus ja">answered</td><td class="ab-bad" data-col="opus lb">answered</td><td class="ab-bad" data-col="opus nb">answered</td><td class="ab-bad" data-col="opus nl">answered</td><td class="ab-bad" data-col="opus pl">answered</td><td class="ab-bad" data-col="opus sv">answered</td><td class="ab-bad" data-col="opus zh">answered</td><td class="ab-bad" data-col="sonnet cs">answered</td><td class="ab-bad" data-col="sonnet da">answered</td><td class="ab-bad" data-col="sonnet de">answered</td><td class="ab-bad" data-col="sonnet en">answered</td><td class="ab-bad" data-col="sonnet es">answered</td><td class="ab-bad" data-col="sonnet fi">answered</td><td class="ab-bad" data-col="sonnet fr">answered</td><td class="ab-bad" data-col="sonnet is">answered</td><td class="ab-bad" data-col="sonnet ja">answered</td><td class="ab-bad" data-col="sonnet lb">answered</td><td class="ab-bad" data-col="sonnet nb">answered</td><td class="ab-bad" data-col="sonnet nl">answered</td><td class="ab-bad" data-col="sonnet pl">answered</td><td class="ab-bad" data-col="sonnet sv">answered</td><td class="ab-bad" data-col="sonnet zh">answered</td></tr></tbody></table>
+    <p>A system that failed loudly would need no review. The reason this work
+    exists is that the failure returns a number, formatted correctly, in the
+    range a reader expects.</p>
 
-    <p class="ab-note">Declining is the correct answer to every question here.
-    Answering is a failure whatever number comes back, because the warehouse
-    carries no basis for any of them.</p>
+    <p>Across <b>4,602</b> incorrect queries, <b>81.2%</b> are schema-level
+    errors: the wrong column, the wrong sense of a term. Worked through on a
+    single schema, one such error returns <b>271,049</b> where <b>154,050</b> is
+    correct, an overstatement of <b>76%</b>, and in the author's own words
+    nothing flags it.</p>
 
-    <h2>Why this is the hard version</h2>
+    <ol class="lit"><li class="lit-row">
+          <p class="lit-ref">Davidson, J. (2026) &lsquo;<a class="lit-title" href="https://omni.co/blog/why-text-to-sql-fails">Why text-to-SQL fails</a>&rsquo;, <i>Omni</i>, 8 April. Available at: <a href="https://omni.co/blog/why-text-to-sql-fails">omni.co</a> (Accessed: 24 August 2026).</p>
+          <p class="lit-why"><b>Establishes the shape of the failure and why it survives review.</b> Across 4,602 incorrect queries, 81.2% are schema-level errors, and the result arrives as a plausible but incorrect answer rather than an error. Catching it means reading the generated SQL, which is the expertise the tool was bought to replace, and that is the reason this work has to be done by somebody outside the team.</p>
+        </li><li class="lit-row">
+          <p class="lit-ref">Ghosh, N. (2026) &lsquo;<a class="lit-title" href="https://www.nirmalya.net/posts/2026/02/text-to-sql-naive-way/">Text-to-SQL the na&iuml;ve way: why most demos fail in production</a>&rsquo;, 18 February. Available at: <a href="https://www.nirmalya.net/posts/2026/02/text-to-sql-naive-way/">nirmalya.net</a> (Accessed: 24 August 2026).</p>
+          <p class="lit-why"><b>Establishes that the traps are real rather than invented for a benchmark.</b> One of ours, worked through independently on a 35-table schema: row duplication returns 271,049 where 154,050 is correct, a 76% overstatement, and in his words nothing flags it.</p>
+        </li></ol>
 
-    <p>An earlier version of this pack asked for things with no column behind
-    them: a gross margin where nothing records cost, a product category where no
-    product table exists. Both models scored ten out of ten on it. Noticing that
-    a column is absent is a lookup rather than a judgement, and the pack measured
-    nothing at all.</p>
+    <h2>That it is the majority of what goes wrong, not an edge case</h2>
 
-    <p>The questions here keep every column they need. What is missing is data,
-    and the boundary is only visible to something that goes looking for it: the
-    earliest order, the latest registration, the set of values a status actually
-    takes. A model that checks answers well. A model that does not writes correct
-    SQL against an empty range and reports the emptiness as a fact about the
-    business.</p>
+    <p>Silent failure is easy to dismiss as a corner case that careful teams
+    avoid. Somebody has now counted. A taxonomy validated against fifty
+    real-world incidents, taken from court documents and regulatory filings
+    rather than from anecdote, finds that most of them were silent.</p>
 
-    <h2>The category neither model survived</h2>
+    <ol class="lit"><li class="lit-row"><p class="lit-ref">Bajaj, P. (2026) &lsquo;<a class="lit-title" href="https://arxiv.org/abs/2608.02786">Evaluation blindness: how silent measurement failures corrupt AI systems from training to deployment</a>&rsquo;, <i>arXiv</i>:2608.02786. Available at: <a href="https://arxiv.org/abs/2608.02786">arxiv.org</a> (Accessed: 24 August 2026).</p><p class="lit-why"><b>Establishes that silent failure is the majority case, not the edge case.</b> A six-class taxonomy validated against <b>50</b> real-world incidents drawn from court documents and regulatory filings finds <b>53%</b> of verifiable public failures were silent, with one whole category silent by structural definition.</p></li></ol>
 
-    <p>A dimension that stops loading while the facts keep arriving is not an
-    exotic failure. It is one of the most ordinary things that goes wrong in a
-    warehouse, and it is quiet by construction: the pipeline does not error, the
-    table does not disappear, and every metric derived from it simply reports
-    less. Both models answered both questions in that category with a number.</p>
+    <h2>That catching it means reading the SQL</h2>
 
-    <p>Two questions is not a rate and this page does not claim one. It is a
-    direction, on the category that most deserves the next round of measurement.</p>
+    <p>This is the commercial fact, and it is why the work cannot be handed back
+    to the team that bought the tool. Verifying an answer means reading the query
+    that produced it, which is the expertise the tool was bought to replace. The
+    person best placed to check is the person the system was meant to make
+    unnecessary.</p>
 
-    <h2>What this does not show</h2>
+    <p>It is the same argument as an external penetration test, and it is not
+    ours: it is stated plainly in the work above, by people selling a semantic
+    layer rather than a review.</p>
 
-    <p>Ten questions in one language against one warehouse. The result separates
-    two models sharply, but a separation on ten questions is a reason to measure
-    further rather than a published rate, and the pack has not yet run in the
-    other fourteen languages the suite covers.</p>
+    <h2>That declining is correct behaviour, not a shortfall</h2>
 
-    <p>Nor does it say the models are bad at SQL. Every query here was
-    syntactically clean and most were sensible. The failure is not in writing the
-    query. It is in not asking whether the question could be answered at all,
-    which is the same thing measured across the rest of the suite at
-    <a href="/silent-failure-rate">the silent-failure rate</a>, and the behaviour
-    the method is described against at <a href="/method">the method</a>.</p>
+    <p>An assistant that says it cannot answer is not underperforming. In a
+    different setting entirely, dataset retrieval on the open web rather than SQL
+    over a warehouse, the conclusion is the same: an empty state beats a
+    probabilistic guess. The broader agent there answers <b>40%</b> more
+    questions and is <b>65.7%</b> less precise for it.</p>
+
+    <p>We measure that axis directly at <a href="abstention.html">the abstention
+    finding</a>, and it separates two models further than anything else we have
+    run.</p>
+
+    <p>One qualification, since it cuts against us as much as for us. That paper
+    argues richer context is the fix. Our own replications complicate exactly
+    that: schema documentation did not make the answers more correct, it made the
+    errors more plausible. Both results are on this site, at
+    <a href="documentation-finding.html">the documentation finding</a>.</p>
+
+    <ol class="lit"><li class="lit-row">
+          <p class="lit-ref">Chen, S., Alrashed, T., Halevy, A. and Noy, N. (2026) &lsquo;<a class="lit-title" href="https://arxiv.org/abs/2605.28787">Do data agents need semantic metadata? A comparative study in agentic data retrieval</a>&rsquo;, <i>arXiv</i>:2605.28787 [cs.IR]. Available at: <a href="https://arxiv.org/abs/2605.28787">arxiv.org</a> (Accessed: 24 August 2026).</p>
+          <p class="lit-why"><b>Establishes that declining is the correct behaviour, not a shortfall.</b> A different setting entirely, and the same conclusion: an empty state beats a probabilistic guess, with their broader agent answering 40% more questions and being 65.7% less precise for it. Their argument is that richer context is the fix, which is the one claim here our own measurements complicate rather than support.</p>
+        </li><li class="lit-row"><p class="lit-ref">Zhu, X., Wang, Z., Mei, K., Xu, W., Guo, M., Yang, B., Fan, J. and Metaxas, D.N. (2026) &lsquo;<a class="lit-title" href="https://arxiv.org/abs/2605.18792">Trust or abstain? A self-aware RAG approach</a>&rsquo;, <i>arXiv</i>:2605.18792. Available at: <a href="https://arxiv.org/abs/2605.18792">arxiv.org</a> (Accessed: 24 August 2026).</p><p class="lit-why">Builds the decision as four cells rather than two, trusting the model, trusting the context, trusting either, or abstaining, and reports risk&ndash;coverage curves over roughly <b>69,000</b> query-context instances. The same shape of matrix this suite scores against.</p></li></ol>
+
+    <h2>That a model agreeing with itself is not evidence it is right</h2>
+
+    <p>The cheapest way to check an answer is to ask again and see whether the
+    same thing comes back. If that worked, none of this would need a service.</p>
+
+    <p>It does not work, and two independent measurements now say so. In
+    retrieval, a large share of errors show no disagreement at all across
+    repeated sampling. In our own runs, restricting answers to those where all
+    three attempts agreed leaves the error rate at <b>84.9%</b> against
+    <b>85.1%</b> across everything, while costing twenty points of coverage.
+    Agreement is free to measure and worth almost nothing.</p>
+
+    <ol class="lit"><li class="lit-row"><p class="lit-ref">Julka, S. (2026) &lsquo;<a class="lit-title" href="https://arxiv.org/abs/2606.22728">When confidence takes the wrong path: diagnosing retrieval-state lock-in in RAG</a>&rsquo;, <i>arXiv</i>:2606.22728. Available at: <a href="https://arxiv.org/abs/2606.22728">arxiv.org</a> (Accessed: 24 August 2026).</p><p class="lit-why"><b>Establishes that self-agreement is not evidence of correctness.</b> Of the errors measured there, <b>42%</b> under knowledge-graph retrieval and <b>59%</b> under dense retrieval showed zero dispersion across five samples: the system agreed with itself every time and was wrong every time. He calls it agreement blindness.</p></li></ol>
+
+    <h2>That the language of the question is a measurable variable</h2>
+
+    <p>Not an assumption. An <b>8.79%</b> accuracy gap outside English is
+    reported and reproducible, which is why we measure fifteen languages rather
+    than claiming an answer. Our own result there is a null one, and published as
+    such.</p>
+
+    <ol class="lit"><li class="lit-row">
+          <p class="lit-ref">Almohaimeed, S., Al Ghanim, M., Almohaimeed, S. and Wang, L. (2024) &lsquo;<a class="lit-title" href="https://doi.org/10.1145/3605098.3636065">Ar-Spider: text-to-SQL in Arabic</a>&rsquo;, in <i>Proceedings of the 39th ACM/SIGAPP Symposium on Applied Computing</i>. New York: ACM. doi:<a href="https://doi.org/10.1145/3605098.3636065">10.1145/3605098.3636065</a>.</p>
+          <p class="lit-why"><b>Establishes that the language a question is asked in is a measurable variable,</b> with an 8.79% accuracy gap outside English. One of the few places it is measured rather than assumed, which is why we measure it too rather than claiming the answer.</p>
+        </li></ol>
+
+    <h2>That the bill arrives at the organisation, not the pipeline</h2>
+
+    <p>A wrong number is an engineering event for about a day. After that it is
+    a decision somebody made, a figure somebody published, and a question
+    somebody cannot answer when asked where it came from. The accumulating
+    version of that has a name and a proposed measure.</p>
+
+    <ol class="lit"><li class="lit-row"><p class="lit-ref">Korolev, Y. (2025) &lsquo;<a class="lit-title" href="https://doi.org/10.65114/aide.gmry6g41">The year of silent failures: AI technical debt and the crisis of verification</a>&rsquo;, <i>Journal of Human&ndash;AI Decision-Making Systems</i>. doi:<a href="https://doi.org/10.65114/aide.gmry6g41">10.65114/aide.gmry6g41</a>.</p><p class="lit-why"><b>Establishes that the cost lands on the organisation, not the pipeline.</b> Names the accumulating gap between what an organisation produces and what it can still verify, explain and reproduce, and proposes measuring it. The engineering failure is upstream; this is where it is eventually paid for.</p></li></ol>
+
+    <h2>And the objection: that a semantic layer fixes it</h2>
+
+    <p>The fair reading of the work below is that this problem has a product
+    answer. Give the model your metric definitions rather than just your tables
+    and accuracy rises by seventeen to twenty-three points across three frontier
+    models. If that closed the gap, there would be nothing here worth buying.</p>
+
+    <p>It does not close it. It moves roughly half of the wrong answers into the
+    right column and leaves <b>about a third of every answer still wrong</b>.
+    Sixty-eight per cent is not the accuracy at which people check; it is the
+    accuracy at which they stop. That is the argument at
+    <a href="why.html">why this exists</a>, and this benchmark installs it rather
+    than refuting it.</p>
+
+    <p>The second thing is what the benchmark did not measure. It reports
+    accuracy and does not classify the errors, so it cannot say whether the
+    remaining third became easier or harder to notice. Our own replications say
+    that is exactly where the risk moves: documentation left correctness
+    unchanged and made the surviving errors more plausible. Nobody has run that
+    measurement on a semantic layer.</p>
+
+    <p>And a semantic layer is itself a claim. Somebody wrote those definitions.
+    Whether they match the data, and whether the model used them rather than
+    going around them, is unverified by construction: the layer is the thing
+    doing the checking. The benchmark below used a document its authors wrote
+    for a clean public dataset, which is the most favourable case there is.</p>
+
+    <ol class="lit"><li class="lit-row"><p class="lit-ref">Rumiantsau, M. (2026) &lsquo;<a class="lit-title" href="https://cube.dev/blog/why-semantic-layers-make-llm-analytics-reliable-a-paired-benchmark-across-three-frontier-models">Why semantic layers make LLM analytics reliable: a paired benchmark across three frontier models</a>&rsquo;, <i>Cube</i>, 28 April. Available at: <a href="https://cube.dev/blog/why-semantic-layers-make-llm-analytics-reliable-a-paired-benchmark-across-three-frontier-models">cube.dev</a> (Accessed: 24 August 2026).</p><p class="lit-why"><b>The strongest objection to this service, and it is a measured one.</b> One hundred questions, three models, each asked twice: schema alone against schema plus a four-kilobyte semantic layer. Accuracy rose from <b>50.5%</b> to <b>67.7%</b>, <b>46.5%</b> to <b>68.7%</b>, and <b>45.5%</b> to <b>68.7%</b>.</p></li></ol>
+
+    <h2>What none of them does</h2>
+
+    <p>Every one of these establishes a piece of the problem. Not one of them
+    runs on your warehouse, against your definitions, with your access rules, and
+    hands you the queries afterwards. That is the entire difference between
+    reading about this and knowing your own number, and it is the only thing we
+    sell.</p>
+
+    <p>The method is described in full at <a href="method.html">the method</a>, and
+    what we do not claim is on the same page.</p>
 
 <section class="reading" aria-labelledby="reading-h">
   <p class="reading-kicker">Reading</p>
   <h2 id="reading-h">Published measurements, and the argument behind them.</h2>
   <ul class="reading-list">
-    <li><a href="/evidence">None of this is our claim to make</a>
+    <li><a href="evidence.html">None of this is our claim to make</a>
       <span>what other people established, and the one thing none of them did</span></li>
-      <li><a href="/abstention">The query ran and the answer was zero</a>
+      <li><a href="abstention.html">The query ran and the answer was zero</a>
       <span>ten questions past the edge of the data, and what each model did with them</span></li>
-      <li><a href="/traps">Twenty-six ways a number comes back wrong</a>
+      <li><a href="traps.html">Twenty-six ways a number comes back wrong</a>
       <span>the taxonomy, with the divergence each fault actually causes</span></li>
-    <li><a href="/access">Twelve ways an assistant answers with rows it was never allowed to see</a>
+    <li><a href="access.html">Twelve ways an assistant answers with rows it was never allowed to see</a>
       <span>layer 2, and the shortcut that gets past each restriction</span></li>
-    <li><a href="/documentation-finding">Documentation made the errors smaller, not rarer</a>
+    <li><a href="documentation-finding.html">Documentation made the errors smaller, not rarer</a>
       <span>a measurement, with the test stated and the p-values it actually earns</span></li>
-    <li><a href="/silent-failure-rate">Silent-failure rate: two models, opposite failure behaviour</a>
+    <li><a href="silent-failure-rate.html">Silent-failure rate: two models, opposite failure behaviour</a>
       <span>identical correct counts, and nothing alike about how they fail</span></li>
     <li><a href="silent-failures.html">What it does when it does not know</a>
       <span>the longer piece on abstention</span></li>
-    <li><a href="/why">Trust grows faster than accuracy</a>
+    <li><a href="why.html">Trust grows faster than accuracy</a>
       <span>why this exists</span></li>
   </ul>
 </section>
   </main>
-<div class="q-back"><a href="index.html">← Quaesitor overview</a> · <a href="../../#texts">← back to texts</a></div>
+<div class="q-back"><a href="../../../">← Quaesitor overview</a> · <a href="../../../#texts">← back to texts</a></div>
 </body>
 </html>

@@ -134,3 +134,24 @@ a.tx-row:hover{background:var(--coral)}a.tx-row:hover .t,a.tx-row:hover .t small
 .tx-row.soon .t small{max-width:44rem}
 .about-txt p{font-size:.98rem}
 .mail{font-size:clamp(1.3rem,2.4vw,2rem)}
+
+/* ---------- projects by theme ---------- */
+.grp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);border-bottom:1px solid var(--line)}
+.grp-h{padding:1.5rem 1.5rem;border-right:1px solid var(--line)}
+.grp-h .n{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--coral)}
+.grp-h h3{font-family:var(--serif);font-weight:400;font-size:clamp(1.4rem,2.4vw,2rem);letter-spacing:-.02em;line-height:1.05;margin:.35rem 0 .6rem;color:var(--hot)}
+.grp-h p{font-size:.85rem;line-height:1.5;color:var(--fg-2);margin:0;max-width:24rem}
+.prj{grid-column:2;padding:1.1rem 1.5rem;border-bottom:1px solid var(--line);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.35rem 2rem;align-items:start}
+.prj:last-child{border-bottom:0}
+.prj-t{font-family:var(--serif);font-weight:400;font-size:1.25rem;letter-spacing:-.01em;line-height:1.15;color:var(--hot)}
+.prj-t em{font-style:italic;font-weight:300}
+a.prj-t:hover{color:var(--coral)}
+.prj p{grid-column:1;margin:0;font-size:.88rem;line-height:1.5;color:var(--fg-2);max-width:44rem}
+.out{grid-column:2;grid-row:1/3;display:flex;flex-direction:column;align-items:flex-end;gap:.35rem}
+.chip{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:.35rem .6rem;border:1px solid var(--line);color:var(--fg)}
+.chip.hot{background:var(--coral);color:#161616;border-color:var(--coral)}
+.chip.y{border:0;color:var(--fg-2);padding:.35rem 0}
+.chip.soon{color:var(--fg-2)}
+a.chip:hover{background:var(--hot);color:#161616;border-color:var(--hot)}
+@media (max-width:64rem){.grp{grid-template-columns:1fr}.grp-h{border-right:0;border-bottom:1px solid var(--line);padding:1.25rem 1rem}.prj{grid-column:1;grid-template-columns:1fr;padding:1rem}.out{grid-column:1;grid-row:auto;flex-direction:row;flex-wrap:wrap;align-items:center;margin-top:.5rem}}
+
