@@ -1,0 +1,74 @@
+{
+  "passed": true,
+  "reasons": [],
+  "key": [
+    "day",
+    "zone"
+  ],
+  "old_rows": 7280,
+  "new_rows": 7280,
+  "schema": {
+    "only_in_old": [],
+    "only_in_new": [],
+    "type_changes": [],
+    "compared": [
+      "day",
+      "zone",
+      "trips",
+      "fare",
+      "km"
+    ],
+    "ignored": []
+  },
+  "keys": {
+    "old_nulls": 0,
+    "new_nulls": 0,
+    "old_duplicates": 0,
+    "new_duplicates": 0,
+    "samples": []
+  },
+  "rows": {
+    "only_in_old": 0,
+    "only_in_new": 0,
+    "matched": 7280,
+    "samples_old": [],
+    "samples_new": []
+  },
+  "columns": [
+    {
+      "column": "trips",
+      "mismatches": 0,
+      "tolerance": null,
+      "samples": []
+    },
+    {
+      "column": "fare",
+      "mismatches": 0,
+      "tolerance": "abs 0.005",
+      "samples": []
+    },
+    {
+      "column": "km",
+      "mismatches": 0,
+      "tolerance": "abs 1e-06",
+      "samples": []
+    }
+  ],
+  "partitions": {
+    "column": "day",
+    "total": 33,
+    "identical": 33,
+    "differing": [],
+    "excluded_columns": [
+      "fare",
+      "km"
+    ]
+  },
+  "meta": {
+    "old": "legacy (pandas)",
+    "new": "new (SQL), day cast to date",
+    "partition": "day",
+    "generated": "2026-09-14T21:01:07+00:00",
+    "cutover": "0.1.0"
+  }
+}

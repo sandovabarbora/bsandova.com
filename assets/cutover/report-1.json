@@ -1,0 +1,203 @@
+{
+  "passed": false,
+  "reasons": [
+    "schema_drift",
+    "column_mismatch:fare",
+    "partition_type_differs"
+  ],
+  "key": [
+    "day",
+    "zone"
+  ],
+  "old_rows": 7280,
+  "new_rows": 7280,
+  "schema": {
+    "only_in_old": [],
+    "only_in_new": [],
+    "type_changes": [
+      [
+        "day",
+        "date32[day]",
+        "timestamp[us]"
+      ]
+    ],
+    "compared": [
+      "zone",
+      "trips",
+      "fare",
+      "km"
+    ],
+    "ignored": []
+  },
+  "keys": {
+    "old_nulls": 0,
+    "new_nulls": 0,
+    "old_duplicates": 0,
+    "new_duplicates": 0,
+    "samples": []
+  },
+  "rows": {
+    "only_in_old": 0,
+    "only_in_new": 0,
+    "matched": 7280,
+    "samples_old": [],
+    "samples_new": []
+  },
+  "columns": [
+    {
+      "column": "trips",
+      "mismatches": 0,
+      "tolerance": null,
+      "samples": []
+    },
+    {
+      "column": "fare",
+      "mismatches": 343,
+      "tolerance": null,
+      "samples": [
+        {
+          "day": "2025-01-01",
+          "zone": 9,
+          "old": 12.059999999999999,
+          "new": 12.06
+        },
+        {
+          "day": "2025-01-01",
+          "zone": 16,
+          "old": 125.72999999999999,
+          "new": 125.73
+        },
+        {
+          "day": "2025-01-01",
+          "zone": 54,
+          "old": 43.309999999999995,
+          "new": 43.31
+        },
+        {
+          "day": "2025-01-01",
+          "zone": 78,
+          "old": 214.35999999999999,
+          "new": 214.36
+        },
+        {
+          "day": "2025-01-01",
+          "zone": 85,
+          "old": 15.780000000000001,
+          "new": 15.78
+        },
+        {
+          "day": "2025-01-01",
+          "zone": 94,
+          "old": 146.17000000000002,
+          "new": 146.17
+        },
+        {
+          "day": "2025-01-01",
+          "zone": 98,
+          "old": 98.03999999999999,
+          "new": 98.04
+        },
+        {
+          "day": "2025-01-01",
+          "zone": 150,
+          "old": 30.759999999999998,
+          "new": 30.76
+        },
+        {
+          "day": "2025-01-01",
+          "zone": 167,
+          "old": 299.53999999999996,
+          "new": 299.54
+        },
+        {
+          "day": "2025-01-01",
+          "zone": 174,
+          "old": 170.07999999999998,
+          "new": 170.08
+        },
+        {
+          "day": "2025-01-01",
+          "zone": 207,
+          "old": 153.14000000000001,
+          "new": 153.14
+        },
+        {
+          "day": "2025-01-01",
+          "zone": 218,
+          "old": 111.11999999999999,
+          "new": 111.12
+        },
+        {
+          "day": "2025-01-01",
+          "zone": 227,
+          "old": 196.39000000000001,
+          "new": 196.39
+        },
+        {
+          "day": "2025-01-01",
+          "zone": 258,
+          "old": 208.95999999999998,
+          "new": 208.96
+        },
+        {
+          "day": "2025-01-02",
+          "zone": 25,
+          "old": 707.9399999999999,
+          "new": 707.94
+        },
+        {
+          "day": "2025-01-02",
+          "zone": 82,
+          "old": 995.8199999999999,
+          "new": 995.82
+        },
+        {
+          "day": "2025-01-03",
+          "zone": 28,
+          "old": 133.01999999999998,
+          "new": 133.02
+        },
+        {
+          "day": "2025-01-03",
+          "zone": 36,
+          "old": 169.57999999999998,
+          "new": 169.58
+        },
+        {
+          "day": "2025-01-03",
+          "zone": 54,
+          "old": 125.21000000000001,
+          "new": 125.21
+        },
+        {
+          "day": "2025-01-03",
+          "zone": 69,
+          "old": 445.21999999999997,
+          "new": 445.22
+        }
+      ]
+    },
+    {
+      "column": "km",
+      "mismatches": 0,
+      "tolerance": "abs 1e-06",
+      "samples": []
+    }
+  ],
+  "partitions": {
+    "column": "day",
+    "total": 0,
+    "identical": 0,
+    "differing": [],
+    "excluded_columns": [
+      "km"
+    ]
+  },
+  "meta": {
+    "old": "legacy (pandas)",
+    "new": "new (SQL)",
+    "partition": "day",
+    "generated": "2026-09-14T21:01:07+00:00",
+    "cutover": "0.1.0"
+  }
+}

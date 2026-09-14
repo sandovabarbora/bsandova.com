@@ -1,0 +1,19 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>cutover · PASS</title><style>
+:root{--bg:#161616;--fg:#dcdcd6;--fg2:#8a8a84;--line:#3a3a36;--ok:#7ed9a6;--bad:#ff6a3d;
+--mono:ui-monospace,SFMono-Regular,Menlo,monospace}
+*{box-sizing:border-box}
+body{margin:0 auto;background:var(--bg);color:var(--fg);font:14px/1.5 system-ui,sans-serif;
+padding:1.5rem 1rem;max-width:64rem}
+h1{font-size:1.4rem;font-weight:500;margin:0 0 .25rem}
+h2{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fg2);font-weight:400;
+margin:2rem 0 .5rem;
+border-bottom:1px solid var(--line);padding-bottom:.4rem}
+h3{font-size:.9rem;font-weight:400;margin:1.2rem 0 .3rem}
+.v{font-family:var(--mono);font-size:2rem;font-weight:700;margin:.5rem 0}
+.ok{color:var(--ok)}.bad{color:var(--bad)}
+.m{color:var(--fg2);font-family:var(--mono);font-size:12px}
+table{border-collapse:collapse;width:100%;font-family:var(--mono);font-size:12px;margin:.5rem 0}
+th,td{text-align:left;padding:.35rem .5rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--fg2);font-weight:400}td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.wrap{overflow-x:auto}ul{margin:.25rem 0;padding-left:1.2rem}code{font-family:var(--mono)}
+</style></head><body><h1>cutover · legacy (pandas) → new (SQL), day cast to date</h1><p class="m">key day, zone · partition day · 2026-09-14T21:01:07+00:00 · cutover 0.1.0</p><p class="v ok">PASS</p><h2>summary</h2><div class="wrap"><table><thead><tr><th>what</th><th>value</th></tr></thead><tbody><tr><td>rows old / new</td><td>7,280 / 7,280</td></tr><tr><td>matched on key</td><td>7,280</td></tr><tr><td>only in old / only in new</td><td>0 / 0</td></tr><tr><td>columns with mismatches</td><td>0 / 3</td></tr><tr><td>partitions identical</td><td>33 / 33</td></tr></tbody></table></div><h2>1 · schema</h2><div class="wrap"><table><thead><tr><th>kind</th><th>columns</th></tr></thead><tbody><tr><td>only in old</td><td>—</td></tr><tr><td>only in new</td><td>—</td></tr><tr><td>type changes</td><td>—</td></tr><tr><td>ignored</td><td>—</td></tr><tr><td>compared</td><td>day, zone, trips, fare, km</td></tr></tbody></table></div><h2>2 · key</h2><div class="wrap"><table><thead><tr><th>side</th><th class="n">nulls</th><th class="n">duplicate rows</th></tr></thead><tbody><tr><td>old</td><td class="n">0</td><td class="n">0</td></tr><tr><td>new</td><td class="n">0</td><td class="n">0</td></tr></tbody></table></div><h2>3 · row set</h2><p class="m">only in old: 0</p><p class="m">none</p><p class="m">only in new: 0</p><p class="m">none</p><h2>4 · columns</h2><div class="wrap"><table><thead><tr><th>column</th><th class="n">mismatches</th><th>tolerance</th></tr></thead><tbody><tr><td>trips</td><td class="n">0</td><td>exact</td></tr><tr><td>fare</td><td class="n">0</td><td>abs 0.005</td></tr><tr><td>km</td><td class="n">0</td><td>abs 1e-06</td></tr></tbody></table></div><h2>5 · fingerprints</h2><p class="m">33 / 33 partitions identical by <code>day</code></p><p class="m">excluded from the hash (tolerance declared): fare, km</p></body></html>
