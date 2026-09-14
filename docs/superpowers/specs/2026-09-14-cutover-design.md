@@ -59,10 +59,11 @@ survives the earlier ones.
    rows per column, showing key, old, new.
 5. **Fingerprint by partition.** If `partition` is given: for each partition
    value, a hash of the rows ordered by key on each side (DuckDB `md5` over a
-   canonical string of the row, aggregated with `string_agg` ordered by key,
-   respecting tolerance-free exact values). Reports `identical / total`
-   partitions and the list of differing ones. Without a partition, one
-   fingerprint per side.
+   canonical string of the row, aggregated with `string_agg` ordered by key).
+   The hash is exact, so columns with a declared tolerance are excluded from
+   it and the report says which; everything else is hashed as is. Reports
+   `identical / total` partitions and the list of differing ones. Without a
+   partition, one fingerprint per side.
 6. **Verdict.** PASS iff schema drift is empty (or allowed), keys are unique,
    both row-set differences are 0, every column has 0 mismatches, and every
    partition fingerprint matches. FAIL otherwise, with `reasons: [...]`.
