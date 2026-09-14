@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css?v=e81036e">
+<link rel="stylesheet" href="../style.css?v=c9e443b">
 <link rel="stylesheet" href="../text.css">
 </head>
 <body>
@@ -32,9 +32,9 @@
 </header>
 
 <section>
-<p>Cars are getting bigger. Everyone can see it, Transport &amp; Environment has measured it, and the obvious next sentence is that they must be eating the parking. The question this text asks is how much, for one city, from the city's own data. The answer is less than the thesis of "carspreading" would suggest, and the reason it is less is the useful part.</p>
+<p>Cars are getting bigger. Everyone can see it, Transport &amp; Environment has measured it<sup class="cite"><a href="#r4">4</a></sup>, and the obvious next sentence is that they must be eating the parking. The question this text asks is how much, for one city, from the city's own data. The answer is less than the thesis of "carspreading" would suggest, and the reason it is less is the useful part.</p>
 
-<p>Prague's paid parking zones are published as 16 874 polygons on the city's ArcGIS server, each with an area in real square metres (the server runs in S-JTSK, so nothing needs reprojecting; the ArcGIS Online copy in Web Mercator overstates every area by a factor of 2.43 at Prague's latitude, which is a trap worth naming). Summed, the zones hold <b>168 456 stalls</b>, which is 1.4 % above the figure the city's road authority published for December 2024, in the right direction: capacity has been added since. Two independent server aggregations, by zone type and by district, agree on the total area to 0.0 m².</p>
+<p>Prague's paid parking zones are published as 16 874 polygons on the city's ArcGIS server<sup class="cite"><a href="#r1">1</a></sup>, each with an area in real square metres (the server runs in S-JTSK, so nothing needs reprojecting; the ArcGIS Online copy in Web Mercator overstates every area by a factor of 2.43 at Prague's latitude, which is a trap worth naming). Summed, the zones hold <b>168 456 stalls</b>, which is 1.4 % above the figure the city's road authority published for December 2024<sup class="cite"><a href="#r2">2</a></sup>, in the right direction: capacity has been added since. Two independent server aggregations, by zone type and by district, agree on the total area to 0.0 m².</p>
 </section>
 
 <section>
@@ -48,19 +48,19 @@
   <figcaption><b>fig. 1</b> · The choice of metric moves the answer more than the data does. Bars are central estimates; whiskers span the gap (0.5–1.0 m) and the parallel share (50–85 %) for the fleet scenario, and the two overhead conventions for the area model. For perpendicular stalls the opposite logic applies; Prague's zones are mostly parallel.</figcaption>
 </figure>
 
-<p>The length model needs no kerb length, which is fortunate because the server would not give it: with the kerb held constant, stalls in 2012 equal stalls today times the ratio of the two pitches. Today's count is the anchor. The gap is 0.82 m, not chosen by hand: T&amp;E reports a 5.20 m pitch for 2025 from Berlin traffic data and a 4.38 m car, and the difference lands in the middle of the 0.5 to 1.0 m range the brief asked to test.</p>
+<p>The length model needs no kerb length, which is fortunate because the server would not give it: with the kerb held constant, stalls in 2012 equal stalls today times the ratio of the two pitches. Today's count is the anchor. The gap is 0.82 m, not chosen by hand: T&amp;E reports a 5.20 m pitch for 2025 from Berlin traffic data and a 4.38 m car<sup class="cite"><a href="#r4">4</a></sup>, and the difference lands in the middle of the 0.5 to 1.0 m range the brief asked to test.</p>
 </section>
 
 <section>
 <h2>The street is parked by the fleet, not by the showroom</h2>
-<p>The second correction is bigger than the first. New cars in the EU's top 100 grew 17 cm in length between 2012 and 2025. But the cars on Prague's streets are not new cars; they are the fleet, and the Czech fleet aged from 13.6 to 16.7 years over the same period. Weighting each model year by a survival curve and calibrating to that mean age, the average parked car grew <b>11.7 cm</b>, not 17. The ageing fleet absorbed about a third of the growth. The shape of the age distribution (Weibull, exponential, uniform) moves this by hundredths of a centimetre; the model does not care.</p>
+<p>The second correction is bigger than the first. New cars in the EU's top 100 grew 17 cm in length between 2012 and 2025<sup class="cite"><a href="#r4">4</a></sup>. But the cars on Prague's streets are not new cars; they are the fleet, and the Czech fleet aged from 13.6 to 16.7 years over the same period<sup class="cite"><a href="#r8">8</a></sup>. Weighting each model year by a survival curve and calibrating to that mean age, the average parked car grew <b>11.7 cm</b>, not 17. The ageing fleet absorbed about a third of the growth. The shape of the age distribution (Weibull, exponential, uniform) moves this by hundredths of a centimetre; the model does not care.</p>
 
 <figure>
   <img src="../assets/parking/03-fleet-lag.svg" alt="Top: new-car length rising faster than fleet length, 2005–2025. Bottom: mean fleet age rising from 13.6 to 16.7 years." loading="lazy">
   <figcaption><b>fig. 2</b> · New car versus fleet. The gap between the two lines is the ageing of the Czech fleet, which nobody publishes by model year, so it is modelled and calibrated to the one number that is published: mean age.</figcaption>
 </figure>
 
-<p>Put together: 11.7 cm more car at a 0.82 m gap, on the 68 % of stalls that T&amp;E assumes are parallel (a Berlin figure, the largest single uncertainty here), and Prague's current zones would hold <b>2 745 more cars</b> if they were parked by 2012's fleet. That is 1.6 % of capacity. Over the full grid of assumptions the range is 1 946 to 8 058 stalls, and the top of the range only appears with the 2 cm-a-year growth rate quoted in Czech media, for which no primary source could be found.</p>
+<p>Put together: 11.7 cm more car at a 0.82 m gap, on the 68 % of stalls that T&amp;E assumes are parallel<sup class="cite"><a href="#r4">4</a></sup> (a Berlin figure, the largest single uncertainty here), and Prague's current zones would hold <b>2 745 more cars</b> if they were parked by 2012's fleet. That is 1.6 % of capacity. Over the full grid of assumptions the range is 1 946 to 8 058 stalls, and the top of the range only appears with the 2 cm-a-year growth rate quoted in Czech media and attributed to the car importers' association, for which no primary source could be found<sup class="cite"><a href="#r9">9</a></sup>; T&amp;E's own rate is 1.2 cm a year<sup class="cite"><a href="#r5">5</a></sup>.</p>
 
 <figure>
   <img src="../assets/parking/01-gap-sensitivity.svg" alt="Lost stalls as a function of manoeuvring gap, three growth scenarios, bands for parallel share 50–85 %." loading="lazy">
@@ -72,7 +72,7 @@
 <h2>Where the width went</h2>
 <p>Cars in the zones are 5.8 cm wider than in 2012. On parallel stalls that is 27 598 m², <b>2.76 hectares</b> of roadway, the area of roughly 2 000 of today's stalls, and it appears in no parking statistic because it was never parking. It came out of the driving lane.</p>
 
-<p>The more graphic number: an average new car with mirrors folded out is 2.02 m wide. The marked parallel stall in the Czech standard ČSN 73 6056 is 2.00 m. New cars crossed that line around 2022. The standard's own design vehicle, from 2011, is 1.75 m wide; new cars had outgrown it before the standard was published.</p>
+<p>The more graphic number: an average new car with mirrors folded out is 2.02 m wide (T&amp;E measures width without mirrors, per SAE J1100<sup class="cite"><a href="#r10">10</a></sup>; mirrors add 15–25 cm, 20 used here<sup class="cite"><a href="#r11">11</a></sup>). The marked parallel stall in the Czech standard ČSN 73 6056 is 2.00 m<sup class="cite"><a href="#r7">7</a></sup>. New cars crossed that line around 2022. The standard's own design vehicle, from 2011, is 1.75 m wide; new cars had outgrown it before the standard was published.</p>
 
 <figure>
   <img src="../assets/parking/05-width-vs-stall.svg" alt="Car width 2005–2040 against the 2.00 m marked stall and the 1.75 m design vehicle." loading="lazy">
@@ -82,26 +82,45 @@
 
 <section>
 <h2>The price does not know any of this</h2>
-<p>A resident permit costs 1 200 Kč a year. At 13.5 m² of net zone area per stall, that is <b>89 Kč per square metre per year</b>, whether the car is a Fabia or a Kodiaq. The price rations neither the number of cars nor their size. This part of the thesis survives the data intact, and it is stronger than the capacity part.</p>
+<p>A resident permit costs 1 200 Kč a year<sup class="cite"><a href="#r3">3</a></sup>. At 13.5 m² of net zone area per stall, that is <b>89 Kč per square metre per year</b>, whether the car is a Fabia or a Kodiaq. The price rations neither the number of cars nor their size. This part of the thesis survives the data intact, and it is stronger than the capacity part.</p>
 </section>
 
 <section>
 <h2>What was checked, and what was not</h2>
-<p>Things that passed: 27 model tests, including the agreement of the continuous formula with a Monte Carlo over the real distribution of segment sizes (16 784 segments, median 8 stalls; integer effects add 0.12 percentage points, not more); the stall totals against the road authority's published numbers; district-level geometry, which turned out uniform, 13.7 to 16.0 m² per stall, so no Simpson's paradox hides two opposite cities inside one mean.</p>
+<p>Things that passed: 27 model tests, including the agreement of the continuous formula with a Monte Carlo over the real distribution of segment sizes (16 784 segments, median 8 stalls; integer effects add 0.12 percentage points, not more); the stall totals against the road authority's published numbers<sup class="cite"><a href="#r2">2</a></sup>; district-level geometry, which turned out uniform, 13.7 to 16.0 m² per stall, so no Simpson's paradox hides two opposite cities inside one mean.</p>
 
 <figure>
   <img src="../assets/parking/04-districts.svg" alt="Gross zone area per stall by district, 13.7 to 16.0 m², against the city mean." loading="lazy">
   <figcaption><b>fig. 5</b> · Districts with 1 000+ stalls. The check passed with a null result, which is also a result.</figcaption>
 </figure>
 
-<p>Things that did not: T&amp;E's headline that European cities lose 8.5 to 14 % of parallel parking by 2040 could not be reproduced from T&amp;E's own published parameters, which give 3.4 to 4.0 %. The factor of two to four is unexplained, so the headline is cited here as their modelling, not as a check on this one. Also unverified: the share of parallel stalls in Prague (the answer sits in the polygons' shape, width 2 to 2.5 m means parallel, 4.5 to 5.5 m means perpendicular, and needs the individual features rather than aggregates); car dimensions for cars registered in Czechia rather than the EU top 100 (one Czech data point, 111 models in 2019, sits 1.4 cm wider and 2.8 cm longer than the EU series, so the transfer is defensible, but it is a transfer); and the age structure of Prague's fleet specifically, which is probably younger than the national fleet.</p>
+<p>Things that did not: T&amp;E's headline that European cities lose 8.5 to 14 % of parallel parking by 2040<sup class="cite"><a href="#r4">4</a></sup> could not be reproduced from T&amp;E's own published parameters, which give 3.4 to 4.0 %. The factor of two to four is unexplained, so the headline is cited here as their modelling, not as a check on this one. Also unverified: the share of parallel stalls in Prague (the answer sits in the polygons' shape, width 2 to 2.5 m means parallel, 4.5 to 5.5 m means perpendicular, and needs the individual features rather than aggregates); car dimensions for cars registered in Czechia rather than the EU top 100 (one Czech data point, 111 models in 2019<sup class="cite"><a href="#r6">6</a></sup>, sits 1.4 cm wider and 2.8 cm longer than the EU series, so the transfer is defensible, but it is a transfer); and the age structure of Prague's fleet specifically, which is probably younger than the national fleet.</p>
 
 <p>One phrasing to be careful with. "Prague lost 2 745 stalls" is shorthand. The model does not know how many stalls Prague had in 2012; it holds today's kerb constant and asks how many 2012 cars it would take. The precise sentence is: <em>on today's zone area, 2012's fleet would park 2 745 more cars.</em></p>
 </section>
 
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Hlavní město Praha, ArcGIS Server: zóny placeného stání — úseky (<a href="https://gs-pub.praha.eu/arcgis/rest/services/dop/zony_placeneho_stani/MapServer/3">MapServer/3</a>), tarifní zóny (<a href="https://gs-pub.praha.eu/arcgis/rest/services/dop/zony_placeneho_stani/MapServer/10">MapServer/10</a>), vyhrazená, ZTP a zásobovací stání (<a href="https://gs-pub.praha.eu/arcgis/rest/services/dop/placene_parkovani/MapServer">placene_parkovani</a>). Server-side aggregations, snapshot 8 September 2026. Coordinate system S-JTSK (EPSG 5514).</li>
+<li id="r2">TSK Praha via data.praha.eu: <a href="https://data.praha.eu/praha-v-cislech/pocty-parkovacich-mist-v-praze">Počty parkovacích míst v Praze</a>, December 2024: 101 908 resident, 63 117 mixed, 1 155 visitor stalls.</li>
+<li id="r3">TSK Praha: <a href="https://www.tsk-praha.cz/nase-cinnosti/parking/">Parking</a> (zone management, permit prices; the "177 thousand stalls" figure without date or breakdown).</li>
+<li id="r4">Transport &amp; Environment (2026): <a href="https://uploads.transportenvironment.org/production/files/2026_06_TE_Ever_Bigger_report_final.pdf"><i>Ever-bigger? Car size at a crossroads</i></a>, p. 26. Dimension series for the 100 best-selling EU models, width without mirrors; 5.20 m end-to-end pitch (Berlin Traffic Information Centre, 2025); 68 % parallel share (Berlin); 8.5–14 % loss projection to 2040.</li>
+<li id="r5">Transport &amp; Environment: <a href="https://www.transportenvironment.org/articles/carspreading-to-wipe-out-up-to-14-of-on-street-parking-in-european-cities-study">Carspreading to wipe out up to 14 % of on-street parking in European cities</a> (annual growth rates: 1.2 cm length, 0.5 cm width).</li>
+<li id="r6">Závadská, A. (2020): <a href="https://dspace.vut.cz/bitstreams/cc9e59b8-9a9c-477e-957d-bc46fb941d69/download"><i>Optimalizace návrhových prvků ČSN 73 6056</i></a>, VUT Brno. Weighted mean of the 111 best-selling new cars in Czechia, 1–11/2019 (205 994 units): 1.80 × 4.30 m.</li>
+<li id="r7">ČSN 73 6056 (March 2011), <i>Odstavné a parkovací plochy silničních vozidel</i>. The standard is paywalled; stall dimensions (parallel 2.00 × 5.75 m, perpendicular 2.50 × 5.00 m) and the 1.75 m design vehicle are taken from secondary sources, chiefly [6], which disagree on the parallel stall length (5.50–6.75 m by source and variant). The length model does not depend on them; the width claim does.</li>
+<li id="r8">Mean age of the Czech passenger-car fleet: ČAPPO, <a href="https://www.cappo.cz/cisla-a-fakta/stav-vozoveho-parku-v-cr">Stav vozového parku v ČR</a> (compilation of SDA data); ČSÚ, <a href="https://statistikaamy.csu.gov.cz/auta-na-ceskych-silnicich">Auta na českých silnicích</a>; MD ČR, <a href="https://md.gov.cz/Statistiky/Silnicni-doprava/Dopravni-park/Osobni-automobily-registrovane-v-CR">Osobní automobily registrované v ČR</a>. Distribution by model year is not published; modelled (Weibull, exponential, uniform) and calibrated to the published means, 13.62 (2012) and 16.68 (2025).</li>
+<li id="r9">"2 cm a year" appears in Czech media (iROZHLAS) attributed to SDA data; no primary SDA publication of that rate was found, so it enters only as the upper bound.</li>
+<li id="r10">SAE J1100 <a href="https://law.resource.org/pub/us/cfr/ibr/005/sae.j1100.2001.html"><i>Motor Vehicle Dimensions</i></a>, W103: overall width excluding mirrors.</li>
+<li id="r11">Mirror allowance 15–25 cm: <a href="https://drivesize.com/articles/car-width-explained-body-mirrors-folded-mirrors-out">Car width explained: body, mirrors folded, mirrors out</a> (drivesize.com).</li>
+<li id="r12">Not used, relevant for the next step: EEA <a href="https://discodata.eea.europa.eu/">Discodata</a> CO2 monitoring (wheelbase and track for cars registered in CZ); <a href="https://open.canada.ca/data/dataset/913f8940-036a-45f2-a5f2-19bde76c1252">Canadian Vehicle Specifications</a> (length, wheelbase and track together, for calibrating the conversions); Holder, D. (2021), <i>Systematic analysis of changing vehicle exterior dimensions</i>, ICED21, <a href="https://doi.org/10.1017/pds.2021.553">10.1017/pds.2021.553</a> (wheelbase/length 0.618, R² 0.75); <a href="https://dataovozidlech.cz/">Registr silničních vozidel</a> data cube.</li>
+</ol>
+</section>
+
 <footer class="text-foot">
   <p><b>Data.</b> Prague paid-parking zones, gs-pub.praha.eu ArcGIS server, snapshot 8 September 2026 (segments, tariff zones, reserved and disabled stalls). Car dimensions: Transport &amp; Environment, <i>Ever-bigger? Car size at a crossroads</i> (June 2026), top 100 EU models, width without mirrors; Czech check point Závadská (2020). Fleet age: national means 2012 and 2025. Standard: ČSN 73 6056, secondary sources; the standard itself is paywalled and its tables were not opened.</p>
-  <p><b>Method.</b> Length (pitch) model anchored on today's stall count; area model kept for comparison; fleet dimensions by survival-weighted model years calibrated to mean age; Monte Carlo over real segment sizes for integer effects. Code, tests and the full methodology note are in the project repository; every figure above is rendered from the run.</p>
+  <p><b>Method.</b> Length (pitch) model anchored on today's stall count; area model kept for comparison; fleet dimensions by survival-weighted model years calibrated to mean age; Monte Carlo over real segment sizes for integer effects. Code, 27 tests and the full methodology note (Czech) live in the project repository; every figure above is rendered from the run by <code>make_figures_web.py</code>.</p>
   <p class="back"><a href="../#texts">← back to texts</a></p>
 </footer>
 </article>
