@@ -12,8 +12,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=5fe0656">
-</head>
+<link rel="stylesheet" href="../style.css?v=679275e">
+<style>
+.cards2{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line)}
+.card2{background:var(--bg);padding:1.25rem 1.5rem 1.25rem;display:flex;flex-direction:column;gap:.6rem;min-height:15rem}
+.card2 .th{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--coral)}
+.card2 .prj-t{font-size:1.35rem;line-height:1.1}
+.card2 p{margin:0;font-size:.85rem;line-height:1.5;color:var(--fg-2);flex:1}
+.card2 .out{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
+@media (max-width:64rem){.cards2{grid-template-columns:1fr}}
+</style></head>
 <body>
 <div class="top"><span><b>bsandova.com</b></span><nav><a href="#works">Projects</a><a href="#about">About</a><a href="#contact">Contact</a></nav><span class="tr"><a href="https://github.com/sandovabarbora" rel="me">github</a> · <a href="https://www.linkedin.com/in/barbora-sandova" rel="me">linkedin</a> · Prague ⇄ Berlin ⇄ Atlantic · <b id="clk">--:--</b></span></div>
 <section class="hero">
@@ -30,7 +38,7 @@
 </div>
 <div class="r">
 <div class="cards">
-<figure class="card" style="margin:0"><img src="assets/portrait-mid.png" alt="Barbora Šandová with Varinka"><figcaption><b>fig. 00</b> · the author with Varinka<br>who was not asked and did not mind</figcaption></figure>
+<figure class="card" style="margin:0"><img src="../assets/portrait-mid.png" alt="Barbora Šandová with Varinka"><figcaption><b>fig. 00</b> · the author with Varinka<br>who was not asked and did not mind</figcaption></figure>
 <!-- fig. 01 · second dog: photo to come -->
 <p class="bio">b. Prague · works in Prague and Berlin · surfs in Portugal</p>
 </div>
@@ -38,27 +46,8 @@
 </div>
 </section>
 
-<section class="sec" id="works">
-<div class="band-h"><span class="n">I</span><h2>Projects</h2><p>By subject. Each one lists what it produced: something to hear or use, a text, the code.</p></div>
-
-<div class="grp"><div class="grp-h"><span class="n">A</span><h3>Cities &amp; transport</h3><p>Prague, mostly. 121 million vehicle-location records and 16 874 parking polygons, read three different ways.</p></div>
-<div class="prj"><a class="prj-t" href="https://sandovabarbora.github.io/delayed-all-the-time/">Delayed All the Time. <em>On Time, Occasionally.</em></a><p>Prague transit played as disco. Five days, five keys; the later the buses, the higher the city sings.</p><div class="out"><a class="chip hot" href="https://sandovabarbora.github.io/delayed-all-the-time/" id="listen">▶ listen</a><a class="chip" href="https://github.com/sandovabarbora/delayed-all-the-time">code</a><span class="chip y">2025</span></div></div>
-<div class="prj"><span class="prj-t">Persistence Dynamics and Welfare Costs <em>of Urban Public Transport Delays</em></span><p>Master's thesis. Within-day delays are persistent, the persistence sits in a state a traveller can watch, and standard appraisal overstates the cost of unreliability. Three hypotheses, all revised by the data.</p><div class="out"><span class="chip soon">text · soon</span><span class="chip y">2026</span></div></div>
-<div class="prj"><a class="prj-t" href="texts/prague-parking.html">How many parking spaces Prague lost <em>to bigger cars</em></a><p>About 2 745 stalls since 2012. Not because cars got wider; because they got longer. The width went into the driving lane, and the price does not know any of this.</p><div class="out"><a class="chip hot" href="texts/prague-parking.html">read</a><span class="chip y">2026</span></div></div>
-</div>
-
-<div class="grp"><div class="grp-h"><span class="n">B</span><h3>Sport</h3><p>Who a country produces, per capita, compared with its peers. Same method twice.</p></div>
-<div class="prj"><a class="prj-t" href="https://hockey.datasimply.eu">Player Pool Atlas <em>· hockey</em></a><p>1.38 NHL players per million Czechs, fifth of six peers; one U22 forward in the NHL, four defencemen. Two rejected analyses are named in the product.</p><div class="out"><a class="chip hot" href="texts/hockey.html">read</a><a class="chip" href="https://hockey.datasimply.eu">atlas</a><a class="chip" href="https://github.com/sandovabarbora/czehockey-player-pool-atlas">code</a><span class="chip y">2026</span></div></div>
-<div class="prj"><a class="prj-t" href="https://football.datasimply.eu">Player Pool Atlas <em>· football</em></a><p>Same method, football. Big-5 exports, and a hierarchical Bayesian model sits next to the multipliers to keep them honest.</p><div class="out"><a class="chip hot" href="https://football.datasimply.eu">atlas</a><a class="chip" href="https://github.com/sandovabarbora/czefootball-player-pool-atlas">code</a><span class="chip y">2026</span></div></div>
-</div>
-
-<div class="grp"><div class="grp-h"><span class="n">C</span><h3>Advertising</h3><p>What Czech brands actually look and sound like, measured rather than asserted.</p></div>
-<div class="prj"><a class="prj-t" href="https://sandovabarbora.github.io/brand-reflection-cz/">Brand Reflection <em>Series</em></a><p>47 TV spots measured for colour and sound; 24 homepages embedded and clustered. Five banks turned out to be one bank.</p><div class="out"><a class="chip hot" href="https://sandovabarbora.github.io/brand-reflection-cz/">studies</a><a class="chip" href="https://github.com/sandovabarbora/brand-reflection-cz">code</a><span class="chip y">2026</span></div></div>
-</div>
-
-<div class="grp"><div class="grp-h"><span class="n">D</span><h3>AI over data</h3><p>When an assistant over a warehouse is wrong without saying so.</p></div>
-<div class="prj"><a class="prj-t" href="texts/quaesitor/">Quaesitor</a><p>Independent review of AI assistants over data warehouses. Retired; the findings are not. Two models with the same score and opposite characters, 26 silent failures with their measured size, and why trust grows faster than accuracy.</p><div class="out"><a class="chip hot" href="texts/quaesitor/">3 texts</a><a class="chip" href="https://github.com/sandovabarbora/quaesitor-zero">code</a><span class="chip y">2026</span></div></div>
-</div>
+<section class="sec" id="works"><div class="band-h"><span class="n">I</span><h2>Projects</h2><p>By subject. Each one lists what it produced: something to hear or use, a text, the code.</p></div>
+<div class="cards2"><div class="card2"><span class="th">A · Cities &amp; transport</span><a class="prj-t" href="https://sandovabarbora.github.io/delayed-all-the-time/">Delayed All the Time. <em>On Time, Occasionally.</em></a><p>Prague transit played as disco. Five days, five keys; the later the buses, the higher the city sings.</p><div class="out"><a class="chip hot" href="https://sandovabarbora.github.io/delayed-all-the-time/" id="listen">▶ listen</a><a class="chip" href="https://github.com/sandovabarbora/delayed-all-the-time">code</a><span class="chip y">2025</span></div></div><div class="card2"><span class="th">A · Cities &amp; transport</span><span class="prj-t">Persistence Dynamics and Welfare Costs <em>of Urban Public Transport Delays</em></span><p>Master's thesis. Within-day delays are persistent, the persistence sits in a state a traveller can watch, and standard appraisal overstates the cost of unreliability. Three hypotheses, all revised by the data.</p><div class="out"><span class="chip soon">text · soon</span><span class="chip y">2026</span></div></div><div class="card2"><span class="th">A · Cities &amp; transport</span><a class="prj-t" href="../texts/prague-parking.html">How many parking spaces Prague lost <em>to bigger cars</em></a><p>About 2 745 stalls since 2012. Not because cars got wider; because they got longer. The width went into the driving lane, and the price does not know any of this.</p><div class="out"><a class="chip hot" href="../texts/prague-parking.html">read</a><span class="chip y">2026</span></div></div><div class="card2"><span class="th">B · Sport</span><a class="prj-t" href="https://hockey.datasimply.eu">Player Pool Atlas <em>· hockey</em></a><p>1.38 NHL players per million Czechs. Sixth of six. Finland has four times as many. Two rejected analyses are named in the product.</p><div class="out"><a class="chip hot" href="https://hockey.datasimply.eu">atlas</a><a class="chip" href="https://github.com/sandovabarbora/czehockey-player-pool-atlas">code</a><span class="chip y">2026</span></div></div><div class="card2"><span class="th">B · Sport</span><a class="prj-t" href="https://football.datasimply.eu">Player Pool Atlas <em>· football</em></a><p>Same method, football. Big-5 exports, and a hierarchical Bayesian model sits next to the multipliers to keep them honest.</p><div class="out"><a class="chip hot" href="https://football.datasimply.eu">atlas</a><a class="chip" href="https://github.com/sandovabarbora/czefootball-player-pool-atlas">code</a><span class="chip y">2026</span></div></div><div class="card2"><span class="th">C · Advertising</span><a class="prj-t" href="https://sandovabarbora.github.io/brand-reflection-cz/">Brand Reflection <em>Series</em></a><p>47 TV spots measured for colour and sound; 24 homepages embedded and clustered. Five banks turned out to be one bank.</p><div class="out"><a class="chip hot" href="https://sandovabarbora.github.io/brand-reflection-cz/">studies</a><a class="chip" href="https://github.com/sandovabarbora/brand-reflection-cz">code</a><span class="chip y">2026</span></div></div></div>
 </section>
 
 <section class="sec" id="about">
