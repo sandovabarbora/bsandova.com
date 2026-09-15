@@ -167,3 +167,14 @@ a.chip:hover{background:var(--hot);color:#161616;border-color:var(--hot)}
 .prj p{grid-column:1/-1;grid-row:2;max-width:52rem}
 .chip{padding:.3rem .55rem}
 @media (max-width:64rem){.grp{grid-template-columns:1fr}.grp-h{grid-row:auto;padding:1.25rem 1rem}.prj{grid-column:1;grid-template-columns:1fr;padding:1rem}.prj-t,.out,.prj p{grid-column:1}.out{grid-row:3;margin-top:.25rem;flex-wrap:wrap}.prj p{grid-row:2}}
+
+/* projects: discipline filter and tags */
+.filters{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;padding:.7rem 1.5rem;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2)}
+.filters .fl{margin-right:.4rem}
+.filters button{font:inherit;letter-spacing:inherit;text-transform:inherit;background:transparent;color:var(--fg);border:1px solid var(--line);padding:.4rem .6rem;cursor:pointer}
+.filters button:hover{border-color:var(--fg-2)}.filters button.on{background:var(--coral);color:#161616;border-color:var(--coral)}
+.filters .cnt{margin-left:auto}
+.tag{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-2);padding:.3rem 0 .3rem .3rem}
+.tag+.tag::before{content:"· ";}
+.prj[hidden],.grp[hidden]{display:none}
+@media (max-width:64rem){.filters{padding:.7rem 1rem}.filters .cnt{margin-left:0;width:100%}}
