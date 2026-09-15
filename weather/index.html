@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weather, checked</title>
+<meta name="description" content="Prague's weather forecast verified against what the stations measured: four models' 7-day forecasts stored every morning and scored by lead against ČHMÚ observations at Ruzyně and Klementinum. Temperature error, rain skill against climatology, and the days the models disagree.">
+<meta name="theme-color" content="#161616">
+<link rel="canonical" href="https://bsandova.com/weather/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../text.css">
+<style>
+.chart{max-width:64rem;margin:1rem 0 .5rem;border:1px solid var(--line);background:var(--bg-2)}
+.chart svg{display:block;width:100%;height:auto;font-family:var(--mono);font-size:11px}
+.chart .grid{stroke:var(--line);stroke-width:1}.chart .axis{fill:var(--fg-2)}.chart .lbl{fill:var(--fg)}
+.legend{display:flex;gap:1.25rem;flex-wrap:wrap;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);margin:.5rem 0 1.5rem}
+.legend i{display:inline-block;width:.9rem;height:.9rem;vertical-align:-.15em;margin-right:.4rem}
+.tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
+.tbl th,.tbl td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top;white-space:nowrap}
+.tbl th:first-child,.tbl td:first-child{padding-left:0}
+.tbl th{font-weight:400;color:var(--fg-2);letter-spacing:.12em;text-transform:uppercase;font-size:10px}
+.tbl td.n,.tbl th.n{text-align:right;font-variant-numeric:tabular-nums}
+.tbl td b{color:var(--hot);font-weight:400}.tbl .hi{color:var(--coral)}.tbl .dim{color:var(--fg-2)}.tbl .go{color:var(--coral)}
+.scroller{overflow-x:auto;max-width:64rem}
+.tabs{display:flex;gap:0;margin:1rem 0;border:1px solid var(--line);width:max-content}
+.tabs button{background:none;border:0;border-right:1px solid var(--line);color:var(--fg-2);font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:.6rem 1rem;cursor:pointer}
+.tabs button:last-child{border-right:0}.tabs button.on{background:var(--hot);color:#161616}
+.gap{font-family:var(--mono);font-size:11px;color:var(--fg-2);border:1px dashed var(--line);padding:.8rem 1rem;max-width:44rem;margin:1rem 0}
+.ctl{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:1rem 2rem;max-width:44rem;margin:1rem 0;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-2)}
+.ctl label{display:flex;flex-direction:column;gap:.35rem}.ctl input{accent-color:var(--coral);width:100%}
+.ctl b{color:var(--fg);font-weight:400}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../">bsandova.com</a></b><nav><a href="../#works">Projects</a><a href="../#about">About</a><a href="../#contact">Contact</a></nav><span class="tr">weather · prague · live · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Weather forecast verification · Praha Ruzyně · Praha Klementinum · four models · stored every morning since 15 September 2026</p>
+  <h1>Weather, <em>checked.</em></h1>
+  <p class="deck">The same question as the <a href="../surf/">surf page</a>, with a better answer key: the truth here is a thermometer and a rain gauge, not another model. Every morning this page stores the seven-day forecast from four weather models for two Prague stations, then scores each forecast against what the Czech Hydrometeorological Institute measured on that day, lead by lead. Temperature error in degrees, rain skill against the 1991–2020 climatology and against "same as yesterday", and the days the models disagree. Numbers appear when there are enough pairs to mean something.</p>
+  <dl class="facts" id="facts">
+    <div><dt>forecasts stored</dt><dd id="f-days">…</dd></div>
+    <div><dt>observed yesterday</dt><dd id="f-obs">…</dd></div>
+    <div><dt>tmax error at lead 1</dt><dd id="f-skill">…</dd></div>
+    <div><dt>rain skill at lead 1</dt><dd id="f-rain">…</dd></div>
+  </dl>
+</header>
+
+<section>
+<h2>The next seven days</h2>
+<p>Daily maximum and minimum temperature and precipitation per model, aggregated from hourly values into the station's own 24-hour windows (temperature extremes to 20:00 UTC, rain to 06:00 UTC), with the climatological mean for the day of year as context.</p>
+</section>
+<div class="tabs" id="tabs"></div>
+<div class="scroller"><table class="tbl" id="fc"><thead><tr><th>date</th><th class="n">lead</th><th class="n">best match</th><th class="n">ICON</th><th class="n">ECMWF</th><th class="n">GFS</th><th class="n">climatology</th><th>rain votes</th></tr></thead><tbody></tbody></table></div>
+
+<section>
+<h2>What the stations measured</h2>
+<p>The last fourteen days as ČHMÚ published them, one row a day, rewritten after each day ends. This is the answer key.</p>
+</section>
+<div class="scroller"><table class="tbl" id="obs"><thead><tr><th>date</th><th class="n">tmax</th><th class="n">tmin</th><th class="n">rain</th><th class="n">clim. tmax</th><th class="n">anomaly</th></tr></thead><tbody></tbody></table></div>
+
+<section>
+<h2>Skill by lead</h2>
+<p>Mean absolute error of the daily maximum temperature per model and lead, in °C, with a block-bootstrap interval by ISO week; below it the two baselines any forecast has to beat, the climatological mean for the day and yesterday's observation. Rain: the share of the four models that call ≥ 1 mm, scored with the Brier score and shown as skill against climatology and persistence. Empty cells: fewer than 14 pairs; grey: fewer than 30.</p>
+</section>
+<div id="skill"></div>
+
+<section>
+<h2>Data quality, counted</h2>
+</section>
+<div id="quality" class="gap"></div>
+
+<section>
+<h2>Method</h2>
+<p>Forecasts: Open-Meteo, hourly 2 m temperature and precipitation for the station coordinates, models <code>best_match</code>, <code>icon_seamless</code>, <code>ecmwf_ifs025</code>, <code>gfs_seamless</code>, seven days ahead, fetched at 06:40 UTC. Observations: ČHMÚ open data, daily climatological values per station (TMA, TMI at 20:00 UTC; SRA at 06:00 UTC). Climatology: the station's own 1991–2020 record, ±15 days around the day of year. Verification: <code>weather/verify.py</code>, five tests over a synthetic world with planted error and bias; the same gates as the surf page. Everything is a public repository, a cron and static files; nothing costs anything and nothing is typed.</p>
+</section>
+
+<footer class="text-foot"><p class="back"><a href="../#works">← projects</a> · <a href="../texts/weather">the text</a> · <a href="../surf/">the surf version</a></p></footer>
+</article>
+
+<script>
+(async function(){
+  const D = await (await fetch('data.json', {cache:'no-store'})).json();
+  const C = await (await fetch('data/climatology.json', {cache:'no-store'})).json();
+  const NAMES = {ruzyne:'Ruzyně', klementinum:'Klementinum'}; const MODELS = D.models; const ML = {best_match:'best match', icon_seamless:'ICON', ecmwf_ifs025:'ECMWF', gfs_seamless:'GFS'};
+  let station = D.stations.includes('ruzyne') ? 'ruzyne' : D.stations[0];
+  const doy = d => { const x = new Date(d+'T00:00:00Z'); return Math.floor((x - Date.UTC(x.getUTCFullYear(),0,0))/864e5); };
+  const clim = (s, d) => (C.stations[s]||{})[String(doy(d))];
+  const fmt = v => v==null ? '—' : v.toFixed(1);
+  function render(){
+    document.getElementById('tabs').innerHTML = D.stations.map(s => `<button class="${s===station?'on':''}" data-s="${s}">${NAMES[s]||s}</button>`).join('');
+    const last = D.issues[D.issues.length-1]; const L = D.latest[station]; const days = Object.keys(L[MODELS[0]]).sort();
+    document.getElementById('f-days').innerHTML = `${D.issues.length} <small>since ${D.issues[0]} · ${MODELS.length} models · 2 stations</small>`;
+    const ro = D.recent_obs[station]; const rd = Object.keys(ro).sort(); const y = rd[rd.length-1]; const cy = clim(station, y);
+    document.getElementById('f-obs').innerHTML = y ? `${fmt(ro[y].tmax)} / ${fmt(ro[y].tmin)} °C <small>${y} · rain ${fmt(ro[y].precip)} mm · ${NAMES[station]} · climatology ${cy?fmt(cy.tmax_mean):'—'} °C</small>` : '—';
+    const S = D.skill[station] || {}; const e1 = S.best_match && S.best_match['1'];
+    document.getElementById('f-skill').innerHTML = e1 && e1.mae_tmax!=null ? `${e1.mae_tmax.toFixed(1)} °C <small>best match, MAE, ${e1.n} pairs${e1.descriptive?' · descriptive':''} · climatology ${fmt(e1.mae_tmax_climatology)} · persistence ${fmt(e1.mae_tmax_persistence)}</small>` : `— <small>${e1?e1.n:0} of ${D.gates.min_pairs} pairs at lead 1</small>`;
+    const r1 = S.ensemble && S.ensemble['1'];
+    document.getElementById('f-rain').innerHTML = r1 && r1.brier!=null ? `${r1.bss_vs_climatology!=null?(r1.bss_vs_climatology>0?'+':'')+r1.bss_vs_climatology.toFixed(2):'—'} <small>Brier skill vs climatology · vs persistence ${r1.bss_vs_persistence!=null?r1.bss_vs_persistence.toFixed(2):'—'} · ${r1.n} days</small>` : `— <small>${r1?r1.n:0} of ${D.gates.min_pairs} days at lead 1</small>`;
+    // forecast table
+    document.querySelector('#fc tbody').innerHTML = days.map(d => {
+      const lead = Math.round((new Date(d) - new Date(last))/864e5); const c = clim(station, d);
+      const cells = MODELS.map(m => { const f = L[m][d]; return f ? `<td class="n"><b>${fmt(f.tmax)}</b> / ${fmt(f.tmin)} <span class="dim">${f.precip.toFixed(1)}</span></td>` : '<td class="n dim">—</td>'; }).join('');
+      const votes = MODELS.filter(m => L[m][d] && L[m][d].precip >= D.rain_mm).length;
+      return `<tr><td>${d}</td><td class="n">${lead}</td>${cells}<td class="n dim">${c?fmt(c.tmax_mean)+' / '+fmt(c.tmin_mean):'—'}</td><td class="${votes>=3?'go':'dim'}">${'●'.repeat(votes)}${'○'.repeat(MODELS.length-votes)} ${votes}/${MODELS.length}${c&&c.rain1_freq!=null?' <span class="dim">· clim '+Math.round(100*c.rain1_freq)+' %</span>':''}</td></tr>`;
+    }).join('');
+    // observations
+    document.querySelector('#obs tbody').innerHTML = rd.slice().reverse().map(d => { const o = ro[d], c = clim(station, d); const an = c ? o.tmax - c.tmax_mean : null;
+      return `<tr><td>${d}</td><td class="n"><b>${fmt(o.tmax)}</b></td><td class="n">${fmt(o.tmin)}</td><td class="n ${o.precip>=D.rain_mm?'hi':''}">${fmt(o.precip)}</td><td class="n dim">${c?fmt(c.tmax_mean):'—'}</td><td class="n ${an!=null&&Math.abs(an)>=4?'hi':'dim'}">${an==null?'—':(an>0?'+':'')+an.toFixed(1)}</td></tr>`; }).join('');
+    // skill
+    const leads = [1,2,3,4,5,6]; const any = MODELS.some(m => S[m] && leads.some(l => S[m][l] && S[m][l].mae_tmax!=null));
+    if (!any) { document.getElementById('skill').innerHTML = `<div class="gap">No lead has ${D.gates.min_pairs} verified pairs yet. Forecasts are stored since ${D.issues[0]}; the first row appears after ${D.gates.min_pairs} days, and rows stop being marked descriptive after ${D.gates.descriptive_below}.</div>`; }
+    else {
+      const row = (label, get) => `<tr><td>${label}</td>${leads.map(l => { const v = get(l); return `<td class="n${v && v.dim ? ' dim':''}">${v && v.t!=null ? v.t : '—'}</td>`; }).join('')}</tr>`;
+      let html = `<div class="scroller"><table class="tbl"><thead><tr><th>tmax MAE · °C</th>${leads.map(l=>`<th class="n">lead ${l}</th>`).join('')}</tr></thead><tbody>`;
+      for (const m of MODELS) html += row(`<b>${ML[m]||m}</b>`, l => { const e = S[m] && S[m][l]; return e && e.mae_tmax!=null ? {t: e.mae_tmax.toFixed(2) + (e.mae_tmax_ci ? ` <span class="dim">${e.mae_tmax_ci[0].toFixed(1)}–${e.mae_tmax_ci[1].toFixed(1)}</span>` : '') + ` <span class="dim">bias ${(e.bias_tmax>0?'+':'')+e.bias_tmax.toFixed(1)}</span>`, dim: e.descriptive} : (e ? {t:'<span class="dim">'+e.n+' pairs</span>'} : null); });
+      html += row('<span class="dim">climatology</span>', l => { const e = S.best_match && S.best_match[l]; return e && e.mae_tmax_climatology!=null ? {t: e.mae_tmax_climatology.toFixed(2), dim:true} : null; });
+      html += row('<span class="dim">persistence</span>', l => { const e = S.best_match && S.best_match[l]; return e && e.mae_tmax_persistence!=null ? {t: e.mae_tmax_persistence.toFixed(2), dim:true} : null; });
+      html += `</tbody></table></div><div class="scroller"><table class="tbl"><thead><tr><th>rain ≥ 1 mm</th>${leads.map(l=>`<th class="n">lead ${l}</th>`).join('')}</tr></thead><tbody>`;
+      html += row('<b>BSS vs climatology</b>', l => { const e = S.ensemble && S.ensemble[l]; return e && e.bss_vs_climatology!=null ? {t:(e.bss_vs_climatology>0?'+':'')+e.bss_vs_climatology.toFixed(2), dim:e.descriptive} : null; });
+      html += row('<b>BSS vs persistence</b>', l => { const e = S.ensemble && S.ensemble[l]; return e && e.bss_vs_persistence!=null ? {t:(e.bss_vs_persistence>0?'+':'')+e.bss_vs_persistence.toFixed(2), dim:e.descriptive} : null; });
+      for (const m of MODELS) html += row(`${ML[m]||m} · POD / FAR`, l => { const e = S[m] && S[m][l]; return e && e.pod!=null ? {t: `${e.pod.toFixed(2)} / ${e.far==null?'—':e.far.toFixed(2)}`, dim:e.descriptive} : null; });
+      html += '</tbody></table></div>';
+      document.getElementById('skill').innerHTML = html;
+    }
+    const q = D.quality;
+    document.getElementById('quality').innerHTML = `issues stored ${q.issues} / expected ${q.expected_issues}${q.missing_issue_dates.length?' · missing '+q.missing_issue_dates.join(', '):''} · null share by model ${MODELS.map(m=>`${ML[m]||m} ${q.null_share_by_model[m]==null?'—':Math.round(100*q.null_share_by_model[m])+' %'}`).join(' · ')} · observation days ${q.observation_days[station]}${(q.observation_gaps[station]||[]).length?' · gaps '+q.observation_gaps[station].join(', '):''} · models disagree by more than 4 °C at lead 1 on ${q.disagreement_gt_4c_lead1[station].n?Math.round(100*q.disagreement_gt_4c_lead1[station].share)+' % of '+q.disagreement_gt_4c_lead1[station].n+' days':'— (no pairs yet)'}`;
+  }
+  document.getElementById('tabs').addEventListener('click', e => { if (e.target.dataset.s) { station = e.target.dataset.s; render(); } });
+  render();
+})();
+</script>
+</body>
+</html>

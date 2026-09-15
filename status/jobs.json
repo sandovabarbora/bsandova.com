@@ -32,6 +32,38 @@
     ]
   },
   {
+    "id": "weather",
+    "name": "Weather forecast verification",
+    "what": "Stores four models' 7-day forecasts for two Prague stations and yesterday's ČHMÚ observations; verifies by lead.",
+    "schedule": "GitHub Actions cron · 06:40 UTC daily",
+    "cadence_hours": 24,
+    "runs": {
+      "github_workflow": {
+        "repo": "sandovabarbora/bsandova.com",
+        "workflow": "weather.yml"
+      }
+    },
+    "data": {
+      "file": "../weather/data.json",
+      "generated_key": "generated"
+    },
+    "cost": "0 EUR · public repo, Open-Meteo + ČHMÚ open data, no keys",
+    "links": [
+      [
+        "page",
+        "../weather/"
+      ],
+      [
+        "text",
+        "../texts/weather"
+      ],
+      [
+        "workflow",
+        "https://github.com/sandovabarbora/bsandova.com/blob/main/.github/workflows/weather.yml"
+      ]
+    ]
+  },
+  {
     "id": "watch",
     "name": "Model release watch",
     "what": "Runs the Quaesitor harness against the current model aliases on two packs, indexes the reports with fingerprints and cost, pushes the data file.",

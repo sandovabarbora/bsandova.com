@@ -39,7 +39,7 @@
 <article class="text">
 <header class="text-head">
   <p class="kicker">Status · what runs this site · read live from the data files and the public GitHub API</p>
-  <h1>Four jobs, <em>no server.</em></h1>
+  <h1>Five jobs, <em>no server.</em></h1>
   <p class="deck">Every live thing on this site is a scheduled job writing a data file that a static page reads. This page reads the same files and asks GitHub what ran, then judges freshness against the cadence each job promised. A card goes green only when a source said so; when a source cannot be read, the card says that, because a status page that guesses is worse than none.</p>
   <dl class="facts">
     <div><dt>jobs</dt><dd id="f-jobs">…</dd></div>
@@ -83,6 +83,14 @@
     if (j.data) {
       try {
         const d = await (await fetch(j.data.file, {cache:'no-store'})).json();
+        if (j.id === 'weather') {
+          const gen = new Date(d.generated+'T06:40:00Z'); dataAge = (now-gen)/36e5;
+          kv.push(['data generated', `${d.generated} <span class="dim">· ${fmtAgo(gen)}</span>`]);
+          kv.push(['issues stored / expected', `${d.quality.issues} / ${d.quality.expected_issues}`]);
+          kv.push(['observation days', Object.entries(d.quality.observation_days).map(([s,n])=>`${s} ${n}`).join(' · ')]);
+          const pairsMax = Math.max(0, ...Object.values(d.skill||{}).flatMap(s=>Object.values(s).flatMap(l=>Object.values(l).map(e=>e.n||0))));
+          kv.push(['gate', `${pairsMax} / ${d.gates.min_pairs} pairs at best lead`]);
+        }
         if (j.id === 'surf') {
           const gen = new Date(d.generated+'T06:10:00Z'); dataAge = (now-gen)/36e5;
           kv.push(['data generated', `${d.generated} <span class="dim">· ${fmtAgo(gen)}</span>`]);

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weather, checked</title>
+<meta name="description" content="The surf verifier pointed at Prague, with a real answer key: four models' seven-day forecasts stored every morning and scored against what the ČHMÚ stations at Ruzyně and Klementinum measured, in the stations' own 24-hour windows. Skill by lead against climatology and persistence, and three dated predictions.">
+<meta name="theme-color" content="#161616">
+<link rel="canonical" href="https://bsandova.com/texts/weather">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css?v=27e23ef">
+<link rel="stylesheet" href="../text.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false})"></script>
+<style>
+.tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
+.tbl th,.tbl td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th:first-child,.tbl td:first-child{padding-left:0}
+.tbl th{font-weight:400;color:var(--fg-2);letter-spacing:.12em;text-transform:uppercase;font-size:10px}
+.tbl td.n,.tbl th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl td b{color:var(--hot);font-weight:400}.tbl .hi{color:var(--coral)}.tbl .dim{color:var(--fg-2)}
+.tbl caption{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);padding:0 0 .5rem}
+.scroller{overflow-x:auto;max-width:64rem}
+pre{font-family:var(--mono);font-size:12px;line-height:1.6;color:var(--fg);background:#1d1d1b;border:1px solid var(--line);padding:.9rem 1rem;overflow-x:auto;max-width:64rem;margin:.5rem 0 1.2rem}
+pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:normal}
+.stack{font-family:var(--mono);font-size:11px;line-height:1.8;color:var(--fg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:.8rem 0;margin:1rem 0 1.5rem;max-width:64rem}
+.stack b{color:var(--fg);font-weight:400}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../">bsandova.com</a></b><nav><a href="../#works">Projects</a><a href="../#about">About</a><a href="../#contact">Contact</a></nav><span class="tr">claims, checked · live · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Claims, checked · Prague · started 15 September 2026 · a second use of the surf verifier</p>
+  <h1>Weather, <em>checked.</em></h1>
+  <p class="deck">The <a href="surf">surf verification</a> has one weakness it admits: its truth is another model's analysis. Prague has thermometers. The Czech Hydrometeorological Institute publishes every station's daily maximum, minimum and rainfall as open data the morning after, so the same machinery can be pointed at a forecast people actually plan around, and scored against what was measured. This is that: four models, two stations, one line a day, and a page that shows a number only once there are enough days to mean one.</p>
+  <dl class="facts">
+    <div><dt>stations</dt><dd>2 <small>Praha Ruzyně (WMO 11518, 364 m) · Praha Klementinum (191 m, since 1775)</small></dd></div>
+    <div><dt>models</dt><dd>4 <small>best match · ICON · ECMWF IFS 0.25° · GFS, via Open-Meteo</small></dd></div>
+    <div><dt>truth</dt><dd>ČHMÚ <small>TMA, TMI to 20:00 UTC · SRA to 06:00 UTC · rewritten after each day</small></dd></div>
+    <div><dt>first skill numbers</dt><dd>14 pairs <small>per lead · block bootstrap by week · 5 tests</small></dd></div>
+  </dl>
+</header>
+
+<section>
+<h2>Why this is a better test than the surf one</h2>
+<p>On the surf page, forecast and truth come from the same family of wave models, so a day on which both are wrong together looks like a hit. Here the truth is a rain gauge and a thermometer at a station that has been measuring since 1938 (Ruzyně) and 1775 (Klementinum). A model that says 24 °C and a station that reads 20 °C disagree in a way nobody can argue with. The cost is one day of lag, since ČHMÚ publishes a day's values after it ends; the benefit is that "skill" on this page means skill against the world<sup class="cite"><a href="#r1">1</a></sup>.</p>
+</section>
+
+<section>
+<h2>The engineering detail that decides whether the comparison is fair</h2>
+<p>A daily maximum is not a daily maximum until you say which 24 hours. ČHMÚ's daily TMA and TMI are read at 20:00 UTC and cover the 24 hours before; its daily precipitation SRA is read at 06:00 UTC and covers the 24 hours before that. Open-Meteo's daily values run midnight to midnight local time. Compared directly, a warm evening or an overnight shower would land on different days on the two sides, and the error would be an artefact of the calendar. So the collector does not use Open-Meteo's daily values at all: it fetches hourly temperature and precipitation, including the previous day so the first window is complete, and aggregates them into the station's own windows, maximum and minimum over (D−1 20:00, D 20:00], sum over (D−1 06:00, D 06:00]. The aggregation has a test of its own with a synthetic hourly series, because it is the kind of thing that is wrong quietly<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p>Two more things the page states rather than hides. Open-Meteo's <code>best_match</code> resolves to ICON for Prague, so on this page it is a duplicate of the ICON column and the four models are effectively three; it is kept because it is what a user of the API gets by default. And the climatology is the station's own 1991–2020 record, ±15 days around the day of year, computed once from ČHMÚ's historical file (72 MB for Ruzyně, 149 MB for Klementinum) and stored as 366 rows; it gives every day a base rate for rain and a mean to beat for temperature before a single forecast has been verified<sup class="cite"><a href="#r2">2</a></sup>.</p>
+</section>
+
+<section>
+<h2>What is scored, and against what</h2>
+<p>Per station, model and lead day 0–6: mean absolute error, bias and RMSE of the daily maximum, MAE and bias of the minimum, MAE of precipitation. Rain as a binary event at 1 mm: hits, misses, false alarms, probability of detection and false-alarm ratio per model; and, treating the share of models that call rain as a probability, the Brier score with skill against two baselines, the climatological rain frequency for that day of year and "rain yesterday". Temperature gets the same two baselines: the climatological mean and yesterday's observation. Intervals from a block bootstrap by ISO week, 500 resamples. Nothing is shown under 14 pairs; under 30 it is marked descriptive. The data-quality block counts issues stored against expected, nulls per model, gaps in the observation series and the share of days the models disagree by more than 4 °C at lead 1<sup class="cite"><a href="#r2">2</a>, <a href="#r3">3</a></sup>.</p>
+<div class="eq">$$\mathrm{BSS}_{\text{ref}} = 1 - \frac{\frac{1}{N}\sum_i (f_i - o_i)^2}{\frac{1}{N}\sum_i (f^{\text{ref}}_i - o_i)^2},\qquad f_i = \frac{\#\{\text{models calling} \ge 1\ \text{mm}\}}{4},\quad f^{\text{clim}}_i = p_{1991\text{–}2020}(\text{doy}_i)$$</div>
+</section>
+
+<section>
+<h2>Three predictions, dated 15 September 2026</h2>
+<p>Written before the first pair exists, so they can be wrong in public. <b>One:</b> at lead 1 the daily-maximum MAE will be between 1.0 and 1.6 °C at Ruzyně and larger at Klementinum, which sits in the city's heat island and is systematically warmer than the models' grid cell; the sign of the Klementinum bias will be negative (models too cold). <b>Two:</b> rain skill against climatology will be clearly positive at leads 1–3 and will fall to about zero by lead 6, and persistence will be a harder baseline than climatology at lead 1 and an easier one from lead 3. <b>Three:</b> ECMWF will have the lowest temperature MAE at leads 3–6, but not at lead 1, where ICON's finer grid will be at least as good. Each will be checked on this page when the gates open, and the result stays here either way<sup class="cite"><a href="#r2">2</a></sup>.</p>
+</section>
+
+<section>
+<h2>What runs it</h2>
+<p>A GitHub Actions cron at 06:40 UTC runs <code>weather/collect.py</code> (Open-Meteo, ČHMÚ current and previous month files, idempotent upsert by station and date) and <code>weather/verify.py</code>, commits the data and the page's <code>data.json</code>, which triggers the site deploy. Append-only JSON, one file per issue date, about 3 KB a day. A missed morning is a visible gap in the quality block, not an interpolated value. Cost: zero. The whole thing is 350 lines and five tests, and it exists because the surf verifier was built as a verifier, not as a surf page<sup class="cite"><a href="#r2">2</a></sup>.</p>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Czech Hydrometeorological Institute (ČHMÚ): <a href="https://opendata.chmi.cz/meteorology/climate/">climatological open data</a>, daily values per station (<code>recent/data/daily/dly-{WSI}-{YYYYMM}.json</code>), element definitions in <code>meta2</code> (TMA, TMI: schedule 20:00; SRA: 06:00), station list in <code>meta1</code>; historical daily files under <code>historical/data/daily/</code>. Stations 0-20000-0-11518 Praha Ruzyně and 0-203-0-11514 Praha Klementinum.</li>
+<li id="r2">Šandová, B. (2026): <a href="https://github.com/sandovabarbora/bsandova.com/tree/main/weather">weather/</a> in the site repository: <code>collect.py</code> (window aggregation, observations, climatology), <code>verify.py</code>, <code>tests/test_verify.py</code> (5 tests), workflow <code>weather.yml</code>; the live page at <a href="../weather/">/weather/</a> reads <code>weather/data.json</code>.</li>
+<li id="r3">Wilks, D. S. (2011): <i>Statistical Methods in the Atmospheric Sciences</i>, 3rd ed., ch. 8, forecast verification: contingency tables, Brier score, skill against climatology and persistence. Open-Meteo: <a href="https://open-meteo.com/en/docs">Forecast API</a>, models parameter.</li>
+</ol>
+</section>
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a> · <a href="../weather/">the live page</a></p>
+</footer>
+</article>
+
+
+</body>
+</html>
