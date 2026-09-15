@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Library</title>
+<meta name="description" content="A shelf from the sources behind the wiki an agent keeps: the books that belong to what this site shows, titles and authors only.">
+<meta name="theme-color" content="#161616">
+<link rel="canonical" href="https://bsandova.com/library/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../text.css">
+<style>
+.shelf{max-width:64rem;margin:0 0 2rem}
+.shelf h2{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-2);font-weight:400;margin:1.6rem 0 .3rem;border-bottom:1px solid var(--line);padding-bottom:.4rem}
+.shelf ol{list-style:none;margin:0;padding:0;columns:2;column-gap:2.5rem}
+.shelf li{break-inside:avoid;padding:.45rem 0;border-bottom:1px solid var(--line)}
+.shelf .t{display:block;font-family:var(--serif);font-size:1.05rem;color:var(--hot);line-height:1.2}
+.shelf .m{display:flex;justify-content:space-between;gap:1rem;margin-top:.15rem}
+.shelf .a{font-size:.82rem;color:var(--fg-2)}
+.shelf .y{font-family:var(--mono);font-size:10px;color:var(--fg-2);letter-spacing:.1em;white-space:nowrap}
+@media (max-width:48rem){.shelf ol{columns:1}}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../">bsandova.com</a></b><nav><a href="../#works">Projects</a><a href="../#about">About</a><a href="../#contact">Contact</a></nav><span class="tr">library · en</span></div>
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Library · a shelf, not an export · chosen by hand, September 2026</p>
+  <h1>What the work <em>was read against.</em></h1>
+  <p class="deck">The <a href="../texts/second-brain">wiki an agent keeps</a> is compiled from a few hundred sources. This is the part of that shelf that belongs to what this site shows: the data-engineering and statistics books behind the day job and the atlases, the security and regulation texts behind Quaesitor, the novels that were checked for quotations, and the dog anatomy. Titles and authors only. What was learned from them is in the wiki, which stays private.</p>
+  <dl class="facts">
+    <div><dt>titles</dt><dd id="f-n">…</dd></div>
+    <div><dt>shelves</dt><dd id="f-s">…</dd></div>
+    <div><dt>data</dt><dd><a href="../assets/library.json">library.json</a> <small>the list this page is built from</small></dd></div>
+  </dl>
+</header>
+<div id="shelves"></div>
+<footer class="text-foot"><p class="back"><a href="../#works">← projects</a> · <a href="../texts/quotecheck">how to catch a fabricated quote</a></p></footer>
+</article>
+<script>
+(async function(){
+  const d = await (await fetch('../assets/library.json')).json();
+  const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  document.getElementById('shelves').innerHTML = d.shelves.map(s => `<section class="shelf"><h2>${esc(s.name)} · ${s.items.length}</h2><ol>${s.items.map(([t,a,y]) => `<li><span class="t">${esc(t)}</span><span class="m"><span class="a">${esc(a||'')}</span><span class="y">${y||''}</span></span></li>`).join('')}</ol></section>`).join('');
+  document.getElementById('f-n').innerHTML = d.shelves.reduce((n,s)=>n+s.items.length,0) + ' <small>of a few hundred sources</small>';
+  document.getElementById('f-s').innerHTML = d.shelves.length + ' <small>' + d.shelves.map(s=>s.name.toLowerCase()).join(' · ') + '</small>';
+})();
+</script>
+</body>
+</html>
