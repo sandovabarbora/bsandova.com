@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Can a wrong number be seen coming?</title>
+<meta name="description" content="5 794 answers from AI assistants over data warehouses, 3 839 of them silently wrong. Everything visible at run time, agreement across repeats, the shape of the SQL, the model, the language, was tried as a predictor of the wrong ones. The best held-out AUC is 0.64; self-consistency does not work; the only thing that catches a silent failure is the true answer.">
+<meta name="theme-color" content="#161616">
+<link rel="canonical" href="https://bsandova.com/texts/silent-detector">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css?v=7047ab4">
+<link rel="stylesheet" href="../text.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false})"></script>
+<style>
+.tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
+.tbl th,.tbl td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th:first-child,.tbl td:first-child{padding-left:0}
+.tbl th{font-weight:400;color:var(--fg-2);letter-spacing:.12em;text-transform:uppercase;font-size:10px}
+.tbl td.n,.tbl th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl td b{color:var(--hot);font-weight:400}.tbl .hi{color:var(--coral)}.tbl .dim{color:var(--fg-2)}
+.tbl caption{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);padding:0 0 .5rem}
+.scroller{overflow-x:auto;max-width:64rem}
+pre{font-family:var(--mono);font-size:12px;line-height:1.6;color:var(--fg);background:#1d1d1b;border:1px solid var(--line);padding:.9rem 1rem;overflow-x:auto;max-width:64rem;margin:.5rem 0 1.2rem}
+pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:normal}
+.stack{font-family:var(--mono);font-size:11px;line-height:1.8;color:var(--fg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:.8rem 0;margin:1rem 0 1.5rem;max-width:64rem}
+.stack b{color:var(--fg);font-weight:400}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../">bsandova.com</a></b><nav><a href="../#works">Projects</a><a href="../#about">About</a><a href="../#contact">Contact</a></nav><span class="tr">claims, checked · ml · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Claims, checked · machine learning · 15 September 2026 · on the Quaesitor runs</p>
+  <h1>Can a wrong number <em>be seen coming?</em></h1>
+  <p class="deck">Quaesitor measured how often an AI assistant over a data warehouse returns a number that runs, looks plausible and is wrong: 3 839 times in 5 794 answers. This text asks the question a trust layer would love answered: is there anything visible <i>at run time</i>, before anyone knows the true answer, that tells the wrong numbers from the right ones? Agreement across repeats, the shape of the SQL, the model, the language. Everything was tried. The honest answer is no, and the reasons are more useful than a yes would have been.</p>
+  <dl class="facts">
+    <div><dt>answers</dt><dd>5 794 <small>125 runs · 15 languages · 8 packs · Quaesitor harness</small></dd></div>
+    <div><dt>trained on</dt><dd>3 704 <small>numeric answers, 87 questions · 81.8 % silently wrong</small></dd></div>
+    <div><dt>best held-out AUC</dt><dd>0.64 <small>agreement features, gradient boosting · 0.5 is a coin</small></dd></div>
+    <div><dt>self-consistency</dt><dd>21 % <small>correct when all repeats agree · base rate 18 %</small></dd></div>
+  </dl>
+</header>
+
+<section>
+<h2>The question, and why it matters</h2>
+<p>An assistant that answers business questions with SQL fails in a particular way: the query runs, a number comes back, the number is wrong, and nothing says so. Quaesitor's harness plants the reasons in a warehouse (duplicated SCD rows, soft deletes, mixed currencies, a timezone, a wrong denominator) and asks questions whose true answer is known, three times each, in fifteen languages, of several models<sup class="cite"><a href="#r1">1</a></sup>. The result over 5 794 answers is a silent-failure rate that ranges from 56 % to 92 % depending on the model and the pack. The trust layer I run at work does not try to predict that; it cross-checks every figure against certified dashboards, which is expensive and needs the dashboards to exist. So the question is worth a day: if a detector could flag the wrong numbers from what is visible while the answer is being produced, the cross-check could be reserved for the flagged ones.</p>
+</section>
+
+<section>
+<h2>What a detector is allowed to see</h2>
+<p>Only what exists at run time, with no access to the true answer. Three groups of features. <b>Agreement across the three repeats</b> of the same question: how many distinct SQL statements the model wrote, how many distinct numbers came back, whether this answer is the majority value, whether all repeats agree. This is the popular self-consistency idea: ask several times and trust the consensus. <b>The shape of the SQL</b>: its length, joins, tables, WHERE terms, boolean flag filters, DISTINCT, GROUP BY, date arithmetic, casts and coalesces, subqueries, NULL checks. <b>The run</b>: which model alias, which question pack, which language. The type of trap planted in the question is the question's label and never enters a model<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p>Two safeguards on the evaluation. Cross-validation is grouped by question, so all fifteen languages of Q03 are held out together and a model cannot learn that "Q03 is the SCD one"; and the abstention pack is left out of training, because there every numeric answer is wrong by construction (the right answer is to decline), which would turn "returned a number" into the label and inflate everything. Before it was left out, the SQL-shape model scored 0.81. After, 0.58. That correction is the first result<sup class="cite"><a href="#r2">2</a></sup>.</p>
+</section>
+
+<section>
+<h2>Nothing visible predicts it</h2>
+<figure>
+  <img src="../assets/detector/01-auc.svg" alt="Horizontal bars of held-out AUC for four feature sets and two model families; all between 0.43 and 0.64, with 0.5 marked as coin flip and the agreement rule at 0.55." loading="lazy">
+  <figcaption><b>fig. 1</b> · Held-out AUC (GroupKFold by question, 5 folds) for logistic regression and gradient boosting on each feature set, 3 704 numeric answers from 87 questions. The dotted line is the plain rule "forward only when all repeats agree".</figcaption>
+</figure>
+<p>The best any model reaches on held-out questions is an AUC of 0.64, from gradient boosting on the agreement features; everything else sits between 0.43 and 0.62, and a logistic regression on the shape of the SQL scores below a coin flip, meaning the shapes that go with wrong answers on some questions go with right answers on others. Used as a filter at a 50 % threshold, the best model forwards 3 % of answers with 86 % of them correct, which is a filter that keeps almost nothing. The run features, model, pack and language, predict nothing at all (0.55–0.56), which is its own finding: the wrong answers are not a property of one model or one language<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p><b>Self-consistency does not work here.</b> When all three repeats return the same number, that number is correct 21 % of the time, against a base rate of 18 %. When the three repeats wrote three different SQL statements and still agreed on the number, which sounds like the strongest possible evidence, it is correct 20 % of the time. The model is not unstable; it is consistently wrong in the same way, ignoring the SCD duplicates on every attempt, counting the soft-deleted rows every time, and consensus among three copies of the same blind spot is not evidence. This is the mechanism behind the headline of the Quaesitor texts, that trust grows faster than accuracy: the assistant is confident and stable exactly when it is wrong in a way it cannot see<sup class="cite"><a href="#r1">1</a>, <a href="#r2">2</a></sup>.</p>
+</section>
+
+<section>
+<h2>What a wrong query looks like does not travel</h2>
+<figure>
+  <img src="../assets/detector/02-transfer.svg" alt="A three by three matrix of AUC values for the SQL-shape model trained on one pack and tested on another; off-diagonal values between 0.41 and 0.62, and the ecommerce and taxi diagonals below 0.5." loading="lazy">
+  <figcaption><b>fig. 2</b> · Gradient boosting on SQL-shape features, trained on one warehouse's pack and scored on the others. Diagonal: held-out questions within the same pack. Values below 0.5 mean the learned pattern points the wrong way on the new warehouse.</figcaption>
+</figure>
+<p>Trained on the e-commerce warehouse, the SQL-shape model scores 0.53 on the SaaS warehouse and 0.62 on the taxi one; trained on taxi it scores 0.41 on SaaS and 0.44 on e-commerce, below chance. Even within a pack, held-out questions score 0.29 (e-commerce) and 0.12 (taxi): a query shape that means "wrong" for one question means "right" for the next. What the model can learn is what the traps of a particular warehouse look like, which is the same as memorising the questions, and that is exactly what a detector deployed on new questions would not have<sup class="cite"><a href="#r2">2</a></sup>.</p>
+</section>
+
+<section>
+<h2>What this means for the trust layer</h2>
+<p>Three practical conclusions. First, run-time signals cannot replace the cross-check: a silently wrong number is by definition one that leaves no trace in how it was produced, and the data say so with an AUC of 0.64 at best. Second, self-consistency, the cheapest and most recommended safeguard, buys three percentage points here, and it buys them at three times the cost; the honest version of "ask it twice" is "it will tell you the same wrong thing twice". Third, the thing that works is the thing that was already built: a catalogue of verified figures the assistant must reconcile against, and a protocol that makes reconciliation a measured obligation rather than a hope. The detector was worth building because it says, with numbers, why the expensive thing is necessary<sup class="cite"><a href="#r3">3</a></sup>.</p>
+<p>Limits. The answers come from one harness with planted traps, not from production questions; production wrong answers may be easier or harder. Features are hand-written from the SQL text; an embedding of the query might do better, though the transfer result suggests it would learn the same thing, the warehouse. The label is binary, and the size of the error (a 6 % miss and a 2 000 % miss are both "silently wrong") is left for later. The code, the parsed answers and every number here are in the harness repository, with tests<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<div class="stack">stack · scikit-learn (GroupKFold, logistic regression, gradient boosting) · pandas · the Quaesitor harness · 4 new tests, 732 in the repository</div>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Šandová, B. (2026): <a href="quaesitor/">Quaesitor</a>, the three texts: the harness, the packs, the classification of answers (correct, silently wrong, implausible, refused) and the finding that trust grows faster than accuracy. Runs: <a href="https://github.com/sandovabarbora/quaesitor">quaesitor</a> repository, <code>method/outputs/agent_*.md</code>, 125 reports.</li>
+<li id="r2">Šandová, B. (2026): <code>method/src/detector.py</code> in the same repository: parser over the run reports, run-time features, GroupKFold by question, pack-to-pack transfer; output <a href="../assets/detector/detector.json">detector.json</a>, tests in <code>tests/test_detector.py</code>. Exclusions: the abstention pack (no contrast) and two packs under 100 numeric answers. 5 794 answers parsed, 3 704 trained on.</li>
+<li id="r3">Šandová, B. (2026): <a href="engineering#what-runs">The platform is code. So is the trust.</a>, section 7: the LLM assistant's trust layer, catalogue-first lookup and protocol compliance as an evaluation metric.</li>
+</ol>
+</section>
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a> · <a href="quaesitor/">Quaesitor</a></p>
+</footer>
+</article>
+
+
+</body>
+</html>
