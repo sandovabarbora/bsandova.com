@@ -8,4 +8,5 @@ for f in index.html texts/*.html; do
   [ -f "$f" ] || continue
   sed -E "s#(href=\"[./]*style\.css)(\?v=[^\"]*)?\"#\1?v=$v\"#g" "$f" > "$f.tmp" && mv "$f.tmp" "$f"
 done
+python3 tools/changelog.py
 echo "stamped ?v=$v"

@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }   # the changelog is generated from the full git log
       - run: ./build.sh   # stamp style.css?v=<sha> so the edge cache cannot serve a stale sheet
       - uses: cloudflare/wrangler-action@v3
         with:
