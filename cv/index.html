@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barbora Šandová · CV</title>
+<meta name="description" content="Barbora Šandová, data & cloud engineer, Prague. Curriculum vitae: Alma Career, Golemio, Medicalc, ČSFD, EY; Charles University and VŠE; the public work behind each line links to its text on this site.">
+<meta name="theme-color" content="#161616">
+<link rel="canonical" href="https://bsandova.com/cv/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../text.css">
+<style>
+.cv{max-width:64rem}
+.cv h2{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-2);font-weight:400;margin:2rem 0 .6rem;border-bottom:1px solid var(--line);padding-bottom:.4rem}
+.job{display:grid;grid-template-columns:9rem minmax(0,1fr);gap:.3rem 1.5rem;padding:.9rem 0;border-bottom:1px solid var(--line)}
+.job .when{font-family:var(--mono);font-size:11px;color:var(--fg-2);letter-spacing:.08em;line-height:1.6}
+.job h3{font-family:var(--serif);font-weight:400;font-size:1.25rem;margin:0;color:var(--hot);letter-spacing:-.01em}
+.job .org{font-size:.9rem;color:var(--fg-2);margin:.1rem 0 .5rem}
+.job ul{margin:0;padding-left:1.1rem;font-size:.92rem;line-height:1.55}
+.job li{margin:.2rem 0}
+.job li a{color:var(--hot)}
+.job .stack{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-2);margin-top:.5rem}
+.skills{display:grid;grid-template-columns:9rem minmax(0,1fr);gap:.3rem 1.5rem;font-size:.92rem;line-height:1.55}
+.skills dt{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);padding-top:.25rem}
+.skills dd{margin:0 0 .5rem}
+.print{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;background:transparent;color:var(--fg);border:1px solid var(--line);padding:.45rem .7rem;cursor:pointer}
+.print:hover{border-color:var(--hot)}
+@media (max-width:48rem){.job,.skills{grid-template-columns:1fr}}
+@media print{
+  :root{color-scheme:light}
+  html,body{background:#fff!important;color:#111}
+  body::before,body::after{display:none!important}
+  body{font-size:10.5pt}
+  .top,.text-foot,.print,.noprint,.facts{display:none!important}
+  .print-contact{display:block!important;font-family:var(--mono);font-size:9pt;color:#222;margin:.2rem 0 .8rem;letter-spacing:.04em}
+  .text{padding:0;max-width:none}
+  .text-head{display:block;border:0;margin:0;padding:0 0 .4rem}
+  .text-head .kicker,.job .when,.job .stack,.skills dt,.cv h2{color:#666}
+  .text-head h1{font-size:22pt;color:#111;margin:0 0 .3rem}
+  .text-head h1 em{color:#111}
+  .text-head .deck{color:#222;font-size:10.5pt;max-width:none}
+  .cv{max-width:none}
+  .job h3,.job li a{color:#111}
+  .job li a::after{content:" (bsandova.com" attr(data-path) ")";color:#666;font-size:8.5pt}
+  .job,.cv h2,.skills{border-color:#ddd}
+  .job{break-inside:auto;padding:.5rem 0}
+  .job h3,.job .org,.cv h2{break-after:avoid}
+  .job li{break-inside:avoid}
+  a{text-decoration:none;color:inherit}
+  @page{margin:14mm 16mm 16mm}
+}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../">bsandova.com</a></b><nav><a href="../#works">Projects</a><a href="../#about">About</a><a href="../#contact">Contact</a></nav><span class="tr">cv · en</span></div>
+<article class="text cv">
+<header class="text-head">
+  <p class="kicker">Curriculum vitae · Prague · updated 15 September 2026<span class="noprint"> · <button class="print" onclick="window.print()">print / save as PDF</button></span></p>
+  <h1>Barbora <em>Šandová</em></h1>
+  <p class="print-contact" style="display:none">hello@bsandova.com · github.com/sandovabarbora · linkedin.com/in/barbora-sandova · Prague · CS / EN / DE</p>
+  <p class="deck">Data &amp; cloud engineer. I build data platforms as code, keep them observable and least-privilege, and measure the AI systems that run on top of them before anyone trusts them. Background in production ML at city scale and in fraud analytics. Every line below that has public work behind it links to that work on this site, where the numbers can be checked.</p>
+  <dl class="facts">
+    <div><dt>contact</dt><dd><a href="mailto:hello@bsandova.com">hello@bsandova.com</a> <small><a href="https://github.com/sandovabarbora">github.com/sandovabarbora</a> · <a href="https://www.linkedin.com/in/barbora-sandova">linkedin.com/in/barbora-sandova</a></small></dd></div>
+    <div><dt>based</dt><dd>Prague <small>works in Prague and Berlin · EU citizen</small></dd></div>
+    <div><dt>languages</dt><dd>CS · EN · DE <small>Czech native, English C1, German C1 (Goethe), French B2, Spanish B1</small></dd></div>
+    <div><dt>talks</dt><dd>2 <small>Prague City Data Congress 2025 · Smart City Expo, Barcelona 2024</small></dd></div>
+  </dl>
+</header>
+
+<h2>Experience</h2>
+
+<div class="job">
+  <div class="when">Oct 2025 →<br>Prague</div>
+  <div>
+    <h3>Data &amp; Cloud Engineer</h3>
+    <p class="org">Alma Career — international job portals and HR products</p>
+    <ul>
+      <li>Architecting a cross-cloud data platform (AWS + GCP): keyless Workload Identity Federation between Step Functions and BigQuery; the full IaC stack in AWS CDK (Python) and Terraform across prod and dev accounts. <a href="../texts/engineering" data-path="/texts/engineering">The platform is code. So is the trust.</a></li>
+      <li>Scoped CDK deployments derived from the live construct tree, so one broken app no longer blocks every other; eight analytics apps split into image + runtime stack pairs with the tag handed over via SSM.</li>
+      <li>Observability as code: CloudWatch dashboards and SLO alarms (latency, 4XX/5XX) defined in CDK, wired to Slack; ECR vulnerability scanning and cross-account security audits on schedule.</li>
+      <li>Least privilege in Terraform for people (per-project groups, read everywhere, write in a sandbox) and for AI agents (a confused-deputy assistant fixed at BigQuery IAM, not in the prompt); partner databases moved to RDS IAM auth with short-lived tokens.</li>
+      <li>dbt modernisation (Python models on Dataproc/Spark, incremental models, cost strategy) and Dagster orchestration; a legacy salary pipeline cut over to dbt with byte-level parity proven across five years before repointing consumers. <a href="../texts/cutover" data-path="/texts/cutover">How to prove a cutover</a></li>
+      <li>An internal LLM data assistant (LangGraph, FastAPI, Anthropic API, MCP to BigQuery/OpenMetadata/Metabase) replacing a 4 500-line service with 400 lines at parity on golden sets; trust layer, tool allowlist, cost caps and pseudonymous tracing added after measuring it. <a href="../texts/silent-detector" data-path="/texts/silent-detector">Can a wrong number be seen coming?</a></li>
+      <li>Developer experience: Poetry → uv, private CodeArtifact registry, Dependabot alerts 792 → 332, documentation rebuilt on Diátaxis.</li>
+    </ul>
+    <p class="stack">Python · SQL · AWS (CDK, ECS/Fargate, Lambda, Step Functions, IAM, CloudWatch, ECR, CodeArtifact) · GCP/BigQuery · Terraform · dbt · Dagster · Docker · FastAPI · LangGraph · MCP · GitHub Actions · uv</p>
+  </div>
+</div>
+
+<div class="job">
+  <div class="when">May 2024 – Sep 2025<br>Prague</div>
+  <div>
+    <h3>Data Scientist, Transport Data Team</h3>
+    <p class="org">Golemio / Operátor ICT — Prague's city data platform</p>
+    <ul>
+      <li>Senior member of a three-person team; led Scrum ceremonies and mentored on ML practice.</li>
+      <li>Architected the ML platform, Kafka → dbt/Prefect → Docker/Kubernetes → API, and ran the production pipeline serving bus-arrival predictions for the city's fleet to the city's apps, on PostgreSQL/PostGIS and Azure.</li>
+      <li>The vehicle-location records behind the master's thesis and the sonification come from this work. <a href="../texts/delayed" data-path="/texts/delayed">Delayed All the Time</a></li>
+      <li>Spoke about the work at the Prague City Data Congress (2025) and Smart City Expo Barcelona (2024).</li>
+    </ul>
+    <p class="stack">Python · PostgreSQL/PostGIS · Kafka · dbt · Prefect · Docker · Kubernetes · Azure · MLflow · scikit-learn · time series</p>
+  </div>
+</div>
+
+<div class="job">
+  <div class="when">Jan – May 2024<br>contract</div>
+  <div>
+    <h3>Data Scientist</h3>
+    <p class="org">Medicalc Software — real-time patient monitoring</p>
+    <ul><li>Statistical models for real-time patient monitoring in C++ with a zero-defect requirement; statistical modules and 3D visualisation delivered ahead of schedule.</li></ul>
+    <p class="stack">C++ · C# · Python · Unity · PostgreSQL</p>
+  </div>
+</div>
+
+<div class="job">
+  <div class="when">Feb 2022 – Jan 2024<br>Prague</div>
+  <div>
+    <h3>Backend Developer &amp; Data Engineer</h3>
+    <p class="org">ČSFD — the Czech film database</p>
+    <ul>
+      <li>Database architecture and query performance for the movie database; a collaborative-filtering recommender; an ETL pipeline over twenty external sources (VOD platforms, cinemas); the migration from a monolith to microservices.</li>
+      <li>The film side of that work continues as <a href="../texts/filmrunner" data-path="/texts/filmrunner">FilmRunner</a>.</li>
+    </ul>
+    <p class="stack">Python · Django · PostgreSQL · Redis · Celery/RabbitMQ · Docker · REST</p>
+  </div>
+</div>
+
+<div class="job">
+  <div class="when">Mar 2021 – Feb 2022<br>Prague</div>
+  <div>
+    <h3>Data Analyst, Forensics &amp; Fraud Detection</h3>
+    <p class="org">EY — Financial Services Advisory</p>
+    <ul><li>Fraud-detection models: pattern recognition, anomaly detection, fuzzy matching for entity resolution across financial datasets; findings presented to executives and regulators. Where the habit of defending every figure line by line comes from.</li></ul>
+    <p class="stack">Python · SQL Server · Power BI · fuzzy matching · statistical analysis</p>
+  </div>
+</div>
+
+<h2>Independent work</h2>
+<div class="job">
+  <div class="when">2025 – 2026</div>
+  <div>
+    <ul>
+      <li><a href="../texts/quaesitor/" data-path="/texts/quaesitor/">Quaesitor</a> — an independent review of AI assistants over data warehouses: 5 794 answers, 15 languages, a harness with 700+ tests, a <a href="../watch/" data-path="/watch/">monthly model watch</a>; <code>quaesitor-zero</code> on PyPI.</li>
+      <li><a href="../texts/hockey" data-path="/texts/hockey">Player Pool Atlas · hockey</a> and <a href="../texts/football" data-path="/texts/football">· football</a> — knowledge graph and public atlases of the Czech player pools; league strength estimated from 2 125 league movers in PyMC.</li>
+      <li><a href="../texts/prague-parking" data-path="/texts/prague-parking">Prague parking</a> I and <a href="../texts/prague-parking-2" data-path="/texts/prague-parking-2">II</a> — how many stalls bigger cars cost, from 16 874 zone polygons and 2.5 million EEA registrations.</li>
+      <li><a href="../texts/brand-reflection" data-path="/texts/brand-reflection">Brand Reflection Series</a> — colour, sound and language of Czech advertising, with predictions published before the data.</li>
+      <li>Tools on PyPI: <a href="../texts/cutover" data-path="/texts/cutover">cutover</a> (prove a migration changed nothing), <a href="../texts/quotecheck" data-path="/texts/quotecheck">quotecheck</a> (is this quotation really in the source), quaesitor-zero.</li>
+      <li><a href="../texts/surf" data-path="/texts/surf">Surf forecast verification</a> and <a href="../atlantic/" data-path="/atlantic/">its sonification</a>; <a href="../texts/icu" data-path="/texts/icu">an ICU cohort</a> whose labels pointed the wrong way; <a href="../texts/second-brain" data-path="/texts/second-brain">a 739-page wiki an agent keeps</a>.</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Education</h2>
+<div class="job">
+  <div class="when">2024 – 2026</div>
+  <div>
+    <h3>M.Sc. Finance and Data Analytics</h3>
+    <p class="org">Charles University, Institute of Economic Studies · minor in Artificial Intelligence (prg.ai)</p>
+    <ul><li>Thesis: <i>Persistence Dynamics and Welfare Costs of Urban Public Transport Delays</i>, 121 million vehicle-location records; within-day delays are persistent (AR(2) coefficient sum 0.727 bus, 0.715 tram) and standard appraisal overstates the cost of unreliability.</li></ul>
+  </div>
+</div>
+<div class="job">
+  <div class="when">2021 – 2025</div>
+  <div>
+    <h3>Ing. Data Science and Cybersecurity</h3>
+    <p class="org">Prague University of Economics (VŠE) · thesis in pattern engineering for cybersecurity · IT SPY 2025 national thesis award nominee</p>
+  </div>
+</div>
+<div class="job">
+  <div class="when">2018 – 2021</div>
+  <div>
+    <h3>Bachelor in International Relations</h3>
+    <p class="org">Prague University of Economics (VŠE) · Erasmus+ at the Berlin School of Economics and Law</p>
+  </div>
+</div>
+
+<h2>Skills</h2>
+<dl class="skills">
+  <dt>platform</dt><dd>Python, SQL, AWS (CDK, ECS/Fargate, Lambda, Step Functions, S3, IAM, CloudWatch, ECR, SSM, Secrets Manager, CodeArtifact), GCP/BigQuery, Terraform, Docker, PostgreSQL, dbt (SQL + Python), Dagster, Prefect, GitHub Actions, uv</dd>
+  <dt>reliability &amp; security</dt><dd>observability as code, SLOs and alerting, on-call, least-privilege IAM / RBAC / ABAC, Workload Identity Federation, parity and fingerprint validation before cutovers, ADR-driven decisions</dd>
+  <dt>ml &amp; ai</dt><dd>scikit-learn, PyMC, time series and econometrics (AR, unit roots, DiD, event studies), LangGraph, MCP, Anthropic API, evaluation harnesses and golden sets, cost guardrails, Kafka and streaming, Kubernetes, MLflow</dd>
+  <dt>also</dt><dd>Neo4j and graph modelling, FAISS, DuckDB, FastAPI, Streamlit, Playwright, pytest, Web Audio, C++, R</dd>
+  <dt>outside work</dt><dd>trains assistance dogs (Pomocné tlapky); programming tutor at People in Need; twelve years of competitive football; surfs in Portugal</dd>
+</dl>
+
+<footer class="text-foot"><p class="back"><a href="../#works">← projects</a> · <a href="../#about">about</a></p></footer>
+</article>
+</body>
+</html>
