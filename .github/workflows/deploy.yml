@@ -12,5 +12,6 @@ jobs:
       - run: ./build.sh   # stamp style.css?v=<sha> so the edge cache cannot serve a stale sheet
       - uses: cloudflare/wrangler-action@v3
         with:
+          wranglerVersion: "4.131.2"   # assets-only workers need wrangler 4
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
