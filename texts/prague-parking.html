@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css?v=33b4eca">
+<link rel="stylesheet" href="../style.css?v=421510f">
 <link rel="stylesheet" href="../text.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
@@ -20,7 +20,7 @@
 
 </head>
 <body>
-<div class="top"><b><a href="../">bsandova.com</a></b><nav><a href="../#works">Works</a><a href="../#texts">Texts</a><a href="../#about">About</a><a href="../#contact">Contact</a></nav><span class="tr">text 01 · 2026 · en</span></div>
+<div class="top"><b><a href="../">bsandova.com</a></b><nav><a href="../#works">Projects</a><a href="../#about">About</a><a href="../#contact">Contact</a></nav><span class="tr">text 01 · 2026 · en</span></div>
 
 <article class="text">
 <header class="text-head">
@@ -122,14 +122,14 @@
 <li id="r9">"2 cm a year" appears in Czech media (iROZHLAS) attributed to SDA data; no primary SDA publication of that rate was found, so it enters only as the upper bound.</li>
 <li id="r10">SAE J1100 <a href="https://law.resource.org/pub/us/cfr/ibr/005/sae.j1100.2001.html"><i>Motor Vehicle Dimensions</i></a>, W103: overall width excluding mirrors.</li>
 <li id="r11">Mirror allowance 15–25 cm: <a href="https://drivesize.com/articles/car-width-explained-body-mirrors-folded-mirrors-out">Car width explained: body, mirrors folded, mirrors out</a> (drivesize.com).</li>
-<li id="r12">Not used, relevant for the next step: EEA <a href="https://discodata.eea.europa.eu/">Discodata</a> CO2 monitoring (wheelbase and track for cars registered in CZ); <a href="https://open.canada.ca/data/dataset/913f8940-036a-45f2-a5f2-19bde76c1252">Canadian Vehicle Specifications</a> (length, wheelbase and track together, for calibrating the conversions); Holder, D. (2021), <i>Systematic analysis of changing vehicle exterior dimensions</i>, ICED21, <a href="https://doi.org/10.1017/pds.2021.553">10.1017/pds.2021.553</a> (wheelbase/length 0.618, R² 0.75); <a href="https://dataovozidlech.cz/">Registr silničních vozidel</a> data cube.</li>
+<li id="r12">Not used here; done in <a href="prague-parking-2">Text 02</a> for the EEA part. Relevant for the next step: EEA <a href="https://discodata.eea.europa.eu/">Discodata</a> CO2 monitoring (wheelbase and track for cars registered in CZ); <a href="https://open.canada.ca/data/dataset/913f8940-036a-45f2-a5f2-19bde76c1252">Canadian Vehicle Specifications</a> (length, wheelbase and track together, for calibrating the conversions); Holder, D. (2021), <i>Systematic analysis of changing vehicle exterior dimensions</i>, ICED21, <a href="https://doi.org/10.1017/pds.2021.553">10.1017/pds.2021.553</a> (wheelbase/length 0.618, R² 0.75); <a href="https://dataovozidlech.cz/">Registr silničních vozidel</a> data cube.</li>
 </ol>
 </section>
 
 <footer class="text-foot">
   <p><b>Data.</b> Prague paid-parking zones, gs-pub.praha.eu ArcGIS server, snapshot 8 September 2026 (segments, tariff zones, reserved and disabled stalls). Car dimensions: Transport &amp; Environment, <i>Ever-bigger? Car size at a crossroads</i> (June 2026), top 100 EU models, width without mirrors; Czech check point Závadská (2020). Fleet age: national means 2012 and 2025. Standard: ČSN 73 6056, secondary sources; the standard itself is paywalled and its tables were not opened.</p>
   <p><b>Method.</b> Length (pitch) model anchored on today's stall count; area model kept for comparison; fleet dimensions by survival-weighted model years calibrated to mean age; Monte Carlo over real segment sizes for integer effects. Code, 27 tests and the full methodology note (Czech) live in the project repository; every figure above is rendered from the run by <code>make_figures_web.py</code>.</p>
-  <p class="back"><a href="../#texts">← back to texts</a></p>
+  <p class="back"><a href="../#works">← projects</a> · <a href="prague-parking-2">Text 02: the fleet, measured</a></p>
 </footer>
 </article>
 </body>
