@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=06214fb">
+<link rel="stylesheet" href="style.css?v=b0b1e5f">
 </head>
 <body>
 <div class="top"><span><b>bsandova.com</b></span><nav><a href="#works">Projects</a><a href="#about">About</a><a href="cv/">CV</a><a href="#contact">Contact</a></nav><span class="tr"><a href="https://github.com/sandovabarbora" rel="me">github</a> · <a href="https://www.linkedin.com/in/barbora-sandova" rel="me">linkedin</a> · Prague ⇄ Berlin ⇄ Atlantic · <b id="clk">--:--</b></span></div>
@@ -40,7 +40,7 @@
 
 <section class="sec" id="works">
 <div class="band-h"><span class="n">I</span><h2>Projects</h2><p>By subject; filter by discipline. Each one lists what it produced: something to hear or use, a text, the code.</p></div>
-<div class="filters" id="filters"><span class="fl">show</span><button class="on" data-f="all">all</button><button data-f="de">data engineering</button><button data-f="ds">data science</button><button data-f="ai">ML &amp; AI</button><button data-f="make">sound &amp; making</button><span class="cnt" id="fcount"></span></div>
+<div class="filters" id="filters"><span class="fl">filter</span><button class="on" data-f="all">all<small></small></button><button data-f="de">data engineering<small></small></button><button data-f="ds">data science<small></small></button><button data-f="ai">ML &amp; AI<small></small></button><button data-f="make">sound &amp; making<small></small></button><span class="cnt" id="fcount"></span></div>
 
 <div class="grp"><div class="grp-h"><span class="n">A</span><h3>Cities &amp; transport</h3><p>Prague, mostly. 121 million vehicle-location records, 16 874 parking polygons and 2.5 million registrations, read four different ways.</p></div>
 <div class="prj" data-tags="make ds"><a class="prj-t" href="texts/delayed">Delayed All the Time. <em>On Time, Occasionally.</em></a><div class="out"><a class="chip hot" href="texts/delayed">read</a><a class="chip" href="https://sandovabarbora.github.io/delayed-all-the-time/" id="listen">▶ listen</a><a class="chip" href="https://github.com/sandovabarbora/delayed-all-the-time">code</a><span class="chip y">2025</span></div><p>Prague transit played as disco. Five days, five keys; the later the buses, the higher the city sings.</p><p class="tags">sound & making · data science</p></div>
@@ -158,7 +158,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')deck.classList.remov
     document.getElementById('fcount').textContent = f==='all' ? '' : `${n} of ${rows.length}`;
     if (f==='all') history.replaceState(null,'',location.pathname+'#works'); else history.replaceState(null,'',location.pathname+'#works='+f);
   }
-  bar.addEventListener('click', e=>{ const f=e.target.dataset.f; if(f) apply(f); });
+  bar.querySelectorAll('button').forEach(b=>{ const f=b.dataset.f; const n = f==='all' ? rows.length : rows.filter(r=>r.dataset.tags.split(' ').includes(f)).length; const sm=b.querySelector('small'); if(sm) sm.textContent=n; });
+  bar.addEventListener('click', e=>{ const b=e.target.closest('button'); if(b && b.dataset.f) apply(b.dataset.f); });
   const m=location.hash.match(/^#works=(de|ds|ai|make)$/); if(m) apply(m[1]);
 })();
 </script>
