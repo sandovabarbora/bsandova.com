@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-14",
+ "generated": "2026-09-15",
  "truth": "meteofrance_wave analysis (lead 0) \u2014 a proxy, not a buoy",
  "spots": [
   "ericeira",
@@ -12,7 +12,8 @@
   "ewam"
  ],
  "issues": [
-  "2026-09-14"
+  "2026-09-14",
+  "2026-09-15"
  ],
  "surfable_rule": {
   "swell_max_m": [
@@ -34,16 +35,16 @@
  },
  "climatology": {
   "ericeira": {
-   "days": 92,
+   "days": 93,
    "from": "2026-06-14",
-   "to": "2026-09-13",
-   "surfable_share": 0.054,
+   "to": "2026-09-14",
+   "surfable_share": 0.065,
    "surfable_share_by_rule": {
-    "period 7 s": 0.185,
+    "period 7 s": 0.194,
     "period 9 s": 0.022,
-    "wind 20": 0.043,
-    "wind 30": 0.054,
-    "height 0.8\u20133.0": 0.109
+    "wind 20": 0.054,
+    "wind 30": 0.065,
+    "height 0.8\u20133.0": 0.118
    },
    "weeks": [
     {
@@ -143,20 +144,27 @@
      "surfable": 2,
      "swell_max_mean": 1.38,
      "period_mean": 7.4
+    },
+    {
+     "week": "2026-W38",
+     "n": 1,
+     "surfable": 1,
+     "swell_max_mean": 1.32,
+     "period_mean": 8.5
     }
    ]
   },
   "peniche": {
-   "days": 92,
+   "days": 93,
    "from": "2026-06-14",
-   "to": "2026-09-13",
-   "surfable_share": 0.076,
+   "to": "2026-09-14",
+   "surfable_share": 0.086,
    "surfable_share_by_rule": {
-    "period 7 s": 0.196,
+    "period 7 s": 0.204,
     "period 9 s": 0.022,
-    "wind 20": 0.065,
-    "wind 30": 0.076,
-    "height 0.8\u20133.0": 0.087
+    "wind 20": 0.075,
+    "wind 30": 0.086,
+    "height 0.8\u20133.0": 0.097
    },
    "weeks": [
     {
@@ -256,20 +264,27 @@
      "surfable": 2,
      "swell_max_mean": 1.31,
      "period_mean": 7.0
+    },
+    {
+     "week": "2026-W38",
+     "n": 1,
+     "surfable": 1,
+     "swell_max_mean": 1.16,
+     "period_mean": 8.2
     }
    ]
   },
   "sagres": {
-   "days": 92,
+   "days": 93,
    "from": "2026-06-14",
-   "to": "2026-09-13",
-   "surfable_share": 0.065,
+   "to": "2026-09-14",
+   "surfable_share": 0.075,
    "surfable_share_by_rule": {
-    "period 7 s": 0.152,
+    "period 7 s": 0.161,
     "period 9 s": 0.022,
-    "wind 20": 0.054,
-    "wind 30": 0.076,
-    "height 0.8\u20133.0": 0.076
+    "wind 20": 0.065,
+    "wind 30": 0.086,
+    "height 0.8\u20133.0": 0.086
    },
    "weeks": [
     {
@@ -369,230 +384,198 @@
      "surfable": 1,
      "swell_max_mean": 1.18,
      "period_mean": 7.1
+    },
+    {
+     "week": "2026-W38",
+     "n": 1,
+     "surfable": 1,
+     "swell_max_mean": 1.14,
+     "period_mean": 8.2
     }
    ]
   }
  },
  "latest": {
   "ericeira": {
-   "issued": "2026-09-14",
+   "issued": "2026-09-15",
    "days": [
     {
-     "date": "2026-09-14",
+     "date": "2026-09-15",
      "lead": 0,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 1.32,
-       "swell_mean": 1.11,
-       "period_mean": 8.69,
-       "dir_mean": 326.0,
-       "wave_max": 1.32,
-       "wind_mean": 6.82,
-       "wind_dir": 313.0
+       "swell_max": 0.94,
+       "swell_mean": 0.8,
+       "period_mean": 7.23,
+       "dir_mean": 317.0,
+       "wave_max": 1.7,
+       "wind_mean": 23.25,
+       "wind_dir": 356.0
       },
       "gwam": {
-       "swell_max": 1.28,
-       "swell_mean": 1.19,
-       "period_mean": 9.74,
-       "dir_mean": 320.0,
-       "wave_max": 1.28,
-       "wind_mean": 6.82,
-       "wind_dir": 313.0
+       "swell_max": 1.1,
+       "swell_mean": 0.77,
+       "period_mean": 8.01,
+       "dir_mean": 315.0,
+       "wave_max": 1.84,
+       "wind_mean": 23.25,
+       "wind_dir": 356.0
       },
       "ewam": {
-       "swell_max": 1.24,
-       "swell_mean": 1.16,
-       "period_mean": 9.69,
-       "dir_mean": 317.0,
-       "wave_max": 1.24,
-       "wind_mean": 6.82,
-       "wind_dir": 313.0
-      }
-     },
-     "swell_max_mean": 1.28,
-     "swell_max_spread": 0.08,
-     "period_mean": 9.4,
-     "wind_mean": 6.82,
-     "wind_dir": 313.0,
-     "surfable_votes": 3
-    },
-    {
-     "date": "2026-09-15",
-     "lead": 1,
-     "models": {
-      "meteofrance_wave": {
-       "swell_max": 0.96,
+       "swell_max": 1.1,
        "swell_mean": 0.81,
-       "period_mean": 7.17,
-       "dir_mean": 317.0,
-       "wave_max": 1.72,
-       "wind_mean": 23.86,
-       "wind_dir": 359.0
-      },
-      "gwam": {
-       "swell_max": 1.14,
-       "swell_mean": 0.87,
-       "period_mean": 8.46,
-       "dir_mean": 316.0,
-       "wave_max": 2.14,
-       "wind_mean": 23.86,
-       "wind_dir": 359.0
-      },
-      "ewam": {
-       "swell_max": 1.14,
-       "swell_mean": 0.88,
-       "period_mean": 8.18,
-       "dir_mean": 313.0,
-       "wave_max": 1.96,
-       "wind_mean": 23.86,
-       "wind_dir": 359.0
+       "period_mean": 7.9,
+       "dir_mean": 312.0,
+       "wave_max": 1.7,
+       "wind_mean": 23.25,
+       "wind_dir": 356.0
       }
      },
-     "swell_max_mean": 1.08,
-     "swell_max_spread": 0.18,
-     "period_mean": 7.9,
-     "wind_mean": 23.86,
-     "wind_dir": 359.0,
-     "surfable_votes": 2
+     "swell_max_mean": 1.05,
+     "swell_max_spread": 0.16,
+     "period_mean": 7.7,
+     "wind_mean": 23.25,
+     "wind_dir": 356.0,
+     "surfable_votes": 1
     },
     {
      "date": "2026-09-16",
-     "lead": 2,
+     "lead": 1,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 2.52,
-       "swell_mean": 1.77,
-       "period_mean": 8.0,
-       "dir_mean": 319.0,
+       "swell_max": 2.46,
+       "swell_mean": 1.57,
+       "period_mean": 8.04,
+       "dir_mean": 316.0,
        "wave_max": 3.04,
-       "wind_mean": 27.44,
-       "wind_dir": 358.0
+       "wind_mean": 27.86,
+       "wind_dir": 356.0
       },
       "gwam": {
        "swell_max": 0.2,
        "swell_mean": 0.18,
-       "period_mean": 9.74,
-       "dir_mean": 327.0,
-       "wave_max": 3.48,
-       "wind_mean": 27.44,
-       "wind_dir": 358.0
+       "period_mean": 9.78,
+       "dir_mean": 325.0,
+       "wave_max": 3.4,
+       "wind_mean": 27.86,
+       "wind_dir": 356.0
       },
       "ewam": {
-       "swell_max": 2.72,
-       "swell_mean": 0.77,
-       "period_mean": 9.36,
-       "dir_mean": 327.0,
-       "wave_max": 3.34,
-       "wind_mean": 27.44,
-       "wind_dir": 358.0
+       "swell_max": 2.74,
+       "swell_mean": 0.47,
+       "period_mean": 9.4,
+       "dir_mean": 326.0,
+       "wave_max": 3.24,
+       "wind_mean": 27.86,
+       "wind_dir": 356.0
       }
      },
-     "swell_max_mean": 1.81,
-     "swell_max_spread": 2.52,
-     "period_mean": 9.0,
-     "wind_mean": 27.44,
-     "wind_dir": 358.0,
+     "swell_max_mean": 1.8,
+     "swell_max_spread": 2.54,
+     "period_mean": 9.1,
+     "wind_mean": 27.86,
+     "wind_dir": 356.0,
      "surfable_votes": 0
     },
     {
      "date": "2026-09-17",
-     "lead": 3,
+     "lead": 2,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 2.92,
-       "swell_mean": 2.35,
-       "period_mean": 7.65,
-       "dir_mean": 329.0,
-       "wave_max": 2.98,
-       "wind_mean": 18.08,
-       "wind_dir": 11.0
+       "swell_max": 2.84,
+       "swell_mean": 2.3,
+       "period_mean": 7.74,
+       "dir_mean": 328.0,
+       "wave_max": 2.86,
+       "wind_mean": 20.39,
+       "wind_dir": 7.0
       },
       "gwam": {
-       "swell_max": 2.8,
-       "swell_mean": 2.12,
-       "period_mean": 9.02,
-       "dir_mean": 333.0,
-       "wave_max": 2.86,
-       "wind_mean": 18.08,
-       "wind_dir": 11.0
+       "swell_max": 2.84,
+       "swell_mean": 1.81,
+       "period_mean": 9.19,
+       "dir_mean": 331.0,
+       "wave_max": 2.98,
+       "wind_mean": 20.39,
+       "wind_dir": 7.0
       },
       "ewam": {
-       "swell_max": 2.7,
-       "swell_mean": 2.14,
-       "period_mean": 9.0,
-       "dir_mean": 329.0,
-       "wave_max": 2.7,
-       "wind_mean": 18.08,
-       "wind_dir": 11.0
+       "swell_max": 2.8,
+       "swell_mean": 2.19,
+       "period_mean": 8.99,
+       "dir_mean": 328.0,
+       "wave_max": 2.8,
+       "wind_mean": 20.39,
+       "wind_dir": 7.0
       }
      },
-     "swell_max_mean": 2.81,
-     "swell_max_spread": 0.22,
+     "swell_max_mean": 2.83,
+     "swell_max_spread": 0.04,
      "period_mean": 8.6,
-     "wind_mean": 18.08,
-     "wind_dir": 11.0,
+     "wind_mean": 20.39,
+     "wind_dir": 7.0,
      "surfable_votes": 0
     },
     {
      "date": "2026-09-18",
-     "lead": 4,
+     "lead": 3,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 2.1,
-       "swell_mean": 1.92,
-       "period_mean": 6.74,
-       "dir_mean": 332.0,
+       "swell_max": 1.94,
+       "swell_mean": 1.82,
+       "period_mean": 6.7,
+       "dir_mean": 330.0,
        "wave_max": 2.42,
-       "wind_mean": 18.61,
-       "wind_dir": 3.0
+       "wind_mean": 21.11,
+       "wind_dir": 0.0
       },
       "gwam": {
-       "swell_max": 2.1,
-       "swell_mean": 1.86,
-       "period_mean": 8.62,
-       "dir_mean": 336.0,
-       "wave_max": 2.3,
-       "wind_mean": 18.61,
-       "wind_dir": 3.0
+       "swell_max": 2.36,
+       "swell_mean": 1.43,
+       "period_mean": 9.26,
+       "dir_mean": 334.0,
+       "wave_max": 2.68,
+       "wind_mean": 21.11,
+       "wind_dir": 0.0
       },
       "ewam": {
-       "swell_max": null,
-       "swell_mean": null,
-       "period_mean": null,
-       "dir_mean": null,
-       "wave_max": null,
-       "wind_mean": 18.61,
-       "wind_dir": 3.0
+       "swell_max": 2.2,
+       "swell_mean": 2.2,
+       "period_mean": 8.45,
+       "dir_mean": 334.0,
+       "wave_max": 2.58,
+       "wind_mean": 21.11,
+       "wind_dir": 0.0
       }
      },
-     "swell_max_mean": 2.1,
-     "swell_max_spread": 0.0,
-     "period_mean": 7.7,
-     "wind_mean": 18.61,
-     "wind_dir": 3.0,
-     "surfable_votes": 1
+     "swell_max_mean": 2.17,
+     "swell_max_spread": 0.42,
+     "period_mean": 8.1,
+     "wind_mean": 21.11,
+     "wind_dir": 0.0,
+     "surfable_votes": 2
     },
     {
      "date": "2026-09-19",
-     "lead": 5,
+     "lead": 4,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 2.76,
-       "swell_mean": 2.4,
-       "period_mean": 9.1,
+       "swell_max": 2.54,
+       "swell_mean": 2.26,
+       "period_mean": 9.36,
        "dir_mean": 335.0,
-       "wave_max": 2.76,
-       "wind_mean": 9.23,
-       "wind_dir": 24.0
+       "wave_max": 2.64,
+       "wind_mean": 8.48,
+       "wind_dir": 29.0
       },
       "gwam": {
-       "swell_max": 2.3,
-       "swell_mean": 2.14,
-       "period_mean": 10.43,
-       "dir_mean": 333.0,
-       "wave_max": 2.34,
-       "wind_mean": 9.23,
-       "wind_dir": 24.0
+       "swell_max": 2.7,
+       "swell_mean": 2.37,
+       "period_mean": 10.73,
+       "dir_mean": 334.0,
+       "wave_max": 2.72,
+       "wind_mean": 8.48,
+       "wind_dir": 29.0
       },
       "ewam": {
        "swell_max": null,
@@ -600,38 +583,38 @@
        "period_mean": null,
        "dir_mean": null,
        "wave_max": null,
-       "wind_mean": 9.23,
-       "wind_dir": 24.0
+       "wind_mean": 8.48,
+       "wind_dir": 29.0
       }
      },
-     "swell_max_mean": 2.53,
-     "swell_max_spread": 0.46,
-     "period_mean": 9.8,
-     "wind_mean": 9.23,
-     "wind_dir": 24.0,
-     "surfable_votes": 1
+     "swell_max_mean": 2.62,
+     "swell_max_spread": 0.16,
+     "period_mean": 10.0,
+     "wind_mean": 8.48,
+     "wind_dir": 29.0,
+     "surfable_votes": 0
     },
     {
      "date": "2026-09-20",
-     "lead": 6,
+     "lead": 5,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 1.74,
-       "swell_mean": 1.62,
-       "period_mean": 7.86,
-       "dir_mean": 332.0,
-       "wave_max": 1.74,
-       "wind_mean": 8.27,
-       "wind_dir": 45.0
+       "swell_max": 1.78,
+       "swell_mean": 1.61,
+       "period_mean": 7.77,
+       "dir_mean": 331.0,
+       "wave_max": 1.78,
+       "wind_mean": 7.64,
+       "wind_dir": 52.0
       },
       "gwam": {
-       "swell_max": 1.9,
-       "swell_mean": 1.75,
-       "period_mean": 9.02,
-       "dir_mean": 332.0,
-       "wave_max": 1.92,
-       "wind_mean": 8.27,
-       "wind_dir": 45.0
+       "swell_max": 1.74,
+       "swell_mean": 1.57,
+       "period_mean": 9.32,
+       "dir_mean": 330.0,
+       "wave_max": 1.74,
+       "wind_mean": 7.64,
+       "wind_dir": 52.0
       },
       "ewam": {
        "swell_max": null,
@@ -639,238 +622,238 @@
        "period_mean": null,
        "dir_mean": null,
        "wave_max": null,
-       "wind_mean": 8.27,
-       "wind_dir": 45.0
+       "wind_mean": 7.64,
+       "wind_dir": 52.0
       }
      },
-     "swell_max_mean": 1.82,
-     "swell_max_spread": 0.16,
-     "period_mean": 8.4,
-     "wind_mean": 8.27,
-     "wind_dir": 45.0,
+     "swell_max_mean": 1.76,
+     "swell_max_spread": 0.04,
+     "period_mean": 8.5,
+     "wind_mean": 7.64,
+     "wind_dir": 52.0,
      "surfable_votes": 1
+    },
+    {
+     "date": "2026-09-21",
+     "lead": 6,
+     "models": {
+      "meteofrance_wave": {
+       "swell_max": 1.38,
+       "swell_mean": 1.22,
+       "period_mean": 9.05,
+       "dir_mean": 330.0,
+       "wave_max": 1.42,
+       "wind_mean": 9.19,
+       "wind_dir": 65.0
+      },
+      "gwam": {
+       "swell_max": 1.16,
+       "swell_mean": 1.14,
+       "period_mean": 9.02,
+       "dir_mean": 325.0,
+       "wave_max": 1.18,
+       "wind_mean": 9.19,
+       "wind_dir": 65.0
+      },
+      "ewam": {
+       "swell_max": null,
+       "swell_mean": null,
+       "period_mean": null,
+       "dir_mean": null,
+       "wave_max": null,
+       "wind_mean": 9.19,
+       "wind_dir": 65.0
+      }
+     },
+     "swell_max_mean": 1.27,
+     "swell_max_spread": 0.22,
+     "period_mean": 9.0,
+     "wind_mean": 9.19,
+     "wind_dir": 65.0,
+     "surfable_votes": 2
     }
    ]
   },
   "peniche": {
-   "issued": "2026-09-14",
+   "issued": "2026-09-15",
    "days": [
     {
-     "date": "2026-09-14",
-     "lead": 0,
-     "models": {
-      "meteofrance_wave": {
-       "swell_max": 1.16,
-       "swell_mean": 1.09,
-       "period_mean": 8.26,
-       "dir_mean": 318.0,
-       "wave_max": 1.22,
-       "wind_mean": 7.33,
-       "wind_dir": 326.0
-      },
-      "gwam": {
-       "swell_max": 1.28,
-       "swell_mean": 1.19,
-       "period_mean": 9.82,
-       "dir_mean": 319.0,
-       "wave_max": 1.28,
-       "wind_mean": 7.33,
-       "wind_dir": 326.0
-      },
-      "ewam": {
-       "swell_max": 1.24,
-       "swell_mean": 1.15,
-       "period_mean": 10.09,
-       "dir_mean": 321.0,
-       "wave_max": 1.24,
-       "wind_mean": 7.33,
-       "wind_dir": 326.0
-      }
-     },
-     "swell_max_mean": 1.23,
-     "swell_max_spread": 0.12,
-     "period_mean": 9.4,
-     "wind_mean": 7.33,
-     "wind_dir": 326.0,
-     "surfable_votes": 3
-    },
-    {
      "date": "2026-09-15",
-     "lead": 1,
+     "lead": 0,
      "models": {
       "meteofrance_wave": {
        "swell_max": 1.02,
        "swell_mean": 0.8,
-       "period_mean": 6.55,
-       "dir_mean": 314.0,
-       "wave_max": 1.76,
-       "wind_mean": 25.27,
-       "wind_dir": 3.0
+       "period_mean": 6.57,
+       "dir_mean": 312.0,
+       "wave_max": 1.74,
+       "wind_mean": 24.5,
+       "wind_dir": 360.0
       },
       "gwam": {
-       "swell_max": 1.14,
-       "swell_mean": 0.98,
-       "period_mean": 8.64,
+       "swell_max": 1.1,
+       "swell_mean": 0.86,
+       "period_mean": 8.09,
        "dir_mean": 311.0,
-       "wave_max": 2.36,
-       "wind_mean": 25.27,
-       "wind_dir": 3.0
+       "wave_max": 2.0,
+       "wind_mean": 24.5,
+       "wind_dir": 360.0
       },
       "ewam": {
-       "swell_max": 1.4,
-       "swell_mean": 1.01,
-       "period_mean": 8.36,
-       "dir_mean": 318.0,
-       "wave_max": 2.08,
-       "wind_mean": 25.27,
-       "wind_dir": 3.0
+       "swell_max": 1.3,
+       "swell_mean": 0.89,
+       "period_mean": 7.84,
+       "dir_mean": 317.0,
+       "wave_max": 1.74,
+       "wind_mean": 24.5,
+       "wind_dir": 360.0
       }
      },
-     "swell_max_mean": 1.19,
-     "swell_max_spread": 0.38,
-     "period_mean": 7.9,
-     "wind_mean": 25.27,
-     "wind_dir": 3.0,
-     "surfable_votes": 0
+     "swell_max_mean": 1.14,
+     "swell_max_spread": 0.28,
+     "period_mean": 7.5,
+     "wind_mean": 24.5,
+     "wind_dir": 360.0,
+     "surfable_votes": 1
     },
     {
      "date": "2026-09-16",
-     "lead": 2,
+     "lead": 1,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 2.32,
-       "swell_mean": 1.63,
-       "period_mean": 8.01,
-       "dir_mean": 317.0,
-       "wave_max": 2.94,
-       "wind_mean": 34.01,
-       "wind_dir": 3.0
+       "swell_max": 2.22,
+       "swell_mean": 1.54,
+       "period_mean": 8.04,
+       "dir_mean": 318.0,
+       "wave_max": 2.9,
+       "wind_mean": 34.05,
+       "wind_dir": 2.0
       },
       "gwam": {
        "swell_max": 0.14,
-       "swell_mean": 0.13,
-       "period_mean": 9.64,
-       "dir_mean": 322.0,
-       "wave_max": 3.52,
-       "wind_mean": 34.01,
-       "wind_dir": 3.0
+       "swell_mean": 0.12,
+       "period_mean": 9.55,
+       "dir_mean": 323.0,
+       "wave_max": 3.46,
+       "wind_mean": 34.05,
+       "wind_dir": 2.0
       },
       "ewam": {
-       "swell_max": 2.94,
-       "swell_mean": 2.03,
-       "period_mean": 9.29,
+       "swell_max": 2.9,
+       "swell_mean": 2.0,
+       "period_mean": 9.21,
        "dir_mean": 335.0,
-       "wave_max": 3.38,
-       "wind_mean": 34.01,
-       "wind_dir": 3.0
+       "wave_max": 3.3,
+       "wind_mean": 34.05,
+       "wind_dir": 2.0
       }
      },
-     "swell_max_mean": 1.8,
-     "swell_max_spread": 2.8,
-     "period_mean": 9.0,
-     "wind_mean": 34.01,
-     "wind_dir": 3.0,
+     "swell_max_mean": 1.75,
+     "swell_max_spread": 2.76,
+     "period_mean": 8.9,
+     "wind_mean": 34.05,
+     "wind_dir": 2.0,
      "surfable_votes": 0
     },
     {
      "date": "2026-09-17",
-     "lead": 3,
+     "lead": 2,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 2.56,
-       "swell_mean": 2.09,
-       "period_mean": 7.58,
-       "dir_mean": 326.0,
-       "wave_max": 2.78,
-       "wind_mean": 24.98,
-       "wind_dir": 12.0
+       "swell_max": 2.52,
+       "swell_mean": 2.0,
+       "period_mean": 7.55,
+       "dir_mean": 325.0,
+       "wave_max": 2.68,
+       "wind_mean": 27.38,
+       "wind_dir": 10.0
       },
       "gwam": {
-       "swell_max": 2.72,
-       "swell_mean": 2.03,
-       "period_mean": 8.89,
-       "dir_mean": 329.0,
-       "wave_max": 2.78,
-       "wind_mean": 24.98,
-       "wind_dir": 12.0
+       "swell_max": 2.74,
+       "swell_mean": 2.04,
+       "period_mean": 9.02,
+       "dir_mean": 328.0,
+       "wave_max": 2.92,
+       "wind_mean": 27.38,
+       "wind_dir": 10.0
       },
       "ewam": {
-       "swell_max": 2.66,
-       "swell_mean": 2.16,
-       "period_mean": 8.75,
-       "dir_mean": 333.0,
-       "wave_max": 2.66,
-       "wind_mean": 24.98,
-       "wind_dir": 12.0
+       "swell_max": 2.78,
+       "swell_mean": 2.23,
+       "period_mean": 8.8,
+       "dir_mean": 332.0,
+       "wave_max": 2.82,
+       "wind_mean": 27.38,
+       "wind_dir": 10.0
       }
      },
-     "swell_max_mean": 2.65,
-     "swell_max_spread": 0.16,
-     "period_mean": 8.4,
-     "wind_mean": 24.98,
-     "wind_dir": 12.0,
+     "swell_max_mean": 2.68,
+     "swell_max_spread": 0.26,
+     "period_mean": 8.5,
+     "wind_mean": 27.38,
+     "wind_dir": 10.0,
      "surfable_votes": 0
     },
     {
      "date": "2026-09-18",
-     "lead": 4,
+     "lead": 3,
      "models": {
       "meteofrance_wave": {
        "swell_max": 1.84,
-       "swell_mean": 1.78,
-       "period_mean": 6.69,
-       "dir_mean": 329.0,
+       "swell_mean": 1.74,
+       "period_mean": 6.64,
+       "dir_mean": 328.0,
        "wave_max": 2.34,
-       "wind_mean": 23.01,
+       "wind_mean": 25.43,
        "wind_dir": 6.0
       },
       "gwam": {
-       "swell_max": 2.14,
-       "swell_mean": 1.92,
-       "period_mean": 8.66,
-       "dir_mean": 334.0,
-       "wave_max": 2.32,
-       "wind_mean": 23.01,
+       "swell_max": 2.54,
+       "swell_mean": 2.06,
+       "period_mean": 9.32,
+       "dir_mean": 333.0,
+       "wave_max": 2.78,
+       "wind_mean": 25.43,
        "wind_dir": 6.0
       },
       "ewam": {
-       "swell_max": null,
-       "swell_mean": null,
-       "period_mean": null,
-       "dir_mean": null,
-       "wave_max": null,
-       "wind_mean": 23.01,
+       "swell_max": 2.22,
+       "swell_mean": 2.22,
+       "period_mean": 8.2,
+       "dir_mean": 338.0,
+       "wave_max": 2.54,
+       "wind_mean": 25.43,
        "wind_dir": 6.0
       }
      },
-     "swell_max_mean": 1.99,
-     "swell_max_spread": 0.3,
-     "period_mean": 7.7,
-     "wind_mean": 23.01,
+     "swell_max_mean": 2.2,
+     "swell_max_spread": 0.7,
+     "period_mean": 8.1,
+     "wind_mean": 25.43,
      "wind_dir": 6.0,
-     "surfable_votes": 1
+     "surfable_votes": 0
     },
     {
      "date": "2026-09-19",
-     "lead": 5,
+     "lead": 4,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 2.28,
-       "swell_mean": 2.11,
-       "period_mean": 9.31,
+       "swell_max": 2.34,
+       "swell_mean": 2.07,
+       "period_mean": 9.24,
        "dir_mean": 333.0,
-       "wave_max": 2.62,
-       "wind_mean": 11.32,
-       "wind_dir": 8.0
+       "wave_max": 2.5,
+       "wind_mean": 8.88,
+       "wind_dir": 18.0
       },
       "gwam": {
-       "swell_max": 2.44,
-       "swell_mean": 2.21,
-       "period_mean": 10.54,
+       "swell_max": 2.8,
+       "swell_mean": 2.42,
+       "period_mean": 10.83,
        "dir_mean": 332.0,
-       "wave_max": 2.46,
-       "wind_mean": 11.32,
-       "wind_dir": 8.0
+       "wave_max": 2.8,
+       "wind_mean": 8.88,
+       "wind_dir": 18.0
       },
       "ewam": {
        "swell_max": null,
@@ -878,38 +861,38 @@
        "period_mean": null,
        "dir_mean": null,
        "wave_max": null,
-       "wind_mean": 11.32,
-       "wind_dir": 8.0
+       "wind_mean": 8.88,
+       "wind_dir": 18.0
       }
      },
-     "swell_max_mean": 2.36,
-     "swell_max_spread": 0.16,
-     "period_mean": 9.9,
-     "wind_mean": 11.32,
-     "wind_dir": 8.0,
-     "surfable_votes": 2
+     "swell_max_mean": 2.57,
+     "swell_max_spread": 0.46,
+     "period_mean": 10.0,
+     "wind_mean": 8.88,
+     "wind_dir": 18.0,
+     "surfable_votes": 1
     },
     {
      "date": "2026-09-20",
-     "lead": 6,
+     "lead": 5,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 1.62,
-       "swell_mean": 1.5,
-       "period_mean": 7.82,
-       "dir_mean": 331.0,
-       "wave_max": 1.64,
-       "wind_mean": 7.15,
-       "wind_dir": 1.0
+       "swell_max": 1.66,
+       "swell_mean": 1.45,
+       "period_mean": 7.94,
+       "dir_mean": 329.0,
+       "wave_max": 1.68,
+       "wind_mean": 9.29,
+       "wind_dir": 55.0
       },
       "gwam": {
-       "swell_max": 1.92,
-       "swell_mean": 1.78,
-       "period_mean": 9.18,
-       "dir_mean": 330.0,
-       "wave_max": 1.94,
-       "wind_mean": 7.15,
-       "wind_dir": 1.0
+       "swell_max": 1.76,
+       "swell_mean": 1.56,
+       "period_mean": 9.35,
+       "dir_mean": 329.0,
+       "wave_max": 1.76,
+       "wind_mean": 9.29,
+       "wind_dir": 55.0
       },
       "ewam": {
        "swell_max": null,
@@ -917,238 +900,238 @@
        "period_mean": null,
        "dir_mean": null,
        "wave_max": null,
-       "wind_mean": 7.15,
-       "wind_dir": 1.0
+       "wind_mean": 9.29,
+       "wind_dir": 55.0
       }
      },
-     "swell_max_mean": 1.77,
-     "swell_max_spread": 0.3,
-     "period_mean": 8.5,
-     "wind_mean": 7.15,
-     "wind_dir": 1.0,
+     "swell_max_mean": 1.71,
+     "swell_max_spread": 0.1,
+     "period_mean": 8.6,
+     "wind_mean": 9.29,
+     "wind_dir": 55.0,
      "surfable_votes": 1
+    },
+    {
+     "date": "2026-09-21",
+     "lead": 6,
+     "models": {
+      "meteofrance_wave": {
+       "swell_max": 1.26,
+       "swell_mean": 1.2,
+       "period_mean": 8.62,
+       "dir_mean": 326.0,
+       "wave_max": 1.32,
+       "wind_mean": 9.97,
+       "wind_dir": 58.0
+      },
+      "gwam": {
+       "swell_max": 1.16,
+       "swell_mean": 1.14,
+       "period_mean": 9.16,
+       "dir_mean": 324.0,
+       "wave_max": 1.16,
+       "wind_mean": 9.97,
+       "wind_dir": 58.0
+      },
+      "ewam": {
+       "swell_max": null,
+       "swell_mean": null,
+       "period_mean": null,
+       "dir_mean": null,
+       "wave_max": null,
+       "wind_mean": 9.97,
+       "wind_dir": 58.0
+      }
+     },
+     "swell_max_mean": 1.21,
+     "swell_max_spread": 0.1,
+     "period_mean": 8.9,
+     "wind_mean": 9.97,
+     "wind_dir": 58.0,
+     "surfable_votes": 2
     }
    ]
   },
   "sagres": {
-   "issued": "2026-09-14",
+   "issued": "2026-09-15",
    "days": [
     {
-     "date": "2026-09-14",
+     "date": "2026-09-15",
      "lead": 0,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 1.14,
-       "swell_mean": 1.02,
-       "period_mean": 8.13,
-       "dir_mean": 322.0,
-       "wave_max": 1.44,
-       "wind_mean": 9.91,
-       "wind_dir": 30.0
-      },
-      "gwam": {
-       "swell_max": 1.46,
-       "swell_mean": 1.34,
-       "period_mean": 8.5,
-       "dir_mean": 13.0,
-       "wave_max": 1.48,
-       "wind_mean": 9.91,
-       "wind_dir": 30.0
-      },
-      "ewam": {
-       "swell_max": 1.3,
-       "swell_mean": 1.18,
-       "period_mean": 7.7,
-       "dir_mean": 115.0,
-       "wave_max": 1.3,
-       "wind_mean": 9.91,
-       "wind_dir": 30.0
-      }
-     },
-     "swell_max_mean": 1.3,
-     "swell_max_spread": 0.32,
-     "period_mean": 8.1,
-     "wind_mean": 9.91,
-     "wind_dir": 30.0,
-     "surfable_votes": 2
-    },
-    {
-     "date": "2026-09-15",
-     "lead": 1,
-     "models": {
-      "meteofrance_wave": {
        "swell_max": 0.82,
-       "swell_mean": 0.63,
-       "period_mean": 7.74,
+       "swell_mean": 0.62,
+       "period_mean": 7.91,
        "dir_mean": 315.0,
-       "wave_max": 1.44,
-       "wind_mean": 23.74,
-       "wind_dir": 341.0
+       "wave_max": 1.52,
+       "wind_mean": 22.94,
+       "wind_dir": 342.0
       },
       "gwam": {
        "swell_max": 1.04,
-       "swell_mean": 0.86,
-       "period_mean": 8.19,
-       "dir_mean": 315.0,
-       "wave_max": 1.72,
-       "wind_mean": 23.74,
-       "wind_dir": 341.0
+       "swell_mean": 0.85,
+       "period_mean": 8.04,
+       "dir_mean": 316.0,
+       "wave_max": 1.58,
+       "wind_mean": 22.94,
+       "wind_dir": 342.0
       },
       "ewam": {
        "swell_max": 0.86,
-       "swell_mean": 0.71,
-       "period_mean": 7.61,
-       "dir_mean": 311.0,
-       "wave_max": 1.18,
-       "wind_mean": 23.74,
-       "wind_dir": 341.0
+       "swell_mean": 0.68,
+       "period_mean": 7.46,
+       "dir_mean": 314.0,
+       "wave_max": 1.08,
+       "wind_mean": 22.94,
+       "wind_dir": 342.0
       }
      },
      "swell_max_mean": 0.91,
      "swell_max_spread": 0.22,
      "period_mean": 7.8,
-     "wind_mean": 23.74,
-     "wind_dir": 341.0,
+     "wind_mean": 22.94,
+     "wind_dir": 342.0,
      "surfable_votes": 1
     },
     {
      "date": "2026-09-16",
-     "lead": 2,
+     "lead": 1,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 1.48,
-       "swell_mean": 0.87,
-       "period_mean": 8.67,
+       "swell_max": 1.76,
+       "swell_mean": 0.88,
+       "period_mean": 8.72,
        "dir_mean": 304.0,
-       "wave_max": 2.72,
-       "wind_mean": 33.48,
-       "wind_dir": 341.0
+       "wave_max": 2.76,
+       "wind_mean": 33.72,
+       "wind_dir": 340.0
       },
       "gwam": {
-       "swell_max": 1.9,
-       "swell_mean": 1.21,
-       "period_mean": 9.23,
-       "dir_mean": 318.0,
-       "wave_max": 2.56,
-       "wind_mean": 33.48,
-       "wind_dir": 341.0
+       "swell_max": 1.88,
+       "swell_mean": 0.94,
+       "period_mean": 9.1,
+       "dir_mean": 316.0,
+       "wave_max": 2.58,
+       "wind_mean": 33.72,
+       "wind_dir": 340.0
       },
       "ewam": {
-       "swell_max": 1.42,
-       "swell_mean": 1.02,
-       "period_mean": 8.97,
-       "dir_mean": 309.0,
+       "swell_max": 1.5,
+       "swell_mean": 0.91,
+       "period_mean": 8.77,
+       "dir_mean": 308.0,
        "wave_max": 1.68,
-       "wind_mean": 33.48,
-       "wind_dir": 341.0
+       "wind_mean": 33.72,
+       "wind_dir": 340.0
       }
      },
-     "swell_max_mean": 1.6,
-     "swell_max_spread": 0.48,
-     "period_mean": 9.0,
-     "wind_mean": 33.48,
-     "wind_dir": 341.0,
+     "swell_max_mean": 1.71,
+     "swell_max_spread": 0.38,
+     "period_mean": 8.9,
+     "wind_mean": 33.72,
+     "wind_dir": 340.0,
      "surfable_votes": 0
     },
     {
      "date": "2026-09-17",
-     "lead": 3,
+     "lead": 2,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 2.34,
-       "swell_mean": 2.14,
-       "period_mean": 7.51,
-       "dir_mean": 322.0,
-       "wave_max": 2.36,
-       "wind_mean": 22.57,
-       "wind_dir": 349.0
+       "swell_max": 2.26,
+       "swell_mean": 2.13,
+       "period_mean": 7.62,
+       "dir_mean": 321.0,
+       "wave_max": 2.34,
+       "wind_mean": 25.04,
+       "wind_dir": 348.0
       },
       "gwam": {
        "swell_max": 2.06,
-       "swell_mean": 1.86,
-       "period_mean": 8.86,
+       "swell_mean": 1.87,
+       "period_mean": 9.01,
        "dir_mean": 323.0,
-       "wave_max": 2.22,
-       "wind_mean": 22.57,
-       "wind_dir": 349.0
+       "wave_max": 2.24,
+       "wind_mean": 25.04,
+       "wind_dir": 348.0
       },
       "ewam": {
        "swell_max": 1.42,
-       "swell_mean": 1.26,
-       "period_mean": 8.8,
+       "swell_mean": 1.29,
+       "period_mean": 8.81,
        "dir_mean": 313.0,
        "wave_max": 1.46,
-       "wind_mean": 22.57,
-       "wind_dir": 349.0
+       "wind_mean": 25.04,
+       "wind_dir": 348.0
       }
      },
-     "swell_max_mean": 1.94,
-     "swell_max_spread": 0.92,
-     "period_mean": 8.4,
-     "wind_mean": 22.57,
-     "wind_dir": 349.0,
-     "surfable_votes": 2
+     "swell_max_mean": 1.91,
+     "swell_max_spread": 0.84,
+     "period_mean": 8.5,
+     "wind_mean": 25.04,
+     "wind_dir": 348.0,
+     "surfable_votes": 0
     },
     {
      "date": "2026-09-18",
-     "lead": 4,
+     "lead": 3,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 1.96,
-       "swell_mean": 1.82,
-       "period_mean": 6.79,
-       "dir_mean": 324.0,
-       "wave_max": 2.1,
-       "wind_mean": 12.79,
-       "wind_dir": 343.0
+       "swell_max": 2.0,
+       "swell_mean": 1.77,
+       "period_mean": 6.81,
+       "dir_mean": 323.0,
+       "wave_max": 2.12,
+       "wind_mean": 19.23,
+       "wind_dir": 351.0
       },
       "gwam": {
-       "swell_max": 1.7,
-       "swell_mean": 1.52,
-       "period_mean": 8.1,
+       "swell_max": 1.84,
+       "swell_mean": 1.67,
+       "period_mean": 8.32,
        "dir_mean": 326.0,
-       "wave_max": 1.76,
-       "wind_mean": 12.79,
-       "wind_dir": 343.0
+       "wave_max": 1.92,
+       "wind_mean": 19.23,
+       "wind_dir": 351.0
       },
       "ewam": {
-       "swell_max": null,
-       "swell_mean": null,
-       "period_mean": null,
-       "dir_mean": null,
-       "wave_max": null,
-       "wind_mean": 12.79,
-       "wind_dir": 343.0
+       "swell_max": 1.22,
+       "swell_mean": 1.22,
+       "period_mean": 8.2,
+       "dir_mean": 316.0,
+       "wave_max": 1.22,
+       "wind_mean": 19.23,
+       "wind_dir": 351.0
       }
      },
-     "swell_max_mean": 1.83,
-     "swell_max_spread": 0.26,
-     "period_mean": 7.4,
-     "wind_mean": 12.79,
-     "wind_dir": 343.0,
-     "surfable_votes": 1
+     "swell_max_mean": 1.69,
+     "swell_max_spread": 0.78,
+     "period_mean": 7.8,
+     "wind_mean": 19.23,
+     "wind_dir": 351.0,
+     "surfable_votes": 2
     },
     {
      "date": "2026-09-19",
-     "lead": 5,
+     "lead": 4,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 1.86,
-       "swell_mean": 1.66,
-       "period_mean": 10.34,
-       "dir_mean": 332.0,
-       "wave_max": 1.96,
-       "wind_mean": 12.21,
-       "wind_dir": 61.0
+       "swell_max": 1.9,
+       "swell_mean": 1.65,
+       "period_mean": 9.32,
+       "dir_mean": 331.0,
+       "wave_max": 1.94,
+       "wind_mean": 17.09,
+       "wind_dir": 88.0
       },
       "gwam": {
-       "swell_max": 1.74,
-       "swell_mean": 1.67,
-       "period_mean": 10.01,
-       "dir_mean": 332.0,
-       "wave_max": 1.74,
-       "wind_mean": 12.21,
-       "wind_dir": 61.0
+       "swell_max": 2.02,
+       "swell_mean": 1.95,
+       "period_mean": 10.4,
+       "dir_mean": 335.0,
+       "wave_max": 2.02,
+       "wind_mean": 17.09,
+       "wind_dir": 88.0
       },
       "ewam": {
        "swell_max": null,
@@ -1156,38 +1139,38 @@
        "period_mean": null,
        "dir_mean": null,
        "wave_max": null,
-       "wind_mean": 12.21,
-       "wind_dir": 61.0
+       "wind_mean": 17.09,
+       "wind_dir": 88.0
       }
      },
-     "swell_max_mean": 1.8,
+     "swell_max_mean": 1.96,
      "swell_max_spread": 0.12,
-     "period_mean": 10.2,
-     "wind_mean": 12.21,
-     "wind_dir": 61.0,
+     "period_mean": 9.9,
+     "wind_mean": 17.09,
+     "wind_dir": 88.0,
      "surfable_votes": 2
     },
     {
      "date": "2026-09-20",
-     "lead": 6,
+     "lead": 5,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 1.38,
-       "swell_mean": 1.28,
-       "period_mean": 8.13,
-       "dir_mean": 333.0,
-       "wave_max": 1.68,
-       "wind_mean": 6.05,
-       "wind_dir": 334.0
+       "swell_max": 1.36,
+       "swell_mean": 1.31,
+       "period_mean": 7.41,
+       "dir_mean": 354.0,
+       "wave_max": 1.86,
+       "wind_mean": 15.84,
+       "wind_dir": 97.0
       },
       "gwam": {
-       "swell_max": 1.72,
-       "swell_mean": 1.64,
-       "period_mean": 8.49,
-       "dir_mean": 7.0,
-       "wave_max": 1.72,
-       "wind_mean": 6.05,
-       "wind_dir": 334.0
+       "swell_max": 2.1,
+       "swell_mean": 1.91,
+       "period_mean": 8.41,
+       "dir_mean": 70.0,
+       "wave_max": 2.1,
+       "wind_mean": 15.84,
+       "wind_dir": 97.0
       },
       "ewam": {
        "swell_max": null,
@@ -1195,26 +1178,151 @@
        "period_mean": null,
        "dir_mean": null,
        "wave_max": null,
-       "wind_mean": 6.05,
-       "wind_dir": 334.0
+       "wind_mean": 15.84,
+       "wind_dir": 97.0
       }
      },
-     "swell_max_mean": 1.55,
-     "swell_max_spread": 0.34,
-     "period_mean": 8.3,
-     "wind_mean": 6.05,
-     "wind_dir": 334.0,
-     "surfable_votes": 2
+     "swell_max_mean": 1.73,
+     "swell_max_spread": 0.74,
+     "period_mean": 7.9,
+     "wind_mean": 15.84,
+     "wind_dir": 97.0,
+     "surfable_votes": 1
+    },
+    {
+     "date": "2026-09-21",
+     "lead": 6,
+     "models": {
+      "meteofrance_wave": {
+       "swell_max": 1.12,
+       "swell_mean": 0.96,
+       "period_mean": 7.37,
+       "dir_mean": 352.0,
+       "wave_max": 1.76,
+       "wind_mean": 9.49,
+       "wind_dir": 97.0
+      },
+      "gwam": {
+       "swell_max": 1.88,
+       "swell_mean": 1.61,
+       "period_mean": 7.67,
+       "dir_mean": 100.0,
+       "wave_max": 1.9,
+       "wind_mean": 9.49,
+       "wind_dir": 97.0
+      },
+      "ewam": {
+       "swell_max": null,
+       "swell_mean": null,
+       "period_mean": null,
+       "dir_mean": null,
+       "wave_max": null,
+       "wind_mean": 9.49,
+       "wind_dir": 97.0
+      }
+     },
+     "swell_max_mean": 1.5,
+     "swell_max_spread": 0.76,
+     "period_mean": 7.5,
+     "wind_mean": 9.49,
+     "wind_dir": 97.0,
+     "surfable_votes": 0
     }
    ]
   }
  },
- "skill": {},
- "baselines": {},
+ "skill": {
+  "ericeira": {
+   "ewam": {
+    "0": {
+     "n": 1,
+     "descriptive": true,
+     "self_verification": false
+    }
+   },
+   "gwam": {
+    "0": {
+     "n": 1,
+     "descriptive": true,
+     "self_verification": false
+    }
+   },
+   "meteofrance_wave": {
+    "0": {
+     "n": 1,
+     "descriptive": true,
+     "self_verification": true
+    }
+   }
+  },
+  "peniche": {
+   "ewam": {
+    "0": {
+     "n": 1,
+     "descriptive": true,
+     "self_verification": false
+    }
+   },
+   "gwam": {
+    "0": {
+     "n": 1,
+     "descriptive": true,
+     "self_verification": false
+    }
+   },
+   "meteofrance_wave": {
+    "0": {
+     "n": 1,
+     "descriptive": true,
+     "self_verification": true
+    }
+   }
+  },
+  "sagres": {
+   "ewam": {
+    "0": {
+     "n": 1,
+     "descriptive": true,
+     "self_verification": false
+    }
+   },
+   "gwam": {
+    "0": {
+     "n": 1,
+     "descriptive": true,
+     "self_verification": false
+    }
+   },
+   "meteofrance_wave": {
+    "0": {
+     "n": 1,
+     "descriptive": true,
+     "self_verification": true
+    }
+   }
+  }
+ },
+ "baselines": {
+  "ericeira": {
+   "0": {
+    "n": 1
+   }
+  },
+  "peniche": {
+   "0": {
+    "n": 1
+   }
+  },
+  "sagres": {
+   "0": {
+    "n": 1
+   }
+  }
+ },
  "robustness": {},
  "quality": {
-  "issues": 1,
-  "expected_issues": 1,
+  "issues": 2,
+  "expected_issues": 2,
   "missing_issue_dates": [],
   "null_share_by_model": {
    "meteofrance_wave": 0.0,
@@ -1228,12 +1336,12 @@
   },
   "disagreement_gt_1m": {
    "share": 0.095,
-   "n": 21
+   "n": 42
   },
   "analysis_days": {
-   "ericeira": 92,
-   "peniche": 92,
-   "sagres": 92
+   "ericeira": 93,
+   "peniche": 93,
+   "sagres": 93
   },
   "analysis_gaps": {
    "ericeira": [],
