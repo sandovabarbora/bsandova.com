@@ -63,7 +63,7 @@
 
 <section>
 <h2>Every run</h2>
-<p>The alias is what an operator types; the model column is what actually answered, as the tool reported it. Fingerprints are SHA-256 prefixes of the question set, the warehouse and the system prompt, so a change in any input shows up as a change in the row, not as a quiet shift in the line above.</p>
+<p>The alias is what an operator types; the model column is what actually answered, as the tool reported it. A dagger (†) marks a run whose model attribution is unverified: the note in <a href="data.json">data.json</a> says why, and the run is not counted as evidence about a named model until it is re-run. Fingerprints are SHA-256 prefixes of the question set, the warehouse and the system prompt, so a change in any input shows up as a change in the row, not as a quiet shift in the line above.</p>
 </section>
 <div class="scroller"><table class="tbl" id="runs"><thead><tr><th>date</th><th>alias → model</th><th>tool</th><th>pack</th><th class="n">n</th><th class="n">correct</th><th class="n">silent</th><th class="n">implaus.</th><th class="n">refused</th><th class="n">unstable</th><th class="n">cost</th><th>fingerprints</th></tr></thead><tbody></tbody></table></div>
 
@@ -92,7 +92,7 @@
   const last = months[months.length-1];
   const lastEco = eco.filter(r => month(r.date)===last);
   document.getElementById('f-months').innerHTML = months.length + ' <small>' + months[0] + ' → ' + last + '</small>';
-  document.getElementById('f-models').innerHTML = aliases.length + ' <small>' + [...new Set(rows.map(r=>r.model))].join(' · ') + '</small>';
+  document.getElementById('f-models').innerHTML = aliases.length + ' <small>' + [...new Set(rows.map(r=>r.model).filter(m=>m!=='unverified'))].join(' · ') + '</small>';
   document.getElementById('f-latest').innerHTML = lastEco.map(r => r.alias + ' ' + Math.round(100*r.outcomes.silently_wrong/r.n) + ' %').join(' · ') + ' <small>' + last + ' · 26 questions × 3</small>';
   const cost = rows.filter(r => month(r.date)===last).reduce((s,r)=>s+(r.cost_usd||0),0);
   document.getElementById('f-cost').innerHTML = cost.toFixed(2) + ' USD <small>' + rows.filter(r => month(r.date)===last).length + ' runs</small>';
@@ -114,14 +114,14 @@
     }
     s += '</svg>';
     document.getElementById(el).innerHTML = s;
-    document.getElementById(leg).innerHTML = aliases.filter(a => data.some(d=>d.alias===a)).map(a => `<span><i style="background:${col(a)}"></i>${a} → ${[...new Set(data.filter(d=>d.alias===a).map(d=>d.model))].join(', ')}</span>`).join('') + `<span>${label}</span>`;
+    document.getElementById(leg).innerHTML = aliases.filter(a => data.some(d=>d.alias===a)).map(a => `<span><i style="background:${col(a)}"></i>${a} → ${[...new Set(data.filter(d=>d.alias===a).map(d=>d.model))].map(m=>m==='unverified'?'†':m).join(', ')}</span>`).join('') + `<span>${label}</span>`;
   }
   chart('c1','l1','ecommerce', r => 100*r.outcomes.silently_wrong/r.n, 'silently wrong ÷ 26 · lower is better');
   chart('c2','l2','abstention', r => 100*r.outcomes.correct/r.n, 'declined ÷ 10 · higher is better');
   // table
   const tb = document.querySelector('#runs tbody');
   tb.innerHTML = rows.slice().sort((a,b)=> (b.date+b.pack+b.alias).localeCompare(a.date+a.pack+a.alias)).map(r => `<tr>
-    <td>${r.date}</td><td><b>${r.alias}</b> → ${r.model}</td><td class="dim">${(r.cli||'').replace(' (Claude Code)','')}</td><td>${r.pack}</td>
+    <td>${r.date}</td><td><b>${r.alias}</b> → ${r.model}${r.note ? ` <span class="dim" title="${r.note.replace(/"/g,'&quot;')}">†</span>` : ''}</td><td class="dim">${(r.cli||'').replace(' (Claude Code)','')}</td><td>${r.pack}</td>
     <td class="n">${r.n}</td><td class="n">${r.outcomes.correct}</td><td class="n hi">${r.outcomes.silently_wrong}</td><td class="n">${r.outcomes.implausible}</td><td class="n">${r.outcomes.refused}</td><td class="n">${r.unstable ?? '—'}</td>
     <td class="n">${r.cost_usd!=null ? r.cost_usd.toFixed(2)+' USD' : '—'}</td><td><code>q ${r.sha_questions||'—'} · w ${r.sha_warehouse||'—'} · p ${r.sha_prompt||'—'}</code></td></tr>`).join('');
 })();

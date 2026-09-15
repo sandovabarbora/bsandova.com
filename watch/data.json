@@ -154,7 +154,7 @@
   "alias": "opus",
   "lang": "cs",
   "pack": "abstention",
-  "model": "claude-haiku-4-5",
+  "model": "unverified",
   "cli": "claude 2.1.270 (Claude Code)",
   "sha_questions": "e05814c11723",
   "sha_warehouse": "03517f517771",
@@ -177,14 +177,16 @@
    "no_number": 0
   },
   "unattributable": 0,
-  "archived": "2026-09-14/agent_opus_cs_abstention.md"
+  "archived": "2026-09-14/agent_opus_cs_abstention.md",
+  "model_recorded": "claude-haiku-4-5",
+  "note": "model attribution unverified: the harness recorded the CLI's ~900-token haiku helper call as the answering model (agent.py took the first modelUsage entry; fixed to take the entry that carried the cost). The run cost is consistent with the alias. Re-run pending."
  },
  {
   "file": "agent_sonnet_cs_abstention.md",
   "alias": "sonnet",
   "lang": "cs",
   "pack": "abstention",
-  "model": "claude-haiku-4-5",
+  "model": "unverified",
   "cli": "claude 2.1.270 (Claude Code)",
   "sha_questions": "e05814c11723",
   "sha_warehouse": "03517f517771",
@@ -207,7 +209,9 @@
    "no_number": 0
   },
   "unattributable": 0,
-  "archived": "2026-09-14/agent_sonnet_cs_abstention.md"
+  "archived": "2026-09-14/agent_sonnet_cs_abstention.md",
+  "model_recorded": "claude-haiku-4-5",
+  "note": "model attribution unverified: the harness recorded the CLI's ~900-token haiku helper call as the answering model (agent.py took the first modelUsage entry; fixed to take the entry that carried the cost). The run cost is consistent with the alias. Re-run pending."
  },
  {
   "file": "agent_haiku_cs.md",
@@ -244,7 +248,7 @@
   "alias": "opus",
   "lang": "cs",
   "pack": "ecommerce",
-  "model": "claude-haiku-4-5",
+  "model": "unverified",
   "cli": "claude 2.1.270 (Claude Code)",
   "sha_questions": "e06618417e5b",
   "sha_warehouse": "03517f517771",
@@ -267,14 +271,16 @@
    "no_number": 0
   },
   "unattributable": 4,
-  "archived": "2026-09-14/agent_opus_cs.md"
+  "archived": "2026-09-14/agent_opus_cs.md",
+  "model_recorded": "claude-haiku-4-5",
+  "note": "model attribution unverified: the harness recorded the CLI's ~900-token haiku helper call as the answering model (agent.py took the first modelUsage entry; fixed to take the entry that carried the cost). The run cost is consistent with the alias. Re-run pending."
  },
  {
   "file": "agent_sonnet_cs.md",
   "alias": "sonnet",
   "lang": "cs",
   "pack": "ecommerce",
-  "model": "claude-haiku-4-5",
+  "model": "unverified",
   "cli": "claude 2.1.270 (Claude Code)",
   "sha_questions": "e06618417e5b",
   "sha_warehouse": "03517f517771",
@@ -297,6 +303,8 @@
    "no_number": 0
   },
   "unattributable": 4,
-  "archived": "2026-09-14/agent_sonnet_cs.md"
+  "archived": "2026-09-14/agent_sonnet_cs.md",
+  "model_recorded": "claude-haiku-4-5",
+  "note": "model attribution unverified: the harness recorded the CLI's ~900-token haiku helper call as the answering model (agent.py took the first modelUsage entry; fixed to take the entry that carried the cost). The run cost is consistent with the alias. Re-run pending."
  }
 ]
