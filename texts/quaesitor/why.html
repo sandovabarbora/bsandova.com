@@ -6,7 +6,7 @@
 <title>Trust grows faster than accuracy — Quaesitor</title>
 <meta name="description" content="Why Quaesitor existed, how a question became a verified one, what other people had already established, and what is left now the service is closed: the method, the runs and an open-source check.">
 <meta name="theme-color" content="#161616">
-<link rel="canonical" href="https://bsandova.com/texts/quaesitor/why.html">
+<link rel="canonical" href="https://bsandova.com/texts/quaesitor/why">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
@@ -79,7 +79,7 @@ pre.sql{font-family:var(--mono);font-size:12px;line-height:1.55;color:var(--fg);
 <p><b>A model agreeing with itself is not evidence it is right.</b> Under dense retrieval, 59 % of errors showed zero dispersion across five samples: the system agreed with itself every time and was wrong every time<sup class="cite"><a href="#r13">13</a></sup>. In my runs, keeping only answers where all three attempts agreed left the error rate at 84.9 % against 85.1 %, and cost twenty points of coverage. Agreement is free to measure and worth almost nothing.</p>
 <p><b>The language of the question is a variable.</b> An 8.79 % accuracy gap outside English is reported and reproducible<sup class="cite"><a href="#r14">14</a></sup>, which is why the suite ran fifteen languages rather than assuming. My own result there is a null one, and published as such.</p>
 <p><b>The bill lands on the organisation, not the pipeline.</b> A wrong number is an engineering event for a day; afterwards it is a decision somebody made and cannot source<sup class="cite"><a href="#r15">15</a></sup>.</p>
-<p><b>And the best objection: a semantic layer fixes it.</b> Give the model your metric definitions and accuracy rises by seventeen to twenty-three points across three frontier models, 50.5 → 67.7 %, 46.5 → 68.7 %, 45.5 → 68.7 %<sup class="cite"><a href="#r16">16</a></sup>. It is the strongest measured case against the service, and it installs the argument rather than refuting it: sixty-eight per cent is not the accuracy at which people check. It is the accuracy at which they stop. And the benchmark reports accuracy without classifying the errors, so it cannot say whether the remaining third got easier or harder to notice. My replication says that is exactly where the risk moves: <a href="measurements.html">documentation left correctness unchanged and made the surviving errors more plausible</a>.</p>
+<p><b>And the best objection: a semantic layer fixes it.</b> Give the model your metric definitions and accuracy rises by seventeen to twenty-three points across three frontier models, 50.5 → 67.7 %, 46.5 → 68.7 %, 45.5 → 68.7 %<sup class="cite"><a href="#r16">16</a></sup>. It is the strongest measured case against the service, and it installs the argument rather than refuting it: sixty-eight per cent is not the accuracy at which people check. It is the accuracy at which they stop. And the benchmark reports accuracy without classifying the errors, so it cannot say whether the remaining third got easier or harder to notice. My replication says that is exactly where the risk moves: <a href="measurements">documentation left correctness unchanged and made the surviving errors more plausible</a>.</p>
 </section>
 
 <section>
@@ -92,11 +92,11 @@ pre.sql{font-family:var(--mono);font-size:12px;line-height:1.55;color:var(--fg);
 <section class="refs" id="refs">
 <h2>References</h2>
 <ol>
-<li id="r1">Quaesitor (2026): <a href="original/why.html">Trust grows faster than accuracy</a>. The 621 vs 684 cohort case is verified in the suite; 95 attempts across the runs.</li>
+<li id="r1">Quaesitor (2026): <a href="original/why">Trust grows faster than accuracy</a>. The 621 vs 684 cohort case is verified in the suite; 95 attempts across the runs.</li>
 <li id="r2">Quaesitor (2026): ibid., "Why the gap is still open".</li>
-<li id="r3">Quaesitor (2026): <a href="original/method.html">Methodology</a>. Definition, query, anchor, classification rules, hand-over; what is and is not claimed.</li>
-<li id="r4">Quaesitor (2026): <a href="original/about.html">One person, and none of the argument rests on that</a>. 5 790 measured answers as of August 2026; the corrected verified query stated in a client report.</li>
-<li id="r5">Quaesitor (2026): <a href="original/evidence.html">None of this is our claim to make</a>. The evidence page, with the strongest measured objection.</li>
+<li id="r3">Quaesitor (2026): <a href="original/method">Methodology</a>. Definition, query, anchor, classification rules, hand-over; what is and is not claimed.</li>
+<li id="r4">Quaesitor (2026): <a href="original/about">One person, and none of the argument rests on that</a>. 5 790 measured answers as of August 2026; the corrected verified query stated in a client report.</li>
+<li id="r5">Quaesitor (2026): <a href="original/evidence">None of this is our claim to make</a>. The evidence page, with the strongest measured objection.</li>
 <li id="r6">Chen, P. B. et al. (2026): <a href="https://arxiv.org/abs/2409.02038">BEAVER: an enterprise benchmark for text-to-SQL</a>, arXiv:2409.02038. 9 128 question–query pairs from real private warehouses, 812 tables, 19 domains; 10.8 % / 30.1 % with oracle hints.</li>
 <li id="r7">Stonebraker, M. and Chen, P. B. (2026): <a href="https://cacm.acm.org/blogcacm/if-you-think-you-can-do-real-world-text-to-sql/">If you think you can do real-world text-to-SQL</a>, BLOG@CACM, 20 July.</li>
 <li id="r8">Davidson, J. (2026): <a href="https://omni.co/blog/why-text-to-sql-fails">Why text-to-SQL fails</a>, Omni, 8 April. 4 602 incorrect queries, 81.2 % schema-level.</li>
@@ -114,8 +114,8 @@ pre.sql{font-family:var(--mono);font-size:12px;line-height:1.55;color:var(--fg);
 </section>
 
 <footer class="text-foot">
-  <p><b>Provenance.</b> Numbers come from the Quaesitor runs as published in August 2026; where a figure is quoted, the reference links the page it was first published on, with the run fingerprint. The original pages, chrome removed, are kept <a href="original/why.html">as published</a>.</p>
-  <p class="back"><a href="index.html">← Quaesitor, the three texts</a> · <a href="../../#works">← projects</a></p>
+  <p><b>Provenance.</b> Numbers come from the Quaesitor runs as published in August 2026; where a figure is quoted, the reference links the page it was first published on, with the run fingerprint. The original pages, chrome removed, are kept <a href="original/why">as published</a>.</p>
+  <p class="back"><a href="./">← Quaesitor, the three texts</a> · <a href="../../#works">← projects</a></p>
 </footer>
 </article>
 </body>

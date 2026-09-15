@@ -6,11 +6,11 @@
 <title>How to prove a cutover</title>
 <meta name="description" content="A migration is finished when nothing changed: zero mismatches across every column and an identical fingerprint for every day, computed before a single consumer is repointed. The method from the day job as a tool, pip install cutover, with a demo on a month of NYC taxi data and what it actually found.">
 <meta name="theme-color" content="#161616">
-<link rel="canonical" href="https://bsandova.com/texts/cutover.html">
+<link rel="canonical" href="https://bsandova.com/texts/cutover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css?v=ca37ce2">
+<link rel="stylesheet" href="../style.css?v=1bcd820">
 <link rel="stylesheet" href="../text.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
@@ -85,7 +85,7 @@ cutover: <b>PASS</b>
 rows: old 7,280 · new 7,280 · matched on key 7,280 · only in old 0 · only in new 0
 columns: 0 / 3 columns with mismatches
 fingerprints: 33 / 33 partitions identical by day</pre>
-<p>Both reports are published as the tool wrote them: <a href="../assets/cutover/report-1.html">run 1</a>, <a href="../assets/cutover/report-2.html">run 2</a>, with the JSON next to each. The script that produced them is <code>tools/cutover_demo.py</code> in the site repository; it downloads the file, builds both aggregates, runs both comparisons and writes the reports, so the numbers above are not typed<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p>Both reports are published as the tool wrote them: <a href="../assets/cutover/report-1">run 1</a>, <a href="../assets/cutover/report-2">run 2</a>, with the JSON next to each. The script that produced them is <code>tools/cutover_demo.py</code> in the site repository; it downloads the file, builds both aggregates, runs both comparisons and writes the reports, so the numbers above are not typed<sup class="cite"><a href="#r2">2</a></sup>.</p>
 </section>
 
 <section>
@@ -97,7 +97,7 @@ fingerprints: 33 / 33 partitions identical by day</pre>
 <section class="refs" id="refs">
 <h2>References</h2>
 <ol>
-<li id="r1">Šandová, B. (2026): <a href="engineering.html">The platform is code. So is the trust.</a>, sections 6 and 11: the dbt salary-recompute cutover (0/0 across 20 columns, five years) and the GA4 backfill (62/62 days). Own account; employer data is not public.</li>
+<li id="r1">Šandová, B. (2026): <a href="engineering">The platform is code. So is the trust.</a>, sections 6 and 11: the dbt salary-recompute cutover (0/0 across 20 columns, five years) and the GA4 backfill (62/62 days). Own account; employer data is not public.</li>
 <li id="r2">Šandová, B. (2026): <a href="https://github.com/sandovabarbora/cutover">cutover</a>, Apache-2.0, on <a href="https://pypi.org/project/cutover/">PyPI</a>; design in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/superpowers/specs/2026-09-14-cutover-design.md">the spec</a>; demo script <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/cutover_demo.py">tools/cutover_demo.py</a>; reports <a href="../assets/cutover/report-1.json">report-1.json</a>, <a href="../assets/cutover/report-2.json">report-2.json</a>.</li>
 <li id="r3">NYC Taxi &amp; Limousine Commission: <a href="https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page">TLC Trip Record Data</a>, yellow taxi, January 2025 (parquet). Rows dated outside the month are a known property of the monthly files.</li>
 <li id="r4"><a href="https://duckdb.org/">DuckDB</a>; <a href="https://arrow.apache.org/">Apache Arrow</a>.</li>

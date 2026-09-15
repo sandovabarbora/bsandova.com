@@ -6,7 +6,7 @@
 <title>Same score, opposite characters — Quaesitor</title>
 <meta name="description" content="Two frontier models, the same number of right answers, opposite failure behaviour. What happened when a warehouse assistant was asked 26 questions with a known answer, in fifteen languages, on five warehouses.">
 <meta name="theme-color" content="#161616">
-<link rel="canonical" href="https://bsandova.com/texts/quaesitor/measurements.html">
+<link rel="canonical" href="https://bsandova.com/texts/quaesitor/measurements">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
@@ -54,7 +54,7 @@ pre.sql{font-family:var(--mono);font-size:12px;line-height:1.55;color:var(--fg);
 
 <section>
 <p>A silent failure is an answer that runs without error, looks plausible and is wrong, with nothing downstream to say it should not be trusted. Every text-to-SQL benchmark reports accuracy. Accuracy folds two very different things, declining and being confidently wrong, into one "not correct", and for anyone actually deploying one of these assistants that is the one distinction that matters<sup class="cite"><a href="#r1">1</a></sup>.</p>
-<p>So I built warehouses with the traps in known places (a null inside an aggregate here, a batch loaded twice there; the full list is <a href="taxonomy.html">the second text</a>), wrote a verified query for every question by hand, and let the models answer. Fifteen languages, three repeats each, one verdict per cell. The numbers on this page are the run's, not mine; the pages they were first published on carry the fingerprints<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p>So I built warehouses with the traps in known places (a null inside an aggregate here, a batch loaded twice there; the full list is <a href="taxonomy">the second text</a>), wrote a verified query for every question by hand, and let the models answer. Fifteen languages, three repeats each, one verdict per cell. The numbers on this page are the run's, not mine; the pages they were first published on carry the fingerprints<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup>.</p>
 </section>
 
 <section>
@@ -125,19 +125,19 @@ WHERE registered_date &gt;= DATE '2026-07-01'
 <section class="refs" id="refs">
 <h2>References</h2>
 <ol>
-<li id="r1">Quaesitor (2026): <a href="original/silent-failure-rate.html">Silent-failure rate</a>. Two models, retail and subscriptions packs, fifteen languages, three repeats. Table as published, with run fingerprints.</li>
-<li id="r2">Quaesitor (2026): <a href="original/documentation-finding.html">Plausible, not correct</a>. claude-sonnet-5, Czech, 26 questions × 3, with and without documentation; three replications; SHA-256 prefixes of both runs' inputs recorded on the page.</li>
-<li id="r3">Quaesitor (2026): <a href="original/packs.html">Five warehouses, and one pack that asks for what none of them holds</a>. Retail, Subscriptions, TPC-DS, NYC taxi, CRM + ERP; answer counts per warehouse.</li>
+<li id="r1">Quaesitor (2026): <a href="original/silent-failure-rate">Silent-failure rate</a>. Two models, retail and subscriptions packs, fifteen languages, three repeats. Table as published, with run fingerprints.</li>
+<li id="r2">Quaesitor (2026): <a href="original/documentation-finding">Plausible, not correct</a>. claude-sonnet-5, Czech, 26 questions × 3, with and without documentation; three replications; SHA-256 prefixes of both runs' inputs recorded on the page.</li>
+<li id="r3">Quaesitor (2026): <a href="original/packs">Five warehouses, and one pack that asks for what none of them holds</a>. Retail, Subscriptions, TPC-DS, NYC taxi, CRM + ERP; answer counts per warehouse.</li>
 <li id="r4">TPC-DS decision-support benchmark, generated with DuckDB's <a href="https://duckdb.org/docs/stable/core_extensions/tpcds">tpcds extension</a>.</li>
 <li id="r5">NYC Taxi &amp; Limousine Commission, <a href="https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page">TLC trip record data</a>; 2.96 M trips in the slice used.</li>
-<li id="r6">Quaesitor (2026): <a href="original/abstention.html">The query ran. The answer was zero.</a> Ten questions past the edge of the data, per model and per language.</li>
-<li id="r7">Quaesitor (2026): <a href="original/method.html">Methodology</a>. How a question becomes a verified one; the 26 traps; what is and is not claimed.</li>
+<li id="r6">Quaesitor (2026): <a href="original/abstention">The query ran. The answer was zero.</a> Ten questions past the edge of the data, per model and per language.</li>
+<li id="r7">Quaesitor (2026): <a href="original/method">Methodology</a>. How a question becomes a verified one; the 26 traps; what is and is not claimed.</li>
 </ol>
 </section>
 
 <footer class="text-foot">
-  <p><b>Provenance.</b> Numbers come from the Quaesitor runs as published in August 2026; where a figure is quoted, the reference links the page it was first published on, with the run fingerprint. The original pages, chrome removed, are kept <a href="original/silent-failure-rate.html">as published</a>.</p>
-  <p class="back"><a href="index.html">← Quaesitor, the three texts</a> · <a href="../../#works">← projects</a></p>
+  <p><b>Provenance.</b> Numbers come from the Quaesitor runs as published in August 2026; where a figure is quoted, the reference links the page it was first published on, with the run fingerprint. The original pages, chrome removed, are kept <a href="original/silent-failure-rate">as published</a>.</p>
+  <p class="back"><a href="./">← Quaesitor, the three texts</a> · <a href="../../#works">← projects</a></p>
 </footer>
 </article>
 </body>

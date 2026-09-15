@@ -6,7 +6,7 @@
 <title>who is behind this — Barbora Šandová</title>
 <meta name="description" content="Who is behind Quaesitor, and why the argument for a finding does not rest on that: the method, the open-source tool and the runs are all published.">
 <meta name="theme-color" content="#161616">
-<link rel="canonical" href="https://bsandova.com/texts/quaesitor/about.html">
+<link rel="canonical" href="https://bsandova.com/texts/quaesitor/about">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
@@ -556,13 +556,13 @@ main.article > .wrap{max-width:60rem}
 
 <h2>What does not depend on me</h2>
 
-<p><b>The method is written down.</b> How a question becomes a verified one — the definition stated in writing by whoever owns the metric, the query read against it clause by clause, the reconciliation against a figure the business already trusts — is <a href="method.html">on the method page</a>, in the order it happens. Nothing in it requires taking my word for a step.</p>
+<p><b>The method is written down.</b> How a question becomes a verified one — the definition stated in writing by whoever owns the metric, the query read against it clause by clause, the reconciliation against a figure the business already trusts — is <a href="method">on the method page</a>, in the order it happens. Nothing in it requires taking my word for a step.</p>
 
 <p><b>The tool runs without me.</b> <a href="https://github.com/sandovabarbora/quaesitor-zero">quaesitor-zero</a> generates questions your schema cannot answer and scores whether your assistant admits it. Version 0.1.4, Apache-2.0, installable <a href="https://pypi.org/project/quaesitor-zero/">from PyPI</a>. It has no network code, no telemetry and no model access, so it cannot report to me what it found on your data — you run it, and you keep the result. Replies are classified mechanically and every classification prints the rule that fired, because a service arguing that confident output needs a signal should not rest its own number on a model's judgement.</p>
 
 <p><b>The measurements are published with the run behind them.</b> 5,790 measured answers as of August 2026, across fifteen languages, against a fixed set of 26 questions, each built around a different way a number comes back wrong. Each figure on this site is injected from those runs at build time rather than typed, and each carries the fingerprint of the run it came from. The build refuses when the runs stop supporting a sentence, which has happened and is the point.</p>
 
-<p><b>The load-bearing claims are somebody else's.</b> Of the things this work depends on, eight were established by people with no stake in it — that benchmark accuracy does not transfer to a private warehouse, that the failure arrives looking plausible, that declining beats guessing. They are <a href="evidence.html">set out with who established what</a>, along with the strongest measured objection to this service, which is also somebody else's work.</p>
+<p><b>The load-bearing claims are somebody else's.</b> Of the things this work depends on, eight were established by people with no stake in it — that benchmark accuracy does not transfer to a private warehouse, that the failure arrives looking plausible, that declining beats guessing. They are <a href="evidence">set out with who established what</a>, along with the strongest measured objection to this service, which is also somebody else's work.</p>
 
 <h2>What &ldquo;we&rdquo; means on this site</h2>
 
@@ -580,7 +580,7 @@ main.article > .wrap{max-width:60rem}
 
 <p>Before that, production machine learning at Prague&rsquo;s smart-city data operator: a transport prediction pipeline serving over a hundred million predictions a month, and econometric work on 5.7 million delay records. Before that, fraud and forensic analytics at Ernst &amp; Young, where a finding was something you took to executives and to a regulator and then had to defend line by line.</p>
 
-<p>That last part is the habit this practice is built on. The measurements behind these pages are bounded with Wilson intervals and tested with McNemar and permutation tests in the harness rather than quoted flat, and the research is written up as a preprint on how the silent-failure rate moves across fifteen languages. The harness, the question sets and this site&rsquo;s own build are in the open; where a figure came from someone else&rsquo;s work, it is attributed on <a href="evidence.html">the evidence page</a>.</p>
+<p>That last part is the habit this practice is built on. The measurements behind these pages are bounded with Wilson intervals and tested with McNemar and permutation tests in the harness rather than quoted flat, and the research is written up as a preprint on how the silent-failure rate moves across fifteen languages. The harness, the question sets and this site&rsquo;s own build are in the open; where a figure came from someone else&rsquo;s work, it is attributed on <a href="evidence">the evidence page</a>.</p>
 
 <p>Outside the practice: training assistance dogs &mdash; the one in the photograph is Varinka &mdash; and, before Prague, two years in Berlin, a year in New York and a year in Copenhagen. That last part is most of why this site explains what Act 93/2009 Coll. is rather than assuming you already know, and why the research asks what happens to the silent-failure rate when the question is not in English.</p>
 
@@ -603,21 +603,21 @@ main.article > .wrap{max-width:60rem}
   <p class="reading-kicker">Reading</p>
   <h2 id="reading-h">Published measurements, and the argument behind them.</h2>
   <ul class="reading-list">
-    <li><a href="evidence.html">None of this is our claim to make</a>
+    <li><a href="evidence">None of this is our claim to make</a>
       <span>what other people established, and the one thing none of them did</span></li>
-      <li><a href="abstention.html">The query ran and the answer was zero</a>
+      <li><a href="abstention">The query ran and the answer was zero</a>
       <span>ten questions past the edge of the data, and what each model did with them</span></li>
-      <li><a href="traps.html">Twenty-six ways a number comes back wrong</a>
+      <li><a href="traps">Twenty-six ways a number comes back wrong</a>
       <span>the taxonomy, with the divergence each fault actually causes</span></li>
-    <li><a href="access.html">Twelve ways an assistant answers with rows it was never allowed to see</a>
+    <li><a href="access">Twelve ways an assistant answers with rows it was never allowed to see</a>
       <span>layer 2, and the shortcut that gets past each restriction</span></li>
-    <li><a href="documentation-finding.html">Documentation made the errors smaller, not rarer</a>
+    <li><a href="documentation-finding">Documentation made the errors smaller, not rarer</a>
       <span>a measurement, with the test stated and the p-values it actually earns</span></li>
-    <li><a href="silent-failure-rate.html">Silent-failure rate: two models, opposite failure behaviour</a>
+    <li><a href="silent-failure-rate">Silent-failure rate: two models, opposite failure behaviour</a>
       <span>identical correct counts, and nothing alike about how they fail</span></li>
-    <li><a href="silent-failures.html">What it does when it does not know</a>
+    <li><a href="silent-failures">What it does when it does not know</a>
       <span>the longer piece on abstention</span></li>
-    <li><a href="why.html">Trust grows faster than accuracy</a>
+    <li><a href="why">Trust grows faster than accuracy</a>
       <span>why this exists</span></li>
   </ul>
 </section>
