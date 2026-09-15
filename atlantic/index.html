@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Atlantic, played</title>
+<meta name="description" content="Every day of swell at Ericeira, Peniche and Sagres since June 2026 as one bar of music: height is pitch, period is pulse, wind is noise, and a day that clears the surfable rule rings a bell. The record grows by a bar every morning, from the same file the surf verifier reads.">
+<meta name="theme-color" content="#161616">
+<link rel="canonical" href="https://bsandova.com/atlantic/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../text.css">
+<style>
+.player{max-width:64rem;border:1px solid var(--line);background:var(--bg-2);padding:1rem 1.25rem 1.25rem;margin:1.5rem 0}
+.ctl{display:flex;flex-wrap:wrap;gap:.75rem 1.5rem;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-2)}
+.ctl button{font:inherit;letter-spacing:inherit;text-transform:inherit;background:var(--coral);color:#161616;border:0;padding:.55rem .9rem;cursor:pointer}
+.ctl button.off{background:transparent;color:var(--fg);border:1px solid var(--line)}
+.ctl label{display:flex;gap:.5rem;align-items:center}.ctl input[type=range]{width:8rem;accent-color:var(--coral)}
+.ctl select{font:inherit;background:var(--bg);color:var(--fg);border:1px solid var(--line);padding:.4rem}
+.stems{display:flex;gap:.5rem;flex-wrap:wrap}.stems button{background:transparent;color:var(--fg-2);border:1px solid var(--line);padding:.4rem .6rem}.stems button.on{color:var(--hot);border-color:var(--fg-2)}
+canvas{display:block;width:100%;height:auto;margin:1rem 0 .25rem}
+.now{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:.4rem 1.5rem;font-family:var(--mono);font-size:11px;color:var(--fg-2);margin-top:.6rem}
+.now b{display:block;font-family:var(--serif);font-size:1.3rem;color:var(--hot);font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.now .go b{color:var(--coral)}
+.tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
+.tbl th,.tbl td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th:first-child,.tbl td:first-child{padding-left:0}
+.tbl th{font-weight:400;color:var(--fg-2);letter-spacing:.12em;text-transform:uppercase;font-size:10px}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../">bsandova.com</a></b><nav><a href="../#works">Projects</a><a href="../#about">About</a><a href="../#contact">Contact</a></nav><span class="tr">atlantic · live · en</span></div>
+<article class="text">
+<header class="text-head">
+  <p class="kicker">The Atlantic, played · one bar a day since 14 June 2026 · from the surf verifier's own file</p>
+  <h1>A record that gets <em>a bar longer every morning.</em></h1>
+  <p class="deck">The <a href="../surf/">surf forecast verification</a> stores one line a day for three Portuguese spots: the swell that arrived, its period, its direction, the wind. Here every day is one bar. Swell height is the note, period is the pulse inside the bar, wind is noise, direction is where it sits in the stereo field, and a day that clears the surfable rule, the same rule the verifier scores, rings a bell. Nothing is composed; the sea is. The file is fetched live, so the piece is one bar longer than it was yesterday.</p>
+  <dl class="facts">
+    <div><dt>days on the record</dt><dd id="f-days">…</dd></div>
+    <div><dt>surfable days · ericeira</dt><dd id="f-go">…</dd></div>
+    <div><dt>loudest day</dt><dd id="f-max">…</dd></div>
+    <div><dt>source</dt><dd><a href="../surf/data/analysis.json">analysis.json</a> <small>Open-Meteo marine analysis, daily aggregates</small></dd></div>
+  </dl>
+</header>
+
+<div class="player">
+  <div class="ctl">
+    <button id="play">▶ play</button>
+    <label>spot <select id="spot"><option value="ericeira">Ericeira</option><option value="peniche">Peniche</option><option value="sagres">Sagres</option></select></label>
+    <label>seconds per day <input id="spd" type="range" min="0.4" max="2" step="0.1" value="0.9"><b id="spdv">0.9 · 1:24</b></label>
+    <span class="stems" id="stems"></span>
+  </div>
+  <canvas id="c" width="1200" height="260"></canvas>
+  <div class="now">
+    <div><span>day</span><b id="n-day">—</b></div>
+    <div><span>swell max</span><b id="n-h">—</b></div>
+    <div><span>period</span><b id="n-p">—</b></div>
+    <div><span>wind</span><b id="n-w">—</b></div>
+    <div><span>direction</span><b id="n-d">—</b></div>
+    <div id="n-go-wrap"><span>the rule</span><b id="n-go">—</b></div>
+  </div>
+</div>
+
+<section>
+<h2>How the sea is mapped</h2>
+<table class="tbl"><thead><tr><th>the sea</th><th>the sound</th><th>range in the data</th></tr></thead><tbody>
+<tr><td>swell height, daily max</td><td>note of the pad, D minor pentatonic over two octaves; louder as it grows</td><td>0.46 – 2.76 m</td></tr>
+<tr><td>mean period</td><td>pulse rate inside the bar: a 10 s groundswell pulses slowly, a 4 s windchop chatters</td><td>3.5 – 10 s</td></tr>
+<tr><td>mean wind</td><td>filtered noise, level with speed; offshore (E ± 60°) opens the filter, onshore closes it</td><td>5 – 26 km/h</td></tr>
+<tr><td>swell direction</td><td>stereo position: north-west left, south-west right</td><td>230 – 340°</td></tr>
+<tr><td>the surfable rule</td><td>a bell on every day with height 1.0–2.5 m, period ≥ 8 s, wind ≤ 25 km/h or offshore</td><td>the verifier's rule, unchanged</td></tr>
+</tbody></table>
+<p>The mapping is the whole piece. There is no melody written over it and no day is skipped; a flat week sounds like a flat week. The same rule that decides <i>surfable</i> on the <a href="../surf/">verification page</a> decides the bell here, and the same file feeds both, so if the collector misses a morning the bar is silent rather than invented. Delayed All the Time did this for Prague's buses; this is the same idea pointed at the sea, and the reason it was built: some things in data you hear before you see them, and a swell that holds for three days is one of them.</p>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Šandová, B. (2026): <a href="../texts/surf">Not worth the flight</a>, the surf forecast verification: collector, analysis file, the surfable rule (height 1.0–2.5 m, mean period ≥ 8 s, wind ≤ 25 km/h or offshore E ± 60°).</li>
+<li id="r2">Open-Meteo Marine Weather API, MFWAM analysis (lead 0), daily aggregates over 06–20 UTC per spot; Open-Meteo Forecast API for wind. Fetched daily by <code>surf/collect.py</code>.</li>
+<li id="r3">Šandová, B. (2025): <a href="../texts/delayed">Delayed All the Time. On Time, Occasionally.</a>, the sonification this one follows: parameter-mapping synthesis in the Web Audio API, no server, no samples.</li>
+</ol>
+</section>
+<footer class="text-foot"><p class="back"><a href="../#works">← projects</a> · <a href="../surf/">verification</a></p></footer>
+</article>
+
+<script>
+(async function(){
+  const D = await (await fetch('../surf/data/analysis.json', {cache:'no-store'})).json();
+  const RULE = {hmin:1.0, hmax:2.5, pmin:8, wmax:25, offshore:90, tol:60};
+  const surfable = r => r.swell_max!=null && r.period_mean!=null && r.swell_max>=RULE.hmin && r.swell_max<=RULE.hmax && r.period_mean>=RULE.pmin &&
+    (r.wind_mean==null || r.wind_mean<=RULE.wmax || (r.wind_dir!=null && Math.abs(((r.wind_dir-RULE.offshore+540)%360)-180)<=RULE.tol));
+  const PENTA = [0,3,5,7,10,12,15,17,19,22,24,27]; // D minor pentatonic, two octaves+
+  const ROOT = 73.42; // D2
+  const note = h => ROOT * Math.pow(2, PENTA[Math.max(0, Math.min(PENTA.length-1, Math.round((h-0.4)/(2.8-0.4)*(PENTA.length-1))))]/12);
+  let spot='ericeira', spd=0.9, ctx=null, master=null, playing=false, t0=0, nodes=[], raf=0;
+  const stems = {pad:true, pulse:true, wind:true, bell:true};
+  const el = id => document.getElementById(id);
+  const days = () => { const s=D.spots[spot]; return Object.keys(s).sort().map(k=>({day:k, ...s[k]})); };
+  const fmt = s => `${Math.floor(s/60)}:${String(Math.round(s%60)).padStart(2,'0')}`;
+
+  function facts(){
+    const ds = days(); const go = ds.filter(surfable);
+    const mx = ds.reduce((a,b)=> (b.swell_max||0)>(a.swell_max||0)?b:a, ds[0]);
+    el('f-days').innerHTML = `${ds.length} <small>${ds[0].day} → ${ds[ds.length-1].day} · ${spot}</small>`;
+    el('f-go').innerHTML = `${go.length} <small>${go.map(d=>d.day.slice(5)).join(' · ')||'none yet'}</small>`;
+    el('f-max').innerHTML = `${mx.swell_max} m <small>${mx.day} · period ${mx.period_mean} s</small>`;
+    el('spdv').textContent = `${spd.toFixed(1)} · ${fmt(ds.length*spd)}`;
+  }
+
+  // --- audio -------------------------------------------------------------
+  function noiseBuffer(c){ const n=c.sampleRate*2, b=c.createBuffer(1,n,c.sampleRate), d=b.getChannelData(0); let last=0; for(let i=0;i<n;i++){ const w=Math.random()*2-1; last=(last+0.02*w)/1.02; d[i]=last*3.5; } return b; }
+  function schedule(){
+    const ds = days(); const start = ctx.currentTime + 0.1; t0 = start;
+    const noise = noiseBuffer(ctx);
+    ds.forEach((r, i) => {
+      const at = start + i*spd, end = at + spd;
+      const h = r.swell_max ?? null, p = r.period_mean ?? null, w = r.wind_mean ?? null, dir = r.dir_mean ?? 300;
+      const pan = ctx.createStereoPanner(); pan.pan.value = Math.max(-1, Math.min(1, (dir-285)/55)); pan.connect(master);
+      if (h!=null && stems.pad){
+        const o = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain(), f = ctx.createBiquadFilter();
+        o.type='sawtooth'; o2.type='triangle'; o.frequency.value = note(h); o2.frequency.value = note(h)*1.005;
+        f.type='lowpass'; f.frequency.value = 300 + h*500; f.Q.value = 0.7;
+        const vol = 0.05 + 0.18*Math.min(1, h/2.8);
+        g.gain.setValueAtTime(0.0001, at); g.gain.exponentialRampToValueAtTime(vol, at+0.05); g.gain.setValueAtTime(vol, end-0.08); g.gain.exponentialRampToValueAtTime(0.0001, end);
+        o.connect(f); o2.connect(f); f.connect(g); g.connect(pan); o.start(at); o2.start(at); o.stop(end+0.02); o2.stop(end+0.02); nodes.push(o,o2);
+      }
+      if (h!=null && p!=null && stems.pulse){
+        const rate = 12/p;                         // pulses per second: 10 s → 1.2/s, 4 s → 3/s
+        for (let k=0; k*1/rate < spd; k++){
+          const t = at + k/rate; const o = ctx.createOscillator(), g = ctx.createGain();
+          o.type='sine'; o.frequency.value = note(h)*2; g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.12*Math.min(1,h/2), t+0.01); g.gain.exponentialRampToValueAtTime(0.0001, t+Math.min(0.25, 0.8/rate));
+          o.connect(g); g.connect(pan); o.start(t); o.stop(t+0.3); nodes.push(o);
+        }
+      }
+      if (w!=null && stems.wind){
+        const src = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+        src.buffer = noise; src.loop = true; f.type='lowpass';
+        const off = r.wind_dir!=null && Math.abs(((r.wind_dir-90+540)%360)-180)<=60;
+        f.frequency.value = off ? 2500 : 700; const vol = 0.02 + 0.22*Math.min(1, w/26);
+        g.gain.setValueAtTime(0.0001, at); g.gain.linearRampToValueAtTime(vol, at+0.2); g.gain.setValueAtTime(vol, end-0.15); g.gain.linearRampToValueAtTime(0.0001, end);
+        src.connect(f); f.connect(g); g.connect(pan); src.start(at); src.stop(end+0.02); nodes.push(src);
+      }
+      if (stems.bell && surfable(r)){
+        [0, 0.5].forEach(d => { const t = at + d*spd*0.5; const o = ctx.createOscillator(), g = ctx.createGain();
+          o.type='sine'; o.frequency.value = note(h)*4; g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.25, t+0.005); g.gain.exponentialRampToValueAtTime(0.0001, t+1.2);
+          o.connect(g); g.connect(master); o.start(t); o.stop(t+1.3); nodes.push(o); });
+      }
+    });
+    return ds.length*spd;
+  }
+  function stop(){ playing=false; cancelAnimationFrame(raf); nodes.forEach(n=>{try{n.stop()}catch(e){}}); nodes=[]; if(ctx){ctx.close(); ctx=null;} el('play').textContent='▶ play'; draw(-1); }
+  function play(){ if(playing){stop();return;} ctx = new (window.AudioContext||window.webkitAudioContext)(); master = ctx.createGain(); master.gain.value = 0.9; const comp = ctx.createDynamicsCompressor(); master.connect(comp); comp.connect(ctx.destination);
+    const len = schedule(); playing=true; el('play').textContent='■ stop'; const tick=()=>{ if(!playing) return; const t=ctx.currentTime-t0; if(t>len){stop();return;} draw(t/spd); raf=requestAnimationFrame(tick); }; tick(); }
+
+  // --- drawing -----------------------------------------------------------
+  const cv = el('c'), g2 = cv.getContext('2d');
+  function draw(pos){
+    const ds = days(), W=cv.width, H=cv.height, n=ds.length, bw=W/n;
+    g2.clearRect(0,0,W,H); g2.fillStyle='#1d1d1b'; g2.fillRect(0,0,W,H);
+    // month ticks
+    g2.strokeStyle='#3A3A36'; g2.fillStyle='#8A8A84'; g2.font='11px JetBrains Mono, monospace';
+    ds.forEach((r,i)=>{ if(r.day.endsWith('-01')){ g2.beginPath(); g2.moveTo(i*bw,0); g2.lineTo(i*bw,H); g2.stroke(); g2.fillText(r.day.slice(0,7), i*bw+4, 14);} });
+    // bars: height; wind as a thin grey cap; surfable = acid
+    ds.forEach((r,i)=>{ const h=r.swell_max||0, bh=(h/2.8)*(H-40); const go=surfable(r); const cur = pos>=0 && Math.floor(pos)===i;
+      g2.fillStyle = go ? '#D6FF3A' : (cur ? '#DCDCD6' : '#8A8A84'); g2.fillRect(i*bw+1, H-20-bh, Math.max(1,bw-2), bh);
+      if (r.wind_mean!=null){ g2.fillStyle='#FF6A3D'; g2.globalAlpha=0.55; g2.fillRect(i*bw+1, H-20-bh-2-(r.wind_mean/26)*24, Math.max(1,bw-2), 2); g2.globalAlpha=1; }
+    });
+    // wavelet of the current day
+    if (pos>=0){ const r = ds[Math.floor(pos)]; const x0=0, y0=H-10; g2.strokeStyle='#D6FF3A'; g2.lineWidth=1.5; g2.beginPath();
+      const amp = (r.swell_max||0)*6, lam = (r.period_mean||6)*9, ph = (pos%1)*lam;
+      for (let x=0;x<W;x+=2){ const y = y0 - amp*Math.sin((x+ph)/lam*2*Math.PI) - (r.wind_mean||0)/26*3*Math.sin(x*0.9+pos*40); g2[x?'lineTo':'moveTo'](x,y); } g2.stroke();
+      g2.fillStyle='#161616'; g2.globalAlpha=0.35; g2.fillRect(0,0,Math.floor(pos)*bw,H); g2.globalAlpha=1;
+      el('n-day').textContent=r.day; el('n-h').textContent=(r.swell_max??'—')+' m'; el('n-p').textContent=(r.period_mean??'—')+' s'; el('n-w').textContent=(r.wind_mean??'—')+' km/h'; el('n-d').textContent=(r.dir_mean??'—')+'°';
+      const go=surfable(r); el('n-go').textContent = go?'surfable · bell':'not this one'; el('n-go-wrap').className = go?'go':'';
+    } else { el('n-day').textContent='—'; }
+  }
+
+  // --- controls ----------------------------------------------------------
+  el('play').addEventListener('click', play);
+  el('spot').addEventListener('change', e=>{ spot=e.target.value; stop(); facts(); draw(-1); });
+  el('spd').addEventListener('input', e=>{ spd=+e.target.value; facts(); if(playing){stop();} });
+  el('stems').innerHTML = Object.keys(stems).map(k=>`<button class="on" data-k="${k}">${k}</button>`).join('');
+  el('stems').addEventListener('click', e=>{ const k=e.target.dataset.k; if(!k) return; stems[k]=!stems[k]; e.target.classList.toggle('on', stems[k]); if(playing) stop(); });
+  facts(); draw(-1);
+})();
+</script>
+</body>
+</html>
