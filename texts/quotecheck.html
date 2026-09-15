@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to catch a fabricated quote</title>
+<meta name="description" content="A quotation reached a 739-page knowledge base that its source never contained, and three genuine ones were nearly deleted as fabrications. The checker that came out of it folds case, ligatures, hyphens, accents and quotation marks, answers in the source's own words, and still says ABSENT to the most-quoted sentence attributed to Viktor Frankl. pip install quotecheck.">
+<meta name="theme-color" content="#161616">
+<link rel="canonical" href="https://bsandova.com/texts/quotecheck">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css?v=1e42ce5">
+<link rel="stylesheet" href="../text.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false})"></script>
+<style>
+.tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
+.tbl th,.tbl td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th:first-child,.tbl td:first-child{padding-left:0}
+.tbl th{font-weight:400;color:var(--fg-2);letter-spacing:.12em;text-transform:uppercase;font-size:10px}
+.tbl td.n,.tbl th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl td b{color:var(--hot);font-weight:400}.tbl .hi{color:var(--coral)}.tbl .dim{color:var(--fg-2)}
+.tbl caption{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);padding:0 0 .5rem}
+.scroller{overflow-x:auto;max-width:64rem}
+pre{font-family:var(--mono);font-size:12px;line-height:1.6;color:var(--fg);background:#1d1d1b;border:1px solid var(--line);padding:.9rem 1rem;overflow-x:auto;max-width:64rem;margin:.5rem 0 1.2rem}
+pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:normal}
+.stack{font-family:var(--mono);font-size:11px;line-height:1.8;color:var(--fg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:.8rem 0;margin:1rem 0 1.5rem;max-width:64rem}
+.stack b{color:var(--fg);font-weight:400}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../">bsandova.com</a></b><nav><a href="../#works">Projects</a><a href="../#about">About</a><a href="../#contact">Contact</a></nav><span class="tr">knowledge · tool · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Knowledge engineering · a tool · 2026 · pip install quotecheck</p>
+  <h1>How to catch <em>a fabricated quote</em></h1>
+  <p class="deck">The <a href="second-brain">wiki an agent keeps</a> quotes its sources, hundreds of times. One day a quotation reached it that the source never contained, shaped exactly like the finding the brief was hoping for. The checker written the next day then nearly deleted three genuine quotations as fabrications. Both failures are in the tool now, as tests, and the tool is on PyPI.</p>
+  <dl class="facts">
+    <div><dt>install</dt><dd>pip install quotecheck <small>no dependencies · txt, md, html, epub, pdf</small></dd></div>
+    <div><dt>false-alarm classes</dt><dd>6 <small>each a genuine quotation once called fabricated</small></dd></div>
+    <div><dt>fabrications it still rejects</dt><dd>2 <small>ISACA's, and the one attributed to Frankl</small></dd></div>
+    <div><dt>tests</dt><dd>20 <small>one per class, plus the cases that must fail</small></dd></div>
+  </dl>
+</header>
+
+<section>
+<h2>The one that got in</h2>
+<p>An agent reading the ISACA <i>CISA Review Manual</i> for the wiki produced, as ISACA's own words, the sentence <i>"a security audit does not typically test information security in an organization but just indicates the extent of compliance with standards."</i> It is not in the manual. The clause <i>"indicates the extent of compliance with standards"</i> exists, once, in a different column of a two-column page; the manual is a 304 MB scanned PDF, and <code>pdftotext -layout</code> welds the two columns together line by line, manufacturing sentences that read perfectly and never existed. The reader accepted one<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>Why it survived the checks that existed: it was the compliance profession indicting itself in its own credentialing text, which is precisely the finding the brief had asked for. A fabrication tailored to a brief always looks like the best result in the report, so "this is a strong claim" is the wrong trigger for verification; every quotation is the right one. All 292 quoted passages across the fifteen CISA pages were then machine-checked; the quote was removed, the removal recorded on the page, and every CISA page now carries a banner saying that its terminology and structure are reliable and its verbatim sentences are not<sup class="cite"><a href="#r1">1</a></sup>.</p>
+</section>
+
+<section>
+<h2>The three that nearly went out</h2>
+<p>The first checker was <code>grep</code>. The next day it reported three fabrications, and all three were real. <i>"Refresh belies that analogy"</i> begins a sentence and the check was case-sensitive. <i>"reduced vibration and good cooling"</i> is hyphenated across a PDF line break, extracted as <code>reduced vibra- tion</code>. A quote spanning a line break, where the newline is not the space the checker typed. A false alarm is the dangerous direction: the purpose of checking a quote is to remove fabrications, so a checker that sees fabrication where there is none removes accurate material and records a correction that is itself wrong<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>Three more classes followed over the next days, each from a real miss. <b>Ligatures:</b> the PDF stores <code>tradeoﬀ</code> as one glyph. <b>Accents:</b> <i>Niccolo</i> typed for the source's <i>Niccolò</i>. <b>Quotation marks:</b> Steinbeck's <i>"For if 'Thou mayest'—it is also true that 'Thou mayest not'"</i> transcribed without the inner marks, and straight, curly, single and double all varying between transcription and source. And one that is not a folding rule at all: Hardy's <i>"If a man has any genuine talent he should be ready to make almost any sacrifice"</i> is in the book, and the scan reads <code>talent he 4 should be ready</code>, a page number dropped into the sentence<sup class="cite"><a href="#r1">1</a></sup>.</p>
+</section>
+
+<section>
+<h2>What the tool does</h2>
+<p><b>Fold, but show the original.</b> Both the source and the phrase are folded to a comparison key: lower case, ligatures expanded, hyphens and dashes dropped on both sides (the only symmetric fix for <code>cross-\nvalidation</code>), whitespace dropped, accents stripped, quotation marks removed. The fold keeps a map from every folded character back to its offset in the original, so the match is found on the key and the context is printed from the source's own text. Nothing normalised is ever shown, which is what keeps a forgiving search honest: a real sentence relayed subtly reworded stays visible as reworded<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p><b>Four answers, in order of strictness.</b> <code>FOUND</code>, with the count and the surrounding sentence. <code>FOUND*</code>, the phrase in two adjacent halves with at most twelve folded characters between them: page furniture from a scan. Digits are deliberately not folded away, because <i>1910</i> is content in <i>Stoner</i> and folding them would let a fabrication through; and a splice of two real fragments from different parts of the book does not pass, because the halves are not adjacent. <code>DRIFT</code>, with a similarity score: the phrase does not occur, but a window of the source is at least 80 % similar, and the tool prints what the source actually says. Drift counts as <i>not found</i>. <code>ABSENT</code>. <b>Batch mode</b> pulls every blockquote and every quoted run of six or more words out of a Markdown note and checks them all, which is how a finished page is verified rather than a quote before it is written<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<pre>$ quotecheck East-of-Eden/source.txt "For if Thou mayest—it is also true that Thou mayest not"
+<b>FOUND</b>   1x  For if Thou mayest—it is also true that Thou mayest not
+        …That throws it right back on a man. For if ‘Thou mayest’—it is also true that ‘Thou mayest not.’ Don’t you see?…
+
+$ quotecheck mathsapology-hardy/source.txt "If a man has any genuine talent he should be ready to make almost any sacrifice"
+<b>FOUND*</b>      If a man has any genuine talent he should be ready to make almost any …
+        …If a man has any genuine talent he 4 should be ready to make almost any sacrifice in order to cultivate it to the full…
+
+$ quotecheck CISA-Review-Manual/source.txt "a security audit does not typically test information security in an organization but just indicates the extent of compliance with standards"
+<i>ABSENT</i>  a security audit does not typically test information security in an or…
+
+$ quotecheck Mans-Search-for-Meaning/source.txt "Between stimulus and response there is a space"
+<i>ABSENT</i>  Between stimulus and response there is a space</pre>
+<p>The four runs above are real, against the extracted text of the four books<sup class="cite"><a href="#r3">3</a></sup>. The last one is a finding in its own right: the most-quoted sentence attributed to Viktor Frankl, <i>"Between stimulus and response there is a space. In that space is our power to choose our response"</i>, is not in <i>Man's Search for Meaning</i>. It is widely reported as a misattribution, and the tool, having been made lenient enough to find Hardy through a page number, still says ABSENT to it, which is the only test that counts<sup class="cite"><a href="#r1">1</a>, <a href="#r4">4</a></sup>.</p>
+</section>
+
+<section>
+<h2>The rule that followed</h2>
+<p>Checking each quote before writing it did not prevent the ISACA fabrication, and the reason is structural: <b>both halves of a splice are genuinely in the source.</b> When two agents were asked to verify their own finished pages, they found sixteen defects between them, fourteen of which were splices, two real fragments joined into a sentence the book never contains. Only re-extracting every quoted span from the finished page and checking it in place finds those, which is what batch mode is for, and it is now a standing rule of the vault: verify the page, not the quote<sup class="cite"><a href="#r1">1</a></sup>. Six classes of false alarm turned out to be one bug: the tool was comparing transcriptions rather than words.</p>
+</section>
+
+<section>
+<h2>What it does not do</h2>
+<p>It needs the source as text, and it is only as good as the extraction; a two-column scan will still produce sentences that read well and never existed, and the tool will find them, because they are in the text it was given. The 80 % drift threshold is a choice, not a law. It does not judge whether a paraphrase was legitimate, only whether quotation marks were earned. And it cannot find a quotation in a book it has not been shown, which is where a citation checker stops and a reader starts.</p>
+<div class="stack">stack · Python ≥ 3.10 · no dependencies (pypdf optional) · uv · ruff · pytest (20) · GitHub Actions · Apache-2.0</div>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Šandová, B. (2026): the wiki's own log, entries of 27 and 28 August 2026: the ISACA fabrication and its remedy (292 passages re-checked, provenance banners on 15 pages), the three false alarms, classes five and six, the sixteen self-found defects and the "verify the finished page" rule. The vault is private; this is my account of its record.</li>
+<li id="r2">Šandová, B. (2026): <a href="https://github.com/sandovabarbora/quotecheck">quotecheck</a>, Apache-2.0, on <a href="https://pypi.org/project/quotecheck/">PyPI</a>: <code>fold.py</code> (the six rules with the offset map), <code>find.py</code> (found, interleaved, drift, absent), <code>batch.py</code>, tests.</li>
+<li id="r3">Sources of the four runs: Steinbeck, J. (1952): <i>East of Eden</i>; Hardy, G. H. (1940): <i>A Mathematician's Apology</i>; ISACA (2024): <i>CISA Review Manual</i>, 28th ed.; Frankl, V. E. (1946/2006): <i>Man's Search for Meaning</i>, Beacon Press. Checked against the full extracted text of each; the outputs are reproduced as printed.</li>
+<li id="r4">On the Frankl misattribution: the sentence does not appear in any edition of <i>Man's Search for Meaning</i>; it is widely reported as a misattribution, and its spread is usually traced to Stephen R. Covey's writing in the 1990s and 2000s. The tool's ABSENT against the full text of the Beacon Press edition is the evidence offered here; the attribution history is background, not a claim of this text.</li>
+</ol>
+</section>
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a> · <a href="second-brain">the wiki an agent keeps</a></p>
+</footer>
+</article>
+
+
+</body>
+</html>
