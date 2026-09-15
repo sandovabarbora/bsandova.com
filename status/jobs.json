@@ -5,10 +5,31 @@
     "what": "Collects the 7-day swell forecast for three Portuguese spots from three wave models, and yesterday's analysis; verifies forecasts against analysis.",
     "schedule": "GitHub Actions cron · 06:10 UTC daily",
     "cadence_hours": 24,
-    "runs": {"github_workflow": {"repo": "sandovabarbora/bsandova.com", "workflow": "surf.yml"}},
-    "data": {"file": "../surf/data.json", "generated_key": "generated"},
+    "runs": {
+      "github_workflow": {
+        "repo": "sandovabarbora/bsandova.com",
+        "workflow": "surf.yml"
+      }
+    },
+    "data": {
+      "file": "../surf/data.json",
+      "generated_key": "generated"
+    },
     "cost": "0 EUR · public repo, Open-Meteo, no keys",
-    "links": [["page", "../surf/"], ["text", "../texts/surf.html"], ["workflow", "https://github.com/sandovabarbora/bsandova.com/blob/main/.github/workflows/surf.yml"]]
+    "links": [
+      [
+        "page",
+        "../surf/"
+      ],
+      [
+        "text",
+        "../texts/surf.html"
+      ],
+      [
+        "workflow",
+        "https://github.com/sandovabarbora/bsandova.com/blob/main/.github/workflows/surf.yml"
+      ]
+    ]
   },
   {
     "id": "watch",
@@ -16,20 +37,51 @@
     "what": "Runs the Quaesitor harness against the current model aliases on two packs, indexes the reports with fingerprints and cost, pushes the data file.",
     "schedule": "launchd on the author's machine · 1st of the month 03:00 · eu.bsandova.model-watch",
     "cadence_hours": 744,
-    "runs": {"data_dates": true},
-    "data": {"file": "../watch/data.json"},
+    "runs": {
+      "data_dates": true
+    },
+    "data": {
+      "file": "../watch/data.json"
+    },
     "cost": "from the runs, see card",
-    "links": [["page", "../watch/"], ["harness", "https://github.com/sandovabarbora/quaesitor"]]
+    "links": [
+      [
+        "page",
+        "../watch/"
+      ],
+      [
+        "harness",
+        "https://github.com/sandovabarbora/quaesitor"
+      ]
+    ]
   },
   {
-    "id": "pages",
+    "id": "deploy",
     "name": "Site deploy",
-    "what": "GitHub Pages builds main on every push. build.sh stamps style.css with the commit so the 10-minute cache cannot serve a stale sheet.",
-    "schedule": "on push to main",
+    "what": "Every push to main runs build.sh (stamps style.css with the commit) and deploys the repository as Cloudflare Worker static assets on bsandova.com; the surf cron's data commit triggers it too.",
+    "schedule": "GitHub Actions on push to main · wrangler deploy",
     "cadence_hours": null,
-    "runs": {"github_pages": {"repo": "sandovabarbora/bsandova.com"}},
+    "runs": {
+      "github_workflow": {
+        "repo": "sandovabarbora/bsandova.com",
+        "workflow": "deploy.yml"
+      }
+    },
     "cost": "0 EUR",
-    "links": [["repo", "https://github.com/sandovabarbora/bsandova.com"]]
+    "links": [
+      [
+        "repo",
+        "https://github.com/sandovabarbora/bsandova.com"
+      ],
+      [
+        "workflow",
+        "https://github.com/sandovabarbora/bsandova.com/blob/main/.github/workflows/deploy.yml"
+      ],
+      [
+        "config",
+        "https://github.com/sandovabarbora/bsandova.com/blob/main/wrangler.jsonc"
+      ]
+    ]
   },
   {
     "id": "cutover",
@@ -37,8 +89,22 @@
     "what": "The package behind How to prove a cutover: ruff and pytest on Python 3.10–3.13 on every push; PyPI release on tag.",
     "schedule": "on push · GitHub Actions matrix",
     "cadence_hours": null,
-    "runs": {"github_workflow": {"repo": "sandovabarbora/cutover", "workflow": "ci.yml"}},
+    "runs": {
+      "github_workflow": {
+        "repo": "sandovabarbora/cutover",
+        "workflow": "ci.yml"
+      }
+    },
     "cost": "0 EUR",
-    "links": [["text", "../texts/cutover.html"], ["repo", "https://github.com/sandovabarbora/cutover"]]
+    "links": [
+      [
+        "text",
+        "../texts/cutover.html"
+      ],
+      [
+        "repo",
+        "https://github.com/sandovabarbora/cutover"
+      ]
+    ]
   }
 ]

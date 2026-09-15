@@ -117,18 +117,9 @@
         if (dataAge==null && j.cadence_hours==null) dataAge = null;
       } catch(e){ err.push('GitHub API: '+e.message); ok = null; }
     }
-    if (j.runs.github_pages) {
-      const w = j.runs.github_pages;
-      try {
-        const dep = (await gh(`repos/${w.repo}/deployments?environment=github-pages&per_page=1`))[0];
-        const st = (await gh(`repos/${w.repo}/deployments/${dep.id}/statuses?per_page=1`))[0];
-        const at = new Date(st ? st.created_at : dep.created_at);
-        ok = st ? st.state === 'success' : null;
-        kv.unshift(['last deploy', `<a href="https://github.com/${w.repo}/commit/${dep.sha}">${dep.sha.slice(0,7)}</a> <span class="dim">· ${iso(at)} · ${fmtAgo(at)}</span>`]);
-        kv.splice(1,0,['result', st ? (ok ? 'success' : `<b>${st.state}</b>`) : '<span class="dim">no status yet</span>']);
-        const stamped = [...document.styleSheets].map(s=>s.href||'').find(h=>/style\.css\?v=/.test(h));
-        kv.push(['stylesheet served', stamped ? stamped.replace(/.*v=/,'v=') : '<span class="dim">unstamped (local)</span>']);
-      } catch(e){ err.push('GitHub API: '+e.message); ok = null; }
+    if (j.id === 'deploy') {
+      const stamped = [...document.styleSheets].map(x=>x.href||'').find(h=>/style\.css\?v=/.test(h));
+      kv.push(['stylesheet served', stamped ? stamped.replace(/.*v=/,'v=') : '<span class="dim">unstamped (local)</span>']);
     }
     const s = err.length && ok==null ? 'na' : judge(dataAge, j.cadence_hours, ok);
     counts[s]++;

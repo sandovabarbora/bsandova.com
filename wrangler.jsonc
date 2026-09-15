@@ -1,0 +1,15 @@
+{
+  // bsandova.com is a static site served as Worker static assets on the zone route below.
+  // Deployed by .github/workflows/deploy.yml on every push to main (and by the surf cron's
+  // data commit); `npx wrangler deploy` from a logged-in machine does the same by hand.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "bsandova-com",
+  "compatibility_date": "2026-09-11",
+  "assets": {
+    "directory": ".",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [{ "pattern": "*bsandova.com/*", "zone_name": "bsandova.com" }],
+  "observability": { "enabled": true }
+}
