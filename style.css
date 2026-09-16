@@ -187,3 +187,7 @@ a.chip:hover{background:var(--hot);color:#161616;border-color:var(--hot)}
 .start a b{color:var(--hot);font-weight:700;margin-right:.35rem}
 .start a:hover{color:var(--hot)}
 @media (max-width:64rem){.start{grid-template-columns:1fr;padding:1rem;gap:.6rem}}
+/* projects: the one sentence that holds the subjects together */
+.works-lead{font-family:var(--serif);font-weight:300;font-size:clamp(1.15rem,1.7vw,1.45rem);line-height:1.35;color:var(--fg);margin:0;padding:1.4rem 1.5rem 1.5rem;border-bottom:1px solid var(--line);max-width:60rem}
+.works-lead span{color:var(--hot);font-weight:400}
+@media (max-width:64rem){.works-lead{padding:1.1rem 1rem 1.2rem}}
