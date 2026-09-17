@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI over data, measured</title>
+<meta name="description" content="How an LLM assistant over a data warehouse was built, measured and hardened: a LangGraph agent with MCP connectors, knowledge in the catalogue instead of the code, a trust protocol that cross-checks every figure, golden sets, pseudonymous tracing, hard caps after one question burned $21, and least privilege enforced at IAM rather than in the prompt. The public counterpart is Quaesitor.">
+<meta property="og:title" content="AI over data, measured">
+<meta property="og:description" content="An LLM assistant over a warehouse, built, measured and hardened; and what an AI engineer should take from it.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://bsandova.com/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bsandova.com/assets/og.png">
+<meta name="theme-color" content="#161616">
+<link rel="canonical" href="https://bsandova.com/texts/ai-over-data">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css?v=408006c">
+<link rel="stylesheet" href="../text.css">
+<style>
+.tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
+.tbl th,.tbl td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th:first-child,.tbl td:first-child{padding-left:0}
+.tbl th{font-weight:400;color:var(--fg-2);letter-spacing:.12em;text-transform:uppercase;font-size:10px}
+.tbl td.n,.tbl th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl td b{color:var(--hot);font-weight:400}.tbl .hi{color:var(--coral)}.tbl .dim{color:var(--fg-2)}
+.tbl caption{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);padding:0 0 .5rem}
+.scroller{overflow-x:auto;max-width:64rem}
+.stack{font-family:var(--mono);font-size:11px;line-height:1.8;color:var(--fg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:.8rem 0;margin:1rem 0 1.5rem;max-width:64rem}
+.stack b{color:var(--fg);font-weight:400}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../">bsandova.com</a></b><nav><a href="../#works">Projects</a><a href="../#about">About</a><a href="../#contact">Contact</a></nav><span class="tr">ai engineering · by day · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">AI engineering · Alma Career, Prague · 2025 → · the day job's LLM system, and what it taught</p>
+  <h1>AI over data, <em>measured.</em></h1>
+  <p class="deck">The most common AI system in a company today is an assistant that answers business questions from a warehouse. It is also the easiest one to ship wrong, because a wrong number looks exactly like a right one. This is how I built one, measured it before anyone trusted it, hardened it after the measurements, and what I would tell an AI engineer who is about to build the next one. Employer data is left out; the engineering is not. The public counterpart, on data anyone can inspect, is <a href="quaesitor/">Quaesitor</a>.</p>
+  <dl class="facts">
+    <div><dt>the rebuild</dt><dd>4 500 → 400 lines <small>Vanna + ChromaDB + custom pipeline → LangGraph agent, parity on golden sets</small></dd></div>
+    <div><dt>tool surface</dt><dd>40 → 15 <small>MCP tools, 18 write-capable → read-only allowlist</small></dd></div>
+    <div><dt>the incident</dt><dd>$21 <small>one unbounded question, 4.07 M input tokens, no error raised</small></dd></div>
+    <div><dt>trace fields</dt><dd>14 <small>per run · salted user hash · never a name, never a tool output</small></dd></div>
+    <div><dt>public counterpart</dt><dd>5 794 <small>answers measured in Quaesitor · monthly watch · a detector that says no</small></dd></div>
+  </dl>
+</header>
+
+<section>
+<h2>1 · What it is for, and what "working" means</h2>
+<p>Non-technical staff want answers to questions like <i>how many active customers did we have in Q2 in Germany</i>, and analysts are the bottleneck between them and the warehouse. The assistant lets them ask in their own words and get a number, a chart and the query that produced it. "Working" is not "answers a demo question well". It is: on a fixed set of real questions with verified answers, the share that comes back correct, the share that comes back wrong without saying so, and the share that correctly declines because the data cannot answer. Those three numbers are the product, and every decision below was made to move them<sup class="cite"><a href="#r1">1</a></sup>.</p>
+</section>
+
+<section>
+<h2>2 · Architecture: knowledge in the catalogue, not in the code</h2>
+<p>The first version I inherited was a ~4 500-line bespoke NL→SQL service: Vanna for retrieval over ChromaDB, a custom pipeline of prompts, and a growing body of Python that encoded what the business meant by its own words. It was replaced by a ~400-line <b>LangGraph agent</b> behind FastAPI on the Anthropic API, with <b>MCP connectors</b> to BigQuery (the warehouse), OpenMetadata (the catalogue and glossary) and Metabase (the certified dashboards). The decisive design choice: <b>domain knowledge lives in the data catalogue</b>, as glossary terms, descriptions and lineage that analysts already maintain, and the agent reads it at run time. Nothing about what a "customer" or a "tier" means is in the codebase. The rebuild was chosen on maintenance cost per line, and it had to be at parity on the golden sets before it replaced anything<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>The graph is deliberately small: understand the question, look the terms up in the catalogue first, find the certified figure if one exists, otherwise write a query, run it read-only, reconcile, answer with provenance. Every step is a node with a typed state, so a run can be replayed from its trace and a change to one node is testable alone. The agent does not get a schema dump in the prompt; it gets tools to look things up, which keeps the context small and makes the catalogue, not the prompt, the thing to fix when it is wrong<sup class="cite"><a href="#r1">1</a></sup>.</p>
+</section>
+
+<section>
+<h2>3 · The trust protocol</h2>
+<p>A number from an LLM is a claim. The protocol turns it into a checked claim or a refusal. <b>Catalogue first:</b> business terms resolve through the glossary before any SQL is written, so "active customer" means what the company decided it means. <b>Cross-check every figure:</b> when a certified dashboard carries the same measure, the assistant's number is reconciled against it and the difference is reported; when none exists, the answer says it is unreconciled. <b>Compliance is a metric:</b> whether a run followed the protocol is scored in the evaluation harness alongside correctness, so a right answer reached the wrong way counts against the system. Trust is not a property of the model. It is a property of the protocol around it, and protocols can be measured<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>The same idea, in public, is the whole of Quaesitor: plant the reasons a number goes wrong in a warehouse, ask questions with known answers three times each, and count. There the silent-failure rate of frontier models ranges from 56 % to 92 % depending on the pack, and a follow-up study shows that nothing visible at run time predicts which answers are the wrong ones, which is why the cross-check is not optional<sup class="cite"><a href="#r2">2</a></sup>.</p>
+</section>
+
+<section>
+<h2>4 · Hardening, after measuring</h2>
+<p>Everything in this section was done because a measurement said so, not because a checklist did. <b>Tool surface:</b> the connectors exposed 40 MCP tools, 18 of them write-capable. An assistant that can drop a table does not need to, so the surface was cut to a 15-tool read-only allowlist, and a <b>project-scoping wrapper</b> rejects any query that reaches outside the user's project before it gets to BigQuery. <b>Least privilege at the wall, not in the prompt:</b> the assistant ran as a service account, which made it a confused deputy, a user could make the assistant's credentials do what the user's own could not. The fix was per-domain protection enforced at BigQuery IAM. A prompt is a suggestion; IAM is a wall. <b>Cost caps:</b> a single unbounded question consumed 4.07 million input tokens and $21 without failing, because nothing said it should. Hard caps on tokens, tool calls and wall time were added the same day, and cost is now a first-class field of every trace<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p><b>Tracing without names:</b> every run writes fourteen fields, including a salted hash of the user, their team, the tools called, tokens in and out, latency, cost and the protocol-compliance flags, and never a name, never a raw tool output. That is an observability decision and a privacy decision at once, and it is why the traces can be kept and analysed. The traces found a defect nobody had reported: a third-party MCP server returned a malformed output schema that silently discarded results, non-deterministically. Without per-run tool logs that would have been "the assistant is sometimes wrong"<sup class="cite"><a href="#r1">1</a></sup>.</p>
+</section>
+
+<section>
+<h2>5 · Evaluation as the development loop</h2>
+<p>The golden sets came from the stakeholders, not from me. The first business POC ran with sales leads, a team manager and a category owner in the room: their real questions became date-fixed golden cases with verified answers; every ambiguous definition they argued about, category semantics, tier models, credit balances, was driven to an authoritative answer and written into the OpenMetadata glossary, so the agent inherits it instead of re-deriving it per question. The harness runs the golden sets on every change and reports correctness, silent failure, refusals and protocol compliance; a change that improves one at the expense of another is visible before it ships. Evaluation is not a phase at the end. It is the loop<sup class="cite"><a href="#r1">1</a></sup>.</p>
+</section>
+
+<section>
+<h2>6 · What I would tell the next AI engineer</h2>
+<p>Measure before you trust, and measure silent failure, not accuracy; a model that is confidently wrong 60 % of the time can have a demo that looks perfect. Put knowledge where people already maintain it, in the catalogue, not in the prompt or the code. Treat the agent as a user with least privilege, enforced where it cannot be talked out of. Cap everything that can grow without bound, and log cost per run from day one. Trace every run pseudonymously so the traces can be kept. Get golden questions from the people who will ask them, fix the dates, and run them in CI. And when you cannot see which answers are wrong from the outside, which the data say you cannot, build the cross-check instead of hoping<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p>The live demonstration of these rules on this site is <a href="../ask/">Ask the site</a>: an agent over this site's own data files and texts, with every number coming from a tool call, every quotation verified verbatim, a cap per question, a budget per day, and the trace shown to the user. It is small on purpose; the rules are the point.</p>
+<div class="stack">stack · Python · LangGraph · FastAPI · Anthropic API · MCP · BigQuery · OpenMetadata · Metabase · pytest · GitHub Actions · public counterparts: quaesitor-method (700+ tests), quaesitor-zero (PyPI), the model watch, the silent-failure detector</div>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Own account of work at Alma Career (October 2025 →). The system, its users and its data are not public; the figures (line counts, tool counts, token and dollar counts, trace fields) are from my own records and are stated without client detail. Where a number cannot be checked from outside, it is presented as my account, not as a citation. Companion: <a href="engineering">The platform is code. So is the trust.</a>, sections 3, 4 and 7.</li>
+<li id="r2">Šandová, B. (2026): <a href="quaesitor/">Quaesitor</a> (three texts and the harness), the <a href="../watch/">model release watch</a>, and <a href="silent-detector">Can a wrong number be seen coming?</a> (5 794 answers, best held-out AUC 0.64, self-consistency buys three points).</li>
+</ol>
+</section>
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a> · <a href="engineering">the platform</a> · <a href="quaesitor/">Quaesitor</a></p>
+</footer>
+</article>
+
+</body>
+</html>

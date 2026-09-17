@@ -1,0 +1,24 @@
+{
+  // Ask the site: a small agent over bsandova.com's own data files and texts.
+  // Deploy: cd ask/worker && npx wrangler deploy   (secret ANTHROPIC_API_KEY set once with `wrangler secret put`)
+  "name": "bsandova-ask",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-11",
+  "routes": [
+    { "pattern": "api.bsandova.com", "custom_domain": true },
+    { "pattern": "api.bsandova.com/*", "zone_name": "bsandova.com" }
+  ],
+  "kv_namespaces": [{ "binding": "ASK_KV", "id": "08b4e31f9ee5472097ef1d33007d14a2" }],
+  "vars": {
+    "SITE": "https://bsandova.com",
+    "MODEL": "claude-sonnet-5",
+    "DAILY_BUDGET_USD": "2.0",
+    "PER_IP_PER_HOUR": "12",
+    "MAX_TOOL_CALLS": "6",
+    "MAX_OUTPUT_TOKENS": "700",
+    "PRICE_IN_PER_M": "3",
+    "PRICE_OUT_PER_M": "15",
+    "ALLOWED_ORIGINS": "https://bsandova.com,http://localhost:8791"
+  },
+  "observability": { "enabled": true }
+}
