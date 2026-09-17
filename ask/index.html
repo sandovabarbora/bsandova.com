@@ -57,7 +57,7 @@
 </header>
 
 <div class="ask">
-  <form id="f"><input id="q" placeholder="e.g. How many surfable days did Ericeira have in the last 92 days?" maxlength="300" autocomplete="off"><button id="go">ask</button></form>
+  <form id="f"><input id="q" placeholder="e.g. How many surfable days did Ericeira have in the climatology window on the surf page?" maxlength="300" autocomplete="off"><button id="go">ask</button></form>
   <div class="ex" id="ex"></div>
   <div class="ans" id="ans"></div>
   <div class="trace" id="trace" hidden></div>
@@ -65,13 +65,13 @@
 
 <section>
 <h2>How it is scored</h2>
-<p>Thirty golden questions with known answers, run against the live API by <code>ask/eval.py</code>, results below as they came back. Sixteen ask for a number in a data file, eight for something said in a text (one demands a verbatim quotation), and six should be declined: a phone number, a forecast for Christmas, a poem, a question about the assistant's own configuration. A question counts as correct when the expected value is in the answer, or when the right response is a refusal and it refused. Two protocol flags are computed from the trace, not from the text: a number stated without any tool result in the conversation, and a quotation without a verified <code>quote</code> call<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>Thirty golden questions with known answers, run against the live API by <code>ask/eval.py</code>, results below as they came back. Eighteen ask for a number in a data file, seven for something said in a text, one demands a verbatim quotation, and four should be declined: a phone number, a forecast for Christmas, a poem, a question about the assistant's own configuration. A question counts as correct when the expected value is in the answer, or when the right response is a refusal and it refused. Two protocol flags are computed from the trace, not from the text: a number stated without any tool result in the conversation, and a quotation without a verified <code>quote</code> call<sup class="cite"><a href="#r1">1</a></sup>.</p>
 </section>
 <div id="eval"></div>
 
 <section>
 <h2>What it is not</h2>
-<p>Not a search engine over the web, not a chat about anything, and not a place where a wrong number can hide: the trace under every answer says which file was read. The model is the configured one in the trace, and the cost shown is computed from configured list prices, not from a bill. If today's budget is spent, it says so and the data files stay readable by hand. The Worker is about 200 lines with no framework; the source is in the repository<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>Not a search engine over the web, not a chat about anything, and not a place where a wrong number can hide: the trace under every answer says which file was read. Four guardrails are enforced in code, not in the prompt: an answer produced without any tool call, a number without a tool result, code in the answer, or a quotation that was not verified is replaced by a refusal, and the trace says so. The one miss in the table above is the theme of this site in miniature: the agent read a text instead of the data file and attributed 2 745 stalls to the wrong series, confidently. The cross-check would have caught it; the golden set did. The model is the configured one in the trace, and the cost shown is computed from configured list prices, not from a bill. If today's budget is spent, it says so and the data files stay readable by hand. The Worker is about 200 lines with no framework; the source is in the repository<sup class="cite"><a href="#r1">1</a></sup>.</p>
 </section>
 
 <section class="refs" id="refs">
@@ -88,10 +88,10 @@
   const API = 'https://api.bsandova.com';
   const el = id => document.getElementById(id);
   const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
-  const EX = ["How many surfable days did Ericeira have in the last 92 days?","What is the best held-out AUC in the silent-failure detector?","By how many millimetres did the wheelbase of new cars in Czechia grow between 2012 and 2022?","What is the surfable rule on the surf page?","Quote the sentence from the engineering text that ends 'IAM is a wall.'","What is Barbora's phone number?"];
+  const EX = ["How many surfable days did Ericeira have in the climatology window on the surf page?","What is the best held-out AUC in the silent-failure detector?","By how many millimetres did the wheelbase of new cars in Czechia grow between 2012 and 2022?","What is the surfable rule on the surf page?","Quote the sentence from the engineering text that ends 'IAM is a wall.'","What is Barbora's phone number?"];
   el('ex').innerHTML = EX.map(q=>`<button type="button">${esc(q)}</button>`).join('');
   el('ex').addEventListener('click', e=>{ if(e.target.tagName==='BUTTON'){ el('q').value=e.target.textContent; el('f').requestSubmit(); }});
-  try { const h = await (await fetch(API+'/health')).json(); el('f-caps').innerHTML = `6 tool calls <small>700 output tokens · ${h.budget_usd} USD a day · 12 questions an hour per address</small>`; el('f-today').innerHTML = `${h.spent_today_usd.toFixed(3)} USD <small>spent of ${h.budget_usd} · model ${h.model}</small>`; }
+  try { const h = await (await fetch(API+'/health')).json(); el('f-caps').innerHTML = `8 tool calls <small>700 output tokens · ${h.budget_usd} USD a day · 12 questions an hour per address</small>`; el('f-today').innerHTML = `${h.spent_today_usd.toFixed(3)} USD <small>spent of ${h.budget_usd} · model ${h.model}</small>`; }
   catch { el('f-caps').innerHTML = '— <small>API unreachable</small>'; el('f-today').innerHTML = '—'; }
   try {
     const ev = await (await fetch('eval.json', {cache:'no-store'})).json(); const s = ev.summary;

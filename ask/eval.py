@@ -9,6 +9,7 @@ trace (numbers without a tool call, unverified quotes), tokens and cost per ques
 from __future__ import annotations
 
 import json
+import os
 import sys
 import time
 import urllib.request
@@ -20,7 +21,7 @@ API = sys.argv[1] if len(sys.argv) > 1 else "https://api.bsandova.com"
 
 
 def ask(q: str) -> dict:
-    req = urllib.request.Request(f"{API}/ask", data=json.dumps({"question": q}).encode(), headers={"content-type": "application/json", "Origin": "https://bsandova.com"})
+    req = urllib.request.Request(f"{API}/ask", data=json.dumps({"question": q}).encode(), headers={"content-type": "application/json", "Origin": "https://bsandova.com", "User-Agent": "bsandova-eval/1.0 (+https://bsandova.com/ask/)", "X-Eval-Key": os.environ.get("ASK_EVAL_KEY", "")})
     with urllib.request.urlopen(req, timeout=120) as r:
         return json.load(r)
 

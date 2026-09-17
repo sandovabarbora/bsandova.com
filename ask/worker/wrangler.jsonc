@@ -9,12 +9,15 @@
     { "pattern": "api.bsandova.com/*", "zone_name": "bsandova.com" }
   ],
   "kv_namespaces": [{ "binding": "ASK_KV", "id": "08b4e31f9ee5472097ef1d33007d14a2" }],
+  // a fetch to the site's own hostname would bypass the site Worker and hit the placeholder origin;
+  // the service binding calls the site Worker directly
+  "services": [{ "binding": "SITE_WORKER", "service": "bsandova-com" }],
   "vars": {
     "SITE": "https://bsandova.com",
     "MODEL": "claude-sonnet-5",
-    "DAILY_BUDGET_USD": "2.0",
+    "DAILY_BUDGET_USD": "3.0",
     "PER_IP_PER_HOUR": "12",
-    "MAX_TOOL_CALLS": "6",
+    "MAX_TOOL_CALLS": "8",
     "MAX_OUTPUT_TOKENS": "700",
     "PRICE_IN_PER_M": "3",
     "PRICE_OUT_PER_M": "15",
