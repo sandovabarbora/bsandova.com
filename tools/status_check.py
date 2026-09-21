@@ -57,10 +57,11 @@ def main() -> int:
             ok = None
             if "github_workflow" in j["runs"]:
                 w = j["runs"]["github_workflow"]
-                runs = get(f"{GH}/repos/{w['repo']}/actions/workflows/{w['workflow']}/runs?per_page=1")["workflow_runs"]
-                if runs:
-                    ok = runs[0]["conclusion"] == "success"
-                    detail.append(f"last run {runs[0]['run_started_at'][:16]} {runs[0]['conclusion']}")
+                # a run still in progress has no conclusion yet; judge the last finished one
+                done = [r for r in get(f"{GH}/repos/{w['repo']}/actions/workflows/{w['workflow']}/runs?per_page=5&status=completed")["workflow_runs"]]
+                if done:
+                    ok = done[0]["conclusion"] == "success"
+                    detail.append(f"last run {done[0]['run_started_at'][:16]} {done[0]['conclusion']}")
             cad = j.get("cadence_hours")
             if ok is False:
                 state = "failed"
