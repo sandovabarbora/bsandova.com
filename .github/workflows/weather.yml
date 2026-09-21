@@ -5,6 +5,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  actions: write   # to dispatch the deploy: pushes made with GITHUB_TOKEN do not trigger other workflows
 jobs:
   collect:
     runs-on: ubuntu-latest
@@ -20,3 +21,5 @@ jobs:
           git add weather/data weather/data.json
           git commit -m "weather: $(date -u +%F)" || echo "nothing to commit"
           git push
+      - run: gh workflow run deploy.yml
+        env: { GH_TOKEN: ${{ github.token }} }

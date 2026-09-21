@@ -1,0 +1,32 @@
+name: status check
+on:
+  schedule:
+    - cron: "30 7 * * *"   # 07:30 UTC daily, after the collectors and their deploy
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - id: check
+        run: |
+          set +e
+          REPORT_PATH=report.txt GITHUB_TOKEN=${{ github.token }} python tools/status_check.py
+          echo "problems=$?" >> "$GITHUB_OUTPUT"
+      - name: mail the report when something is late, stale or failed
+        if: steps.check.outputs.problems != '0'
+        uses: dawidd6/action-send-mail@v4
+        with:
+          server_address: smtp.zoho.eu
+          server_port: 465
+          secure: true
+          username: ${{ secrets.MAIL_USER }}
+          password: ${{ secrets.MAIL_PASS }}
+          subject: "bsandova.com status: something needs a look"
+          to: hello@bsandova.com
+          from: bsandova.com status <${{ secrets.MAIL_USER }}>
+          body: file://report.txt
