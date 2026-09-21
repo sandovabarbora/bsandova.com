@@ -1,0 +1,27 @@
+name: ask eval
+on:
+  schedule:
+    - cron: "0 5 * * 1"   # Mondays 05:00 UTC, before anyone asks anything
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: python ask/eval.py
+        env:
+          ASK_EVAL_KEY: ${{ secrets.ASK_EVAL_KEY }}
+      - run: |
+          git config user.name "ask-eval"
+          git config user.email "ask-eval@users.noreply.github.com"
+          git add ask/eval.json ask/eval-history.json
+          git commit -m "ask: eval $(date -u +%F)" || echo "nothing to commit"
+          git push
+      - run: gh workflow run deploy.yml
+        env:
+          GH_TOKEN: ${{ github.token }}

@@ -70,6 +70,12 @@
 <div id="eval"></div>
 
 <section>
+<h2>Every evaluation</h2>
+<p>The golden set runs every Monday morning against the live API and appends one row here, so a change in the model, the prompt or the data files shows up as a change in the score, not as a quiet drift. Same idea as the <a href="../watch/">model release watch</a>, pointed at this site's own agent.</p>
+</section>
+<div id="history"></div>
+
+<section>
 <h2>What it is not</h2>
 <p>Not a search engine over the web, not a chat about anything, and not a place where a wrong number can hide: the trace under every answer says which file was read. Four guardrails are enforced in code, not in the prompt: an answer produced without any tool call, a number without a tool result, code in the answer, or a quotation that was not verified is replaced by a refusal, and the trace says so. The one miss in the table above is the theme of this site in miniature: the agent read a text instead of the data file and attributed 2 745 stalls to the wrong series, confidently. The cross-check would have caught it; the golden set did. The model is the configured one in the trace, and the cost shown is computed from configured list prices, not from a bill. If today's budget is spent, it says so and the data files stay readable by hand. The Worker is about 200 lines with no framework; the source is in the repository<sup class="cite"><a href="#r1">1</a></sup>.</p>
 </section>
@@ -99,6 +105,11 @@
     el('eval').innerHTML = `<div class="scroller"><table class="tbl"><thead><tr><th>kind</th><th>question</th><th>answer (first line)</th><th>tools</th><th class="n">tokens</th><th class="n">usd</th><th>ok</th></tr></thead><tbody>` +
       ev.rows.map(r=>`<tr><td class="dim">${r.kind}</td><td>${esc(r.q)}</td><td>${esc((r.answer||r.error||'').split('\n')[0].slice(0,110))}</td><td class="dim">${(r.tools||[]).join(' → ')}</td><td class="n">${(r.input_tokens||0)+(r.output_tokens||0)}</td><td class="n">${r.cost_usd??'—'}</td><td class="${r.ok?'ok':'miss'}">${r.ok?'✓':'✗'}${(r.protocol&&(r.protocol.numbers_without_tool||r.protocol.unverified_quote))?' <span class="miss">protocol</span>':''}</td></tr>`).join('') + '</tbody></table></div>';
   } catch { el('f-eval').innerHTML = '— <small>no eval run yet</small>'; el('eval').innerHTML = '<p class="gap">No evaluation run published yet.</p>'; }
+  try {
+    const hist = await (await fetch('eval-history.json', {cache:'no-store'})).json();
+    el('history').innerHTML = `<div class="scroller"><table class="tbl"><thead><tr><th>date</th><th>model</th><th class="n">correct</th><th class="n">number</th><th class="n">text</th><th class="n">quote</th><th class="n">decline</th><th class="n">protocol</th><th class="n">usd</th><th class="n">median s</th></tr></thead><tbody>` +
+      hist.slice().reverse().map(h=>`<tr><td>${h.date}</td><td class="dim">${esc(h.model||'')}</td><td class="n"><b>${h.correct} / ${h.n}</b></td>${['number','text','quote','decline'].map(k=>`<td class="n">${h.by_kind[k]?h.by_kind[k].ok+'/'+h.by_kind[k].n:'—'}</td>`).join('')}<td class="n ${h.protocol_violations?'miss':''}">${h.protocol_violations}</td><td class="n">${h.cost_usd}</td><td class="n">${(h.median_ms/1000).toFixed(1)}</td></tr>`).join('') + '</tbody></table></div>';
+  } catch { el('history').innerHTML = ''; }
   el('f').addEventListener('submit', async e=>{
     e.preventDefault(); const q = el('q').value.trim(); if(!q) return;
     el('go').disabled = true; el('ans').textContent = '…'; el('trace').hidden = true;

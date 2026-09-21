@@ -51,6 +51,10 @@ def main() -> None:
                "cost_usd": round(sum(r.get("cost_usd") or 0 for r in rows), 4), "median_ms": sorted(r.get("ms") or 0 for r in rows)[n // 2],
                "model": next((r.get("model") for r in rows if r.get("model")), None)}
     (ROOT / "eval.json").write_text(json.dumps({"summary": summary, "rows": rows}, indent=1, ensure_ascii=False) + "\n")
+    hist_p = ROOT / "eval-history.json"
+    hist = json.loads(hist_p.read_text()) if hist_p.exists() else []
+    hist = [h for h in hist if h["date"] != summary["date"]] + [summary]
+    hist_p.write_text(json.dumps(hist, indent=1, ensure_ascii=False) + "\n")
     print(json.dumps(summary, indent=1))
 
 

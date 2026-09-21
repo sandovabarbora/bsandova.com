@@ -138,5 +138,33 @@
         "https://github.com/sandovabarbora/cutover"
       ]
     ]
+  },
+  {
+    "id": "ask-eval",
+    "name": "Ask · weekly evaluation",
+    "what": "Runs the 30 golden questions against the live Ask API every Monday and appends the score to the history on the Ask page.",
+    "schedule": "GitHub Actions cron · Mondays 05:00 UTC",
+    "cadence_hours": 168,
+    "runs": {
+      "github_workflow": {
+        "repo": "sandovabarbora/bsandova.com",
+        "workflow": "ask-eval.yml"
+      }
+    },
+    "data": {
+      "file": "../ask/eval.json",
+      "generated_key": "summary.date"
+    },
+    "cost": "≈ 0.85 USD a run, from the Ask budget",
+    "links": [
+      [
+        "page",
+        "../ask/"
+      ],
+      [
+        "workflow",
+        "https://github.com/sandovabarbora/bsandova.com/blob/main/.github/workflows/ask-eval.yml"
+      ]
+    ]
   }
 ]

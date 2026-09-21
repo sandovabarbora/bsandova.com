@@ -38,7 +38,11 @@ def main() -> int:
             age_h = None
             if j.get("data"):
                 d = get(f"{SITE}/{j['data']['file'].replace('../', '')}")
-                if isinstance(d, dict) and "generated" in d:
+                if isinstance(d, dict) and "summary" in d and "date" in d["summary"]:
+                    gen = datetime.fromisoformat(d["summary"]["date"] + "T05:00:00+00:00")
+                    age_h = (now - gen).total_seconds() / 3600
+                    detail.append(f"last eval {d['summary']['date']} · {d['summary']['correct']}/{d['summary']['n']}")
+                elif isinstance(d, dict) and "generated" in d:
                     gen = datetime.fromisoformat(d["generated"] + "T06:40:00+00:00")
                     age_h = (now - gen).total_seconds() / 3600
                     detail.append(f"data {d['generated']} ({age_h:.0f} h old)")
