@@ -35,3 +35,4 @@ store = "sqlite:/data/limits.db"
 allowed_origins = ["https://bsandova.com", "http://localhost:8791"]
 eval_key_env = "SITEWITNESS_EVAL_KEY"
 trusted_ip_header = "X-Client-IP"   # set by the Cloudflare Worker proxy from CF-Connecting-IP
+proxy_key_env = "SITEWITNESS_PROXY_KEY" # the Worker sends X-Proxy-Key; without it the server answers 403, so fly.dev cannot be used directly

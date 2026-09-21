@@ -17,7 +17,7 @@ export default {
     if (request.method === "OPTIONS") return new Response(null, { headers: cors });
     const url = new URL(request.url);
     if (!["/ask", "/health"].includes(url.pathname)) return new Response("POST /ask {question} · GET /health", { status: 404, headers: cors });
-    const headers = new Headers({ "content-type": "application/json", "X-Client-IP": request.headers.get("CF-Connecting-IP") || "0" });
+    const headers = new Headers({ "content-type": "application/json", "X-Client-IP": request.headers.get("CF-Connecting-IP") || "0", "X-Proxy-Key": env.PROXY_KEY || "" });
     const ek = request.headers.get("X-Eval-Key");
     if (ek) headers.set("X-Eval-Key", ek);
     let upstream;
