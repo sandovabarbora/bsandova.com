@@ -3,6 +3,11 @@ on:
   schedule:
     - cron: "30 7 * * *"   # 07:30 UTC daily, after the collectors and their deploy
   workflow_dispatch:
+    inputs:
+      test_mail:
+        description: "send the report even when everything is fine"
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
@@ -18,7 +23,7 @@ jobs:
           REPORT_PATH=report.txt GITHUB_TOKEN=${{ github.token }} python tools/status_check.py
           echo "problems=$?" >> "$GITHUB_OUTPUT"
       - name: mail the report when something is late, stale or failed
-        if: steps.check.outputs.problems != '0'
+        if: steps.check.outputs.problems != '0' || inputs.test_mail
         uses: dawidd6/action-send-mail@v4
         with:
           server_address: smtp.zoho.eu
@@ -26,7 +31,7 @@ jobs:
           secure: true
           username: ${{ secrets.MAIL_USER }}
           password: ${{ secrets.MAIL_PASS }}
-          subject: "bsandova.com status: something needs a look"
+          subject: "bsandova.com status: ${{ steps.check.outputs.problems != '0' && 'something needs a look' || 'all clear (test)' }}"
           to: hello@bsandova.com
           from: bsandova.com status <${{ secrets.MAIL_USER }}>
           body: file://report.txt
