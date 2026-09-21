@@ -1,0 +1,17 @@
+name: deploy ask
+on:
+  push:
+    branches: [main]
+    paths: ["sitewitness.toml", "deploy/**", "texts/**", "ask/eval.json", "surf/data.json", "weather/data.json", "watch/data.json", "assets/**/*.json", "status/jobs.json", "changelog/data.json"]
+  workflow_dispatch:
+concurrency: deploy-ask
+jobs:
+  fly:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/changelog.py   # changelog/data.json is generated, not committed
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --remote-only --config deploy/fly.toml
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

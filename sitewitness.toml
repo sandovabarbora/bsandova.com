@@ -1,0 +1,37 @@
+# bsandova.com as a sitewitness instance. Deployed by deploy/ (Fly.io); the Worker at
+# api.bsandova.com proxies to it. Build the index at deploy time from this checkout.
+
+[site]
+name = "bsandova.com"
+base_url = "https://bsandova.com"
+texts = ["texts/*.html", "texts/quaesitor/*.html"]
+
+[site.data]
+"surf/data.json" = "Surf forecast verification (Ericeira, Peniche, Sagres): stored forecasts, skill by lead, climatology, quality counts."
+"weather/data.json" = "Prague weather verification (Ruzyně, Klementinum): latest forecasts, recent observations, skill by lead, quality."
+"watch/data.json" = "Model release watch: one record per Quaesitor run (date, alias, model, pack, outcomes, cost, fingerprints)."
+"assets/detector/detector.json" = "Silent-failure detector results: outcomes, baseline rule, model AUCs, transfer matrix, per-pack counts."
+"assets/parking2/eea_cz.json" = "Parking II: EEA wheelbase/track/mass by year for Czech registrations, length series, stalls lost scenarios, top models."
+"assets/cutover/report-2.json" = "cutover demo, run 2: comparison report of two NYC taxi aggregates (schema, keys, rows, columns, partitions)."
+"status/jobs.json" = "The site's scheduled jobs: name, schedule, cadence, sources."
+"assets/library.json" = "The library shelf: titles, authors, years by shelf."
+"changelog/data.json" = "Every commit to the site: date, area, subject, files."
+"ask/eval.json" = "The latest evaluation of this assistant: 30 golden questions, score, per-question rows."
+
+[model]
+name = "claude-sonnet-5"
+max_output_tokens = 700
+price_in_per_m = 3.0
+price_out_per_m = 15.0
+
+[limits]
+max_tool_calls = 8
+max_wall_seconds = 90
+daily_budget_usd = 4.0
+per_ip_per_hour = 12
+store = "sqlite:/data/limits.db"
+
+[server]
+allowed_origins = ["https://bsandova.com", "http://localhost:8791"]
+eval_key_env = "SITEWITNESS_EVAL_KEY"
+trusted_ip_header = "X-Client-IP"   # set by the Cloudflare Worker proxy from CF-Connecting-IP
