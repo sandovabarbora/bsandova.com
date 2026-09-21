@@ -22,4 +22,5 @@ jobs:
           git commit -m "surf: $(date -u +%F)" || echo "nothing to commit"
           git push
       - run: gh workflow run deploy.yml
-        env: { GH_TOKEN: ${{ github.token }} }
+        env:
+          GH_TOKEN: ${{ github.token }}
