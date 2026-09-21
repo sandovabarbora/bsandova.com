@@ -92,3 +92,16 @@ def test_windows_follow_chmi_definitions():
     vals = [float(i) for i in range(len(times))]
     assert windows(times, vals, "max") == {"2026-09-15": 43.0, "2026-09-16": 67.0}   # (14 20:00, 15 20:00]
     assert windows(times, vals, "sum")["2026-09-15"] == sum(range(6, 30))              # (14 06:00, 15 06:00]
+
+
+def test_string_values_from_the_source_are_missing_not_crashes(tmp_path, monkeypatch):
+    from weather.collect import as_number
+
+    assert as_number("12,4") == 12.4 and as_number("") is None and as_number("-") is None and as_number(None) is None
+    build_world(tmp_path)
+    obs = json.loads((tmp_path / "observations.json").read_text())
+    day = sorted(obs["stations"]["ruzyne"])[5]
+    obs["stations"]["ruzyne"][day]["precip"] = "0,0"        # a string that once crashed the verifier
+    (tmp_path / "observations.json").write_text(json.dumps(obs))
+    monkeypatch.setattr(V, "DATA", tmp_path); monkeypatch.setattr(V, "OUT", tmp_path / "data.json")
+    V.main()                                                  # must not raise

@@ -76,6 +76,12 @@ def contingency(pairs):
 
 def main() -> None:
     obs = json.loads((DATA / "observations.json").read_text())["stations"]
+    # defensive: a value that is not a number (older files, or a string from the source) is a missing value
+    for s in obs:
+        for d in list(obs[s]):
+            obs[s][d] = {k: v for k, v in obs[s][d].items() if isinstance(v, (int, float)) and not isinstance(v, bool)}
+            if not obs[s][d]:
+                del obs[s][d]
     clim = json.loads((DATA / "climatology.json").read_text())["stations"] if (DATA / "climatology.json").exists() else {}
     issues = sorted(p.stem for p in (DATA / "forecasts").glob("*.json"))
     fcs = {i: json.loads((DATA / "forecasts" / f"{i}.json").read_text()) for i in issues}

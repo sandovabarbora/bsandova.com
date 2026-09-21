@@ -41,6 +41,19 @@ CHMI = "https://opendata.chmi.cz/meteorology/climate"
 ELEMENTS = {"TMA": "tmax", "TMI": "tmin", "SRA": "precip"}
 
 
+def as_number(v) -> float | None:
+    """ČHMÚ values are numbers, but a few arrive as strings (and some as '' or '-'); anything
+    that is not a finite number is a missing value, never a string that later breaks a comparison."""
+    if isinstance(v, bool):
+        return None
+    if isinstance(v, (int, float)):
+        return float(v) if v == v else None
+    try:
+        return float(str(v).replace(",", "."))
+    except (TypeError, ValueError):
+        return None
+
+
 def get(url: str) -> dict:
     with urllib.request.urlopen(url, timeout=120) as r:
         return json.load(r)
@@ -87,8 +100,10 @@ def fetch_observations(wsi: str, months: list[str]) -> dict[str, dict]:
             print(f"  {wsi} {ym}: {e}")
             continue
         for _, element, _vtype, dt, val, _flag, _q in rows:
-            if element in ELEMENTS and val is not None:
-                out[dt[:10]][ELEMENTS[element]] = val
+            if element in ELEMENTS:
+                v = as_number(val)
+                if v is not None:
+                    out[dt[:10]][ELEMENTS[element]] = v
     return dict(out)
 
 
