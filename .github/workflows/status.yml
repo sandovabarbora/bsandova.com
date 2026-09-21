@@ -21,17 +21,26 @@ jobs:
         run: |
           set +e
           REPORT_PATH=report.txt GITHUB_TOKEN=${{ github.token }} python tools/status_check.py
-          echo "problems=$?" >> "$GITHUB_OUTPUT"
+          rc=$?
+          echo "problems=$rc" >> "$GITHUB_OUTPUT"
+          echo "exit code $rc"
       - name: mail the report when something is late, stale or failed
         if: steps.check.outputs.problems != '0' || inputs.test_mail
-        uses: dawidd6/action-send-mail@v4
-        with:
-          server_address: smtp.zoho.eu
-          server_port: 465
-          secure: true
-          username: ${{ secrets.MAIL_USER }}
-          password: ${{ secrets.MAIL_PASS }}
-          subject: "bsandova.com status: ${{ steps.check.outputs.problems != '0' && 'something needs a look' || 'all clear (test)' }}"
-          to: hello@bsandova.com
-          from: bsandova.com status <${{ secrets.MAIL_USER }}>
-          body: file://report.txt
+        env:
+          MAIL_USER: ${{ secrets.MAIL_USER }}
+          MAIL_PASS: ${{ secrets.MAIL_PASS }}
+          SUBJECT: "bsandova.com status: ${{ steps.check.outputs.problems != '0' && 'something needs a look' || 'all clear (test)' }}"
+        run: |
+          python - <<'PY'
+          import os, smtplib, ssl
+          from email.message import EmailMessage
+          m = EmailMessage()
+          m["From"] = f"bsandova.com status <{os.environ['MAIL_USER']}>"
+          m["To"] = "hello@bsandova.com"
+          m["Subject"] = os.environ["SUBJECT"]
+          m.set_content(open("report.txt").read())
+          with smtplib.SMTP_SSL("smtp.zoho.eu", 465, context=ssl.create_default_context()) as s:
+              s.login(os.environ["MAIL_USER"], os.environ["MAIL_PASS"])
+              s.send_message(m)
+          print("sent")
+          PY
