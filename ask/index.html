@@ -97,19 +97,7 @@
   const EX = ["How many surfable days did Ericeira have in the climatology window on the surf page?","What is the best held-out AUC in the silent-failure detector?","By how many millimetres did the wheelbase of new cars in Czechia grow between 2012 and 2022?","What is the surfable rule on the surf page?","Quote the sentence from the engineering text that ends 'IAM is a wall.'","What is Barbora's phone number?"];
   el('ex').innerHTML = EX.map(q=>`<button type="button">${esc(q)}</button>`).join('');
   el('ex').addEventListener('click', e=>{ if(e.target.tagName==='BUTTON'){ el('q').value=e.target.textContent; el('f').requestSubmit(); }});
-  try { const h = await (await fetch(API+'/health')).json(); el('f-caps').innerHTML = `8 tool calls <small>700 output tokens · ${h.budget_usd} USD a day · 12 questions an hour per address</small>`; el('f-today').innerHTML = `${h.spent_today_usd.toFixed(3)} USD <small>spent of ${h.budget_usd} · model ${h.model}</small>`; }
-  catch { el('f-caps').innerHTML = '— <small>API unreachable</small>'; el('f-today').innerHTML = '—'; }
-  try {
-    const ev = await (await fetch('eval.json', {cache:'no-store'})).json(); const s = ev.summary;
-    el('f-eval').innerHTML = `${s.correct} / ${s.n} <small>${s.date} · ${s.protocol_violations} protocol violations · ${s.cost_usd} USD · median ${(s.median_ms/1000).toFixed(1)} s</small>`;
-    el('eval').innerHTML = `<div class="scroller"><table class="tbl"><thead><tr><th>kind</th><th>question</th><th>answer (first line)</th><th>tools</th><th class="n">tokens</th><th class="n">usd</th><th>ok</th></tr></thead><tbody>` +
-      ev.rows.map(r=>`<tr><td class="dim">${r.kind}</td><td>${esc(r.q)}</td><td>${esc((r.answer||r.error||'').split('\n')[0].slice(0,110))}</td><td class="dim">${(r.tools||[]).join(' → ')}</td><td class="n">${(r.input_tokens||0)+(r.output_tokens||0)}</td><td class="n">${r.cost_usd??'—'}</td><td class="${r.ok?'ok':'miss'}">${r.ok?'✓':'✗'}${(r.protocol&&(r.protocol.numbers_without_tool||r.protocol.unverified_quote))?' <span class="miss">protocol</span>':''}</td></tr>`).join('') + '</tbody></table></div>';
-  } catch { el('f-eval').innerHTML = '— <small>no eval run yet</small>'; el('eval').innerHTML = '<p class="gap">No evaluation run published yet.</p>'; }
-  try {
-    const hist = await (await fetch('eval-history.json', {cache:'no-store'})).json();
-    el('history').innerHTML = `<div class="scroller"><table class="tbl"><thead><tr><th>date</th><th>model</th><th class="n">correct</th><th class="n">number</th><th class="n">text</th><th class="n">quote</th><th class="n">decline</th><th class="n">protocol</th><th class="n">usd</th><th class="n">median s</th></tr></thead><tbody>` +
-      hist.slice().reverse().map(h=>`<tr><td>${h.date}</td><td class="dim">${esc(h.model||'')}</td><td class="n"><b>${h.correct} / ${h.n}</b></td>${['number','text','quote','decline'].map(k=>`<td class="n">${h.by_kind[k]?h.by_kind[k].ok+'/'+h.by_kind[k].n:'—'}</td>`).join('')}<td class="n ${h.protocol_violations?'miss':''}">${h.protocol_violations}</td><td class="n">${h.cost_usd}</td><td class="n">${(h.median_ms/1000).toFixed(1)}</td></tr>`).join('') + '</tbody></table></div>';
-  } catch { el('history').innerHTML = ''; }
+  // the submit handler is registered before any network call, so a slow /health can never leave the form to reload the page
   el('f').addEventListener('submit', async e=>{
     e.preventDefault(); const q = el('q').value.trim(); if(!q) return;
     el('go').disabled = true; el('ans').textContent = '…'; el('trace').hidden = true;
@@ -130,6 +118,19 @@
     } catch(err) { el('ans').textContent = 'The API could not be reached.'; }
     finally { el('go').disabled = false; }
   });
+  try { const h = await (await fetch(API+'/health')).json(); el('f-caps').innerHTML = `8 tool calls <small>700 output tokens · ${h.budget_usd} USD a day · 12 questions an hour per address</small>`; el('f-today').innerHTML = `${h.spent_today_usd.toFixed(3)} USD <small>spent of ${h.budget_usd} · model ${h.model}</small>`; }
+  catch { el('f-caps').innerHTML = '— <small>API unreachable</small>'; el('f-today').innerHTML = '—'; }
+  try {
+    const ev = await (await fetch('eval.json', {cache:'no-store'})).json(); const s = ev.summary;
+    el('f-eval').innerHTML = `${s.correct} / ${s.n} <small>${s.date} · ${s.protocol_violations} protocol violations · ${s.cost_usd} USD · median ${(s.median_ms/1000).toFixed(1)} s</small>`;
+    el('eval').innerHTML = `<div class="scroller"><table class="tbl"><thead><tr><th>kind</th><th>question</th><th>answer (first line)</th><th>tools</th><th class="n">tokens</th><th class="n">usd</th><th>ok</th></tr></thead><tbody>` +
+      ev.rows.map(r=>`<tr><td class="dim">${r.kind}</td><td>${esc(r.q)}</td><td>${esc((r.answer||r.error||'').split('\n')[0].slice(0,110))}</td><td class="dim">${(r.tools||[]).join(' → ')}</td><td class="n">${(r.input_tokens||0)+(r.output_tokens||0)}</td><td class="n">${r.cost_usd??'—'}</td><td class="${r.ok?'ok':'miss'}">${r.ok?'✓':'✗'}${(r.protocol&&(r.protocol.numbers_without_tool||r.protocol.unverified_quote))?' <span class="miss">protocol</span>':''}</td></tr>`).join('') + '</tbody></table></div>';
+  } catch { el('f-eval').innerHTML = '— <small>no eval run yet</small>'; el('eval').innerHTML = '<p class="gap">No evaluation run published yet.</p>'; }
+  try {
+    const hist = await (await fetch('eval-history.json', {cache:'no-store'})).json();
+    el('history').innerHTML = `<div class="scroller"><table class="tbl"><thead><tr><th>date</th><th>model</th><th class="n">correct</th><th class="n">number</th><th class="n">text</th><th class="n">quote</th><th class="n">decline</th><th class="n">protocol</th><th class="n">usd</th><th class="n">median s</th></tr></thead><tbody>` +
+      hist.slice().reverse().map(h=>`<tr><td>${h.date}</td><td class="dim">${esc(h.model||'')}</td><td class="n"><b>${h.correct} / ${h.n}</b></td>${['number','text','quote','decline'].map(k=>`<td class="n">${h.by_kind[k]?h.by_kind[k].ok+'/'+h.by_kind[k].n:'—'}</td>`).join('')}<td class="n ${h.protocol_violations?'miss':''}">${h.protocol_violations}</td><td class="n">${h.cost_usd}</td><td class="n">${(h.median_ms/1000).toFixed(1)}</td></tr>`).join('') + '</tbody></table></div>';
+  } catch { el('history').innerHTML = ''; }
 })();
 </script>
 </body>
