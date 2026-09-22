@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css?v=9c14eb8">
+<link rel="stylesheet" href="../style.css?v=e882003">
 <link rel="stylesheet" href="../text.css">
 <style>
 .tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
@@ -81,7 +81,7 @@
 <section>
 <h2>6 · What I would tell the next AI engineer</h2>
 <p>Measure before you trust, and measure silent failure, not accuracy; a model that is confidently wrong 60 % of the time can have a demo that looks perfect. Put knowledge where people already maintain it, in the catalogue, not in the prompt or the code. Treat the agent as a user with least privilege, enforced where it cannot be talked out of. Cap everything that can grow without bound, and log cost per run from day one. Trace every run pseudonymously so the traces can be kept. Get golden questions from the people who will ask them, fix the dates, and run them in CI. And when you cannot see which answers are wrong from the outside, which the data say you cannot, build the cross-check instead of hoping<sup class="cite"><a href="#r2">2</a></sup>.</p>
-<p>The live demonstration of these rules on this site is <a href="../ask/">Ask the site</a>: an agent over this site's own data files and texts, with every number coming from a tool call, every quotation verified verbatim, a cap per question, a budget per day, and the trace shown to the user. It is small on purpose; the rules are the point.</p>
+<p>The live demonstration of these rules on this site is <a href="../ask/">Ask the site</a>: an agent over this site's own data files and texts, with every number coming from a tool call, every quotation verified verbatim, a cap per question, a budget per day, and the trace shown to the user. It is small on purpose; the rules are the point. It became a package, <a href="https://github.com/sandovabarbora/sitewitness">sitewitness</a>: a folder of texts and JSON files in, an agent with the five rules enforced in code, an evaluation runner and a trace page out; this site is its first instance.</p>
 <div class="stack">stack · Python · LangGraph · FastAPI · Anthropic API · MCP · BigQuery · OpenMetadata · Metabase · pytest · GitHub Actions · public counterparts: quaesitor-method (700+ tests), quaesitor-zero (PyPI), the model watch, the silent-failure detector</div>
 </section>
 

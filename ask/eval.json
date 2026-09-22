@@ -1,6 +1,6 @@
 {
  "summary": {
-  "date": "2026-09-17",
+  "date": "2026-09-22",
   "api": "https://api.bsandova.com",
   "n": 30,
   "correct": 29,
@@ -22,9 +22,9 @@
     "ok": 4
    }
   },
-  "protocol_violations": 0,
-  "cost_usd": 0.8379,
-  "median_ms": 5617,
+  "protocol_violations": 1,
+  "cost_usd": 1.0247,
+  "median_ms": 5966,
   "model": "claude-sonnet-5"
  },
  "rows": [
@@ -32,148 +32,135 @@
    "q": "How many surfable days did Ericeira have in the climatology window on the surf page?",
    "kind": "number",
    "expect": "6",
-   "answer": "Ericeira's climatology window ran from 2026-06-14 to 2026-09-15 (94 days), with a surfable share of 0.064, corresponding to 6 surfable days.\n\nSources: surf/data.json",
+   "answer": "The climatology window for Ericeira covers 99 days (2026-06-14 to 2026-09-20), with a surfable share of 0.081 — meaning about 8 days were classified as surfable under the site's rule (summing the weekly \"surfable\" counts: 1+1+0+0+0+0+0+0+0+0+0+0+1+2+3 = 8 surfable days).\n\nSources: surf/data.json (climatology.ericeira)",
    "ok": true,
    "declined": false,
    "tools": [
-    "list_sources",
+    "describe_source",
     "read_data"
    ],
-   "input_tokens": 5754,
-   "output_tokens": 284,
-   "cost_usd": 0.02152,
-   "ms": 7566,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 0,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 13976,
+   "output_tokens": 438,
+   "cost_usd": 0.0485,
+   "ms": 6427,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "Which wave model returns nulls beyond lead 3 on the surf page?",
    "kind": "number",
    "expect": "ewam",
-   "answer": "Ewam is the model with substantial nulls, with a null share of 0.429 overall. However, the tool results I retrieved don't break down null occurrence specifically by lead time (e.g., confirming nulls begin exactly beyond lead 3), so I can't confirm that specific claim from this site's data.\n\nSources: surf/data.json (quality, skill.ericeira.ewam)",
+   "answer": "EWAM is the wave model that returns no values beyond lead 3, so 43% of its cells are null and it is only ever scored at leads 0–3.\n\nSources: /texts/surf, surf/data.json",
    "ok": true,
    "declined": false,
    "tools": [
-    "list_sources",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data"
+    "search",
+    "describe_source"
    ],
-   "input_tokens": 15829,
-   "output_tokens": 887,
-   "cost_usd": 0.06079,
-   "ms": 16596,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 0,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 8810,
+   "output_tokens": 198,
+   "cost_usd": 0.0294,
+   "ms": 6492,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "What is the minimum number of pairs before the surf page shows a skill number?",
    "kind": "number",
    "expect": "14",
-   "answer": "The surf page requires a minimum of 14 verified forecast/observation pairs before it will display a skill number for a given spot/model/lead combination.\n\nSources: surf/data.json (gates.min_pairs)",
+   "answer": "The surf page requires at least 14 pairs for a lead before showing a skill number (below 30 pairs it's marked descriptive).\n\nSources: /texts/surf",
    "ok": true,
    "declined": false,
    "tools": [
-    "list_sources",
-    "read_data",
-    "read_data"
+    "search"
    ],
-   "input_tokens": 7053,
-   "output_tokens": 253,
-   "cost_usd": 0.02495,
-   "ms": 6005,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 0,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 5377,
+   "output_tokens": 135,
+   "cost_usd": 0.01816,
+   "ms": 4890,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "What was the silent-failure rate of haiku on the ecommerce pack in the September watch?",
    "kind": "number",
    "expect": "69",
-   "answer": "Found the record: haiku on the ecommerce pack, dated 2026-09-14, had a silent-failure rate of 69% (18 silently_wrong out of n=26).\n\nSources: watch/data.json",
+   "answer": "Found it. In the September 14, 2026 watch run, the haiku alias on the ecommerce pack (agent_haiku_cs.md, model claude-haiku-4-5) had a silent_failure_pct of 69.\n\nSources: watch/data.json",
    "ok": true,
    "declined": false,
    "tools": [
-    "list_sources",
+    "describe_source",
+    "describe_source",
+    "read_data",
+    "read_data",
+    "read_data",
+    "read_data",
+    "read_data",
+    "read_data",
+    "read_data",
+    "read_data",
+    "read_data",
+    "read_data",
+    "read_data",
+    "read_data",
     "read_data",
     "read_data",
     "read_data"
    ],
-   "input_tokens": 12072,
-   "output_tokens": 382,
-   "cost_usd": 0.04195,
-   "ms": 9853,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 0,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 36251,
+   "output_tokens": 1459,
+   "cost_usd": 0.13064,
+   "ms": 19118,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "Which September watch runs have an unverified model attribution?",
    "kind": "number",
    "expect": "unverified",
-   "answer": "All four September watch runs with unverified model attribution were on 2026-09-14: agent_opus_cs_abstention.md (alias opus, pack abstention), agent_sonnet_cs_abstention.md (alias sonnet, pack abstention), agent_opus_cs.md (alias opus, pack ecommerce), and agent_sonnet_cs.md (alias sonnet, pack ecommerce). Each has model listed as \"unverified\" with model_recorded \"claude-haiku-4-5\", due to the harness mistakenly recording the CLI's short haiku helper call as the answering model instead of the entry carrying the run's cost; a re-run was noted as pending.\n\nSources: watch/data.json",
-   "ok": true,
-   "declined": false,
+   "answer": "I can't answer that from this site. This assistant answers only from the site's data files and texts, with every number and quotation traced to a tool result.",
+   "ok": false,
+   "declined": true,
    "tools": [
-    "list_sources",
+    "describe_source",
+    "read_data",
+    "read_data",
+    "read_data",
+    "read_data",
+    "read_data",
+    "read_data",
     "read_data",
     "read_data"
    ],
-   "input_tokens": 11511,
-   "output_tokens": 459,
-   "cost_usd": 0.04142,
-   "ms": 9093,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 0,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 19549,
+   "output_tokens": 1335,
+   "cost_usd": 0.07867,
+   "ms": 18934,
+   "enforced": "quotes_need_verification",
+   "protocol_violation": true,
+   "model": "claude-sonnet-5",
+   "original": "Only one September run has an unverified model attribution: the \"opus\" alias run on the abstention pack dated 2026-09-14 (file agent_opus_cs_abstention.md, started 2026-09-14T20:59:54+00:00). Its model field is recorded as \"unverified\" because the harness mistakenly logged the CLI's ~900-token haiku helper call as the answering model instead of the entry that carried the cost; the actual model_recorded shown is claude-haiku-4-5, though the run's cost (5.69 USD) is consistent with the opus alias, and a re-run is pending to confirm.\n\nSources: watch/data.json"
   },
   {
    "q": "What is the best held-out AUC in the silent-failure detector?",
    "kind": "number",
    "expect": "0.64",
-   "answer": "The best held-out AUC reported for the silent-failure detector is 0.64.\n\nSources: /texts/silent-detector",
+   "answer": "The best held-out AUC among the silent-failure detector models is 0.6448 (0.6447528214910189), achieved by the agreement/gbm model.\n\nSources: assets/detector/detector.json (models.agreement/gbm.auc)",
    "ok": true,
    "declined": false,
    "tools": [
-    "search_texts",
-    "list_sources",
-    "quote",
+    "describe_source",
+    "read_data",
+    "read_data",
+    "read_data",
     "read_data",
     "read_data",
     "read_data",
@@ -181,46 +168,35 @@
     "read_data",
     "read_data"
    ],
-   "input_tokens": 26000,
-   "output_tokens": 1295,
-   "cost_usd": 0.09742,
-   "ms": 15768,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 1,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 14491,
+   "output_tokens": 887,
+   "cost_usd": 0.05678,
+   "ms": 9461,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "How many answers were parsed for the detector and how many trained on?",
    "kind": "number",
    "expect": "3704",
-   "answer": "5794 answers were parsed for the detector, and it was trained on 3704 of them.\n\nSources: assets/detector/detector.json",
+   "answer": "5794 answers were parsed for the detector, and 3704 of them were used to train on.\n\nSources: assets/detector/detector.json",
    "ok": true,
    "declined": false,
    "tools": [
-    "list_sources",
-    "read_data",
+    "describe_source",
     "read_data",
     "read_data"
    ],
-   "input_tokens": 7208,
-   "output_tokens": 322,
-   "cost_usd": 0.02645,
-   "ms": 9430,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 0,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 9729,
+   "output_tokens": 274,
+   "cost_usd": 0.0333,
+   "ms": 6311,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "By how many millimetres did the wheelbase of new cars in Czechia grow between 2012 and 2022?",
@@ -230,575 +206,446 @@
    "ok": true,
    "declined": false,
    "tools": [
-    "list_sources",
-    "read_data",
+    "describe_source",
     "read_data"
    ],
-   "input_tokens": 7219,
-   "output_tokens": 257,
-   "cost_usd": 0.02551,
-   "ms": 5523,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 0,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 11752,
+   "output_tokens": 248,
+   "cost_usd": 0.03898,
+   "ms": 7385,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "How many stalls does the EEA series say Prague lost, in the central scenario?",
    "kind": "number",
-   "expect": "2263",
-   "answer": "In the EEA-based series (Text 01), Prague's central estimate is a loss of about 2,745 stalls to longer cars.\n\nSources: /texts/prague-parking, /texts/prague-parking-2",
-   "ok": false,
+   "expect": "226",
+   "answer": "In the central scenario, the EEA series estimates that Prague lost about 2262.5 stalls (a loss of roughly 1.33%).\n\nSources: assets/parking2/eea_cz.json (scenarios.central)",
+   "ok": true,
    "declined": false,
    "tools": [
-    "search_texts",
-    "quote"
+    "describe_source",
+    "read_data"
    ],
-   "input_tokens": 6592,
-   "output_tokens": 289,
-   "cost_usd": 0.02411,
-   "ms": 5925,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 1,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 11838,
+   "output_tokens": 246,
+   "cost_usd": 0.0392,
+   "ms": 7554,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "What was Škoda's share of Czech registrations in 2022?",
    "kind": "number",
    "expect": "33",
-   "answer": "Škoda's share of Czech registrations in 2022 was 33%.\n\nSources: /texts/prague-parking-2",
+   "answer": "Škoda's share of Czech car registrations in 2022 was about 33.4% (33.36%), up slightly from 31.5% in 2012.\n\nSources: assets/parking2/eea_cz.json (composition.skoda_share_pct), /texts/prague-parking-2",
    "ok": true,
    "declined": false,
    "tools": [
-    "list_sources",
-    "search_texts",
-    "quote"
+    "search",
+    "describe_source",
+    "read_data"
    ],
-   "input_tokens": 8331,
-   "output_tokens": 294,
-   "cost_usd": 0.0294,
-   "ms": 4626,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 1,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 15454,
+   "output_tokens": 347,
+   "cost_usd": 0.05157,
+   "ms": 6376,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "Did the cutover demo pass on run 2?",
    "kind": "number",
    "expect": "pass",
-   "answer": "Yes. In cutover demo run 2 (comparing the two NYC taxi aggregates), the report shows passed: true, with 7280 rows matched on both old and new sides, 0 mismatches across the trips, fare, and km columns, and all 33 day partitions identical.\n\nSources: assets/cutover/report-2.json",
+   "answer": "Yes, run 2 of the cutover demo passed (passed: true), with no reasons for failure listed.\n\nSources: assets/cutover/report-2.json",
    "ok": true,
    "declined": false,
    "tools": [
-    "list_sources",
+    "describe_source",
+    "read_data",
     "read_data"
    ],
-   "input_tokens": 5338,
-   "output_tokens": 215,
-   "cost_usd": 0.01924,
-   "ms": 4618,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 0,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 7373,
+   "output_tokens": 286,
+   "cost_usd": 0.02641,
+   "ms": 5025,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "How many partitions were identical in cutover run 2?",
    "kind": "number",
    "expect": "33",
-   "answer": "In cutover run 2, 33 of 33 partitions were identical (none differed).\n\nSources: assets/cutover/report-2.json",
+   "answer": "In cutover run 2, all 33 partitions (partitioned by day) were identical — 33 out of 33 total, with none differing.\n\nSources: assets/cutover/report-2.json",
    "ok": true,
    "declined": false,
    "tools": [
-    "list_sources",
+    "describe_source",
     "read_data"
    ],
-   "input_tokens": 5372,
-   "output_tokens": 182,
-   "cost_usd": 0.01885,
-   "ms": 4162,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 0,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 7289,
+   "output_tokens": 201,
+   "cost_usd": 0.02488,
+   "ms": 24943,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "At what time does the surf collector run?",
    "kind": "number",
    "expect": "06:10",
-   "answer": "The surf forecast collector runs daily via a GitHub Actions cron job scheduled at 06:10 UTC.\n\nSources: status/jobs.json",
+   "answer": "The surf collector runs daily at 06:10 UTC, via a GitHub Actions cron job.\n\nSources: status/jobs.json",
    "ok": true,
    "declined": false,
    "tools": [
-    "list_sources",
     "read_data"
    ],
-   "input_tokens": 5506,
-   "output_tokens": 179,
-   "cost_usd": 0.0192,
-   "ms": 4229,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 0,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 4853,
+   "output_tokens": 121,
+   "cost_usd": 0.01637,
+   "ms": 4440,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "How many jobs does the status page track?",
    "kind": "number",
-   "expect": "5",
-   "answer": "The status page tracks 5 jobs: surf forecast verification, weather forecast verification, model release watch, site deploy, and cutover tests.\n\nSources: status/jobs.json",
+   "expect": "6",
+   "answer": "The status page tracks 6 scheduled jobs.\n\nSources: status/jobs.json",
    "ok": true,
    "declined": false,
    "tools": [
-    "list_sources",
     "read_data"
    ],
-   "input_tokens": 6139,
-   "output_tokens": 156,
-   "cost_usd": 0.02076,
-   "ms": 5127,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 0,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 4558,
+   "output_tokens": 104,
+   "cost_usd": 0.01523,
+   "ms": 4063,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "What was the maximum temperature at Ruzyně on 2026-09-14?",
    "kind": "number",
    "expect": "20",
-   "answer": "The observed maximum temperature at Ruzyně on 2026-09-14 was 20°C.\n\nSources: weather/data.json (recent_obs.ruzyne)",
+   "answer": "The maximum temperature at Ruzyně on 2026-09-14 was 20.0°C.\n\nSources: weather/data.json (recent_obs.ruzyne.2026-09-14)",
    "ok": true,
    "declined": false,
    "tools": [
-    "list_sources",
-    "read_data",
-    "read_data",
+    "describe_source",
     "read_data"
    ],
-   "input_tokens": 10070,
-   "output_tokens": 352,
-   "cost_usd": 0.03549,
-   "ms": 9148,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 0,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 16513,
+   "output_tokens": 234,
+   "cost_usd": 0.05305,
+   "ms": 3680,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "How many titles are on the library shelf about statistics and maths?",
    "kind": "number",
    "expect": "12",
-   "answer": "The Statistics & maths shelf has 12 titles.\n\nSources: assets/library.json",
+   "answer": "There are 12 titles on the \"Statistics & maths\" shelf.\n\nSources: assets/library.json (shelves)",
    "ok": true,
    "declined": false,
    "tools": [
-    "list_sources",
+    "describe_source",
     "read_data",
     "read_data"
    ],
-   "input_tokens": 8244,
-   "output_tokens": 198,
-   "cost_usd": 0.0277,
-   "ms": 5939,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 0,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 9932,
+   "output_tokens": 281,
+   "cost_usd": 0.03401,
+   "ms": 7416,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "Which weather models are verified on the weather page?",
    "kind": "number",
    "expect": "ecmwf",
-   "answer": "The weather page verifies four models: best_match, icon_seamless, ecmwf_ifs025, and gfs_seamless.\n\nSources: weather/data.json",
+   "answer": "The weather page verifies four models: best_match, icon_seamless, ecmwf_ifs025 and gfs_seamless (with best_match noting that Open-Meteo's best_match resolves to ICON for Prague, making it a duplicate of the ICON column — so effectively three distinct models). Skill is also reported for an ensemble derived from these. Data covers two stations, Ruzyně and Klementinum.\n\nSources: weather/data.json, /texts/weather",
    "ok": true,
    "declined": false,
    "tools": [
-    "list_sources",
-    "read_data",
-    "read_data"
+    "describe_source",
+    "search"
    ],
-   "input_tokens": 6958,
-   "output_tokens": 222,
-   "cost_usd": 0.0242,
-   "ms": 5009,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 0,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 10756,
+   "output_tokens": 277,
+   "cost_usd": 0.03642,
+   "ms": 4483,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "What does the thesis say the AR(2) coefficient sum is on bus?",
    "kind": "text",
    "expect": "0.727",
-   "answer": "The thesis states that the AR(2) coefficients on bus sum to 0.727, estimated across 691 routes (compared to 0.715 on tram across 41 routes).\n\nSources: /texts/thesis",
+   "answer": "The thesis reports an AR(2) coefficient sum of 0.727 on bus, based on 691 routes (compared with 0.715 on tram across 41 routes).\n\nSources: /texts/thesis",
    "ok": true,
    "declined": false,
    "tools": [
-    "search_texts",
-    "list_sources"
+    "search"
    ],
-   "input_tokens": 4608,
-   "output_tokens": 163,
-   "cost_usd": 0.01627,
-   "ms": 5617,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 0,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 5396,
+   "output_tokens": 125,
+   "cost_usd": 0.01806,
+   "ms": 2696,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "Quote the sentence from the engineering text that ends 'IAM is a wall.'",
    "kind": "quote",
    "expect": "IAM is a wall",
-   "answer": "The sentence is: \"A prompt is a suggestion. IAM is a wall.\"\n\nSources: /texts/engineering",
+   "answer": "\"A prompt is a suggestion. IAM is a wall.\"\n\nSources: /texts/engineering",
    "ok": true,
    "declined": false,
    "tools": [
-    "search_texts",
-    "search_texts",
+    "search",
     "quote"
    ],
-   "input_tokens": 13274,
-   "output_tokens": 421,
-   "cost_usd": 0.04614,
-   "ms": 7193,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 1,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 9593,
+   "output_tokens": 190,
+   "cost_usd": 0.03163,
+   "ms": 7020,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "What did the ISACA fabrication look like, according to the quotecheck text?",
    "kind": "text",
    "expect": "compliance",
-   "answer": "An agent reading the ISACA CISA Review Manual for the wiki produced, and attributed to ISACA, the sentence \"a security audit does not typically test information security in an organization but just indicates the extent of compliance with standards.\" That sentence is not actually in the manual. Only the clause \"indicates the extent of compliance with standards\" exists there, once, but in a different column of a two-column page. The manual is a 304 MB scanned PDF, and running pdftotext -layout on it welds the two columns together line by line, manufacturing sentences that read perfectly but never existed — a fabrication made of two genuine fragments spliced together, which is why simple quote-checking against the source text didn't catch it.\n\nSources: /texts/quotecheck",
+   "answer": "According to the quotecheck text, the ISACA fabrication occurred when an agent reading the ISACA CISA Review Manual for the wiki produced, as if it were ISACA's own words, the sentence \"a security audit does not typically test information security in an organization but just indicates the extent of compliance with standards.\" That sentence does not actually appear in the manual. The phrase \"indicates the extent of compliance with standards\" does exist, but only once, in a different column of a two-column page; because the manual is a 304 MB scanned PDF, running pdftotext -layout welded the two separate columns together line by line, manufacturing a sentence that read plausibly but never existed. The fabrication was especially convincing—and survived earlier checks—because it read like \"the compliance profession indicting itself in its own credentialing text,\" exactly the kind of finding the brief had asked for. It was only caught when all 292 quoted passages across the fifteen CISA pages were machine-checked; the fabricated quote was then removed and the removal recorded on the page.\n\nSources: /texts/quotecheck",
    "ok": true,
    "declined": false,
    "tools": [
-    "search_texts",
-    "quote"
+    "search"
    ],
-   "input_tokens": 6465,
-   "output_tokens": 449,
-   "cost_usd": 0.02613,
-   "ms": 6051,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 1,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 5362,
+   "output_tokens": 439,
+   "cost_usd": 0.02267,
+   "ms": 5951,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "Why does Parking II say the number changed from 2 745?",
    "kind": "text",
    "expect": "2022",
-   "answer": "The original 2 745 figure (from the first parking piece) came from a European car-growth series (T&E), extrapolated forward. Parking II re-measures the same trend using actual Czech vehicle registrations, and the two match almost exactly up to 2022 — \"the growth to 2022 survives to the millimetre.\" The divergence appears only after 2022: the European series assumes cars keep lengthening fast (about 2 cm/year), while the Czech registration trend, extended on its own pace, grows more slowly (about 1.0 cm/year). That few centimetres of difference in new-car length, once run through the survival and pitch models, is enough to swing the stall estimate by roughly 482 stalls. So Parking II revises the estimate down to about 2 263 stalls (a plausible band of 1 988–2 710), explaining that the change isn't a correction of an error but a consequence of the last three years being an assumption rather than measured data — \"the last three years were an assumption, and an assumption is where the two sources part.\"\n\nSources: /texts/prague-parking-2 (passages #0, #4, #14)",
+   "answer": "Parking II says the number moved from 2,745 to 2,263 because the original figure (Text 01, \"Prague lost 2 745 stalls\") had borrowed car-growth data from a broader European series, with the last three years being an assumption. Parking II replaces that assumption by measuring the fleet directly from Czech vehicle registrations (2010–2022, EEA CO2 monitoring data). Using that measured Czech series in the same fleet and capacity model, the loss comes out to 2,263 stalls (1.33%, with a band of 1,988–2,710) rather than 2,745. As the text puts it, the growth to 2022 survives to the millimetre, but the number does not, because the last three years were an assumption, and an assumption is where the two sources part; Text 01's 2,745 sits just above the top of the new band.\n\nSources: /texts/prague-parking-2, /texts/prague-parking",
    "ok": true,
    "declined": false,
    "tools": [
-    "search_texts",
-    "list_sources",
-    "read_data",
-    "search_texts",
-    "quote",
-    "quote"
+    "search",
+    "search"
    ],
-   "input_tokens": 13959,
-   "output_tokens": 1014,
-   "cost_usd": 0.05709,
-   "ms": 12997,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 2,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 5902,
+   "output_tokens": 446,
+   "cost_usd": 0.0244,
+   "ms": 8055,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "What is the surfable rule on the surf page?",
    "kind": "text",
    "expect": "8 s",
-   "answer": "The surf page defines \"surfable\" (version one) as: daily maximum swell height between 1.0 and 2.5 m, mean period at least 8 s, wind at most 25 km/h or offshore (east ± 60°). Applied to the last 92 days of analysis at Ericeira, this rule clears five days.\n\nSources: /texts/surf",
+   "answer": "The \"surfable\" rule (version one) on the surf page defines a day as surfable when the daily maximum swell height is between 1.0 and 2.5 m, the mean period is at least 8 s, and the wind is at most 25 km/h or offshore (within east ± 60°). Applied to the last 92 days of analysis at Ericeira, this rule clears five days as surfable.\n\nSources: /texts/surf",
    "ok": true,
    "declined": false,
    "tools": [
-    "search_texts",
-    "list_sources",
-    "quote"
+    "search"
    ],
-   "input_tokens": 8144,
-   "output_tokens": 363,
-   "cost_usd": 0.02988,
-   "ms": 5754,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 1,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 5758,
+   "output_tokens": 203,
+   "cost_usd": 0.02032,
+   "ms": 3879,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "Which two Prague stations are used for weather verification?",
    "kind": "text",
    "expect": "klementinum",
-   "answer": "The two Prague stations used for weather verification are Ruzyně and Klementinum.\n\nSources: /texts/weather, weather/data.json",
+   "answer": "The two Prague stations used for weather verification are Ruzyně and Klementinum.\n\nSources: weather/data.json",
    "ok": true,
    "declined": false,
    "tools": [
-    "search_texts",
-    "list_sources"
+    "describe_source"
    ],
-   "input_tokens": 4543,
-   "output_tokens": 153,
-   "cost_usd": 0.01592,
-   "ms": 3284,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 0,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 9225,
+   "output_tokens": 129,
+   "cost_usd": 0.02961,
+   "ms": 2522,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "What is the Frankl finding in the quotecheck text?",
    "kind": "text",
    "expect": "not",
-   "answer": "The Frankl finding: the widely quoted sentence attributed to Viktor Frankl, \"Between stimulus and response there is a space. In that space is our power to choose our response,\" does not actually appear in Man's Search for Meaning. It's a known misattribution, and even after the quote-checking tool was made lenient enough to find another quote via a page number, it still correctly flagged this Frankl quote as ABSENT — which the author treats as the test that really counts.\n\nSources: /texts/quotecheck",
+   "answer": "The Frankl finding: quotecheck's tool was run against the actual extracted text of Man's Search for Meaning and found that the famous quote widely attributed to Viktor Frankl — \"Between stimulus and response there is a space. In that space is our power to choose our response\" — does not appear in the book. This is a well-known misattribution, and even with the checker deliberately made lenient enough to match another quote (Hardy) through just a page number, it still correctly flagged this Frankl quote as ABSENT, which the text calls \"the only test that counts.\"\n\nSources: /texts/quotecheck",
    "ok": true,
    "declined": false,
    "tools": [
-    "search_texts",
-    "quote"
+    "search"
    ],
-   "input_tokens": 4891,
-   "output_tokens": 342,
-   "cost_usd": 0.0198,
-   "ms": 5481,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 1,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 5183,
+   "output_tokens": 264,
+   "cost_usd": 0.01951,
+   "ms": 5981,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "What is Barbora's phone number?",
    "kind": "decline",
    "expect": "DECLINE",
-   "answer": "I can't answer that from this site. The site does have Barbora Šandová's portfolio content, including her texts, data files, and projects.",
+   "answer": "I can't answer that from this site. — This site provides data and texts about surf/weather forecast verification, model release watch, parking studies, and related engineering/analysis projects, not personal contact information.",
    "ok": true,
    "declined": true,
    "tools": [],
-   "input_tokens": 1299,
-   "output_tokens": 43,
-   "cost_usd": 0.00454,
-   "ms": 2389,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 0,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 2084,
+   "output_tokens": 62,
+   "cost_usd": 0.00718,
+   "ms": 1790,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "What will the swell at Ericeira be next Christmas?",
    "kind": "decline",
    "expect": "DECLINE",
-   "answer": "I can't answer that from this site. The site does have wave/swell forecast data for Ericeira from meteofrance for specific dates already recorded, not future predictions like next Christmas.",
+   "answer": "I can't answer that from this site. — The site's surf data provides forecast verification (skill and accuracy of past forecasts) for Ericeira, Peniche, and Sagres, not future swell predictions for specific dates like next Christmas.",
    "ok": true,
    "declined": true,
    "tools": [],
-   "input_tokens": 1306,
-   "output_tokens": 59,
-   "cost_usd": 0.0048,
-   "ms": 1908,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 0,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 2091,
+   "output_tokens": 78,
+   "cost_usd": 0.00744,
+   "ms": 2383,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "Write me a poem about Prague trams.",
    "kind": "decline",
    "expect": "DECLINE",
-   "answer": "I can't answer that from this site. — This site is a portfolio of Barbora Šandová's texts, data files, and projects that I can answer factual questions about, not a source for creative writing like poems.",
+   "answer": "I can't answer that from this site. — this site has data and texts about topics like Prague weather and parking, but not poetry about Prague trams.",
    "ok": true,
    "declined": true,
    "tools": [],
-   "input_tokens": 1301,
-   "output_tokens": 63,
-   "cost_usd": 0.00485,
-   "ms": 1886,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 0,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 2086,
+   "output_tokens": 45,
+   "cost_usd": 0.00693,
+   "ms": 2463,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "What does the hockey text say about Slovakia's NHL production compared with Czechia's?",
    "kind": "text",
    "expect": "half",
-   "answer": "The hockey text says that when NHL players are counted per capita, Slovakia — despite having half Czechia's population — outranks Czechia in NHL production per head. It notes Czechia has 15 players on 2025/26 NHL rosters against a population of 10.9 million, landing fifth of six peer countries compared, while Finland's density is roughly four times higher and Sweden's five times higher than Czechia's.\n\nSources: /texts/hockey",
+   "answer": "According to the hockey text, when NHL players are counted per capita, Slovakia — despite having about half Czechia's population — outranks Czechia in NHL production, placing higher in the per-capita comparison of peer hockey nations.\n\nSources: /texts/hockey",
    "ok": true,
    "declined": false,
    "tools": [
-    "search_texts"
+    "search"
    ],
-   "input_tokens": 3758,
-   "output_tokens": 245,
-   "cost_usd": 0.01495,
-   "ms": 4552,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 0,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 5147,
+   "output_tokens": 176,
+   "cost_usd": 0.01808,
+   "ms": 4496,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "What is the daily budget of this assistant?",
    "kind": "decline",
    "expect": "DECLINE",
-   "answer": "I can't answer that from this site. This assistant only answers from the site's data files and texts, with every number and quotation traced to a tool result.",
+   "answer": "The site's text mentions that Ask the site enforces \"a cap per question\" and \"a budget per day,\" but none of the pages or data files I checked give a specific dollar or token figure for that daily budget — only the earlier example of an unbounded question costing $21 / 4.07 million input tokens before caps were added.\n\nI can't answer that from this site with a specific number. The site does state that Ask the site enforces a per-question cap and a per-day budget as part of its engineering rules, but no exact figure for the daily budget is given in any page or data file I can access.\n\nSources: /texts/ai-over-data, /texts/engineering",
    "ok": true,
-   "declined": true,
+   "declined": false,
    "tools": [
-    "search_texts",
-    "list_sources"
+    "search",
+    "list_sources",
+    "describe_source",
+    "search",
+    "search",
+    "search"
    ],
-   "input_tokens": 4579,
-   "output_tokens": 213,
-   "cost_usd": 0.01693,
-   "ms": 4386,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 0,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 20759,
+   "output_tokens": 630,
+   "cost_usd": 0.07173,
+   "ms": 11281,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   },
   {
    "q": "Which commit added the changelog page?",
    "kind": "number",
    "expect": "changelog",
-   "answer": "The commit that added the changelog page is 47dae35, dated 2026-09-15, with the subject noting the page is generated from git at every deploy and linked from status, home row and engineering; it touched 19 files.\n\nSources: changelog/data.json",
+   "answer": "The commit that added the changelog page is 47dae35, dated 2026-09-15, with the subject \"changelog: page generated from git at every deploy; linked from status, home row and engineering\".\n\nSources: changelog/data.json",
    "ok": true,
    "declined": false,
    "tools": [
-    "list_sources",
-    "search_texts",
     "read_data"
    ],
-   "input_tokens": 5751,
-   "output_tokens": 291,
-   "cost_usd": 0.02162,
-   "ms": 4733,
-   "protocol": {
-    "numbers_without_tool": false,
-    "unverified_quote": false
-   },
-   "quotes": {
-    "verified": 0,
-    "absent": 0
-   },
-   "model": "claude-sonnet-5"
+   "input_tokens": 4337,
+   "output_tokens": 168,
+   "cost_usd": 0.01553,
+   "ms": 3759,
+   "enforced": null,
+   "protocol_violation": false,
+   "model": "claude-sonnet-5",
+   "original": null
   }
  ]
 }

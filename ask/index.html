@@ -38,6 +38,7 @@
 .tbl td.n,.tbl th.n{text-align:right;font-variant-numeric:tabular-nums}
 .tbl .ok{color:#7ED9A6}.tbl .miss{color:#FF6A3D}.tbl .dim{color:var(--fg-2)}
 .scroller{overflow-x:auto;max-width:64rem}
+pre{font-family:var(--mono);font-size:12px;line-height:1.6;color:var(--fg);background:#1d1d1b;border:1px solid var(--line);padding:.9rem 1rem;overflow-x:auto;max-width:64rem;margin:.5rem 0 1.2rem}pre i{color:var(--fg-2);font-style:normal}
 </style>
 </head>
 <body>
@@ -47,9 +48,9 @@
 <header class="text-head">
   <p class="kicker">Ask the site · an agent over this site's data and texts · the trust rules from the day job, in public</p>
   <h1>Ask the site. <em>It shows its work.</em></h1>
-  <p class="deck">A small agent with four tools: list this site's data files, read a slice of one, search the texts, verify a quotation verbatim. Four rules it is scored on: every number comes from a tool result, every quotation is verified before it is quoted, it declines when the site has no such data, and every question has a cap and every day a budget. The trace, tools called, tokens, cost and the rule checks, is shown under each answer. It is deliberately small; the rules are the point, and they are the same rules the assistant at work runs on<sup class="cite"><a href="#r1">1</a></sup>.</p>
+  <p class="deck">A small agent with five tools: list this site's data files, describe one's schema, read a slice of it, search the texts, verify a quotation verbatim. Five rules it is scored on and that are enforced in code: every number comes from a tool result, every quotation is verified before it is quoted, no code in an answer, every source named must exist, and it declines when the site has no such data; plus a cap per question and a budget per day. The trace, tools called, tokens, cost and the rule checks, is shown under each answer. It is deliberately small; the rules are the point, and they are the same rules the assistant at work runs on. Since 21 September it runs on <a href="https://github.com/sandovabarbora/sitewitness">sitewitness</a>, the package that came out of it, and this site is its first instance<sup class="cite"><a href="#r1">1</a></sup>.</p>
   <dl class="facts">
-    <div><dt>tools</dt><dd>4 <small>list_sources · read_data · search_texts · quote</small></dd></div>
+    <div><dt>tools</dt><dd>5 <small>list_sources · describe_source · read_data · search · quote</small></dd></div>
     <div><dt>caps</dt><dd id="f-caps">…</dd></div>
     <div><dt>golden questions</dt><dd id="f-eval">…</dd></div>
     <div><dt>today</dt><dd id="f-today">…</dd></div>
@@ -76,14 +77,36 @@
 <div id="history"></div>
 
 <section>
+<h2>Run this on your own site</h2>
+<p>Everything on this page is <code>pip install sitewitness</code>. A folder of texts and JSON files, one config file, five commands, and you have the same agent, the same five rules enforced in code, the same evaluation runner and this page. The trust protocol is the package; the site is the argument for it.</p>
+<pre>pip install "sitewitness[embed]"
+sitewitness index --embed                       # texts → passages, BM25 + embeddings; JSON → schemas
+sitewitness serve --port 8000                   # POST /ask · GET /health
+sitewitness eval golden.json --api http://localhost:8000
+sitewitness page ask/ --api https://api.example.com --example "How many …?"</pre>
+<pre><i># sitewitness.toml</i>
+[site]
+name = "example.com"
+texts = ["texts/**/*.html"]
+[site.data]
+"data/results.json" = "What the file holds, in one line the model will read."
+
+[limits]
+max_tool_calls = 8
+daily_budget_usd = 4.0
+per_ip_per_hour = 12</pre>
+<p>The five rules (<code>require_tool_use</code>, <code>numbers_need_tool</code>, <code>forbid_code</code>, <code>quotes_need_verification</code>, <code>sources_must_exist</code>) live in <code>protocol.py</code> as checks over the answer and its trace; a prompt can ask for them, only the config can switch them off. 47 tests, none of them touching the network: the model client is an interface with a fake in the suite. The server behind this page runs on Fly behind a Cloudflare Worker that adds a proxy key, so it cannot be reached around the limits<sup class="cite"><a href="#r1">1</a></sup>.</p>
+</section>
+
+<section>
 <h2>What it is not</h2>
-<p>Not a search engine over the web, not a chat about anything, and not a place where a wrong number can hide: the trace under every answer says which file was read. Four guardrails are enforced in code, not in the prompt: an answer produced without any tool call, a number without a tool result, code in the answer, or a quotation that was not verified is replaced by a refusal, and the trace says so. The one miss in the table above is the theme of this site in miniature: the agent read a text instead of the data file and attributed 2 745 stalls to the wrong series, confidently. The cross-check would have caught it; the golden set did. The model is the configured one in the trace, and the cost shown is computed from configured list prices, not from a bill. If today's budget is spent, it says so and the data files stay readable by hand. The Worker is about 200 lines with no framework; the source is in the repository<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>Not a search engine over the web, not a chat about anything, and not a place where a wrong number can hide: the trace under every answer says which file was read. Four guardrails are enforced in code, not in the prompt: an answer produced without any tool call, a number without a tool result, code in the answer, or a quotation that was not verified is replaced by a refusal, and the trace says so. The one miss in the table above is the theme of this site in miniature: the agent read a text instead of the data file and attributed 2 745 stalls to the wrong series, confidently. The cross-check would have caught it; the golden set did. The model is the configured one in the trace, and the cost shown is computed from configured list prices, not from a bill. If today's budget is spent, it says so and the data files stay readable by hand. The agent is the package above; the Worker at <code>api.bsandova.com</code> is a twenty-line proxy<sup class="cite"><a href="#r1">1</a></sup>.</p>
 </section>
 
 <section class="refs" id="refs">
 <h2>References</h2>
 <ol>
-<li id="r1">Šandová, B. (2026): <a href="https://github.com/sandovabarbora/bsandova.com/tree/main/ask">ask/</a> in the site repository: <code>worker/src/index.js</code> (the agent, tools, caps, budget, trace), <code>golden.json</code> (30 questions), <code>eval.py</code>, <code>eval.json</code> (the run shown here), <code>index.json</code> (354 passages from 21 texts, built by <code>tools/ask_index.py</code>). The rules are the ones described in <a href="../texts/ai-over-data">AI over data, measured</a>.</li>
+<li id="r1">Šandová, B. (2026): <a href="https://github.com/sandovabarbora/bsandova.com/tree/main/ask">ask/</a> in the site repository: <code>sitewitness.toml</code>, <code>deploy/</code> (Dockerfile, fly.toml), <code>worker/src/index.js</code> (the proxy), <code>golden.json</code> (30 questions), <code>eval.json</code> and <code>eval-history.json</code> (the runs shown here). The package: <a href="https://github.com/sandovabarbora/sitewitness">sandovabarbora/sitewitness</a>, Apache-2.0. The rules are the ones described in <a href="../texts/ai-over-data">AI over data, measured</a>.</li>
 </ol>
 </section>
 <footer class="text-foot"><p class="back"><a href="../#works">← projects</a> · <a href="../texts/ai-over-data">the rules, explained</a></p></footer>
@@ -105,16 +128,17 @@
       const r = await fetch(API+'/ask', {method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({question:q})});
       const d = await r.json();
       if (d.error) { el('ans').textContent = 'error: ' + d.error; return; }
-      const [main, ...rest] = d.answer.split(/\n(?=Sources:)/);
+      const [main, ...rest] = d.answer.split(/\n(?=Sources?:)/i);
       el('ans').innerHTML = esc(main) + (rest.length ? `<span class="src">${esc(rest.join('\n'))}</span>` : '');
       const t = d.trace || {};
-      if (t.tools) {
+      if (t.limited) { el('trace').innerHTML = `budget today ${t.budget_spent_usd} USD · limited: ${t.limited}`; el('trace').hidden=false; }
+      else if (t.tools) {
         const p = t.protocol || {};
         el('trace').innerHTML = `<b>trace</b> · model ${esc(t.model_used||t.model||'')} · ${t.turns} turns · ${t.input_tokens} in / ${t.output_tokens} out · ${t.cost_usd} USD (configured prices) · ${t.ms} ms · budget today ${t.budget_spent_usd} USD<br>`+
-          `rules: numbers from tools <span class="${p.numbers_without_tool?'bad':'ok'}">${p.numbers_without_tool?'VIOLATED':'ok'}</span> · quotes verified <span class="${p.unverified_quote?'bad':'ok'}">${p.unverified_quote?'VIOLATED':(t.quotes.verified+' verified, '+t.quotes.absent+' rejected')}</span> · declined ${t.declined?'yes':'no'}<ol>`+
+          `rules: ${Object.entries(p).map(([k,v])=>`${k} <span class="${v?'bad':'ok'}">${v?'VIOLATED':'ok'}</span>`).join(' · ')}${t.enforced?` · <span class="bad">enforced: ${esc(t.enforced)}</span>`:''} · quotes ${t.quotes_verified} verified / ${t.quotes_absent} rejected · declined ${t.declined?'yes':'no'}<ol>`+
           t.tools.map(x=>`<li>${esc(x.name)} ${esc(JSON.stringify(x.input||{}))} · ${x.ms} ms · ${x.bytes} B</li>`).join('')+'</ol>';
         el('trace').hidden = false;
-      } else if (t.budget_spent_usd!=null) { el('trace').innerHTML = `budget today ${t.budget_spent_usd} USD`; el('trace').hidden=false; }
+      }
     } catch(err) { el('ans').textContent = 'The API could not be reached.'; }
     finally { el('go').disabled = false; }
   });
@@ -124,7 +148,7 @@
     const ev = await (await fetch('eval.json', {cache:'no-store'})).json(); const s = ev.summary;
     el('f-eval').innerHTML = `${s.correct} / ${s.n} <small>${s.date} · ${s.protocol_violations} protocol violations · ${s.cost_usd} USD · median ${(s.median_ms/1000).toFixed(1)} s</small>`;
     el('eval').innerHTML = `<div class="scroller"><table class="tbl"><thead><tr><th>kind</th><th>question</th><th>answer (first line)</th><th>tools</th><th class="n">tokens</th><th class="n">usd</th><th>ok</th></tr></thead><tbody>` +
-      ev.rows.map(r=>`<tr><td class="dim">${r.kind}</td><td>${esc(r.q)}</td><td>${esc((r.answer||r.error||'').split('\n')[0].slice(0,110))}</td><td class="dim">${(r.tools||[]).join(' → ')}</td><td class="n">${(r.input_tokens||0)+(r.output_tokens||0)}</td><td class="n">${r.cost_usd??'—'}</td><td class="${r.ok?'ok':'miss'}">${r.ok?'✓':'✗'}${(r.protocol&&(r.protocol.numbers_without_tool||r.protocol.unverified_quote))?' <span class="miss">protocol</span>':''}</td></tr>`).join('') + '</tbody></table></div>';
+      ev.rows.map(r=>`<tr><td class="dim">${r.kind}</td><td>${esc(r.q)}</td><td>${esc((r.answer||r.error||'').split('\n')[0].slice(0,110))}</td><td class="dim">${(r.tools||[]).join(' → ')}</td><td class="n">${(r.input_tokens||0)+(r.output_tokens||0)}</td><td class="n">${r.cost_usd??'—'}</td><td class="${r.ok?'ok':'miss'}">${r.ok?'✓':'✗'}${r.protocol_violation?' <span class="miss">'+esc(r.enforced||'protocol')+'</span>':''}</td></tr>`).join('') + '</tbody></table></div>';
   } catch { el('f-eval').innerHTML = '— <small>no eval run yet</small>'; el('eval').innerHTML = '<p class="gap">No evaluation run published yet.</p>'; }
   try {
     const hist = await (await fetch('eval-history.json', {cache:'no-store'})).json();
