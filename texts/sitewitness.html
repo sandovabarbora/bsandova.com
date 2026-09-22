@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>sitewitness: an agent that shows its work</title>
+<meta name="description" content="How the Ask page became a package: a trust protocol enforced in code, five tools, an eval runner, and what six evaluation runs taught in two days: which rule fired on correct answers, why paragraphs must not be clipped, why a schema is evidence, and why the first version scored 22 before it scored 29.">
+<meta property="og:title" content="sitewitness: an agent that shows its work">
+<meta property="og:description" content="A trust protocol enforced in code, packaged; and what six evaluation runs taught in two days.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://bsandova.com/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bsandova.com/assets/og.png">
+<meta name="theme-color" content="#161616">
+<link rel="canonical" href="https://bsandova.com/texts/sitewitness">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css?v=9caf9af">
+<link rel="stylesheet" href="../text.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false})"></script>
+<style>
+.tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
+.tbl th,.tbl td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th:first-child,.tbl td:first-child{padding-left:0}
+.tbl th{font-weight:400;color:var(--fg-2);letter-spacing:.12em;text-transform:uppercase;font-size:10px}
+.tbl td.n,.tbl th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl td b{color:var(--hot);font-weight:400}.tbl .hi{color:var(--coral)}.tbl .dim{color:var(--fg-2)}
+.tbl caption{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);padding:0 0 .5rem}
+.scroller{overflow-x:auto;max-width:64rem}
+pre{font-family:var(--mono);font-size:12px;line-height:1.6;color:var(--fg);background:#1d1d1b;border:1px solid var(--line);padding:.9rem 1rem;overflow-x:auto;max-width:64rem;margin:.5rem 0 1.2rem}
+pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:normal}
+.stack{font-family:var(--mono);font-size:11px;line-height:1.8;color:var(--fg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:.8rem 0;margin:1rem 0 1.5rem;max-width:64rem}
+.stack b{color:var(--fg);font-weight:400}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../">bsandova.com</a></b><nav><a href="../#works">Projects</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">ai engineering · tool · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">AI engineering · a tool · 21–22 September 2026 · pip install sitewitness</p>
+  <h1>An agent that <em>shows its work.</em></h1>
+  <p class="deck">The <a href="../ask/">Ask page</a> started as two hundred lines in a Cloudflare Worker with four rules in a prompt. It ended as a package: the rules moved out of the prompt into code, where they can be tested, and the whole thing was evaluated six times in two days. This is what the package is, and what the evaluations taught, including the two things that were wrong with the first version and could not have been seen without a golden set.</p>
+  <dl class="facts">
+    <div><dt>install</dt><dd>pip install sitewitness <small>texts + JSON in · agent, eval, trace page out</small></dd></div>
+    <div><dt>rules enforced in code</dt><dd>5 <small>tool use · numbers · code · quotations · sources</small></dd></div>
+    <div><dt>tests</dt><dd>47 <small>none touch the network; the model client is an interface</small></dd></div>
+    <div><dt>evaluation runs</dt><dd>6 <small>in two days · 22 → 26 → 26 → 28 → 29 of 30</small></dd></div>
+    <div><dt>security findings</dt><dd>5 <small>from review, all fixed before the first deploy</small></dd></div>
+  </dl>
+</header>
+
+<section>
+<h2>1 · From a prompt to a protocol</h2>
+<p>The first Ask asked the model nicely: every number from a tool, every quotation verified, decline when the site has no data. It also checked two of those things after the fact, in the Worker. The package makes the check the design. <b>Five rules, each a function over the answer and its trace:</b> an answer with no tool call is refused; a digit in the answer with no <code>read_data</code>, <code>search</code> or <code>describe_source</code> result in the conversation is refused; fenced code, <code>def</code> or an HTML tag is refused; a quotation of forty characters or more that neither the <code>quote</code> tool returned as found nor occurs verbatim in a tool result is refused; a <code>Sources:</code> line naming a file or page the site does not have is refused. The first violated rule wins, the answer is replaced by the decline sentence, and the trace names the rule. A decline is never enforced against. The rules can be switched only in the config file, never by anything the model or a user says<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>The rest is what any agent needs and most demos skip: a budget per day and a rate per address in a pluggable store, caps on tool calls, output tokens and wall time, a final turn with no tools when the cap is reached so the answer is never empty, cost computed from configured prices and labelled as such, and a trace with every tool call, its input, its size and its time. No framework: the loop is eighty lines over an interface with two methods, which is also why the tests never touch the network<sup class="cite"><a href="#r1">1</a></sup>.</p>
+</section>
+
+<section>
+<h2>2 · What the golden set found, run by run</h2>
+<p>Thirty questions with known answers, the same set the Worker had scored 29 of 30 on. The package's first run scored <b>22</b>. Same model, same questions, same site. The golden set was doing its job: a rewrite that looks equivalent is not, and only a fixed test can say so. Each run's misses were read from the trace, and each fix was a commit<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p><b>Run 1, 22/30.</b> Two stale expectations (the status page had grown from five jobs to six; a number formatted <i>3,704</i> against an expected <i>3704</i>), which are the evaluator's fault and were fixed as such. Then the real ones. The sources rule refused correct answers because the model wrote <code>https://bsandova.com/texts/surf</code> and the check wanted <code>/texts/surf</code>: the rule was right, the matching was pedantic. The quotation rule refused correct answers because the model quoted a passage it had just retrieved, without calling <code>quote</code>: the evidence was in the conversation, and the rule ignored it. <b>Fix:</b> tolerant source matching; a quotation counts as verified when its words occur in any tool result of the conversation, punctuation aside. Also from this run: the enforced answer replaced the original, so the trace lost what the model had said. The original is kept now, which is how every later run could be read<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p><b>Run 2, 26/30.</b> The quotation question failed in a new way: the model searched eight times for <i>IAM is a wall</i>, retrieval returned the right paragraph first every time, and the model still said it could not find the sentence. <code>search</code> clipped passages to 600 characters and the sentence sat at character 700. <b>Fix:</b> a passage is a paragraph; return it whole. The number-without-tool rule fired on "the status page tracks 6 jobs", answered from a <code>describe_source</code> result (<code>"array": 6</code>): a schema is evidence too. <b>Fix:</b> count it<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p><b>Runs 3 and 4, 26 and 28.</b> The model declined a weather question without calling a tool, because nothing told it the site has weather data; and it read a nine-item list one item at a time, hitting the tool cap. <b>Fix:</b> the system prompt now lists what data files and pages exist, one line each, never their contents; and the <code>read_data</code> description says what <code>find</code> is for. The sources rule still refused <code>surf/data.json (climatology.ericeira)</code>, a correct path with a helpful note in parentheses. <b>Fix:</b> parenthetical notes are not part of a path. <b>Run 5, 29/30</b>, one rule fired: the model quoted a long note from a data file verbatim, which is what the rule is for, and the golden set expected <i>2 263</i> where the file says <i>2262.5</i>, which is the evaluator's fault again<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p>Six runs cost 5.3 USD and used up one day's budget, which is a finding in itself: the budget worked, the fourth run of the day was cut off at the configured 4 USD with the message it was supposed to show. The weekly evaluation now runs on Monday morning on a clean budget<sup class="cite"><a href="#r2">2</a></sup>.</p>
+</section>
+
+<section>
+<h2>3 · Five security findings before the first deploy</h2>
+<p>An automated review read each commit as it was pushed and found five things, all real and all cheap. The client-address header (<code>X-Forwarded-For</code>) was trusted unconditionally, so anyone could spoof their way past the per-address limit; now a header is trusted only when the config names it, and only if its value parses as an address. The eval key was compared with <code>==</code>; now with a constant-time comparison. Upstream error text went to the client; now it goes to the log. A server on a public host could be reached around the proxy that adds the limits; now the server can require a proxy key and answers 403 without it, so the Fly hostname is useless on its own. And a deploy action was pinned to <code>@master</code>; now to a commit. The general lesson is not new, but it was confirmed again: the interesting bugs in an agent are not in the model<sup class="cite"><a href="#r1">1</a></sup>.</p>
+</section>
+
+<section>
+<h2>4 · Running it</h2>
+<pre>pip install "sitewitness[embed]"
+sitewitness index --embed                  # texts → passages, BM25 + embeddings; JSON → schemas
+sitewitness serve --port 8000              # POST /ask · GET /health
+sitewitness eval golden.json --api http://localhost:8000 --allowed-misses 1
+sitewitness page ask/ --api https://api.example.com --example "How many …?"</pre>
+<p>This site is the first instance: the config is <code>sitewitness.toml</code> in the repository, the server runs on Fly behind a twenty-line Cloudflare Worker that adds the client address and the proxy key, the index is built in the image at deploy, and the deploy runs from GitHub Actions whenever a text or a data file changes. The Ask page's trace panel and evaluation tables come from <code>sitewitness page</code> with the site's own stylesheet<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>What it does not do: stream, remember a conversation, or use a model other than Anthropic's, though the client is an interface with two methods. And it does not make the model right. It makes the model's wrongness visible and refusable, which on the evidence of <a href="silent-detector">the detector text</a> is the most a run-time system can do.</p>
+<div class="stack">stack · Python 3.10–3.13 · anthropic · FastAPI · rank-bm25 · sentence-transformers (optional) · quotecheck · pytest (47) · GitHub Actions · Fly.io · Cloudflare Workers · Apache-2.0</div>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Šandová, B. (2026): <a href="https://github.com/sandovabarbora/sitewitness">sitewitness</a>, Apache-2.0, on <a href="https://pypi.org/project/sitewitness/">PyPI</a>; design in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/superpowers/specs/2026-09-21-sitewitness-design.md">the spec</a>; modules <code>protocol.py</code>, <code>agent.py</code>, <code>limits.py</code>, <code>server.py</code>, <code>evaluate.py</code>. Instance: <code>sitewitness.toml</code>, <code>deploy/</code>, <code>ask/worker/</code> in the site repository.</li>
+<li id="r2">The evaluation runs of 21–22 September 2026: <a href="../ask/eval-history.json">eval-history.json</a> and the commit history of the package (each fix named in its commit subject). The run-by-run scores 22, 26, 26, 28, 29 are from the terminal output of <code>sitewitness eval</code> on those days; the published <code>eval.json</code> is the last run.</li>
+</ol>
+</section>
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a> · <a href="../ask/">ask the site</a> · <a href="ai-over-data">AI over data, measured</a></p>
+</footer>
+</article>
+
+
+</body>
+</html>
