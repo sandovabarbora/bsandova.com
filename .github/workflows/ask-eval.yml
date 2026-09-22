@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
-      - run: pip install -q deploy/sitewitness-0.1.0-py3-none-any.whl
+      - run: pip install -q sitewitness==0.1.0
       - run: sitewitness eval ask/golden.json --api https://api.bsandova.com --out ask --allowed-misses 30
         env:
           SITEWITNESS_EVAL_KEY: ${{ secrets.ASK_EVAL_KEY }}

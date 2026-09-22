@@ -15,8 +15,7 @@ COPY assets/library.json ./assets/library.json
 COPY status/jobs.json ./status/jobs.json
 COPY changelog/data.json ./changelog/data.json
 COPY ask/eval.json ./ask/eval.json
-COPY deploy/sitewitness-0.1.0-py3-none-any.whl /tmp/
-RUN uv pip install --system --no-cache "sitewitness[embed] @ file:///tmp/sitewitness-0.1.0-py3-none-any.whl" && \
+RUN uv pip install --system --no-cache "sitewitness[embed]==0.1.0" && \
     python -c "import sentence_transformers; sentence_transformers.SentenceTransformer('all-MiniLM-L6-v2')" && \
     sitewitness index --embed
 RUN mkdir -p /data
