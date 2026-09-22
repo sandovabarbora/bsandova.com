@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css?v=9caf9af">
+<link rel="stylesheet" href="../style.css?v=86d5996">
 <link rel="stylesheet" href="../text.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
@@ -43,19 +43,19 @@
 
 <article class="text">
 <header class="text-head">
-  <p class="kicker">Player Pool Atlas · football · first edition · 2026/27 · 19 leagues · 7 seasons · 163 tests</p>
-  <h1>When did the train leave, <em>and where does it stop</em></h1>
-  <p class="deck">The same question as the hockey atlas, asked of football with a better corpus: how deep is the Czech pool per head, where does the pathway abroad leak, what is the World Cup squad made of, and what do Norway and Denmark do that Czechia does not. Czechia is the worked example. The pipeline takes a nationality code and a peer set.</p>
+  <p class="kicker">Player Pool Atlas · football · six editions · Czechia, Denmark, England, Germany, Norway, Spain · 31 seasons in the long run · 317 tests</p>
+  <h1>When did the train leave, <em>and who else missed it</em></h1>
+  <p class="deck">The same five questions, asked of six nations the same way: how many players reach the strongest leagues per million, how many minutes the home league gives its own under-21s, when the first move abroad comes, how strong the home league is, and what the national-team squad is built from. Czechia was the first edition; Denmark, England, Germany, Norway and Spain followed, and a <a href="https://football.datasimply.eu/nations/">Nations page</a> puts them side by side. Czechia turns out to be the one small nation whose presence in the Big-5 fell and has not come back, and the data can say on which rung.</p>
   <dl class="facts">
-    <div><dt>players in Europe's top-9 leagues, per million</dt><dd>2.39 <small>seventh of nine · Denmark 12.58</small></dd></div>
-    <div><dt>Czech players in the Big-5, ≥ 450 min</dt><dd>26 → 6 → 10 <small>2007/08 · 2015/16 · 2025/26</small></dd></div>
-    <div><dt>U21 share of domestic minutes</dt><dd>6.4 % <small>Denmark 15.3 %</small></dd></div>
-    <div><dt>World Cup 2026 squad in the top-9 leagues</dt><dd>35 % <small>Switzerland 88 % · Norway 65 %</small></dd></div>
+    <div><dt>editions, one method</dt><dd>6 <small>CZE · DEN · ENG · ESP · GER · NOR · 17 countries in the long run</small></dd></div>
+    <div><dt>Czech players in the Big-5, ≥ 450 min</dt><dd>26 → 6 → 10 <small>2007/08 peak · 2015/16 · 2025/26 · two dated breaks</small></dd></div>
+    <div><dt>own U21 share of home-league minutes</dt><dd>10 % → 6 % <small>six seasons · Norway 8 → 11 % · Denmark 16 → 15 %</small></dd></div>
+    <div><dt>what carries the gap</dt><dd>73 % · 72 % <small>league strength vs Norway · youth minutes vs Denmark</small></dd></div>
   </dl>
 </header>
 
 <section>
-<p>The atlas maps every Czech professional FBref knows about, 440 players, 192 of them with a full 2025/26 season in one of nineteen leagues, and reads the pool the way a federation would want to: against peers, per head, along the pathway abroad, and at the moment a tournament squad is named<sup class="cite"><a href="#r1">1</a></sup>. No predictions, no selection advice. Every number on the page is computed from the run and the build refuses to render a sentence its data no longer supports; there are 163 tests and a ledger of 23 rulings behind it.</p>
+<p>The atlas maps every Czech professional FBref knows about, 440 players, 192 of them with a full 2025/26 season in one of nineteen leagues, and reads the pool the way a federation would want to: against peers, per head, along the pathway abroad, and at the moment a tournament squad is named<sup class="cite"><a href="#r1">1</a></sup>. No predictions, no selection advice. Every number on the page is computed from the run and the build refuses to render a sentence its data no longer supports; there are 317 tests and two dated ledgers behind it.</p>
 </section>
 
 <section>
@@ -93,34 +93,25 @@
 </section>
 
 <section>
-<h2>When the train left</h2>
-<p>Count Czech players with at least 450 minutes in the Big-5 leagues, every season since 2000/01. The peak is 26 in 2007/08 (the most-minutes names that season: Drobný, Plašil, Kučera; in 2002/03 Čech, Koller, Jarolím). The trough is 6 in 2015/16. The current figure is 10. Denmark is at 38 and Croatia at 24, both on a rising line<sup class="cite"><a href="#r6">6</a></sup>.</p>
+<h2>When the train left, dated twice</h2>
+<p>Count Czech players with at least 450 minutes in the Big-5 leagues, every season since 1995/96, thirty-one seasons. The peak is 26 in 2007/08, the trough 6 in 2015/16, the current figure 10. A local-level model with two step changes at unknown seasons dates them: a rise in 2000/01 (×1.66, posterior probability 0.55) and a fall in 2014/15 (×0.60, 0.56), the pair together at 0.36 against every other pair. At the 2007/08 peak the nation's Big-5 players had a median age of 28; in the fall season it was 32 and no debutant arrived. A generation retired and what followed was thinner<sup class="cite"><a href="#r1">1</a><a href="#r10">10</a></sup>.</p>
+<p>The same series for sixteen other countries is what makes this a finding and not a lament. Croatia fell too, in 2003/04, and came back eleven seasons later; Norway fell in 2004/05 and came back seventeen seasons later. Every other small peer's later step is a rise. Czechia is the one whose fall has no recovery yet<sup class="cite"><a href="#r1">1</a></sup>.</p>
 </section>
 <figure>
   <img src="../assets/football/big5-series.svg" alt="Line chart 2000/01 to 2025/26: Czech players with 450+ minutes in the Big-5 leagues, peaking at 26 in 2007/08, falling to 6 in 2015/16, 10 in 2025/26; peer countries in grey, Denmark rising to 38." loading="lazy">
-  <figcaption><b>fig. 1</b> · Czech players in the Big-5 leagues, 2000/01 to 2025/26, against eight peers (grey). Lower panel: the same per million. Recoloured to this site's palette from the atlas render.</figcaption>
+  <figcaption><b>fig. 1</b> · Czech players in the Big-5 leagues against eight peers (grey), from the first edition's render; the live atlas now runs the series from 1995/96 and marks both breaks. Lower panel: the same per million.</figcaption>
 </figure>
 <section>
-<p>This is presence, not quality: goalkeepers count, a lineup of who was there. But it dates the problem. The decline is not recent and it is not a blip; it is a fifteen-year line with a floor in it.</p>
+<p>This is presence, not quality: goalkeepers count, a lineup of who was there. But it dates the problem to a season, and it says the problem is a fall without a rise, which is a different thing from a slow decline.</p>
 </section>
 
 <section>
-<h2>How Norway and Denmark do it</h2>
-<p>The same six numbers, same definitions, same seasons. A comparison, not a causal claim.</p>
-</section>
-<table class="tbl"><caption>Same definitions, same seasons</caption>
-<thead><tr><th>metric</th><th class="n">CZE</th><th class="n">NOR</th><th class="n">DEN</th></tr></thead>
-<tbody>
-<tr><td>players per million, top-9 leagues</td><td class="n hi">2.39</td><td class="n">9.37</td><td class="n">12.58</td></tr>
-<tr><td>U21 share of domestic minutes</td><td class="n hi">6.4 %</td><td class="n">11.5 %</td><td class="n">15.3 %</td></tr>
-<tr><td>export age, recent (median)</td><td class="n">22</td><td class="n">22</td><td class="n">22</td></tr>
-<tr><td>sideways moves</td><td class="n">19 %</td><td class="n">22 %</td><td class="n">10 %</td></tr>
-<tr><td>exports' club-minutes share</td><td class="n">50 %</td><td class="n">37 %</td><td class="n">46 %</td></tr>
-<tr><td>World Cup squad in the top-9 leagues</td><td class="n hi">35 %</td><td class="n">65 %</td><td class="n dim">—</td></tr>
-<tr><td>Big-5 players now</td><td class="n hi">10</td><td class="n">25</td><td class="n">38</td></tr>
-</tbody></table>
-<section>
-<p>The export age is the same everywhere, 22. What differs is what happens before it (minutes at home) and what the export leads to (a top-9 roster, or a sideways move). Norway gives its under-21s twice the domestic minutes and sends 65 % of its squad to the top nine; Denmark gives them two and a half times the minutes and loses a tenth of its exports sideways against Czechia's fifth.</p>
+<h2>Two problems at once, and the rung where the mistake shows</h2>
+<p>Each edition decomposes its gap to every peer into three channels, youth minutes at home, home-league strength and the age of the first move, by a ridge regression across the peers and an Oaxaca–Blinder accounting of the gap. Which mechanism carries the gap depends on the peer: against Norway, home-league strength carries 73 % of a 7.0-per-million gap; against Denmark, youth minutes at home carries 72 % of a 10.2-per-million gap. They add rather than compete. A league that gives its young few minutes and is weak besides loses on both counts<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>The cross-section cannot see change, so the atlas now carries six seasons of every covered league's own under-21 share at home. Czechia's went from 10 % to 6 %; over the same seasons Norway's from 8 % to 11 % with +2.7 per million more players in the Big-5, Denmark's 16 % to 15 % with +2.3, Czechia −0.1. Across the sixteen leagues the change in youth minutes and the change in Big-5 presence lean the same way, a weak signal with the right sign, and the page calls it that<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>Where Czechia is out of line is the first rung. Own under-21s get 6.4 % of home-league minutes and 1.1 regular under-21 starters per club, last among the peers (Denmark 15.3 % and 2.5); the first move abroad comes at a median 24 where the peers that grew moved at 22–23; 32 first moves in the covered seasons against Denmark's 112. Where it is not out of line: the home league itself, multiplier 0.43 and second of nine among the peers, and how its exports fare, a median 50 % of their club's minutes, third of nine. What the peers show is reachable: two regular under-21 starters per club, which Denmark, Croatia and Hungary already do; the first move at 22–23; more of them, not better ones. Four numbers to watch every summer<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p><b>Can a reform cause it?</b> The data can follow two documented cases, and only as a sequence. Germany after the DFB/DFL academy licensing of 2001/02: its own under-21s' share of Bundesliga minutes went from 5 % to 11 % by 2009/10 and is 6 % now. England after the Elite Player Performance Plan of 2012/13: from 3 % to 6 % by 2019/20 and 3 % now. In both, the turn did not hold. A sequence in one country against none in another is the strongest thing this data can say, and it is not a counterfactual. Read as a heuristic: minutes for the young at home are the lever a federation holds, the effect is counted in seasons, and a weaker league yields less from it<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>Six editions are six sentences of the same kind, each written from its own numbers at build time so it moves when they do. Denmark's: 443 players, Euro 2024 as the core squad. Norway's: 511 players, a rise after the fall is a recovery. Spain's: 1 047 players, a flat series says so. Germany's: 932 players, the Bundesliga as home league. England's: the Premier League as home league, which is why per-million ranks are against a nation's own peer set and never across editions<sup class="cite"><a href="#r1">1</a></sup>.</p>
 </section>
 
 <section>
@@ -153,7 +144,7 @@
 <section class="refs" id="refs">
 <h2>References</h2>
 <ol>
-<li id="r1">Šandová, B. (2026): <a href="https://football.datasimply.eu">Czech football · Player pool atlas</a>, first edition, 2026/27. Summary, cohort gaps, pathway exhibits, squad composition, peer comparison.</li>
+<li id="r1">Šandová, B. (2026): <a href="https://football.datasimply.eu">Player Pool Atlas · football</a>: the Czech edition (summary, cohort gaps, pathway exhibits, squad composition, peer comparison, the Big-5 series from 1995/96 with two dated breaks, generations); editions for <a href="https://football.datasimply.eu/den/">Denmark</a>, <a href="https://football.datasimply.eu/eng/">England</a>, <a href="https://football.datasimply.eu/esp/">Spain</a>, <a href="https://football.datasimply.eu/ger/">Germany</a> and <a href="https://football.datasimply.eu/nor/">Norway</a>; the <a href="https://football.datasimply.eu/nations/">Nations page</a> (side by side, gap decomposition per peer, six seasons of youth minutes, the long run for 17 countries, the two reform cases). Every statement on the atlas is written from its numbers at build time. Read 22 September 2026.</li>
 <li id="r2"><a href="https://fbref.com/">FBref</a> via <a href="https://github.com/probberechts/soccerdata">soccerdata</a>: player season tables (standard, playing time) for the nine headline leagues, the Czech First League, peer domestic leagues and the German second tier; the "Players from Czechia" country page for pool discovery; the nationality column for peer counts. Season 2025/26 complete; ≥ 450 minutes.</li>
 <li id="r3">Eurostat, population estimates 2024 (Czechia 10.9 M); every country counted the same way.</li>
 <li id="r4">Šandová, B. (2026): atlas <a href="https://football.datasimply.eu/#methodology">Methodology</a>: league multipliers, Bayesian shrinkage (K = 10 · 900 minutes), PCA loadings per position group, 41-scenario sensitivity table.</li>
@@ -161,7 +152,7 @@
 <li id="r6">FBref Big-5 player tables 2000/01 → 2025/26, players with ≥ 450 minutes, nationality CZE; peers on the same rule.</li>
 <li id="r7">UEFA men's association coefficients, current five-year ranking (2022–23 to 2026–27), via Wikipedia; tier-1 multiplier = coefficient / max, tier-2 = 0.6 × tier-1 (assumption). ClubElo unreachable at run time (HTTP error).</li>
 <li id="r8">Šandová, B. (2026): atlas data-quality log, 6 recomputed checks and 5 recorded incidents, with counts.</li>
-<li id="r9"><a href="https://github.com/sandovabarbora/czefootball-player-pool-atlas">sandovabarbora/czefootball-player-pool-atlas</a>, MIT. Spec, plan and ledger under <code>docs/superpowers/</code>; 163 tests; seed 42 for every stochastic step. Portraits: Wikimedia Commons via Wikidata P18, credited in the atlas footer.</li>
+<li id="r9"><a href="https://github.com/sandovabarbora/czefootball-player-pool-atlas">sandovabarbora/czefootball-player-pool-atlas</a>, MIT. Spec, plan and ledger under <code>docs/superpowers/</code>; 317 tests; seed 42 for every stochastic step. Portraits: Wikimedia Commons via Wikidata P18, credited in the atlas footer.</li>
 <li id="r10">Šandová, B. (2026): atlas <a href="https://football.datasimply.eu/#methodology">Methodology</a>, chapter IV: <a href="https://football.datasimply.eu/#league-strength">league strength from the transfer graph</a> (<code>src/league_strength.py</code>, output <code>data/snapshot/cze/league_strength.json</code>: 2 125 movers, 8 108 rows, 7 seasons, max R-hat 1.003, 0 divergences, Spearman 0.742 vs UEFA over 18 leagues, out-of-sample 2025–26 log predictive density −2.17 / −2.73 / −2.63 and MAE 0.127 / 0.151 / 0.137 for model / UEFA / naive); <a href="https://football.datasimply.eu/#model-comparison">three models, one task</a> (<code>model_comparison.json</code>: pooled RMSE gbm 0.0706, bayesian 0.0713, persistence 0.0754, mlp 0.0753; Bayesian coverage90 0.916); <a href="https://football.datasimply.eu/#series-model">dating the break</a> (<code>series_model.json</code>: break 2014–15 p = 0.62, δ ×0.57 (0.38–0.86), backtest MAE 2.8 vs naive 2.73, coverage 0.87, forecast 2026–27 11 (5–18)); <a href="https://football.datasimply.eu/#youth-panel">youth-minutes panel</a> and <a href="https://football.datasimply.eu/#gap-decomposition">gap decomposition</a> as printed on the atlas. PyMC 5, NUTS; tests <code>tests/test_&lt;module&gt;.py</code>.</li>
 </ol>
 </section>
