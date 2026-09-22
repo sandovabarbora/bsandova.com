@@ -9,7 +9,7 @@ a **portfolio**, not a service. New home: **bsandova.com** (to be registered;
 Cloudflare Registrar recommended so DNS needs no nameserver change). Deployed via
 **Cloudflare Pages** from this repo (static root, no build step).
 datasimply.eu becomes a 301 redirect (Cloudflare Redirect Rule) once DNS moves.
-hockey.datasimply.eu / football.datasimply.eu stay where they are.
+hockey.datasimply.eu / football.bsandova.com stay where they are.
 
 ## Identity
 Pure quaesitor register *and* palette (`quaesitor/brand/BRAND.md`): parchment /

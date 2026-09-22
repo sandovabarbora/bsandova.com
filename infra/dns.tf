@@ -28,3 +28,14 @@ resource "cloudflare_dns_record" "aaaa" {
 
 # The two _acme-challenge TXT records are Cloudflare's own (Universal SSL validation);
 # they are not managed here on purpose.
+
+# The football atlas is a GitHub Pages site (repo czefootball-player-pool-atlas, /docs). DNS-only:
+# GitHub issues the certificate for the custom domain, so Cloudflare must not proxy it.
+resource "cloudflare_dns_record" "football" {
+  zone_id = var.zone_id
+  name    = "football.bsandova.com"
+  type    = "CNAME"
+  content = "sandovabarbora.github.io"
+  proxied = false
+  ttl     = 300
+}
