@@ -92,6 +92,7 @@
       <li>Least privilege in Terraform for people (per-project groups, read everywhere, write in a sandbox) and for AI agents (a confused-deputy assistant fixed at BigQuery IAM, not in the prompt); partner databases moved to RDS IAM auth with short-lived tokens.</li>
       <li>dbt modernisation (Python models on Dataproc/Spark, incremental models, cost strategy) and Dagster orchestration; a legacy salary pipeline cut over to dbt with byte-level parity proven across five years before repointing consumers. <a href="../texts/cutover" data-path="/texts/cutover">How to prove a cutover</a></li>
       <li>An internal LLM data assistant (LangGraph, FastAPI, Anthropic API, MCP to BigQuery/OpenMetadata/Metabase) replacing a 4 500-line service with 400 lines at parity on golden sets; trust layer, tool allowlist, cost caps and pseudonymous tracing added after measuring it. <a href="../texts/silent-detector" data-path="/texts/silent-detector">Can a wrong number be seen coming?</a></li>
+      <li>Shipped it to non-technical colleagues as a one-click installer for Claude Desktop and ChatGPT Desktop (macOS + Windows), with BigQuery running under each person's own Google identity, so every query is attributable and IAM-enforced.</li>
       <li>Developer experience: Poetry → uv, private CodeArtifact registry, Dependabot alerts 792 → 332, documentation rebuilt on Diátaxis.</li>
     </ul>
     <p class="stack">Python · SQL · AWS (CDK, ECS/Fargate, Lambda, Step Functions, IAM, CloudWatch, ECR, CodeArtifact) · GCP/BigQuery · Terraform · dbt · Dagster · Docker · FastAPI · LangGraph · MCP · GitHub Actions · uv</p>
@@ -151,12 +152,13 @@
   <div class="when">2025 – 2026</div>
   <div>
     <ul>
-      <li><a href="../texts/quaesitor/" data-path="/texts/quaesitor/">Quaesitor</a> — an independent review of AI assistants over data warehouses: 5 794 answers, 15 languages, a harness with 700+ tests, a <a href="../watch/" data-path="/watch/">monthly model watch</a>; <code>quaesitor-zero</code> on PyPI.</li>
+      <li><a href="../texts/quaesitor/" data-path="/texts/quaesitor/">Quaesitor</a> — an independent review of AI assistants over data warehouses: 5 794 answers, 15 languages, a harness with 700+ tests, a <a href="../watch/" data-path="/watch/">monthly model watch</a>; <code>quaesitor-zero</code> on PyPI; preprint <i>Equal Accuracy, Opposite Failure</i> on uncalibrated abstention in text-to-SQL.</li>
+      <li><a href="../ask/" data-path="/ask/">Ask the site</a>, packaged as <a href="../texts/sitewitness" data-path="/texts/sitewitness">sitewitness</a> — an agent over this site's texts and data whose five trust rules are enforced in code; 47 tests, evaluation 22 → 29 of 30 in six runs.</li>
       <li><a href="../texts/hockey" data-path="/texts/hockey">Player Pool Atlas · hockey</a> and <a href="../texts/football" data-path="/texts/football">· football</a> — knowledge graph and public atlases of the Czech player pools; league strength estimated from 2 125 league movers in PyMC.</li>
       <li><a href="../texts/prague-parking" data-path="/texts/prague-parking">Prague parking</a> I, <a href="../texts/prague-parking-2" data-path="/texts/prague-parking-2">II</a> and <a href="../texts/prague-parking-3" data-path="/texts/prague-parking-3">III</a> — how many stalls bigger cars cost, from 16 874 zone polygons and 2.5 million EEA registrations.</li>
       <li><a href="../texts/brand-reflection" data-path="/texts/brand-reflection">Brand Reflection Series</a> — colour, sound and language of Czech advertising, with predictions published before the data.</li>
-      <li>Tools on PyPI: <a href="../texts/cutover" data-path="/texts/cutover">cutover</a> (prove a migration changed nothing), <a href="../texts/quotecheck" data-path="/texts/quotecheck">quotecheck</a> (is this quotation really in the source), quaesitor-zero.</li>
-      <li><a href="../texts/surf" data-path="/texts/surf">Surf forecast verification</a> and <a href="../atlantic/" data-path="/atlantic/">its sonification</a>; <a href="../texts/icu" data-path="/texts/icu">an ICU cohort</a> whose labels pointed the wrong way; <a href="../texts/second-brain" data-path="/texts/second-brain">a 739-page wiki an agent keeps</a>.</li>
+      <li>Tools on PyPI: <a href="../texts/sitewitness" data-path="/texts/sitewitness">sitewitness</a> (an agent that shows its work), <a href="../texts/cutover" data-path="/texts/cutover">cutover</a> (prove a migration changed nothing), <a href="../texts/quotecheck" data-path="/texts/quotecheck">quotecheck</a> (is this quotation really in the source), quaesitor-zero.</li>
+      <li><a href="../texts/surf" data-path="/texts/surf">Surf</a> and <a href="../texts/weather" data-path="/texts/weather">Prague weather</a> forecast verification, <a href="../atlantic/" data-path="/atlantic/">a sonification</a> and <a href="../status/" data-path="/status/">a status page</a> for the jobs behind them; <a href="../texts/icu" data-path="/texts/icu">an ICU cohort</a> whose labels pointed the wrong way; <a href="../texts/second-brain" data-path="/texts/second-brain">a 739-page wiki an agent keeps</a>.</li>
     </ul>
   </div>
 </div>
@@ -167,7 +169,8 @@
   <div>
     <h3>M.Sc. Finance and Data Analytics</h3>
     <p class="org">Charles University, Institute of Economic Studies · minor in Artificial Intelligence (prg.ai)</p>
-    <ul><li>Thesis (defended September 2026): <i>Persistence Dynamics and Welfare Costs of Urban Public Transport Delays</i>, 121 million vehicle-location records; within-day delays are persistent (AR(2) coefficient sum 0.727 bus, 0.715 tram) and standard appraisal overstates the cost of unreliability.</li></ul>
+    <ul><li>Graduated with honours; thesis awarded the <a href="https://ies.fsv.cuni.cz/aktuality/reditel-ies-udelil-oceneni-za-vynikajici-zaverecne-prace-v-zari-2026">IES Director's Award for Distinguished Theses</a> (September 2026).</li>
+    <li>Thesis (defended September 2026): <i>Persistence Dynamics and Welfare Costs of Urban Public Transport Delays</i>, 121 million vehicle-location records; within-day delays are persistent (AR(2) coefficient sum 0.727 bus, 0.715 tram) and standard appraisal overstates the cost of unreliability.</li></ul>
   </div>
 </div>
 <div class="job">
