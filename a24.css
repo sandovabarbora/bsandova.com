@@ -108,3 +108,9 @@ input,textarea,select{font-family:var(--sans)}
 @media (max-width:820px){.film-in{grid-template-columns:1fr}.film-poster{display:none}.film{min-height:560px}}
 .text section.film.film-page{max-width:none;margin:0 calc(-1*var(--pad)) clamp(40px,5vw,72px);height:min(92svh,64vw);min-height:420px}
 .film.film-page .film-in{grid-template-columns:1fr auto}
+
+/* photographic stills: black and white with one colour held */
+.shot{position:absolute;inset:0;background-size:cover;background-position:center}
+.film .credit{position:absolute;z-index:3;right:var(--pad);bottom:16px;margin:0;font:400 11px var(--mono);color:rgba(255,255,255,.6);text-align:right}
+.film .credit a{text-decoration:underline;color:inherit}
+.film.film-page::before{background:linear-gradient(0deg,rgba(0,0,0,.35),rgba(0,0,0,0) 30%)!important}
