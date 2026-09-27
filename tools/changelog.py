@@ -106,6 +106,7 @@ def render(items: list[dict]) -> str:
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../style.css">
 <link rel="stylesheet" href="../text.css">
+<link rel="stylesheet" href="../a24.css">
 <style>
 .text h2{{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-2);font-weight:400;margin:1.8rem 0 .4rem;border-bottom:1px solid var(--line);padding-bottom:.4rem}}
 .log{{list-style:none;margin:0;padding:0;max-width:64rem}}
@@ -132,6 +133,7 @@ def render(items: list[dict]) -> str:
     <div><dt>data</dt><dd><a href="data.json">data.json</a> <small>one record per commit</small></dd></div>
   </dl>
 </header>
+<section class="film film-page"><div class="shot" style="view-transition-name:ph-page-changelog;--bg:url(../assets/photo/page-changelog.jpg);--bg-s:url(../assets/photo/page-changelog-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Olivetti_Lettera_82_portable_mechanical_typewriter.jpg">Suyash Dwivedi</a> · CC BY-SA 4.0, colour held</p></section>
 {"".join(rows)}
 <footer class="text-foot"><p class="back"><a href="../#works">← projects</a> · <a href="../status/">status</a></p></footer>
 </article>

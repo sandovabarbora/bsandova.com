@@ -99,3 +99,6 @@ input,textarea,select{font-family:var(--sans)}
   ::view-transition-old(root),::view-transition-new(root){animation-duration:.45s}
   ::view-transition-group(*){animation-duration:.6s;animation-timing-function:cubic-bezier(.19,1,.22,1)}
 }
+
+/* credits stay readable on light photographs */
+.film .credit,.credit{background:rgba(0,0,0,.42);padding:3px 8px;color:rgba(255,255,255,.85)!important;border-radius:2px}
