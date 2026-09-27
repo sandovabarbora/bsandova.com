@@ -37,7 +37,7 @@ img{display:block;max-width:100%}
 .hd{position:fixed;inset:0 0 auto 0;z-index:20;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:28px var(--pad);color:#fff;pointer-events:none;text-shadow:0 1px 12px rgba(0,0,0,.35)}
 .hd>*{pointer-events:auto}
 .hd{transition:background .3s,padding .3s,color .3s}
-.hd.solid{mix-blend-mode:normal;background:rgba(255,255,255,.94);color:#000;padding-top:16px;padding-bottom:16px;backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.hd.solid{mix-blend-mode:normal;text-shadow:none;background:rgba(255,255,255,.94);color:#000;padding-top:16px;padding-bottom:16px;backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .menu-btn{display:flex;align-items:center;gap:14px;background:none;border:0;color:inherit;font:400 14px var(--display);letter-spacing:.02em;text-transform:uppercase;cursor:pointer;justify-self:start}
 .menu-btn i{display:block;width:26px;height:8px;border-top:1.5px solid currentColor;border-bottom:1.5px solid currentColor}
 .mark{font:500 30px/1 var(--serif);letter-spacing:-.02em}
@@ -495,7 +495,9 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
   const dark = '.hero, .film, .seaband, .band, .ft';
   const solid = () => {
     const under = document.elementsFromPoint(innerWidth / 2, 40).find(el => !hd.contains(el));
-    hd.classList.toggle('solid', !(under && under.closest(dark)));
+    const d = under && under.closest(dark);
+    // a section still waiting for its reveal is transparent: the page behind it is paper, not photograph
+    hd.classList.toggle('solid', !(d && (!d.classList.contains('rv') || d.classList.contains('in'))));
   };
   addEventListener('scroll', solid, {passive: true}); solid();
 
@@ -523,6 +525,9 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
   // scroll reveal
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold: .12});
   document.querySelectorAll('.rv').forEach(el => io.observe(el));
+  // after a jump (menu, index, #hash) sections above the viewport are shown at once
+  const revealAbove = () => document.querySelectorAll('.rv:not(.in)').forEach(el => { if (el.getBoundingClientRect().bottom < 0) el.classList.add('in'); });
+  addEventListener('scroll', revealAbove, {passive: true}); addEventListener('hashchange', revealAbove); revealAbove();
 
   // index: a photograph follows the cursor over rows that have one
   const peek = document.getElementById('peek'), pimg = peek.querySelector('img');
