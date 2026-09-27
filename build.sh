@@ -9,4 +9,5 @@ for f in $(find . -name '*.html' -not -path './variants/*' -not -path './node_mo
 done
 python3 tools/changelog.py
 python3 tools/sitemap.py
+python3 tools/feed.py
 echo "stamped ?v=$v"
