@@ -24,12 +24,12 @@
 <style>
 .jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(24rem,1fr));gap:1px;background:var(--line);border:1px solid var(--line);max-width:64rem;margin:1.5rem 0}
 .job{background:var(--bg);padding:1.1rem 1.25rem 1.25rem;display:flex;flex-direction:column;gap:.55rem;min-width:0}
-.job h3{font-family:var(--serif);font-weight:400;font-size:1.25rem;margin:0;color:var(--hot);letter-spacing:-.01em}
+.job h2{font-family:var(--serif);font-weight:400;font-size:1.25rem;margin:0;color:var(--hot);letter-spacing:-.01em}
 .job .what{font-size:.86rem;line-height:1.5;color:var(--fg-2);margin:0}
 .st{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase}
 .st i{width:.6rem;height:.6rem;border-radius:50%;display:inline-block;background:var(--fg-2)}
-.st.ok i{background:#7ED9A6}.st.late i{background:#D6FF3A}.st.stale i,.st.fail i{background:#FF6A3D}.st.na i{background:transparent;border:1px solid var(--fg-2)}
-.st.ok{color:#7ED9A6}.st.late{color:#D6FF3A}.st.stale,.st.fail{color:#FF6A3D}.st.na{color:var(--fg-2)}
+.st.ok i{background:#1a7f4b}.st.late i{background:#8a6d00}.st.stale i,.st.fail i{background:#c2410c}.st.na i{background:transparent;border:1px solid var(--fg-2)}
+.st.ok{color:#1a7f4b}.st.late{color:#8a6d00}.st.stale,.st.fail{color:#c2410c}.st.na{color:var(--fg-2)}
 .kv{display:grid;grid-template-columns:auto 1fr;gap:.3rem 1rem;font-family:var(--mono);font-size:11px;margin:.2rem 0 0}
 .kv dt{color:var(--fg-2);letter-spacing:.1em;text-transform:uppercase;font-size:10px;white-space:nowrap}.kv dd{margin:0;color:var(--fg);overflow-wrap:anywhere}
 .kv dd b{color:var(--hot);font-weight:400}.kv dd .dim{color:var(--fg-2)}
@@ -149,7 +149,7 @@
     counts[s]++;
     kv.push(['schedule', j.schedule]); kv.push(['cost', j.cost]);
     if (err.length) kv.push(['could not read', err.join(' · ')]);
-    return `<div class="job"><span class="st ${s}"><i></i>${state[s]}</span><h3>${j.name}</h3><p class="what">${j.what}</p><dl class="kv">${kv.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl><div class="links">${j.links.map(([t,h])=>`<a href="${h}">${t}</a>`).join('')}</div></div>`;
+    return `<div class="job"><span class="st ${s}"><i></i>${state[s]}</span><h2>${j.name}</h2><p class="what">${j.what}</p><dl class="kv">${kv.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl><div class="links">${j.links.map(([t,h])=>`<a href="${h}">${t}</a>`).join('')}</div></div>`;
   }));
   document.getElementById('jobs').innerHTML = cards.join('');
   document.getElementById('f-jobs').innerHTML = `${jobs.length} <small>${jobs.map(j=>j.id).join(' · ')}</small>`;
