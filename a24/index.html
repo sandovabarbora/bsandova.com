@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barbora Šandová</title>
+<meta name="description" content="Barbora Šandová, data & cloud engineer in Prague. Things made out of data: some you can read, some you can hear, all of them you can check.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#000; --paper:#fff; --grey:#888; --line:#e6e6e6; --panel:#f0f0f0; --soft:#cacaca;
+  --pad:clamp(16px,3vw,42px);
+  --display:"Inter Tight","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  --serif:"Fraunces",Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
+body{background:var(--paper);color:var(--ink);font:400 15px/1.45 var(--display);letter-spacing:-.005em;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+/* header: menu left, mark centre, ask right; turns black on paper once past the hero */
+.hd{position:fixed;inset:0 0 auto 0;z-index:20;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:28px var(--pad);color:#fff;mix-blend-mode:difference;pointer-events:none}
+.hd>*{pointer-events:auto}
+.menu-btn{display:flex;align-items:center;gap:14px;background:none;border:0;color:inherit;font:400 14px var(--display);letter-spacing:.02em;text-transform:uppercase;cursor:pointer;justify-self:start}
+.menu-btn i{display:block;width:26px;height:8px;border-top:1.5px solid currentColor;border-bottom:1.5px solid currentColor}
+.mark{font:500 30px/1 var(--serif);letter-spacing:-.02em}
+.mark sup{font:400 10px var(--mono);letter-spacing:0;margin-left:2px;vertical-align:top}
+.ask{justify-self:end;font:400 14px var(--display);text-transform:uppercase;letter-spacing:.02em;display:flex;align-items:center;gap:10px}
+.ask svg{width:20px;height:20px}
+
+/* full-screen menu */
+.nav{position:fixed;inset:0;z-index:30;background:#000;color:#fff;padding:110px var(--pad) var(--pad);display:grid;grid-template-columns:2fr 1fr;gap:var(--pad);opacity:0;visibility:hidden;transition:opacity .35s}
+.nav.open{opacity:1;visibility:visible}
+.nav ul{list-style:none}
+.nav li a{font:500 clamp(40px,7vw,96px)/1.02 var(--display);letter-spacing:-.045em;color:#fff;transition:color .2s}
+.nav ul:hover a{color:#555}.nav ul a:hover{color:#fff}
+.nav .side{align-self:end;font:400 13px/1.9 var(--mono);color:#888}
+.nav .side a{color:#fff}
+.close{position:absolute;top:24px;left:var(--pad);background:none;border:0;color:#fff;font:400 14px var(--display);text-transform:uppercase;letter-spacing:.02em;cursor:pointer;display:flex;gap:14px;align-items:center}
+.close b{font-size:26px;font-weight:300;line-height:1}
+
+/* hero: a still behind a stacked list of titles */
+.hero{position:relative;height:100svh;min-height:560px;overflow:hidden;background:#0b0b0b;color:#fff}
+.still{position:absolute;inset:0;opacity:0;transition:opacity .9s ease,transform 6s ease;transform:scale(1.06)}
+.still.on{opacity:1;transform:scale(1)}
+.still img{width:100%;height:100%;object-fit:cover}
+.still.photo img{filter:grayscale(1) contrast(1.15) brightness(.5);object-position:50% 22%}
+.still.chart{background:#0b0b0b}
+.still.chart img{object-fit:contain;padding:12vh 6vw 30vh 38vw;filter:grayscale(1) contrast(1.25) brightness(.85);opacity:.9}
+.hero::after{content:"";position:absolute;inset:0;background:url(../assets/grain.png);opacity:.14;mix-blend-mode:screen;pointer-events:none}
+.hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.2) 55%,rgba(0,0,0,0) 100%);pointer-events:none}
+.titles{position:absolute;z-index:2;left:var(--pad);right:var(--pad);bottom:clamp(28px,6vh,64px);list-style:none}
+.titles a{display:inline-flex;align-items:flex-start;gap:12px;font:500 clamp(34px,5.2vw,74px)/1.04 var(--display);letter-spacing:-.045em;color:#fff;transition:color .25s}
+.titles sup{font:400 13px/1 var(--mono);letter-spacing:0;margin-top:.55em;color:#fff}
+.titles:hover a,.titles.cycling a{color:rgba(255,255,255,.45)}
+.titles a.on,.titles:hover a:hover{color:#fff}
+.hero .cap{position:absolute;z-index:2;right:var(--pad);bottom:clamp(28px,6vh,64px);max-width:300px;font:400 12px/1.5 var(--mono);color:#bbb;text-align:right}
+
+/* editorial modules */
+.mod{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--pad);padding:clamp(56px,9vw,120px) var(--pad) 0}
+.mod .pic{grid-column:2/8;background:var(--panel);aspect-ratio:1/1;display:grid;place-items:center;padding:8%}
+.mod .pic img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+.mod .txt{grid-column:8/13;display:flex;flex-direction:column}
+.mod.flip .pic{grid-column:6/12;grid-row:1}
+.mod.flip .txt{grid-column:1/6;grid-row:1}
+.lbl{font:400 14px var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--grey);margin-bottom:18px}
+.big{font:500 clamp(40px,5.2vw,74px)/1.02 var(--display);letter-spacing:-.045em}
+.big em{font-style:normal;color:var(--grey)}
+.dek{margin-top:26px;max-width:40ch;font-size:17px;line-height:1.45}
+.ctas{margin-top:auto;padding-top:40px;display:flex;flex-direction:column;gap:14px}
+.cta{display:inline-flex;align-items:center;gap:32px;font:400 18px var(--display);text-transform:uppercase;letter-spacing:.01em;width:max-content}
+.cta svg{width:56px;height:14px;transition:transform .3s}
+.cta:hover svg{transform:translateX(8px)}
+
+/* a full-bleed band: the person */
+.band{position:relative;margin-top:clamp(80px,12vw,160px);height:92svh;min-height:560px;overflow:hidden;background:#111;color:#fff}
+.band img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 25%;filter:grayscale(1) contrast(1.1) brightness(.55)}
+.band::after{content:"";position:absolute;inset:0;background:url(../assets/grain.png);opacity:.14;mix-blend-mode:screen}
+.band .in{position:absolute;z-index:1;left:var(--pad);right:var(--pad);bottom:clamp(28px,6vh,64px);display:grid;grid-template-columns:repeat(12,1fr);gap:var(--pad);align-items:end}
+.band .big{grid-column:1/9}
+.band p{grid-column:9/13;font:400 15px/1.55 var(--display);color:#ddd}
+.band .lbl{color:#aaa}
+
+/* the index: every piece of work, like a film catalogue */
+.idx{padding:clamp(80px,10vw,140px) var(--pad) 0}
+.idx-h{display:flex;justify-content:space-between;align-items:end;gap:var(--pad);margin-bottom:34px;flex-wrap:wrap}
+.filters{display:flex;gap:22px;flex-wrap:wrap}
+.filters button{background:none;border:0;font:400 14px var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--grey);cursor:pointer;padding:4px 0}
+.filters button.on{color:var(--ink);box-shadow:inset 0 -1.5px 0 var(--ink)}
+.rows{list-style:none;border-top:1px solid var(--ink)}
+.rows li{border-bottom:1px solid var(--line)}
+.rows a{display:grid;grid-template-columns:1fr 220px 70px;gap:var(--pad);align-items:baseline;padding:18px 0;transition:padding .25s,color .2s}
+.rows a:hover{padding-left:14px}
+.rows .t{font:500 clamp(22px,2.4vw,34px)/1.1 var(--display);letter-spacing:-.035em}
+.rows .c{font:400 13px var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--grey)}
+.rows .y{font:400 13px var(--mono);color:var(--grey);text-align:right}
+.rows li[hidden]{display:none}
+
+/* footer */
+.ft{margin-top:clamp(100px,12vw,180px);background:#000;color:#fff;padding:clamp(56px,7vw,96px) var(--pad) 28px}
+.ft .big{font-size:clamp(48px,9vw,140px);line-height:.95}
+.ft .big a{color:#fff}
+.ft .row{margin-top:clamp(40px,6vw,80px);display:flex;justify-content:space-between;gap:var(--pad);flex-wrap:wrap;font:400 12px var(--mono);color:#888}
+.ft .row a{color:#fff}
+.ft .row nav{display:flex;gap:22px;flex-wrap:wrap}
+
+@media (max-width:820px){
+  .mod,.mod.flip{grid-template-columns:1fr}
+  .mod .pic,.mod.flip .pic,.mod .txt,.mod.flip .txt{grid-column:1/-1;grid-row:auto}
+  .still.chart img{padding:14vh 4vw 42vh}
+  .hero .cap{display:none}
+  .band .in{grid-template-columns:1fr}
+  .band .big,.band p{grid-column:1/-1}
+  .rows a{grid-template-columns:1fr 54px}
+  .rows .c{display:none}
+  .nav{grid-template-columns:1fr}
+  .ask span{display:none}
+  .menu-btn span{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="hd">
+  <button class="menu-btn" id="open" aria-expanded="false" aria-controls="nav"><i></i><span>Menu</span></button>
+  <a class="mark" href="#top" aria-label="Barbora Šandová, home">bŠ<sup>cz</sup></a>
+  <a class="ask" href="../ask/"><span>Ask the site</span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8.5" cy="8.5" r="6.5"/><path d="M13.5 13.5 19 19"/></svg></a>
+</header>
+
+<nav class="nav" id="nav" aria-hidden="true">
+  <button class="close" id="close"><b>×</b> Close</button>
+  <ul>
+    <li><a href="#work">Work</a></li>
+    <li><a href="../texts/">Texts</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="../cv/">CV</a></li>
+    <li><a href="../ask/">Ask</a></li>
+    <li><a href="../status/">Status</a></li>
+  </ul>
+  <div class="side">
+    <div><a href="mailto:hello@bsandova.com">hello@bsandova.com</a></div>
+    <div><a href="https://github.com/sandovabarbora" rel="me">github</a> · <a href="https://www.linkedin.com/in/barbora-sandova" rel="me">linkedin</a></div>
+    <div>Prague ⇄ Berlin ⇄ Atlantic</div>
+  </div>
+</nav>
+
+<section class="hero" id="top" aria-label="Featured work">
+  <div class="still photo on" data-k="0"><img src="../assets/source-portrait.jpeg" alt=""></div>
+  <div class="still chart" data-k="1"><img src="../assets/delayed/01-five-days.svg" alt=""></div>
+  <div class="still chart" data-k="2"><img src="../assets/football/atlas-fw.svg" alt=""></div>
+  <div class="still chart" data-k="3"><img src="../assets/parking2/02-stalls.svg" alt=""></div>
+  <div class="still chart" data-k="4"><img src="../assets/icu/01-trajectories.svg" alt=""></div>
+  <div class="still chart" data-k="5"><img src="../assets/surf/01-ericeira-92-days.svg" alt=""></div>
+  <ul class="titles" id="titles">
+    <li><a href="../texts/delayed" data-k="1">Delayed All the Time<sup>2025</sup></a></li>
+    <li><a href="../texts/football" data-k="2">Player Pool Atlas<sup>2026</sup></a></li>
+    <li><a href="../texts/prague-parking" data-k="3">Parking, Measured<sup>2026</sup></a></li>
+    <li><a href="../texts/icu" data-k="4">The Label Says Deteriorating<sup>2026</sup></a></li>
+    <li><a href="../texts/surf" data-k="5">Not Worth the Flight<sup>live</sup></a></li>
+  </ul>
+  <p class="cap" id="cap">Barbora Šandová makes things out of data. Some you can read, some you can hear, all of them you can check.</p>
+</section>
+
+<main id="work">
+  <article class="mod">
+    <div class="pic"><img src="../assets/delayed/01-five-days.svg" alt="Five days of Prague transit delays, one key per day"></div>
+    <div class="txt">
+      <p class="lbl">Sound &amp; making</p>
+      <h2 class="big">Delayed All the Time. <em>On Time, Occasionally.</em></h2>
+      <p class="dek">Prague transit played as disco: five days, five keys; the later the buses, the higher the city sings.</p>
+      <div class="ctas">
+        <a class="cta" href="https://sandovabarbora.github.io/delayed-all-the-time/"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Listen now</a>
+        <a class="cta" href="../texts/delayed"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Read</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="mod flip">
+    <div class="pic"><img src="../assets/parking2/02-stalls.svg" alt="Parking stalls lost to longer cars"></div>
+    <div class="txt">
+      <p class="lbl">Cities &amp; transport · a series of three</p>
+      <h2 class="big">How many parking spaces Prague lost <em>to bigger cars</em></h2>
+      <p class="dek">About 2 745 stalls since 2012, because cars got longer, not wider. Then the same question on 2.5 million registrations, then next to the permits.</p>
+      <div class="ctas">
+        <a class="cta" href="../texts/prague-parking"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Read part I</a>
+        <a class="cta" href="../texts/prague-parking-2"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Part II</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="mod">
+    <div class="pic"><img src="../assets/football/atlas-fw.svg" alt="Player pool atlas, forwards"></div>
+    <div class="txt">
+      <p class="lbl">Sport · data science</p>
+      <h2 class="big">Player Pool Atlas</h2>
+      <p class="dek">Who a country produces, per capita, compared with its peers. Same method twice: hockey, then football.</p>
+      <div class="ctas">
+        <a class="cta" href="../texts/football"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Football</a>
+        <a class="cta" href="../texts/hockey"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Hockey</a>
+      </div>
+    </div>
+  </article>
+
+  <section class="band" id="about">
+    <img src="../assets/source-portrait-2.jpeg" alt="Barbora Šandová with Largo">
+    <div class="in">
+      <div><p class="lbl">About</p><h2 class="big">Data &amp; cloud engineer by day. After hours, a cartographer without a licence.</h2></div>
+      <p>At Alma Career in Prague: a cross-cloud data platform, the code that provisions it and LLM systems over the warehouse that get measured before they get trusted. Before that, production ML at Golemio and forensic analytics at EY. Thesis on Prague transit delays, IES Director's Award, 2026. Lives with Varinka and Largo, surfs in Portugal when the forecast allows. <a href="../cv/" style="color:#fff;text-decoration:underline">CV</a></p>
+    </div>
+  </section>
+
+  <section class="idx" aria-label="All work">
+    <div class="idx-h">
+      <h2 class="big">All work</h2>
+      <div class="filters" id="filters">
+        <button class="on" data-f="all">All</button>
+        <button data-f="ds">Data science</button>
+        <button data-f="de">Data engineering</button>
+        <button data-f="ai">ML &amp; AI</button>
+        <button data-f="make">Sound &amp; making</button>
+      </div>
+    </div>
+    <ul class="rows" id="rows">
+      <li data-tags="make ds"><a href="../texts/delayed"><span class="t">Delayed All the Time</span><span class="c">Sound &amp; making</span><span class="y">2025</span></a></li>
+      <li data-tags="ds"><a href="../texts/thesis"><span class="t">Persistence Dynamics and Welfare Costs of Transit Delays</span><span class="c">Thesis · award</span><span class="y">2026</span></a></li>
+      <li data-tags="ds"><a href="../texts/prague-parking"><span class="t">How many parking spaces Prague lost</span><span class="c">Data science</span><span class="y">2026</span></a></li>
+      <li data-tags="ds"><a href="../texts/prague-parking-2"><span class="t">Parking II: the fleet, measured</span><span class="c">Data science</span><span class="y">2026</span></a></li>
+      <li data-tags="ds"><a href="../texts/prague-parking-3"><span class="t">Parking III: count, not size</span><span class="c">Data science</span><span class="y">2026</span></a></li>
+      <li data-tags="ds ai"><a href="../texts/hockey"><span class="t">Player Pool Atlas · hockey</span><span class="c">Sport</span><span class="y">2026</span></a></li>
+      <li data-tags="ds ai"><a href="../texts/football"><span class="t">Player Pool Atlas · football</span><span class="c">Sport</span><span class="y">2026</span></a></li>
+      <li data-tags="ai"><a href="../texts/quaesitor/"><span class="t">Quaesitor</span><span class="c">ML &amp; AI</span><span class="y">2026</span></a></li>
+      <li data-tags="ai de"><a href="../watch/"><span class="t">Model release watch</span><span class="c">Monthly · live</span><span class="y">live</span></a></li>
+      <li data-tags="ai ds"><a href="../texts/silent-detector"><span class="t">Can a wrong number be seen coming?</span><span class="c">ML &amp; AI</span><span class="y">2026</span></a></li>
+      <li data-tags="ds ai"><a href="../texts/brand-reflection"><span class="t">Brand Reflection Series</span><span class="c">Claims, checked</span><span class="y">2026</span></a></li>
+      <li data-tags="ds ai"><a href="../texts/icu"><span class="t">The label says deteriorating</span><span class="c">Claims, checked</span><span class="y">2026</span></a></li>
+      <li data-tags="ds de"><a href="../texts/surf"><span class="t">Not worth the flight</span><span class="c">Forecasts, verified</span><span class="y">live</span></a></li>
+      <li data-tags="ds de"><a href="../texts/weather"><span class="t">Weather, checked</span><span class="c">Forecasts, verified</span><span class="y">live</span></a></li>
+      <li data-tags="make"><a href="../atlantic/"><span class="t">The Atlantic, played</span><span class="c">Sound &amp; making</span><span class="y">live</span></a></li>
+      <li data-tags="make ai"><a href="../texts/filmrunner"><span class="t">FilmRunner · the living call sheet</span><span class="c">Built to be used</span><span class="y">2025</span></a></li>
+      <li data-tags="ai"><a href="../texts/second-brain"><span class="t">A wiki that an agent keeps</span><span class="c">ML &amp; AI</span><span class="y">2026</span></a></li>
+      <li data-tags="de"><a href="../texts/quotecheck"><span class="t">How to catch a fabricated quote</span><span class="c">Data engineering</span><span class="y">2026</span></a></li>
+      <li data-tags="ai de"><a href="../ask/"><span class="t">Ask the site. It shows its work.</span><span class="c">Live</span><span class="y">2026</span></a></li>
+      <li data-tags="ai de"><a href="../texts/sitewitness"><span class="t">An agent that shows its work</span><span class="c">Data engineering</span><span class="y">2026</span></a></li>
+      <li data-tags="de"><a href="../texts/cutover"><span class="t">How to prove a cutover</span><span class="c">Data engineering</span><span class="y">2026</span></a></li>
+      <li data-tags="ai de"><a href="../texts/ai-over-data"><span class="t">AI over data, measured</span><span class="c">By day</span><span class="y">2025</span></a></li>
+      <li data-tags="de ai"><a href="../texts/engineering"><span class="t">The platform is code. So is the trust.</span><span class="c">By day</span><span class="y">2021</span></a></li>
+      <li data-tags="de"><a href="../status/"><span class="t">Six jobs, no server</span><span class="c">Live</span><span class="y">live</span></a></li>
+      <li data-tags=""><a href="../library/"><span class="t">What the work was read against</span><span class="c">Library</span><span class="y">2026</span></a></li>
+    </ul>
+  </section>
+</main>
+
+<footer class="ft" id="contact">
+  <h2 class="big"><a href="mailto:hello@bsandova.com">hello@<br>bsandova.com</a></h2>
+  <div class="row">
+    <span>Barbora Šandová · Prague 50.08° N 14.43° E</span>
+    <nav><a href="https://github.com/sandovabarbora" rel="me">github</a><a href="https://www.linkedin.com/in/barbora-sandova" rel="me">linkedin</a><a href="../cv/">cv</a><a href="../changelog/">changelog</a></nav>
+  </div>
+</footer>
+
+<script>
+(() => {
+  // hero: hover or focus a title to swap the still; otherwise cycle slowly
+  const stills = [...document.querySelectorAll('.still')];
+  const titles = document.getElementById('titles');
+  const links = [...titles.querySelectorAll('a')];
+  const show = k => {
+    stills.forEach(s => s.classList.toggle('on', s.dataset.k === String(k)));
+    links.forEach(a => a.classList.toggle('on', a.dataset.k === String(k)));
+  };
+  let i = 0, timer = null;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const cycle = () => { if (reduce) return; timer = setInterval(() => { i = i % links.length + 1; titles.classList.add('cycling'); show(i); }, 4200); };
+  links.forEach(a => {
+    a.addEventListener('mouseenter', () => { clearInterval(timer); titles.classList.remove('cycling'); show(a.dataset.k); });
+    a.addEventListener('focus', () => { clearInterval(timer); show(a.dataset.k); });
+  });
+  titles.addEventListener('mouseleave', () => { links.forEach(a => a.classList.remove('on')); show(0); cycle(); });
+  cycle();
+
+  // menu
+  const nav = document.getElementById('nav'), open = document.getElementById('open');
+  const set = v => { nav.classList.toggle('open', v); nav.setAttribute('aria-hidden', String(!v)); open.setAttribute('aria-expanded', String(v)); };
+  open.addEventListener('click', () => set(true));
+  document.getElementById('close').addEventListener('click', () => set(false));
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => set(false)));
+  addEventListener('keydown', e => { if (e.key === 'Escape') set(false); });
+
+  // index filters
+  const rows = [...document.querySelectorAll('#rows li')];
+  document.querySelectorAll('#filters button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('#filters button').forEach(x => x.classList.toggle('on', x === b));
+    rows.forEach(r => { r.hidden = b.dataset.f !== 'all' && !r.dataset.tags.split(' ').includes(b.dataset.f); });
+  }));
+})();
+</script>
+</body>
+</html>
