@@ -56,7 +56,7 @@ body::after{display:none}
 
 /* chips, buttons, tables: black on white */
 .chip{border-color:#000!important;color:#000!important;background:#fff!important;border-radius:0!important}
-.chip.hot,.play,button.on{background:#000!important;color:#fff!important;border-color:#000!important}
+.chip.hot,button.on{background:#000!important;color:#fff!important;border-color:#000!important}
 .tbl th{color:#888}
 .tbl td b{color:#000}
 .tbl .hi{color:#000;font-weight:500}
@@ -115,3 +115,24 @@ input,textarea,select{font-family:var(--sans)}
 
 /* style.css sets overflow-x:hidden on html and body, which turns off position:sticky; clip crops the same without it */
 html,body{overflow-x:clip!important}
+
+/* Quaesitor archive pages (ported from quaesitor.eu): same type as the rest of the site */
+body:has(.q-note),body:has(.q-note) [style*="Space Grotesk"]{font-family:var(--sans)!important}
+body:has(.q-note) main p,body:has(.q-note) main li{text-align:left!important;hyphens:manual!important;-webkit-hyphens:manual!important;letter-spacing:-.003em!important}
+body:has(.q-note) main h1{font:500 clamp(40px,5.4vw,80px)/.96 var(--sans)!important;letter-spacing:-.05em!important}
+body:has(.q-note) main h2{font-family:var(--sans)!important;font-weight:500!important;letter-spacing:-.035em!important}
+.q-note{font:400 12px/1.4 var(--sans)!important;letter-spacing:.02em!important;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:10px var(--pad)!important}
+.q-back{padding:24px var(--pad)!important;font:400 14px var(--sans)!important;text-transform:uppercase;letter-spacing:.02em}
+body:has(.q-note) main.article{padding:clamp(40px,6vw,88px) var(--pad) clamp(48px,6vw,96px)!important}
+body:has(.q-note) main p,body:has(.q-note) main li{max-width:72ch}
+
+/* article heads: the facts table starts level with the title, not wherever the deck ends */
+.text-head{align-items:start}
+.text-head .facts{align-self:start;margin-top:clamp(6px,1vw,14px)}
+.facts dd small{font-size:12px;color:#666}
+@media (max-width:600px){.facts div{grid-template-columns:1fr;gap:4px}.facts dd,.facts dd small{text-align:left}}
+/* one call-to-action style: the arrow link used on the front page */
+.play{display:inline-flex!important;align-items:center;gap:22px;background:none!important;color:#000!important;border:0!important;padding:0!important;font:400 17px/1 var(--sans)!important;letter-spacing:.01em!important;text-transform:uppercase}
+.play::before{content:"";width:56px;height:1.3px;background:currentColor;flex:none}
+/* wide archive figures scroll sideways on phones instead of being cut off */
+body:has(.q-note) main [style*="grid-template-columns"],body:has(.q-note) main table{max-width:100%;overflow-x:auto}

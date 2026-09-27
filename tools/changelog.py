@@ -120,7 +120,7 @@ def render(items: list[dict]) -> str:
 </style>
 </head>
 <body>
-<div class="top"><b><a href="../">bsandova.com</a></b><nav><a href="../#works">Projects</a><a href="../#about">About</a><a href="../#contact">Contact</a></nav><span class="tr">changelog · en</span></div>
+<div class="top"><b><a href="../" aria-label="bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">changelog · en</span></div>
 <article class="text">
 <header class="text-head">
   <p class="kicker">Changelog · every commit since {first} · generated from git at build time</p>

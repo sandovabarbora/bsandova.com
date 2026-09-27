@@ -1,0 +1,44 @@
+"""One top bar for every subpage: the bŠ mark and the same five links, with paths relative to each page.
+
+Rewrites the <div class="top"> brand and nav in every tracked page, and in the page templates of the generators
+(tools/changelog.py, tools/quaesitor_texts.py, tools/port_quaesitor.py), so a regenerated page keeps the same bar.
+The page label (<span class="tr">) is left alone.
+
+Usage:
+    python3 tools/topbar.py
+"""
+
+import re
+import subprocess
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+LINKS = [("#work", "Work"), ("#works", "All work"), ("#about", "About"), ("ask/", "Ask"), ("#contact", "Contact")]
+BAR = re.compile(r'(<div class="top">)<b><a href="([^"]*)">[^<]*</a></b><nav>.*?</nav>')
+SKIP = ("variants/", "tools/", "a24/", "assets/", "classic.html", "index.html")
+
+
+def bar(home: str) -> str:
+    links = "".join(f'<a href="{home}{h}"{" class=\"ask-link\"" if h == "ask/" else ""}>{t}</a>' for h, t in LINKS)
+    return f'<b><a href="{home}" aria-label="bsandova.com, home">bŠ</a></b><nav>{links}</nav>'
+
+
+def rewrite(text: str) -> str:
+    return BAR.sub(lambda m: m.group(1) + bar(m.group(2)), text)
+
+
+def main() -> None:
+    files = subprocess.run(["git", "ls-files", "*.html"], cwd=ROOT, capture_output=True, text=True).stdout.split()
+    targets = [f for f in files if not f.startswith(SKIP) and f not in SKIP]
+    targets += ["tools/changelog.py", "tools/quaesitor_texts.py", "tools/port_quaesitor.py"]
+    for f in targets:
+        path = ROOT / f
+        old = path.read_text()
+        new = rewrite(old)
+        if new != old:
+            path.write_text(new)
+            print(f)
+
+
+if __name__ == "__main__":
+    main()
