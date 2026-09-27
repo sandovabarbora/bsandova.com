@@ -1,0 +1,68 @@
+/* bsandova.com — the A24 layer for every page except the classic front page.
+   Loaded after style.css and text.css: remaps the shared tokens (paper white, ink black, one grotesk)
+   and restyles the shared furniture (top bar, article head, headings, tables, chips). Page-specific
+   inline styles keep working because they read the same tokens. */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap");
+
+:root{
+  --bg:#fff;--bg-2:#f0f0f0;--fg:#111;--fg-2:#888;--line:#e6e6e6;--hot:#000;--coral:#000;--sea:#000;
+  --sans:"Inter Tight","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --serif:"Inter Tight","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mark:"Fraunces",Georgia,serif;
+  --pad:clamp(16px,3vw,42px);
+}
+html{background:#fff}
+body{background:#fff;color:var(--fg);font-family:var(--sans);letter-spacing:-.005em;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+::selection{background:#000;color:#fff}
+/* the dark theme's screen-blended grain speckles black type on paper */
+body::after{display:none}
+
+/* top bar: sticky, white, A24 type */
+.top{position:sticky;top:0;z-index:40;height:auto;padding:22px var(--pad);background:rgba(255,255,255,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line);font:400 13px/1 var(--sans);letter-spacing:.02em;text-transform:uppercase;color:#000}
+.top b{color:#000;font-weight:400}
+.top>b,.top>b a,.top>span:first-child b,.top>span:first-child b a{font:500 22px/1 var(--mark);letter-spacing:-.02em;text-transform:none;color:#000}
+.top nav{gap:clamp(16px,2.2vw,32px)}
+.top nav a{color:#000;transition:color .2s}
+.top nav:hover a{color:#aaa}.top nav a:hover{color:#000}
+.top nav a.ask-link{color:#000}
+.top .tr{color:#888;font:400 12px var(--mono);letter-spacing:.02em;text-transform:none}
+.top .tr a{color:#000}
+
+/* article head: label, huge title, deck, facts */
+.text{padding:clamp(40px,7vw,96px) var(--pad) clamp(64px,8vw,120px)}
+.text-head{margin:0 calc(-1*var(--pad)) clamp(40px,5vw,72px);padding:0 var(--pad) clamp(32px,4vw,56px);gap:clamp(24px,3vw,48px) clamp(32px,4vw,64px);border-bottom:1px solid #000}
+.kicker{font:400 14px var(--sans);letter-spacing:.02em;text-transform:uppercase;color:var(--fg-2)}
+.text-head h1{font:500 clamp(48px,7.2vw,112px)/.94 var(--sans);font-variation-settings:normal;letter-spacing:-.05em;color:#000}
+.text-head h1 em{font-style:normal;font-weight:500;letter-spacing:-.05em;color:#8a8a8a}
+.deck{font:400 clamp(19px,1.6vw,24px)/1.35 var(--sans);letter-spacing:-.01em;color:#111}
+.facts{border-top:1px solid #000}
+.facts dt{font:400 12px var(--sans);letter-spacing:.04em;color:#888}
+.facts dd{font:500 clamp(26px,2.4vw,36px)/1 var(--sans);letter-spacing:-.04em;color:#000}
+.facts dd small{font:400 11px var(--mono);letter-spacing:.02em;text-transform:none;color:#888}
+
+/* body copy and headings */
+.text h2{font:500 clamp(32px,3.6vw,56px)/1 var(--sans);letter-spacing:-.045em;color:#000;margin:clamp(40px,5vw,72px) 0 clamp(16px,2vw,28px)}
+.text h3{font:500 clamp(22px,2vw,30px)/1.1 var(--sans);letter-spacing:-.03em;color:#000}
+.text p{font:400 17px/1.6 var(--sans);letter-spacing:-.003em;color:#111}
+.text p b,.text p strong{color:#000;font-weight:500}
+.text p a,.text li a{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em}
+.text figure img{border:0}
+.text figcaption,.text-foot,.text-foot p{font-family:var(--mono);color:#888;letter-spacing:.02em;text-transform:none}
+.text figcaption b,.text-foot a,.cite a,.refs li::marker{color:#000}
+.text-foot{border-top:1px solid #000}
+.back a{font:400 14px var(--sans);letter-spacing:.02em;text-transform:uppercase;text-decoration:none}
+
+/* chips, buttons, tables: black on white */
+.chip{border-color:#000!important;color:#000!important;background:#fff!important;border-radius:0!important}
+.chip.hot,.play,button.on{background:#000!important;color:#fff!important;border-color:#000!important}
+.tbl th{color:#888}
+.tbl td b{color:#000}
+.tbl .hi{color:#000;font-weight:500}
+input,textarea,select{font-family:var(--sans)}
+
+@media (max-width:820px){
+  .top{padding:16px var(--pad)}
+  .text-head h1{font-size:clamp(40px,11vw,64px)}
+}
