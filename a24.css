@@ -92,3 +92,10 @@ input,textarea,select{font-family:var(--sans)}
 
 .shot{background-image:var(--bg)}
 @media (max-width:900px){.shot{background-image:var(--bg-s,var(--bg))}}
+
+/* page transitions: photographs morph from the front page into their article; everything else cross-fades */
+@media (prefers-reduced-motion:no-preference){
+  @view-transition{navigation:auto}
+  ::view-transition-old(root),::view-transition-new(root){animation-duration:.45s}
+  ::view-transition-group(*){animation-duration:.6s;animation-timing-function:cubic-bezier(.19,1,.22,1)}
+}
