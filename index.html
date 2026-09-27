@@ -125,32 +125,12 @@ img{display:block;max-width:100%}
 .ft .row a{color:#fff}
 .ft .row nav{display:flex;gap:22px;flex-wrap:wrap}
 
-/* posters: one per study, A24-style billing; shown as the object on each feature stage */
-.poster{container-type:inline-size;display:block;aspect-ratio:2/3;background:var(--bg);color:var(--fg);position:relative;overflow:hidden;transition:transform .6s cubic-bezier(.19,1,.22,1),box-shadow .6s}
-.poster .pi{position:absolute;inset:0;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto 1fr auto auto auto auto;justify-items:center;text-align:center;padding:6cqw 7cqw 5cqw}
-.poster:hover{transform:translateY(-8px);box-shadow:0 28px 60px -24px rgba(0,0,0,.45)}
-.poster::after{content:"";position:absolute;inset:0;background:url(assets/grain.png);opacity:.10;mix-blend-mode:overlay;pointer-events:none}
-.poster .bill{font:500 3cqw/1 var(--display);letter-spacing:.32em;text-transform:uppercase}
-.poster .art{align-self:stretch;justify-self:stretch;margin:5cqw -7cqw 4cqw;background-repeat:no-repeat}
-.poster .art.inv{filter:invert(1)}
-.poster .art.num{display:grid;place-items:center}
-.poster .art.num span{font:500 17cqw/.86 var(--display);letter-spacing:-.06em;width:min-content;text-align:left}
-.poster .pt{font:500 var(--ts,12.5cqw)/.9 var(--serif);letter-spacing:-.02em;text-transform:uppercase}
-.poster .tag{margin-top:3.5cqw;font:italic 500 4.2cqw/1.2 var(--serif);max-width:80%}
-.poster .credits{margin-top:5cqw;font:500 2.35cqw/1.22 var(--display);text-transform:uppercase;letter-spacing:.01em;opacity:.78;max-width:92%}
-.poster .date{margin-top:3cqw;font:400 2.6cqw/1 var(--mono);letter-spacing:.14em;text-transform:uppercase}
-.still.pstill{display:grid;place-items:start end;padding:11vh 7vw 0 0}
-.still.pstill .poster{width:min(28vw,44vh);box-shadow:0 40px 90px -30px rgba(0,0,0,.8);transform:rotate(1.2deg)}
-.peek.pp{width:230px;aspect-ratio:2/3;background:none}
 .peek img[hidden]{display:none}
-.peek .poster{width:230px;pointer-events:none}
-/* A24-scale features: a big grey stage with the poster as the object, a huge title beside it */
+/* A24-scale features (unused layout kept for the classic grid) */
 .feat{display:grid;grid-template-columns:minmax(0,54fr) minmax(0,46fr);gap:clamp(24px,4vw,64px);padding:clamp(60px,9vh,110px) var(--pad) 0 clamp(16px,6.8vw,98px);align-items:stretch}
 .feat.flip{grid-template-columns:minmax(0,46fr) minmax(0,54fr);padding:clamp(60px,9vh,110px) clamp(16px,6.8vw,98px) 0 var(--pad)}
 .feat.flip .stage{order:2}
 .stage{background:#f0f0f0;height:min(86svh,64vw);display:grid;place-items:center;overflow:hidden}
-.stage .poster{height:76%;width:auto;aspect-ratio:2/3;box-shadow:0 30px 70px -28px rgba(0,0,0,.45);transition:transform 1.2s cubic-bezier(.19,1,.22,1)}
-.stage:hover .poster{transform:translateY(-10px) rotate(-.6deg)}
 .feat .side{display:flex;flex-direction:column;justify-content:space-between;padding:clamp(4px,1.4vh,18px) 0 clamp(8px,2vh,24px)}
 .feat .big{font-size:clamp(46px,5.6vw,96px)}
 .feat .dek{max-width:34ch;font-size:clamp(16px,1.25vw,19px)}
@@ -171,21 +151,15 @@ img{display:block;max-width:100%}
   .feat .side{gap:28px}
   .sb-now{text-align:left}
 }
-/* films: a full-bleed data still per study, huge title over it, the poster as a companion */
+/* films: a full-bleed photograph per study, huge title over it */
 .film{position:relative;height:100svh;min-height:640px;margin-top:14px;background:var(--tint,#080808);color:#fff;overflow:hidden}
 .film:first-of-type{margin-top:clamp(80px,10vh,120px)}
-.film canvas.datastill{position:absolute;inset:0;width:100%;height:100%}
 .film::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(0deg,rgba(0,0,0,.78) 0%,rgba(0,0,0,.25) 45%,rgba(0,0,0,0) 70%),linear-gradient(90deg,rgba(0,0,0,.45),rgba(0,0,0,0) 60%);pointer-events:none}
 .film::after{content:"";position:absolute;inset:0;z-index:1;background:url(assets/grain.png);opacity:.13;mix-blend-mode:screen;pointer-events:none}
 .film-in{position:absolute;z-index:2;left:var(--pad);right:var(--pad);bottom:clamp(28px,6vh,64px);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--pad);align-items:end}
 .film .lbl{color:#b5b5b5}
 .film .dek{color:#d8d8d8;max-width:46ch;margin-top:clamp(16px,2.4vh,28px)}
 .film .ctas{padding-top:clamp(20px,3vh,36px);flex-direction:row;flex-wrap:wrap;gap:14px 44px}
-.film-poster{display:block;width:clamp(150px,15vw,250px);transform:rotate(1.2deg);transition:transform .8s cubic-bezier(.19,1,.22,1)}
-.film-poster:hover{transform:rotate(0) translateY(-8px)}
-.film-poster .poster{width:100%;box-shadow:0 30px 70px -20px rgba(0,0,0,.8)}
-.still.data canvas{position:absolute;inset:0;width:100%;height:100%}
-@media (max-width:820px){.film-in{grid-template-columns:1fr}.film-poster{display:none}.film{min-height:560px}}
 /* photographic stills: black and white with one colour held */
 .shot{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.03);transition:transform 8s ease}
 .film:hover .shot,.seaband:hover .shot{transform:scale(1.08)}
@@ -207,6 +181,7 @@ img{display:block;max-width:100%}
 .hero-prog{position:absolute;z-index:3;left:0;right:0;bottom:0;height:2px;background:rgba(255,255,255,.18)}
 .hero-prog i{display:block;height:100%;width:calc(var(--p) * 100%);background:#fff}
 @media (prefers-reduced-motion:reduce){.still.shot{translate:none}}
+@media (max-width:820px){.film-in{grid-template-columns:1fr}.film{min-height:560px}}
 /* header clock */
 .hd .right{justify-self:end;display:flex;align-items:center;gap:28px}
 .clock{font:400 12px var(--mono);letter-spacing:.02em;opacity:.8}
@@ -222,9 +197,6 @@ img{display:block;max-width:100%}
 .rv{opacity:0;transform:translateY(48px);transition:opacity 1s ease,transform 1.2s cubic-bezier(.19,1,.22,1)}
 .rv.in{opacity:1;transform:none}
 /* typographic panel */
-.pic.type{background:#000;color:#fff;align-content:end;justify-items:start;padding:7%}
-.pic.type b{font:500 clamp(44px,6.4vw,104px)/.9 var(--display);letter-spacing:-.05em}
-.pic.type span{margin-top:18px;font:400 13px/1.5 var(--mono);color:#999;max-width:36ch}
 /* now strip */
 .now{padding:clamp(80px,10vw,140px) var(--pad) 0}
 .now-g{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink)}
@@ -505,23 +477,10 @@ img{display:block;max-width:100%}
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold: .12});
   document.querySelectorAll('.rv').forEach(el => io.observe(el));
 
-  // posters: reuse the same poster in the hero and the cursor preview
-  document.querySelectorAll('.still.pstill').forEach(st => {
-    const src = document.getElementById('p-' + st.dataset.poster);
-    if (src) { const c = src.cloneNode(true); c.removeAttribute('id'); c.setAttribute('tabindex', '-1'); c.setAttribute('aria-hidden', 'true'); st.appendChild(c); }
-  });
-
-  // index: a still follows the cursor over rows that have one
+  // index: a photograph follows the cursor over rows that have one
   const peek = document.getElementById('peek'), pimg = peek.querySelector('img');
-  document.querySelectorAll('#rows li[data-img], #rows li[data-poster]').forEach(li => {
-    li.addEventListener('mouseenter', () => {
-      peek.querySelectorAll('.poster').forEach(x => x.remove());
-      if (li.dataset.poster) {
-        const c = document.getElementById('p-' + li.dataset.poster).cloneNode(true); c.removeAttribute('id');
-        pimg.hidden = true; peek.classList.add('pp'); peek.appendChild(c);
-      } else { pimg.hidden = false; peek.classList.remove('pp'); pimg.src = li.dataset.img; }
-      peek.classList.add('on');
-    });
+  document.querySelectorAll('#rows li[data-img]').forEach(li => {
+    li.addEventListener('mouseenter', () => { pimg.src = li.dataset.img; peek.classList.add('on'); });
     li.addEventListener('mouseleave', () => peek.classList.remove('on'));
   });
   addEventListener('mousemove', e => { peek.style.left = e.clientX + 'px'; peek.style.top = e.clientY + 'px'; }, {passive: true});
