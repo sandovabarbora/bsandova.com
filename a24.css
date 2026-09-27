@@ -63,6 +63,12 @@ body::after{display:none}
 input,textarea,select{font-family:var(--sans)}
 
 @media (max-width:820px){
+  /* phones: keep the navigation (the old theme hid it), drop the long page label, calmer kicker */
+  .top{grid-template-columns:auto 1fr;gap:12px;padding:14px var(--pad)}
+  .top>b,.top>b a,.top>span:first-child b,.top>span:first-child b a{font-size:18px}
+  .top nav{display:flex!important;justify-content:flex-start;margin-left:auto;gap:12px;font-size:11px;min-width:0;overflow-x:auto;scrollbar-width:none}
+  .top .tr{display:none}
+  .text-head .kicker,p.kicker{font-size:11px!important;letter-spacing:.06em;line-height:1.5}
   .top{padding:16px var(--pad)}
   .text-head h1{font-size:clamp(40px,11vw,64px)}
 }
