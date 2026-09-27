@@ -199,12 +199,14 @@ img{display:block;max-width:100%}
 .seaband .shot::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,0) 20%),linear-gradient(0deg,rgba(0,0,0,.8) 0%,rgba(0,0,0,.25) 45%,rgba(0,0,0,0) 70%)}
 /* hero: horizontal parallax while scrolling out of it (--p goes 0 -> 1 across the hero) */
 .hero{--p:0}
-.titles li{translate:calc(var(--p) * var(--dx,0) * 1vw) 0;will-change:translate}
-.titles li:nth-child(1){--dx:-34}.titles li:nth-child(2){--dx:22}.titles li:nth-child(3){--dx:-16}
-.titles li:nth-child(4){--dx:28}.titles li:nth-child(5){--dx:-24}
-.still.shot{translate:calc(var(--p) * 7vw) 0;scale:1.1}
-.hero .cap{translate:calc(var(--p) * 18vw) 0}
-@media (prefers-reduced-motion:reduce){.titles li,.still.shot,.hero .cap{translate:none}}
+.still.shot{translate:calc(var(--p) * 4vw) 0;scale:1.12}
+.hero-track{position:relative;height:calc(100svh + 5 * 70svh)}
+.hero-track>.hero{position:sticky;top:0}
+.titles a.on{color:#fff}
+.titles a.on sup{color:#fff}
+.hero-prog{position:absolute;z-index:3;left:0;right:0;bottom:0;height:2px;background:rgba(255,255,255,.18)}
+.hero-prog i{display:block;height:100%;width:calc(var(--p) * 100%);background:#fff}
+@media (prefers-reduced-motion:reduce){.still.shot{translate:none}}
 /* header clock */
 .hd .right{justify-self:end;display:flex;align-items:center;gap:28px}
 .clock{font:400 12px var(--mono);letter-spacing:.02em;opacity:.8}
@@ -279,7 +281,7 @@ img{display:block;max-width:100%}
   </div>
 </nav>
 
-<section class="hero" id="top" aria-label="Featured work">
+<section class="hero-track" id="top" aria-label="Featured work"><div class="hero">
   <div class="still photo on" data-k="0"><img src="assets/source-portrait.jpeg" alt=""></div>
   <div class="still shot" data-k="1" style="background-image:url(assets/photo/delayed-red.jpg)"></div>
   <div class="still shot" data-k="2" style="background-image:url(assets/photo/atlas.jpg)"></div>
@@ -294,7 +296,8 @@ img{display:block;max-width:100%}
     <li><a href="texts/surf" data-k="5">Not Worth the Flight<sup id="swell-sup">live</sup></a></li>
   </ul>
   <p class="cap" id="cap">Barbora Šandová makes things out of data. Some you can read, some you can hear, all of them you can check.</p>
-</section>
+  <div class="hero-prog" aria-hidden="true"><i></i></div>
+</div></section>
 
 <main id="work">
   <section class="film rv" style="--tint:#150707" aria-label="Delayed All the Time">
@@ -426,8 +429,20 @@ img{display:block;max-width:100%}
     a.addEventListener('mouseenter', () => { clearInterval(timer); titles.classList.remove('cycling'); show(a.dataset.k); });
     a.addEventListener('focus', () => { clearInterval(timer); show(a.dataset.k); });
   });
-  titles.addEventListener('mouseleave', () => { links.forEach(a => a.classList.remove('on')); show(0); cycle(); });
-  cycle();
+  const track = document.querySelector('.hero-track');
+  let scrolled = false;
+  const fromScroll = () => {
+    const p = Math.min(1, Math.max(0, scrollY / (track.offsetHeight - innerHeight)));
+    track.querySelector('.hero').style.setProperty('--p', p.toFixed(4));
+    if (scrollY < 40) { if (scrolled) { scrolled = false; titles.classList.remove('cycling'); show(0); cycle(); } return; }
+    if (!scrolled) { scrolled = true; clearInterval(timer); }
+    titles.classList.add('cycling');
+    show(Math.min(links.length, 1 + Math.floor(p * links.length)));
+  };
+  let sTick = 0;
+  addEventListener('scroll', () => { if (!sTick) sTick = requestAnimationFrame(() => { sTick = 0; fromScroll(); }); }, {passive: true});
+  titles.addEventListener('mouseleave', () => { if (scrolled) return fromScroll(); links.forEach(a => a.classList.remove('on')); show(0); cycle(); });
+  cycle(); fromScroll();
 
   // entrance
   requestAnimationFrame(() => document.body.classList.add('ready'));
@@ -485,9 +500,6 @@ img{display:block;max-width:100%}
   addEventListener('scroll', solid, {passive: true}); solid();
 
   // hero parallax: progress through the hero drives horizontal offsets in CSS
-  let pTick = 0;
-  const heroPar = () => { pTick = 0; hero.style.setProperty('--p', Math.min(1, Math.max(0, scrollY / hero.offsetHeight)).toFixed(4)); };
-  addEventListener('scroll', () => { if (!pTick) pTick = requestAnimationFrame(heroPar); }, {passive: true}); heroPar();
 
   // scroll reveal
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold: .12});
