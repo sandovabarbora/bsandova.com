@@ -32,6 +32,10 @@ COLOURS = {
     "rgba(28,26,23,.16)": "rgba(220,220,214,.16)",
 }
 
+# 2026-09-28: the site moved to a light A24 theme; the dark port colours map onto paper
+PAPER = {'#161616': '#FFFFFF', '#1F1F1F': '#F4F4F2', '#232323': '#EFEFED', '#2A2A27': '#E6E6E6', '#3A3A36': '#E0E0DC', '#DCDCD6': '#111111', '#C8C8C2': '#2B2B28', '#B0B0AA': '#555550', '#9A9A94': '#6B6B66', '#8A8A84': '#777770', '#5A5A56': '#9A9A94', '#F2F2EE': '#000000', '#D6FF3A': '#000000', '#BFE82F': '#333333', '#FF6A3D': '#C8322A', '#B78CFF': '#8A5A00', '#7ED9A6': '#1F7A4F', 'rgba(220,220,214,.2)': 'rgba(0,0,0,.14)', 'rgba(22,22,22,.9)': 'rgba(255,255,255,.92)', 'rgba(220,220,214,.08)': 'rgba(0,0,0,.05)', 'rgba(22,22,22,.8)': 'rgba(255,255,255,.85)', 'rgba(220,220,214,.16)': 'rgba(0,0,0,.1)'}
+COLOURS = {k: PAPER.get(v, v) for k, v in COLOURS.items()}
+
 PAGES = {  # source → (slug, kicker label)
     "method": ("method", "Quaesitor · methodology"),
     "documentation-finding": ("documentation-finding", "Quaesitor · measurement 01"),
@@ -54,7 +58,7 @@ HEAD = """<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{desc}">
-<meta name="theme-color" content="#161616">
+<meta name="theme-color" content="#ffffff">
 <link rel="canonical" href="https://bsandova.com/texts/quaesitor/{slug}.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -65,16 +69,16 @@ HEAD = """<!doctype html>
 /* quaesitor.eu stylesheet, palette remapped; see tools/port_quaesitor.py */
 {css}
 /* port overrides: gutter alignment, this site's chrome */
-body{{background:#161616}}
+body{{background:#FFFFFF}}
 main.article{{max-width:none !important;margin:0 !important;padding:2rem 1.5rem 3rem !important}}
 main.article > .wrap{{max-width:60rem}}
 .cell.c-correct,.cell.c-silent,.cell.c-implausible,.cell.c-invalid{{display:inline-block;width:1rem;height:1rem;background:currentColor;border:0;padding:0;vertical-align:-.15em;margin-right:.4rem}}
 .grid .cell{{display:block;width:100%;min-width:.9rem;height:1.25rem;margin:0}}
-.q-title{{font-family:'Fraunces',serif;font-weight:700;font-variation-settings:'opsz' 144;font-size:clamp(2rem,4.5vw,4rem);line-height:1;letter-spacing:-.04em;margin:0 0 1.5rem;color:#F2F2EE;max-width:18em}}
-.q-note{{margin:0;padding:.7rem 1.5rem;border-bottom:1px solid #3A3A36;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#8A8A84}}
-.q-note b{{color:#D6FF3A;font-weight:400}}
-.q-back{{padding:1.5rem;border-top:1px solid #3A3A36;font-family:'JetBrains Mono',monospace;font-size:11px}}
-.q-back a{{color:#D6FF3A}}
+.q-title{{font-family:'Fraunces',serif;font-weight:700;font-variation-settings:'opsz' 144;font-size:clamp(2rem,4.5vw,4rem);line-height:1;letter-spacing:-.04em;margin:0 0 1.5rem;color:#000000;max-width:18em}}
+.q-note{{margin:0;padding:.7rem 1.5rem;border-bottom:1px solid #E0E0DC;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#777770}}
+.q-note b{{color:#000000;font-weight:400}}
+.q-back{{padding:1.5rem;border-top:1px solid #E0E0DC;font-family:'JetBrains Mono',monospace;font-size:11px}}
+.q-back a{{color:#000000}}
 @media (max-width:64rem){{main.article{{padding:1.5rem 1rem 2.5rem !important}}}}
 </style>
 </head>
