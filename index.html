@@ -71,7 +71,7 @@ img{display:block;max-width:100%}
 .titles{position:absolute;z-index:2;left:var(--pad);right:var(--pad);bottom:clamp(28px,6vh,64px);list-style:none}
 .titles a{display:inline-flex;align-items:flex-start;gap:12px;font:500 clamp(34px,5.2vw,74px)/1.04 var(--display);letter-spacing:-.045em;color:#fff;transition:color .25s}
 .titles sup{font:400 13px/1 var(--mono);letter-spacing:0;margin-top:.55em;color:#fff}
-.titles:hover a,.titles.cycling a{color:rgba(255,255,255,.45)}
+.titles:hover a,.titles.cycling a{color:rgba(255,255,255,.6)}
 .titles a.on,.titles:hover a:hover{color:#fff}
 .hero .cap{position:absolute;z-index:2;right:var(--pad);bottom:clamp(28px,6vh,64px);max-width:300px;font:400 12px/1.5 var(--mono);color:#bbb;text-align:right}
 
@@ -203,6 +203,11 @@ img{display:block;max-width:100%}
 .where a.on{color:#fff;translate:-6px 0}
 .where a.on::after{content:"";width:14px;height:1px;background:#fff;align-self:center}
 @media (max-width:1100px){.where{display:none}}
+/* keyboard focus: visible on photographs and on paper */
+:focus-visible{outline:2px solid #fff;outline-offset:3px;box-shadow:0 0 0 5px rgba(0,0,0,.6)}
+main :focus-visible,.ft :focus-visible{outline-color:currentColor}
+.skip{position:fixed;z-index:50;left:var(--pad);top:-60px;background:#000;color:#fff;padding:10px 14px;font:400 14px var(--display)}
+.skip:focus{top:12px}
 /* header clock */
 .hd .right{justify-self:end;display:flex;align-items:center;gap:28px}
 .clock{font:400 12px var(--mono);letter-spacing:.02em;opacity:.8}
@@ -251,6 +256,7 @@ img{display:block;max-width:100%}
 </head>
 <body>
 
+<a class="skip" href="#work">Skip to the work</a>
 <header class="hd">
   <button class="menu-btn" id="open" aria-expanded="false" aria-controls="nav"><i></i><span>Menu</span></button>
   <a class="mark" href="#top" aria-label="Barbora Šandová, home">bŠ<sup>cz</sup></a>
@@ -528,11 +534,23 @@ img{display:block;max-width:100%}
 
   // menu
   const nav = document.getElementById('nav'), open = document.getElementById('open');
-  const set = v => { nav.classList.toggle('open', v); nav.setAttribute('aria-hidden', String(!v)); open.setAttribute('aria-expanded', String(v)); };
+  const set = v => {
+    nav.classList.toggle('open', v); nav.setAttribute('aria-hidden', String(!v)); open.setAttribute('aria-expanded', String(v));
+    nav.inert = !v;  // closed menu is out of the tab order
+    if (v) nav.querySelector('#close').focus(); else if (nav.contains(document.activeElement) || document.activeElement === document.body) open.focus();
+  };
+  nav.inert = true;
+  // keep Tab inside the open menu
+  nav.addEventListener('keydown', e => {
+    if (e.key !== 'Tab') return;
+    const f = [...nav.querySelectorAll('button, a[href]')], first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
   open.addEventListener('click', () => set(true));
   document.getElementById('close').addEventListener('click', () => set(false));
   nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => set(false)));
-  addEventListener('keydown', e => { if (e.key === 'Escape') set(false); });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && nav.classList.contains('open')) set(false); });
 
   // index filters
   const rows = [...document.querySelectorAll('#rows li')];
