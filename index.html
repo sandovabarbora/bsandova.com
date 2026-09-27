@@ -197,6 +197,14 @@ img{display:block;max-width:100%}
 .hero::before{background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,0) 20%),linear-gradient(0deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.15) 55%,rgba(0,0,0,0) 75%),linear-gradient(90deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,0) 60%)}
 .film::before{background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,0) 20%),linear-gradient(0deg,rgba(0,0,0,.8) 0%,rgba(0,0,0,.25) 45%,rgba(0,0,0,0) 70%),linear-gradient(90deg,rgba(0,0,0,.45),rgba(0,0,0,0) 60%)!important}
 .seaband .shot::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,0) 20%),linear-gradient(0deg,rgba(0,0,0,.8) 0%,rgba(0,0,0,.25) 45%,rgba(0,0,0,0) 70%)}
+/* hero: horizontal parallax while scrolling out of it (--p goes 0 -> 1 across the hero) */
+.hero{--p:0}
+.titles li{translate:calc(var(--p) * var(--dx,0) * 1vw) 0;will-change:translate}
+.titles li:nth-child(1){--dx:-34}.titles li:nth-child(2){--dx:22}.titles li:nth-child(3){--dx:-16}
+.titles li:nth-child(4){--dx:28}.titles li:nth-child(5){--dx:-24}
+.still.shot{translate:calc(var(--p) * 7vw) 0;scale:1.1}
+.hero .cap{translate:calc(var(--p) * 18vw) 0}
+@media (prefers-reduced-motion:reduce){.titles li,.still.shot,.hero .cap{translate:none}}
 /* header clock */
 .hd .right{justify-self:end;display:flex;align-items:center;gap:28px}
 .clock{font:400 12px var(--mono);letter-spacing:.02em;opacity:.8}
@@ -475,6 +483,11 @@ img{display:block;max-width:100%}
     hd.classList.toggle('solid', !(under && under.closest(dark)));
   };
   addEventListener('scroll', solid, {passive: true}); solid();
+
+  // hero parallax: progress through the hero drives horizontal offsets in CSS
+  let pTick = 0;
+  const heroPar = () => { pTick = 0; hero.style.setProperty('--p', Math.min(1, Math.max(0, scrollY / hero.offsetHeight)).toFixed(4)); };
+  addEventListener('scroll', () => { if (!pTick) pTick = requestAnimationFrame(heroPar); }, {passive: true}); heroPar();
 
   // scroll reveal
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold: .12});
