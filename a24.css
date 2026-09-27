@@ -89,3 +89,6 @@ input,textarea,select{font-family:var(--sans)}
 .film .credit{position:absolute;z-index:3;right:var(--pad);bottom:16px;margin:0;font:400 11px var(--mono);color:rgba(255,255,255,.6);text-align:right}
 .film .credit a{text-decoration:underline;color:inherit}
 .film.film-page::before{background:linear-gradient(0deg,rgba(0,0,0,.35),rgba(0,0,0,0) 30%)!important}
+
+.shot{background-image:var(--bg)}
+@media (max-width:900px){.shot{background-image:var(--bg-s,var(--bg))}}
