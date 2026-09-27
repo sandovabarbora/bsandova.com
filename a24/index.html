@@ -123,9 +123,7 @@ img{display:block;max-width:100%}
 .ft .row a{color:#fff}
 .ft .row nav{display:flex;gap:22px;flex-wrap:wrap}
 
-/* posters: one per study, A24-style billing */
-.showing{padding:clamp(80px,10vw,140px) var(--pad) 0}
-.posters{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.4vw,36px)}
+/* posters: one per study, A24-style billing; shown as the object on each feature stage */
 .poster{container-type:inline-size;display:block;aspect-ratio:2/3;background:var(--bg);color:var(--fg);position:relative;overflow:hidden;transition:transform .6s cubic-bezier(.19,1,.22,1),box-shadow .6s}
 .poster .pi{position:absolute;inset:0;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto 1fr auto auto auto auto;justify-items:center;text-align:center;padding:6cqw 7cqw 5cqw}
 .poster:hover{transform:translateY(-8px);box-shadow:0 28px 60px -24px rgba(0,0,0,.45)}
@@ -144,8 +142,33 @@ img{display:block;max-width:100%}
 .peek.pp{width:230px;aspect-ratio:2/3;background:none}
 .peek img[hidden]{display:none}
 .peek .poster{width:230px;pointer-events:none}
-@media (max-width:1000px){.posters{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:560px){.posters{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 calc(-1*var(--pad));padding:0 var(--pad) 12px}.poster{flex:0 0 78%;scroll-snap-align:center}}
+/* A24-scale features: a big grey stage with the poster as the object, a huge title beside it */
+.feat{display:grid;grid-template-columns:minmax(0,54fr) minmax(0,46fr);gap:clamp(24px,4vw,64px);padding:clamp(60px,9vh,110px) var(--pad) 0 clamp(16px,6.8vw,98px);align-items:stretch}
+.feat.flip{grid-template-columns:minmax(0,46fr) minmax(0,54fr);padding:clamp(60px,9vh,110px) clamp(16px,6.8vw,98px) 0 var(--pad)}
+.feat.flip .stage{order:2}
+.stage{background:#f0f0f0;height:min(86svh,64vw);display:grid;place-items:center;overflow:hidden}
+.stage .poster{height:76%;width:auto;aspect-ratio:2/3;box-shadow:0 30px 70px -28px rgba(0,0,0,.45);transition:transform 1.2s cubic-bezier(.19,1,.22,1)}
+.stage:hover .poster{transform:translateY(-10px) rotate(-.6deg)}
+.feat .side{display:flex;flex-direction:column;justify-content:space-between;padding:clamp(4px,1.4vh,18px) 0 clamp(8px,2vh,24px)}
+.feat .big{font-size:clamp(46px,5.6vw,96px)}
+.feat .dek{max-width:34ch;font-size:clamp(16px,1.25vw,19px)}
+.seaband{position:relative;margin-top:clamp(80px,12vh,140px);height:100svh;min-height:600px;background:#050b11;color:#fff;overflow:hidden}
+.seaband canvas{position:absolute;inset:0;width:100%;height:100%}
+.seaband::after{content:"";position:absolute;inset:0;background:url(../assets/grain.png);opacity:.14;mix-blend-mode:screen;pointer-events:none}
+.sb-in{position:absolute;z-index:1;left:var(--pad);right:var(--pad);bottom:clamp(28px,6vh,64px)}
+.sb-in .lbl{color:#9fb0bd}
+.huge{font:500 clamp(64px,11.5vw,190px)/.88 var(--display);letter-spacing:-.055em}
+.sb-row{margin-top:clamp(24px,4vh,48px);display:flex;justify-content:space-between;align-items:flex-end;gap:var(--pad);flex-wrap:wrap}
+.sb-row .ctas{margin:0;padding:0}
+.sb-now{text-align:right;font:400 13px/1.5 var(--mono);color:#9fb0bd}
+.sb-now b{display:block;font:500 clamp(48px,6vw,96px)/1 var(--display);letter-spacing:-.05em;color:#fff}
+@media (max-width:820px){
+  .feat,.feat.flip{grid-template-columns:1fr;padding:56px var(--pad) 0}
+  .feat.flip .stage{order:0}
+  .stage{height:auto;aspect-ratio:4/5;margin:0 calc(-1*var(--pad))}
+  .feat .side{gap:28px}
+  .sb-now{text-align:left}
+}
 /* header clock */
 .hd .right{justify-self:end;display:flex;align-items:center;gap:28px}
 .clock{font:400 12px var(--mono);letter-spacing:.02em;opacity:.8}
@@ -238,17 +261,49 @@ img{display:block;max-width:100%}
 </section>
 
 <main id="work">
-  <section class="showing" aria-label="Now showing">
-    <div class="idx-h"><h2 class="big">Now showing</h2><p class="lbl" style="margin:0">six studies · each one checked</p></div>
-    <div class="posters">
-      <a class="poster" id="p-delayed" href="../texts/delayed" style="--bg:#c8322a;--fg:#fff"><span class="pi"><span class="bill">Barbora Šandová</span><div class="art" style="background-image:url(../assets/a24/delayed.svg);background-size:112% auto;background-position:50% 100%"></div><span class="pt">Delayed<br>All the Time</span><span class="tag">When the city stops keeping up, the track lifts into the chorus.</span><span class="credits">Five real days of Prague public transport · the metro is the kick drum · the buses are the chords, out of tune exactly as far as they run late · 121 M stop events · Web Audio, no samples</span><span class="date">2025</span></span></a>
-      <a class="poster" id="p-parking" href="../texts/prague-parking" style="--bg:#ece7db;--fg:#111"><span class="pi"><span class="bill">Barbora Šandová</span><div class="art inv" style="background-image:url(../assets/a24/parking.svg);background-size:96% auto;background-position:50% 82%"></div><span class="pt">Parking,<br>Measured</span><span class="tag">Cars got longer, not wider.</span><span class="credits">A series in three parts · about 2 745 stalls lost since 2012 · 16 874 parking polygons · 2.5 million registered cars · code and data published</span><span class="date">2026</span></span></a>
-      <a class="poster" id="p-atlas" href="../texts/football" style="--bg:#133b29;--fg:#f3efe4"><span class="pi"><span class="bill">Barbora Šandová</span><div class="art" style="background-image:url(../assets/a24/football.svg);background-size:250% auto;background-position:14% 52%"></div><span class="pt">Player<br>Pool Atlas</span><span class="tag">When did the train leave, and who else missed it.</span><span class="credits">Hockey · football · six nations: Czechia, Denmark, England, Germany, Norway, Spain · 31 seasons in the long run · 317 tests</span><span class="date">2026</span></span></a>
-      <a class="poster" id="p-icu" href="../texts/icu" style="--bg:#cddbe4;--fg:#0e1a22;--ts:9.4cqw"><span class="pi"><span class="bill">Barbora Šandová</span><div class="art inv" style="background-image:url(../assets/a24/icu.svg);background-size:112% auto;background-position:52% 50%"></div><span class="pt">The Label Says<br>Deteriorating</span><span class="tag">The patient is getting better.</span><span class="credits">Intensive care · 622 patients · fourteen readings of the P/F ratio each · one outcome label pointing the wrong way · three classifiers, none better</span><span class="date">2026</span></span></a>
-      <a class="poster" id="p-surf" href="../texts/surf" style="--bg:#0c2336;--fg:#e8eef2"><span class="pi"><span class="bill">Barbora Šandová</span><div class="art" style="background-image:url(../assets/a24/surf.svg);background-size:104% auto;background-position:50% 0%"></div><span class="pt">Not Worth<br>the Flight</span><span class="tag">A page that gets better every morning.</span><span class="credits">Surf forecast verification · Ericeira · Peniche · Sagres · three wave models stored daily · started 14 September 2026</span><span class="date">Now playing</span></span></a>
-      <a class="poster" id="p-thesis" href="../texts/thesis" style="--bg:#0a0a0a;--fg:#fff"><span class="pi"><span class="bill">Barbora Šandová</span><div class="art num"><span>121<br>000<br>000</span></div><span class="pt">Persistence</span><span class="tag">Delays remember. A traveller can watch them.</span><span class="credits">Master's thesis · Institute of Economic Studies, Charles University · supervisor Luboš Hanus · 121 million vehicle-location records from Prague · IES Director's Award</span><span class="date">2026</span></span></a>
+  <article class="feat rv">
+    <a class="stage" href="../texts/delayed" aria-label="Delayed All the Time"><div class="poster" id="p-delayed" style="--bg:#c8322a;--fg:#fff"><span class="pi"><span class="bill">Barbora Šandová</span><div class="art" style="background-image:url(../assets/a24/delayed.svg);background-size:112% auto;background-position:50% 100%"></div><span class="pt">Delayed<br>All the Time</span><span class="tag">When the city stops keeping up, the track lifts into the chorus.</span><span class="credits">Five real days of Prague public transport · the metro is the kick drum · the buses are the chords, out of tune exactly as far as they run late · 121 M stop events · Web Audio, no samples</span><span class="date">2025</span></span></div></a>
+    <div class="side">
+      <div><p class="lbl">Sound &amp; making · Prague</p><h2 class="big">Delayed All the Time</h2><p class="dek">Five real days of Prague public transport, played as disco by the transport system itself. The metro is the kick drum; the buses go out of tune exactly as far as they run late.</p></div>
+      <div class="ctas"><a class="cta" href="https://sandovabarbora.github.io/delayed-all-the-time/"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Listen now</a><a class="cta" href="../texts/delayed"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Read</a></div>
+    </div>
+  </article>
+  <article class="feat rv flip">
+    <a class="stage" href="../texts/prague-parking" aria-label="Parking, Measured"><div class="poster" id="p-parking" style="--bg:#ece7db;--fg:#111"><span class="pi"><span class="bill">Barbora Šandová</span><div class="art inv" style="background-image:url(../assets/a24/parking.svg);background-size:96% auto;background-position:50% 82%"></div><span class="pt">Parking,<br>Measured</span><span class="tag">Cars got longer, not wider.</span><span class="credits">A series in three parts · about 2 745 stalls lost since 2012 · 16 874 parking polygons · 2.5 million registered cars · code and data published</span><span class="date">2026</span></span></div></a>
+    <div class="side">
+      <div><p class="lbl">Cities · a series in three parts</p><h2 class="big">Parking, Measured</h2><p class="dek">About 2&nbsp;745 stalls lost since 2012, because cars got longer, not wider. Then the same question on 2.5 million registrations, then next to the permits.</p></div>
+      <div class="ctas"><a class="cta" href="../texts/prague-parking"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Part I</a><a class="cta" href="../texts/prague-parking-2"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Part II</a><a class="cta" href="../texts/prague-parking-3"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Part III</a></div>
+    </div>
+  </article>
+  <section class="seaband" aria-label="Not Worth the Flight, live">
+    <canvas id="sea2" aria-hidden="true"></canvas>
+    <div class="sb-in">
+      <p class="lbl">The Atlantic · Ericeira · live</p>
+      <h2 class="huge">Not Worth<br>the Flight</h2>
+      <div class="sb-row"><div class="ctas"><a class="cta" href="../texts/surf"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Read</a><a class="cta" href="../surf/"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>The live page</a></div><p class="sb-now"><b id="sb-h">—</b><span id="sb-s">swell right now</span></p></div>
     </div>
   </section>
+  <article class="feat rv">
+    <a class="stage" href="../texts/football" aria-label="Player Pool Atlas"><div class="poster" id="p-atlas" style="--bg:#133b29;--fg:#f3efe4"><span class="pi"><span class="bill">Barbora Šandová</span><div class="art" style="background-image:url(../assets/a24/football.svg);background-size:250% auto;background-position:14% 52%"></div><span class="pt">Player<br>Pool Atlas</span><span class="tag">When did the train leave, and who else missed it.</span><span class="credits">Hockey · football · six nations: Czechia, Denmark, England, Germany, Norway, Spain · 31 seasons in the long run · 317 tests</span><span class="date">2026</span></span></div></a>
+    <div class="side">
+      <div><p class="lbl">Sport · six nations</p><h2 class="big">Player Pool Atlas</h2><p class="dek">Who a country produces, per capita, compared with its peers: the same five questions asked of six nations the same way. Hockey first, then football.</p></div>
+      <div class="ctas"><a class="cta" href="../texts/football"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Football</a><a class="cta" href="../texts/hockey"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Hockey</a></div>
+    </div>
+  </article>
+  <article class="feat rv flip">
+    <a class="stage" href="../texts/icu" aria-label="The Label Says Deteriorating"><div class="poster" id="p-icu" style="--bg:#cddbe4;--fg:#0e1a22;--ts:9.4cqw"><span class="pi"><span class="bill">Barbora Šandová</span><div class="art inv" style="background-image:url(../assets/a24/icu.svg);background-size:112% auto;background-position:52% 50%"></div><span class="pt">The Label Says<br>Deteriorating</span><span class="tag">The patient is getting better.</span><span class="credits">Intensive care · 622 patients · fourteen readings of the P/F ratio each · one outcome label pointing the wrong way · three classifiers, none better</span><span class="date">2026</span></span></div></a>
+    <div class="side">
+      <div><p class="lbl">Claims, checked · intensive care</p><h2 class="big">The Label Says Deteriorating</h2><p class="dek">622 patients, fourteen readings each, one label to predict. The first thing the data said was that the label points the wrong way. The report says so.</p></div>
+      <div class="ctas"><a class="cta" href="../texts/icu"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Read</a><a class="cta" href="../assets/icu/report.pdf"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>The report</a></div>
+    </div>
+  </article>
+  <article class="feat rv">
+    <a class="stage" href="../texts/thesis" aria-label="Persistence"><div class="poster" id="p-thesis" style="--bg:#0a0a0a;--fg:#fff"><span class="pi"><span class="bill">Barbora Šandová</span><div class="art num"><span>121<br>000<br>000</span></div><span class="pt">Persistence</span><span class="tag">Delays remember. A traveller can watch them.</span><span class="credits">Master's thesis · Institute of Economic Studies, Charles University · supervisor Luboš Hanus · 121 million vehicle-location records from Prague · IES Director's Award</span><span class="date">2026</span></span></div></a>
+    <div class="side">
+      <div><p class="lbl">Master's thesis · IES Director's Award 2026</p><h2 class="big">Persistence</h2><p class="dek">On 121 million vehicle-location records from Prague, delays are persistent, the persistence sits in a state a traveller can watch, and standard appraisal overstates the cost of unreliability.</p></div>
+      <div class="ctas"><a class="cta" href="../texts/thesis"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Read</a></div>
+    </div>
+  </article>
 
   <section class="now rv" aria-label="Now">
     <div class="idx-h"><h2 class="big">Now</h2><p class="lbl" style="margin:0">live · no server, six scheduled jobs</p></div>
@@ -291,7 +346,7 @@ img{display:block;max-width:100%}
       <li data-tags="ai ds"><a href="../texts/silent-detector"><span class="t">Can a wrong number be seen coming?</span><span class="c">ML &amp; AI</span><span class="y">2026</span></a></li>
       <li data-tags="ds ai" data-img="../assets/a24/brand.svg"><a href="../texts/brand-reflection"><span class="t">Brand Reflection Series</span><span class="c">Claims, checked</span><span class="y">2026</span></a></li>
       <li data-tags="ds ai" data-poster="icu"><a href="../texts/icu"><span class="t">The label says deteriorating</span><span class="c">Claims, checked</span><span class="y">2026</span></a></li>
-      <li data-tags="ds de" data-poster="surf"><a href="../texts/surf"><span class="t">Not worth the flight</span><span class="c">Forecasts, verified</span><span class="y">live</span></a></li>
+      <li data-tags="ds de" data-img="../assets/a24/surf.svg"><a href="../texts/surf"><span class="t">Not worth the flight</span><span class="c">Forecasts, verified</span><span class="y">live</span></a></li>
       <li data-tags="ds de"><a href="../texts/weather"><span class="t">Weather, checked</span><span class="c">Forecasts, verified</span><span class="y">live</span></a></li>
       <li data-tags="make"><a href="../atlantic/"><span class="t">The Atlantic, played</span><span class="c">Sound &amp; making</span><span class="y">live</span></a></li>
       <li data-tags="make ai"><a href="../texts/filmrunner"><span class="t">FilmRunner · the living call sheet</span><span class="c">Built to be used</span><span class="y">2025</span></a></li>
@@ -342,8 +397,8 @@ img{display:block;max-width:100%}
 
   // live sea: amplitude from the real swell at Ericeira, period from its period (as on the old front page)
   const SEA = {h: 0.9, p: 10};
-  const sc = document.getElementById('sea'), sx = sc.getContext('2d'); let st = 0;
-  const sea = () => {
+  let st = 0;
+  const seaOn = (sc, base) => { const sx = sc.getContext('2d'); const draw = () => {
     const dpr = devicePixelRatio, W = sc.width = sc.clientWidth * dpr, H = sc.height = sc.clientHeight * dpr;
     sx.clearRect(0, 0, W, H);
     const A = Math.min(H * .22, (SEA.h / 2.5) * H * .22), L = W / (3 + 18 / SEA.p), k = 2 * Math.PI / L, w = 2 * Math.PI / (SEA.p * .35);
@@ -351,14 +406,16 @@ img{display:block;max-width:100%}
       sx.beginPath(); sx.strokeStyle = '#fff'; sx.lineWidth = (n ? 1 : 1.6) * dpr; sx.globalAlpha = n ? .5 - n * .045 : .95;
       for (let i = 0; i <= W; i += 3 * dpr) {
         const ph = k * i - w * st + n * .7;
-        const y = H * .38 - A * (Math.sin(ph) + .28 * Math.sin(2 * ph + .4)) * (1 - n * .08) + n * H * .045;
+        const y = H * base - A * (Math.sin(ph) + .28 * Math.sin(2 * ph + .4)) * (1 - n * .08) + n * H * .045;
         i ? sx.lineTo(i, y) : sx.moveTo(i, y);
       }
       sx.stroke();
     }
-    st += 1 / 60; requestAnimationFrame(sea);
-  };
-  requestAnimationFrame(sea);
+    requestAnimationFrame(draw);
+  }; requestAnimationFrame(draw); };
+  (function tickSea() { st += 1 / 60; requestAnimationFrame(tickSea); })();
+  seaOn(document.getElementById('sea'), .38);
+  seaOn(document.getElementById('sea2'), .3);
   const dirs = ['N','NE','E','SE','S','SW','W','NW'];
   fetch('https://marine-api.open-meteo.com/v1/marine?latitude=38.96&longitude=-9.42&current=swell_wave_height,swell_wave_period,swell_wave_direction')
     .then(r => r.json()).then(j => {
@@ -366,6 +423,8 @@ img{display:block;max-width:100%}
       const d = dirs[Math.round(c.swell_wave_direction / 45) % 8];
       document.getElementById('swell-sup').textContent = c.swell_wave_height.toFixed(1) + ' m';
       document.getElementById('now-sea').textContent = c.swell_wave_height.toFixed(1) + ' m';
+      document.getElementById('sb-h').textContent = c.swell_wave_height.toFixed(1) + ' m';
+      document.getElementById('sb-s').textContent = Math.round(c.swell_wave_period) + ' s · ' + d + ' · ' + (c.swell_wave_height >= 1.2 ? 'book it' : 'not worth the flight');
       document.getElementById('now-sea-s').innerHTML = '<b>' + Math.round(c.swell_wave_period) + ' s · ' + d + '</b> · ' + (c.swell_wave_height >= 1.2 ? 'book it' : 'not worth the flight');
     }).catch(() => { document.getElementById('now-sea-s').textContent = 'offline, so: writing'; });
   fetch('https://api.open-meteo.com/v1/forecast?latitude=50.09&longitude=14.42&current=temperature_2m,wind_speed_10m&timezone=Europe%2FPrague')
