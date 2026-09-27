@@ -112,3 +112,6 @@ input,textarea,select{font-family:var(--sans)}
 /* keyboard focus */
 :focus-visible{outline:2px solid currentColor;outline-offset:3px}
 .film :focus-visible{outline-color:#fff}
+
+/* style.css sets overflow-x:hidden on html and body, which turns off position:sticky; clip crops the same without it */
+html,body{overflow-x:clip!important}
