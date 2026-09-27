@@ -165,8 +165,8 @@ img{display:block;max-width:100%}
 .shot{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.03);transition:transform 8s ease}
 .film:hover .shot,.seaband:hover .shot{transform:scale(1.08)}
 .still.shot{background-size:cover;background-position:center}
-.credit{position:absolute;z-index:3;right:var(--pad);top:clamp(80px,11vh,110px);font:400 11px var(--mono);color:rgba(255,255,255,.55)}
 .credit a{text-decoration:underline;text-underline-offset:.15em}
+.film .credit,.seaband .credit{position:absolute;z-index:3;right:var(--pad);top:auto;bottom:16px;height:auto;margin:0;font:400 11px var(--mono);background:rgba(0,0,0,.42);padding:3px 8px;color:rgba(255,255,255,.85);border-radius:2px}
 .peek img{object-fit:cover;padding:0}
 /* legibility over photographs: dark at the top (header) and bottom (titles) */
 .hero::before{background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,0) 20%),linear-gradient(0deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.15) 55%,rgba(0,0,0,0) 75%),linear-gradient(90deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,0) 60%)}
@@ -193,8 +193,16 @@ img{display:block;max-width:100%}
   ::view-transition-old(root),::view-transition-new(root){animation-duration:.45s}
   ::view-transition-group(*){animation-duration:.6s;animation-timing-function:cubic-bezier(.19,1,.22,1)}
 }
-/* credits stay readable on light photographs */
-.credit{background:rgba(0,0,0,.42);padding:3px 8px;color:rgba(255,255,255,.85)!important;border-radius:2px}
+/* where am I: a small index of the film sections, shown while they are on screen */
+.where{position:fixed;z-index:15;right:var(--pad);top:50%;translate:0 -50%;opacity:0;pointer-events:none;transition:opacity .4s}
+.where.show{opacity:1;pointer-events:auto}
+.where ol{list-style:none;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.where a{display:flex;flex-direction:row-reverse;gap:10px;align-items:baseline;justify-content:flex-start;font:400 12px/1.2 var(--mono);color:rgba(255,255,255,.5);text-shadow:0 1px 8px rgba(0,0,0,.5);transition:color .25s,translate .25s}
+.where a span{font-size:10px;opacity:.7}
+.where a:hover{color:#fff}
+.where a.on{color:#fff;translate:-6px 0}
+.where a.on::after{content:"";width:14px;height:1px;background:#fff;align-self:center}
+@media (max-width:1100px){.where{display:none}}
 /* header clock */
 .hd .right{justify-self:end;display:flex;align-items:center;gap:28px}
 .clock{font:400 12px var(--mono);letter-spacing:.02em;opacity:.8}
@@ -284,22 +292,23 @@ img{display:block;max-width:100%}
   <div class="hero-prog" aria-hidden="true"><i></i></div>
 </div></section>
 
+<nav class="where" id="where" aria-label="Sections"><ol><li><a href="#f-delayed-all-the-time" data-t="f-delayed-all-the-time"><span>01</span>Delayed All the Time</a></li><li><a href="#f-parking" data-t="f-parking"><span>02</span>Parking, Measured</a></li><li><a href="#f-not-worth-the-flight" data-t="f-not-worth-the-flight"><span>03</span>Not Worth the Flight</a></li><li><a href="#f-player-pool-atlas" data-t="f-player-pool-atlas"><span>04</span>Player Pool Atlas</a></li><li><a href="#f-the-label-says-deteriorating" data-t="f-the-label-says-deteriorating"><span>05</span>The Label Says Deteriorating</a></li><li><a href="#f-persistence" data-t="f-persistence"><span>06</span>Persistence</a></li></ol></nav>
 <main id="work">
-  <section class="film rv" style="--tint:#150707" aria-label="Delayed All the Time">
+  <section class="film rv" style="--tint:#150707" id="f-delayed-all-the-time" aria-label="Delayed All the Time">
     <div class="shot lazy" style="view-transition-name:ph-delayed-red;--bg:url(assets/photo/delayed-red.jpg);--bg-s:url(assets/photo/delayed-red-1200.jpg)"></div>
     <div class="film-in">
       <div class="film-txt"><p class="lbl">Sound &amp; making · Prague</p><h2 class="huge">Delayed<br>All the Time</h2><p class="dek">Five real days of Prague public transport, played as disco by the transport system itself. The metro is the kick drum; the buses go out of tune exactly as far as they run late.</p><div class="ctas"><a class="cta" href="https://sandovabarbora.github.io/delayed-all-the-time/"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Listen now</a><a class="cta" href="texts/delayed"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Read</a></div></div>
     </div>
     <p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Prague_-_8986914607.jpg">Yannick Loriot</a> · CC BY 2.0</p>
   </section>
-  <section class="film rv" style="--tint:#0b0b0b" aria-label="Parking, Measured">
+  <section class="film rv" style="--tint:#0b0b0b" id="f-parking" aria-label="Parking, Measured">
     <div class="shot lazy" style="view-transition-name:ph-prague-parking;--bg:url(assets/photo/prague-parking.jpg);--bg-s:url(assets/photo/prague-parking-1200.jpg)"></div>
     <div class="film-in">
       <div class="film-txt"><p class="lbl">Cities · a series in three parts</p><h2 class="huge">Parking,<br>Measured</h2><p class="dek">About 2&nbsp;745 stalls lost since 2012, because cars got longer, not wider. Then the same question on 2.5 million registrations, then next to the permits.</p><div class="ctas"><a class="cta" href="texts/prague-parking"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Part I</a><a class="cta" href="texts/prague-parking-2"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Part II</a><a class="cta" href="texts/prague-parking-3"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Part III</a></div></div>
     </div>
     <p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Lipansk%C3%A1,_policejn%C3%AD_stanice.jpg">ŠJů</a> · CC BY-SA 3.0, colour held</p>
   </section>
-  <section class="seaband" aria-label="Not Worth the Flight, live">
+  <section class="seaband" id="f-not-worth-the-flight" aria-label="Not Worth the Flight, live">
     <div class="shot lazy" style="view-transition-name:ph-surf;--bg:url(assets/photo/surf.jpg);--bg-s:url(assets/photo/surf-1200.jpg)"></div>
     <div class="sb-in">
       <p class="lbl">The Atlantic · Ericeira · live</p>
@@ -308,21 +317,21 @@ img{display:block;max-width:100%}
     </div>
     <p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Ericeira-06-Ribeira_d%27Ilhas-2011-gje.jpg">Gerd Eichmann</a> · CC BY-SA 4.0, colour held</p>
   </section>
-  <section class="film rv" style="--tint:#04120b" aria-label="Player Pool Atlas">
+  <section class="film rv" style="--tint:#04120b" id="f-player-pool-atlas" aria-label="Player Pool Atlas">
     <div class="shot lazy" style="view-transition-name:ph-atlas;--bg:url(assets/photo/atlas.jpg);--bg-s:url(assets/photo/atlas-1200.jpg)"></div>
     <div class="film-in">
       <div class="film-txt"><p class="lbl">Sport · six nations</p><h2 class="huge">Player<br>Pool Atlas</h2><p class="dek">Who a country produces, per capita, compared with its peers: the same five questions asked of six nations the same way. Hockey first, then football.</p><div class="ctas"><a class="cta" href="texts/football"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Football</a><a class="cta" href="texts/hockey"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Hockey</a></div></div>
     </div>
     <p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:The_Peninsula_Stadium_at_night_-_Salford_City_-_Aug_24.jpg">Emessem T</a> · CC BY-SA 4.0, colour held</p>
   </section>
-  <section class="film rv" style="--tint:#07111b" aria-label="The Label Says Deteriorating">
+  <section class="film rv" style="--tint:#07111b" id="f-the-label-says-deteriorating" aria-label="The Label Says Deteriorating">
     <div class="shot lazy" style="view-transition-name:ph-icu;--bg:url(assets/photo/icu.jpg);--bg-s:url(assets/photo/icu-1200.jpg)"></div>
     <div class="film-in">
       <div class="film-txt"><p class="lbl">Claims, checked · intensive care</p><h2 class="huge">The Label Says<br>Deteriorating</h2><p class="dek">622 patients, fourteen readings each, one label to predict. The first thing the data said was that the label points the wrong way. The report says so.</p><div class="ctas"><a class="cta" href="texts/icu"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Read</a><a class="cta" href="assets/icu/report.pdf"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>The report</a></div></div>
     </div>
     <p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:20250808_Intensive_care_unit_bed.jpg">Ismael Olea</a> · CC BY 4.0, colour held</p>
   </section>
-  <section class="film rv" style="--tint:#060606" aria-label="Persistence">
+  <section class="film rv" style="--tint:#060606" id="f-persistence" aria-label="Persistence">
     <div class="shot lazy" style="view-transition-name:ph-thesis;--bg:url(assets/photo/thesis.jpg);--bg-s:url(assets/photo/thesis-1200.jpg)"></div>
     <div class="film-in">
       <div class="film-txt"><p class="lbl">Master's thesis · IES Director's Award 2026</p><h2 class="huge">Persistence</h2><p class="dek">On 121 million vehicle-location records from Prague, delays are persistent, the persistence sits in a state a traveller can watch, and standard appraisal overstates the cost of unreliability.</p><div class="ctas"><a class="cta" href="texts/thesis"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Read</a></div></div>
@@ -491,6 +500,19 @@ img{display:block;max-width:100%}
   document.querySelectorAll('.film .shot.lazy, .seaband .shot.lazy').forEach(el => lazyIO.observe(el));
   const heroRest = () => document.querySelectorAll('.still.shot.lazy').forEach(el => el.classList.remove('lazy'));
   if (document.readyState === 'complete') setTimeout(heroRest, 600); else addEventListener('load', () => setTimeout(heroRest, 600));
+
+  // where am I: highlight the film section that holds the middle of the screen
+  const where = document.getElementById('where'), wl = [...where.querySelectorAll('a')];
+  const secs = wl.map(a => document.getElementById(a.dataset.t));
+  const whereTick = () => {
+    const mid = innerHeight / 2;
+    let cur = null;
+    secs.forEach(sec => { const r = sec.getBoundingClientRect(); if (r.top <= mid && r.bottom > mid) cur = sec.id; });
+    where.classList.toggle('show', !!cur);
+    wl.forEach(a => a.classList.toggle('on', a.dataset.t === cur));
+  };
+  let wTick = 0;
+  addEventListener('scroll', () => { if (!wTick) wTick = requestAnimationFrame(() => { wTick = 0; whereTick(); }); }, {passive: true}); whereTick();
 
   // scroll reveal
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold: .12});
