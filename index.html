@@ -21,7 +21,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#000; --paper:#fff; --grey:#888; --line:#e6e6e6; --panel:#f0f0f0; --soft:#cacaca;
+  --ink:#000; --paper:#fff; --grey:#888; --grey-ink:#6e6e6e; --line:#e6e6e6; --panel:#f0f0f0; --soft:#cacaca;
   --pad:clamp(16px,3vw,42px);
   --display:"Inter Tight","Helvetica Neue",Helvetica,Arial,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,monospace;
@@ -96,15 +96,15 @@ img{display:block;max-width:100%}
 .idx{padding:clamp(80px,10vw,140px) var(--pad) 0}
 .idx-h{display:flex;justify-content:space-between;align-items:end;gap:var(--pad);margin-bottom:34px;flex-wrap:wrap}
 .filters{display:flex;gap:22px;flex-wrap:wrap}
-.filters button{background:none;border:0;font:400 14px var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--grey);cursor:pointer;padding:4px 0}
+.filters button{background:none;border:0;font:400 14px var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--grey-ink);cursor:pointer;padding:4px 0}
 .filters button.on{color:var(--ink);box-shadow:inset 0 -1.5px 0 var(--ink)}
 .rows{list-style:none;border-top:1px solid var(--ink)}
 .rows li{border-bottom:1px solid var(--line)}
 .rows a{display:grid;grid-template-columns:1fr 220px 70px;gap:var(--pad);align-items:baseline;padding:18px 0;transition:padding .25s,color .2s}
 .rows a:hover{padding-left:14px}
 .rows .t{font:500 clamp(22px,2.4vw,34px)/1.1 var(--display);letter-spacing:-.035em}
-.rows .c{font:400 13px var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--grey)}
-.rows .y{font:400 13px var(--mono);color:var(--grey);text-align:right}
+.rows .c{font:400 13px var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--grey-ink)}
+.rows .y{font:400 13px var(--mono);color:var(--grey-ink);text-align:right}
 .rows li[hidden]{display:none}
 
 /* footer */
@@ -229,9 +229,9 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
 
 <a class="skip" href="#work">Skip to the work</a>
 <header class="hd">
-  <button class="menu-btn" id="open" aria-expanded="false" aria-controls="nav"><i></i><span>Menu</span></button>
-  <a class="mark" href="#top" aria-label="Barbora Šandová, home">bŠ<sup>cz</sup></a>
-  <div class="right"><span class="clock" id="clk">Prague --:--</span><a class="ask" href="ask/"><span>Ask the site</span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8.5" cy="8.5" r="6.5"/><path d="M13.5 13.5 19 19"/></svg></a></div>
+  <button class="menu-btn" id="open" aria-expanded="false" aria-controls="nav" aria-label="Menu"><i></i><span>Menu</span></button>
+  <a class="mark" href="#top" aria-label="bŠ cz, Barbora Šandová, home">bŠ<sup>cz</sup></a>
+  <div class="right"><span class="clock" id="clk">Prague --:--</span><a class="ask" href="ask/" aria-label="Ask the site"><span>Ask the site</span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8.5" cy="8.5" r="6.5"/><path d="M13.5 13.5 19 19"/></svg></a></div>
 </header>
 
 <nav class="nav" id="nav" aria-hidden="true">
@@ -326,7 +326,7 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
   </section>
 
   <section class="band" id="about"><span id="research"></span>
-    <img src="assets/source-portrait-2.jpeg" alt="Barbora Šandová with Largo">
+    <img src="assets/source-portrait-2.jpeg" alt="Barbora Šandová with Largo" loading="lazy" decoding="async" width="1050" height="1400">
     <div class="in">
       <div><p class="lbl">About</p><h2 class="big">Data &amp; cloud engineer by day. After hours, a cartographer without a licence.</h2></div>
       <p>At Alma Career in Prague: a cross-cloud data platform, the code that provisions it and LLM systems over the warehouse that get measured before they get trusted. Before that, production ML at Golemio and forensic analytics at EY. Thesis on Prague transit delays, IES Director's Award, 2026. Lives with Varinka and Largo, surfs in Portugal when the forecast allows. <a href="cv/" style="color:#fff;text-decoration:underline">CV</a></p>

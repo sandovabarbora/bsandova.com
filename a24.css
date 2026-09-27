@@ -3,10 +3,8 @@
    and restyles the shared furniture (top bar, article head, headings, tables, chips). Page-specific
    inline styles keep working because they read the same tokens. */
 
-@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap");
-
 :root{
-  --bg:#fff;--bg-2:#f0f0f0;--fg:#111;--fg-2:#888;--line:#e6e6e6;--hot:#000;--coral:#000;--sea:#000;
+  --bg:#fff;--bg-2:#f0f0f0;--fg:#111;--fg-2:#6e6e6e;--line:#e6e6e6;--hot:#000;--coral:#000;--sea:#000;
   --sans:"Inter Tight","Helvetica Neue",Helvetica,Arial,sans-serif;
   --serif:"Inter Tight","Helvetica Neue",Helvetica,Arial,sans-serif;
   --mark:"Fraunces",Georgia,serif;
@@ -27,7 +25,7 @@ body::after{display:none}
 .top nav a{color:#000;transition:color .2s}
 .top nav:hover a{color:#aaa}.top nav a:hover{color:#000}
 .top nav a.ask-link{color:#000}
-.top .tr{color:#888;font:400 12px var(--mono);letter-spacing:.02em;text-transform:none}
+.top .tr{color:#6e6e6e;font:400 12px var(--mono);letter-spacing:.02em;text-transform:none}
 .top .tr a{color:#000}
 
 /* article head: label, huge title, deck, facts */
@@ -38,9 +36,9 @@ body::after{display:none}
 .text-head h1 em{font-style:normal;font-weight:500;letter-spacing:-.05em;color:#8a8a8a}
 .deck{font:400 clamp(19px,1.6vw,24px)/1.35 var(--sans);letter-spacing:-.01em;color:#111}
 .facts{border-top:1px solid #000}
-.facts dt{font:400 12px var(--sans);letter-spacing:.04em;color:#888}
+.facts dt{font:400 12px var(--sans);letter-spacing:.04em;color:#6e6e6e}
 .facts dd{font:500 clamp(26px,2.4vw,36px)/1 var(--sans);letter-spacing:-.04em;color:#000}
-.facts dd small{font:400 11px var(--mono);letter-spacing:.02em;text-transform:none;color:#888}
+.facts dd small{font:400 11px var(--mono);letter-spacing:.02em;text-transform:none;color:#6e6e6e}
 
 /* body copy and headings */
 .text h2{font:500 clamp(32px,3.6vw,56px)/1 var(--sans);letter-spacing:-.045em;color:#000;margin:clamp(40px,5vw,72px) 0 clamp(16px,2vw,28px)}
@@ -49,7 +47,7 @@ body::after{display:none}
 .text p b,.text p strong{color:#000;font-weight:500}
 .text p a,.text li a{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em}
 .text figure img{border:0}
-.text figcaption,.text-foot,.text-foot p{font-family:var(--mono);color:#888;letter-spacing:.02em;text-transform:none}
+.text figcaption,.text-foot,.text-foot p{font-family:var(--mono);color:#6e6e6e;letter-spacing:.02em;text-transform:none}
 .text figcaption b,.text-foot a,.cite a,.refs li::marker{color:#000}
 .text-foot{border-top:1px solid #000}
 .back a{font:400 14px var(--sans);letter-spacing:.02em;text-transform:uppercase;text-decoration:none}
@@ -57,7 +55,7 @@ body::after{display:none}
 /* chips, buttons, tables: black on white */
 .chip{border-color:#000!important;color:#000!important;background:#fff!important;border-radius:0!important}
 .chip.hot,button.on{background:#000!important;color:#fff!important;border-color:#000!important}
-.tbl th{color:#888}
+.tbl th{color:#6e6e6e}
 .tbl td b{color:#000}
 .tbl .hi{color:#000;font-weight:500}
 input,textarea,select{font-family:var(--sans)}

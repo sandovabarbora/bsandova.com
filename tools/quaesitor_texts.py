@@ -36,13 +36,14 @@ HEAD = """<!doctype html>
 <link rel="canonical" href="https://bsandova.com/texts/quaesitor/%SLUG%.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../style.css">
 <link rel="stylesheet" href="../../text.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../a24.css">
 <style>%CSS%</style>
 </head>
 <body>
-<div class="top"><b><a href="../../" aria-label="bsandova.com, home">bŠ</a></b><nav><a href="../../#work">Work</a><a href="../../#works">All work</a><a href="../../#about">About</a><a href="../../ask/" class="ask-link">Ask</a><a href="../../#contact">Contact</a></nav><span class="tr">Quaesitor · %N% of 3 · en</span></div>
+<div class="top"><b><a href="../../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../../#work">Work</a><a href="../../#works">All work</a><a href="../../#about">About</a><a href="../../ask/" class="ask-link">Ask</a><a href="../../#contact">Contact</a></nav><span class="tr">Quaesitor · %N% of 3 · en</span></div>
 <article class="text">
 """
 FOOT = """

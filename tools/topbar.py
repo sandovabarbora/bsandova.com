@@ -14,13 +14,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 LINKS = [("#work", "Work"), ("#works", "All work"), ("#about", "About"), ("ask/", "Ask"), ("#contact", "Contact")]
-BAR = re.compile(r'(<div class="top">)<b><a href="([^"]*)">[^<]*</a></b><nav>.*?</nav>')
+BAR = re.compile(r'(<div class="top">)<b><a href="([^"]*)"[^>]*>[^<]*</a></b><nav>.*?</nav>')
 SKIP = ("variants/", "tools/", "a24/", "assets/", "classic.html", "index.html")
 
 
 def bar(home: str) -> str:
     links = "".join(f'<a href="{home}{h}"{" class=\"ask-link\"" if h == "ask/" else ""}>{t}</a>' for h, t in LINKS)
-    return f'<b><a href="{home}" aria-label="bsandova.com, home">bŠ</a></b><nav>{links}</nav>'
+    return f'<b><a href="{home}" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav>{links}</nav>'
 
 
 def rewrite(text: str) -> str:
