@@ -8,4 +8,5 @@ for f in $(find . -name '*.html' -not -path './variants/*' -not -path './node_mo
   sed -E "s#(href=\"[./]*(style|text|a24)\.css)(\?v=[^\"]*)?\"#\1?v=$v\"#g" "$f" > "$f.tmp" && mv "$f.tmp" "$f"
 done
 python3 tools/changelog.py
+python3 tools/sitemap.py
 echo "stamped ?v=$v"
