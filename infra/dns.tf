@@ -39,3 +39,14 @@ resource "cloudflare_dns_record" "football" {
   proxied = false
   ttl     = 300
 }
+
+# The hockey atlas is a GitHub Pages site (repo czehockey-player-pool-atlas) with the custom domain
+# hockey.bsandova.com already set on the GitHub side; without this record the zone route serves the main site there.
+resource "cloudflare_dns_record" "hockey" {
+  zone_id = var.zone_id
+  name    = "hockey.bsandova.com"
+  type    = "CNAME"
+  content = "sandovabarbora.github.io"
+  proxied = false
+  ttl     = 300
+}

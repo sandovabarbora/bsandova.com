@@ -143,16 +143,16 @@
 <section>
 <h2>The rest of the atlas</h2>
 <p>Above the structural layer sits an applied one: a Neo4j knowledge graph of about 3 200 players across NHL, AHL, Extraliga, Liiga, SHL and the Swiss NL, with identity resolution on name, date of birth and position across sources; FAISS similarity search in the style space; historical career analogs from a corpus of 1 177 players; and per-player scouting briefs drafted by an LLM under grounding rules (names reproduced verbatim, position-filtered similarity, regular-season stats labelled as such)<sup class="cite"><a href="#r1">1</a></sup>. Every ingest that mutates the graph is preceded by a read-only merge check that computes the ids it would write and counts collisions first; that check caught a duplicate-node bug that would have created about 570 phantom players<sup class="cite"><a href="#r6">6</a></sup>.</p>
-<p>The whole pipeline is public, MIT, seed 42 for everything stochastic: <code>make install &amp;&amp; make all</code><sup class="cite"><a href="#r6">6</a></sup>. The live atlas, with interactive cluster filters, player cards and the briefs, is at <a href="https://hockey.datasimply.eu">hockey.datasimply.eu</a>, in English and Czech.</p>
+<p>The whole pipeline is public, MIT, seed 42 for everything stochastic: <code>make install &amp;&amp; make all</code><sup class="cite"><a href="#r6">6</a></sup>. The live atlas, with interactive cluster filters, player cards and the briefs, is at <a href="https://hockey.bsandova.com">hockey.datasimply.eu</a>, in English and Czech.</p>
 </section>
 
 <section class="refs" id="refs">
 <h2>References</h2>
 <ol>
-<li id="r1">Šandová, B. (2026): <a href="https://hockey.datasimply.eu">Czech Hockey · Player Pool Atlas</a>, edition 01, rendered 18 May 2026; English edition 12 September 2026. Summary, cohort tables, cluster archetypes, trajectories, limitations.</li>
+<li id="r1">Šandová, B. (2026): <a href="https://hockey.bsandova.com">Czech Hockey · Player Pool Atlas</a>, edition 01, rendered 18 May 2026; English edition 12 September 2026. Summary, cohort tables, cluster archetypes, trajectories, limitations.</li>
 <li id="r2">NHL Stats API, <a href="https://api-web.nhle.com/v1/">api-web.nhle.com/v1</a>: 2024/25 and 2025/26 rosters, <code>birth_country</code> field; peer countries computed the same way. Enrichment: <a href="https://moneypuck.com/">MoneyPuck</a> (5v5 per-60, xG); <a href="https://www.liiga.fi/">Liiga</a> season totals; <a href="https://www.hokej.cz/">hokej.cz</a> Extraliga statistics and birth dates; IIHF tournament rosters (WC 2024, WC 2025, WJC 2024, WJC 2025) via Wikipedia for the eligibility filter.</li>
 <li id="r3">Population denominators: 2024 estimates (Czechia 10.9 M); the atlas methodology note states the figure used for each country.</li>
-<li id="r4">Šandová, B. (2026): atlas <a href="https://hockey.datasimply.eu/#metodologie">Methodology</a>: Bayesian shrinkage (K = 10), PCA loadings by position and projection, sensitivity table.</li>
+<li id="r4">Šandová, B. (2026): atlas <a href="https://hockey.bsandova.com/#metodologie">Methodology</a>: Bayesian shrinkage (K = 10), PCA loadings by position and projection, sensitivity table.</li>
 <li id="r5">League multipliers informed by public NHL-equivalency comparisons: <a href="https://hockeyviz.com/">hockeyviz.com</a>; Sznajder's NHLe analyses. Approximations, tested at ±20 %.</li>
 <li id="r6"><a href="https://github.com/sandovabarbora/czehockey-player-pool-atlas">sandovabarbora/czehockey-player-pool-atlas</a>, MIT. Pipeline, graph ingest with read-only merge check, render, site build. Report snapshot 18 May 2026 (re-fetching would change the season and the numbers).</li>
 </ol>
