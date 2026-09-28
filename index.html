@@ -196,6 +196,12 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
 /* scroll reveal */
 .rv{opacity:0;transform:translateY(48px);transition:opacity 1s ease,transform 1.2s cubic-bezier(.19,1,.22,1)}
 .rv.in{opacity:1;transform:none}
+/* the photo reel runs as one black band: no paper between films, and a film fades its picture in, never the page */
+.film,.film:first-of-type,.seaband{margin-top:0}
+.film+.film,.film+.seaband,.seaband+.film{border-top:12px solid #000}
+.film.rv,.film.rv.in{opacity:1;transform:none}
+.film.rv .shot,.film.rv .film-in{opacity:0;transition:opacity 1.1s ease,transform 8s ease}
+.film.rv.in .shot,.film.rv.in .film-in{opacity:1}
 /* typographic panel */
 /* now strip */
 .now{padding:clamp(80px,10vw,140px) var(--pad) 0}
