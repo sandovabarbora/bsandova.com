@@ -823,4 +823,84 @@ before any H2 estimate is computed, or recorded as not used.
 
 ## Changes after registration
 
-(none yet)
+### 2026-09-29, before any outcome was joined
+
+**Not run.** These inputs could not be obtained before outcomes were joined, so the steps that needed them were not
+run:
+
+- **H5 ladder (ii) and (iii)**, and H5 robustness 5e (Heritage Reserve), 5f (buildable land) and 5l (line D). The
+  Urban Atlas 2012 needs a Copernicus login. The IPR/NPÚ regulatory layers and official line D station coordinates
+  were not obtained.
+- **BDL gmina construction periods (747069, 747070)**, the H6 context for H2. The BDL API refused connections on
+  28 and 29 September.
+- **H2 robustness 2h (the Little's-law band).** The Prague file shows "." for dwellings under construction in every
+  year of the window; its note 3 says the series is no longer published after 2009. The registration assumed the
+  series existed.
+- **H3 robustness 3c** (ČSÚ realised-price indices), not downloaded. **H3 robustness 3f** (annual frequency): nine
+  annual observations cannot carry the lag structure.
+- **H5 robustness 5b** (ZSJ). No 2011 population by basic settlement unit is among the registered inputs.
+
+**Operationalised.**
+
+- **H1 census reference dates** come from national census documentation compiled by the author, not from Eurostat
+  metadata. CZ, PL and AT are as registered. The following are [verify]:
+  - DE 15 May 2022, IE 3 April 2022, HU 1 October 2022;
+  - IT, SE, FI, EE and CH 31 December 2021;
+  - RO 1 December 2021, BG 7 September 2021, HR 31 August 2021, PT 19 April 2021, EL 22 October 2021,
+    CY 19 October 2021, LU 8 November 2021, MT 21 November 2021.
+
+  All other countries are dated 1 January 2021.
+- **H1 core region.** The member NUTS 3 with the highest population per km² in 2011. Eurostat `demo_r_d3area` was
+  added to the hashed inputs for this. It gives Prague CZ010, Vienna AT130 and Warsaw PL911.
+- **H1 ČSÚ-rebuilt numerator.** It uses kraj monthly completions of new family and multi-dwelling houses (`STA09B`,
+  3113 + 3114, January 2011 – 26 March 2021, with March prorated), not the municipal file (`200068-25`). Czech NUTS 3
+  regions are kraje, and the monthly series allows proration to census day.
+- **H1 within-Czechia replication.** Prague's rank among the 14 kraje on the raw annualised ČSÚ rate, without a
+  model. 14 units cannot carry the 7-parameter model.
+- **H2 point estimates.** Best of 10 starting values (μ ∈ {6, 12, 24, 36, 48} × φ ∈ {2, 8}). Bootstrap draws start
+  from the point estimate.
+- **H3 sample.** Twelve quarterly price-change lags need price data from q − 12. Prices begin in 2015 Q1, so the
+  12-lag sample is 2018 Q2 – 2024 Q4 (27 quarters, ν = round(0.4 · 27^(2/3)) = 4). The registered 35-quarter window
+  applies to a 4-lag version, which is reported alongside. The fixed-b critical value is simulated (20 000 draws).
+- **H4 inference.**
+  - WCR is the unstudentised Kline–Santos score bootstrap.
+  - The effective number of clusters uses an independence working covariance, γ_g = Σ_{i∈g} μ_i x̃_i².
+  - Common support is 242 powiats (at least one non-market start in 2012–2024).
+- **Robustness bootstraps use B = 999.** The confirmatory tests use B = 9 999.
+- **H5 robustness.** 5j uses today's PID network (tram and rail stops), not 2012's. 5c's 500 m cells take the 2011
+  density of their parent 1 km cell.
+- **Hashes.** GTFS, the 2021 grid, the metro station list and `demo_r_d3area` were added to
+  `prague-housing-files.sha256`.
+
+### 2026-09-29, after estimation
+
+- **H5 falls on Holm's threshold.** H5's decision p is 0.0252 (the WCR p; Conley's p is 0.0011), against a Holm
+  threshold of 0.025 at the second step. It is **not supported**, as registered. The Monte Carlo standard error of a
+  p-value near 0.025 with B = 9 999 is about 0.0016. The test was not re-run with another seed. The reverse test is
+  far from 5 %, so the reading is "indeterminate".
+- **H2 lag distributions.** Prague's fitted kernel is degenerate (φ̂ very large: all mass at μ̂ = 16.1 months). The
+  rest's mean lag of 5.1 months is implausibly short for building a block of flats. Relevance check R2 passes as
+  registered (μ̂ ≥ 3). The short lag is reported as a caveat: it suggests the rest's fit tracks common reporting
+  timing as well as construction.
+  - The noise ratio is 3.3 for Prague and 1.1 for the rest, so the "underpowered" wording rule is triggered. It
+    applies only to a non-supported H2, and H2 is supported.
+- **Relevance checks R1, R3 and R4 failed.**
+  - R1: the coefficient on positive population growth is −5.4.
+  - R3: the rest's cumulative response is 16.0 with a 90 % EWC interval of −22 to 54.
+  - R4: β_M = 0.09, p = 0.32.
+
+  As registered, H1, H3 and H4 are labelled **uninformative**. Their numbers are reported, and their pre-written
+  statements are shown only as what the rule would have said.
+- **H2 identification.** Prague's profile likelihood for μ is flat: the 95 % profile region runs from about 14 to
+  38 months. It is much wider than the bootstrap interval of the contrast (8.7 to 12.6 months). The article reports
+  both and states that Prague's lag is weakly identified. The contrast's sign holds in every H2 specification.
+- **H2 robustness 2d and 2e.**
+  - In the exponential-kernel and COVID-excluded variants, a few bootstrap draws diverge (μ̂ unbounded), and the
+    bootstrap standard error explodes.
+  - Their SE-based p-values (0.50) carry no information, so the percentile intervals are reported. They count as
+    "not p < 0.05" in the specification curve.
+- **H4 frames.** Robustness variants contain powiat-by-group cells in which every count is zero, and these broke the
+  restricted Poisson fit. They are dropped in all frames (`h4_frame`), because PPML ignores them anyway.
+  - The main frame has none, so the main H4 estimates are unchanged.
+  - The main estimates were produced before this line was added. The main frame was checked to contain zero such
+    cells.

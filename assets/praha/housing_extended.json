@@ -1,0 +1,1856 @@
+{
+ "design": "docs/research/prague-housing-design.md (v2, 503ef06)",
+ "seed": 20260929,
+ "H1": {
+  "eurostat": {
+   "metro": {
+    "n": 208,
+    "score": 0.267,
+    "rank_from_lowest": 119,
+    "p": 0.5721,
+    "czechia_mean_score": 0.179,
+    "prague_minus_other_czech": 0.118,
+    "country_rank_from_lowest": 8,
+    "countries": 22,
+    "observed_per_1000_year": 5.28,
+    "vienna": {
+     "id": "AT001MC",
+     "score": 0.981,
+     "rank_from_lowest": 155,
+     "observed_per_1000_year": 6.18
+    },
+    "warsaw": {
+     "id": "PL001MC",
+     "score": 2.952,
+     "rank_from_lowest": 205,
+     "observed_per_1000_year": 10.04
+    }
+   },
+   "core": {
+    "n": 208,
+    "score": -0.28,
+    "rank_from_lowest": 107,
+    "p": 0.5144,
+    "czechia_mean_score": 0.076,
+    "prague_minus_other_czech": -0.475,
+    "country_rank_from_lowest": 6,
+    "countries": 22,
+    "observed_per_1000_year": 4.74,
+    "vienna": {
+     "id": "AT130",
+     "score": 0.877,
+     "rank_from_lowest": 154,
+     "observed_per_1000_year": 6.04
+    },
+    "warsaw": {
+     "id": "PL911",
+     "score": 3.749,
+     "rank_from_lowest": 206,
+     "observed_per_1000_year": 10.8
+    }
+   },
+   "statement": "Within the range of European peers",
+   "label": "uninformative (R1 failed); rule gives: Within the range of European peers"
+  },
+  "R1": {
+   "b_growth_positive": -5.424,
+   "p_one_sided": 0.7104,
+   "passed": false
+  },
+  "coefficients_full_sample": {
+   "const": 4.553,
+   "g_pos": -5.424,
+   "g_neg": 58.436,
+   "ln_pop": -0.182,
+   "ln_gdppc": 0.273,
+   "ln_dw": -0.591,
+   "capital": 0.518
+  },
+  "csu_rebuilt": {
+   "metro": {
+    "n": 208,
+    "score": -0.509,
+    "rank_from_lowest": 93,
+    "p": 0.4471,
+    "czechia_mean_score": -0.532,
+    "prague_minus_other_czech": 0.031,
+    "country_rank_from_lowest": 5,
+    "countries": 22,
+    "observed_per_1000_year": 3.88,
+    "vienna": {
+     "id": "AT001MC",
+     "score": 1.011,
+     "rank_from_lowest": 157,
+     "observed_per_1000_year": 6.18
+    },
+    "warsaw": {
+     "id": "PL001MC",
+     "score": 3.037,
+     "rank_from_lowest": 205,
+     "observed_per_1000_year": 10.04
+    }
+   },
+   "core": {
+    "n": 208,
+    "score": -1.138,
+    "rank_from_lowest": 76,
+    "p": 0.3654,
+    "czechia_mean_score": -0.633,
+    "prague_minus_other_czech": -0.673,
+    "country_rank_from_lowest": 5,
+    "countries": 22,
+    "observed_per_1000_year": 3.65,
+    "vienna": {
+     "id": "AT130",
+     "score": 0.872,
+     "rank_from_lowest": 153,
+     "observed_per_1000_year": 6.04
+    },
+    "warsaw": {
+     "id": "PL911",
+     "score": 3.562,
+     "rank_from_lowest": 205,
+     "observed_per_1000_year": 10.8
+    }
+   },
+   "statement": "Within the range of European peers",
+   "label": "uninformative (R1 failed); rule gives: Within the range of European peers"
+  },
+  "H6_czech_kraje": {
+   "prague_rate": 3.65,
+   "rank_from_lowest_of_14": 13,
+   "median_other": 2.05
+  },
+  "plot": [
+   {
+    "id": "IT007M",
+    "country": "IT",
+    "score": -4.265,
+    "rate": 0.96
+   },
+   {
+    "id": "DE546M",
+    "country": "DE",
+    "score": -4.074,
+    "rate": 0.95
+   },
+   {
+    "id": "IT009M",
+    "country": "IT",
+    "score": -4.03,
+    "rate": 0.88
+   },
+   {
+    "id": "IT001MC",
+    "country": "IT",
+    "score": -3.862,
+    "rate": 1.43
+   },
+   {
+    "id": "DE045M",
+    "country": "DE",
+    "score": -3.846,
+    "rate": 1.0
+   },
+   {
+    "id": "IT502M",
+    "country": "IT",
+    "score": -3.512,
+    "rate": 1.06
+   },
+   {
+    "id": "IT006M",
+    "country": "IT",
+    "score": -3.214,
+    "rate": 1.19
+   },
+   {
+    "id": "DE079M",
+    "country": "DE",
+    "score": -3.153,
+    "rate": 1.84
+   },
+   {
+    "id": "ES009M",
+    "country": "ES",
+    "score": -2.934,
+    "rate": 1.07
+   },
+   {
+    "id": "ES008M",
+    "country": "ES",
+    "score": -2.624,
+    "rate": 0.71
+   },
+   {
+    "id": "DE540M",
+    "country": "DE",
+    "score": -2.603,
+    "rate": 1.75
+   },
+   {
+    "id": "DE036M",
+    "country": "DE",
+    "score": -2.599,
+    "rate": 1.84
+   },
+   {
+    "id": "IT008M",
+    "country": "IT",
+    "score": -2.574,
+    "rate": 1.09
+   },
+   {
+    "id": "DE542M",
+    "country": "DE",
+    "score": -2.572,
+    "rate": 1.58
+   },
+   {
+    "id": "IT022M",
+    "country": "IT",
+    "score": -2.556,
+    "rate": 1.18
+   },
+   {
+    "id": "IT003M",
+    "country": "IT",
+    "score": -2.416,
+    "rate": 1.14
+   },
+   {
+    "id": "IT028M",
+    "country": "IT",
+    "score": -2.362,
+    "rate": 1.42
+   },
+   {
+    "id": "DE077M",
+    "country": "DE",
+    "score": -2.361,
+    "rate": 2.61
+   },
+   {
+    "id": "IT010M",
+    "country": "IT",
+    "score": -2.333,
+    "rate": 0.99
+   },
+   {
+    "id": "DE040M",
+    "country": "DE",
+    "score": -2.327,
+    "rate": 1.51
+   },
+   {
+    "id": "IT002M",
+    "country": "IT",
+    "score": -2.259,
+    "rate": 1.77
+   },
+   {
+    "id": "IT005M",
+    "country": "IT",
+    "score": -2.149,
+    "rate": 1.16
+   },
+   {
+    "id": "HU002M",
+    "country": "HU",
+    "score": -2.147,
+    "rate": 0.54
+   },
+   {
+    "id": "HU009M",
+    "country": "HU",
+    "score": -2.118,
+    "rate": 1.6
+   },
+   {
+    "id": "DE513M",
+    "country": "DE",
+    "score": -2.07,
+    "rate": 2.15
+   },
+   {
+    "id": "CH004MC",
+    "country": "CH",
+    "score": -2.06,
+    "rate": 4.18
+   },
+   {
+    "id": "ES025M",
+    "country": "ES",
+    "score": -2.04,
+    "rate": 0.96
+   },
+   {
+    "id": "ES003M",
+    "country": "ES",
+    "score": -1.977,
+    "rate": 0.91
+   },
+   {
+    "id": "HU004M",
+    "country": "HU",
+    "score": -1.954,
+    "rate": 1.05
+   },
+   {
+    "id": "DE020M",
+    "country": "DE",
+    "score": -1.932,
+    "rate": 2.58
+   },
+   {
+    "id": "IT004M",
+    "country": "IT",
+    "score": -1.916,
+    "rate": 1.47
+   },
+   {
+    "id": "IT503M",
+    "country": "IT",
+    "score": -1.911,
+    "rate": 1.75
+   },
+   {
+    "id": "ES013M",
+    "country": "ES",
+    "score": -1.885,
+    "rate": 1.45
+   },
+   {
+    "id": "DE018M",
+    "country": "DE",
+    "score": -1.833,
+    "rate": 1.85
+   },
+   {
+    "id": "ES522M",
+    "country": "ES",
+    "score": -1.83,
+    "rate": 1.17
+   },
+   {
+    "id": "IT011M",
+    "country": "IT",
+    "score": -1.819,
+    "rate": 1.77
+   },
+   {
+    "id": "ES015M",
+    "country": "ES",
+    "score": -1.802,
+    "rate": 1.54
+   },
+   {
+    "id": "ES002M",
+    "country": "ES",
+    "score": -1.782,
+    "rate": 1.03
+   },
+   {
+    "id": "ES019M",
+    "country": "ES",
+    "score": -1.744,
+    "rate": 1.81
+   },
+   {
+    "id": "IT505M",
+    "country": "IT",
+    "score": -1.696,
+    "rate": 1.56
+   },
+   {
+    "id": "IT016M",
+    "country": "IT",
+    "score": -1.688,
+    "rate": 1.59
+   },
+   {
+    "id": "DE042M",
+    "country": "DE",
+    "score": -1.667,
+    "rate": 2.97
+   },
+   {
+    "id": "ES005M",
+    "country": "ES",
+    "score": -1.665,
+    "rate": 1.61
+   },
+   {
+    "id": "ES012M",
+    "country": "ES",
+    "score": -1.592,
+    "rate": 2.55
+   },
+   {
+    "id": "ES001MC",
+    "country": "ES",
+    "score": -1.591,
+    "rate": 2.05
+   },
+   {
+    "id": "DE059M",
+    "country": "DE",
+    "score": -1.587,
+    "rate": 2.91
+   },
+   {
+    "id": "SK002M",
+    "country": "SK",
+    "score": -1.576,
+    "rate": 1.67
+   },
+   {
+    "id": "ES026M",
+    "country": "ES",
+    "score": -1.569,
+    "rate": 1.61
+   },
+   {
+    "id": "ES501M",
+    "country": "ES",
+    "score": -1.569,
+    "rate": 1.4
+   },
+   {
+    "id": "ES020M",
+    "country": "ES",
+    "score": -1.554,
+    "rate": 1.6
+   },
+   {
+    "id": "DK001MC",
+    "country": "DK",
+    "score": -1.542,
+    "rate": 3.14
+   },
+   {
+    "id": "DE017M",
+    "country": "DE",
+    "score": -1.534,
+    "rate": 2.77
+   },
+   {
+    "id": "ES007M",
+    "country": "ES",
+    "score": -1.495,
+    "rate": 1.36
+   },
+   {
+    "id": "DE537M",
+    "country": "DE",
+    "score": -1.455,
+    "rate": 3.37
+   },
+   {
+    "id": "DE533M",
+    "country": "DE",
+    "score": -1.405,
+    "rate": 2.96
+   },
+   {
+    "id": "ES510M",
+    "country": "ES",
+    "score": -1.396,
+    "rate": 2.31
+   },
+   {
+    "id": "IT501M",
+    "country": "IT",
+    "score": -1.343,
+    "rate": 1.55
+   },
+   {
+    "id": "ES022M",
+    "country": "ES",
+    "score": -1.34,
+    "rate": 1.82
+   },
+   {
+    "id": "DE061M",
+    "country": "DE",
+    "score": -1.333,
+    "rate": 3.26
+   },
+   {
+    "id": "ES004M",
+    "country": "ES",
+    "score": -1.332,
+    "rate": 1.59
+   },
+   {
+    "id": "DE044M",
+    "country": "DE",
+    "score": -1.332,
+    "rate": 2.51
+   },
+   {
+    "id": "HU001MC",
+    "country": "HU",
+    "score": -1.253,
+    "rate": 3.08
+   },
+   {
+    "id": "NL008M",
+    "country": "NL",
+    "score": -1.176,
+    "rate": 2.51
+   },
+   {
+    "id": "HU005M",
+    "country": "HU",
+    "score": -1.163,
+    "rate": 1.74
+   },
+   {
+    "id": "ES006M",
+    "country": "ES",
+    "score": -1.146,
+    "rate": 1.74
+   },
+   {
+    "id": "DE011M",
+    "country": "DE",
+    "score": -1.103,
+    "rate": 2.53
+   },
+   {
+    "id": "DE019M",
+    "country": "DE",
+    "score": -1.094,
+    "rate": 2.34
+   },
+   {
+    "id": "DE083M",
+    "country": "DE",
+    "score": -1.081,
+    "rate": 2.87
+   },
+   {
+    "id": "DE025M",
+    "country": "DE",
+    "score": -1.033,
+    "rate": 3.61
+   },
+   {
+    "id": "IT012M",
+    "country": "IT",
+    "score": -1.029,
+    "rate": 2.3
+   },
+   {
+    "id": "DE527M",
+    "country": "DE",
+    "score": -1.025,
+    "rate": 2.67
+   },
+   {
+    "id": "DE548M",
+    "country": "DE",
+    "score": -1.013,
+    "rate": 3.24
+   },
+   {
+    "id": "DE057M",
+    "country": "DE",
+    "score": -0.964,
+    "rate": 3.68
+   },
+   {
+    "id": "DE523M",
+    "country": "DE",
+    "score": -0.877,
+    "rate": 3.53
+   },
+   {
+    "id": "DE084M",
+    "country": "DE",
+    "score": -0.873,
+    "rate": 2.72
+   },
+   {
+    "id": "NL012M",
+    "country": "NL",
+    "score": -0.871,
+    "rate": 3.11
+   },
+   {
+    "id": "DE013M",
+    "country": "DE",
+    "score": -0.859,
+    "rate": 2.41
+   },
+   {
+    "id": "DE035M",
+    "country": "DE",
+    "score": -0.84,
+    "rate": 3.21
+   },
+   {
+    "id": "ES021M",
+    "country": "ES",
+    "score": -0.83,
+    "rate": 2.19
+   },
+   {
+    "id": "IT029M",
+    "country": "IT",
+    "score": -0.817,
+    "rate": 2.21
+   },
+   {
+    "id": "DE524M",
+    "country": "DE",
+    "score": -0.748,
+    "rate": 3.34
+   },
+   {
+    "id": "DE529M",
+    "country": "DE",
+    "score": -0.717,
+    "rate": 4.24
+   },
+   {
+    "id": "ES014M",
+    "country": "ES",
+    "score": -0.707,
+    "rate": 3.26
+   },
+   {
+    "id": "DE034M",
+    "country": "DE",
+    "score": -0.669,
+    "rate": 3.21
+   },
+   {
+    "id": "DE517M",
+    "country": "DE",
+    "score": -0.638,
+    "rate": 3.4
+   },
+   {
+    "id": "DE073M",
+    "country": "DE",
+    "score": -0.615,
+    "rate": 3.97
+   },
+   {
+    "id": "DK003M",
+    "country": "DK",
+    "score": -0.608,
+    "rate": 2.77
+   },
+   {
+    "id": "DE039M",
+    "country": "DE",
+    "score": -0.598,
+    "rate": 2.91
+   },
+   {
+    "id": "DE038M",
+    "country": "DE",
+    "score": -0.551,
+    "rate": 1.63
+   },
+   {
+    "id": "IT511M",
+    "country": "IT",
+    "score": -0.537,
+    "rate": 2.6
+   },
+   {
+    "id": "DE522M",
+    "country": "DE",
+    "score": -0.527,
+    "rate": 3.33
+   },
+   {
+    "id": "NO001MC",
+    "country": "NO",
+    "score": -0.499,
+    "rate": 5.14
+   },
+   {
+    "id": "DE510M",
+    "country": "DE",
+    "score": -0.413,
+    "rate": 3.49
+   },
+   {
+    "id": "DE054M",
+    "country": "DE",
+    "score": -0.361,
+    "rate": 4.24
+   },
+   {
+    "id": "BE005M",
+    "country": "BE",
+    "score": -0.326,
+    "rate": 2.69
+   },
+   {
+    "id": "NL009M",
+    "country": "NL",
+    "score": -0.324,
+    "rate": 3.48
+   },
+   {
+    "id": "CZ003M",
+    "country": "CZ",
+    "score": -0.321,
+    "rate": 2.19
+   },
+   {
+    "id": "DE549M",
+    "country": "DE",
+    "score": -0.302,
+    "rate": 4.29
+   },
+   {
+    "id": "DE012M",
+    "country": "DE",
+    "score": -0.235,
+    "rate": 3.11
+   },
+   {
+    "id": "EE001MC",
+    "country": "EE",
+    "score": -0.235,
+    "rate": 5.56
+   },
+   {
+    "id": "FR001MC",
+    "country": "FR",
+    "score": -0.235,
+    "rate": 3.67
+   },
+   {
+    "id": "NL511M",
+    "country": "NL",
+    "score": -0.185,
+    "rate": 4.07
+   },
+   {
+    "id": "DE004M",
+    "country": "DE",
+    "score": -0.173,
+    "rate": 2.98
+   },
+   {
+    "id": "DE532M",
+    "country": "DE",
+    "score": -0.147,
+    "rate": 4.61
+   },
+   {
+    "id": "DE069M",
+    "country": "DE",
+    "score": -0.053,
+    "rate": 4.61
+   },
+   {
+    "id": "NL005M",
+    "country": "NL",
+    "score": 0.015,
+    "rate": 4.0
+   },
+   {
+    "id": "DE007M",
+    "country": "DE",
+    "score": 0.024,
+    "rate": 3.32
+   },
+   {
+    "id": "DE037M",
+    "country": "DE",
+    "score": 0.051,
+    "rate": 4.79
+   },
+   {
+    "id": "BE007M",
+    "country": "BE",
+    "score": 0.054,
+    "rate": 4.07
+   },
+   {
+    "id": "DE001MC",
+    "country": "DE",
+    "score": 0.055,
+    "rate": 3.69
+   },
+   {
+    "id": "DE005M",
+    "country": "DE",
+    "score": 0.079,
+    "rate": 3.57
+   },
+   {
+    "id": "SE001MC",
+    "country": "SE",
+    "score": 0.106,
+    "rate": 5.35
+   },
+   {
+    "id": "DE014M",
+    "country": "DE",
+    "score": 0.148,
+    "rate": 3.9
+   },
+   {
+    "id": "DE504M",
+    "country": "DE",
+    "score": 0.211,
+    "rate": 4.93
+   },
+   {
+    "id": "CZ004M",
+    "country": "CZ",
+    "score": 0.213,
+    "rate": 3.65
+   },
+   {
+    "id": "DE027M",
+    "country": "DE",
+    "score": 0.218,
+    "rate": 4.36
+   },
+   {
+    "id": "FR038M",
+    "country": "FR",
+    "score": 0.229,
+    "rate": 3.1
+   },
+   {
+    "id": "DE052M",
+    "country": "DE",
+    "score": 0.246,
+    "rate": 4.94
+   },
+   {
+    "id": "CZ001MC",
+    "country": "CZ",
+    "score": 0.267,
+    "rate": 5.28
+   },
+   {
+    "id": "FR016M",
+    "country": "FR",
+    "score": 0.295,
+    "rate": 3.21
+   },
+   {
+    "id": "LU001MC",
+    "country": "LU",
+    "score": 0.299,
+    "rate": 8.33
+   },
+   {
+    "id": "CH002M",
+    "country": "CH",
+    "score": 0.308,
+    "rate": 4.41
+   },
+   {
+    "id": "PL024M",
+    "country": "PL",
+    "score": 0.312,
+    "rate": 2.82
+   },
+   {
+    "id": "PL514M",
+    "country": "PL",
+    "score": 0.328,
+    "rate": 3.31
+   },
+   {
+    "id": "DE033M",
+    "country": "DE",
+    "score": 0.334,
+    "rate": 4.57
+   },
+   {
+    "id": "CH003M",
+    "country": "CH",
+    "score": 0.407,
+    "rate": 4.12
+   },
+   {
+    "id": "FR024M",
+    "country": "FR",
+    "score": 0.41,
+    "rate": 3.13
+   },
+   {
+    "id": "BG001MC",
+    "country": "BG",
+    "score": 0.457,
+    "rate": 4.5
+   },
+   {
+    "id": "BE002M",
+    "country": "BE",
+    "score": 0.477,
+    "rate": 4.16
+   },
+   {
+    "id": "RO503M",
+    "country": "RO",
+    "score": 0.49,
+    "rate": 2.48
+   },
+   {
+    "id": "SE002M",
+    "country": "SE",
+    "score": 0.52,
+    "rate": 3.77
+   },
+   {
+    "id": "CZ002M",
+    "country": "CZ",
+    "score": 0.556,
+    "rate": 4.07
+   },
+   {
+    "id": "FR018M",
+    "country": "FR",
+    "score": 0.563,
+    "rate": 4.08
+   },
+   {
+    "id": "SE003M",
+    "country": "SE",
+    "score": 0.583,
+    "rate": 4.12
+   },
+   {
+    "id": "FR011M",
+    "country": "FR",
+    "score": 0.587,
+    "rate": 3.51
+   },
+   {
+    "id": "PL506M",
+    "country": "PL",
+    "score": 0.602,
+    "rate": 3.8
+   },
+   {
+    "id": "FR014M",
+    "country": "FR",
+    "score": 0.609,
+    "rate": 3.78
+   },
+   {
+    "id": "RO505M",
+    "country": "RO",
+    "score": 0.625,
+    "rate": 2.92
+   },
+   {
+    "id": "DK004M",
+    "country": "DK",
+    "score": 0.65,
+    "rate": 4.18
+   },
+   {
+    "id": "DE534M",
+    "country": "DE",
+    "score": 0.658,
+    "rate": 6.53
+   },
+   {
+    "id": "FR019M",
+    "country": "FR",
+    "score": 0.664,
+    "rate": 3.91
+   },
+   {
+    "id": "FR040M",
+    "country": "FR",
+    "score": 0.684,
+    "rate": 3.9
+   },
+   {
+    "id": "RO004M",
+    "country": "RO",
+    "score": 0.695,
+    "rate": 2.85
+   },
+   {
+    "id": "FR020M",
+    "country": "FR",
+    "score": 0.704,
+    "rate": 3.97
+   },
+   {
+    "id": "DE028M",
+    "country": "DE",
+    "score": 0.729,
+    "rate": 6.29
+   },
+   {
+    "id": "FR021M",
+    "country": "FR",
+    "score": 0.735,
+    "rate": 3.85
+   },
+   {
+    "id": "FR009M",
+    "country": "FR",
+    "score": 0.743,
+    "rate": 3.45
+   },
+   {
+    "id": "DE520M",
+    "country": "DE",
+    "score": 0.819,
+    "rate": 5.96
+   },
+   {
+    "id": "PL014M",
+    "country": "PL",
+    "score": 0.856,
+    "rate": 4.26
+   },
+   {
+    "id": "FR036M",
+    "country": "FR",
+    "score": 0.862,
+    "rate": 4.23
+   },
+   {
+    "id": "DE003M",
+    "country": "DE",
+    "score": 0.902,
+    "rate": 4.94
+   },
+   {
+    "id": "FI003M",
+    "country": "FI",
+    "score": 0.908,
+    "rate": 4.94
+   },
+   {
+    "id": "DE002M",
+    "country": "DE",
+    "score": 0.945,
+    "rate": 4.55
+   },
+   {
+    "id": "CY001MC",
+    "country": "CY",
+    "score": 0.957,
+    "rate": 8.4
+   },
+   {
+    "id": "AT001MC",
+    "country": "AT",
+    "score": 0.981,
+    "rate": 6.18
+   },
+   {
+    "id": "PL010M",
+    "country": "PL",
+    "score": 0.986,
+    "rate": 2.9
+   },
+   {
+    "id": "SE006M",
+    "country": "SE",
+    "score": 0.988,
+    "rate": 6.43
+   },
+   {
+    "id": "DK002M",
+    "country": "DK",
+    "score": 0.992,
+    "rate": 5.38
+   },
+   {
+    "id": "FR025M",
+    "country": "FR",
+    "score": 0.996,
+    "rate": 4.58
+   },
+   {
+    "id": "NO004M",
+    "country": "NO",
+    "score": 1.051,
+    "rate": 7.01
+   },
+   {
+    "id": "FR015M",
+    "country": "FR",
+    "score": 1.059,
+    "rate": 4.15
+   },
+   {
+    "id": "FR035M",
+    "country": "FR",
+    "score": 1.103,
+    "rate": 4.57
+   },
+   {
+    "id": "RO501M",
+    "country": "RO",
+    "score": 1.106,
+    "rate": 4.47
+   },
+   {
+    "id": "LT001MC",
+    "country": "LT",
+    "score": 1.18,
+    "rate": 5.66
+   },
+   {
+    "id": "BE003M",
+    "country": "BE",
+    "score": 1.273,
+    "rate": 6.05
+   },
+   {
+    "id": "PL008M",
+    "country": "PL",
+    "score": 1.31,
+    "rate": 5.25
+   },
+   {
+    "id": "RO003M",
+    "country": "RO",
+    "score": 1.343,
+    "rate": 5.16
+   },
+   {
+    "id": "AT005M",
+    "country": "AT",
+    "score": 1.366,
+    "rate": 6.1
+   },
+   {
+    "id": "AT004M",
+    "country": "AT",
+    "score": 1.366,
+    "rate": 5.57
+   },
+   {
+    "id": "FR006M",
+    "country": "FR",
+    "score": 1.373,
+    "rate": 5.07
+   },
+   {
+    "id": "AT003M",
+    "country": "AT",
+    "score": 1.385,
+    "rate": 5.49
+   },
+   {
+    "id": "CH005M",
+    "country": "CH",
+    "score": 1.398,
+    "rate": 6.74
+   },
+   {
+    "id": "BG002M",
+    "country": "BG",
+    "score": 1.424,
+    "rate": 4.02
+   },
+   {
+    "id": "FI001MC",
+    "country": "FI",
+    "score": 1.434,
+    "rate": 8.09
+   },
+   {
+    "id": "CH006M",
+    "country": "CH",
+    "score": 1.501,
+    "rate": 6.06
+   },
+   {
+    "id": "FR022M",
+    "country": "FR",
+    "score": 1.509,
+    "rate": 4.58
+   },
+   {
+    "id": "PL007M",
+    "country": "PL",
+    "score": 1.53,
+    "rate": 5.74
+   },
+   {
+    "id": "FR044M",
+    "country": "FR",
+    "score": 1.531,
+    "rate": 5.09
+   },
+   {
+    "id": "FR026M",
+    "country": "FR",
+    "score": 1.534,
+    "rate": 5.13
+   },
+   {
+    "id": "RO504M",
+    "country": "RO",
+    "score": 1.558,
+    "rate": 5.41
+   },
+   {
+    "id": "CH007M",
+    "country": "CH",
+    "score": 1.627,
+    "rate": 7.29
+   },
+   {
+    "id": "BG003M",
+    "country": "BG",
+    "score": 1.628,
+    "rate": 6.84
+   },
+   {
+    "id": "FR037M",
+    "country": "FR",
+    "score": 1.655,
+    "rate": 4.65
+   },
+   {
+    "id": "CH001M",
+    "country": "CH",
+    "score": 1.713,
+    "rate": 6.64
+   },
+   {
+    "id": "FR205M",
+    "country": "FR",
+    "score": 1.909,
+    "rate": 3.92
+   },
+   {
+    "id": "FR003M",
+    "country": "FR",
+    "score": 1.931,
+    "rate": 5.76
+   },
+   {
+    "id": "FR023M",
+    "country": "FR",
+    "score": 1.96,
+    "rate": 5.53
+   },
+   {
+    "id": "AT002M",
+    "country": "AT",
+    "score": 2.007,
+    "rate": 8.05
+   },
+   {
+    "id": "FR013M",
+    "country": "FR",
+    "score": 2.08,
+    "rate": 7.12
+   },
+   {
+    "id": "RO002M",
+    "country": "RO",
+    "score": 2.125,
+    "rate": 7.03
+   },
+   {
+    "id": "LT002M",
+    "country": "LT",
+    "score": 2.141,
+    "rate": 4.16
+   },
+   {
+    "id": "RO502M",
+    "country": "RO",
+    "score": 2.151,
+    "rate": 8.86
+   },
+   {
+    "id": "FR203M",
+    "country": "FR",
+    "score": 2.204,
+    "rate": 5.17
+   },
+   {
+    "id": "FR045M",
+    "country": "FR",
+    "score": 2.268,
+    "rate": 6.81
+   },
+   {
+    "id": "PL006M",
+    "country": "PL",
+    "score": 2.347,
+    "rate": 8.93
+   },
+   {
+    "id": "FR004M",
+    "country": "FR",
+    "score": 2.441,
+    "rate": 8.4
+   },
+   {
+    "id": "FR043M",
+    "country": "FR",
+    "score": 2.465,
+    "rate": 6.83
+   },
+   {
+    "id": "FR008M",
+    "country": "FR",
+    "score": 2.518,
+    "rate": 8.04
+   },
+   {
+    "id": "PL003M",
+    "country": "PL",
+    "score": 2.588,
+    "rate": 9.0
+   },
+   {
+    "id": "PL005M",
+    "country": "PL",
+    "score": 2.619,
+    "rate": 8.91
+   },
+   {
+    "id": "FR007M",
+    "country": "FR",
+    "score": 2.701,
+    "rate": 8.34
+   },
+   {
+    "id": "SK001MC",
+    "country": "SK",
+    "score": 2.703,
+    "rate": 9.33
+   },
+   {
+    "id": "FR010M",
+    "country": "FR",
+    "score": 2.712,
+    "rate": 8.17
+   },
+   {
+    "id": "FR048M",
+    "country": "FR",
+    "score": 2.873,
+    "rate": 9.45
+   },
+   {
+    "id": "PL001MC",
+    "country": "PL",
+    "score": 2.952,
+    "rate": 10.04
+   },
+   {
+    "id": "RO001MC",
+    "country": "RO",
+    "score": 3.525,
+    "rate": 8.75
+   },
+   {
+    "id": "BG004M",
+    "country": "BG",
+    "score": 3.667,
+    "rate": 11.32
+   },
+   {
+    "id": "PL004M",
+    "country": "PL",
+    "score": 4.069,
+    "rate": 13.5
+   }
+  ]
+ },
+ "H2": {
+  "mu_prague": 16.12,
+  "mu_rest": 5.07,
+  "phi_prague": 17506.01,
+  "phi_rest": 5.98,
+  "theta_prague": 0.255,
+  "theta_rest": 0.719,
+  "tail_mass_prague": 0.0,
+  "tail_mass_rest": 0.0,
+  "delta_months": 11.05,
+  "se_boot": 1.93,
+  "ci90": [
+   8.72,
+   12.62
+  ],
+  "p": 5.181632900530531e-09,
+  "block_length": 2.1,
+  "reps": 9999,
+  "noise_ratio": {
+   "prague": 3.29,
+   "rest": 1.12
+  },
+  "corr_theta_mu_prague": -0.052,
+  "profile": {
+   "prague": {
+    "mu": [
+     6.0,
+     7.0,
+     8.0,
+     9.0,
+     10.0,
+     11.0,
+     12.0,
+     13.0,
+     14.0,
+     15.0,
+     16.0,
+     17.0,
+     18.0,
+     19.0,
+     20.0,
+     21.0,
+     22.0,
+     23.0,
+     24.0,
+     25.0,
+     26.0,
+     27.0,
+     28.0,
+     29.0,
+     30.0,
+     31.0,
+     32.0,
+     33.0,
+     34.0,
+     35.0,
+     36.0,
+     37.0,
+     38.0,
+     39.0,
+     40.0,
+     41.0,
+     42.0,
+     43.0,
+     44.0,
+     45.0,
+     46.0,
+     47.0,
+     48.0,
+     49.0,
+     50.0,
+     51.0,
+     52.0,
+     53.0,
+     54.0,
+     55.0,
+     56.0,
+     57.0,
+     58.0,
+     59.0,
+     60.0
+    ],
+    "rel_loglik": [
+     -4.552,
+     -4.407,
+     -4.221,
+     -3.995,
+     -3.709,
+     -1.797,
+     -2.584,
+     -1.958,
+     -1.409,
+     -0.982,
+     0.0,
+     -0.32,
+     -0.657,
+     -0.933,
+     -0.955,
+     -0.972,
+     -0.99,
+     -1.015,
+     -1.047,
+     -1.085,
+     -1.13,
+     -1.18,
+     -1.237,
+     -1.298,
+     -1.364,
+     -1.432,
+     -1.503,
+     -1.575,
+     -1.647,
+     -1.718,
+     -1.786,
+     -1.851,
+     -1.913,
+     -1.971,
+     -2.025,
+     -2.076,
+     -2.123,
+     -2.167,
+     -2.208,
+     -2.246,
+     -2.282,
+     -2.315,
+     -2.347,
+     -2.376,
+     -2.404,
+     -2.43,
+     -2.455,
+     -2.479,
+     -2.501,
+     -2.522,
+     -2.542,
+     -2.561,
+     -2.58,
+     -2.597,
+     -2.614
+    ]
+   },
+   "rest": {
+    "mu": [
+     6.0,
+     7.0,
+     8.0,
+     9.0,
+     10.0,
+     11.0,
+     12.0,
+     13.0,
+     14.0,
+     15.0,
+     16.0,
+     17.0,
+     18.0,
+     19.0,
+     20.0,
+     21.0,
+     22.0,
+     23.0,
+     24.0,
+     25.0,
+     26.0,
+     27.0,
+     28.0,
+     29.0,
+     30.0,
+     31.0,
+     32.0,
+     33.0,
+     34.0,
+     35.0,
+     36.0,
+     37.0,
+     38.0,
+     39.0,
+     40.0,
+     41.0,
+     42.0,
+     43.0,
+     44.0,
+     45.0,
+     46.0,
+     47.0,
+     48.0,
+     49.0,
+     50.0,
+     51.0,
+     52.0,
+     53.0,
+     54.0,
+     55.0,
+     56.0,
+     57.0,
+     58.0,
+     59.0,
+     60.0
+    ],
+    "rel_loglik": [
+     0.0,
+     -0.952,
+     -1.839,
+     -2.552,
+     -3.151,
+     -3.69,
+     -4.197,
+     -4.689,
+     -5.174,
+     -5.657,
+     -6.139,
+     -6.616,
+     -7.082,
+     -7.525,
+     -7.935,
+     -8.307,
+     -8.642,
+     -8.942,
+     -9.213,
+     -9.458,
+     -9.68,
+     -9.883,
+     -10.068,
+     -10.238,
+     -10.395,
+     -10.54,
+     -10.674,
+     -10.799,
+     -10.915,
+     -11.023,
+     -11.124,
+     -11.219,
+     -11.309,
+     -11.393,
+     -11.472,
+     -11.547,
+     -11.618,
+     -11.685,
+     -11.749,
+     -11.809,
+     -11.867,
+     -11.921,
+     -11.973,
+     -12.023,
+     -12.071,
+     -12.116,
+     -12.16,
+     -12.202,
+     -12.242,
+     -12.28,
+     -12.317,
+     -12.353,
+     -12.387,
+     -12.42,
+     -12.452
+    ]
+   }
+  },
+  "little_band_prague": {
+   "run": false,
+   "reason": "the Prague file shows '.' for dwellings under construction in every year of the window (not published since 2009, its note 3)"
+  },
+  "R2": {
+   "theta_rest": 0.719,
+   "mu_rest": 5.07,
+   "passed": true
+  },
+  "underpowered_rule_triggered": true
+ },
+ "H3": {
+  "quarters": 27,
+  "first_quarter": "2018Q2",
+  "relative_cumulative": {
+   "estimate": -11.351,
+   "se": 34.859,
+   "ci90": [
+    -85.666,
+    62.964
+   ],
+   "p_below_zero": 0.38051835728590166,
+   "p_above_zero": 0.6194816427140983,
+   "nu": 4
+  },
+  "rest_cumulative": {
+   "estimate": 16.021,
+   "se": 18.01,
+   "ci90": [
+    -22.373,
+    54.415
+   ],
+   "p_below_zero": 0.7880230509101118,
+   "p_above_zero": 0.21197694908988818,
+   "nu": 4
+  },
+  "ratio_prague_to_rest": 0.292,
+  "centre_of_mass_quarters": {
+   "rest": 5.24,
+   "prague": -10.6
+  },
+  "profile_rest": [
+   0.7693,
+   1.36,
+   1.8043,
+   2.1022,
+   2.2539,
+   2.2592,
+   2.1182,
+   1.8308,
+   1.3972,
+   0.8172,
+   0.0909,
+   -0.7818
+  ],
+  "profile_prague": [
+   1.514,
+   2.0178,
+   2.309,
+   2.3878,
+   2.2541,
+   1.908,
+   1.3493,
+   0.5782,
+   -0.4054,
+   -1.6014,
+   -3.01,
+   -4.631
+  ],
+  "statement": "Cannot be told apart",
+  "fixed_b": {
+   "estimate": -11.351,
+   "ci90": [
+    -100.679,
+    77.978
+   ],
+   "critical_value": 3.766
+  },
+  "rank_of_prague_from_lowest": 5,
+  "kraje": 13,
+  "placebo_family_house_index": {
+   "estimate": 8.455,
+   "se": 15.847,
+   "ci90": [
+    -25.328,
+    42.238
+   ],
+   "p_below_zero": 0.6890379714064345,
+   "p_above_zero": 0.3109620285935655,
+   "nu": 4
+  },
+  "four_lags_35_quarters": {
+   "estimate": 3.819,
+   "se": 2.925,
+   "ci90": [
+    -2.416,
+    10.055
+   ],
+   "p_below_zero": 0.8691778971804489,
+   "p_above_zero": 0.1308221028195511,
+   "nu": 4,
+   "quarters": 35
+  },
+  "R3": {
+   "rest_cumulative": 16.021,
+   "p_one_sided": 0.212,
+   "passed": false
+  },
+  "label": "uninformative (R3 failed)"
+ },
+ "H4": {
+  "beta_market": 0.089,
+  "beta_nonmarket": -0.475,
+  "difference": -0.564,
+  "se_cr1": 0.579,
+  "p_cr1": 0.16481639028653788,
+  "p_wcr": 0.1655,
+  "p": 0.1655,
+  "clusters": 242,
+  "effective_clusters": 63.1,
+  "powiats": 242,
+  "rows": 6210,
+  "ci90_cr1": [
+   -1.516,
+   0.388
+  ],
+  "R4": {
+   "beta_market": 0.089,
+   "p_one_sided": 0.31874746430301926,
+   "passed": false
+  },
+  "cyclicality": {
+   "beta_market_national": 1.291,
+   "se_market": 1.433,
+   "beta_nonmarket_national": -0.88,
+   "difference": -2.171,
+   "se_difference": 4.158,
+   "note": "descriptive; no year effects; group trends"
+  }
+ },
+ "H5": {
+  "gamma": -0.227,
+  "se_conley_1_5km": 0.074,
+  "se_conley_3km": 0.077,
+  "ci90_conley": [
+   -0.349,
+   -0.105
+  ],
+  "p_conley_negative": 0.0010931023701757654,
+  "p_wcr_negative": 0.0252,
+  "p": 0.0252,
+  "p_positive": 0.9989068976298242,
+  "p_conley3_negative": 0.0016276144351849348,
+  "effective_clusters": 13.7,
+  "clusters": 22,
+  "density_ratio_per_doubling": 0.797,
+  "cells": 524,
+  "flats": 54242,
+  "delta_centre": 0.214,
+  "H6_2000_2011": {
+   "gamma": -0.062,
+   "se_conley_1_5km": 0.055,
+   "se_conley_3km": 0.06,
+   "ci90_conley": [
+    -0.152,
+    0.028
+   ],
+   "p_conley_negative": 0.12798770677416754,
+   "p_wcr_negative": 0.183,
+   "p": 0.183,
+   "p_positive": 0.8720122932258325,
+   "p_conley3_negative": 0.1497572735458162,
+   "effective_clusters": 13.0,
+   "clusters": 22,
+   "density_ratio_per_doubling": 0.94,
+   "cells": 524,
+   "flats": 113570,
+   "delta_centre": 0.307
+  },
+  "H6_2012_2024": {
+   "gamma": -0.243,
+   "se_conley_1_5km": 0.08,
+   "se_conley_3km": 0.086,
+   "ci90_conley": [
+    -0.375,
+    -0.112
+   ],
+   "p_conley_negative": 0.001154370395630621,
+   "p_wcr_negative": 0.022,
+   "p": 0.022,
+   "p_positive": 0.9988456296043694,
+   "p_conley3_negative": 0.0024165322750682693,
+   "effective_clusters": 13.9,
+   "clusters": 22,
+   "density_ratio_per_doubling": 0.784,
+   "cells": 524,
+   "flats": 78070,
+   "delta_centre": 0.128
+  },
+  "reading": "indeterminate"
+ },
+ "holm": {
+  "H2": {
+   "p": 5.181632900530531e-09,
+   "threshold": 0.016666666666666666,
+   "supported": true,
+   "relevance_passed": true,
+   "label": "supported"
+  },
+  "H5": {
+   "p": 0.0252,
+   "threshold": 0.025,
+   "supported": false,
+   "relevance_passed": true,
+   "label": "not supported"
+  },
+  "H4": {
+   "p": 0.1655,
+   "threshold": 0.05,
+   "supported": false,
+   "relevance_passed": false,
+   "label": "uninformative"
+  }
+ }
+}

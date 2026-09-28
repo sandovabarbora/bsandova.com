@@ -39,7 +39,9 @@ ROOT = Path(__file__).resolve().parents[2]
 DATA = Path(os.environ.get("DATA", ROOT / "tools" / "data"))
 RAW = DATA / "praha4x"
 SHA = ROOT / "docs" / "research" / "prague-housing-files.sha256"
-REUSED = [DATA / "praha4" / "byt_vystavba.xlsx", DATA / "praha2x" / "buildings_5514.pkl"]
+REUSED = [DATA / "praha4" / "byt_vystavba.xlsx", DATA / "praha2x" / "buildings_5514.pkl",
+          DATA / "praha2x" / "grid_obyvatelstvo_sldb2021_20210326.geojson", DATA / "praha2" / "metro_stations.csv",
+          *[DATA / "praha2" / "gtfs" / f for f in ("routes.txt", "trips.txt", "stop_times.txt", "stops.txt")]]
 
 CSU_OD = "https://data.csu.gov.cz/opendata/sady/{}/distribuce/csv"
 CSU_SCHEMA = "https://data.csu.gov.cz/opendata/sady/{}/schema/csv"
@@ -57,7 +59,7 @@ AT_FILES = ["352/WhgJ10-J26_150626_Q1.ods", "352/Whg05-09_150621.ods",
             "353/WhgAbgang011111-311224_Bdl_150925.ods"]
 EUROSTAT = "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/{}?format=JSON&lang=EN"
 EUROSTAT_SETS = ["cens_21dwop_r3", "cens_21dwob_r3", "cens_11dwob_r3", "demo_r_pjanaggr3", "nama_10r_3gdp",
-                 "nama_10r_3empers"]
+                 "nama_10r_3empers", "demo_r_d3area"]
 # NUTS 2021 classification with the territorial typologies (sheet "Metropolitan") and the 2013-2016 correspondence;
 # GEOSTAT 2011 1 km population grid
 OTHER = {"eurostat/NUTS2021.xlsx": "https://ec.europa.eu/eurostat/documents/345175/629341/NUTS2021.xlsx",
