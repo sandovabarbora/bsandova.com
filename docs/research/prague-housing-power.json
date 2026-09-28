@@ -1,0 +1,146 @@
+{
+ "seed": 20260929,
+ "alphas": {
+  "holm_first_step_family_3": 0.016666666666666666,
+  "nominal": 0.05
+ },
+ "H1": {
+  "n": 208,
+  "smallest_p": 0.0048,
+  "power_by_gap_in_residual_sd": {
+   "gap_1.0_sd": {
+    "holm_first_step_family_3": 0.111,
+    "nominal": 0.247
+   },
+   "gap_1.5_sd": {
+    "holm_first_step_family_3": 0.232,
+    "nominal": 0.424
+   },
+   "gap_2.0_sd": {
+    "holm_first_step_family_3": 0.403,
+    "nominal": 0.618
+   },
+   "gap_2.5_sd": {
+    "holm_first_step_family_3": 0.594,
+    "nominal": 0.787
+   },
+   "gap_3.0_sd": {
+    "holm_first_step_family_3": 0.766,
+    "nominal": 0.901
+   },
+   "gap_3.5_sd": {
+    "holm_first_step_family_3": 0.887,
+    "nominal": 0.962
+   }
+  }
+ },
+ "H2": {
+  "reps": 200,
+  "kernel": {
+   "k": 72,
+   "theta": 0.8,
+   "phi": 4.0,
+   "mu_rest": 24.0
+  },
+  "critical_value": "simulated null quantile of the contrast",
+  "power": {
+   "noise_0.25_x_signal_sd": {
+    "delta_3_months": {
+     "holm_first_step_family_3": 0.975,
+     "nominal": 0.98
+    },
+    "delta_6_months": {
+     "holm_first_step_family_3": 1.0,
+     "nominal": 1.0
+    },
+    "delta_12_months": {
+     "holm_first_step_family_3": 1.0,
+     "nominal": 1.0
+    },
+    "null_sd_of_contrast_months": 0.79
+   },
+   "noise_0.5_x_signal_sd": {
+    "delta_3_months": {
+     "holm_first_step_family_3": 0.365,
+     "nominal": 0.55
+    },
+    "delta_6_months": {
+     "holm_first_step_family_3": 0.94,
+     "nominal": 0.96
+    },
+    "delta_12_months": {
+     "holm_first_step_family_3": 1.0,
+     "nominal": 1.0
+    },
+    "null_sd_of_contrast_months": 1.8
+   },
+   "noise_1.0_x_signal_sd": {
+    "delta_3_months": {
+     "holm_first_step_family_3": 0.1,
+     "nominal": 0.2
+    },
+    "delta_6_months": {
+     "holm_first_step_family_3": 0.245,
+     "nominal": 0.385
+    },
+    "delta_12_months": {
+     "holm_first_step_family_3": 0.87,
+     "nominal": 0.95
+    },
+    "null_sd_of_contrast_months": 4.08
+   }
+  }
+ },
+ "H3": {
+  "quarters": 35,
+  "first": "2016 Q2",
+  "within_sd_price_growth_prague": 0.0715,
+  "within_sd_price_growth_rest_median": 0.0892,
+  "inference": "not in the family; EWC interval (ν ≈ 4), no power computed"
+ },
+ "H4": {
+  "reps": 200,
+  "powiats_in_support": 252,
+  "powiat_years": 3240,
+  "share_powiat_years_with_non_market_start_2005_2011": 0.231,
+  "within_sd_price_growth": 0.1187,
+  "power_beta_nm_minus_beta_m": {
+   "gap_0.0": {
+    "holm_first_step_family_3": 0.02,
+    "nominal": 0.055
+   },
+   "gap_0.5": {
+    "holm_first_step_family_3": 0.05,
+    "nominal": 0.13
+   },
+   "gap_1.0": {
+    "holm_first_step_family_3": 0.185,
+    "nominal": 0.255
+   }
+  }
+ },
+ "H5": {
+  "reps": 500,
+  "cells": 524,
+  "vif": {
+   "log2_metro": 2.15,
+   "log2_centre": 2.06
+  },
+  "clusters": 22,
+  "inference_in_simulation": "PPML, CR1 by 22 administrative districts, t(21); the registered decision uses max(p_Conley, p_WCR), which can only lower power",
+  "power_gamma_per_doubling": {
+   "gamma_0.0": {
+    "holm_first_step_family_3": 0.018,
+    "nominal": 0.052
+   },
+   "gamma_-0.25": {
+    "holm_first_step_family_3": 0.988,
+    "nominal": 0.998
+   },
+   "gamma_-0.5": {
+    "holm_first_step_family_3": 1.0,
+    "nominal": 1.0
+   }
+  }
+ }
+}

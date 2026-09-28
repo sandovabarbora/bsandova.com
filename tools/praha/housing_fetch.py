@@ -58,8 +58,11 @@ AT_FILES = ["352/WhgJ10-J26_150626_Q1.ods", "352/Whg05-09_150621.ods",
 EUROSTAT = "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/{}?format=JSON&lang=EN"
 EUROSTAT_SETS = ["cens_21dwop_r3", "cens_21dwob_r3", "cens_11dwob_r3", "demo_r_pjanaggr3", "nama_10r_3gdp",
                  "nama_10r_3empers"]
-# NUTS 2021 classification with the territorial typologies (sheet "Metropolitan"); GEOSTAT 2011 1 km population grid
+# NUTS 2021 classification with the territorial typologies (sheet "Metropolitan") and the 2013-2016 correspondence;
+# GEOSTAT 2011 1 km population grid
 OTHER = {"eurostat/NUTS2021.xlsx": "https://ec.europa.eu/eurostat/documents/345175/629341/NUTS2021.xlsx",
+         "eurostat/NUTS2013-NUTS2016.xlsx":
+             "https://ec.europa.eu/eurostat/documents/345175/629341/NUTS2013-NUTS2016.xlsx",
          "prague/GEOSTAT-grid-POP-1K-2011-V2-0-1.zip":
              "https://ec.europa.eu/eurostat/cache/GISCO/geodatafiles/GEOSTAT-grid-POP-1K-2011-V2-0-1.zip"}
 # RÚIAN layers queried by housing_data.py (building points with nespravny, platiod, pocetpodlazi; districts)
