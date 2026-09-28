@@ -94,7 +94,10 @@ def builders(e: dict, r: dict) -> None:
         v = r["H4"][k]
         rows.append((lab, v["difference"], v["difference"] - 1.645 * v["se_cr1"],
                      v["difference"] + 1.645 * v["se_cr1"], v["p"]))
-    fig, ax = plt.subplots(figsize=(8, 3.0))
+    nb = r["H4"]["g_negative_binomial"]
+    rows.append(("negative binomial", nb["difference"], nb["difference"] - 1.645 * nb["se"],
+                 nb["difference"] + 1.645 * nb["se"], nb["p"]))
+    fig, ax = plt.subplots(figsize=(8, 3.3))
     spec_rows(ax, rows, "non-market minus market response to price growth (90 % interval)",
               margin=-1)
     fig.tight_layout()
@@ -108,14 +111,19 @@ def metro(e: dict, r: dict) -> None:
     names = {"a_2012_2024": "2012–2024", "c_500m_cells": "500 m cells",
              "d_stations_with_2015_extension": "stations incl. 2015 extension",
              "g_ruian_pre2012_density": "pre-2012 flats as density", "h_implausible_types_excluded":
-             "reconstructions excluded", "j_rail_tram_distance_added": "rail and tram distance added"}
+             "implausible new-build types excluded", "j_rail_tram_distance_added": "rail and tram distance added"}
     for k, lab in names.items():
         v = r["H5"][k]
         rows.append((lab, v["gamma"], v["gamma"] - 1.645 * v["se_conley_1_5km"],
                      v["gamma"] + 1.645 * v["se_conley_1_5km"], v["p"]))
+    rows.insert(1, ("Conley 3 km", h["gamma"], h["gamma"] - 1.645 * h["se_conley_3km"],
+                    h["gamma"] + 1.645 * h["se_conley_3km"], h["p_conley3_negative"]))
+    nb = r["H5"]["i_negative_binomial"]
+    rows.append(("negative binomial", nb["gamma"], nb["gamma"] - 1.645 * nb["se_cluster"],
+                 nb["gamma"] + 1.645 * nb["se_cluster"], nb["p"]))
     old = h["H6_2000_2011"]
     rows.append(("replication: 2000–2011", old["gamma"], *old["ci90_conley"], old["p"]))
-    fig, ax = plt.subplots(figsize=(8, 3.2))
+    fig, ax = plt.subplots(figsize=(8, 3.7))
     spec_rows(ax, rows, "γ: log density of new flats per doubling of metro distance (90 %)",
               margin=-0.25)
     fig.tight_layout()

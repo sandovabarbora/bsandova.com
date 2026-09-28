@@ -904,3 +904,24 @@ run:
   - The main frame has none, so the main H4 estimates are unchanged.
   - The main estimates were produced before this line was added. The main frame was checked to contain zero such
     cells.
+
+### 2026-09-30, after an independent fact-check of the draft article
+
+- **Two registered checks were omitted from the first runs.** They were run now by `tools/praha/housing_addenda.py`,
+  outside the family:
+  - H5 with the wild score bootstrap clustered by the 57 city districts: γ = −0.227, WCR p = 0.0149, about 17.5
+    effective clusters.
+  - The H6 replication of H3 on Polish powiats (Warsaw against the others). It uses starts, annual data for
+    2014–2024 and 3 annual lags, because Polish prices begin in 2010. The design did not fix this lag structure.
+    Warsaw's relative cumulative response is −5.7, and Warsaw ranks 4th of 376 powiats given the same treatment.
+    There is no test, because there is only one Warsaw.
+- **H1 raw ranks were added as description, with no model.** The Prague metro region builds 5.28 per 1 000 a year
+  (census numerator), 163rd of 208 from the bottom (median 3.55). On the ČSÚ-rebuilt numerator it builds 3.88,
+  116th of 208 (median 3.50). The fact-check's figure of 115th counted ties differently; the value in
+  `housing_extended.json` is authoritative.
+- **The within-Czechia replication is the raw ČSÚ rate, with no model** (already listed above). It is marked as a
+  deviation in the article.
+- **Not run: an OECD source next to the Doing Business figure (§8).** It was not verified in time, and the article
+  cites Doing Business only with its caveats.
+- **Robustness 1c** dropped Spain and the three other Czech metro regions, and kept Prague on the rebuilt numerator.
+  Croatia had no region left in the sample. The article now says so.
