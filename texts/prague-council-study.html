@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who says no in Prague</title>
+<meta name="description" content="A pre-registered study of 10 565 roll calls of Prague's City Assembly, 2010–2026. The same councillors vote against half as often each term; a list's voting depends on whether it governs, not on its party; the opposition never says no as a bloc.">
+<meta property="og:title" content="Who says no in Prague">
+<meta property="og:description" content="Part 1 of Prague, measured, the long version: four terms, 199 councillors, three registered tests.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://bsandova.com/assets/og/prague-council.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bsandova.com/assets/og/prague-council.jpg">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://bsandova.com/texts/prague-council-study">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../text.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../a24.css">
+<style>
+.ht{width:100%;border-collapse:collapse;font:400 13px/1.4 var(--sans);font-variant-numeric:tabular-nums;margin:.6rem 0 1rem}
+.ht th{font:400 11px var(--mono);color:#666;text-align:left;padding:6px 10px 6px 0;border-bottom:1px solid #000;vertical-align:bottom}
+.ht td{padding:6px 10px 6px 0;border-bottom:1px solid #e6e6e6;vertical-align:top}
+.ht td.v{white-space:nowrap}
+.ht td.v b{font-weight:500;color:#a8201a}
+.ht small{color:#666;font:400 11px var(--mono)}
+.note{font:400 12px/1.6 var(--mono);color:#666}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">prague, measured · 1, long · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Prague, measured · Part 1, the long version · pre-registered · City Assembly roll calls 2010–2026</p>
+  <h1>Who says no <em>in Prague</em></h1>
+  <p class="deck"><a href="prague-council">Part 1</a> found an assembly that has almost stopped voting against anything. This version asks why, across four terms and 10 565 roll calls: is it the same people voting differently, or different people? Whose no is it? And on what? Three tests were written down before the votes were modelled. One passed. Along the way the data showed something the tests did not ask about. How a list votes depends on whether it governs, not on the party behind it.</p>
+  <dl class="facts">
+    <div><dt>the same councillor's votes against, each new term</dt><dd>× 0.49 <small>59 people · p &lt; 0.001</small></dd></div>
+    <div><dt>ANO voting yes, in the coalition / in opposition</dt><dd>95 / 58 % <small>Praha sobě: 95 / 77 %</small></dd></div>
+    <div><dt>contested votes where the opposition says no together</dt><dd>15–17 % <small>mostly one club at a time</small></dd></div>
+    <div><dt>registered tests passed</dt><dd>1 of 3 <small>Holm, family-wise 5 %</small></dd></div>
+  </dl>
+</header>
+<section class="film film-page"><div class="shot" style="--bg:url(../assets/photo/prague-council.jpg);--bg-s:url(../assets/photo/prague-council-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Praha,_Star%C3%A9_M%C4%9Bsto,_Mari%C3%A1nsk%C3%A9_n%C3%A1m%C4%9Bst%C3%AD,_Nov%C3%A1_radnice_(Magistr%C3%A1t).jpg">Stanislav Dusík</a> · CC BY-SA 4.0, colour held</p></section>
+
+<section>
+<p>Prague's City Assembly publishes every councillor's vote on every resolution it adopts: 65 seats, four terms since 2010<sup class="cite"><a href="#r1">1</a></sup>. Part 1 read the current term and found that disagreement had moved off the record. Votes against fell in every term, from 1.06 per 100 councillors present in 2010–14 to 0.28. Pressing nothing rose. Legislative scholars have tools for such records: scaling votes into positions<sup class="cite"><a href="#r2">2</a></sup><sup class="cite"><a href="#r3">3</a></sup>, asking whether a chamber divides by government and opposition or by left and right<sup class="cite"><a href="#r4">4</a></sup>, and asking whether change comes from members converting or from members being replaced<sup class="cite"><a href="#r5">5</a></sup>. This text uses them. It uses them under rules fixed in advance: a design reviewed by three referees and committed before any vote was modelled<sup class="cite"><a href="#r6">6</a></sup>.</p>
+<p>A caveat that frames everything below: the files do not hold every vote. Comparing the numbered votes of each sitting with the rows published shows that the files hold between 55 and 67 % of the roll calls taken. Procedural votes, agenda changes and amendments are missing, and in national parliaments those are where government and opposition fight most<sup class="cite"><a href="#r7">7</a></sup><sup class="cite"><a href="#r8">8</a></sup>. Everything here is about the final votes on the resolutions the assembly adopted.</p>
+</section>
+
+<section>
+<h2>The tests</h2>
+<table class="ht">
+  <thead><tr><th>Hypothesis</th><th>Test</th><th>Result</th></tr></thead>
+  <tbody>
+  <tr><td>H1 · the same councillors vote against less, term after term</td><td>within-person change &lt; 0</td><td class="v"><b>supported</b><br><small>× 0.49 per term, p &lt; 0.001</small></td></tr>
+  <tr><td>H3 · votes split along coalition and opposition better than along left and right</td><td>classification errors</td><td class="v">not supported<br><small>left–right cut fits better</small></td></tr>
+  <tr><td>H4 · the opposition opposes planning and property more than grants</td><td>difference in non-support</td><td class="v">not supported<br><small>−0.4 points, p = 0.53</small></td></tr>
+  </tbody>
+</table>
+<p class="note">A fourth hypothesis, on when abstentions fell, was demoted to description before any test was run. A research assistant had looked at the answer by accident. It is in "How abstaining ended" below.</p>
+</section>
+
+<section>
+<h2>The same people, voting differently</h2>
+<p>Fifty-nine people sat in two consecutive terms and were seated for at least 300 votes in each, 73 such pairs in all. For each pair the test compares a councillor's rate of voting against with their own rate one term earlier. Only votes against are used: they need a button press, so no change in how the system records a member who presses nothing can move them.</p>
+<p>The same people also move between government and opposition, and opposition councillors vote against more. Each change is therefore adjusted for the change in how much of the councillor's term their club spent in opposition. Adjusted this way, a councillor's rate of voting against roughly halves from one term to the next (× 0.49, p &lt; 0.001, sign-flip test over people).</p>
+<figure>
+  <img src="../assets/zhmp/04-within.svg" alt="Three horizontal intervals on a log scale. 2010–14 to 2014–18: the same 21 councillors voted against at 0.20 times their earlier rate. 2014–18 to 2018–22: 20 councillors, 0.96 times, interval crossing 1. 2018–22 to 2022–26: 32 councillors, 0.65 times. Pooled: 0.49." loading="lazy">
+  <figcaption><b>fig. 1</b> · A councillor's rate of voting against in the next term relative to their own rate this term, adjusted for moving between coalition and opposition. 95 % intervals over people.</figcaption>
+</figure>
+<p>The pooled number hides three different transitions.</p>
+<ul>
+<li><b>2010–14 to 2014–18: conversion.</b> The same 21 people voted against a fifth as often.</li>
+<li><b>2014–18 to 2018–22: replacement.</b> The 20 people who stayed voted as before, and the whole fall of the assembly's rate, 0.35 votes against per 100 present, comes from who left and who arrived.</li>
+<li><b>2018–22 to 2022–26: a smaller conversion.</b> The rate fell to about two thirds.</li>
+</ul>
+<p>The pattern holds without the adjustment for status (× 0.59), on passed votes only (× 0.47) and without the first transition (× 0.72). It does not hold among the 26 people whose status did not change at all: × 0.86, p = 0.14. People who stay on the same side vote against less, but that small group cannot show it with confidence. Each new cohort also arrives voting against less than the one before: 0.67 per 100 present among 2014's newcomers, 0.30 in 2018, 0.26 in 2022.</p>
+</section>
+
+<section>
+<h2>It is the role, not the party</h2>
+<p>The adjustment above turned out to matter more than anything else, and it is worth seeing why. Put each list's share of yes votes side by side for the periods it governed and the periods it did not. The dates come from coalition agreements and news reports<sup class="cite"><a href="#r9">9</a></sup>.</p>
+<figure>
+  <img src="../assets/zhmp/05-roles.svg" alt="Dot chart for six lists: share of present members voting yes while in the coalition (red) and in opposition (grey). Praha sobě 95 and 77 %. ANO 95 and 59 %. TOP 09 91 and 47 %. ODS 87 and 58 %. ČSSD 97 and 79 %. Pirates 95 and 69 %." loading="lazy">
+  <figcaption><b>fig. 2</b> · Share of present members voting yes, by list, averaged over the periods it governed (red) and the periods it did not (grey), 2010–2026, weighted by votes. Interregna, when no coalition governed, are left out. ODS in 2022–26 ran inside SPOLU and is not in its row.</figcaption>
+</figure>
+<p>Every list that has governed and opposed looks like two different parties.</p>
+<ul>
+<li>TOP 09 voted yes 91 % of the time while it led the city in 2011–14, and 43 % in opposition in 2016–18.</li>
+<li>ANO voted yes 95 % in the coalition of 2014–18, and 58–60 % in opposition since.</li>
+<li>Praha sobě, a local movement, voted yes 95 % in the coalition of 2018–22 and 77 % in opposition since 2023. That is still the most of any opposition club, which is what Part 1 noticed.</li>
+</ul>
+<p>Nothing here is causal, and new coalitions bring new agendas. But the size of the swing puts a list's voting on the city's ordinary business mostly down to its seat, not its programme.</p>
+</section>
+
+<section>
+<h2>No opposition bloc</h2>
+<p>H3 asked a classic question<sup class="cite"><a href="#r4">4</a></sup>. On the contested votes, does a single dividing line between coalition and opposition sort the councillors better than a cut along the left–right order of their national parties? For left and right the design used the Chapel Hill expert survey<sup class="cite"><a href="#r10">10</a></sup>: economic left–right for 2018–22, and general left–right for 2022–26, where the economic scale lines the coalition up next to itself (Appendix B of the design).</p>
+<p>The answer is no, in both terms. The best left–right cut makes 10 fewer errors per 100 councillors in 2018–22 and 6 fewer in 2022–26. The reason is visible in who votes no.</p>
+<figure>
+  <img src="../assets/zhmp/07-who-says-no.svg" alt="Two bar charts of contested votes by which clubs had a majority not voting yes. 2018–22: no club as a whole 49 %, ODS alone 23 %, ANO and ODS 15 %, ANO alone 12 %. 2022–26: no club as a whole 42 %, SPD alone 20 %, ANO and SPD 17 %, ANO alone 11 %, Praha sobě 2.5 %." loading="lazy">
+  <figcaption><b>fig. 3</b> · Contested votes (at least 2.5 % of present members on the losing side) by which clubs had a majority not voting yes. Grey: no club voted no as a whole; the minority was scattered.</figcaption>
+</figure>
+<p>The coalition clubs almost never vote no. When a club does, it is usually one opposition club on its own.</p>
+<ul>
+<li><b>2018–22:</b> ODS alone on 23 % of the contested votes, ANO alone on 12 %, the two together on 15 %.</li>
+<li><b>2022–26:</b> SPD alone on 20 %, ANO alone on 11 %, the two together on 17 %.</li>
+</ul>
+<p>A left–right cut can separate ODS, or SPD, from everyone else, because they sit at one end of the scale. A coalition-against-opposition line cannot, because it must put ANO on the same side. The registered comparison gave left–right that flexibility: any cut against two fixed sides. That asymmetry was in the design before the data were seen. It is reported, and the test is not re-specified.</p>
+<p>A one-dimensional scaling of the votes, reported as description<sup class="cite"><a href="#r3">3</a></sup>, still puts every coalition club on one side and every opposition club on the other in both terms.</p>
+<ul>
+<li><b>2018–22:</b> the Pirates +0.96, Praha sobě +0.82, the TOP 09 and STAN list +0.20; ANO −1.06, ODS −1.10.</li>
+<li><b>2022–26:</b> the Pirates +0.83, STAN +0.70, SPOLU +0.58; Praha sobě −0.39, SPD −1.08, ANO −1.23.</li>
+</ul>
+<p>Both readings are true. The main line runs between government and opposition, and the opposition is several separate noes, not one.</p>
+</section>
+
+<section>
+<h2>What the opposition votes against</h2>
+<p>Resolution titles were sorted into subjects by a keyword dictionary. It was fixed before any title was joined to a vote, and checked against an independent coding of 200 titles it had not been tuned on (agreement 90.5 %, κ 0.88)<sup class="cite"><a href="#r6">6</a></sup>. The expectation was that land-use changes and property deals, where Prague's scandals have been, would draw more opposition than grants. On the 2 237 council-proposed votes since February 2023 they do not. Opposition councillors present withheld a yes on 41 % of grant votes, 41 % of property votes and 37 % of land-use votes. The registered contrast is −0.4 points (p = 0.53). The lowest shares are on the budget (30 %) and on appointments (31 %). The opposition's no is spread across the agenda, not concentrated on development.</p>
+</section>
+
+<section>
+<h2>How abstaining ended</h2>
+<p>Part 1 found abstentions falling abruptly between 2014–18 and 2018–22 and could not say why. Nothing documented changed in how votes are taken.</p>
+<ul>
+<li>The rules of procedure were amended in 2019, a change the assembly's own transcript calls mostly technical.</li>
+<li>The chair has asked "for, against, abstaining?" in the same words from 2015 to 2023.</li>
+<li>New voting equipment came only in 2023.</li>
+<li>The open data changed how it counts "present" in October 2020, but that field is not used here.</li>
+</ul>
+<figure>
+  <img src="../assets/zhmp/06-abstain-sittings.svg" alt="Scatter of sittings from 2010 to 2026: abstentions as a share of abstentions plus pressing nothing. Around 20 to 60 % in 2010–2018 with a downward drift in each term, falling to under 10 % from late 2018, and near zero by 2026. Dashed lines mark the term boundaries; a solid line marks October 2020." loading="lazy">
+  <figcaption><b>fig. 4</b> · Abstentions as a share of the two ways of being present without voting yes (abstaining, pressing nothing), per sitting. Dashed: new terms. Solid: the month the open data changed its count of "present".</figcaption>
+</figure>
+<p>The sittings show a drift and a step. Abstaining fades within each term, and there is a step down at the 2018 boundary that a trend alone does not produce. The step appears even among the 20 councillors who sat in both terms. That argues against pure turnover and for something shared: a norm, a club practice, or a habit of how the room votes. This analysis was demoted to description before it was run, so no test is claimed for it.</p>
+</section>
+
+<section>
+<h2>What changed after registration</h2>
+<ul>
+<li><b>The abstention hypothesis became description.</b> This happened before estimation, because its answer had been seen (above).</li>
+<li><b>The left–right axis for 2022–26 moved from economic to general left–right.</b> This was a pre-specified fallback, applied because on the economic scale the coalition occupies a contiguous stretch.</li>
+<li><b>Three pieces were added after the results and are labelled as such:</b> the breakdown by which club says no, the one-dimensional scaling, and the comparison of lists in and out of government.</li>
+<li><b>Some registered robustness checks were not run:</b>
+  <ul>
+  <li>a conditional logit and bounds for who returns;</li>
+  <li>alternative contested-vote cut-offs;</li>
+  <li>an audit against complete session records.</li>
+  </ul></li>
+</ul>
+<p>The full list, the councillor-to-list crosswalk and every source are in the repository<sup class="cite"><a href="#r6">6</a></sup>. Every number comes from four scripts:</p>
+<ul>
+<li><code>tools/zhmp/council.py</code></li>
+<li><code>clubs.py</code></li>
+<li><code>topics.py</code></li>
+<li><code>council_extended.py</code></li>
+</ul>
+</section>
+
+<section>
+<h2>What this does not show</h2>
+<p>Pressing nothing cannot be told apart from stepping out while logged in, from the chair not voting, from a declared conflict of interest, or from a club's collective decision. So the record describes the record, not intent. Party positions are national expert scores for national parties, and Prague's lists are not always those parties. Praha sobě has no score at all. A third to a half of the roll calls are not in the files. Nothing here names or ranks individual councillors, and nothing is a causal effect.</p>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Hlavní město Praha: Výsledky hlasování ZHMP 2010–2014, 2014–2018, 2018–2022, 2022–2026, open data on lkod.cz; resolution titles 2022–2026 from the city's resolution register, <a href="https://usneseni.praha.eu/">usneseni.praha.eu</a>.</li>
+<li id="r2">Poole, K. T., Rosenthal, H. (1997): <i>Congress: A Political-Economic History of Roll Call Voting</i>. Oxford University Press.</li>
+<li id="r3">Clinton, J., Jackman, S., Rivers, D. (2004): The statistical analysis of roll call data. <i>American Political Science Review</i> 98(2).</li>
+<li id="r4">Hix, S., Noury, A. (2016): Government–opposition or left–right? The institutional determinants of voting in legislatures. <i>Political Science Research and Methods</i> 4(2).</li>
+<li id="r5">Theriault, S. M. (2006): Party polarization in the US Congress: member replacement and member adaptation. <i>Party Politics</i> 12(4).</li>
+<li id="r6">Šandová, B. (2026): <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-council-design.md">Prague's council: research design</a>, registered version with dated changes, <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-council-crosswalk.csv">councillor crosswalk</a> and <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-council-sources.md">sources</a>.</li>
+<li id="r7">Cox, G. W., McCubbins, M. D. (2005): <i>Setting the Agenda: Responsible Party Government in the US House of Representatives</i>. Cambridge University Press.</li>
+<li id="r8">Carrubba, C. J., Gabel, M., Murrah, L., Clough, R., Montgomery, E., Schambach, R. (2006): Off the record: unrecorded legislative votes, selection bias and roll-call vote analysis. <i>British Journal of Political Science</i> 36(4).</li>
+<li id="r9">Coalition dates: aktualne.cz, Novinky, Deník, iROZHLAS, ČT24 and the city's records, 2010–2023, listed with links in the <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-council-sources.md">sources note</a>.</li>
+<li id="r10">Jolly, S., Bakker, R., Hooghe, L., Marks, G., Polk, J., Rovny, J., Steenbergen, M., Vachudova, M. A. (2022): Chapel Hill Expert Survey trend file, 1999–2019. <i>Electoral Studies</i> 75; CHES 2024, <a href="https://www.chesdata.eu/ches-europe">chesdata.eu</a>.</li>
+<li id="r11">Holm, S. (1979): A simple sequentially rejective multiple test procedure. <i>Scandinavian Journal of Statistics</i> 6(2), 65–70.</li>
+<li id="r12">Český statistický úřad: municipal election candidate registers 2010, 2014, 2018 and 2022, <a href="https://www.volby.cz/">volby.cz</a>.</li>
+</ol>
+</section>
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a> · <a href="prague-council">Part 1, the short version</a> · <a href="prague-rings-study">Part 2, the long version</a> · <a href="prague-districts">Part 3</a> · <a href="prague-housing">Part 4</a></p>
+</footer>
+</article>
+</body>
+</html>
