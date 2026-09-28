@@ -866,5 +866,85 @@
     1.6
    ]
   }
+ },
+ "ds12": {
+  "dict_file": "dict_model_lines.csv",
+  "sha256": "ccfd595fe215a84c4326f8c2fd418c422a4d5f22f2d31bcc7d2a9bb024b269dc",
+  "rows": 141859,
+  "eea_lines": 796,
+  "match_by_year": {
+   "2012": {
+    "eea_regs": 169938,
+    "matched_line_share": 0.9982,
+    "matched_make_share": 0.9999
+   },
+   "2013": {
+    "eea_regs": 162052,
+    "matched_line_share": 0.9984,
+    "matched_make_share": 1.0
+   },
+   "2014": {
+    "eea_regs": 179010,
+    "matched_line_share": 0.9998,
+    "matched_make_share": 1.0
+   },
+   "2015": {
+    "eea_regs": 227819,
+    "matched_line_share": 0.9999,
+    "matched_make_share": 1.0
+   },
+   "2016": {
+    "eea_regs": 214425,
+    "matched_line_share": 1.0,
+    "matched_make_share": 1.0
+   },
+   "2017": {
+    "eea_regs": 220863,
+    "matched_line_share": 0.9999,
+    "matched_make_share": 1.0
+   },
+   "2018": {
+    "eea_regs": 237220,
+    "matched_line_share": 0.9727,
+    "matched_make_share": 0.9728
+   },
+   "2019": {
+    "eea_regs": 244726,
+    "matched_line_share": 0.9998,
+    "matched_make_share": 1.0
+   },
+   "2020": {
+    "eea_regs": 196720,
+    "matched_line_share": 0.9994,
+    "matched_make_share": 1.0
+   },
+   "2021": {
+    "eea_regs": 201024,
+    "matched_line_share": 0.9977,
+    "matched_make_share": 1.0
+   },
+   "2022": {
+    "eea_regs": 185835,
+    "matched_line_share": 1.0,
+    "matched_make_share": 1.0
+   },
+   "2023": {
+    "eea_regs": 217145,
+    "matched_line_share": 0.995,
+    "matched_make_share": 1.0
+   },
+   "2024": {
+    "eea_regs": 227734,
+    "matched_line_share": 0.9965,
+    "matched_make_share": 1.0
+   },
+   "2025": {
+    "eea_regs": 239896,
+    "matched_line_share": 0.9997,
+    "matched_make_share": 1.0
+   }
+  },
+  "rule": "matched_line_share < 0.80 in a year -> that year uses make × year cells",
+  "years_falling_back": []
  }
 }
