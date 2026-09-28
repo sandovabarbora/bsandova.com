@@ -1,536 +1,598 @@
 # One city, 57 budgets: research design (Part 3, extended)
 
-**Status: draft for review.** Written before any budget figure outside Part 3's published 2022–2024 actuals has been
-looked at, and before any model below has been estimated. The raw files in §4 have been downloaded by
-`tools/praha/districts_data.py`. Only their structure has been inspected: columns, codes, coverage and counts of
-units (§0). After review this file becomes the registered version. Deviations will then be listed, dated, under
-"Changes after registration".
+**Status: registered, version 2 (29 September 2026).** Revised after three referee reports on draft v1: public
+finance and political economy, statistics, and data audit (`docs/research/prague-districts-referees.md`). The
+response is item by item in §10.
+
+Registered **before any grant amount has been aggregated** by district, year or alignment, and before any model below
+has been estimated. At registration:
+
+- every raw file listed in Appendix A had been downloaded and hashed (`docs/research/prague-districts-files.sha256`);
+- the grant lists had been parsed for **structure only** (`docs/research/prague-districts-grants-structure.json`);
+- the alignment coding had been frozen and hashed (`docs/research/prague-districts-alignment.csv`, `.json`);
+- the design-stage power simulation had been run on the real switch vectors (`docs/research/prague-districts-power.json`).
+
+Deviations will be listed, dated, under "Changes after registration".
 
 ## 0. What has already been seen
 
-**Part 3 (published, `texts/prague-districts.html`, `assets/praha/districts.json`).** MONITOR actuals ("reality")
-for 2022, 2023 and 2024 for all 57 districts, divided by residents at 31 December of each year and averaged.
+### 0.1 Part 3 as published (before the correction)
 
-- Per district, public in `districts.json`:
-  - spending per resident (three-year mean and each year);
+MONITOR actuals ("reality") for 2022, 2023 and 2024 for all 57 districts, divided by residents at 31 December and
+averaged.
+
+- **Public per district** in `districts.json`:
+  - spending per resident, the three-year mean and each year;
   - spending shares of eight function groups and of capital outlays;
-  - income shares and income per resident split into taxes, non-tax and class 4 "transfers";
-  - the 2022 district-assembly lists with votes and seats.
-- Headline numbers:
-  - the 13 districts over 40 000 residents spend 8 346–17 604 CZK per resident, and Praha 1 spends 35 320 (35 602,
-    34 564 and 35 794 in the three years);
-  - the median district spends 14 669, and the JSON range is 7 763–73 020;
-  - Praha-Lysolaje spent 119 531 per resident in 2022 and 27 118 in 2024, with 73 % of its three-year spending
-    capital.
-- Income:
-  - class 4 transfers are 82 % of the median district's income (66–92 %);
-  - taxes and fees per resident are 9 676 CZK in Praha 1 and 1 363 in Praha 4, and transfers per resident are
-    23 570 and 7 009;
-  - Praha 1's overnight-stay fee was 82.9 m CZK in 2024 (47.5 m in 2022), and its public-space fee 114.2 m (97.3 m).
-- Spending shares in the 13 large districts (medians):
-  - town hall (section 61) 29 % (24–38 %);
-  - education 32 % (18–42 %);
-  - social 7.5 % (2–17 %);
-  - capital 28 % (14–48 %).
-- Figure 1 plots spending per resident against population for all 57, so **the cross-sectional shape of size
-  against total spending, 2022–2024, has been seen**. Figure 2 shows income per resident by type for the large
-  districts.
+  - income shares and per-resident income, split into taxes, non-tax and class 4;
+  - the 2022 district lists with their votes and seats.
+- **Headline figures:**
+  - the 13 districts over 40 000 residents spend 8 346–17 604 CZK per resident;
+  - Praha 1 spends 35 320 (35 602 / 34 564 / 35 794 in the three years);
+  - the median district spends 14 669, and the range is 7 763–73 020;
+  - Praha-Lysolaje spent 119 531 in 2022 and 27 118 in 2024, and 73 % of its spending over the three years was
+    capital;
+  - Praha 1's overnight-stay fee was 47.5 → 82.9 m CZK and its public-space fee 97.3 → 114.2 m CZK (2022 → 2024);
+  - in the large districts, the median town-hall share is 29 % (24–38), education 32 % (18–42), social 7.5 % (2–17)
+    and capital 28 % (14–48).
+- **The size shape.** Figure 1 plots spending per resident against population, so the shape of that relation for
+  2022–2024 has been seen.
 
-**What Part 3 did not look at.** None of the following has been seen:
+### 0.2 The Part 3 correction (branch `docs/PRAHA-3_transfer-label-fix`, 28 Sep 2026)
 
-- 2025;
-- the approved (`approved`), amended (`afterChanges`) or final (`finalBudget`) columns for any year;
-- class 4 split into its items;
-- the financing class (8) or the balance;
-- the 2014 and 2018 elections;
-- any partisan alignment;
-- population by age;
-- area.
+The correction removed items 4131, 4132 and 4140 from "transfers" and counted them as own non-tax revenue. It
+changed only the three-year means that had already been published.
 
-Class 4 *actuals* for 2022–2024, which contain the actuals of 4137 and 4251, were seen only as totals.
+| Figure | Old | New |
+|---|---|---|
+| Transfers, share of the median district's income | 82 % | 76 % |
+| Transfers, range of that share | 66–92 % | 38–92 % |
+| Transfers per resident, Praha 1 | 23 570 | 13 655 |
+| Transfers per resident, Praha 4 | 7 009 | 6 804 |
+| Non-tax income per resident, Praha 1 | 2 393 | 12 308 |
+| Non-tax income per resident, Praha 4 | 699 | 905 |
+| Districts whose share of income from transfers is changed | – | 48 |
+| Districts where transfers are below half of income | none | Praha 1, Praha 2 |
 
-**Seen while drafting this design (no outcome statistic computed).**
+**What this reveals.** The referees found that district reports carry no 411x/42xx state items: all state money
+arrives through 4137/4251. So the new "transfers" column is, per district, the 2022–2024 three-year mean of actual
+4137 + 4251 (+ 4121/4122, if present) per resident. This is part of the *reality* half of the MONITOR secondary
+outcome. The `approved` half, and the individual years, remain unseen.
 
-- **Coverage (the finding that shaped this design).** The MONITOR web API answers every district-year for 2015–2025,
-  but **all 57 district reports for 2015–2021 are empty (399 of 399 district-years have zero outgoings)**. Only
-  2022–2025 carry figures. The city's own reports (IČO 00064581) are filled in every year. The bulk FIN 2-12 M
-  extract for 2019 has none of the 57 district IČOs (the city is present), as Part 3 found for 2024. **Open
-  budget data for the districts therefore start in 2022.**
-- **MONITOR JSON structure.** Every node carries `approved`, `afterChanges`, `finalBudget`, `reality` and four
-  `sankey*` twins.
-  - The class 4 items that occur across all district-years (names only, no amounts) include:
-    - state transfers 4111, 4112, 4113, 4116, 4118 and 4119;
-    - 4121 (from municipalities) and 4122 (from regions);
-    - 4131 and 4132 (transfers from the district's own funds);
-    - **4137** (non-investment transfers between statutory cities including Prague and their districts);
-    - 4140;
-    - foreign 4151, 4152 and 4155;
-    - 4171;
-    - investment 4213, 4216, 4218, 4221 and 4232;
-    - **4251** (investment transfers between statutory cities … and their districts).
-  - Consequence for Part 3: its class 4 "transfers from the city and the state" includes 4131/4132/4140, which are
-    transfers from a district's own funds, not grants. Their size has not been computed (open question Q1).
-- **Praha 8's explanatory memo to its 2022 draft budget** (m.praha8.cz, `Rozpocet-2022-duvodova-zprava.pdf`) was
-  read for the allocation rule (§1). It also gives **one district-year of approved amounts**:
-  - "finanční vztah" 357 379 thousand CZK;
-  - state-administration contribution 88 527 thousand;
-  - property tax (budgeted) 118 200 thousand.
-- **Web-search snippets** showed further approved or city-level figures [unconfirmed at source]:
-  - Praha 6 "dotační vztah" over 500 m CZK (2024);
-  - Praha 9 "finanční vztah" 312 247.1 thousand (2024);
-  - an unidentified line "the city receives 1 300 382.7 thousand, gives the districts 885 960.6 thousand" (2024);
-  - for 2019, "Prague received 1 075 508.6 thousand CZK from the state and provided 905 123 thousand to districts",
-    attributed to a closing-account table "Tabulka č. 9 – Finanční vztahy k MČ" (xls). The table itself has not
-    been found or opened.
-- **Election files for 2014, 2018 and 2022.**
-  - Each holds 58 Prague assemblies (57 districts + ZHMP), with list composition (`SLOZENI`), each candidate's
-    nominating party and membership (`NSTRANA`, `PSTRANA`) and seats. Seats have not been tabulated by party.
-  - Election dates in the Prague rows show six repeat or new district elections (§4).
-- **Other covariates.** RÚIAN has 57 district polygons and 22 administrative districts with an area attribute. ČSÚ
-  has age by five-year group for all 57 districts, 2011–2025, and residents for 1991–2025.
+### 0.3 Seen by the referees (reported in their file, §0)
+
+- **Data referee, by accident:**
+  - MONITOR totals nodes for Praha 1 and Praha 4, 2023;
+  - for Praha 2 and Praha 3, 2019, item 4137 approved, amended and actual (from the closing-account PDF);
+  - the city's totals for 4137 and 5347 in 2019.
+- **Statistics referee:** rough alignment counts for 2022→2023 from the election files, with no budget data. 17
+  up-switchers, 3 down, 32 never aligned, 5 always aligned. 15 of the 17 switched because the coalition changed.
+- **Public-finance referee:** the published income shares sum to 0.91–1.00 of total income.
+
+### 0.4 Seen by the author while preparing v1 and v2 (no outcome statistic computed)
+
+- **v1** (see the v1 file in git history):
+  - MONITOR JSON structure;
+  - the empty 2015–2021 district reports;
+  - the Praha 8 2022 budget memo, one district-year of approved amounts (formula transfer 357 379 thousand CZK,
+    state-administration contribution 88 527 thousand CZK, property tax 118 200 thousand CZK);
+  - search snippets for Praha 6 and Praha 9 (2024) and city totals for 2019 and 2024;
+  - the election files, RÚIAN and ČSÚ structure.
+- **v2, closing-account text read while locating the lists.** Numbers were masked in the author's own tools, except
+  in these cases:
+  - **The first rows of the 2019 city-grant list (section 5.3).** About 35 lines were read unmasked while learning
+    the layout: environmental grants (ÚZ 81, ZHMP resolution 8/27, chapter 02), each with its amount. The districts
+    were Praha 2, 3, 5, 6, 8, 17 and 18, Běchovice, Březiněves, Čakovice, Ďáblice and Klánovice.
+  - **A header scan of the 2025 part III report**, which printed several city-wide 2025 sentences with their
+    amounts:
+    - non-investment targeted grants to districts, 891 557.9 thousand CZK;
+    - investment targeted grants, 3 475 335.4 thousand CZK;
+    - ÚZ 84 investment, 2 552 075.6 thousand CZK;
+    - an MŽP grant, 1 722.9 thousand CZK;
+    - the text of the ZHMP resolutions on retained grants (22/35, 22/33, 26/53, 26/66, 20/16).
+
+    No district-level amount for 2025 was printed.
+  - **Allocation tables** (annexes of each approved budget): sheet names, shapes, the number of cells naming a
+    district, and the header "Kritéria: 30 % dle počtu obyvatel MČ, 10 % dle rozlohy MČ, 30 % dle počtu dětí MŠ a
+    žáků ZŠ…" for 2019–2023. No amount was read.
+  - **Grant-list structure:** row counts by section, layout, resolution type, ÚZ class and column header, and the
+    coverage of resolution dating (§4.2). These are counts of rows, not of money.
+- **Coders.** Six coding agents (two blind coders × three groups of districts) reported that they saw, and did not
+  record, incidental money figures in district newsletters, resolutions and minutes:
+  - councillors' pay;
+  - individual grant or project sums in Zbraslav, Ďáblice, Velká Chuchle, Chaberský zpravodaj, Koloděje, Kolovraty,
+    Nedvězí and Šeberov documents;
+  - an idnes.cz headline (Sep 2026) about extra money for outlying districts.
+
+  One coder listed the scratchpad directory and saw file names only. None of this reaches the author's analysis
+  files.
 
 ## 1. Background: how a Prague district is financed
 
-- **Legal frame.**
-  - Prague is one municipality and one region (Act 131/2000 Coll. on the capital city of Prague).
-  - Under the budgetary allocation of taxes (rozpočtové určení daní, Act 243/2000 Coll.), shared taxes go to the
-    city, not to the districts.
-  - The city's Statute (Obecně závazná vyhláška č. 55/2000 Sb. hl. m. Prahy, as amended) says which revenues are
-    the districts' own and how the city shares its money with them.
-- **Districts' own revenue.**
-  - Property tax: its full yield goes to the district (Praha's statement reported in *Moderní obec*, 2019). From
-    tax year 2020 the city let districts set a property-tax coefficient on their territory [verify which
-    coefficient, and uptake].
-  - Local fees.
-  - Rents and sales, often through a business account that feeds the budget as 4131.
-- **City to district, rule-based (item 4137, set in the city budget each December).**
-  - **"Finanční vztah"**: a formula share of the city's expected shared-tax yield. Praha 8's 2022 memo gives the
-    weights "as in 2021":
-    - residents 30 %;
-    - area 10 %;
-    - kindergarten and primary pupils 30 %;
-    - green space in the district's care 20 %;
-    - roads in the district's care 10 %.
+- **The legal frame.**
+  - Prague is one municipality and one region (Act 131/2000 Coll.).
+  - Shared taxes go to the city under the budgetary allocation of taxes (Act 243/2000 Coll.). The districts receive
+    what the city's Statute (OZV 55/2000 Sb. hl. m. Prahy) and its budget give them.
+- **The districts' own revenue:**
+  - the full property-tax yield;
+  - local fees;
+  - rents and sales, often through the business account that feeds the budget as item 4131.
+- **The rule-based transfer ("finanční vztah", item 4137).** It is set in the city's December budget as a formula
+  share of the expected shared-tax yield. The data audit found three regimes:
+  - **2015–2019:** 30 % of the personal-income-tax yield, then the criteria 30/10/30/20/10 (residents, area, pupils,
+    green space, roads), with different weights for districts 23–57 in 2015, and with floors and caps;
+  - **2020–2023:** 30/10/30/20/10, with a per-resident floor and cap of 3 000 / 5 500 CZK, raised to 3 500 / 6 000
+    in 2023;
+  - **2024–2025:** a new rule, last year's actual plus a top-up tied to the tax forecast. The new coalition adopted
+    it on 14 Dec 2023. The 2023 allocation had been adopted on 15 Dec 2022, by the old council.
+- **The state-administration contribution** (PVSS, also 4137) is financed by the state and routed through the city.
+- **Discretionary grants.** During the year the city council (RHMP) and assembly (ZHMP) grant targeted
+  non-investment (4137) and investment (4251 from 2020) money through budget measures (rozpočtová opatření).
+  - The city's closing accounts list every one of them by district, with the resolution, the purpose code (ÚZ) and
+    the amount.
+  - State pass-throughs (ÚZ 98xxx and other state ÚZ) and operational programmes are listed separately.
+- **City coalitions** (sources: Part 1, `docs/research/prague-council-sources.md`):
 
-    Whether the weights changed in 2023–2025 is open [verify, Q3].
-  - **State-administration contribution**: a per-100-residents rate plus a component for delegated agendas, paid by
-    the state through the city (Praha 8 memo).
-- **City to district, discretionary.** During the year the city council (RHMP) and assembly (ZHMP) grant targeted
-  non-investment (4137) and investment (4251) transfers. They appear as budget amendments in the district's
-  accounts. These are the margin on which partisan allocation can operate. State pass-throughs also arrive in-year
-  under 4137, for example election costs and refugee-related grants in 2022–2023 [verify].
-- **Tiers.** The 22 numbered districts (Praha 1–22) are seats of administrative districts. They carry extended
-  delegated administration for their smaller neighbours; the 35 others do not.
-- **City coalitions.**
-  - 26 Nov 2014 – Nov 2018: ANO, ČSSD and the Trojkoalice (Greens, KDU-ČSL, STAN). The coalition broke in October
-    2015 and was renewed on 28 April 2016.
-  - 15 Nov 2018 – 16 Feb 2023: Pirates, Praha Sobě, Spojené síly pro Prahu (TOP 09, STAN, KDU-ČSL and others
-    [verify]). Caretaker after the 23–24 Sept 2022 election.
-  - 16 Feb 2023 – present: SPOLU (ODS, TOP 09, KDU-ČSL [verify KDU-ČSL on the 2022 Prague SPOLU list]), Pirates,
-    STAN.
-  - Sources: cs.wikipedia "Rada hlavního města Prahy"; Český rozhlas and Deník reporting of Nov 2015 and Apr 2016.
-    All dates are [verify] against ZHMP resolutions before coding.
+  | From | To | Coalition |
+  |---|---|---|
+  | 26 Nov 2014 | 14 Nov 2018 | ANO, ČSSD, SZ, KDU-ČSL, STAN |
+  | 15 Nov 2018 | 15 Feb 2023 | Piráti, Praha Sobě, TOP 09, STAN, KDU-ČSL (Spojené síly pro Prahu) |
+  | 16 Feb 2023 | – | ODS, TOP 09, KDU-ČSL, Piráti, STAN |
+
+  - 2014–2018: the coalition was declared dead on 10 Nov 2015 and renewed on 28 Apr 2016. That period is the
+    **interregnum**.
+  - 2018–2023: from the Sept 2022 election until 16 Feb 2023 the council was a caretaker.
 
 ## 2. Research questions and estimands
 
-The budget panel is **57 districts × 2022–2025 = 228 district-years**. In that window the city coalition changes
-once, on 16 Feb 2023, and the district assemblies once, at the September 2022 election. Both changes fall between
-budget year 2022 and budget year 2023. Every change in partisan alignment therefore happens at **one date**. That
-gives a two-group, one-switch difference-in-differences with one pre-year (2022) and three post-years (2023–2025).
+- **RQ1 (alignment premium).** When a district becomes governed by a party of the city coalition, do the city's own
+  in-year grants to it rise, relative to districts whose status did not change?
+- **RQ2 (what kind of money).** Is the premium carried by investment grants?
 
-- **RQ1 (partisan alignment).** Do districts whose assembly majority belongs to the city's governing parties receive
-  more discretionary, in-year city transfers per resident?
-  - Estimand: the difference-in-differences contrast in in-year transfers per resident between districts that
-    became aligned in 2023 and those that did not, and symmetrically for districts that stopped being aligned.
-    This is pooled in a two-way fixed-effects model, which with a single switch date has no forbidden comparisons.
-  - Reported by direction of switch.
-- **RQ2 (what kind of money).** Is any alignment premium concentrated in investment transfers (4251), the visible,
-  ribbon-cutting kind, rather than non-investment transfers (4137)?
-  - Estimand: the difference between the alignment effects on the two components, in CZK per resident.
-- **RQ3 (budget execution and capacity).** Do smaller districts execute a smaller share of their amended capital
-  budgets?
-  - Estimand: the conditional association between log population and the capital execution rate (actual /
-    amended), within tier and year. Descriptive.
-- **RQ4 (planned deficits, realised surpluses).** Do districts approve budgets that plan to draw on reserves, and
-  then close the year better than planned?
-  - Estimand: the mean, over districts, of (actual balance − approved balance) per resident, 2022–2025. This is the
-    gap between the deficit a district tells its assembly it will run and what it runs.
-  - It is the local form of the reserve accumulation that the Czech municipal sector is known for.
+**Estimand of H1: the switch-in effect.** Take districts unaligned in the three regime-years before a city-coalition
+event and aligned in the three after. The estimand is the average, over those districts, of the change in the city's
+own grants (scaled as in §4.3) between the pre and post windows, minus the same change in districts unaligned
+throughout. It is pooled over the two events (Nov 2018, Feb 2023), weighted by the number of switchers.
 
-**Why these, and not a re-run.** Part 3 described levels.
+- Switch-out is descriptive: its units are few (§6).
+- **Switches are party-level.** In 2023 the switch is essentially ODS entering (and Praha Sobě leaving). In 2018
+  the Piráti, Praha Sobě and TOP 09 entered, and ANO, ČSSD and SZ left.
+- The alignment effect therefore cannot be separated from shocks common to one party's districts. The number of
+  independent treatment changes is the number of parties that switched: 4 entries and 4 exits over the two events.
+- The design says so, and adds a party-level permutation (§5.3).
 
-- RQ1 and RQ2 need the approved / actual split of 4137 and 4251, and alignment. Neither was in Part 3.
-- RQ3 and RQ4 need the approved and amended columns, which Part 3 never read.
-- Size economies in total spending were shown in Part 3 (figure 1) and are not tested (E1).
+**Estimand of H2.** The part of the switch-in effect carried by investment grants, and its excess over the
+non-investment part.
 
-**Questions this panel cannot answer, and why they are not registered.**
+**Not registered as confirmatory** (moved out of the family, §3):
 
-- **Pre-election pork (a political budget cycle in transfers).** 2025 is the only pre-election year in the panel,
-  so there is one window and no replication. The question moves to the extension (§2a).
-- **Flypaper / pass-through of formula money.** Identification needs the formula pot to move across many years.
-  2022–2025 gives three usable shocks with year effects. The question is described in E3, and moves to the
-  extension if district spending before 2022 can be found.
+- capacity, i.e. capital-budget execution by size (exploratory, two-sided);
+- planned deficits and realised surpluses (descriptive);
+- size economies, dual mandates, the property-tax windfall and forecast bias (exploratory).
 
 **Literature.**
 
 - Alignment:
-  - Solé-Ollé and Sorribas-Navarro (2008), Spain, difference-in-differences;
-  - Brollo and Nannicini (2012), Brazil, close races;
-  - Bracco et al. (2015), Italy;
-  - Arulampalam et al. (2009), India.
-- Composition of politically motivated spending: Drazen and Eslava (2010); Veiga and Veiga (2007).
-- Flypaper: Hines and Thaler (1995); Knight (2002); Gordon (2004); Dahlberg et al. (2008); Inman (2008).
-- Fiscal forecasting and strategic budgeting: Goeminne, Geys and Smolders (2008).
-- Size: Blom-Hansen et al. (2016).
-- Czech evidence on partisan alignment in regional or ministerial grants: [verify, locate before registration].
-  We know of no study of Prague's intra-city transfers [verify].
+  - Solé-Ollé and Sorribas-Navarro (2008);
+  - Brollo and Nannicini (2012);
+  - Bracco, Lockwood, Porcelli and Redoano (2015);
+  - Migueis (2013) [verify];
+  - Curto-Grau, Solé-Ollé and Sorribas-Navarro (2018) [verify];
+  - Baskaran and Hessami (2017) on German parliamentary coalitions [verify];
+  - Kauder, Potrafke and Reischmann (2016) [verify];
+  - Fiva and Halse (2016) [verify];
+  - Muraközy and Telegdy (2016) [verify];
+  - Arulampalam et al. (2009).
+- H2's premise, that visible, investment-type spending is favoured: Drazen and Eslava (2010); Veiga and Veiga
+  (2007).
+- Inference with few treated clusters:
+  - MacKinnon and Webb (2017, 2018, 2020 [verify]);
+  - Conley and Taber (2011);
+  - Wu and Ding (2021);
+  - Rambachan and Roth (2023);
+  - de Chaisemartin and D'Haultfœuille (2020, 2024 [verify]);
+  - Cengiz, Dube, Lindner and Zipperer (2019);
+  - McKenzie (2012) on power with noisy, lumpy outcomes [verify].
 
-### 2a. Conditional extension to 2015–2021 (decided before any outcome is seen)
+**Literature benchmark, registered now** [verify every figure before publication]:
 
-The city's closing accounts are reported to contain, per year, a table of financial relationships with each
-district: "Tabulka č. 9 – Finanční vztahy k MČ z rozpočtu hl. m. Prahy" (§0) [verify existence for 2015–2021, and
-whether it separates the formula transfer, the state-administration contribution and targeted grants].
+- Solé-Ollé and Sorribas-Navarro (2008): aligned Spanish municipalities receive substantially more grants, of the
+  order of 40 % [verify].
+- Bracco et al. (2015): aligned Italian municipalities receive of the order of 10–20 % more [verify].
 
-- **If** such tables are found for at least 2015–2021, in a machine-readable or cleanly extractable form, with
-  targeted grants shown per district, then **before registration**:
-  - H1 and H2 are re-specified on the grantor-side series 2015–2025 (627 district-years, alignment changes in
-    2018/19 and 2023);
-  - a pre-election hypothesis **H5** (alignment × {2017, 2018, 2021, 2022, 2025}) is added to the family;
-  - the event-study pre-trends in §5 become available.
-- **If not**, the design stays on 2022–2025 as written.
-- The switch is decided on availability alone, and recorded under Changes after registration with the date.
+The benchmark used for the power statements is a **premium of 20–40 % of a district's usual city grants**.
 
 ## 3. Hypotheses, tests and decision rules
 
-**One one-sided p-value per hypothesis; Holm step-down at family-wise α = 0.05 over H1, H2, H3, H4** (and H5 if
-§2a triggers). Every hypothesis is reported whichever way it falls. "Not supported" and "underpowered" are written
-as such.
+**Confirmatory family {H1, H2}. Holm step-down at family-wise α = 0.05.** One one-sided p-value each. Every
+hypothesis is reported whichever way it falls.
 
-- **H1 (alignment premium).** β_A > 0 in M1: in-year city transfers D per resident, on alignment A, with district
-  and year effects.
-  - H0: β_A ≤ 0.
-  - p-value: **randomization inference** over the 2023–2025 alignment assignment. The observed 2023 alignment
-    vector is permuted across districts within tier, keeping the number of aligned districts in each tier;
-    9 999 draws; the statistic is the M1 t-statistic.
-  - The wild cluster restricted bootstrap (Webb, B = 9 999) and CR2 are reported alongside.
-  - RI is primary because all switches share one date. The number of switchers may be small, and wild bootstrap
-    tests are unreliable with few treated clusters (MacKinnon and Webb 2018).
-  - *Supported* if p passes its Holm threshold.
-- **H2 (investment, not upkeep).** β_A^cap − β_A^cur > 0, the effects of A on D_cap (4251) and D_cur (4137) per
-  resident, estimated jointly (stacked).
-  - One-sided RI on the difference, as in H1.
-  - H2 is tested whatever H1's result, because "no premium overall, but a shift toward investment" is a
-    substantive outcome.
-- **H3 (capacity).** β_N > 0 on log population in M3 (tier and year effects): the capital execution rate rises
-  with size.
-  - One-sided CR2 t-test, Satterthwaite degrees of freedom, clustered by district. WCR bootstrap alongside.
-- **H4 (planned deficits, realised surpluses).** μ > 0, where μ is the mean over the 57 districts of the district's
-  2022–2025 average of (actual balance − approved balance) per resident, balance = incomes − outgoings.
-  - One-sided t-test on 57 district means. A sign test and a population-weighted mean are reported alongside.
-  - One observation per district, so there is no within-district dependence.
+- **H1 (switch-in premium).** β > 0 for the estimand in §2.
+  - The p-value is from **randomisation inference**. Within strata of tier (the 22 numbered districts vs the 35
+    others) and among units unaligned at baseline, the switch-in label is permuted, holding the number of switchers
+    per stratum and event fixed.
+  - The statistic is the studentised pooled difference (Wu and Ding 2021), with 9 999 draws, or full enumeration if
+    there are fewer distinct assignments.
+  - The smallest attainable p-value is reported.
+  - **Co-primary interval:** Conley–Taber.
+  - Reported alongside: wild cluster restricted bootstrap (Webb) and CR2.
+  - Decision: *supported* if the RI p-value passes its Holm threshold.
+- **Equivalence for H1 (not in the family).** A two one-sided test (TOST) with margin ±20 % of the clean controls'
+  pre-window mean. A non-significant H1 is called "consistent with no premium larger than 20 %" only if the TOST
+  rejects. Otherwise it is "inconclusive".
+- **H2 (investment share), intersection–union.** Supported only if both of these hold:
+  - β_cap > 0;
+  - β_cap − β_cur > 0.
 
-**Exploratory, outside the family (no confirmatory test).**
-
-- **E1 (size economies of the town hall).** Elasticity of section-61 spending per resident with respect to
-  population, within tier.
-  - Part 3 showed the 2022–2024 cross-section of total spending and the town-hall share. **Not an independent
-    test.**
-  - Council remuneration is set by population band (Government Decree 318/2017 Coll.). Paragraph 6112 is reported
-    apart.
-- **E2 (dual mandates).** Whether districts with a city-assembly member on their own assembly (name + age match
-  across the ZHMP and district candidate files) receive more in-year transfers. A mechanism check for H1.
-- **E3 (spend or save, and does the label matter).** The one-year spending response to rule-based transfers
-  (approved 4137, instrumented by 2022 exposure share × leave-one-out pot, t = 2023–2025).
-  - It is compared with the response to the 2024 property-tax windfall: Act 349/2023 Coll. raised property-tax
-    rates from 2024 [verify rates]. Exposure = 2023 property tax per resident.
-  - With three years and one reform, both are reported as estimates with intervals, not tests.
-- **E4 (forecast bias by source).** Actual / approved for own-source revenue (classes 1 + 2, without 4131), for
-  4137 and for 4251, by year. It is associated with assembly fragmentation (effective number of lists).
+  The p-value is the larger of the two one-sided RI p-values.
+  - If the pre-2020 lists do not mark investment grants for at least 95 % of rows (§4.2), H2 is estimated on the
+    2023 event alone, whose window (2020–2025) lies wholly in the 4251 period.
+- **Outside the family:**
+  - H3 (capacity; exploratory, two-sided): the slope of capital-budget execution (MONITOR, 2022–2025) on log
+    population, within tier;
+  - H4 (planned deficits and realised surpluses; descriptive): (actual − approved) balance per resident, 2022–2025,
+    with D (§4.4) and 5901 reserves / class 8 netted out as variants;
+  - E1–E4: see v1 §3; they are unchanged in content and remain exploratory.
 
 ## 4. Data and measures
 
-**Budgets.** MONITOR web API (Ministry of Finance), FIN 2-12 M at December, **2022–2025**, for the 57 districts and
-the city (IČO 00064581):
+### 4.1 Sources
 
-- totals (`rozpocet`);
-- incomes by type (`druhovy`, `cast=p`);
-- outgoings by type (`druhovy`, `cast=v`);
-- outgoings by function (`odvetvovy`, `cast=v`).
+- **The city's closing accounts, 2014–2025** (`https://praha.eu/zpravy-o-plneni-rozpoctu`; the per-year /w/ pages
+  are listed in `tools/praha/districts_city.py`).
+  - Part III ("městské části"), section 5, gives the per-grant lists:
+    - 5.2: state pass-throughs;
+    - 5.3: the city's own grants;
+    - 5.4: operational programmes;
+    - 5.5–5.6: drawdown.
+  - The per-district statements are also in part III, and the year-end settlement with the districts is an annex.
+- **Approved budgets and proposals, 2015–2026.** The allocation tables ("Finanční vztahy k MČ", per district) exist
+  for **2016–2026**. The 2015 approved-budget page carries no attachments, and the 2015 proposal is in PDF. PVSS
+  tables exist for 2021–2026.
+- **MONITOR** district reports, 2022–2025 (v1), for the secondary outcome.
+- **Elections:** ČSÚ open data 2014, 2018 and 2022 (v1).
+- **Population:** ČSÚ Prague office. **ZHMP session dates:** Part 1's roll-call files (`tools/data/zhmp/votes{2010,2014,2018,2022}.csv`).
 
-Column semantics: `approved` = schválený rozpočet, `afterChanges` = rozpočet po změnách, `reality` = skutečnost.
-`finalBudget` is to be confirmed from MONITOR documentation [verify]. The 2015–2021 files were downloaded and are
-empty (§0).
+### 4.2 Structure of the grant lists (from the structure pass)
 
-Measures, per resident, CZK nominal (year effects absorb prices):
+- **Parsed rows** (district, budget-measure number, resolution, ÚZ): about 1 700–4 200 rows per year for
+  2014–2023, 1 566 for 2024 and 142 for 2025. In 2025 only drawdown lists remain, with a new layout.
+  - Lines naming a district with an amount but not parsed: 115–1 055 per year. Most are continuation lines, subtotals
+    and the drawdown tables of 5.6.
+  - **Registered rule:** before any amount is summed, the parser is extended until at least 97 % of the amount-bearing
+    district lines in 5.3 are parsed in every year. The count is reported; amounts are not.
+- **Section 5.3 (the city's own grants)** is present in every year 2014–2023.
+  - In 2015 the lists sit in a single section 5.4 that combines 5.3 and 5.4 by source. They are separated by ÚZ.
+  - For 2024–2025 the budget-measure lists are gone. **The primary outcome for 2024–2025 is taken from the drawdown
+    lists** ("skutečně poskytnuto", amount provided, by resolution).
+  - This is a bridging risk. For 2019–2023, where both lists exist, their agreement is computed blind (a statistic
+    only, no amounts) before 2024–2025 are used. If Lin's concordance across district-years is below 0.9, the post
+    window of the 2023 event is shortened to 2023 alone and H1 uses ℓ = 0 for that event.
+- **Resolutions.**
+  - In 5.3, 93–99 % of rows cite a ZHMP resolution ("session/item"). **Every one resolves to a dated ZHMP session**
+    in Part 1's roll-call files (7 of 1 087 in 2018 and 1 of 782 in 2024 do not).
+  - The remaining rows cite an RHMP resolution. They are dated by linear interpolation of the budget-measure number
+    (RO), which is sequential within the year, between the nearest ZHMP-dated rows.
+- **ÚZ** is present on every parsed row. State ÚZ are 0 rows in 5.3 in every year but one (1 in 2020).
+- **Investment / non-investment.** Column headers carry 4251/6363 (investment) and 4137/5347 (non-investment) from
+  2020. Before 2020 the 5.3 lists have only 4137/5347 columns.
+  - Whether investment grants before 2020 can be separated (by ORG/ORJ codes or a "b" marker) is to be established
+    by the parser. H2's fallback in §3 applies otherwise.
 
-- **Rule-based transfer R_it** = `approved` of 4137. This assumes the approved budget contains the December city
-  allocation (formula + state administration) and nothing else.
-  - Checked against the documented approved amounts (§0) and, if found, the city's tables (§2a).
-  - Districts that approve their budget before the city's are flagged from resolution dates if obtainable
-    [verify]; otherwise a limitation.
-- **In-year city transfers D_it** = (`reality` − `approved`) of 4137 + 4251; D_cur (4137) and D_cap (4251) apart.
-  Primary outcome for H1 and H2.
-- **Capital execution rate E_it** = `reality` / `afterChanges` of class 6 outgoings (H3). Undefined when
-  `afterChanges` = 0; those district-years are dropped and counted.
-- **Balance gap G_it** = (incomes − outgoings)^reality − (incomes − outgoings)^approved, from the totals node (H4).
-  - Totals are consolidated as in Part 3.
-  - Transfers from own funds (4131, 4132, 4140) move money between a district's accounts. Whether they are removed
-    by MONITOR's consolidation in the totals node is to be established from the item structure before estimation
-    [verify, Q1]. If not, they are subtracted from incomes on both sides.
-- **4131, 4132 and 4140 are excluded from "transfers" everywhere in this study.**
+### 4.3 The primary outcome
 
-**Population.** ČSÚ Prague office, residents at 31 December (`CR_L3_MC.xlsx`). The denominator for year t is 31
-December of t − 1, the stock the December allocation can know; robustness uses t. Age shares (0–14, 65+) come from
-`1_PHA_VEK_obyv_mc.xlsx`, 2011–2025.
+**Y_ir** = the city's own grants to district i whose resolution falls in regime-year r (5.3 lists; drawdown lists
+for 2024–2025), in CZK:
 
-**Area and tier.** RÚIAN layer 8 (district polygons, `st_area`) and layer 10 (22 administrative districts).
-Tier = seat of an administrative district (Praha 1–22).
+- excluding state ÚZ (98xxx and other state codes) and operational programmes (5.4);
+- including returns (negative rows) in the year of their resolution;
+- **divided by R_i,2016**, the district's approved "finanční vztah" in the 2016 allocation table. This is the
+  earliest year with a table in the panel, and a base year before both events.
 
-**Elections and alignment.** volby.gov.cz open data: lists (`kvros`), candidates (`kvrk`), party code lists.
+**Secondary scalings:**
 
-- Regular elections: first polling days 10 Oct 2014, 5 Oct 2018 and 23 Sept 2022 (`DATUMVOLEB`).
-- The files also hold **repeat or new district elections**, which change the assembly mid-term:
-  - Praha 13, 21 Nov 2014;
-  - Praha-Koloděje, 13 Jun 2015;
-  - Praha-Nedvězí, 5 Nov 2016 and 14 Sep 2019;
-  - Praha 4 and Praha 8, 30 Nov 2018.
+- per resident, with population on 1 January of r − 1 (ČSÚ 31 December of r − 2). The **definition break at 31 Dec
+  2022**, when temporary-protection holders are included, is flagged. Robustness holds the 2021 stock.
+- log(1 + Y_ir per resident).
 
-  None falls in 2022–2025. Whether each was a repeat or a new election is [verify].
-- **City coalition set C_t.** Parties of the city council in office on **30 June of year t** (§1): Pirates, Praha
-  Sobě, TOP 09, STAN, KDU-ČSL (+ others in Spojené síly [verify]) for 2022; ODS, TOP 09, KDU-ČSL, Pirates, STAN for
-  2023–2025.
-- **District assembly** in force on 30 June of t: the 2018 election (or its repeat) for 2022; the 2022 election for
-  2023–2025.
-- **Aligned seat share a_it.** The share of assembly seats won by candidates whose nominating party (`NSTRANA`) or
-  membership (`PSTRANA`) is in C_t.
-  - Independents nominated by a coalition party count as aligned.
-  - Multi-party lists (e.g. SPOLU 2022) are coded by each elected candidate's `NSTRANA` and the list's `SLOZENI`.
-  - Local lists do not count.
-  - The party-code table is committed before estimation.
-- **A_it = 1[a_it > 0.5]** (primary); a_it continuous (robustness).
-- **Mayor's party** in office on 30 June of each year, 57 × 4, hand-coded from district websites and resolutions
-  **before any outcome is joined**, sources kept (secondary; Q4).
-- The 2014 election files are downloaded for the §2a extension only.
+**Components:** Y_cap (investment) and Y_cur (non-investment).
 
-**Units.**
+**Regime-years.** A regime-year runs 1 Jan – 31 Dec, with two exceptions:
 
-- 57 × 4 = 228 district-years for H1, H2 and H3.
-- 57 district means for H4.
+- 15 Nov – 31 Dec 2018 belongs to r = 2019;
+- 1 Jan – 15 Feb 2023 belongs to r = 2022. Grants the caretaker council decided remain in the old regime.
 
-Constant district set: all 57 IČOs answer the API for 2022–2025 [verify validity dates in the MONITOR register].
+Amounts in the lengthened or shortened regime-years are annualised by days. Grants resolved in the interregnum (10
+Nov 2015 – 27 Apr 2016) are kept in the primary outcome, and dropped in robustness.
+
+**Panel:** 57 districts × regime-years 2015–2025. 2014 is excluded: it lies outside every event window.
+
+### 4.4 Secondary outcome (MONITOR, 2022–2025)
+
+- D_it = (reality − approved) of 4137 + 4251 per resident, with a variant net of 5347 (returns flow in 226 of 228
+  district-years).
+- `finalBudget` is dropped: it is always 0.
+- 4251 approved is 0 in all 228 district-years.
+- **Blind validation:** the parsed 2022–2023 grant lists (all sources) are compared with MONITOR reality − approved
+  of 4137 + 4251. Only an agreement statistic (Spearman across district-years) is published.
+
+### 4.5 Alignment (frozen)
+
+- **Primary A_ir:** the district's mayor on 30 June of r belongs to a party in the city coalition of that date.
+  - Party is membership at candidacy (candidate register PSTRANA), or, for a non-member, the nominating party
+    (NSTRANA).
+  - Local lists and movements are not aligned.
+  - During a vacancy the previous mayor's party carries over, because the rada elected with that mayor stays in
+    office.
+- **Where the rule comes from.** The referees asked for "the parties on the rada, or the mayor's party". Small
+  districts have no rada, so the mayor's party is the only measure defined for all 57, and it is primary. Rada
+  composition, where coded, is kept for robustness.
+- **Coding.** Two blind coders coded every mayoral spell from the 2014 constituent sessions to Sept 2026, with
+  sources: `tools/data/praha3x/alignment/coder_{A,B}.csv`. Both files are frozen.
+  - The mayor's party is taken mechanically from the register, so disagreement can arise only over *who* was mayor.
+    The coders named the same mayor in 98.9 % of 627 district-years.
+  - The 7 district-years where they differed (Křeslice 2023–24, Lipence 2019, Přední Kopanina 2015–18) were adjudicated before any outcome was joined, with reasons, in `tools/data/praha3x/alignment/adjudication.csv`. All 7 resolve to A = 0. The coders' own party-membership field gives the identical A in all 627 district-years.
+- **Hashes:** the frozen coding `46ca3b84765926589c6ac107e56cf507f858fe004b806bf2ec8b9edc18b01949`, the panel `6aa4987457967a9f5b928f495ea8669821d2c58779ad80e8949ecb41ab2a8400`.
+- **Robustness rules:**
+  - the coders' own party-membership field, which captures mid-term party switches;
+  - seat majority by NSTRANA ∪ PSTRANA;
+  - the largest list containing a coalition party;
+  - the continuous aligned seat share.
+
+  Counts under each rule are in §6.
+- **Before publication**, the coding is checked against the constituent-session resolutions. Any change is recorded
+  under Changes after registration, and the analysis is rerun both ways.
 
 ## 5. Models and inference
 
-Let i be the district, t ∈ {2022, …, 2025}, α_i and γ_t fixed effects, and X_it = (share 0–14, share 65+, log
-population), all slow-moving. X_it is included as precision control, and results are reported with and without it.
+### 5.1 Primary estimator (H1, H2): stacked difference-in-differences by event (Cengiz et al. 2019)
 
-- **M1 (H1):** D_it = α_i + γ_t + β_A·A_it + X_it'δ + ε_it. Unweighted: the unit is one allocation decision per
-  district-year.
-- **M2 (H2):** M1 stacked for D_cap and D_cur, with component-specific α, γ and β.
-  H0: β_A^cap − β_A^cur ≤ 0.
-- **M3 (H3):** E_it = γ_t + β_N·log N_it + τ·tier_i + ε_it, pooled, clustered by district. Robustness: district
-  means (57 observations, HC2).
-- **H4:** the one-sample t-test on district means (above).
+- **Events:** e ∈ {2018, 2023}. Window: regime-years e − 3 … e + 2, i.e. 2016–2021 and 2020–2025.
+- **Stack e contains:**
+  - switch-in units: A = 0 in every pre year and A = 1 in every post year;
+  - clean controls: A = 0 in every year of the window.
 
-**Inference, small-sample.** G = 57 clusters, T = 4.
+  Other units are left out of stack e. Mid-term switchers and always-aligned districts are reported separately.
+- **Statistic:** per unit, Δ_i = mean(post) − mean(pre) of Y. Per event, the difference between switchers' and
+  controls' mean Δ, studentised (Welch). Pooled over events with weights proportional to the number of switchers.
+- **The same estimate in regression form:** Y_ier = α_ie + γ_re + β·(switch_ie × post_r), with district×event and
+  year×event effects. It is reported with CR2 (clusters = districts) and WCR.
 
-- **H1 and H2: randomization inference is primary** (above). Its sharp null (no effect for any district) is
-  stronger than H0. It is valid in finite samples under the permutation design, which treats the 2023 alignment
-  as if assigned at random within tier, conditional on the number aligned. That assumption is the same one the
-  difference-in-differences needs, stated as a design.
-- Alongside:
-  - the WCR bootstrap (Webb six-point, B = 9 999, restricted; Roodman et al. 2019);
-  - CR2 with Pustejovsky–Tipton degrees of freedom;
-  - Conley–Taber intervals;
-  - the effective number of clusters;
-  - the number of switchers in each direction.
-- **H3: CR2** with Satterthwaite degrees of freedom is primary (between-district variation, 57 clusters, many
-  "treated"). The WCR bootstrap is reported alongside.
-- **What can realistically be learned.**
-  - One pre-year means **no pre-trend test**. The parallel-trends assumption for H1 is untestable within
-    2022–2025, and is stated as such.
-  - The difference-in-differences compares switchers and stayers across one regime change. That change also
-    replaced the district assemblies (the 2022 elections), so a new district government's lobbying skill is
-    confounded with alignment for districts whose majority changed. Districts whose alignment changed **only**
-    because the city coalition changed (same district majority, different city partners) isolate alignment from
-    district turnover, and are reported as a subgroup.
-  - STAN and KDU-ČSL sit in both coalitions, so districts run by them are aligned throughout and serve only as
-    controls.
-  - A close-election regression discontinuity (Brollo and Nannicini) is not feasible with 57 district elections.
-  - H3 is a between-district association with 57 units, 22 of them of a different tier; the population range
-    (about 380 to 136 000) is its main source of power.
+### 5.2 Dynamics and pre-trends
 
-## 6. Design-stage checks (covariates only; run before any outcome enters the model frame)
+- Event-study coefficients for leads −3 … −1 and lags 0 … 2, with a joint RI pre-trend test on the leads.
+- HonestDiD (Rambachan and Roth 2023) intervals for β at M̄ ∈ {0.5, 1}.
+- de Chaisemartin–D'Haultfœuille `did_multiplegt_dyn` over the whole panel, all switches on and off, as robustness.
+- No two-way-fixed-effects event study is estimated.
 
-Script: `tools/praha/districts_power.py`, output committed as `docs/research/prague-districts-power.json`. It reads
-no `reality` value of 4137, 4251, class 6 or totals, and no `approved` value of 4251, class 6 or totals.
+### 5.3 Inference
 
-1. **Alignment table.**
-   - A_it and a_it for all district-years;
-   - the numbers aligned in 2022 and 2023, by tier;
-   - **switchers by direction**;
-   - switchers whose district majority did not change (the "city-only" subgroup).
-2. **Power for H1 and H2 from the design alone.** The minimum detectable effect at 80 % power, one-sided 5 %, of
-   the RI test, in **residual-SD units**. Computed by simulating placebo outcomes: district effect + AR(1) error,
-   ρ ∈ {0, 0.3, 0.6}, with a constant effect added to switchers, and running the full RI pipeline (1 000
-   simulations × 999 permutations).
-   - Pre-committed consequences, applied separately to H1 and H2 at ρ = 0.3:
-     - MDE > 0.5 SD: the hypothesis is reported as "underpowered" if not supported;
-     - MDE > 1 SD, or fewer than 5 switchers: this is recorded as a change before estimation, and the article
-       states in its first section that H1 cannot detect effects of the size found in the literature. The
-       literature's effects are converted to SD units only after estimation, from the observed residual SD, and
-       that conversion is reported as post hoc.
-3. **H3 design.**
-   - Log population by tier.
-   - The VIF of log population and tier.
-   - The number of district-years with capital `afterChanges` = 0, dropped. This is a count of undefined
-     denominators, not a value.
-   - The MDE of β_N for a unit-variance outcome.
-4. **H4 design.** The MDE of μ in SD units for n = 57. The number of districts whose MONITOR totals node carries
-   `approved` (presence only).
-5. **Validation of R.** Approved 4137 (a covariate; no hypothesis tests it) against the documented approved amounts
-   (§0), and against the city tables if §2a finds them. This reveals approved 4137, which is part of D's
-   definition, but not D.
-6. **§2a search.** The outcome of the search for the city's per-district tables, with URLs, is recorded here,
-   whichever way it goes.
+- **RI (primary):** described in §3. The randomisation is conditional on the number of switchers per tier and event.
+- **Party-level permutation (reported, coarse by design):** at each event the set of entering parties is replaced by
+  a random set of equal size drawn from the parties that held at least one district mayor at the time. Switch vectors
+  are rebuilt and the statistic recomputed over all such sets.
+- **Conley–Taber:** co-primary interval, with the controls' residual distribution.
+- **WCR** (Webb, B = 9 999) and **CR2** are reported, with the caveat that they are unreliable when few clusters are
+  treated (MacKinnon and Webb 2018).
 
-## 7. Robustness checks (reported, not in the family)
+### 5.4 What can realistically be learned
 
-1. Population-weighted estimates.
-2. Continuous a_it instead of A_it.
-3. Mayor's party alignment instead of seat majority.
-4. D_cap by Poisson PML (a semi-elasticity), since D_cap ≥ 0 if approved 4251 is 0 [verify at design stage, by
-   presence count only].
-5. `afterChanges` − `approved` instead of `reality` − `approved`.
-6. Without Praha 1, and without districts under 1 000 residents.
-7. Without 2022, the refugee year: the contrast becomes 2023 vs 2024–2025, identified from nothing. This check
-   therefore reduces to the "city-only" subgroup and the direction split.
-8. Leave-one-district-out: the largest change in each confirmatory coefficient.
-9. **Placebo outcome:** approved 4137 on A_it. It should be zero if the formula is followed. A non-zero value is a
-   finding about the formula, reported, not tested.
-10. **Placebo assignment:** A_it defined with the 2014–2018 city coalition (ANO, ČSSD, Greens, KDU-ČSL, STAN).
-    It should show no effect.
-11. H3: fractional logit; district means; controlling for D_cap as a share of amended capital budget (late grants
-    cannot be spent), marked as a post-treatment control.
-12. H4: without 4131/4132/4140 on both sides; by year; population-weighted.
-13. **Specification curve** over:
-    - {weighted, unweighted};
-    - {A, a, mayor};
-    - {reality, afterChanges};
+- There are 30 switch-in units over two events, but only 4 entering parties. The design can detect a premium of
+  about 100 % of a district's usual grants at 80 % power under the base scenario (§6), which is 2.5 times
+  the upper literature benchmark (40 %) and 5 times the lower (20 %).
+- A null result will not be informative: the ±20 % TOST has essentially no power (§6.2). The confirmatory test can detect only a very large premium.
+
+## 6. Design-stage checks (covariates only; completed before registration)
+
+Scripts:
+
+- `tools/praha/districts_alignment.py`, output `docs/research/prague-districts-alignment.{csv,json}`;
+- `tools/praha/districts_power.py`, output `docs/research/prague-districts-power.json`;
+- `tools/praha/districts_grants.py --structure`, output `docs/research/prague-districts-grants-structure.json`.
+
+### 6.1 Alignment counts per event (primary rule, 30 June)
+
+| | 2018 event (2018 → 2019) | 2023 event (2022 → 2023) |
+|---|---|---|
+| up (0 → 1) | 10 | 24 |
+| down (1 → 0) | 8 | 4 |
+| always aligned | 7 | 10 |
+| never aligned | 32 | 19 |
+| unresolved | 0 | 0 |
+
+- Switch-in units meeting the full-window rule (§5.1): 7 in 2018 and 23 in 2023. Clean controls:
+  31 and 14.
+- Mid-term switches outside the events: 12 (Praha 1 2020 (0→1); Praha 11 2017 (0→1); Praha 11 2024 (0→1); Praha 14 2021 (1→0); Praha 21 2016 (1→0); Praha 22 2021 (1→0); Praha 5 2020 (1→0); Praha 5 2025 (0→1); Praha-Klánovice 2025 (0→1); Praha-Křeslice 2025 (0→1); Praha-Velká Chuchle 2022 (1→0); Praha-Velká Chuchle 2024 (0→1)).
+- Aligned districts on 30 June 2018 / 2019 / 2022 / 2023, under the three count-based rules (the fourth, the continuous seat share, has no count):
+  - mayor (primary): 15 / 17 / 14 / 34;
+  - seat majority: 9 / 8 / 8 / 22;
+  - largest list with a coalition party: 18 / 23 / 23 / 32.
+- For comparison, the referees found 12 / 22 / 22 / 34 aligned districts in 2022 under their four rules, and a
+  2022 → 2023 split of 17 up, 3 down, 32 never and 5 always, from election files only.
+  - Ours, on the mayor rule, is 24 up, 4 down, 19 never and 10 always.
+  - The difference comes from the mayor's actual party, which the election files alone do not give.
+
+### 6.2 Power on the real switch vectors
+
+The simulation uses:
+
+- outcomes in units of each district's own mean;
+- standardised t innovations with ν ∈ {3, 5};
+- SD ∝ (N / median N)^(−θ/2), θ ∈ {0, 0.5, 1};
+- AR(1) with ρ ∈ {0, 0.3, 0.6};
+- a zero-grant probability q ∈ {0, 0.2, 0.4};
+- a coefficient of variation CV ∈ {0.5, 1, 2};
+- 400 data sets × 999 permutations.
+
+The base scenario is CV 1, ν 3, θ 0.5, ρ 0.3, q 0.2.
+
+| scenario (change from base) | power at +20 % | +50 % | +100 % | MDE80, α = 0.025 | MDE80, α = 0.05 | size at 0.05 |
+|---|---|---|---|---|---|---|
+| base | 0.11 | 0.38 | 0.83 | 100 % | 100 % | 0.048 |
+| CV = 0.5 | 0.17 | 0.67 | 0.99 | 75 % | 75 % | 0.040 |
+| CV = 2.0 | 0.07 | 0.20 | 0.55 | 150 % | 150 % | 0.045 |
+| ν = 5 | 0.10 | 0.38 | 0.82 | 100 % | 100 % | 0.050 |
+| θ = 0.0 | 0.10 | 0.42 | 0.89 | 100 % | 75 % | 0.045 |
+| θ = 1.0 | 0.09 | 0.33 | 0.79 | 150 % | 100 % | 0.037 |
+| ρ = 0.0 | 0.12 | 0.43 | 0.88 | 100 % | 75 % | 0.065 |
+| ρ = 0.6 | 0.13 | 0.40 | 0.84 | 100 % | 100 % | 0.055 |
+| q = 0.0 | 0.15 | 0.57 | 0.96 | 75 % | 75 % | 0.050 |
+| q = 0.4 | 0.10 | 0.26 | 0.70 | 150 % | 150 % | 0.058 |
+
+Power columns: one-sided RI at α = 0.025 (Holm's first step). Effects are proportional premiums on a district's usual city grants.
+
+- Smallest attainable p: 0.001. There are 2.2e+15 distinct within-stratum assignments, so the bound is set by the number of draws (1/1 000 here; 1/10 000 at estimation).
+- TOST power at margin ±20 % with no true effect: at most 0.003 in every scenario, i.e. essentially zero.
+
+**Pre-committed consequences:**
+
+- **Result.** In the base scenario, the minimum detectable effect at 80 % power is a premium of about 100 % of a
+  district's usual city grants (75–150 % across scenarios). The upper literature benchmark is 40 %, and power at a
+  20 % premium is about 0.1.
+- **H1 is therefore declared underpowered for effects of the size found in the literature.** The article says so in
+  its first section. A non-rejection is reported as "not detected", never as "no premium".
+- **The TOST at ±20 % has essentially zero power.** The margin is kept, because it was chosen on substantive
+  grounds. A null H1 will therefore be reported as "inconclusive", with its interval drawn against the ±20 % band
+  and the 20–40 % benchmark.
+- **Size.** The RI test holds its level in every scenario (0.04–0.065 at a nominal 0.05, with 400 simulations).
+- **H2 is not simulated separately.** It splits the same switchers into two components, and the intersection–union
+  rule is at least as conservative, so it is underpowered by construction.
+
+### 6.3 Covariate balance (for the MONITOR secondary, 2023 event)
+
+Population growth 2015–2021, the 0–14 and 65+ shares, and 2018 seat shares by party, for switchers against
+controls, with RI p-values. If population growth is imbalanced at p < 0.1, it is added as a covariate.
+**Computed at estimation, from covariates only.**
+
+## 7. The formula channel (descriptive)
+
+- For 2020–2023, the residual of each district's approved finanční vztah from the published criteria, where the
+  table gives them, is related to alignment. Descriptive only.
+- The 2024 formula change (adopted 14 Dec 2023 by the new coalition) is reported as a separate "formula-level
+  alignment channel". The changes it made to each district's allocation are compared by alignment. Descriptive; no
+  test.
+
+## 8. Robustness (reported, not in the family)
+
+1. Per-resident scaling; log(1 + Y).
+2. Robustness alignment rules (§4.5).
+3. Dropping interregnum grants; dropping the regime-years adjacent to each event (2018, 2019 and 2022, 2023).
+4. Population denominators with the 2021 stock held.
+5. Including always-aligned districts as controls.
+6. Without Praha 1; without districts under 1 000 residents.
+7. Leave one district out; leave one party out (all districts whose mayor's party is P).
+8. dCDH `did_multiplegt_dyn`; HonestDiD.
+9. MONITOR secondary outcome, 2023 event (one pre year): D, D net of 5347, with the covariate balance of §6.3.
+10. **Placebo event:** a pseudo-event at 2020/21, with the same window rules and no coalition change.
+11. **Specification curve** over:
+    - {R_2016 scaling, per resident, log};
+    - {mayor, seat majority, largest list};
+    - {with, without interregnum};
     - {all, without Praha 1, without < 1 000};
-    - {with, without X};
-    - {RI, WCR, CR2}.
+    - {RI, CT, WCR, CR2}.
 
-    The share of specifications supporting each confirmatory conclusion is reported.
+## 9. Limitations and framing
 
-## 8. Limitations (stated in the article)
+- **Party-level treatment.** The effect of alignment cannot be separated from what else happened to one party's
+  districts (§2).
+- **What the lists contain.** The city can also favour a district by building there itself or through its
+  companies. The lists measure one channel.
+- **The bridge between list formats** in 2024–2025 (§4.2).
+- **Coding error** in who was mayor: minimised by double coding, but not zero.
+- **Framing (registered):**
+  - neutral words only: "alignment premium", "in-year grants to aligned districts". Never "favouritism", "pork" or
+    "clientelism";
+  - parties are named only as coalition membership, with the statement that the design cannot separate party from
+    alignment;
+  - no per-district table of the outcome next to party labels;
+  - named individuals only as counts (E2).
 
-- **Four years.** Open district budgets start in 2022. One regime change, one pre-year, no pre-trend test. If §2a
-  fails, H1 is a before/after comparison around a single event, and its causal reading rests on an untestable
-  assumption.
-- **Few units.** 57 districts. Null results will mostly be uninformative; the intervals are the result.
-- **Alignment is not assigned at random.** The 2022 elections changed district governments and alignment together.
-  The "city-only" subgroup helps; it is small.
-- **What in-year transfers contain.** D includes state pass-throughs routed through the city (elections, the 2022
-  refugee wave). Year effects absorb them only if they are proportional to population.
-- **The city's own spending in a district is invisible.** The city can favour a district by building there itself
-  or through its companies. That is not in the district's accounts, so H1 measures one channel of favouritism.
-- **Approved budgets and timing.** If a district approves its budget before the city's allocation is known, or
-  budgets expected grants, `approved` mismeasures R and D.
-- **Accounting.** Classification differs across districts: education was coded 31 or 32 in Part 3. Consolidation
-  of own-fund transfers is to be established (Q1).
-- **H3 and H4 are descriptive.** Size, tier, suburban location and project mix travel together (H3). A balance gap
-  can be prudence, strategy or delayed projects, and the design does not separate them (H4).
+## 10. Response to referees
 
-## 9. Deliverables
+Items refer to `docs/research/prague-districts-referees.md`.
 
-- `tools/praha/districts_data.py`: raw data (written; downloads and a structure report only).
-- `tools/praha/districts_frame.py`: alignment coding, measures, analysis frame.
-- `tools/praha/districts_power.py`: §6.
-- `tools/praha/districts_extended.py`: H1–H4, E1–E4.
-- `tools/praha/districts_robust.py`: §7.
-- `assets/praha/districts_extended.json`.
-- `texts/prague-districts-study.html`, the long version.
-- This file, and `docs/research/prague-districts-files.sha256` at registration.
+- **§0, cells seen.** Recorded in §0.3. The author's own exposures are in §0.2–0.4.
+- **§1, data foundation.**
+  - MONITOR from 2022 only: accepted, and MONITOR becomes the secondary source (§4.4).
+  - Closing-account lists, allocation tables and PVSS annexes: downloaded (820 MB, 535 linked files, 3 of them missing on the portal, hashed) and parsed
+    for structure (§4.2).
+  - **Differences from the audit:**
+    - allocation tables start in **2016**, not 2015: the 2015 page has no attachments;
+    - the 2024 and 2025 lists are drawdown-only, as the audit said, and the bridge rule is registered;
+    - the 2014 list parses as text, but it lies outside every window and stays excluded.
+  - Formula regimes, items, consolidation, elections (wards, court decisions, new elections) and population
+    definitions: adopted in §1, §4.4 and §4.5.
+    - In the register, the 2014 Praha 13 and 2018 Praha 8 court records have the same party seat totals as the
+      originals. Praha 4 2018 differs, and the latest record per assembly on or before 30 June is used.
+- **§2.1 scope.** Adopted: the 2015–2025 grantor-side panel; MONITOR secondary.
+- **§2.2 primary outcome.** Adopted: own grants, excluding state ÚZ and operational programmes, split
+  investment / non-investment, dated by resolution, scaled by the base-year allocation, per resident secondary.
+  - The base year is 2016, the first table. Blind validation against MONITOR is registered (§4.4).
+- **§2.3 events.** Adopted, with Part 1's dates. The interregnum is flagged, kept in the primary outcome and dropped
+  in robustness. No TWFE; stacked design with clean controls; leads, joint pre-trend test, HonestDiD.
+- **§2.4 estimands.** Adopted. Switch-in is H1; switch-out is descriptive; the party-level caveat is stated in §2.
+- **§2.5 inference.** Adopted: RI within tier × baseline alignment with a studentised statistic, the smallest
+  attainable p, the party-level permutation, Conley–Taber co-primary, WCR and CR2 alongside.
+- **§2.6 alignment measure.**
+  - Adopted, with one change: the mayor's party is primary, because 35 small districts have no rada. The coding is
+    double and blind, with sources, frozen and hashed (§4.5).
+  - Robustness rules and their counts are in §6.1.
+- **§2.7 family.** Adopted: {H1, H2} with Holm; H2 intersection–union; H3 and H4 out of the family.
+- **§2.8 covariate balance.** Adopted for the MONITOR secondary (§6.3).
+- **§2.9 formula channel.** Adopted (§7).
+- **§2.10 denominators.** Adopted (§4.3).
+- **§2.11 refugee pass-throughs.** State ÚZ are excluded from the primary outcome, so the 2022 refugee money is not
+  in it. They remain in the MONITOR secondary, and the 2022 pre-year of the 2023 event is flagged.
+- **§2.12 power.** Adopted and run (§6.2). The benchmark is registered (§2) [verify the published magnitudes].
+- **§2.13 equivalence.** Adopted: TOST at ±20 % (§3).
+- **§2.14 literature.** Added, and marked [verify].
+- **§3, the Part 3 correction.** Done first, on its own branch, before any grant amount was touched. The figures it
+  changed are recorded in §0.2.
+- **§4 framing.** Adopted (§9).
 
-## Open questions for the referees
+## 11. Deliverables
 
-- **Q0 (scope).** Open district budgets exist only for 2022–2025. Is a one-switch, one-pre-year design for H1
-  worth registering? Or should registration wait for the §2a search (city closing-account tables 2015–2021) and
-  register the 2015–2025 grantor-side design only?
-- **Q1.** Part 3 counted 4131/4132/4140 (transfers from a district's own funds) as "transfers from the city and the
-  state". Should Part 3 be corrected now? Is recomputing its class 4 share without them outcome-revealing for this
-  design? It reveals class 4 actual totals by item, and so the actuals of 4137 and 4251, which are half of D.
-- **Q2.** Is `reality` − `approved` of 4137 + 4251 a defensible measure of discretionary city transfers, given
-  in-year state pass-throughs and districts that budget expected grants?
-- **Q3.** Were the formula weights (30/10/30/20/10) constant over 2022–2025? This matters for the placebo outcome
-  (§7.9) and for E3.
-- **Q4.** Seat-majority alignment (mechanical, open data) or the mayor's party (hand-coded, closer to who governs)
-  as primary?
-- **Q5.** RI over the 2023 assignment within tier as the primary test for H1 and H2. Is the permutation design
-  (fixed number aligned per tier) the right one? Or should assignment be permuted within strata of 2022 alignment?
-- **Q6.** H3's direction. Is "smaller districts execute less" the right one-sided alternative? Large districts run
-  larger, more complex projects, which argues the other way.
-- **Q7.** H4 is likely to be supported. Is it informative enough to hold a place in the family? Or should it be
-  replaced by its fragmentation version (E4), which has a less certain sign?
-- **Q8.** Should the property-tax windfall comparison (E3) be promoted to a registered test, despite two
-  post-reform years?
+- `tools/praha/districts_data.py`: MONITOR, population, elections, RÚIAN (v1).
+- `tools/praha/districts_city.py`: closing accounts, approved budgets, proposals; `city/manifest.csv`.
+- `tools/praha/districts_grants.py`: the grant lists. `--structure` only, until registration.
+- `tools/praha/districts_alignment.py`: the frozen alignment.
+- `tools/praha/districts_power.py`: §6.2.
+- `tools/praha/districts_extended.py` and `districts_robust.py`: after registration.
+- `assets/praha/districts_extended.json` and `texts/prague-districts-study.html`.
 
 ## References
 
-- Arulampalam, W., Dasgupta, S., Dhillon, A., Dutta, B. (2009): Electoral goals and center-state transfers. Journal
-  of Development Economics 88(1), 103–119.
-- Blom-Hansen, J., Houlberg, K., Serritzlew, S., Treisman, D. (2016): Jurisdiction size and local government
-  policy expenditure. American Political Science Review 110(4), 812–831.
-- Bracco, E., Lockwood, B., Porcelli, F., Redoano, M. (2015): Intergovernmental grants as signals and the alignment
-  effect. Journal of Public Economics 123, 78–91.
-- Brollo, F., Nannicini, T. (2012): Tying your enemy's hands in close races. American Political Science Review
-  106(4), 742–761.
-- Conley, T. G., Taber, C. R. (2011): Inference with "difference in differences" with a small number of policy
-  changes. Review of Economics and Statistics 93(1), 113–125.
-- Dahlberg, M., Mörk, E., Rattsø, J., Ågren, H. (2008): Using a discontinuous grant rule to identify the effect of
-  grants on local taxes and spending. Journal of Public Economics 92(12), 2320–2335.
-- Drazen, A., Eslava, M. (2010): Electoral manipulation via voter-friendly spending. Journal of Development
-  Economics 92(1), 39–52.
-- Goeminne, S., Geys, B., Smolders, C. (2008): Political fragmentation and projected tax revenues: evidence from
-  Flemish municipalities. International Tax and Public Finance 15(3), 297–315 [verify].
-- Gordon, N. (2004): Do federal grants boost school spending? Evidence from Title I. Journal of Public Economics
-  88(9–10), 1771–1792.
-- Hines, J. R., Thaler, R. H. (1995): Anomalies: the flypaper effect. Journal of Economic Perspectives 9(4),
-  217–226.
-- Holm, S. (1979): A simple sequentially rejective multiple test procedure. Scandinavian Journal of Statistics
-  6(2), 65–70.
-- Inman, R. P. (2008): The flypaper effect. NBER Working Paper 14579.
-- Knight, B. (2002): Endogenous federal grants and crowd-out of state government spending. American Economic
-  Review 92(1), 71–92.
-- MacKinnon, J. G., Webb, M. D. (2018): The wild bootstrap for few (treated) clusters. Econometrics Journal 21(2),
-  114–135.
-- Pustejovsky, J. E., Tipton, E. (2018): Small-sample methods for cluster-robust variance estimation and hypothesis
-  testing in fixed effects models. Journal of Business & Economic Statistics 36(4), 672–683.
-- Roodman, D., Nielsen, M. Ø., MacKinnon, J. G., Webb, M. D. (2019): Fast and wild: bootstrap inference in Stata
-  using boottest. Stata Journal 19(1), 4–60.
-- Solé-Ollé, A., Sorribas-Navarro, P. (2008): The effects of partisan alignment on the allocation of
-  intergovernmental transfers. Journal of Public Economics 92(12), 2302–2319.
-- Veiga, L. G., Veiga, F. J. (2007): Political business cycles at the municipal level. Public Choice 131(1–2),
-  45–64.
-- Czech law: Act 131/2000 Coll. (capital city of Prague); Act 243/2000 Coll. (budgetary allocation of taxes);
-  Statute of Prague, OZV 55/2000 Sb. hl. m. Prahy; Government Decree 318/2017 Coll. (councillors' remuneration);
-  Act 349/2023 Coll. (2024 consolidation package, property tax) [verify].
-- Moderní obec (2019): Hlavní město Praha nechá jednotlivé městské části na jejich územích rozhodnout o dani z
-  nemovitých věcí.
-- MČ Praha 8 (2021): Důvodová zpráva, návrh rozpočtu na rok 2022.
+As in v1, plus:
 
-## Appendix A. Raw files (to be hashed at registration)
+- Baskaran, T., Hessami, Z. (2017): Political alignment and intergovernmental transfers in parliamentary systems:
+  evidence from Germany. Public Choice 171, 75–98 [verify].
+- Cengiz, D., Dube, A., Lindner, A., Zipperer, B. (2019): The effect of minimum wages on low-wage jobs. Quarterly
+  Journal of Economics 134(3), 1405–1454.
+- Curto-Grau, M., Solé-Ollé, A., Sorribas-Navarro, P. (2018): Does electoral competition curb party favoritism?
+  American Economic Journal: Applied Economics 10(4), 378–407 [verify].
+- de Chaisemartin, C., D'Haultfœuille, X. (2024): Difference-in-differences estimators of intertemporal treatment
+  effects. Review of Economics and Statistics [verify].
+- Fiva, J. H., Halse, A. H. (2016): Local favoritism in at-large proportional representation systems. Journal of
+  Public Economics 143, 15–26 [verify].
+- Kauder, B., Potrafke, N., Reischmann, M. (2016): Do politicians reward core supporters? Evidence from a
+  discretionary grant program. European Journal of Political Economy 45, 39–56 [verify].
+- MacKinnon, J. G., Webb, M. D. (2020): Randomization inference for difference-in-differences with few treated
+  clusters. Journal of Econometrics 218(2), 435–450 [verify].
+- McKenzie, D. (2012): Beyond baseline and follow-up: the case for more T in experiments. Journal of Development
+  Economics 99(2), 210–221 [verify].
+- Migueis, M. (2013): The effect of political alignment on transfers to Portuguese municipalities. Economics &
+  Politics 25(1), 110–133 [verify].
+- Muraközy, B., Telegdy, Á. (2016): Political incentives and state subsidy allocation: evidence from Hungarian
+  municipalities. European Economic Review 89, 324–344 [verify].
+- Rambachan, A., Roth, J. (2023): A more credible approach to parallel trends. Review of Economic Studies 90(5),
+  2555–2591.
+- Wu, J., Ding, P. (2021): Randomization tests for weak null hypotheses in randomized experiments. Journal of the
+  American Statistical Association 116(536), 1898–1913.
 
-`tools/data/praha3x/` (gitignored):
+## Appendix A. Raw files
 
-- `api/{ico}_{year}_{tot,prij,dru,odv}.json`: 57 districts + the city, 2015–2025. The district files for 2015–2021
-  are empty.
-- `finm/2019_12.zip`: the bulk extract, kept as coverage evidence.
-- `mc_ico.csv`, `mc_pop.xlsx`, `mc_age.xlsx`.
-- `ruian_momc.json`, `ruian_spravni.json`.
-- `kv2014/`, `kv2018/`, `kv2022/`: reg, data and code-list archives.
-- `raw_report.json`: the structure report.
+SHA-256 of every raw file in `tools/data/praha3x/`, in `docs/research/prague-districts-files.sha256`. The derived
+text dumps (`city_txt/`) are excluded.
 
 ## Changes after registration
 
