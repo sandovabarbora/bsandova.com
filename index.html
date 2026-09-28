@@ -69,6 +69,9 @@ img{display:block;max-width:100%}
 .hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.2) 55%,rgba(0,0,0,0) 100%);pointer-events:none}
 .titles{position:absolute;z-index:2;left:var(--pad);right:var(--pad);bottom:clamp(28px,6vh,64px);list-style:none}
 .titles a{display:inline-flex;align-items:flex-start;gap:12px;font:500 clamp(34px,5.2vw,74px)/1.04 var(--display);letter-spacing:-.045em;color:#fff;transition:color .25s}
+.hero .still.shot{filter:brightness(.62) contrast(1.05)}
+@media (max-width:700px){.titles a{display:inline;font-size:clamp(26px,7.6vw,40px);line-height:1.08}.titles sup{margin-left:6px;vertical-align:top}.titles li{margin-bottom:4px}}
+.titles .kick{font:400 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#bbb;margin:0 0 14px}
 .titles sup{font:400 13px/1 var(--mono);letter-spacing:0;margin-top:.55em;color:#fff}
 .titles:hover a,.titles.cycling a{color:rgba(255,255,255,.6)}
 .titles a.on,.titles:hover a:hover{color:#fff}
@@ -256,23 +259,24 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
 
 <section class="hero-track" id="top" aria-label="Featured work"><div class="hero">
   <div class="still photo on" data-k="0"><img src="assets/source-portrait.jpeg" alt=""></div>
-  <div class="still shot" data-k="1" style="--bg:url(assets/photo/delayed-red.jpg);--bg-s:url(assets/photo/delayed-red-1200.jpg)"></div>
-  <div class="still shot lazy" data-k="2" style="--bg:url(assets/photo/atlas.jpg);--bg-s:url(assets/photo/atlas-1200.jpg)"></div>
-  <div class="still shot lazy" data-k="3" style="--bg:url(assets/photo/prague-parking.jpg);--bg-s:url(assets/photo/prague-parking-1200.jpg)"></div>
-  <div class="still shot lazy" data-k="4" style="--bg:url(assets/photo/icu.jpg);--bg-s:url(assets/photo/icu-1200.jpg)"></div>
-  <div class="still shot lazy" data-k="5" style="--bg:url(assets/photo/surf.jpg);--bg-s:url(assets/photo/surf-1200.jpg)"></div>
+  <div class="still shot" data-k="1" style="--bg:url(assets/photo/prague-council.jpg);--bg-s:url(assets/photo/prague-council-1200.jpg)"></div>
+  <div class="still shot lazy" data-k="2" style="--bg:url(assets/photo/prague-rings.jpg);--bg-s:url(assets/photo/prague-rings-1200.jpg)"></div>
+  <div class="still shot lazy" data-k="3" style="--bg:url(assets/photo/prague-districts.jpg);--bg-s:url(assets/photo/prague-districts-1200.jpg)"></div>
+  <div class="still shot lazy" data-k="4" style="--bg:url(assets/photo/prague-housing.jpg);--bg-s:url(assets/photo/prague-housing-1200.jpg)"></div>
+  <div class="still shot lazy" data-k="5" style="--bg:url(assets/photo/prague-parking.jpg);--bg-s:url(assets/photo/prague-parking-1200.jpg)"></div>
   <ul class="titles" id="titles">
-    <li><a href="texts/delayed" data-k="1">Delayed All the Time<sup>2025</sup></a></li>
-    <li><a href="texts/football" data-k="2">Player Pool Atlas<sup>2026</sup></a></li>
-    <li><a href="texts/prague-parking" data-k="3">Parking, Measured<sup>2026</sup></a></li>
-    <li><a href="texts/icu" data-k="4">The Label Says Deteriorating<sup>2026</sup></a></li>
-    <li><a href="texts/surf" data-k="5">Not Worth the Flight<sup id="swell-sup">live</sup></a></li>
+    <li class="kick">Prague, measured · a series</li>
+    <li><a href="texts/prague-council" data-k="1" data-dek="403 votes against in four years, out of 143 360 cast while present.">Prague's council rarely says no<sup>1</sup></a></li>
+    <li><a href="texts/prague-rings" data-k="2" data-dek="The vote follows the distance from the centre and the panel estates, not the metro. Who lives there explains 43 % of the estates' pull.">Prague votes in rings<sup>2</sup></a></li>
+    <li><a href="texts/prague-districts" data-k="3" data-dek="The large districts spend 8 346–17 604 crowns per resident a year; Praha 1 spends 35 320. Most of it is money they are given.">One city, 57 budgets<sup>3</sup></a></li>
+    <li><a href="texts/prague-housing" data-k="4" data-dek="Prague completes 4.5 new homes a year per 1 000 residents; Vienna 6.6, Warsaw 10.4.">Two homes for Vienna's three<sup>4</sup></a></li>
+    <li><a href="texts/prague-parking" data-k="5" data-dek="About 2 745 stalls lost since 2012, because cars got longer, not wider.">Parking, measured<sup>I–III</sup></a></li>
   </ul>
   <p class="cap" id="cap">Barbora Šandová makes things out of data. Some you can read, some you can hear, all of them you can check.</p>
   <div class="hero-prog" aria-hidden="true"><i></i></div>
 </div></section>
 
-<nav class="where" id="where" aria-label="Sections"><ol><li><a href="#f-delayed-all-the-time" data-t="f-delayed-all-the-time"><span>01</span>Delayed All the Time</a></li><li><a href="#f-parking" data-t="f-parking"><span>02</span>Parking, Measured</a></li><li><a href="#f-not-worth-the-flight" data-t="f-not-worth-the-flight"><span>03</span>Not Worth the Flight</a></li><li><a href="#f-player-pool-atlas" data-t="f-player-pool-atlas"><span>04</span>Player Pool Atlas</a></li><li><a href="#f-the-label-says-deteriorating" data-t="f-the-label-says-deteriorating"><span>05</span>The Label Says Deteriorating</a></li><li><a href="#f-persistence" data-t="f-persistence"><span>06</span>Persistence</a></li></ol></nav>
+<nav class="where" id="where" aria-label="Sections"><ol><li><a href="#f-delayed-all-the-time" data-t="f-delayed-all-the-time"><span>01</span>Delayed All the Time</a></li><li><a href="#f-not-worth-the-flight" data-t="f-not-worth-the-flight"><span>02</span>Not Worth the Flight</a></li><li><a href="#f-persistence" data-t="f-persistence"><span>03</span>Persistence</a></li></ol></nav>
 <main id="work">
   <section class="film rv" style="--tint:#150707" id="f-delayed-all-the-time" aria-label="Delayed All the Time">
     <div class="shot lazy" style="view-transition-name:ph-delayed-red;--bg:url(assets/photo/delayed-red.jpg);--bg-s:url(assets/photo/delayed-red-1200.jpg)"></div>
@@ -280,13 +284,6 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
       <div class="film-txt"><p class="lbl">Sound &amp; making · Prague</p><h2 class="huge">Delayed<br>All the Time</h2><p class="dek">Five real days of Prague public transport, played as disco by the transport system itself. The metro is the kick drum; the buses go out of tune exactly as far as they run late.</p><div class="ctas"><a class="cta" href="https://sandovabarbora.github.io/delayed-all-the-time/"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Listen now</a><a class="cta" href="texts/delayed"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Read</a></div></div>
     </div>
     <p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Prague_-_8986914607.jpg">Yannick Loriot</a> · CC BY 2.0</p>
-  </section>
-  <section class="film rv" style="--tint:#0b0b0b" id="f-parking" aria-label="Parking, Measured">
-    <div class="shot lazy" style="view-transition-name:ph-prague-parking;--bg:url(assets/photo/prague-parking.jpg);--bg-s:url(assets/photo/prague-parking-1200.jpg)"></div>
-    <div class="film-in">
-      <div class="film-txt"><p class="lbl">Cities · a series in three parts</p><h2 class="huge">Parking,<br>Measured</h2><p class="dek">About 2&nbsp;745 stalls lost since 2012, because cars got longer, not wider. Then the same question on 2.5 million registrations, then next to the permits.</p><div class="ctas"><a class="cta" href="texts/prague-parking"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Part I</a><a class="cta" href="texts/prague-parking-2"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Part II</a><a class="cta" href="texts/prague-parking-3"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Part III</a></div></div>
-    </div>
-    <p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Lipansk%C3%A1,_policejn%C3%AD_stanice.jpg">ŠJů</a> · CC BY-SA 3.0, colour held</p>
   </section>
   <section class="seaband" id="f-not-worth-the-flight" aria-label="Not Worth the Flight, live">
     <div class="shot lazy" style="view-transition-name:ph-surf;--bg:url(assets/photo/surf.jpg);--bg-s:url(assets/photo/surf-1200.jpg)"></div>
@@ -296,20 +293,6 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
       <div class="sb-row"><div class="ctas"><a class="cta" href="texts/surf"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Read</a><a class="cta" href="surf/"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>The live page</a></div><p class="sb-now"><b id="sb-h">—</b><span id="sb-s">swell right now</span></p></div>
     </div>
     <p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Ericeira-06-Ribeira_d%27Ilhas-2011-gje.jpg">Gerd Eichmann</a> · CC BY-SA 4.0, colour held</p>
-  </section>
-  <section class="film rv" style="--tint:#04120b" id="f-player-pool-atlas" aria-label="Player Pool Atlas">
-    <div class="shot lazy" style="view-transition-name:ph-atlas;--bg:url(assets/photo/atlas.jpg);--bg-s:url(assets/photo/atlas-1200.jpg)"></div>
-    <div class="film-in">
-      <div class="film-txt"><p class="lbl">Sport · six nations</p><h2 class="huge">Player<br>Pool Atlas</h2><p class="dek">Who a country produces, per capita, compared with its peers: the same five questions asked of six nations the same way. Hockey first, then football.</p><div class="ctas"><a class="cta" href="texts/football"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Football</a><a class="cta" href="texts/hockey"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Hockey</a></div></div>
-    </div>
-    <p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:The_Peninsula_Stadium_at_night_-_Salford_City_-_Aug_24.jpg">Emessem T</a> · CC BY-SA 4.0, colour held</p>
-  </section>
-  <section class="film rv" style="--tint:#07111b" id="f-the-label-says-deteriorating" aria-label="The Label Says Deteriorating">
-    <div class="shot lazy" style="view-transition-name:ph-icu;--bg:url(assets/photo/icu.jpg);--bg-s:url(assets/photo/icu-1200.jpg)"></div>
-    <div class="film-in">
-      <div class="film-txt"><p class="lbl">Claims, checked · intensive care</p><h2 class="huge">The Label Says<br>Deteriorating</h2><p class="dek">622 patients, fourteen readings each, one label to predict. The first thing the data said was that the label points the wrong way. The report says so.</p><div class="ctas"><a class="cta" href="texts/icu"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Read</a><a class="cta" href="assets/icu/report.pdf"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>The report</a></div></div>
-    </div>
-    <p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:20250808_Intensive_care_unit_bed.jpg">Ismael Olea</a> · CC BY 4.0, colour held</p>
   </section>
   <section class="film rv" style="--tint:#060606" id="f-persistence" aria-label="Persistence">
     <div class="shot lazy" style="view-transition-name:ph-thesis;--bg:url(assets/photo/thesis.jpg);--bg-s:url(assets/photo/thesis-1200.jpg)"></div>
@@ -396,9 +379,12 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
   const stills = [...document.querySelectorAll('.still')];
   const titles = document.getElementById('titles');
   const links = [...titles.querySelectorAll('a')];
+  const cap = document.getElementById('cap'), capRest = cap.textContent;
   const show = k => {
     stills.forEach(s => s.classList.toggle('on', s.dataset.k === String(k)));
     links.forEach(a => a.classList.toggle('on', a.dataset.k === String(k)));
+    const cur = links.find(a => a.dataset.k === String(k));
+    cap.textContent = cur ? cur.dataset.dek : capRest;
   };
   let i = 0, timer = null;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -450,7 +436,6 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
     .then(r => r.json()).then(j => {
       const c = j.current; SEA.h = c.swell_wave_height; SEA.p = c.swell_wave_period;
       const d = dirs[Math.round(c.swell_wave_direction / 45) % 8];
-      document.getElementById('swell-sup').textContent = c.swell_wave_height.toFixed(1) + ' m';
       document.getElementById('now-sea').textContent = c.swell_wave_height.toFixed(1) + ' m';
       document.getElementById('sb-h').textContent = c.swell_wave_height.toFixed(1) + ' m';
       document.getElementById('sb-s').textContent = Math.round(c.swell_wave_period) + ' s · ' + d + ' · ' + (c.swell_wave_height >= 1.2 ? 'book it' : 'not worth the flight');
