@@ -1,0 +1,26 @@
+{
+ "frozen": "2026-09-29, before any unpermuted register length was read",
+ "code_sha256": {
+  "tools/parking6/parking6_estimate.py": "4fad464b54902dbdadb521f7b63708fa1382e143b9327033f1b51f4864686ec2",
+  "tools/parking6/parking6_dict.py": "1ab6c4fa51205a8e64265e8cc9649567f29d65990ad6e3297e1ace57de7fd587",
+  "tools/parking6/rsv_extract.py": "2a99523f0e531bb14d41ee43930f811cab9218a07a94327e96c4d7634cc51724",
+  "tools/parking6/eea_counts_2325.py": "440b5bcd970b96d9208205678a40276e46ec5a2581f7cc424b9b0d38eb064d26",
+  "tools/parking6/parking6_design.py": "6ffe9a2f71aae945a95336d017313d3f4f0f5776b3a7a45237463b88b38a3473"
+ },
+ "data_sha256": {
+  "dict_model_lines.csv (DS12 frozen dictionary)": "ccfd595fe215a84c4326f8c2fd418c422a4d5f22f2d31bcc7d2a9bb024b269dc",
+  "rsv_m1n1_20260901.parquet (compact extract, M1/M1G/N1/N1G, no VIN/PČV/owner)": "24e225eed03545872d6e01f4c1de0124adaa26423a5862be67f3c59cf96fba46",
+  "eea_cz_counts_2023_2025_m1_m1g.csv": "343712db76b720f5d11cd297af6a71d9f217c3a56913b45d4bb29fc83df3da6a"
+ },
+ "dry_run": {
+  "file": "assets/parking6/dryrun.json",
+  "permutation": "L, W and WB permuted jointly across cohorts within make (DS11 as registered), seed 20260928",
+  "checks": {
+   "pipeline_end_to_end": "ok (h2, e1, e4 written)",
+   "trend_null_under_permutation": "Δ1 = 2.1 cm, Δ2 = 0.0 cm (residual make mix only); H2a reads 'disagreement', as expected when the trend is destroyed",
+   "size_check_rejection_rates": "H2a +δ 0.07, H2a −δ 0.03, H2b 0.045 (nominal 0.05; 200 sims, reduced B)",
+   "kish_effective_clusters": 37.1,
+   "wild_fallback": false
+  }
+ }
+}
