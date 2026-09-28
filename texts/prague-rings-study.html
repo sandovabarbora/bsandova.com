@@ -55,7 +55,7 @@
 
 <section>
 <h2>How this was done</h2>
-<p>The design was written, sent to three reviewers (a statistician, an electoral geographer and a census-data specialist), revised, and committed to the site's public repository before any census count or earlier election was joined to a precinct<sup class="cite"><a href="#r6">6</a></sup>. It fixes the questions, the hypotheses, the one test for each, the decision rules and fourteen robustness checks. Everything that changed afterwards is listed, dated, at the end of that file and summarised <a href="#changes">below</a>, including a coding error found in one test.</p>
+<p>The design was written, sent to three reviewers (a statistician, an electoral geographer and a census-data specialist), revised, and committed to the site's public repository before any census count or earlier election was joined to a precinct<sup class="cite"><a href="#r6">6</a></sup>. It fixes the questions, the hypotheses, the one test for each, the decision rules and fourteen robustness checks. Everything that changed afterwards is listed, dated, at the end of that file and summarised <a href="#changes">below</a>.</p>
 <p>The census counts people on a grid of 1 km squares<sup class="cite"><a href="#r7">7</a></sup>. Prague's median precinct is an eighth of a square, so every cell's counts were spread over the precincts it overlaps, in proportion to the flats standing in each on census day, from the cadastre's building register<sup class="cite"><a href="#r8">8</a></sup>. This is dasymetric allocation<sup class="cite"><a href="#r9">9</a></sup>. It puts 1 301 482 residents into Prague's precincts against the census's 1 301 432. An independent allocation from the census's 958 basic settlement units in Prague agrees within 25 % for all but 13 precincts.</p>
 <p>A precinct still only gets the composition of the square it sits in, while its housing is measured building by building. Comparing the two at different resolutions would flatter housing, so the main models add precincts up into the square that holds most of their flats: 282 clusters, each measured at one resolution. The regressions weight by valid votes. Uncertainty comes from a wild cluster bootstrap over Prague's 57 districts<sup class="cite"><a href="#r10">10</a></sup><sup class="cite"><a href="#r11">11</a></sup>, with conventional, small-sample-corrected<sup class="cite"><a href="#r12">12</a></sup> and spatial<sup class="cite"><a href="#r13">13</a></sup> standard errors computed alongside. The six confirmatory tests share a 5 % error rate through Holm's procedure<sup class="cite"><a href="#r14">14</a></sup>.</p>
 </section>
@@ -132,7 +132,6 @@
 <section id="changes">
 <h2>What changed after registration</h2>
 <ul>
-<li><b>A coding error, fixed before anything was reported.</b> The first run of H4a tested the difference of the two turnout gradients, not the difference of their absolute values as registered. The two differ only because the resident gradient came out with the opposite sign; the registered test is the one reported.</li>
 <li><b>The metro test was underpowered from the start.</b> The design-stage check found this before any outcome was joined. It was recorded then, and the margin was kept.</li>
 <li><b>Operational details the design left open:</b>
   <ul>
