@@ -1,0 +1,870 @@
+{
+ "kappa": {
+  "inputs": {
+   "mean_age": {
+    "2012": 13.62,
+    "2025": 16.68
+   },
+   "fleet_length_m": {
+    "2012": 4.098,
+    "2025": 4.195
+   },
+   "pitch_ref_m": 5.2,
+   "g_derived_m": 1.005,
+   "s": 0.68,
+   "perturbation": "ramp 0 (≤2012) → 1 (2022), held after"
+  },
+  "kappa": {
+   "weibull_k1.5": 0.2988,
+   "weibull_k2.0": 0.2875,
+   "weibull_k3.0": 0.2729,
+   "weibull_k2.0_entry_weighted_eea": 0.3096
+  },
+  "dtheta1_dfleetlength_per_m": {
+   "0.5": 0.09615,
+   "0.68": 0.12988,
+   "0.85": 0.16131,
+   "1.0": 0.18872
+  },
+  "delta_newcar_cm_exact": 6.442,
+  "delta_newcar_cm_registered": 6.4,
+  "delta_by_s_cm": {
+   "0.5": 8.7,
+   "0.68": 6.44,
+   "0.85": 5.19,
+   "1.0": 4.43
+  },
+  "delta_H2a_cm": 4.4,
+  "fleet_growth_needed_for_theta1_3.7pct_cm": {
+   "s0.68_g0.82": 27.8,
+   "s0.68_g1.005": 28.8,
+   "s0.85_g0.82": 22.2,
+   "s0.85_g1.005": 23.1,
+   "s1.0_g0.82": 18.9,
+   "s1.0_g1.005": 19.6
+  }
+ },
+ "classifier": {
+  "source": "ZPS251_USEKY.json",
+  "sha256": "294138775f15852f258f7667c6f1fd4a67b6173b76202a0969010d8e17d7fe19",
+  "segments_labelled_used": 1706,
+  "segments_skipped_unlabelled": 13,
+  "confusion_segments": {
+   "non_parallel->non_parallel": 338,
+   "non_parallel->parallel": 12,
+   "non_parallel->unclassified": 30,
+   "parallel->non_parallel": 15,
+   "parallel->parallel": 1301,
+   "parallel->unclassified": 10
+  },
+  "confusion_stalls": {
+   "non_parallel->non_parallel": 4607,
+   "non_parallel->parallel": 45,
+   "non_parallel->unclassified": 266,
+   "parallel->non_parallel": 192,
+   "parallel->parallel": 11329,
+   "parallel->unclassified": 51
+  },
+  "width_quantiles_m": {
+   "Podélné": [
+    1.87,
+    1.98,
+    2.03,
+    2.1,
+    2.5
+   ],
+   "Kolmé": [
+    3.65,
+    4.45,
+    4.58,
+    4.86,
+    5.36
+   ],
+   "Šikmé": [
+    3.52,
+    4.15,
+    4.35,
+    4.51,
+    4.85
+   ]
+  },
+  "segments": {
+   "accuracy_among_classified": 0.9838,
+   "accuracy_unclassified_as_wrong": 0.9607,
+   "unclassified_share": 0.0234,
+   "ppv_parallel": 0.9909,
+   "ppv_non_parallel": 0.9575,
+   "true_parallel_share": 0.7773
+  },
+  "stalls": {
+   "accuracy_among_classified": 0.9853,
+   "accuracy_unclassified_as_wrong": 0.9664,
+   "unclassified_share": 0.0192,
+   "ppv_parallel": 0.996,
+   "ppv_non_parallel": 0.96,
+   "true_parallel_share": 0.7018
+  },
+  "s_hat_ppv_in_sample": 0.7017,
+  "pre_committed_rule": "accuracy (stalls, unclassified counted as wrong) >= 0.80 -> classifier used; else prior",
+  "passes": true
+ },
+ "layer3": {
+  "file": "zps_layer3_snapshot_20260928.json",
+  "sha256": "a2f18100611041af8fe19d76690aa4dd84422c43290ddde808342688b32bc1c4",
+  "features": 16874,
+  "ps_zps_sum": 168424,
+  "unique_objectid": 16874
+ },
+ "eea_m1g": {
+  "raw_file": "eea_cz_by_model_m1_m1g.csv",
+  "sha256": "c20aa884280fceb9971ee0d3f336e5e7bdeb891ab0e706bfce30fa9eb71a0c58",
+  "m1g_share_by_year": {
+   "2010": 0.0,
+   "2011": 0.0,
+   "2012": 0.0021,
+   "2013": 0.0055,
+   "2014": 0.0248,
+   "2015": 0.0287,
+   "2016": 0.0001,
+   "2017": 0.0331,
+   "2018": 0.0346,
+   "2019": 0.0455,
+   "2020": 0.0532,
+   "2021": 0.0576,
+   "2022": 0.0619
+  },
+  "wheelbase_mean_mm": {
+   "2010": 2604.7,
+   "2011": 2618.4,
+   "2012": 2616.7,
+   "2013": 2636.5,
+   "2014": 2641.3,
+   "2015": 2646.6,
+   "2016": 2645.7,
+   "2017": 2661.2,
+   "2018": 2659.7,
+   "2019": 2673.2,
+   "2020": 2681.2,
+   "2021": 2684.1,
+   "2022": 2696.8
+  },
+  "wheelbase_change_2012_2022_mm_endpoints": 80.2,
+  "wheelbase_trend_2012_2022_mm_per_year": 7.072,
+  "wheelbase_trend_2012_2022_mm_x10": 70.7,
+  "wheelbase_trend_2010_2022_mm_per_year": 7.146,
+  "part2_m1_only": {
+   "change_2012_2022_mm": 68,
+   "slope_mm_per_year": 6.0
+  }
+ },
+ "ds8": {
+  "clusters": 3986,
+  "kish_effective_clusters": 43.6,
+  "se_length_change_2012_2022_cm": 2.39,
+  "se_length_change_2019_2022_x3_cm_proxy": 1.594,
+  "H2a_prior_predictive_P_supported": 0.1271,
+  "H2a_power_at_d0": 0.1557,
+  "H2a_mde_margin_80pct_at_d0_cm": 6.99,
+  "H2b_prior_predictive_P_supported": 0.27,
+  "H2b_power_at_3cm": 0.594,
+  "rule": "A.4: prior-predictive P(supported) > 0.95 -> reported as descriptive, outside the family"
+ },
+ "ds1": {
+  "source": "rsv_coverage_20260901.json",
+  "rows_total": 19383927,
+  "short_rows": 0,
+  "rows_by_category": {
+   "M1": 13057729,
+   "other": 4924047,
+   "N1": 975245,
+   "M1G": 341852,
+   "N1G": 85054
+  },
+  "m1_m1g_status": {
+   "PROVOZOVANÉ": 6921884,
+   "ZÁNIK": 5032836,
+   "VÝVOZ": 984050,
+   "VYŘAZENO Z PROVOZU": 460811
+  },
+  "coverage_by_manufacture_year": {
+   "1990": {
+    "rows": 214823,
+    "length_present": 0.4351,
+    "wheelbase_present": 0.4277
+   },
+   "1991": {
+    "rows": 156029,
+    "length_present": 0.2369,
+    "wheelbase_present": 0.2266
+   },
+   "1992": {
+    "rows": 189040,
+    "length_present": 0.3256,
+    "wheelbase_present": 0.3149
+   },
+   "1993": {
+    "rows": 176720,
+    "length_present": 0.3083,
+    "wheelbase_present": 0.2948
+   },
+   "1994": {
+    "rows": 157569,
+    "length_present": 0.3711,
+    "wheelbase_present": 0.3548
+   },
+   "1995": {
+    "rows": 223188,
+    "length_present": 0.5805,
+    "wheelbase_present": 0.5613
+   },
+   "1996": {
+    "rows": 304519,
+    "length_present": 0.6984,
+    "wheelbase_present": 0.6786
+   },
+   "1997": {
+    "rows": 350499,
+    "length_present": 0.8256,
+    "wheelbase_present": 0.8019
+   },
+   "1998": {
+    "rows": 327667,
+    "length_present": 0.918,
+    "wheelbase_present": 0.8902
+   },
+   "1999": {
+    "rows": 331264,
+    "length_present": 0.9434,
+    "wheelbase_present": 0.9095
+   },
+   "2000": {
+    "rows": 300015,
+    "length_present": 0.9551,
+    "wheelbase_present": 0.9147
+   },
+   "2001": {
+    "rows": 261044,
+    "length_present": 0.9616,
+    "wheelbase_present": 0.9153
+   },
+   "2002": {
+    "rows": 252363,
+    "length_present": 0.9566,
+    "wheelbase_present": 0.9071
+   },
+   "2003": {
+    "rows": 259690,
+    "length_present": 0.9427,
+    "wheelbase_present": 0.8904
+   },
+   "2004": {
+    "rows": 232402,
+    "length_present": 0.9469,
+    "wheelbase_present": 0.8917
+   },
+   "2005": {
+    "rows": 232840,
+    "length_present": 0.9682,
+    "wheelbase_present": 0.9097
+   },
+   "2006": {
+    "rows": 220601,
+    "length_present": 0.9783,
+    "wheelbase_present": 0.9169
+   },
+   "2007": {
+    "rows": 220779,
+    "length_present": 0.9829,
+    "wheelbase_present": 0.9213
+   },
+   "2008": {
+    "rows": 213896,
+    "length_present": 0.9885,
+    "wheelbase_present": 0.9248
+   },
+   "2009": {
+    "rows": 207168,
+    "length_present": 0.9896,
+    "wheelbase_present": 0.9253
+   },
+   "2010": {
+    "rows": 203127,
+    "length_present": 0.9928,
+    "wheelbase_present": 0.9269
+   },
+   "2011": {
+    "rows": 203978,
+    "length_present": 0.9939,
+    "wheelbase_present": 0.9262
+   },
+   "2012": {
+    "rows": 141813,
+    "length_present": 0.9958,
+    "wheelbase_present": 0.9237
+   },
+   "2013": {
+    "rows": 71945,
+    "length_present": 0.9999,
+    "wheelbase_present": 0.9139
+   },
+   "2014": {
+    "rows": 65900,
+    "length_present": 0.9998,
+    "wheelbase_present": 0.9066
+   },
+   "2015": {
+    "rows": 80569,
+    "length_present": 0.9999,
+    "wheelbase_present": 0.9078
+   },
+   "2016": {
+    "rows": 74732,
+    "length_present": 1.0,
+    "wheelbase_present": 0.9016
+   },
+   "2017": {
+    "rows": 96130,
+    "length_present": 1.0,
+    "wheelbase_present": 0.8857
+   },
+   "2018": {
+    "rows": 78880,
+    "length_present": 0.9999,
+    "wheelbase_present": 0.8723
+   },
+   "2019": {
+    "rows": 93309,
+    "length_present": 1.0,
+    "wheelbase_present": 0.911
+   },
+   "2020": {
+    "rows": 64825,
+    "length_present": 1.0,
+    "wheelbase_present": 0.9297
+   },
+   "2021": {
+    "rows": 77189,
+    "length_present": 1.0,
+    "wheelbase_present": 0.924
+   },
+   "2022": {
+    "rows": 60418,
+    "length_present": 1.0,
+    "wheelbase_present": 0.9174
+   },
+   "2023": {
+    "rows": 49120,
+    "length_present": 1.0,
+    "wheelbase_present": 0.8998
+   },
+   "2024": {
+    "rows": 56284,
+    "length_present": 1.0,
+    "wheelbase_present": 0.9505
+   },
+   "2025": {
+    "rows": 65821,
+    "length_present": 1.0,
+    "wheelbase_present": 0.9619
+   },
+   "2026": {
+    "rows": 21819,
+    "length_present": 1.0,
+    "wheelbase_present": 0.9738
+   },
+   "missing": {
+    "rows": 4071429,
+    "length_present": 0.9998,
+    "wheelbase_present": 0.919
+   }
+  },
+  "new_to_cz_vs_eea": {
+   "2010": {
+    "rsv_new_to_cz": 171193,
+    "rsv_entries_all": 298946,
+    "length_present_new": 0.9918,
+    "eea_m1_m1g_approx": 164618,
+    "ratio_rsv_to_eea": 1.04
+   },
+   "2011": {
+    "rsv_new_to_cz": 175392,
+    "rsv_entries_all": 307779,
+    "length_present_new": 0.993,
+    "eea_m1_m1g_approx": 169259,
+    "ratio_rsv_to_eea": 1.036
+   },
+   "2012": {
+    "rsv_new_to_cz": 175958,
+    "rsv_entries_all": 300837,
+    "length_present_new": 0.996,
+    "eea_m1_m1g_approx": 169933,
+    "ratio_rsv_to_eea": 1.035
+   },
+   "2013": {
+    "rsv_new_to_cz": 165973,
+    "rsv_entries_all": 292735,
+    "length_present_new": 0.9987,
+    "eea_m1_m1g_approx": 162046,
+    "ratio_rsv_to_eea": 1.024
+   },
+   "2014": {
+    "rsv_new_to_cz": 193809,
+    "rsv_entries_all": 315044,
+    "length_present_new": 0.9995,
+    "eea_m1_m1g_approx": 179001,
+    "ratio_rsv_to_eea": 1.083
+   },
+   "2015": {
+    "rsv_new_to_cz": 231023,
+    "rsv_entries_all": 381749,
+    "length_present_new": 0.9997,
+    "eea_m1_m1g_approx": 227828,
+    "ratio_rsv_to_eea": 1.014
+   },
+   "2016": {
+    "rsv_new_to_cz": 259791,
+    "rsv_entries_all": 423581,
+    "length_present_new": 1.0,
+    "eea_m1_m1g_approx": 214429,
+    "ratio_rsv_to_eea": 1.212
+   },
+   "2017": {
+    "rsv_new_to_cz": 271882,
+    "rsv_entries_all": 441672,
+    "length_present_new": 0.9999,
+    "eea_m1_m1g_approx": 220852,
+    "ratio_rsv_to_eea": 1.231
+   },
+   "2018": {
+    "rsv_new_to_cz": 262561,
+    "rsv_entries_all": 438429,
+    "length_present_new": 0.9999,
+    "eea_m1_m1g_approx": 237209,
+    "ratio_rsv_to_eea": 1.107
+   },
+   "2019": {
+    "rsv_new_to_cz": 250950,
+    "rsv_entries_all": 426741,
+    "length_present_new": 1.0,
+    "eea_m1_m1g_approx": 244739,
+    "ratio_rsv_to_eea": 1.025
+   },
+   "2020": {
+    "rsv_new_to_cz": 201743,
+    "rsv_entries_all": 351672,
+    "length_present_new": 1.0,
+    "eea_m1_m1g_approx": 196728,
+    "ratio_rsv_to_eea": 1.025
+   },
+   "2021": {
+    "rsv_new_to_cz": 207885,
+    "rsv_entries_all": 391915,
+    "length_present_new": 1.0,
+    "eea_m1_m1g_approx": 201028,
+    "ratio_rsv_to_eea": 1.034
+   },
+   "2022": {
+    "rsv_new_to_cz": 193888,
+    "rsv_entries_all": 353253,
+    "length_present_new": 1.0,
+    "eea_m1_m1g_approx": 185826,
+    "ratio_rsv_to_eea": 1.043
+   },
+   "2023": {
+    "rsv_new_to_cz": 222825,
+    "rsv_entries_all": 375180,
+    "length_present_new": 1.0,
+    "eea_m1_m1g_approx": null,
+    "ratio_rsv_to_eea": null
+   },
+   "2024": {
+    "rsv_new_to_cz": 232917,
+    "rsv_entries_all": 372308,
+    "length_present_new": 1.0,
+    "eea_m1_m1g_approx": null,
+    "ratio_rsv_to_eea": null
+   },
+   "2025": {
+    "rsv_new_to_cz": 250577,
+    "rsv_entries_all": 397672,
+    "length_present_new": 1.0,
+    "eea_m1_m1g_approx": null,
+    "ratio_rsv_to_eea": null
+   }
+  },
+  "jan1_share_first_reg_cz": {
+   "2000": 0.0842,
+   "2001": 0.0353,
+   "2002": 0.0065,
+   "2003": 0.0118,
+   "2004": 0.0062,
+   "2005": 0.0153,
+   "2006": 0.0045,
+   "2007": 0.0024,
+   "2008": 0.0004,
+   "2009": 0.0,
+   "2010": 0.0,
+   "2011": 0.0,
+   "2012": 0.0,
+   "2013": 0.0,
+   "2014": 0.0,
+   "2015": 0.0,
+   "2016": 0.0,
+   "2017": 0.0,
+   "2018": 0.0,
+   "2019": 0.0,
+   "2020": 0.0,
+   "2021": 0.0,
+   "2022": 0.0,
+   "2023": 0.0,
+   "2024": 0.0,
+   "2025": 0.0,
+   "2026": 0.0
+  },
+  "coverage_pre1990": {
+   "rows": 2990166,
+   "length_present": 0.4537
+  },
+  "rule": "coverage (length present) < 0.90 in any year 2012–2025 -> H2a/H2b reweight to EEA / register entry counts and are flagged",
+  "years_below_0.90_new_to_cz_2012_2025": []
+ },
+ "ds10": {
+  "entries_m1_m1g_total": 13394875.0,
+  "tolerances": {
+   "age_years": 0.3,
+   "count_pct": 5.0
+  },
+  "fits": {
+   "k1.5": {
+    "lambda": 24.594,
+    "years": {
+     "2016": {
+      "age_model": 14.5,
+      "age_sda": 14.5,
+      "count_model": 5363282,
+      "count_sda": 5368661,
+      "age_err": -0.0,
+      "count_err_pct": -0.1
+     },
+     "2017": {
+      "age_model": 14.48,
+      "age_sda": 14.6,
+      "count_model": 5577854,
+      "count_sda": 5592738,
+      "age_err": -0.12,
+      "count_err_pct": -0.27
+     },
+     "2018": {
+      "age_model": 14.49,
+      "age_sda": 14.8,
+      "count_model": 5780846,
+      "count_sda": 5802521,
+      "age_err": -0.31,
+      "count_err_pct": -0.37
+     },
+     "2019": {
+      "age_model": 14.56,
+      "age_sda": 14.9,
+      "count_model": 5963622,
+      "count_sda": 5989538,
+      "age_err": -0.34,
+      "count_err_pct": -0.43
+     }
+    },
+    "passes": false
+   },
+   "k2.0": {
+    "lambda": 27.654,
+    "years": {
+     "2016": {
+      "age_model": 14.5,
+      "age_sda": 14.5,
+      "count_model": 5837899,
+      "count_sda": 5368661,
+      "age_err": -0.0,
+      "count_err_pct": 8.74
+     },
+     "2017": {
+      "age_model": 14.48,
+      "age_sda": 14.6,
+      "count_model": 6064176,
+      "count_sda": 5592738,
+      "age_err": -0.12,
+      "count_err_pct": 8.43
+     },
+     "2018": {
+      "age_model": 14.49,
+      "age_sda": 14.8,
+      "count_model": 6279248,
+      "count_sda": 5802521,
+      "age_err": -0.31,
+      "count_err_pct": 8.22
+     },
+     "2019": {
+      "age_model": 14.55,
+      "age_sda": 14.9,
+      "count_model": 6474519,
+      "count_sda": 5989538,
+      "age_err": -0.35,
+      "count_err_pct": 8.1
+     }
+    },
+    "passes": false
+   },
+   "k3.0": {
+    "lambda": 29.813,
+    "years": {
+     "2016": {
+      "age_model": 14.5,
+      "age_sda": 14.5,
+      "count_model": 6337344,
+      "count_sda": 5368661,
+      "age_err": -0.0,
+      "count_err_pct": 18.04
+     },
+     "2017": {
+      "age_model": 14.48,
+      "age_sda": 14.6,
+      "count_model": 6577431,
+      "count_sda": 5592738,
+      "age_err": -0.12,
+      "count_err_pct": 17.61
+     },
+     "2018": {
+      "age_model": 14.5,
+      "age_sda": 14.8,
+      "count_model": 6805941,
+      "count_sda": 5802521,
+      "age_err": -0.3,
+      "count_err_pct": 17.29
+     },
+     "2019": {
+      "age_model": 14.56,
+      "age_sda": 14.9,
+      "count_model": 7014287,
+      "count_sda": 5989538,
+      "age_err": -0.34,
+      "count_err_pct": 17.11
+     }
+    },
+    "passes": false
+   }
+  },
+  "passes_primary_k2": false,
+  "ds10b_per_year_lambda": {
+   "grid": {
+    "0.8": {
+     "count_err_pct": {
+      "2016": -33.24,
+      "2017": -31.47,
+      "2018": -29.67,
+      "2019": -29.62
+     },
+     "admissible": false
+    },
+    "0.9": {
+     "count_err_pct": {
+      "2016": -24.91,
+      "2017": -23.34,
+      "2018": -21.61,
+      "2019": -21.5
+     },
+     "admissible": false
+    },
+    "1.0": {
+     "count_err_pct": {
+      "2016": -18.12,
+      "2017": -16.74,
+      "2018": -15.07,
+      "2019": -14.95
+     },
+     "admissible": false
+    },
+    "1.1": {
+     "count_err_pct": {
+      "2016": -12.73,
+      "2017": -11.5,
+      "2018": -9.89,
+      "2019": -9.76
+     },
+     "admissible": false
+    },
+    "1.2": {
+     "count_err_pct": {
+      "2016": -8.57,
+      "2017": -7.44,
+      "2018": -5.86,
+      "2019": -5.74
+     },
+     "admissible": false
+    },
+    "1.3": {
+     "count_err_pct": {
+      "2016": -5.3,
+      "2017": -4.23,
+      "2018": -2.67,
+      "2019": -2.52
+     },
+     "admissible": false
+    },
+    "1.4": {
+     "count_err_pct": {
+      "2016": -2.53,
+      "2017": -1.51,
+      "2018": 0.03,
+      "2019": 0.2
+     },
+     "admissible": true
+    },
+    "1.5": {
+     "count_err_pct": {
+      "2016": -0.1,
+      "2017": 0.87,
+      "2018": 2.4,
+      "2019": 2.59
+     },
+     "admissible": true
+    },
+    "1.6": {
+     "count_err_pct": {
+      "2016": 2.06,
+      "2017": 2.99,
+      "2018": 4.49,
+      "2019": 4.7
+     },
+     "admissible": true
+    },
+    "1.7": {
+     "count_err_pct": {
+      "2016": 4.0,
+      "2017": 4.89,
+      "2018": 6.37,
+      "2019": 6.58
+     },
+     "admissible": false
+    },
+    "1.8": {
+     "count_err_pct": {
+      "2016": 5.74,
+      "2017": 6.59,
+      "2018": 8.05,
+      "2019": 8.26
+     },
+     "admissible": false
+    },
+    "1.9": {
+     "count_err_pct": {
+      "2016": 7.31,
+      "2017": 8.12,
+      "2018": 9.57,
+      "2019": 9.79
+     },
+     "admissible": false
+    },
+    "2.0": {
+     "count_err_pct": {
+      "2016": 8.74,
+      "2017": 9.52,
+      "2018": 10.94,
+      "2019": 11.16
+     },
+     "admissible": false
+    },
+    "2.1": {
+     "count_err_pct": {
+      "2016": 10.04,
+      "2017": 10.8,
+      "2018": 12.2,
+      "2019": 12.42
+     },
+     "admissible": false
+    },
+    "2.2": {
+     "count_err_pct": {
+      "2016": 11.24,
+      "2017": 11.97,
+      "2018": 13.36,
+      "2019": 13.57
+     },
+     "admissible": false
+    },
+    "2.3": {
+     "count_err_pct": {
+      "2016": 12.34,
+      "2017": 13.04,
+      "2018": 14.42,
+      "2019": 14.63
+     },
+     "admissible": false
+    },
+    "2.4": {
+     "count_err_pct": {
+      "2016": 13.35,
+      "2017": 14.03,
+      "2018": 15.39,
+      "2019": 15.61
+     },
+     "admissible": false
+    },
+    "2.5": {
+     "count_err_pct": {
+      "2016": 14.28,
+      "2017": 14.95,
+      "2018": 16.3,
+      "2019": 16.51
+     },
+     "admissible": false
+    },
+    "2.6": {
+     "count_err_pct": {
+      "2016": 15.15,
+      "2017": 15.8,
+      "2018": 17.14,
+      "2019": 17.35
+     },
+     "admissible": false
+    },
+    "2.7": {
+     "count_err_pct": {
+      "2016": 15.95,
+      "2017": 16.59,
+      "2018": 17.92,
+      "2019": 18.12
+     },
+     "admissible": false
+    },
+    "2.8": {
+     "count_err_pct": {
+      "2016": 16.7,
+      "2017": 17.32,
+      "2018": 18.64,
+      "2019": 18.84
+     },
+     "admissible": false
+    },
+    "2.9": {
+     "count_err_pct": {
+      "2016": 17.4,
+      "2017": 18.0,
+      "2018": 19.31,
+      "2019": 19.51
+     },
+     "admissible": false
+    },
+    "3.0": {
+     "count_err_pct": {
+      "2016": 18.04,
+      "2017": 18.64,
+      "2018": 19.94,
+      "2019": 20.14
+     },
+     "admissible": false
+    }
+   },
+   "admissible_k": [
+    1.4,
+    1.6
+   ]
+  }
+ }
+}
