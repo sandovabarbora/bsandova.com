@@ -16,6 +16,8 @@ Sources (downloaded into tools/data/praha4x/, not committed):
   - Statistics Poland, Local Data Bank (BDL API): powiat level (380 units) dwellings permitted, started and completed
     by form of construction; median price per m2 of flats sold in market transactions; population; dwelling stock;
     and, at gmina level, the average construction period of new residential buildings.
+  - Eurostat NUTS 2021 classification with typologies (metro regions); GEOSTAT 2011 1 km population grid;
+    employment by NUTS 3 and NACE (nama_10r_3empers), for the Bartik robustness check.
 
 Part 2's RÚIAN building points (tools/data/praha2x/buildings_5514.pkl, built by rings_data.py) are reused for the
 Prague-internal analysis and are hashed here too.
@@ -54,7 +56,15 @@ AT_FILES = ["352/WhgJ10-J26_150626_Q1.ods", "352/Whg05-09_150621.ods",
             "353/Whg11-24_Bdl_150925.ods", "353/Ergebnisse_im_UEberblick_Baufertigstellungen_2024.ods",
             "353/WhgAbgang011111-311224_Bdl_150925.ods"]
 EUROSTAT = "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/{}?format=JSON&lang=EN"
-EUROSTAT_SETS = ["cens_21dwop_r3", "cens_21dwob_r3", "cens_11dwob_r3", "demo_r_pjanaggr3", "nama_10r_3gdp"]
+EUROSTAT_SETS = ["cens_21dwop_r3", "cens_21dwob_r3", "cens_11dwob_r3", "demo_r_pjanaggr3", "nama_10r_3gdp",
+                 "nama_10r_3empers"]
+# NUTS 2021 classification with the territorial typologies (sheet "Metropolitan"); GEOSTAT 2011 1 km population grid
+OTHER = {"eurostat/NUTS2021.xlsx": "https://ec.europa.eu/eurostat/documents/345175/629341/NUTS2021.xlsx",
+         "prague/GEOSTAT-grid-POP-1K-2011-V2-0-1.zip":
+             "https://ec.europa.eu/eurostat/cache/GISCO/geodatafiles/GEOSTAT-grid-POP-1K-2011-V2-0-1.zip"}
+# RÚIAN layers queried by housing_data.py (building points with nespravny, platiod, pocetpodlazi; districts)
+QUERIED = ["prague/buildings.parquet", "prague/city_districts.parquet", "prague/admin_districts.parquet",
+           "prague/prague.parquet"]
 BDL = "https://bdl.stat.gov.pl/api/v1/data/by-variable/{}?unit-level={}&format=json&lang=en&page-size=100&page={}"
 # powiat level (5): completions by form (P3824), starts Jan-Dec by form (P3822), permits Jan-Dec by form (P3816),
 # median price per m2, market transactions (P3787: total, primary, secondary), population, dwelling stock
@@ -116,6 +126,7 @@ def main() -> None:
     files += [get(CSU_DOCS + u, RAW / "csu" / name) for name, u in CSU_FILES.items()]
     files += [get(AT + f, RAW / "at" / Path(f).name) for f in AT_FILES]
     files += [get(EUROSTAT.format(s), RAW / "eurostat" / f"{s}.json") for s in EUROSTAT_SETS]
+    files += [get(url, RAW / name) for name, url in OTHER.items()]
     for ids in BDL_POWIAT.values():
         files += [bdl(v, 5) for v in ids]
     for ids in BDL_GMINA.values():  # replication only (H6): recorded as missing if the quota blocks it
@@ -124,7 +135,7 @@ def main() -> None:
                 files.append(bdl(v, 6, tries=1))
             except RuntimeError as e:
                 print(f"missing: {e}")
-    files += [p for p in REUSED if p.exists()]
+    files += [p for p in REUSED + [RAW / q for q in QUERIED] if p.exists()]
     lines = [f"{hashlib.sha256(p.read_bytes()).hexdigest()}  tools/data/{p.relative_to(DATA)}" for p in files]
     SHA.write_text("\n".join(lines) + "\n")
     print(f"{len(files)} files, hashes in {SHA.relative_to(ROOT)}")
