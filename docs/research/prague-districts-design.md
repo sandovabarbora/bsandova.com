@@ -673,3 +673,65 @@ and longer codes). The rule was decided on row labels, before any amount was sum
 **Also seen during this step (§0 addendum).** One unmasked line of the 2025 drawdown list was printed while learning
 the layout: the "CELKEM MČ Praha 1" total row, with its five amounts (adjusted budget, provided, returned, drawn,
 remaining). The 2023 event's window now ends in 2023, so that 2025 row is not part of H1.
+
+
+### 29 September 2026, estimation (after outcomes were joined)
+
+Built by `tools/praha/districts_extended.py` and `districts_robust.py`. Output is in
+`assets/praha/districts_extended.json` and `districts_extended_robust.json`.
+
+**A measurement correction found after outcomes were visible.** The first run gave the city's own grants in
+regime-year 2023 as 24.6 m CZK, against 3–6 bn CZK in every other year, and an investment share above 1.
+
+- **Cause.** The 2023 list prints each amount in the city-side column (5347 / 6363) and 0,00 in the district-side
+  column (4137 / 4251). The parser took the last amount on the line.
+- **Fix.** The rule is now the last non-zero amount. This is consistent with the rule recorded before joining
+  ("the value in its 4137 / 4251 column, or 5347 / 6363 where only the city's side is printed").
+  - Other years: 2016–2021 are unchanged, and 2015 changes by +0.07 %.
+  - 2022 changes by +4.9 %, because regime-year 2022 includes 1 Jan – 15 Feb 2023 grants from the 2023 list.
+- **Effect.** The switch in the first run's H1 estimate, from +0.33 to −0.70 in R units, comes almost entirely from
+  this fix. Both runs are reported here. The first was wrong, because its 2023 outcome was near zero for every
+  district.
+
+**Implementation choices the registration left open:**
+
+- **Relative effect:** the pooled estimate divided by the unweighted mean, over the two events, of the controls'
+  pre-window level.
+- **TOST:** randomisation inference, with the switchers' Δ shifted by ± the margin. The margin m is 20 % of that
+  mean, 0.36 R.
+- **Regression form (CR2 and WCR):** the stacked model with unit×event and year×event effects, 47 district clusters.
+  The CR2 reference distribution is t(G − 1).
+- **Conley–Taber:** 20 000 draws of the controls' demeaned Δ.
+- **HonestDiD:** a simplified relative-magnitudes interval. The bound is M̄ × the largest pre-period change of the
+  switcher–control difference, added to a ±1.96 SE interval. The sampling noise in the bound is ignored. This is
+  simpler than Rambachan and Roth's optimal interval.
+- **Placebo event:** the 2023 stack's units, pre 2019–2020 and post 2021–2022. That is two years on each side,
+  because a three-year pre window would reach the 2018 event.
+- **de Chaisemartin–D'Haultfœuille:** DID_M and the joiners-only DID_+ over 2015–2023, implemented directly, with a
+  district bootstrap of 999 draws. The R/Stata package was not used.
+- **Party-level permutation:** at each event the entering set is replaced by every equal-size set of parties that
+  held a mayor on 30 June of the first post year. That gives 10 options in 2018 and 2 in 2023, 20 sets in all.
+  Mayors' parties come from coder A's spells, which match the adjudicated panel wherever the two coders' mayor
+  agrees.
+- **Power.** The simulation (§6.2) assumed a 2023 post window of 2023–2025. After the bridge rule, the window is
+  2023 alone, and the 2023 stack has 23 switch-ins and 17 clean controls. The design-stage minimum detectable effect
+  is therefore, if anything, optimistic for the realised design.
+- **MONITOR secondary:**
+  - window 2022 (pre) and 2023–2025 (post): 24 switch-ins, 15 controls;
+  - population growth 2015–2021 was imbalanced (RI p = 0.098), so the rule of §6.3 applied. The estimate adjusted
+    for it (residualised on growth, fitted on the controls) is reported;
+  - the 0–14 share was also imbalanced (p = 0.066). The registered rule names population growth only, so the 0–14
+    share is not added.
+- **H3:** capital execution = MONITOR class 6 reality / afterChanges. No district-year had a zero amended capital
+  budget.
+- **H4 variants:** net of D (the unbudgeted in-year 4137 + 4251), and net of approved 5901 reserves. Class 8 is not
+  netted: the gap is defined on incomes minus outgoings, which excludes financing.
+- **Formula channel:**
+  - the 2024 rule change is reported as the change in each district's approved allocation from 2023 to 2024, by
+    2024 alignment;
+  - the 2020–2023 floor/cap adjustment is computed but **not interpreted**. Its "final" column includes the pupil
+    top-up (DFVz) in 2023 but not in 2020, so the years are not comparable.
+- **E1–E4 were not run** in this version. They were exploratory and remain so.
+- **The specification curve** uses 999 permutations and 999 WCR draws per specification, 54 specifications.
+  - WCR and CR2 are computed only for the full sample (18 specifications).
+  - Dropping Praha 1 changes nothing: it is in neither stack.

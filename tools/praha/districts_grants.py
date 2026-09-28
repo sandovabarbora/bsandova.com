@@ -11,7 +11,8 @@ Sections (headings as printed):
 Each item row carries the budget measure (RO), the resolution, the purpose code (ÚZ), the district and the amount.
 Budget-measure lists and the 2024 list are in thousand CZK; the 2025 list is in CZK. The amount of a budget
 measure is the value in its 4137 / 4251 column (or 5347 / 6363 where only the city's side is printed); in a drawdown
-list it is the first column, the budget adjustment ("úprava rozpočtu"), i.e. the amount granted.
+list it is the first column, the budget adjustment ("úprava rozpočtu"), i.e. the amount granted. Where one of
+the two budget-measure columns prints 0,00 (2023: the district side), the non-zero one is taken.
 
 A row is a **city's own grant** (the primary outcome, §4.3) if its ÚZ is a number from 1 to 999 (leading zeros and a
 /ZJ suffix ignored) and it is not in the year-end settlement series (RO 8000-8999). State ÚZ (98xxx, 1xxxx, 3xxxx and
@@ -257,7 +258,11 @@ def items(year: int, lookup: dict) -> tuple[list[dict], dict]:
                 if kind == "drawdown":
                     row["amount_text"] = amounts[0][0] if amounts else None
                 else:
-                    row["amount_text"] = amounts[-1][0] if amounts else None
+                    # the district-side (4137/4251) and city-side (5347/6363) columns carry the same amount; some
+                    # lists fill only one of them and print 0,00 in the other (2023 fills the city side), so the
+                    # last non-zero amount on the line is taken (correction of 29 Sep 2026, see the design)
+                    nonzero = [t for t, _ in amounts if float(t.replace(" ", "").replace(",", ".")) != 0.0]
+                    row["amount_text"] = nonzero[-1] if nonzero else (amounts[-1][0] if amounts else None)
                 row["column"] = column
                 # investment: the 4251/6363 column where the header has one (2020-2023); otherwise the list's
                 # "b)" subsection (investment transfers) against "a)" (non-investment)
