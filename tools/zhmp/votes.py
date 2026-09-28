@@ -170,6 +170,30 @@ def main() -> None:
             .loc[lambda x: x.isin(PRESENT[1:])].value_counts(normalize=True).items()}
         for c in names
     }
+    # every councillor: what they did while seated (a cell is empty when the member did not hold the seat)
+    members = []
+    for m, c in club.items():
+        seated = d[m].notna()
+        v = d.loc[seated, m]
+        present = v.isin(PRESENT)
+        both = present & p.loc[seated, c].notna()
+        yes = v == "Hlas pro"
+        members.append({
+            "name": re.sub(r"\s+", " ", m).strip(),
+            "club": c,
+            "first": str(d.loc[seated, "t"].min().date()),
+            "last": str(d.loc[seated, "t"].max().date()),
+            "seated_votes": int(seated.sum()),
+            "attendance": round(float(present.mean()), 3),
+            "yes": round(float((v[present] == "Hlas pro").mean()), 3),
+            "no_vote": round(float((v[present] == "Nehlasoval").mean()), 3),
+            "abstained": int((v == "Zdržel se").sum()),
+            "against": int((v == "Hlas proti").sum()),
+            "with_club": round(float((yes[both] == p.loc[seated, c][both]).mean()), 3) if c != "Nezařazená" else None,
+            "with_spolu": round(float((yes[present & p.loc[seated, "SPOLU"].notna()]
+                                       == p.loc[seated, "SPOLU"][present & p.loc[seated, "SPOLU"].notna()]).mean()), 3),
+        })
+    (OUT.parent / "members2022.json").write_text(json.dumps(members, ensure_ascii=False, indent=0) + "\n")
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=1) + "\n")
     print(json.dumps(checks, ensure_ascii=False))

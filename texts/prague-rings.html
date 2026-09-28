@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prague votes in rings, not along lines</title>
+<meta name="description" content="The 2025 Chamber election in Prague's 1 119 precincts, against the metro, the distance from the centre and the city's housing stock. The metro explains nothing once the rest is known; the panel estates explain the most: ANO takes 26 % where most flats are in panel buildings and 16 % where almost none are.">
+<meta property="og:title" content="Prague votes in rings, not along lines">
+<meta property="og:description" content="1 119 precincts of the 2025 election: the metro explains nothing, the distance from the centre and the panel estates explain most.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://bsandova.com/assets/og/prague-rings.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bsandova.com/assets/og/prague-rings.jpg">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://bsandova.com/texts/prague-rings">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../text.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../a24.css">
+<style>
+.pm-bar{display:flex;flex-wrap:wrap;gap:6px 18px;margin:0 0 .8rem;font:400 13px var(--sans);text-transform:uppercase;letter-spacing:.02em}
+.pm-bar button{background:none;border:0;padding:4px 0;color:#666;cursor:pointer;font:inherit;letter-spacing:inherit;text-transform:inherit}
+.pm-bar button.on{color:#000;box-shadow:inset 0 -1.5px 0 #000}
+.pm{position:relative;display:none}
+.pm svg{width:100%;height:auto;display:block}
+.pm path.o{stroke:#fff;stroke-width:.35;vector-effect:non-scaling-stroke;cursor:pointer}
+.pm path.o:hover,.pm path.o.sel{stroke:#000;stroke-width:1.4}
+.pm-tip{position:absolute;pointer-events:none;background:#fff;border:1px solid #000;padding:8px 10px;font:400 12px/1.45 var(--mono);min-width:210px;z-index:2}
+.pm-tip b{font:500 13px var(--sans);display:block;margin-bottom:4px}
+.pm-tip td{padding:0 10px 0 0}.pm-tip td+td{text-align:right}
+.pm-leg{display:flex;align-items:center;gap:8px;font:400 11px var(--mono);color:#666;margin-top:6px}
+.pm-leg i{display:block;width:180px;height:8px}
+.js .pm{display:block}.js .pm-static{display:none}
+</style>
+<script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">prague, measured · 2 · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Prague, measured · Part 2 of 5 · Chamber election, October 2025, 1 119 precincts</p>
+  <h1>Prague votes in rings, <em>not along lines</em></h1>
+  <p class="deck">The metro is the obvious suspect: three lines that carry the city from its centre to its estates. Put every precinct of the 2025 election next to the nearest station, the distance from the centre and the flats around it, and the metro adds almost nothing to what the other two explain. Prague's vote changes with how far a precinct is from Můstek and with how many of its flats are in panel buildings.</p>
+  <dl class="facts">
+    <div><dt>ANO, within 2 km of the centre</dt><dd>13 % <small>25 % at 8–10 km</small></dd></div>
+    <div><dt>ANO, precincts mostly panel flats</dt><dd>26 % <small>16 % where almost none are</small></dd></div>
+    <div><dt>metro, once the rest is known</dt><dd>−0.05 <small>points per doubling of distance · −0.28 to +0.19</small></dd></div>
+    <div><dt>flats in panel buildings</dt><dd>32 % <small>of 735 755 flats in the precincts</small></dd></div>
+  </dl>
+</header>
+<section class="film film-page"><div class="shot" style="view-transition-name:ph-prague-rings;--bg:url(../assets/photo/prague-rings.jpg);--bg-s:url(../assets/photo/prague-rings-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Opatov,_z_l%C3%A1vky_sm%C4%9Br_Modletick%C3%A1.jpg">ŠJů</a> · CC BY-SA 3.0, colour held</p></section>
+
+<section>
+<p>In the Chamber election of 3–4 October 2025 Prague voted SPOLU 33.9 %, ANO 19.9 %, the Pirates 16.9 % and STAN 13.4 %, on a turnout of 71.4 %<sup class="cite"><a href="#r1">1</a></sup>. The Statistical Office publishes the count of every one of the city's 1 119 precincts, and the cadastre publishes their boundaries and every residential building inside them, with its number of flats and what its walls are made of<sup class="cite"><a href="#r2">2</a></sup>. Together they allow a question that a city map invites and rarely answers: which of the obvious lines through Prague does its vote actually follow?</p>
+</section>
+
+<section>
+<h2>The map</h2>
+<div class="pm-bar" id="pm-bar" role="group" aria-label="What the map shows"></div>
+<figure class="pm-fig">
+  <div class="pm" id="pm" aria-label="Interactive map of Prague precincts"><div class="pm-tip" id="pm-tip" hidden></div></div>
+  <img class="pm-static" src="../assets/praha/01-ano-map.svg" alt="Map of Prague's precincts shaded by ANO's share of valid votes in 2025, light in the centre and darkest in the large housing estates on the edge. The 40 precincts where ANO did best lie mostly in Praha 11 (Jižní Město), Praha 8, Praha 14 (Černý Most), Praha 12 (Modřany) and Praha 18 (Letňany). The three metro lines and their stations are drawn in black." loading="lazy">
+  <figcaption><b>fig. 1</b> · Share of valid votes by precinct, Chamber election 2025 (ANO unless you pick another; hover or tap a precinct for its numbers); black: the metro and its 58 stations as they ran on election day. The darkest patches are housing estates: of the 40 precincts where ANO did best, 13 are in Praha 11 (Jižní Město) and most of the rest in Praha 8, 14, 12 and 18.</figcaption>
+</figure>
+<p>The pattern is concentric. ANO takes 13 % within two kilometres of Můstek and 25 % between eight and ten, then falls back to 22 % beyond ten, where the estates give way to family houses and villages inside the city boundary. The Pirates run the other way, from 22 % in the centre to 13 % at the edge. SPOLU, the largest party, moves least, from 37 % to 31 % and back to 34 %.</p>
+</section>
+
+<section>
+<h2>Three rulers</h2>
+<p>Three measurements can be put on every precinct: how far its centre is from the nearest metro station, how far from Můstek, and what share of its flats are in panel buildings. Laid side by side on the same scale, only one of the first two moves anything.</p>
+<figure>
+  <img src="../assets/praha/02-three-rulers.svg" alt="Three panels on one vertical scale. By distance to the metro, ANO and the Pirates barely change. By distance from Můstek, ANO rises from 13 to 25 % and the Pirates fall from 22 to 13 %. By share of flats in panel buildings, ANO rises from 16 to 26 %." loading="lazy">
+  <figcaption><b>fig. 2</b> · ANO (ochre) and the Pirates (black), % of valid votes, grouped by each ruler. Distances are from the precinct's centre; Můstek stands for the centre; a panel building is one the cadastre records as built of wall panels. Two precincts with no flats (1 117 of 1 119 remain).</figcaption>
+</figure>
+<p>Near the metro or far from it, ANO's share stays between 19 and 23 %, and the small rise that exists comes with distance from the centre, because the stations thin out as the city does. The estates are where the gradient sits. Where fewer than one flat in ten is in a panel building, ANO takes 16 % and SPOLU 37 %; where more than seven in ten are, ANO takes 26 % and SPOLU 29 %. A third of the city's flats are in panel buildings, so this is not a margin.</p>
+<p>Put all three into one weighted regression, with the share of flats in family houses as a fourth, and the metro's coefficient for ANO is −0.05 points per doubling of the distance to the nearest station (95 % interval −0.28 to +0.19): nothing measurable. Every ten percentage points of panel flats go with 0.9 points more for ANO (0.8 to 1.0), and every doubling of the distance from Můstek with 2.0 more (1.5 to 2.4). For the Pirates the metro has no measurable effect either, and the centre is most of the story: 2.0 points fewer per doubling. The model explains 56 % of the variation in ANO's share across precincts, and 54 % of the Pirates'.</p>
+</section>
+
+<section>
+<h2>The other parties, and who turns out</h2>
+<p>SPOLU is the mirror of ANO, with a second ingredient. It loses 0.6 points for every ten points of panel flats and gains 0.5 (0.4 to 0.7) for every ten points of flats in family houses, which is why it recovers beyond ten kilometres: the villa quarters and the villages inside the city boundary are its outer ring. The rest follow the rulers weakly. STAN loses a quarter of a point for every ten points of panel flats and Stačilo! gains a sixth; SPD and the Motorists rise a little with the distance from the centre, by a third and a half of a point per doubling. The model explains only 13–29 % of how these four vary: their voters are spread thinly everywhere. The metro's one measurable trace in the whole election is SPD's, a tenth of a point more per halving of the distance to a station (0.02 to 0.17).</p>
+<p>Turnout runs against the grain of the metro. It is lowest in the centre, 66.8 % within two kilometres of Můstek, and about 73 % from four kilometres out, and it barely changes with the share of panel flats (71–72 % across the four groups). One reading is that the centre has more registered voters who live elsewhere; the files cannot show it.</p>
+<p>The map above has all of this: pick a party, or turnout, or the share of panel flats, and hover over any precinct.</p>
+</section>
+
+<section>
+<h2>What the rulers are, and are not</h2>
+<p>These are the places people vote from, not the people. A panel estate is also younger or older, richer or poorer, and more or less often a place people moved to from elsewhere than a street in Vinohrady; the regression cannot tell which of those the panels stand for. The census could; this text does not use it. What the data can say is narrower and still useful: the metro, which planners and campaigns both treat as the city's spine, is not where its politics divides.</p>
+</section>
+
+<section>
+<h2>What was checked</h2>
+<p>The precinct counts add up to the Statistical Office's published result for Prague: 1 119 precincts, 898 829 registered voters, 632 938 valid votes, SPOLU 33.94 %, SPD 5.24 %<sup class="cite"><a href="#r1">1</a></sup>. Boundaries come from the cadastre's current register, which keeps only the latest version of each precinct<sup class="cite"><a href="#r2">2</a></sup>: every record is dated after the election, most from two bulk updates in October and November 2025, and 22 were changed from December on. Dropping those 22 moves no estimate by more than a tenth of a point. The metro stations come from Prague's public-transport timetable<sup class="cite"><a href="#r3">3</a></sup>, which today lacks Flora: the station has been closed for reconstruction since 2 February 2026<sup class="cite"><a href="#r4">4</a></sup>, so it is added back as it ran on election day. A building's construction type is recorded for 98 % of the flats; "panel" here is the cadastre's wall panels, concrete included. Every number is produced by <code>tools/praha/metro.py</code> from the published files.</p>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Český statistický úřad: <a href="https://volby.gov.cz/opendata/ps2025/ps2025_opendata.htm">open data, Chamber of Deputies election 2025</a>, precinct results (pst4, pst4p) and the published result for Prague.</li>
+<li id="r2">ČÚZK: <a href="https://ags.cuzk.gov.cz/arcgis/rest/services/RUIAN/MapServer">RÚIAN map service</a>, layers Volební okrsek (precinct polygons) and building definition points (number of flats, construction type, use).</li>
+<li id="r3">Pražská integrovaná doprava: <a href="https://data.pid.cz/PID_GTFS.zip">PID GTFS</a>, stops served by the three metro lines, and their shapes.</li>
+<li id="r4">Dopravní podnik hl. m. Prahy: <a href="https://www.dpp.cz/spolecnost/pro-media/tiskove-zpravy/detail/278_3233-stanice-metra-flora-se-kvuli-kompletni-rekonstrukci-na-deset-mesicu-zavira">Stanice metra Flora se kvůli kompletní rekonstrukci na deset měsíců zavírá</a>.</li>
+<li id="r5">Šandová, B. (2026): <a href="prague-council">Prague's council rarely says no</a> (Part 1).</li>
+</ol>
+</section>
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a> · <a href="prague-council">Part 1</a></p>
+</footer>
+</article>
+
+<script>
+(async () => {
+  const box = document.getElementById("pm"), tip = document.getElementById("pm-tip"), bar = document.getElementById("pm-bar");
+  let P, M;
+  try { [P, M] = await Promise.all(["precincts2025.json", "metro_lines.json"].map(f => fetch("../assets/praha/" + f).then(r => r.json()))); }
+  catch (e) { document.documentElement.classList.remove("js"); return; }
+  const k = 1 / Math.cos(50.08 * Math.PI / 180), W = 900;
+  let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+  P.forEach(p => p.r.forEach(r => r.forEach(([x, y]) => { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); })));
+  const s = W / (x1 - x0), H = Math.round((y1 - y0) * k * s);
+  const X = x => ((x - x0) * s).toFixed(1), Y = y => ((y1 - y) * k * s).toFixed(1);
+  const path = r => r.map(ring => "M" + ring.map(([x, y]) => X(x) + "," + Y(y)).join("L") + "Z").join("");
+  const svg = `<svg viewBox="0 0 ${W} ${H}" role="img">` +
+    P.map((p, i) => `<path class="o" data-i="${i}" d="${path(p.r)}"/>`).join("") +
+    M.lines.map(l => `<path d="M${l.map(([x, y]) => X(x) + "," + Y(y)).join("L")}" fill="none" stroke="#111" stroke-width="1.6" pointer-events="none"/>`).join("") +
+    M.stations.map(([x, y]) => `<circle cx="${X(x)}" cy="${Y(y)}" r="2.6" fill="#fff" stroke="#111" stroke-width="1" pointer-events="none"/>`).join("") + "</svg>";
+  box.insertAdjacentHTML("afterbegin", svg);
+  const leg = document.createElement("div"); leg.className = "pm-leg"; box.after(leg);
+  const paths = [...box.querySelectorAll("path.o")];
+  const views = [["ANO", p => p.s.ANO], ["SPOLU", p => p.s.SPOLU], ["Piráti", p => p.s["Piráti"]], ["STAN", p => p.s.STAN],
+    ["SPD", p => p.s.SPD], ["Motoristé", p => p.s["Motoristé"]], ["Turnout", p => p.t], ["Panel flats", p => p.p]];
+  const ramp = t => { const c = [[246,241,220],[224,194,90],[154,123,10],[74,58,4]], u = Math.max(0, Math.min(1, t)) * 3, i = Math.min(2, Math.floor(u)), f = u - i;
+    return "rgb(" + c[i].map((a, j) => Math.round(a + (c[i + 1][j] - a) * f)).join(",") + ")"; };
+  const pc = v => Math.round(100 * v) + " %";
+  function show(v) {
+    const f = views[v][1], vals = P.map(f).sort((a, b) => a - b), lo = vals[Math.floor(.02 * vals.length)], hi = vals[Math.floor(.98 * vals.length)];
+    paths.forEach((el, i) => el.setAttribute("fill", ramp((f(P[i]) - lo) / (hi - lo))));
+    leg.innerHTML = `${pc(lo)} <i style="background:linear-gradient(90deg,${[0, .33, .66, 1].map(ramp).join(",")})"></i> ${pc(hi)} · ${views[v][0]}`;
+    bar.querySelectorAll("button").forEach((b, j) => b.classList.toggle("on", j === v));
+  }
+  bar.innerHTML = views.map(([n]) => `<button type="button">${n}</button>`).join("");
+  bar.querySelectorAll("button").forEach((b, j) => b.addEventListener("click", () => show(j)));
+  function detail(i, ev) {
+    const p = P[i], order = Object.entries(p.s).sort((a, b) => b[1] - a[1]);
+    tip.innerHTML = `<b>${p.d} · precinct ${p.n}</b><table>` + order.map(([n, v]) => `<tr><td>${n}</td><td>${pc(v)}</td></tr>`).join("") +
+      `</table>turnout ${pc(p.t)} · panel flats ${pc(p.p)}<br>metro ${p.m >= 1000 ? (p.m / 1000).toFixed(1) + " km" : p.m + " m"} · centre ${p.c} km`;
+    tip.hidden = false;
+    const r = box.getBoundingClientRect(), tx = ev.clientX - r.left, ty = ev.clientY - r.top;
+    tip.style.left = Math.min(tx + 14, r.width - tip.offsetWidth - 4) + "px"; tip.style.top = Math.max(0, ty - tip.offsetHeight - 12) + "px";
+    paths.forEach(el => el.classList.toggle("sel", el === paths[i]));
+  }
+  const hit = e => { const el = e.target.closest("path.o"); if (el) detail(+el.dataset.i, e); };
+  box.addEventListener("pointermove", hit); box.addEventListener("pointerdown", hit);
+  box.addEventListener("pointerleave", () => { tip.hidden = true; paths.forEach(el => el.classList.remove("sel")); });
+  show(0);
+})();
+</script>
+</body>
+</html>
