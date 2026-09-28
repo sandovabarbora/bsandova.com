@@ -98,7 +98,7 @@
 </section>
 <figure>
   <img src="../assets/icu/02-effect-size.svg" alt="Bar chart of Cohen's d at each of fourteen timepoints rising from 0.22 to 0.95, with small, medium and large thresholds marked." loading="lazy">
-  <figcaption><b>fig. 3</b> · Cohen's d between the groups at each timepoint, equal-n pooled SD. Mint: medium effect and above; acid: large. Recomputed from the CSVs; identical to the report's table.</figcaption>
+  <figcaption><b>fig. 3</b> · Cohen's d between the groups at each timepoint, equal-n pooled SD. Blue: medium effect and above; green: large. Recomputed from the CSVs; identical to the report's table.</figcaption>
 </figure>
 <section>
 <p>Adjacent timepoints correlate at r = 0.71, decaying to 0.38 across the week: the fourteen columns are one smooth trajectory, not fourteen measurements. That predicts two things, both tested. Regularisation matters for logistic regression (at C = 10 the coefficients of adjacent timepoints oscillate between −0.33 and +0.20; at C = 0.01 they settle into a profile rising towards day seven). And hand-built summary features should add nothing: adding mean, SD, slope, change and the two day averages moves nested accuracy by +0.014, −0.007 and +0.001. No gain<sup class="cite"><a href="#r1">1</a></sup>.</p>

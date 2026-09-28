@@ -27,6 +27,6 @@ for ax, day in zip(axes, days):
     ax.text(0.2, d.max() * .92, f"{day['label']} · {day['disc']} · {int(day['total']):,} events".replace(",", " "), fontsize=8, color=FG, va="top")
     ax.set_ylabel("s late"); ax.set_xlim(0, 24)
     rows.append((day["label"], day["disc"], int(day["total"]), round(float(np.average(d, weights=np.maximum(n, 1))), 0), int(chorus.sum()) * 5))
-axes[-1].set_xticks(range(0, 25, 3)); axes[-1].set_xlabel("hour of day · orange = chorus (smoothed delay above 68 % of the day's maximum)")
+axes[-1].set_xticks(range(0, 25, 3)); axes[-1].set_xlabel("hour of day · red = chorus (smoothed delay above 68 % of the day's maximum)")
 fig.savefig(OUT / "01-five-days.svg"); plt.close(fig)
 for r in rows: print(r)
