@@ -17,7 +17,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
-D = json.loads((ROOT / "assets/parking2/eea_cz.json").read_text())
+# corrected 29 Sep 2026: Text 02 with M1 + M1G (assets/parking6/part2_correction.json)
+D = {"scenarios": json.loads((ROOT / "assets/parking6/part2_correction.json").read_text())["m1_m1g"]["scenarios"]}
 OUT = ROOT / "assets/parking3"
 BG, FG, FG2, LINE = "#161616", "#DCDCD6", "#8A8A84", "#3A3A36"
 ACID, BUS = "#D6FF3A", "#FF6A3D"
