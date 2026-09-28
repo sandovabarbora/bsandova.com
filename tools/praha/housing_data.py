@@ -299,8 +299,10 @@ def prague_cells(report: dict, districts: pd.DataFrame, admin: pd.DataFrame, cit
     for name, t in [("admin_district", admin), ("city_district", districts)]:
         polys = [wkb.loads(g) for g in t.geom_wkb]
         tree = STRtree(polys)
-        c[name] = [t.kod.iloc[next(iter(tree.query(Point(x, y), predicate="within")), -1)]
-                   if len(tree.query(Point(x, y), predicate="within")) else None for x, y in cen]
+        # the district holding the cell centroid; a centroid outside Prague takes the nearest district
+        c[name] = [t.kod.iloc[int(tree.nearest(Point(x, y)))] for x, y in cen]
+        report[f"h5_cells_centroid_outside_{name}"] = int(sum(
+            not len(tree.query(Point(x, y), predicate="within")) for x, y in cen))
     report["h5_admin_districts"] = int(c.admin_district.nunique())
     report["h5_city_districts"] = int(c.city_district.nunique())
     c["geom_wkb"] = c.geom.apply(lambda g: g.wkb)
