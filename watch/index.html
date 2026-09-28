@@ -92,7 +92,7 @@
 
 <script>
 (async () => {
-  const C = {opus:'#D6FF3A', sonnet:'#B78CFF', haiku:'#7ED9A6', llama:'#FF6A3D'};
+  const C = {opus:'#2a78d6', sonnet:'#eb6834', haiku:'#1baf7a', llama:'#eda100'};
   const col = a => C[a] || '#8A8A84';
   const rows = await (await fetch('data.json', {cache:'no-store'})).json();
   const month = d => d.slice(0,7);

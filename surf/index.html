@@ -106,7 +106,7 @@
 <script>
 (async () => {
   const D = await (await fetch('data.json', {cache:'no-store'})).json();
-  const MC = {meteofrance_wave:'#D6FF3A', gwam:'#B78CFF', ewam:'#7ED9A6'};
+  const MC = {meteofrance_wave:'#2a78d6', gwam:'#eb6834', ewam:'#1baf7a'};
   const spots = D.spots; let spot = spots[0];
   const rule = D.surfable_rule;
   const surf = r => r && r.swell_max!=null && r.period_mean!=null && r.swell_max>=rule.swell_max_m[0] && r.swell_max<=rule.swell_max_m[1] && r.period_mean>=rule.period_min_s && (r.wind_mean==null || r.wind_mean<=rule.wind_max_kmh || Math.abs(((r.wind_dir-rule.offshore_deg[0]+180)%360)-180)<=rule.offshore_deg[1]);
@@ -133,10 +133,10 @@
     const x = i => Lm + i*(W-Lm-R)/Math.max(1,w.length); const bw = (W-Lm-R)/Math.max(1,w.length) - 3;
     let s = `<svg viewBox="0 0 ${W} ${H}">`;
     for (const v of [0,25,50,75,100]) { const y = T + (100-v)*(H-T-B)/100; s += `<line class="grid" x1="${Lm}" x2="${W-R}" y1="${y}" y2="${y}"/><text class="axis" x="${Lm-6}" y="${y+4}" text-anchor="end">${v}%</text>`; }
-    w.forEach((k,i) => { const pct = 100*k.surfable/k.n, y = T + (100-pct)*(H-T-B)/100; s += `<rect x="${x(i)}" y="${y}" width="${bw}" height="${H-B-y}" fill="${pct>0?'#D6FF3A':'#3A3A36'}"><title>${k.week} · ${k.surfable}/${k.n} surfable · max swell ${k.swell_max_mean} m · period ${k.period_mean} s</title></rect>`; if (i%3===0) s += `<text class="axis" x="${x(i)+bw/2}" y="${H-14}" text-anchor="middle">${k.week.slice(5)}</text>`; });
+    w.forEach((k,i) => { const pct = 100*k.surfable/k.n, y = T + (100-pct)*(H-T-B)/100; s += `<rect x="${x(i)}" y="${y}" width="${bw}" height="${H-B-y}" fill="${pct>0?'#1f64ad':'#e6e6e3'}"><title>${k.week} · ${k.surfable}/${k.n} surfable · max swell ${k.swell_max_mean} m · period ${k.period_mean} s</title></rect>`; if (i%3===0) s += `<text class="axis" x="${x(i)+bw/2}" y="${H-14}" text-anchor="middle">${k.week.slice(5)}</text>`; });
     s += '</svg>';
     document.getElementById('clim').innerHTML = s;
-    document.getElementById('clim-l').innerHTML = `<span><i style="background:#D6FF3A"></i>share of surfable days per ISO week</span><span>${C.days} days · ${C.from} → ${C.to} · ${Math.round(100*C.surfable_share)} % overall</span>`;
+    document.getElementById('clim-l').innerHTML = `<span><i style="background:#1f64ad"></i>share of surfable days per ISO week</span><span>${C.days} days · ${C.from} → ${C.to} · ${Math.round(100*C.surfable_share)} % overall</span>`;
     // skill
     const S = D.skill[spot] || {}; const leads = [0,1,2,3,4,5,6];
     const models = D.models;

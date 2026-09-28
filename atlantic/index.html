@@ -170,20 +170,20 @@ canvas{display:block;width:100%;height:auto;margin:1rem 0 .25rem}
   const cv = el('c'), g2 = cv.getContext('2d');
   function draw(pos){
     const ds = days(), W=cv.width, H=cv.height, n=ds.length, bw=W/n;
-    g2.clearRect(0,0,W,H); g2.fillStyle='#1d1d1b'; g2.fillRect(0,0,W,H);
+    g2.clearRect(0,0,W,H); g2.fillStyle='#f0f0f0'; g2.fillRect(0,0,W,H);
     // month ticks
-    g2.strokeStyle='#3A3A36'; g2.fillStyle='#8A8A84'; g2.font='11px JetBrains Mono, monospace';
+    g2.strokeStyle='#c8c8c4'; g2.fillStyle='#666666'; g2.font='11px JetBrains Mono, monospace';
     ds.forEach((r,i)=>{ if(r.day.endsWith('-01')){ g2.beginPath(); g2.moveTo(i*bw,0); g2.lineTo(i*bw,H); g2.stroke(); g2.fillText(r.day.slice(0,7), i*bw+4, 14);} });
     // bars: height; wind as a thin grey cap; surfable = acid
     ds.forEach((r,i)=>{ const h=r.swell_max||0, bh=(h/2.8)*(H-40); const go=surfable(r); const cur = pos>=0 && Math.floor(pos)===i;
-      g2.fillStyle = go ? '#D6FF3A' : (cur ? '#DCDCD6' : '#8A8A84'); g2.fillRect(i*bw+1, H-20-bh, Math.max(1,bw-2), bh);
-      if (r.wind_mean!=null){ g2.fillStyle='#FF6A3D'; g2.globalAlpha=0.55; g2.fillRect(i*bw+1, H-20-bh-2-(r.wind_mean/26)*24, Math.max(1,bw-2), 2); g2.globalAlpha=1; }
+      g2.fillStyle = go ? '#1f64ad' : (cur ? '#111111' : '#b5b5b0'); g2.fillRect(i*bw+1, H-20-bh, Math.max(1,bw-2), bh);
+      if (r.wind_mean!=null){ g2.fillStyle='#eb6834'; g2.globalAlpha=0.7; g2.fillRect(i*bw+1, H-20-bh-2-(r.wind_mean/26)*24, Math.max(1,bw-2), 2); g2.globalAlpha=1; }
     });
     // wavelet of the current day
-    if (pos>=0){ const r = ds[Math.floor(pos)]; const x0=0, y0=H-10; g2.strokeStyle='#D6FF3A'; g2.lineWidth=1.5; g2.beginPath();
+    if (pos>=0){ const r = ds[Math.floor(pos)]; const x0=0, y0=H-10; g2.strokeStyle='#1f64ad'; g2.lineWidth=1.5; g2.beginPath();
       const amp = (r.swell_max||0)*6, lam = (r.period_mean||6)*9, ph = (pos%1)*lam;
       for (let x=0;x<W;x+=2){ const y = y0 - amp*Math.sin((x+ph)/lam*2*Math.PI) - (r.wind_mean||0)/26*3*Math.sin(x*0.9+pos*40); g2[x?'lineTo':'moveTo'](x,y); } g2.stroke();
-      g2.fillStyle='#161616'; g2.globalAlpha=0.35; g2.fillRect(0,0,Math.floor(pos)*bw,H); g2.globalAlpha=1;
+      g2.fillStyle='#ffffff'; g2.globalAlpha=0.55; g2.fillRect(0,0,Math.floor(pos)*bw,H); g2.globalAlpha=1;
       el('n-day').textContent=r.day; el('n-h').textContent=(r.swell_max??'—')+' m'; el('n-p').textContent=(r.period_mean??'—')+' s'; el('n-w').textContent=(r.wind_mean??'—')+' km/h'; el('n-d').textContent=(r.dir_mean??'—')+'°';
       const go=surfable(r); el('n-go').textContent = go?'surfable · bell':'not this one'; el('n-go-wrap').className = go?'go':'';
     } else { el('n-day').textContent='—'; }
