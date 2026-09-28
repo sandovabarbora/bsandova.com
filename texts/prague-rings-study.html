@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Place or people: Prague's estates</title>
+<meta name="description" content="A pre-registered study of Prague's vote, 2017–2025: census composition explains 43 % of ANO's panel-estate gradient, never more than half in 48 specifications; the gradient steepened from 0.55 to 0.80 points per 10 pp of panel flats; the metro's effect cannot be shown to be negligible; the centre's low turnout is not a registration artefact in the simple sense.">
+<meta property="og:title" content="Place or people: Prague's estates">
+<meta property="og:description" content="Part 2 of Prague, measured, the long version: seven registered hypotheses, three elections, one census.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://bsandova.com/assets/og/prague-rings.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bsandova.com/assets/og/prague-rings.jpg">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://bsandova.com/texts/prague-rings-study">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../text.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../a24.css">
+<style>
+.ht{width:100%;border-collapse:collapse;font:400 13px/1.4 var(--sans);font-variant-numeric:tabular-nums;margin:.6rem 0 1rem}
+.ht th{font:400 11px var(--mono);color:#666;text-align:left;padding:6px 10px 6px 0;border-bottom:1px solid #000;vertical-align:bottom}
+.ht td{padding:6px 10px 6px 0;border-bottom:1px solid #e6e6e6;vertical-align:top}
+.ht td.v{white-space:nowrap}
+.ht td.v b{font-weight:500;color:#9a7b0a}
+.ht small{color:#666;font:400 11px var(--mono)}
+.note{font:400 12px/1.6 var(--mono);color:#666}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">prague, measured · 2, long · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Prague, measured · Part 2, the long version · pre-registered · elections of 2017, 2021 and 2025</p>
+  <h1>Place or people: <em>Prague's estates, measured again</em></h1>
+  <p class="deck"><a href="prague-rings">Part 2</a> found that Prague votes by distance from the centre and by how many of a precinct's flats are in panel buildings, and hardly at all by the metro. It could not say whether the estates mattered as places or only for who lives in them. This version answers with the 2021 census and three elections. It tests seven hypotheses written down before the data were joined, and reports every one whichever way it fell.</p>
+  <dl class="facts">
+    <div><dt>ANO's estate gradient explained by education and citizenship</dt><dd>43 % <small>31–44 % in 48 specifications; never half</small></dd></div>
+    <div><dt>the same gradient, 2017 → 2025</dt><dd>0.55 → 0.80 <small>points per 10 pp of panel flats</small></dd></div>
+    <div><dt>the metro, per doubling of distance</dt><dd>−0.17 <small>90 %: −0.40 to +0.05 · not shown negligible</small></dd></div>
+    <div><dt>hypotheses supported, of six tested</dt><dd>1 <small>Holm, family-wise 5 %</small></dd></div>
+  </dl>
+</header>
+<section class="film film-page"><div class="shot" style="--bg:url(../assets/photo/prague-rings.jpg);--bg-s:url(../assets/photo/prague-rings-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Opatov,_z_l%C3%A1vky_sm%C4%9Br_Modletick%C3%A1.jpg">ŠJů</a> · CC BY-SA 3.0, colour held</p></section>
+
+<section>
+<p>Where people vote from and who they are are hard to tell apart. A panel estate is a housing stock, but it is also a population: people who were allocated flats there in the 1970s and 1980s and grew old in them, their children, and later buyers of the cheapest flats in the city. When ANO does better in the estates, that can be because of the estates (their distance, their shops, their neighbours, what the place does to what people think) or because the estates hold more of the people who vote ANO anywhere. Electoral geography has argued about this for four decades, as context against composition<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup>. For immigration attitudes in large European cities, the best recent panel evidence finds that most of what looks like place is people<sup class="cite"><a href="#r3">3</a></sup>.</p>
+<p>Aggregate data cannot settle this for individuals<sup class="cite"><a href="#r4">4</a></sup><sup class="cite"><a href="#r5">5</a></sup>. What they can do is measure how much of the estates' gradient is left once what the census knows about their residents is held equal. This text does that, under rules fixed in advance.</p>
+</section>
+
+<section>
+<h2>How this was done</h2>
+<p>The design was written, sent to three reviewers (a statistician, an electoral geographer and a census-data specialist), revised, and committed to the site's public repository before any census count or earlier election was joined to a precinct<sup class="cite"><a href="#r6">6</a></sup>. It fixes the questions, the hypotheses, the one test for each, the decision rules and fourteen robustness checks. Everything that changed afterwards is listed, dated, at the end of that file and summarised <a href="#changes">below</a>, including a coding error found in one test.</p>
+<p>The census counts people on a grid of 1 km squares<sup class="cite"><a href="#r7">7</a></sup>. Prague's median precinct is an eighth of a square, so every cell's counts were spread over the precincts it overlaps, in proportion to the flats standing in each on census day, from the cadastre's building register<sup class="cite"><a href="#r8">8</a></sup>. This is dasymetric allocation<sup class="cite"><a href="#r9">9</a></sup>. It puts 1 301 482 residents into Prague's precincts against the census's 1 301 432. An independent allocation from the census's 958 basic settlement units in Prague agrees within 25 % for all but 13 precincts.</p>
+<p>A precinct still only gets the composition of the square it sits in, while its housing is measured building by building. Comparing the two at different resolutions would flatter housing, so the main models add precincts up into the square that holds most of their flats: 282 clusters, each measured at one resolution. The regressions weight by valid votes. Uncertainty comes from a wild cluster bootstrap over Prague's 57 districts<sup class="cite"><a href="#r10">10</a></sup><sup class="cite"><a href="#r11">11</a></sup>, with conventional, small-sample-corrected<sup class="cite"><a href="#r12">12</a></sup> and spatial<sup class="cite"><a href="#r13">13</a></sup> standard errors computed alongside. The six confirmatory tests share a 5 % error rate through Holm's procedure<sup class="cite"><a href="#r14">14</a></sup>.</p>
+</section>
+
+<section>
+<h2>The hypotheses, and what happened to them</h2>
+<table class="ht">
+  <thead><tr><th>Hypothesis</th><th>Test</th><th>Result</th></tr></thead>
+  <tbody>
+  <tr><td>H1a · ANO does worse where more adults have a university or higher vocational degree <small>check that the census measure works</small></td><td>coefficient &lt; 0</td><td class="v"><b>supported</b><br><small>−0.33 pp per pp, p &lt; 0.001</small></td></tr>
+  <tr><td>H1b · education and citizenship explain more than half of ANO's estate gradient</td><td>θ &gt; 0.5</td><td class="v">not supported<br><small>θ = 0.43, p = 0.97</small></td></tr>
+  <tr><td>H1b′ · the same for SPOLU's (negative) estate gradient</td><td>θ &gt; 0.5</td><td class="v">not supported<br><small>θ = 0.42, p = 0.91</small></td></tr>
+  <tr><td>H2 · the metro's effect on ANO is within ±0.25 points per doubling of distance</td><td>equivalence (TOST)</td><td class="v">not supported: inconclusive<br><small>p = 0.28</small></td></tr>
+  <tr><td>H3 · ANO's estate gradient was steeper in 2025 than in 2017</td><td>interaction &gt; 0</td><td class="v"><b>supported</b><br><small>+0.26 per 10 pp, p &lt; 0.001</small></td></tr>
+  <tr><td>H4a · the centre's turnout gap is smaller counted against residents than against the register</td><td>|gradient| smaller</td><td class="v">not supported<br><small>p = 0.80, sign reversed</small></td></tr>
+  <tr><td>H4b · registrants who are not residents add less than one voter each</td><td>elasticity &lt; 1</td><td class="v">not supported<br><small>0.99 ± 0.02, p = 0.37</small></td></tr>
+  </tbody>
+</table>
+<p class="note">θ: share of the estate gradient accounted for by the composition block. p-values: one-sided, wild cluster bootstrap over 57 districts, 9 999 draws; H2 uses the largest of three standard errors. Holm thresholds run from 0.008 to 0.05; only H3 passes. H1a is outside the family.</p>
+</section>
+
+<section>
+<h2>Place or people</h2>
+<p>Across the 282 clusters, ANO's share rises by 0.99 points for every ten percentage points more flats in panel buildings, holding the distance from the centre, the distance to the metro and the share of family houses equal. Add what the census knows about education and citizenship and the gradient falls to 0.56 points (95 % interval 0.47 to 0.66). The census block raises the share of variation explained from 70 % to 87 %.</p>
+<figure>
+  <img src="../assets/praha/07-attenuation.svg" alt="Arrow chart. For each row an arrow runs from the estate gradient without composition (grey dot) to the gradient with education and citizenship held equal (ochre dot), with a dashed mark at half the original. ANO 2025: 0.99 to 0.56, 43 % explained. ANO 2025 with age added: 0.99 to 0.47, 52 %. ANO 2021: 0.86 to 0.48, 44 %. SPOLU 2025: −0.60 to −0.35, 42 %. SPOLU 2021: −0.77 to −0.53, 31 %." loading="lazy">
+  <figcaption><b>fig. 1</b> · The estate gradient before (grey) and after (ochre) holding education and citizenship equal; the dashed mark is half the original gradient, the line H1b had to cross. Right: the share explained. Grid clusters, weighted by valid votes.</figcaption>
+</figure>
+<p>Education does almost all of the work. A decomposition of the gap<sup class="cite"><a href="#r15">15</a></sup> puts 0.44 of the 0.42 points on education and nothing on the share of foreign citizens. What remains is not small: 57 % of the gradient survives, and the test in the other direction (is more than half left?) rejects at p = 0.03. For SPOLU the pattern is the same and weaker: 42 % explained, with neither direction significant.</p>
+<p>Two things qualify the result, and both were written down before it was seen. First, the census measures a square kilometre, not a street. Measuring composition coarsely under-controls for it, so the gradient left over is an upper bound on what the estates contribute as places, and 43 % is a lower bound on what composition explains. Second, the registered primary block leaves out age, because the estates' age structure is itself partly a product of the housing: flats were allocated to young families in one decade, and those families aged in place. With the share of over-65s and under-15s added, composition explains 52 %, and the test can no longer tell the answer from one half.</p>
+<p>The 2021 election, a replication fixed in advance, gives 44 % for ANO and 31 % for SPOLU.</p>
+</section>
+
+<section>
+<h2>The metro</h2>
+<p>Part 2 found no effect of the metro. Finding none is not the same as showing there is none, so this version asked the stronger question: is the metro's effect small enough not to matter? The threshold was set at a quarter of a point per doubling of the distance to a station. Across the middle half of Prague's precincts that is half a point, a fortieth of ANO's vote in the city.</p>
+<figure>
+  <img src="../assets/praha/09-metro-equivalence.svg" alt="Four horizontal intervals against a grey band from −0.25 to +0.25. Grid clusters 2025: −0.17, from −0.40 to +0.05. Precincts 2025: −0.10, from −0.28 to +0.07. Grid clusters 2021: −0.15, from −0.38 to +0.08. Spatial error model: −0.20, from −0.45 to +0.04. Every interval crosses zero and every one reaches past −0.25." loading="lazy">
+  <figcaption><b>fig. 2</b> · The metro's coefficient for ANO with its 90 % interval (the interval an equivalence test at 5 % uses), against the band declared too small to matter.</figcaption>
+</figure>
+<p>Every estimate is small and every interval crosses zero, but every interval also reaches past −0.25. The design-stage power check, run before any outcome was joined, had predicted this: with 282 clusters the standard error was bound to be larger than the margin. The margin was not widened afterwards, because the 2025 estimate was already known and a margin chosen after seeing it would prove nothing. The answer is the honest one: the data cannot tell a negligible metro effect from a small one. If anything, ANO does slightly better closer to stations once the rest is held equal.</p>
+</section>
+
+<section>
+<h2>The estates are pulling away</h2>
+<p>Precinct boundaries move between elections and the cadastre keeps only the current ones. The comparison over time therefore uses the 819 precincts that exist under the same number in 2017, 2021 and 2025 and whose register grew or shrank no more than 10 % beyond what new flats inside them predict. Matched precincts have more panel flats than the rest (40 % against 27 %), because the unmatched are mostly where the city is still building.</p>
+<figure>
+  <img src="../assets/praha/08-steepening.svg" alt="Line chart of ANO's estate gradient in the matched precincts: 0.55 points per 10 pp of panel flats in 2017, 0.73 in 2021, 0.80 in 2025, with a light band showing the range under 5 % and 20 % matching rules." loading="lazy">
+  <figcaption><b>fig. 3</b> · ANO's estate gradient by election, 819 matched precincts; band: the same with the 5 % (410 precincts) and 20 % (982) matching rules. Distance from the centre, distance to the metro and family-house share are held equal in each year.</figcaption>
+</figure>
+<p>ANO's estate gradient grew by 0.26 points per 10 pp of panel flats between 2017 and 2025 (p &lt; 0.001), from 0.55 to 0.80, with 2021 in between. It is the one registered hypothesis that passes the family-wise threshold. It holds under the stricter and the looser matching rule (+0.24 and +0.30) and with weights that correct for which precincts could be matched (+0.26). The census comes from between the elections, so this comparison holds housing fixed but not people. It shows that ANO's vote became more concentrated in the estates, not why.</p>
+</section>
+
+<section>
+<h2>Turnout in the centre</h2>
+<p>Turnout is lowest in the centre, and Part 2 guessed why: the centre may have more registered voters who live somewhere else. Czech permanent residence is an address in a register, not where a person sleeps, and people with no address of their own are registered at the district office. The test compared turnout counted against the register with turnout counted against the census's Czech adults who actually live there. Precincts containing a district office, a hospital, a care home or a prison were excluded, 158 in all.</p>
+<p>The guess fails, and in an unexpected direction. Against the register, turnout rises by 1.9 points per doubling of the distance from Můstek. Against resident Czech adults, it falls by 4.3. Measured against the people who live there, the centre votes more, not less. The second test agrees that registration is not the story: envelopes scale with the register at an elasticity of 0.99, and residents add nothing once the register is known.</p>
+<p>This is the least secure result in the text, for a reason found only after the data were joined. The register count the Statistical Office publishes per precinct includes voters who came with a voting pass, and passes are used most where people are away from home. In all 14 819 precincts in the file, abroad included, envelopes never exceed that count, which is what one would see if pass voters are added to it. The centre's count is therefore not the register alone, and the published files cannot separate the two.</p>
+</section>
+
+<section>
+<h2>How far it holds</h2>
+<figure>
+  <img src="../assets/praha/10-spec-curve.svg" alt="Dot chart of 48 specifications sorted by the share of ANO's estate gradient explained by composition, from 31 % to 44 %, all below a dashed line at 50 %. Ochre dots, 36 of 48, mark specifications where the remainder is significantly more than half; grey dots are indeterminate." loading="lazy">
+  <figcaption><b>fig. 4</b> · Share of ANO's estate gradient explained by education and citizenship in 48 specifications: weighted or not, allocation by flats or by area, panel defined narrowly or broadly, all clusters or large precincts only or homogeneous squares only, bootstrap or spatial errors. Ochre: significantly less than half explained. Grey: indeterminate. None: more than half.</figcaption>
+</figure>
+<table class="ht">
+  <thead><tr><th>Check</th><th>ANO θ</th><th>SPOLU θ</th><th>metro</th></tr></thead>
+  <tbody id="rb"></tbody>
+</table>
+<p>Nothing registered turns the result. Dropping any one of the 57 districts moves θ by at most 0.02. Fractional logit, which respects that vote shares lie between 0 and 1<sup class="cite"><a href="#r16">16</a></sup>, gives 46 %. At the level of single precincts, where composition is coarser than housing and the leftover gradient is inflated by construction, composition explains 30 %. The clusters' residuals are only faintly clustered in space (Moran's I = 0.06), and a spatial error model gives the same answers (Hausman test<sup class="cite"><a href="#r17">17</a></sup> p = 0.62). Shuffling panel shares within districts leaves an apparent attenuation of 0.19 points, not zero, because districts differ in both housing and people. The observed 0.42 lies outside that range. The placebo with the planned line D stations was not run, because official station coordinates could not be found in open data.</p>
+</section>
+
+<section id="changes">
+<h2>What changed after registration</h2>
+<ul>
+<li><b>A coding error, fixed before anything was reported.</b> The first run of H4a tested the difference of the two turnout gradients, not the difference of their absolute values as registered. The two differ only because the resident gradient came out with the opposite sign; the registered test is the one reported.</li>
+<li><b>The metro test was underpowered from the start.</b> The design-stage check found this before any outcome was joined. It was recorded then, and the margin was kept.</li>
+<li><b>Operational details the design left open:</b>
+  <ul>
+  <li>15–17 year olds are estimated as three fifths of the 15–19 group, because only five-year groups are published.</li>
+  <li>Dormitories are not flagged, because no open list exists.</li>
+  <li>The bootstrap is unrestricted.</li>
+  <li>2017 precinct geometry was not recovered from the cadastre's change files; the registered matching rule is used alone.</li>
+  </ul></li>
+<li><b>The publication-timing rule was dropped</b> before estimation.</li>
+</ul>
+<p>The full list is in the design file<sup class="cite"><a href="#r6">6</a></sup>. The numbers come from four scripts:</p>
+<ul>
+<li><code>tools/praha/rings_data.py</code></li>
+<li><code>rings_power.py</code></li>
+<li><code>rings_extended.py</code></li>
+<li><code>rings_robust.py</code></li>
+</ul>
+</section>
+
+<section>
+<h2>What this does not show</h2>
+<p>These are areas, not people: no result here says how any resident votes<sup class="cite"><a href="#r4">4</a></sup>. The census is from March 2021, four and a half years before the 2025 election, taken during distance teaching and before the refugees of 2022. The grid is coarse, which caps what composition can explain. The areas are Prague's, and a different grid would give somewhat different numbers<sup class="cite"><a href="#r18">18</a></sup>. The leftover estate gradient is what the census does not measure, and the place itself is only one candidate. Income, tenure and how long people have lived there are not in the grid, and any of them could carry it. Nothing here is a causal effect of living in a panel building.</p>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Agnew, J. (1987): <i>Place and Politics: The Geographical Mediation of State and Society</i>. Allen &amp; Unwin.</li>
+<li id="r2">Johnston, R., Pattie, C. (2006): <i>Putting Voters in their Place: Geography and Elections in Great Britain</i>. Oxford University Press.</li>
+<li id="r3">Maxwell, R. (2019): Cosmopolitan immigration attitudes in large European cities: contextual or compositional effects? <i>American Political Science Review</i> 113(2), 456–474.</li>
+<li id="r4">Robinson, W. S. (1950): Ecological correlations and the behavior of individuals. <i>American Sociological Review</i> 15(3), 351–357.</li>
+<li id="r5">King, G. (1997): <i>A Solution to the Ecological Inference Problem</i>. Princeton University Press.</li>
+<li id="r6">Šandová, B. (2026): <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-rings-design.md">Prague votes in rings: research design</a>, registered version with dated changes; <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-rings-power.json">design-stage checks</a>.</li>
+<li id="r7">Český statistický úřad: Census 2021 on the 1 km grid (<a href="https://geodata.csu.gov.cz/">geodata.csu.gov.cz</a>, Gridy SLDB 2021); usual residents by basic settlement unit; SLD21A011, residents by citizenship and age.</li>
+<li id="r8">ČÚZK: <a href="https://ags.cuzk.gov.cz/arcgis/rest/services/RUIAN/MapServer">RÚIAN map service</a>, precincts, building points (flats, construction, use, completion date), basic settlement units, address points; Seznam OVM for the district offices; ÚZIS NRPZS and the MPSV register of social services for institutions.</li>
+<li id="r9">Mennis, J. (2003): Generating surface models of population using dasymetric mapping. <i>The Professional Geographer</i> 55(1), 31–42.</li>
+<li id="r10">Cameron, A. C., Gelbach, J. B., Miller, D. L. (2008): Bootstrap-based improvements for inference with clustered errors. <i>Review of Economics and Statistics</i> 90(3), 414–427.</li>
+<li id="r11">Webb, M. D. (2023): Reworking wild bootstrap-based inference for clustered errors. <i>Canadian Journal of Economics</i> 56(3).</li>
+<li id="r12">Bell, R. M., McCaffrey, D. F. (2002): Bias reduction in standard errors for linear regression with multi-stage samples. <i>Survey Methodology</i> 28(2), 169–181.</li>
+<li id="r13">Conley, T. G. (1999): GMM estimation with cross sectional dependence. <i>Journal of Econometrics</i> 92(1), 1–45.</li>
+<li id="r14">Holm, S. (1979): A simple sequentially rejective multiple test procedure. <i>Scandinavian Journal of Statistics</i> 6(2), 65–70.</li>
+<li id="r15">Gelbach, J. B. (2016): When do covariates matter? And which ones, and how much? <i>Journal of Labor Economics</i> 34(2), 509–543.</li>
+<li id="r16">Papke, L. E., Wooldridge, J. M. (1996): Econometric methods for fractional response variables with an application to 401(k) plan participation rates. <i>Journal of Applied Econometrics</i> 11(6), 619–632.</li>
+<li id="r17">Pace, R. K., LeSage, J. P. (2008): A spatial Hausman test. <i>Economics Letters</i> 101(3), 282–284.</li>
+<li id="r18">Openshaw, S. (1984): <i>The Modifiable Areal Unit Problem</i>. CATMOG 38, Geo Books.</li>
+<li id="r19">Český statistický úřad: <a href="https://volby.gov.cz/">volby.gov.cz open data</a>, Chamber elections 2017, 2021 and 2025, precinct results and candidate registers.</li>
+</ol>
+</section>
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a> · <a href="prague-rings">Part 2, the short version</a> · <a href="prague-council">Part 1</a> · <a href="prague-districts">Part 3</a> · <a href="prague-housing">Part 4</a></p>
+</footer>
+</article>
+
+<script>
+(async () => {
+  let r; try { r = await (await fetch("../assets/praha/rings_robust.json")).json(); } catch (e) { return; }
+  const names = {"1_unweighted": "unweighted", "3_without_redrawn": "without precincts redrawn after Dec 2025",
+    "4_min_300_registered": "precincts with 300+ voters", "6_panel_code_4": "panel: wall panels only",
+    "7_area_allocation": "census spread by area", "8_stated_and_populated": "education stated, 50+ residents",
+    "9_without_foreigners": "composition of citizens only", "10_without_zsj_flagged": "allocation check passed",
+    "11_homogeneous": "homogeneous squares only"};
+  const f = v => (v >= 0 ? "" : "−") + Math.abs(v).toFixed(2);
+  const row = (lab, s) => `<tr><td>${lab}</td><td>${Math.round(100 * s.ANO.theta)} %</td><td>${Math.round(100 * s.SPOLU.theta)} %</td><td>${f(s.metro.gamma)}</td></tr>`;
+  document.getElementById("rb").innerHTML = row("main", r.main) +
+    Object.entries(names).map(([k, lab]) => row(lab, r.robustness[k])).join("");
+})();
+</script>
+</body>
+</html>

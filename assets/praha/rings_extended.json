@@ -1,0 +1,836 @@
+{
+ "n_accounting": {
+  "2017": {
+   "results_rows": 1109,
+   "joined": 1103,
+   "results_without_polygon": 6
+  },
+  "2021": {
+   "results_rows": 1119,
+   "joined": 1112,
+   "results_without_polygon": 7
+  },
+  "2025": {
+   "results_rows": 1119,
+   "joined": 1119,
+   "results_without_polygon": 0
+  }
+ },
+ "clusters": 282,
+ "H1_ANO": {
+  "n": 282,
+  "beta0_per10pp": 0.985,
+  "beta1_per10pp": 0.565,
+  "theta": 0.426,
+  "delta": {
+   "estimate": 0.0072,
+   "null": 0.0,
+   "se": {
+    "hc1": 0.0047,
+    "cr1": 0.0038,
+    "cr2": 0.004,
+    "conley_1km": 0.0048,
+    "conley_1.5km": 0.0047,
+    "conley_3km": 0.0043,
+    "wild_equiv": 0.0037
+   },
+   "G": 56,
+   "n": 282,
+   "p": {
+    "hc1": {
+     "less": 0.9392,
+     "greater": 0.0608
+    },
+    "conley_1.5km": {
+     "less": 0.9374,
+     "greater": 0.0626
+    },
+    "cr2": {
+     "less": 0.9614,
+     "greater": 0.0386
+    },
+    "wild": {
+     "less": 0.972,
+     "greater": 0.0281
+    }
+   }
+  },
+  "beta1": {
+   "estimate": 0.0565,
+   "null": 0.0,
+   "se": {
+    "hc1": 0.0064,
+    "cr1": 0.0048,
+    "cr2": 0.005,
+    "conley_1km": 0.0063,
+    "conley_1.5km": 0.0061,
+    "conley_3km": 0.0055,
+    "wild_equiv": 0.0047
+   },
+   "G": 56,
+   "n": 282,
+   "p": {
+    "hc1": {
+     "less": 1.0,
+     "greater": 0.0
+    },
+    "conley_1.5km": {
+     "less": 1.0,
+     "greater": 0.0
+    },
+    "cr2": {
+     "less": 1.0,
+     "greater": 0.0
+    },
+    "wild": {
+     "less": 1.0,
+     "greater": 0.0001
+    }
+   }
+  },
+  "beta1_ci95_per10pp": [
+   0.473,
+   0.657
+  ],
+  "gelbach_per10pp": {
+   "education": 0.439,
+   "citizenship": -0.02
+  },
+  "gelbach_check": 0.00084,
+  "coefs_full": {
+   "panel": 0.0565,
+   "house": 0.0014,
+   "log2_centre": 0.4581,
+   "log2_metro": -0.1718,
+   "tertiary": -0.3297,
+   "vocational": 0.1264,
+   "basic": 0.1782,
+   "not_stated": -0.0789,
+   "foreign": 0.0448
+  },
+  "tertiary": {
+   "estimate": -0.3297,
+   "null": 0.0,
+   "se": {
+    "hc1": 0.0673,
+    "cr1": 0.0606,
+    "cr2": 0.0656,
+    "conley_1km": 0.0661,
+    "conley_1.5km": 0.0639,
+    "conley_3km": 0.062,
+    "wild_equiv": 0.0598
+   },
+   "G": 56,
+   "n": 282,
+   "p": {
+    "hc1": {
+     "less": 0.0,
+     "greater": 1.0
+    },
+    "conley_1.5km": {
+     "less": 0.0,
+     "greater": 1.0
+    },
+    "cr2": {
+     "less": 0.0,
+     "greater": 1.0
+    },
+    "wild": {
+     "less": 0.0001,
+     "greater": 1.0
+    }
+   }
+  },
+  "metro": {
+   "estimate": -0.1718,
+   "null": 0.0,
+   "se": {
+    "hc1": 0.1372,
+    "cr1": 0.1345,
+    "cr2": 0.1421,
+    "conley_1km": 0.1352,
+    "conley_1.5km": 0.1306,
+    "conley_3km": 0.1274,
+    "wild_equiv": 0.1337
+   },
+   "G": 56,
+   "n": 282,
+   "p": {
+    "hc1": {
+     "less": 0.1052,
+     "greater": 0.8948
+    },
+    "conley_1.5km": {
+     "less": 0.0942,
+     "greater": 0.9058
+    },
+    "cr2": {
+     "less": 0.1159,
+     "greater": 0.8841
+    },
+    "wild": {
+     "less": 0.1257,
+     "greater": 0.8744
+    }
+   }
+  },
+  "r2_base": 0.703,
+  "r2_full": 0.872,
+  "p_confirmatory": 0.972,
+  "outcome_unadjusted": "place beyond composition"
+ },
+ "H1_SPOLU": {
+  "n": 282,
+  "beta0_per10pp": -0.597,
+  "beta1_per10pp": -0.346,
+  "theta": 0.42,
+  "delta": {
+   "estimate": 0.0048,
+   "null": 0.0,
+   "se": {
+    "hc1": 0.0047,
+    "cr1": 0.0037,
+    "cr2": 0.0039,
+    "conley_1km": 0.0048,
+    "conley_1.5km": 0.005,
+    "conley_3km": 0.0051,
+    "wild_equiv": 0.0037
+   },
+   "G": 56,
+   "n": 282,
+   "p": {
+    "hc1": {
+     "less": 0.847,
+     "greater": 0.153
+    },
+    "conley_1.5km": {
+     "less": 0.8319,
+     "greater": 0.1681
+    },
+    "cr2": {
+     "less": 0.8862,
+     "greater": 0.1138
+    },
+    "wild": {
+     "less": 0.912,
+     "greater": 0.0881
+    }
+   }
+  },
+  "beta1": {
+   "estimate": -0.0346,
+   "null": 0.0,
+   "se": {
+    "hc1": 0.0059,
+    "cr1": 0.0068,
+    "cr2": 0.0072,
+    "conley_1km": 0.0059,
+    "conley_1.5km": 0.006,
+    "conley_3km": 0.0066,
+    "wild_equiv": 0.0067
+   },
+   "G": 56,
+   "n": 282,
+   "p": {
+    "hc1": {
+     "less": 0.0,
+     "greater": 1.0
+    },
+    "conley_1.5km": {
+     "less": 0.0,
+     "greater": 1.0
+    },
+    "cr2": {
+     "less": 0.0,
+     "greater": 1.0
+    },
+    "wild": {
+     "less": 0.0001,
+     "greater": 1.0
+    }
+   }
+  },
+  "beta1_ci95_per10pp": [
+   -0.477,
+   -0.215
+  ],
+  "gelbach_per10pp": {
+   "education": -0.253,
+   "citizenship": 0.002
+  },
+  "gelbach_check": 0.00032,
+  "coefs_full": {
+   "panel": -0.0346,
+   "house": 0.0576,
+   "log2_centre": 0.0618,
+   "log2_metro": 0.2721,
+   "tertiary": 0.0276,
+   "vocational": -0.366,
+   "basic": -0.3488,
+   "not_stated": 0.0683,
+   "foreign": -0.0046
+  },
+  "tertiary": {
+   "estimate": 0.0276,
+   "null": 0.0,
+   "se": {
+    "hc1": 0.0923,
+    "cr1": 0.0932,
+    "cr2": 0.1011,
+    "conley_1km": 0.0926,
+    "conley_1.5km": 0.0952,
+    "conley_3km": 0.0999,
+    "wild_equiv": 0.0921
+   },
+   "G": 56,
+   "n": 282,
+   "p": {
+    "hc1": {
+     "less": 0.6177,
+     "greater": 0.3823
+    },
+    "conley_1.5km": {
+     "less": 0.6142,
+     "greater": 0.3858
+    },
+    "cr2": {
+     "less": 0.6072,
+     "greater": 0.3928
+    },
+    "wild": {
+     "less": 0.6063,
+     "greater": 0.3938
+    }
+   }
+  },
+  "metro": {
+   "estimate": 0.2721,
+   "null": 0.0,
+   "se": {
+    "hc1": 0.1256,
+    "cr1": 0.134,
+    "cr2": 0.1436,
+    "conley_1km": 0.1271,
+    "conley_1.5km": 0.1249,
+    "conley_3km": 0.1266,
+    "wild_equiv": 0.1348
+   },
+   "G": 56,
+   "n": 282,
+   "p": {
+    "hc1": {
+     "less": 0.9848,
+     "greater": 0.0152
+    },
+    "conley_1.5km": {
+     "less": 0.9854,
+     "greater": 0.0146
+    },
+    "cr2": {
+     "less": 0.9683,
+     "greater": 0.0317
+    },
+    "wild": {
+     "less": 0.9661,
+     "greater": 0.034
+    }
+   }
+  },
+  "r2_base": 0.541,
+  "r2_full": 0.706,
+  "p_confirmatory": 0.912,
+  "outcome_unadjusted": "indeterminate"
+ },
+ "H1_ANO_with_age": {
+  "n": 282,
+  "beta0_per10pp": 0.985,
+  "beta1_per10pp": 0.468,
+  "theta": 0.525,
+  "delta": {
+   "estimate": -0.0025,
+   "null": 0.0,
+   "se": {
+    "hc1": 0.0054,
+    "cr1": 0.0051,
+    "cr2": 0.0056,
+    "conley_1km": 0.0056,
+    "conley_1.5km": 0.0057,
+    "conley_3km": 0.0056,
+    "wild_equiv": 0.0051
+   },
+   "G": 56,
+   "n": 282,
+   "p": {
+    "hc1": {
+     "less": 0.3243,
+     "greater": 0.6757
+    },
+    "conley_1.5km": {
+     "less": 0.3328,
+     "greater": 0.6672
+    },
+    "cr2": {
+     "less": 0.3294,
+     "greater": 0.6706
+    },
+    "wild": {
+     "less": 0.3215,
+     "greater": 0.6786
+    }
+   }
+  },
+  "beta1": {
+   "estimate": 0.0468,
+   "null": 0.0,
+   "se": {
+    "hc1": 0.0066,
+    "cr1": 0.0046,
+    "cr2": 0.0047,
+    "conley_1km": 0.0067,
+    "conley_1.5km": 0.0065,
+    "conley_3km": 0.0059,
+    "wild_equiv": 0.0046
+   },
+   "G": 56,
+   "n": 282,
+   "p": {
+    "hc1": {
+     "less": 1.0,
+     "greater": 0.0
+    },
+    "conley_1.5km": {
+     "less": 1.0,
+     "greater": 0.0
+    },
+    "cr2": {
+     "less": 1.0,
+     "greater": 0.0
+    },
+    "wild": {
+     "less": 1.0,
+     "greater": 0.0001
+    }
+   }
+  },
+  "beta1_ci95_per10pp": [
+   0.378,
+   0.558
+  ],
+  "gelbach_per10pp": {
+   "education": 0.404,
+   "citizenship": -0.05,
+   "age": 0.164
+  },
+  "gelbach_check": -0.00091,
+  "coefs_full": {
+   "panel": 0.0468,
+   "house": -0.006,
+   "log2_centre": 0.787,
+   "log2_metro": -0.1172,
+   "tertiary": -0.3203,
+   "vocational": 0.0878,
+   "basic": 0.3084,
+   "not_stated": -0.0024,
+   "foreign": 0.1148,
+   "old": 0.1679,
+   "young": 0.1005
+  },
+  "tertiary": {
+   "estimate": -0.3203,
+   "null": 0.0,
+   "se": {
+    "hc1": 0.0663,
+    "cr1": 0.0648,
+    "cr2": 0.0705,
+    "conley_1km": 0.0654,
+    "conley_1.5km": 0.0639,
+    "conley_3km": 0.0633,
+    "wild_equiv": 0.0645
+   },
+   "G": 56,
+   "n": 282,
+   "p": {
+    "hc1": {
+     "less": 0.0,
+     "greater": 1.0
+    },
+    "conley_1.5km": {
+     "less": 0.0,
+     "greater": 1.0
+    },
+    "cr2": {
+     "less": 0.0,
+     "greater": 1.0
+    },
+    "wild": {
+     "less": 0.0001,
+     "greater": 1.0
+    }
+   }
+  },
+  "metro": {
+   "estimate": -0.1172,
+   "null": 0.0,
+   "se": {
+    "hc1": 0.1435,
+    "cr1": 0.1493,
+    "cr2": 0.1573,
+    "conley_1km": 0.1419,
+    "conley_1.5km": 0.1384,
+    "conley_3km": 0.1344,
+    "wild_equiv": 0.1482
+   },
+   "G": 56,
+   "n": 282,
+   "p": {
+    "hc1": {
+     "less": 0.207,
+     "greater": 0.793
+    },
+    "conley_1.5km": {
+     "less": 0.1986,
+     "greater": 0.8014
+    },
+    "cr2": {
+     "less": 0.2296,
+     "greater": 0.7704
+    },
+    "wild": {
+     "less": 0.2315,
+     "greater": 0.7686
+    }
+   }
+  },
+  "r2_base": 0.703,
+  "r2_full": 0.88,
+  "p_confirmatory": 0.3215,
+  "outcome_unadjusted": "indeterminate"
+ },
+ "H2": {
+  "estimate": -0.1718,
+  "null": 0.0,
+  "se": {
+   "hc1": 0.1372,
+   "cr1": 0.1345,
+   "cr2": 0.1421,
+   "conley_1km": 0.1352,
+   "conley_1.5km": 0.1306,
+   "conley_3km": 0.1274,
+   "wild_equiv": 0.1329
+  },
+  "G": 56,
+  "n": 282,
+  "p": {
+   "hc1": {
+    "less": 0.1052,
+    "greater": 0.8948
+   },
+   "conley_1.5km": {
+    "less": 0.0942,
+    "greater": 0.9058
+   },
+   "cr2": {
+    "less": 0.1159,
+    "greater": 0.8841
+   },
+   "wild": {
+    "less": 0.1192,
+    "greater": 0.8809
+   }
+  },
+  "se_used": 0.1372,
+  "margin": 0.25,
+  "p_tost": 0.2843,
+  "ci90_used": [
+   -0.3975,
+   0.0539
+  ],
+  "outcome": "not supported: inconclusive"
+ },
+ "matching": {
+  "have_all_three": 1103,
+  "matched_10pct": 819
+ },
+ "H3": {
+  "estimate": 0.0256,
+  "null": 0.0,
+  "se": {
+   "hc1": 0.0068,
+   "cr1": 0.0055,
+   "cr2": 0.0058,
+   "conley_1km": 0.0055,
+   "conley_1.5km": 0.0058,
+   "conley_3km": 0.0058,
+   "wild_equiv": 0.0054
+  },
+  "G": 49,
+  "n": 1638,
+  "p": {
+   "hc1": {
+    "less": 0.9999,
+    "greater": 0.0001
+   },
+   "conley_1.5km": {
+    "less": 1.0,
+    "greater": 0.0
+   },
+   "cr2": {
+    "less": 1.0,
+    "greater": 0.0
+   },
+   "wild": {
+    "less": 1.0,
+    "greater": 0.0001
+   }
+  },
+  "interaction_per10pp": 0.256,
+  "n_precincts": 819,
+  "panel_slope_per10pp_by_year": {
+   "2017": 0.545,
+   "2021": 0.733,
+   "2025": 0.801
+  },
+  "p_confirmatory": 0.0001
+ },
+ "H3_sensitivity": {
+  "tol_5pct": {
+   "n": 410,
+   "interaction_per10pp": 0.237,
+   "p": 0.0001,
+   "by_year": {
+    "2017": 0.484,
+    "2021": 0.648,
+    "2025": 0.72
+   }
+  },
+  "tol_20pct": {
+   "n": 982,
+   "interaction_per10pp": 0.295,
+   "p": 0.0001,
+   "by_year": {
+    "2017": 0.555,
+    "2021": 0.748,
+    "2025": 0.85
+   }
+  },
+  "ipw": {
+   "n": 819,
+   "interaction_per10pp": 0.259,
+   "p": 0.0001
+  },
+  "matched_vs_not": {
+   "False": {
+    "n": 282.0,
+    "panel": 26.59,
+    "log2_centre": 2.158,
+    "ano_2025_share": 18.243
+   },
+   "True": {
+    "n": 819.0,
+    "panel": 40.303,
+    "log2_centre": 2.443,
+    "ano_2025_share": 20.527
+   }
+  }
+ },
+ "H4": {
+  "n": 250,
+  "register_ratio_citywide": 0.92,
+  "register_ratio_quantiles": {
+   "0.05": 0.718,
+   "0.25": 0.86,
+   "0.5": 0.929,
+   "0.75": 0.975,
+   "0.95": 1.057
+  },
+  "gradient_registered_pp": 1.876,
+  "gradient_resident_pp": -4.308,
+  "h4a": {
+   "estimate": -2.4322,
+   "null": 0.0,
+   "se": {
+    "hc1": 1.3194,
+    "cr1": 1.835,
+    "cr2": 2.2018,
+    "conley_1km": 1.3238,
+    "conley_1.5km": 1.4178,
+    "conley_3km": 1.6677,
+    "wild_equiv": 1.8165
+   },
+   "G": 44,
+   "n": 250,
+   "p": {
+    "hc1": {
+     "less": 0.0326,
+     "greater": 0.9674
+    },
+    "conley_1.5km": {
+     "less": 0.0431,
+     "greater": 0.9569
+    },
+    "cr2": {
+     "less": 0.1377,
+     "greater": 0.8623
+    },
+    "wild": {
+     "less": 0.2026,
+     "greater": 0.7975
+    }
+   }
+  },
+  "h4a_p": 0.7975,
+  "h4b": {
+   "estimate": 0.9911,
+   "null": 1.0,
+   "se": {
+    "hc1": 0.0249,
+    "cr1": 0.0232,
+    "cr2": 0.025,
+    "conley_1km": 0.0248,
+    "conley_1.5km": 0.0245,
+    "conley_3km": 0.0224,
+    "wild_equiv": 0.0229
+   },
+   "G": 44,
+   "n": 250,
+   "p": {
+    "hc1": {
+     "less": 0.3607,
+     "greater": 0.6393
+    },
+    "conley_1.5km": {
+     "less": 0.3582,
+     "greater": 0.6418
+    },
+    "cr2": {
+     "less": 0.3616,
+     "greater": 0.6384
+    },
+    "wild": {
+     "less": 0.3674,
+     "greater": 0.6327
+    }
+   }
+  },
+  "h4b_b": 0.991,
+  "h4b_c": 0.003,
+  "h4b_p": 0.3674,
+  "descriptive_E_R_on_R_A": -0.0019
+ },
+ "H4_with_flagged": {
+  "n": 282,
+  "register_ratio_citywide": 0.952,
+  "register_ratio_quantiles": {
+   "0.05": 0.755,
+   "0.25": 0.877,
+   "0.5": 0.944,
+   "0.75": 0.998,
+   "0.95": 1.17
+  },
+  "gradient_registered_pp": 0.371,
+  "gradient_resident_pp": -4.519,
+  "h4a": {
+   "estimate": -4.1484,
+   "null": 0.0,
+   "se": {
+    "hc1": 1.2862,
+    "cr1": 1.9978,
+    "cr2": 2.5487,
+    "conley_1km": 1.3156,
+    "conley_1.5km": 1.4941,
+    "conley_3km": 1.7724,
+    "wild_equiv": 1.9825
+   },
+   "G": 56,
+   "n": 282,
+   "p": {
+    "hc1": {
+     "less": 0.0006,
+     "greater": 0.9994
+    },
+    "conley_1.5km": {
+     "less": 0.0027,
+     "greater": 0.9973
+    },
+    "cr2": {
+     "less": 0.0547,
+     "greater": 0.9453
+    },
+    "wild": {
+     "less": 0.1129,
+     "greater": 0.8872
+    }
+   }
+  },
+  "h4a_p": 0.8872,
+  "h4b": {
+   "estimate": 0.7428,
+   "null": 1.0,
+   "se": {
+    "hc1": 0.0652,
+    "cr1": 0.077,
+    "cr2": 0.085,
+    "conley_1km": 0.0657,
+    "conley_1.5km": 0.0668,
+    "conley_3km": 0.0698,
+    "wild_equiv": 0.0766
+   },
+   "G": 56,
+   "n": 282,
+   "p": {
+    "hc1": {
+     "less": 0.0,
+     "greater": 1.0
+    },
+    "conley_1.5km": {
+     "less": 0.0001,
+     "greater": 0.9999
+    },
+    "cr2": {
+     "less": 0.0019,
+     "greater": 0.9981
+    },
+    "wild": {
+     "less": 0.0133,
+     "greater": 0.9868
+    }
+   }
+  },
+  "h4b_b": 0.743,
+  "h4b_c": 0.24,
+  "h4b_p": 0.0133,
+  "descriptive_E_R_on_R_A": -0.2348
+ },
+ "holm": {
+  "H3": {
+   "p": 0.0001,
+   "threshold": 0.0083,
+   "reject": true
+  },
+  "H2": {
+   "p": 0.2843,
+   "threshold": 0.01,
+   "reject": false
+  },
+  "H4b": {
+   "p": 0.3674,
+   "threshold": 0.0125,
+   "reject": false
+  },
+  "H4a": {
+   "p": 0.7975,
+   "threshold": 0.0167,
+   "reject": false
+  },
+  "H1b_SPOLU": {
+   "p": 0.912,
+   "threshold": 0.025,
+   "reject": false
+  },
+  "H1b_ANO": {
+   "p": 0.972,
+   "threshold": 0.05,
+   "reject": false
+  }
+ }
+}

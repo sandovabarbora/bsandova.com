@@ -1,0 +1,66 @@
+{
+ "clusters": 282,
+ "precincts_in_clusters": 1120,
+ "vif": {
+  "panel": 2.35,
+  "house": 2.42,
+  "log2_centre": 2.86,
+  "log2_metro": 2.19,
+  "tertiary": 14.6,
+  "vocational": 11.76,
+  "basic": 3.4,
+  "not_stated": 1.61,
+  "foreign": 2.03
+ },
+ "condition_number_scaled": 119.4,
+ "residual_sd_part2_pp": {
+  "ANO": 4.04,
+  "SPOLU": 3.97,
+  "turnout": 8.42
+ },
+ "h2": {
+  "se_log2_metro_pp": 0.311,
+  "margin_pp": 0.25,
+  "tost_power_at_true_zero": 0.0,
+  "mde_equivalence_margin_80pct": 0.911
+ },
+ "h4a_se_centre_gradient_turnout_pp": 1.174,
+ "h1b": {
+  "pi_tertiary_on_panel": -0.109,
+  "power_by_theta": {
+   "0.2": {
+    "reject_toward_composition": 0.0,
+    "reject_toward_place": 0.806
+   },
+   "0.3": {
+    "reject_toward_composition": 0.0,
+    "reject_toward_place": 0.506
+   },
+   "0.4": {
+    "reject_toward_composition": 0.005,
+    "reject_toward_place": 0.21
+   },
+   "0.5": {
+    "reject_toward_composition": 0.054,
+    "reject_toward_place": 0.062
+   },
+   "0.6": {
+    "reject_toward_composition": 0.196,
+    "reject_toward_place": 0.008
+   },
+   "0.7": {
+    "reject_toward_composition": 0.486,
+    "reject_toward_place": 0.0
+   },
+   "0.8": {
+    "reject_toward_composition": 0.77,
+    "reject_toward_place": 0.0
+   }
+  }
+ },
+ "notes": [
+  "Residual SDs are precinct-level Part 2 values, an upper bound at the cluster level.",
+  "SEs assume independence across clusters; the confirmatory SEs (wild cluster bootstrap by district, Conley) will be larger."
+ ],
+ "h4a_mde_pp_per_doubling": 4.129
+}
