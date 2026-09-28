@@ -1,0 +1,565 @@
+{
+ "H1": {
+  "c_reconstruction_countries_dropped": {
+   "n": 183,
+   "score": -0.732,
+   "rank_from_lowest": 50,
+   "p": 0.2732,
+   "observed_per_1000_year": 3.88
+  },
+  "d_bartik": {
+   "n": 116,
+   "score": 0.183,
+   "rank_from_lowest": 45,
+   "p": 0.3879,
+   "observed_per_1000_year": 5.28
+  },
+  "e_without_gdp": {
+   "n": 216,
+   "score": 0.273,
+   "rank_from_lowest": 123,
+   "p": 0.5694,
+   "observed_per_1000_year": 5.28
+  },
+  "f_2016_plus": {
+   "n": 208,
+   "score": 0.329,
+   "rank_from_lowest": 120,
+   "p": 0.5769,
+   "observed_per_1000_year": 5.77
+  },
+  "g_unknown_5pc": {
+   "n": 199,
+   "score": 0.216,
+   "rank_from_lowest": 106,
+   "p": 0.5327,
+   "observed_per_1000_year": 5.28
+  },
+  "h_population_weighted": {
+   "n": 208,
+   "score": 0.531,
+   "rank_from_lowest": 137,
+   "p": 0.6587,
+   "observed_per_1000_year": 5.28
+  },
+  "i_contemporaneous_growth_2011_2021": {
+   "n": 208,
+   "score": 0.775,
+   "rank_from_lowest": 138,
+   "p": 0.6635,
+   "observed_per_1000_year": 5.28
+  }
+ },
+ "H3": {
+  "e_all_new_construction": {
+   "estimate": -17.823,
+   "se": 17.639,
+   "ci90": [
+    -55.428,
+    19.781
+   ],
+   "p_below_zero": 0.18472038180390332,
+   "p_above_zero": 0.8152796181960966,
+   "nu": 4
+  },
+  "g_without_2020_2021": {
+   "estimate": 18.735,
+   "se": 31.016,
+   "ci90": [
+    -54.257,
+    91.726
+   ],
+   "p_below_zero": 0.7057811368030134,
+   "p_above_zero": 0.29421886319698665,
+   "nu": 3
+  },
+  "c_csu_realised_indices": {
+   "run": false,
+   "reason": "not downloaded before estimation"
+  },
+  "f_annual": {
+   "run": false,
+   "reason": "9 annual observations cannot carry the registered lag structure"
+  }
+ },
+ "H4": {
+  "a_completions": {
+   "beta_market": 0.005,
+   "beta_nonmarket": -0.707,
+   "difference": -0.712,
+   "se_cr1": 0.446,
+   "p_cr1": 0.055305061382009316,
+   "p_wcr": 0.051,
+   "p": 0.051,
+   "powiats": 308,
+   "effective_clusters": 96.4
+  },
+  "b_with_cooperatives": {
+   "beta_market": 0.081,
+   "beta_nonmarket": 0.005,
+   "difference": -0.076,
+   "se_cr1": 0.486,
+   "p_cr1": 0.43806100885319077,
+   "p_wcr": 0.457,
+   "p": 0.457,
+   "powiats": 259,
+   "effective_clusters": 50.9
+  },
+  "c_primary_market_price": {
+   "beta_market": 0.14,
+   "beta_nonmarket": 0.485,
+   "difference": 0.345,
+   "se_cr1": 0.498,
+   "p_cr1": 0.7556055540109785,
+   "p_wcr": 0.756,
+   "p": 0.756,
+   "powiats": 197,
+   "effective_clusters": 45.4
+  },
+  "f_2012_2019": {
+   "beta_market": 0.454,
+   "beta_nonmarket": -0.349,
+   "difference": -0.803,
+   "se_cr1": 0.668,
+   "p_cr1": 0.11445575458450102,
+   "p_wcr": 0.112,
+   "p": 0.112,
+   "powiats": 200,
+   "effective_clusters": 37.6
+  },
+  "d_voivodeship_clusters": {
+   "beta_market": 0.089,
+   "beta_nonmarket": -0.475,
+   "difference": -0.564,
+   "se_cr1": 0.655,
+   "p_cr1": 0.19471963296680117,
+   "p_wcr": 0.1968,
+   "p": 0.1968,
+   "powiats": 242,
+   "effective_clusters": 12.4
+  },
+  "e_without_five_largest_cities": {
+   "beta_market": 0.186,
+   "beta_nonmarket": -0.272,
+   "difference": -0.459,
+   "se_cr1": 0.552,
+   "p_cr1": 0.2030811405084973,
+   "p_wcr": 0.239,
+   "p": 0.239,
+   "powiats": 237,
+   "effective_clusters": 63.1
+  },
+  "g_negative_binomial": {
+   "difference": -1.518,
+   "se": 0.899,
+   "p": 0.04559344286591296,
+   "alpha": 4.544
+  }
+ },
+ "H5": {
+  "a_2012_2024": {
+   "gamma": -0.243,
+   "se_conley_1_5km": 0.08,
+   "p_conley_negative": 0.001154370395630621,
+   "p_wcr_negative": 0.029,
+   "p": 0.029,
+   "p_positive": 0.9988456296043694,
+   "cells": 524,
+   "flats": 78070
+  },
+  "b_zsj": {
+   "run": false,
+   "reason": "no 2011 population by basic settlement unit in the registered inputs"
+  },
+  "c_500m_cells": {
+   "gamma": -0.229,
+   "se_conley_1_5km": 0.073,
+   "p_conley_negative": 0.0008802981285461998,
+   "p_wcr_negative": 0.034,
+   "p": 0.034,
+   "p_positive": 0.9991197018714538,
+   "cells": 2015,
+   "flats": 54239
+  },
+  "d_stations_with_2015_extension": {
+   "gamma": -0.185,
+   "se_conley_1_5km": 0.079,
+   "p_conley_negative": 0.009277108215816312,
+   "p_wcr_negative": 0.057,
+   "p": 0.057,
+   "p_positive": 0.9907228917841837,
+   "cells": 524,
+   "flats": 54242
+  },
+  "e_heritage_reserve_excluded": {
+   "run": false,
+   "reason": "heritage polygon not obtained before estimation"
+  },
+  "f_buildable_land": {
+   "run": false,
+   "reason": "Urban Atlas 2012 not obtained (login)"
+  },
+  "g_ruian_pre2012_density": {
+   "gamma": -0.206,
+   "se_conley_1_5km": 0.072,
+   "p_conley_negative": 0.002213380362197642,
+   "p_wcr_negative": 0.023,
+   "p": 0.023,
+   "p_positive": 0.9977866196378024,
+   "cells": 524,
+   "flats": 54242
+  },
+  "h_implausible_types_excluded": {
+   "gamma": -0.246,
+   "se_conley_1_5km": 0.075,
+   "p_conley_negative": 0.0005258098470288591,
+   "p_wcr_negative": 0.026,
+   "p": 0.026,
+   "p_positive": 0.9994741901529711,
+   "cells": 524,
+   "flats": 50175
+  },
+  "i_negative_binomial": {
+   "gamma": -0.427,
+   "se_cluster": 0.155,
+   "p": 0.0029334477810362227,
+   "alpha": 9.29
+  },
+  "j_rail_tram_distance_added": {
+   "gamma": -0.241,
+   "se_conley_1_5km": 0.073,
+   "p_conley_negative": 0.0004526931363118483,
+   "p_wcr_negative": 0.013,
+   "p": 0.013,
+   "p_positive": 0.9995473068636882,
+   "cells": 524,
+   "flats": 54242
+  },
+  "k_leave_one_district_out": {
+   "min": -0.271,
+   "max": -0.182,
+   "by_district": {
+    "60": -0.189,
+    "213": -0.194,
+    "132": -0.213,
+    "205": -0.204,
+    "51": -0.236,
+    "19": -0.22,
+    "78": -0.238,
+    "86": -0.206,
+    "124": -0.247,
+    "43": -0.229,
+    "27": -0.223,
+    "108": -0.27,
+    "35": -0.227,
+    "116": -0.271,
+    "94": -0.182,
+    "221": -0.244,
+    "159": -0.243,
+    "167": -0.229,
+    "141": -0.234,
+    "191": -0.24,
+    "175": -0.229,
+    "183": -0.216
+   }
+  },
+  "l_line_d_excluded": {
+   "run": false,
+   "reason": "no official line D station coordinates obtained"
+  },
+  "ladder_ii_iii": {
+   "run": false,
+   "reason": "developable-land and regulatory layers not obtained"
+  }
+ },
+ "H2": {
+  "a_all_new_construction": {
+   "mu_prague": 16.12,
+   "mu_rest": 11.14,
+   "delta_months": 4.97,
+   "se_boot": 3.11,
+   "ci90": [
+    0.56,
+    8.64
+   ],
+   "p": 0.05475079603294564,
+   "theta_prague": 0.26,
+   "theta_rest": 0.797,
+   "block_length": 3.4
+  },
+  "b_k96": {
+   "mu_prague": 16.15,
+   "mu_rest": 4.99,
+   "delta_months": 11.16,
+   "se_boot": 5.58,
+   "ci90": [
+    8.76,
+    13.01
+   ],
+   "p": 0.022780063306062637,
+   "theta_prague": 0.218,
+   "theta_rest": 0.646,
+   "block_length": 2.0
+  },
+  "c_block_12": {
+   "mu_prague": 16.12,
+   "mu_rest": 5.07,
+   "delta_months": 11.05,
+   "se_boot": 2.86,
+   "ci90": [
+    8.6,
+    12.61
+   ],
+   "p": 5.498248102298042e-05,
+   "theta_prague": 0.255,
+   "theta_rest": 0.719,
+   "block_length": 12.0
+  },
+  "c_block_24": {
+   "mu_prague": 16.12,
+   "mu_rest": 5.07,
+   "delta_months": 11.05,
+   "se_boot": 3.01,
+   "ci90": [
+    7.95,
+    12.55
+   ],
+   "p": 0.00012357899523252058,
+   "theta_prague": 0.255,
+   "theta_rest": 0.719,
+   "block_length": 24.0
+  },
+  "d_exponential_kernel": {
+   "mu_prague": 48.56,
+   "mu_rest": 7.96,
+   "delta_months": 40.6,
+   "se_boot": 6.499892259549163e+16,
+   "ci90": [
+    -8.49,
+    3.3830224010949188e+16
+   ],
+   "p": 0.4999999999999998,
+   "theta_prague": 0.534,
+   "theta_rest": 0.712,
+   "block_length": 2.1
+  },
+  "e_without_covid_months": {
+   "mu_prague": 16.1,
+   "mu_rest": 4.95,
+   "delta_months": 11.15,
+   "se_boot": 40440266901525.51,
+   "ci90": [
+    6.05,
+    18.3
+   ],
+   "p": 0.49999999999989,
+   "theta_prague": 0.396,
+   "theta_rest": 0.729,
+   "block_length": 2.3
+  },
+  "f_prague_plus_stredocesky": {
+   "mu_prague": 15.32,
+   "mu_rest": 5.07,
+   "delta_months": 10.25,
+   "se_boot": 3.59,
+   "ci90": [
+    6.2,
+    14.11
+   ],
+   "p": 0.002154080605192399,
+   "theta_prague": 0.439,
+   "theta_rest": 0.719,
+   "block_length": 2.2
+  },
+  "g_against_jihomoravsky": {
+   "mu_prague": 16.12,
+   "mu_rest": 8.51,
+   "delta_months": 7.61,
+   "se_boot": 2.38,
+   "ci90": [
+    4.99,
+    9.63
+   ],
+   "p": 0.0006775114952375372,
+   "theta_prague": 0.255,
+   "theta_rest": 0.231,
+   "block_length": 1.8
+  },
+  "h_little_band": {
+   "run": false,
+   "reason": "dwellings under construction not published for the window"
+  }
+ },
+ "spec_curve": {
+  "H2": {
+   "specifications": [
+    {
+     "name": "main",
+     "estimate": 11.05,
+     "p": 5.181632900530531e-09
+    },
+    {
+     "name": "a_all_new_construction",
+     "estimate": 4.97,
+     "p": 0.05475079603294564
+    },
+    {
+     "name": "b_k96",
+     "estimate": 11.16,
+     "p": 0.022780063306062637
+    },
+    {
+     "name": "c_block_12",
+     "estimate": 11.05,
+     "p": 5.498248102298042e-05
+    },
+    {
+     "name": "c_block_24",
+     "estimate": 11.05,
+     "p": 0.00012357899523252058
+    },
+    {
+     "name": "d_exponential_kernel",
+     "estimate": 40.6,
+     "p": 0.4999999999999998
+    },
+    {
+     "name": "e_without_covid_months",
+     "estimate": 11.15,
+     "p": 0.49999999999989
+    },
+    {
+     "name": "f_prague_plus_stredocesky",
+     "estimate": 10.25,
+     "p": 0.002154080605192399
+    },
+    {
+     "name": "g_against_jihomoravsky",
+     "estimate": 7.61,
+     "p": 0.0006775114952375372
+    }
+   ],
+   "share_same_sign": 1.0,
+   "share_p_below_005": 0.667,
+   "robust": true
+  },
+  "H4": {
+   "specifications": [
+    {
+     "name": "main",
+     "estimate": -0.564,
+     "p": 0.1655
+    },
+    {
+     "name": "a_completions",
+     "estimate": -0.712,
+     "p": 0.051
+    },
+    {
+     "name": "b_with_cooperatives",
+     "estimate": -0.076,
+     "p": 0.457
+    },
+    {
+     "name": "c_primary_market_price",
+     "estimate": 0.345,
+     "p": 0.756
+    },
+    {
+     "name": "f_2012_2019",
+     "estimate": -0.803,
+     "p": 0.112
+    },
+    {
+     "name": "d_voivodeship_clusters",
+     "estimate": -0.564,
+     "p": 0.1968
+    },
+    {
+     "name": "e_without_five_largest_cities",
+     "estimate": -0.459,
+     "p": 0.239
+    },
+    {
+     "name": "g_negative_binomial",
+     "estimate": -1.518,
+     "p": 0.04559344286591296
+    }
+   ],
+   "share_same_sign": 0.875,
+   "share_p_below_005": 0.125,
+   "robust": false
+  },
+  "H5": {
+   "specifications": [
+    {
+     "name": "main",
+     "estimate": -0.227,
+     "p": 0.0252
+    },
+    {
+     "name": "a_2012_2024",
+     "estimate": -0.243,
+     "p": 0.029
+    },
+    {
+     "name": "c_500m_cells",
+     "estimate": -0.229,
+     "p": 0.034
+    },
+    {
+     "name": "d_stations_with_2015_extension",
+     "estimate": -0.185,
+     "p": 0.057
+    },
+    {
+     "name": "g_ruian_pre2012_density",
+     "estimate": -0.206,
+     "p": 0.023
+    },
+    {
+     "name": "h_implausible_types_excluded",
+     "estimate": -0.246,
+     "p": 0.026
+    },
+    {
+     "name": "i_negative_binomial",
+     "estimate": -0.427,
+     "p": 0.0029334477810362227
+    },
+    {
+     "name": "j_rail_tram_distance_added",
+     "estimate": -0.241,
+     "p": 0.013
+    }
+   ],
+   "share_same_sign": 1.0,
+   "share_p_below_005": 0.875,
+   "robust": true
+  }
+ },
+ "addenda": {
+  "date": "2026-09-30",
+  "H5_city_district_clusters": {
+   "gamma": -0.227,
+   "p_conley_negative": 0.0010931023701757654,
+   "p_wcr_negative": 0.0149,
+   "p": 0.0149,
+   "clusters": 57,
+   "effective_clusters": 17.5
+  },
+  "H6_warsaw": {
+   "years": [
+    2014,
+    2024
+   ],
+   "lags_years": 3,
+   "powiats": 377,
+   "warsaw_relative_cumulative": -5.687,
+   "rest_cumulative": 0.196,
+   "warsaw_rank_from_lowest": 4,
+   "ranked_powiats": 376,
+   "note": "starts (notified starts of works), a different concept from Czech permitted dwellings; single treated unit, so no test; rank among all powiats given the same treatment"
+  }
+ }
+}
