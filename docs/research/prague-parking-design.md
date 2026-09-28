@@ -284,8 +284,9 @@ office or address as DS3 determines. It is never presented as permits.
 1. **Residents, by size (length or footprint):**
    - **Koblenz:** length × width × 23.40 € a year, minimum 100 €, from 1 Mar 2024 (koblenz.de, verified).
    - **Köln:** ≤ 4 109 mm 100 €, 4 110–4 709 mm 110 €, > 4 709 mm 120 €, from 1 Mar 2025 (stadt-koeln.de press
-     release, verified 28 Sep 2026). The thresholds sit a millimetre from this series' Fabia and Kodiaq, and that is
-     verified, not a transcription error. The 5 600 mm exclusion is **[verify]**.
+     release, verified 28 Sep 2026). The lower limit is 1 mm above this series' Fabia (4 108 mm) and the upper
+     limit 12 mm above the first Kodiaq (4 697 mm). Both are verified, not transcription errors (corrected
+     2026-09-29 after the fact-check). The 5 600 mm exclusion is **[verify]**.
    - **Freiburg:** 240 / 360 / 480 € by length, annulled by BVerwG 9 CN 2.22 on 13 Jun 2023 (verified).
    - **Aachen:** 30 € per m² of footprint + 15 € **[verify]**.
    - **Bonn:** footprint-based, flat 120 € from 2027 **[verify]**.
@@ -674,6 +675,9 @@ Holm 1979; Schuirmann 1987; Cameron, Gelbach & Miller 2008; Webb 2023; Saltelli 
     reported as a limitation.
   - A level offset common to 2012 and 2025 would move θ₁ᵘ very little. One that differs between the years would not
     be captured.
+  - **The rule's code was written after the real run**, together with fixing k = 1.5. The frozen code (`4fad464b…`)
+    reported the diagnostic but did not implement the remedy. The remedy was then coded as registered, and it changed
+    no estimate beyond the fourth decimal.
 - **Painted bays were not measured.** Neither the orthophoto sample nor TSK's marking inventory (R-TSK-3) exists
   yet. θ₁ is computed with every parallel stall unmarked (s_p = 0), which is an upper bound. s_p/ŝ = 0.25 and 0.5 are
   reported alongside.
@@ -683,7 +687,10 @@ Holm 1979; Schuirmann 1987; Cameron, Gelbach & Miller 2008; Webb 2023; Saltelli 
   - X ("between a short and a long car") is operationalised as p90 − p10 of the revenue-neutral length schedule at
     1 200 Kč.
   - The E4 fleet is the national active fleet, because DS3 is unresolved.
-- **E3 not run:** awaiting TSK data (R-TSK-2).
+- **E3 not run:** awaiting TSK data (R-TSK-2). The registered descriptive fallback (Prague-registered M1 from the
+  cube) was not done either, because DS3 (what the cube's location means) is unresolved.
+- **RQ5 is not in one unit.** The single-currency conversion (ECB rate of 30 Sep 2026, and PPS) was not done, and
+  neither was the per-m²-of-kerb-per-year unit. Each city's rule is shown in its own terms.
 - **H2a precision.** The realised SE of d (3.9 cm) is larger than the DS8 proxy (2.4 cm), so power was lower than
   planned. Kish = 37.1, so no wild-bootstrap fallback was needed.
   - The size check at +δ rejected at 0.11 (reduced B, not studentised). The H2a lower-tail test may be liberal. This

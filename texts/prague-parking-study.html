@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bigger cars, the same kerb</title>
-<meta name="description" content="Part 6 of Prague, measured: the three parking texts merged into one study under a registered analysis plan. On today's kerb, 2012's cars would fit about 1.6 % more (1.3–1.9 %). New cars in Czechia grew 2.3 cm in 2022–2025, not T&E's 6. A long car's advantage under the flat permit is about 100 Kč a year; the subsidy to parking at all is between 5 800 and 48 000 Kč.">
+<meta name="description" content="Part 6 of Prague, measured: the three parking texts merged into one study under a registered analysis plan. Today's paid kerb would hold about 1.6 % more cars (1.3–1.9 %) if they were 2012's cars. New cars in Czechia grew 2.3 cm in 2022–2025, not T&E's 6. A long car's advantage under the flat permit is about 120 Kč a year; the implicit subsidy (forgone rent) to parking at all is between 5 800 and 48 000 Kč a year, depending on the benchmark.">
 <meta property="og:title" content="Bigger cars, the same kerb">
 <meta property="og:description" content="Part 6 of Prague, measured, the long version: every car in the Czech register, the zone polygons, two registered tests and three pre-specified estimates.">
 <meta property="og:type" content="article">
@@ -38,11 +38,11 @@
 <header class="text-head">
   <p class="kicker">Prague, measured · Part 6, the long version · registered analysis plan · paid parking zones and every car in the Czech register</p>
   <h1>Bigger cars, <em>the same kerb</em></h1>
-  <p class="deck">Three short texts asked how much of Prague's paid parking bigger cars have taken, and what the flat resident permit does about it. This version merges them into one study. It measures every car in the national register, reads the zones' own geometry, and writes down its tests and estimates, and the sentences that report them, before the car lengths were read. Two tests were registered and one passed. The size effect is real and small, and the permit's size subsidy is small too. The subsidy to parking at all is not.</p>
+  <p class="deck">Three short texts asked how many more cars today's paid kerb would hold with 2012's cars, and what the flat resident permit does about it. This version merges them into one study. It measures every car in the national register, reads the zones' own geometry, and writes down its tests and estimates, and the sentences that report them, before the car lengths were read. Two tests were registered and one passed. The size effect is real: between one and two and a half cars in every hundred. The permit's size subsidy is small; the implicit subsidy (forgone rent) to parking at all is between 5 800 and 48 000 Kč a year, depending on the benchmark.</p>
   <dl class="facts">
     <div><dt>more cars today's kerb would hold with 2012's cars</dt><dd>1.6 % <small>1.3–1.9 % · about 2 800 of 168 400 stalls</small></dd></div>
     <div><dt>a new car in Czechia, 2022 → 2025</dt><dd>+2.3 cm <small>95 %: −0.3 to +5.2 · not T&amp;E's +6.0</small></dd></div>
-    <div><dt>a long car's advantage under the flat permit</dt><dd>~100 Kč <small>a year · subsidy to parking at all: 5 800 to 48 000 Kč</small></dd></div>
+    <div><dt>a long car's advantage under the flat permit</dt><dd>~120 Kč <small>a year · implicit subsidy (forgone rent) to parking at all: 5 800 to 48 000 Kč</small></dd></div>
     <div><dt>registered tests passed</dt><dd>1 of 2 <small>Holm, family-wise 5 %</small></dd></div>
   </dl>
 </header>
@@ -50,19 +50,19 @@
 
 <section>
 <p>Cars are getting bigger, and on a street where they park end to end, a longer car leaves less room for the next one<sup class="cite"><a href="#r4">4</a></sup>. <a href="prague-parking">Text 01</a> put a number on this for Prague's paid zones: 2 745 stalls. <a href="prague-parking-2">Text 02</a> measured the Czech market through its wheelbases and got 2 263. <a href="prague-parking-3">Text 03</a> set that against the growth in the number of cars and priced it against the flat resident permit. Each borrowed at least one number it could not check. The parallel share came from Berlin, the car lengths after 2022 were extrapolated, and the age of the fleet in 2012 was extrapolated too.</p>
-<p>Parking economics has long argued that the kerb is underpriced land and that its price, not its supply, is the lever<sup class="cite"><a href="#r11">11</a></sup><sup class="cite"><a href="#r12">12</a></sup><sup class="cite"><a href="#r13">13</a></sup>. The size of cars is a newer strand of the argument<sup class="cite"><a href="#r4">4</a></sup>. This text asks the size question again with the numbers measured rather than borrowed, and asks how it compares with the price question.</p>
+<p>Parking economics has long argued that the kerb is underpriced land and that its price, not its supply, is the lever<sup class="cite"><a href="#r11">11</a></sup><sup class="cite"><a href="#r12">12</a></sup><sup class="cite"><a href="#r13">13</a></sup><sup class="cite"><a href="#r15">15</a></sup>. The size of cars is a newer strand of the argument<sup class="cite"><a href="#r4">4</a></sup>. This text asks the size question again with most of the numbers measured rather than borrowed, and asks how it compares with the price question.</p>
 </section>
 
 <section>
 <h2>How this was done</h2>
-<p>The analysis plan was written, reviewed by three referees (transport economics, statistics, a data audit), revised and committed to the site's public repository before any car length from the register was read<sup class="cite"><a href="#r8">8</a></sup>. The code was then frozen and run once on scrambled lengths, and only after that on the real ones. The plan fixes:</p>
+<p>The analysis plan was written, reviewed by three referees (transport economics, statistics, a data audit), revised and committed to the site's public repository before any car length from the register was read<sup class="cite"><a href="#r8">8</a></sup>. The code was then frozen and run once on scrambled lengths, and only after that on the real ones. What changed after that is <a href="#changes">listed below</a>. The plan fixes:</p>
 <ul>
 <li>two tests, with a 5 % family-wise error rate shared through Holm's procedure<sup class="cite"><a href="#r16">16</a></sup>;</li>
 <li>three estimates that are reported, not tested, with the sentence for each possible result written in advance;</li>
 <li>the inputs and their ranges.</li>
 </ul>
-<p>The size of the cars comes from the Ministry of Transport's register, which lists every vehicle ever registered in Czechia with its overall length<sup class="cite"><a href="#r2">2</a></sup>. The export read here has 19.4 million rows. Passenger cars and their off-road variant (M1 and M1G) number 13.4 million, of which 6.9 million are in operation. Length is recorded for at least 99.6 % of cars made since 2012, but for fewer than half of those made before 1990.</p>
-<p>The kerb comes from the city's zone layer: 16 874 segments and 168 424 stalls on 28 September 2026. These are "administrative stalls", a count the city assigns to each segment<sup class="cite"><a href="#r1">1</a></sup>. Each segment's band width, solved from its area and perimeter, says whether cars park along it or across it. Checked against 1 706 segments that the city had labelled in 2019, the rule classifies 97 % of stalls correctly. Applied to today's layer, it puts 59 % of stalls on parallel kerb, not the 68 % borrowed from Berlin in the earlier texts.</p>
+<p>The size of the cars comes from the Ministry of Transport's register, which lists the vehicles registered in Czechia, including those since scrapped or exported, with their overall length<sup class="cite"><a href="#r2">2</a></sup>. The export read here has 19.4 million rows. Passenger cars and their off-road variant (M1 and M1G) number 13.4 million, of which 6.9 million are in operation. Length is recorded for at least 99.6 % of cars made since 2012, but for fewer than half of those made before 1990.</p>
+<p>The kerb comes from the city's zone layer: 16 874 segments and 168 424 stalls on 28 September 2026. These are "administrative stalls", a count the city assigns to each segment<sup class="cite"><a href="#r1">1</a></sup>. Each segment's band width, solved from its area and perimeter, says whether cars park along it or across it. Checked against 1 706 segments that the city had labelled in 2019, all in Prague 4, 5, 6 and 9, the rule classifies 97 % of stalls correctly. Applied to today's layer, it puts 59 % of stalls on parallel kerb, not the 68 % borrowed from Berlin in the earlier texts.</p>
 </section>
 
 <section>
@@ -70,17 +70,17 @@
 <table class="ht">
   <thead><tr><th>Hypothesis</th><th>Test</th><th>Result</th></tr></thead>
   <tbody>
-  <tr><td>H2a · the register agrees with the wheelbase route of Text 02 on how much new cars grew, 2012–2022</td><td>equivalence within ±4.4 cm</td><td class="v">not supported: inconclusive<br><small>+2.3 cm apart, p = 0.29</small></td></tr>
+  <tr><td>H2a · the register agrees with the wheelbase route of Text 02 on how much new cars grew, 2012–2022</td><td>equivalence within ±4.4 cm<sup class="cite"><a href="#r17">17</a></sup></td><td class="v">inconclusive (underpowered)<br><small>+2.3 cm apart, p = 0.29</small></td></tr>
   <tr><td>H2b · new cars grew less in 2022–2025 than T&amp;E's series implies (+6.0 cm)</td><td>one-sided</td><td class="v"><b>supported</b><br><small>+2.3 cm, p = 0.007</small></td></tr>
   </tbody>
 </table>
-<p class="note">p-values: studentised cluster bootstrap over 796 model lines, 9 999 draws. Holm thresholds 0.025 and 0.05; only H2b passes. The ±4.4 cm margin is the change in new-car growth that would move the kerb estimate by a quarter of a percentage point, fixed from constants before the data were read.</p>
+<p class="note">p-values: studentised cluster bootstrap over 796 model lines, 9 999 draws. Holm thresholds 0.025 and 0.05; only H2b passes. The ±4.4 cm margin is the change in new-car growth that would move the per-parallel-space estimate by a quarter of a percentage point, fixed from constants before the data were read.</p>
 </section>
 
 <section>
 <h2>New cars, measured</h2>
 <p>For each year the register gives the cars that were new to Czechia that year. They are weighted to the EEA's registration counts model by model, so cars that have since been scrapped or exported count as they did when they were sold<sup class="cite"><a href="#r3">3</a></sup>. Measured this way, the average new car grew by 12.7 cm per decade over 2012–2022.</p>
-<p>Text 02 had to go through the wheelbase, the only dimension the EEA publishes. The plan re-ran that route with the off-road variant included, which Text 02 had dropped, and converted wheelbase to length with the register's own ratio within each model line: 1.47 mm of length per mm of wheelbase. That route gives 10.4 cm. The two differ by 2.3 cm, and the test cannot say whether that is agreement: the 90 % interval runs from −4.3 to +9.2 cm, far wider than the margin. This was predicted. The plan's power check, run before any length was read, put the chance of showing agreement at 16 %.</p>
+<p>Text 02 had to go through the wheelbase, the only dimension the EEA publishes. The plan re-ran that route with the off-road variant included, which Text 02 had dropped, and converted wheelbase to length with the register's own ratio within each model line: 1.47 mm of length per mm of wheelbase. That route gives 10.4 cm. Text 02's own ratio (0.618)<sup class="cite"><a href="#r19">19</a></sup> turns the same wheelbase into 13.0 cm. The two differ by 2.3 cm, and the test cannot say whether that is agreement: the 90 % interval runs from −4.3 to +9.2 cm, far wider than the margin. This was predicted. The plan's power check, run before any length was read, put the chance of showing agreement at 16 %, and the realised standard error was 3.9 cm against the 2.4 cm planned, so the real power was lower still. The result is inconclusive (underpowered), not a disagreement.</p>
 <figure>
   <img src="../assets/parking6/01-new-cars.svg" alt="Line chart of the mean length of a new car registered in Czechia, 2012 to 2025, rising from 4.36 m to 4.50 m in 2022 and 4.52 m in 2025. A dashed grey line shows the slope of the EEA wheelbase route for 2012 to 2022. After 2022 a dotted line shows T&amp;E's pace of plus 6 cm by 2025, and a dashed line Part II's extrapolation of plus 3 cm; the register runs slightly below Part II's line." loading="lazy">
   <figcaption><b>fig. 1</b> · Mean overall length of cars new to Czechia, from the register, weighted to EEA registrations by model line. Dashed grey: the slope of the wheelbase route (the H2a comparator). After 2022: T&amp;E's pace and Part II's extrapolation, both starting from the register's 2022 value.</figcaption>
@@ -90,12 +90,12 @@
   <img src="../assets/parking6/02-tests.svg" alt="Left: the difference between the register and the wheelbase route, +2.3 cm, with a 90 % interval from −4.3 to +9.2 cm, against a shaded band from −4.4 to +4.4 cm. Right: new-car growth 2022 to 2025, +2.3 cm with a 95 % interval from −0.3 to +5.2 cm, against dashed lines at 3.0 (Part II), 4.5 (midpoint) and 6.0 (T&amp;E)." loading="lazy">
   <figcaption><b>fig. 2</b> · The two registered tests. Left: H2a, the difference between the two routes with the interval an equivalence test at 5 % uses, against the margin. Right: H2b, three-year growth with its 95 % interval, against T&amp;E's and Part II's figures.</figcaption>
 </figure>
-<p>Re-running Text 02's own pipeline with the off-road variant included changes its numbers. The wheelbase grew 80 mm over the decade, not 68, and Text 02's estimate rises from 2 263 stalls to about 2 700, with a band of 2 400–3 300. A correction note on Text 02 says so.</p>
+<p>Re-running Text 02's own pipeline with the off-road variant included changes its numbers. The wheelbase grew 80 mm over the decade, not 68, and Text 02's estimate rises from 2 263 stalls to about 2 700, with a band of 2 400–3 200. A correction note on Text 02 says so.</p>
 </section>
 
 <section>
-<h2>What the kerb lost</h2>
-<p>Car lengths enter the parked fleet slowly: the average car in the Czech fleet is almost seventeen years old<sup class="cite"><a href="#r24">24</a></sup>. The plan models the fleet from the register itself: every car entering in each year, at the age it entered (new, or imported used), survives to 2012 and to 2025 on a curve calibrated to the fleet's published mean age. The average car in the fleet grew from 4.23 m to 4.37 m. On a parallel kerb, where capacity is kerb length divided by car length plus gap, that is:</p>
+<h2>What today's kerb would hold with 2012's cars</h2>
+<p>Car lengths enter the parked fleet slowly: the average car in the Czech fleet is almost seventeen years old<sup class="cite"><a href="#r24">24</a></sup>. The plan models the fleet from the register itself: every car entering in each year, at the age it entered (new, or imported used), survives to 2012 and to 2025 on a curve calibrated to the fleet's mean age in each year: 16.7 years in 2025, which is published, and an assumed 13.3–14.1 years in 2012, which is not. The average car in the fleet grew from 4.23 m to 4.37 m. On a parallel kerb, where capacity is kerb length divided by car length plus gap, that is:</p>
 <table class="ht">
   <thead><tr><th>Estimate</th><th>Median</th><th>Interval under the registered inputs</th></tr></thead>
   <tbody>
@@ -106,11 +106,12 @@
   </tbody>
 </table>
 <p>The whole interval sits in one of the bands fixed in advance, and the plan's sentence for it reads: <b>on today's kerb, 2012's cars would fit between one and two and a half more cars in every hundred: real, and small next to the count of cars.</b> The second half of that sentence was written for a comparison this text could not yet make. The count of permits by year has been requested from TSK (below).</p>
+<p>The per-parallel-space estimate, 2.2–3.2 %, straddles two bands, and the plan says to give both sentences and the input that decides: <b>on today's kerb, 2012's cars would fit between one and two and a half, or between two and a half and five, more cars in every hundred parallel spaces.</b> Which of the two depends above all on how long the cars made before 2010 really were (fig. 4).</p>
 <figure>
   <img src="../assets/parking6/03-loss.svg" alt="Dot and interval chart in per cent. This study with all parallel bays unmarked: 1.6, from 1.3 to 1.9. With a quarter of bays painted: 1.3. With half painted: 1.0. Per parallel space: 2.7, from 2.2 to 3.2. Per parallel space with a gap proportional to length: 3.2. For comparison, diamonds: Part I 1.6, Part II as published 1.3, Part II corrected 1.6. Dashed lines at 1 and 2.5 per cent mark the registered bands." loading="lazy">
   <figcaption><b>fig. 3</b> · How many more cars today's kerb would hold with 2012's fleet, with the 2.5–97.5 % interval under the registered input distributions. Dashed: the band edges fixed in advance. Diamonds: the published texts, point estimates.</figcaption>
 </figure>
-<p>The earlier texts land in the same place for different reasons. Text 01 had a longer fleet growth and a larger parallel share; this study has a longer fleet growth measured and a smaller share measured. Per parallel space, 2.7 % over thirteen years is far below T&amp;E's headline pro-rated to the same span (7.4–12.1 %)<sup class="cite"><a href="#r4">4</a></sup>. It is close to what T&amp;E's own parameters imply (2.9–3.4 %), a figure Text 01 could reproduce where the headline could not be.</p>
+<p>The earlier texts land in the same place for different reasons. Text 01 had a shorter fleet growth (11.7 cm) and a larger parallel share (68 %); this study measures a longer growth (14 cm) and a smaller share (59 %), and the two offset. Per parallel space, 2.7 % over thirteen years is far below T&amp;E's headline pro-rated to the same span (7.4–12.1 %)<sup class="cite"><a href="#r4">4</a></sup>. It is close to what T&amp;E's own parameters imply (2.9–3.4 %), a figure Text 01 could reproduce where the headline could not be.</p>
 <p>Where bays are painted, a longer car does not cost a bay unless it no longer fits. The share of cars longer than 5.25 m, half a metre short of a painted parallel bay, rose from 0.3 % to 1.1 %. Which of Prague's bays are painted is not in the open data. The estimate above therefore treats every parallel bay as unmarked, which makes it an upper bound, and the painted scenarios show how far it would fall.</p>
 </section>
 
@@ -121,16 +122,16 @@
   <img src="../assets/parking6/04-tornado.svg" alt="Tornado chart of θ₁ at the ends of each input's range, others held central, around a central 1.61 per cent. Pre-2010 cars' lengths: 1.30 to 1.92. Reference pitch: 1.52 to 1.71. 2012 mean age: 1.57 to 1.64. Age definition: 1.59 to 1.63. Survival shape: 1.60 to 1.61. None crosses the dashed band edges at 1.0 and 2.5." loading="lazy">
   <figcaption><b>fig. 4</b> · θ₁ at the ends of each input's registered range, all other inputs central. Dashed: band edges.</figcaption>
 </figure>
-<p>Almost all of the uncertainty (a first-order share of 0.92 in a variance decomposition<sup class="cite"><a href="#r18">18</a></sup>) comes from one thing: how long the cars made before 2010 really were. The register records them only as survivors. Many of the rest were scrapped before the register's history begins, and the plan brackets that ignorance with a symmetric allowance of up to ±10 cm for the oldest cars. The survival curve itself is pinned down well. Fitted to the fleet's published mean age, it reproduces the published fleet counts for 2016–2019 to within 5 % only for one narrow range of shapes (within 3 % at the shape used), and that range was fixed before any length was read.</p>
-<p>One check the plan wrote down failed. The modelled fleet of 2025 is 3.9 cm shorter than the fleet the register shows in operation. The registered remedy, choosing the curve's shape to close the gap, could not close it, because the gap is smallest at the edge of the allowed range. A shortfall common to 2012 and 2025 would hardly move the loss. One that differs between the years would, and nothing here can rule that out.</p>
+<p>Almost all of the uncertainty (a first-order share of 0.92 in a variance decomposition<sup class="cite"><a href="#r18">18</a></sup>) comes from one thing: how long the cars made before 2010 really were. The register records them only as survivors. Many of the rest were scrapped before the register's history begins, and the plan brackets that ignorance with a symmetric allowance of up to ±10 cm for the oldest cars. The survival curve's shape is narrowly constrained. Fitted to the fleet's published mean age, it reproduces the published fleet counts for 2016–2019 to within 5 % only for one narrow range of shapes (within 3 % at the shape used), and that range was fixed before any length was read.</p>
+<p>One check the plan wrote down failed. The modelled fleet of 2025 is 3.9 cm shorter than the fleet the register shows in operation. The registered remedy, choosing the curve's shape to close the gap, could not close it, because the gap is smallest at the edge of the allowed range. A shortfall common to 2012 and 2025 would hardly move the loss. One that differs between the years would, and nothing here can rule that out. The code for this rule was written after the real run, not before it, and it fixed the shape at the edge value (k = 1.5); with the shape drawn across its range the estimates are the same to four decimals.</p>
 </section>
 
 <section>
 <h2>The price</h2>
-<p>A resident's first car pays 1 200 Kč a year in the main areas, whatever its length<sup class="cite"><a href="#r9">9</a></sup>. In the fleet on the road, a short car (the tenth percentile, 3.96 m) therefore pays about 250 Kč per metre of kerb a year and a long one (the ninetieth, 4.84 m) about 210.</p>
+<p>A resident's first car pays 1 200 Kč a year in the main areas, whatever its length<sup class="cite"><a href="#r9">9</a></sup>. In the national fleet on the road (Prague's own fleet is not identifiable in the open data), a short car (the tenth percentile, 3.96 m) therefore pays about 250 Kč per metre of kerb a year and a long one (the ninetieth, 4.84 m) about 210.</p>
 <ul>
-<li><b>The size component.</b> A permit priced by length, with today's average kept, would run from about 1 100 Kč for the short car to about 1 300 for the long one: about 100 Kč a year apart. It would change the price by more than a tenth for 2 % of cars.</li>
-<li><b>The level.</b> The plan brackets the subsidy to parking at all, the rent forgone on 13.5 m² of zone, and never states it as one number.
+<li><b>The size component.</b> A permit priced by length, with today's average kept, would run from about 1 140 Kč for the short car to about 1 260 for the long one: about 120 Kč a year apart. It would change the price by more than a tenth for 2 % of cars.</li>
+<li><b>The level.</b> The plan brackets the implicit subsidy (forgone rent) to parking at all, the rent forgone on 13.5 m² of zone, and never states it as one number. A permit is a licence to search, not a bay, and the search has its own cost<sup class="cite"><a href="#r14">14</a></sup>.
   <ul>
   <li>At the city's own price for a second car, 7 000 Kč, the permit is 5 800 Kč under it.</li>
   <li>At the city's fee for reserving a permanent bay, 10 Kč per m² a day<sup class="cite"><a href="#r10">10</a></sup>, a fee for exclusive round-the-clock use and so an upper end, it is 48 000 Kč under it.</li>
@@ -141,7 +142,7 @@
   <img src="../assets/parking6/05-subsidy.svg" alt="Horizontal bars on a log scale in Kč a year. Size component, long against short car: 120 at today's price, 690 at the second-car price, 4 900 at the reserved-bay fee. Level of the subsidy: 5 800 against the second-car price, 48 000 against the reserved-bay fee." loading="lazy">
   <figcaption><b>fig. 5</b> · The size component of the implicit subsidy (forgone rent), long against short car (90th against 10th percentile of length), at three price levels, next to the two ends of the level bracket.</figcaption>
 </figure>
-<p>At every price level the gap between a long and a short car is about a tenth of the price of the space itself. The flat permit's size subsidy is about 100 Kč a year between a short and a long car, and the implicit subsidy (forgone rent) to parking at all is between 5 800 and 48 000 Kč. Pricing by length corrects the price, and changes little unless the price itself rises.</p>
+<p>At every price level the gap between a long and a short car is about a tenth of the price of the space itself. The flat permit's size subsidy is about 120 Kč a year between a short and a long car, and the implicit subsidy (forgone rent) to parking at all is between 5 800 and 48 000 Kč a year, depending on the benchmark. Pricing by length corrects the price, and changes little unless the price itself rises.</p>
 </section>
 
 <section>
@@ -152,19 +153,19 @@
   <tr><td>Koblenz, from March 2024<sup class="cite"><a href="#r21">21</a></sup></td><td>residents</td><td>length × width × 23.40 € a year, at least 100 €</td></tr>
   <tr><td>Cologne, from March 2025<sup class="cite"><a href="#r22">22</a></sup></td><td>residents</td><td>100 € up to 4 109 mm, 110 € to 4 709 mm, 120 € above</td></tr>
   <tr><td>Freiburg, 2022–2023<sup class="cite"><a href="#r20">20</a></sup></td><td>residents</td><td>240 / 360 / 480 € by length; annulled by the Federal Administrative Court in June 2023, partly because the steps between length classes were too large</td></tr>
-  <tr><td>Paris, from October 2024<sup class="cite"><a href="#r23">23</a></sup></td><td>visitors only</td><td>hourly tariff tripled for cars of 1.6 t or more (2 t electric); residents exempt</td></tr>
+  <tr><td>Paris, from October 2024<sup class="cite"><a href="#r23">23</a></sup></td><td>visitors only</td><td>hourly tariff tripled for cars of 1.6 t or more (2 t electric); residents exempt (secondary source; no paris.fr page was located)</td></tr>
   <tr><td>Prague</td><td>residents</td><td>1 200 Kč a year for a first car in the main areas, whatever its size</td></tr>
   </tbody>
 </table>
-<p class="note">Cologne's class limits sit a millimetre from the Fabia (4 108 mm) and the first Kodiaq (4 697 mm) used in Text 03. That was checked on the city's own release. Weight-based schemes (Lyon, Tübingen) and footprint schemes elsewhere (Aachen, Bonn) could not be verified in primary sources and are left out, as the plan required. Prices are shown in their own currency. The planned conversion to one unit is listed under changes.</p>
+<p class="note">Cologne's lower class limit sits 1 mm above the Fabia (4 108 mm) and its upper limit 12 mm above the first Kodiaq (4 697 mm), the two cars used in Text 03. That was checked on the city's own release. Weight-based schemes (Lyon, Tübingen) and footprint schemes elsewhere (Aachen, Bonn) could not be verified in primary sources and are left out, as the plan required. Prices are shown in their own currency. The planned conversion to one unit is listed under changes.</p>
 </section>
 
 <section>
 <h2>Count against size</h2>
-<p><b>Not run: awaiting TSK data.</b> The plan's third estimate compares, in the districts whose zones have not grown since 2012 (Prague 1, 2, 3 and 7), how much more kerb the growing number of cars claims with how much more their length claims. It needs the number of valid permits at each year's end, and no such series is public. The only public figure is 215 108 valid permits on 1 May 2026<sup class="cite"><a href="#r25">25</a></sup>. The request for the series is for the author to send, and the estimate will be added when the data arrive.</p>
+<p><b>Not run: awaiting TSK data.</b> The plan's third estimate compares, in the districts whose zones barely changed since 2012 (Prague 1, 2, 3 and 7), how much more kerb the growing number of cars claims with how much more their length claims. It needs the number of valid permits at each year's end, and no such series is public. The only public figure is 215 108 valid permits on 1 May 2026, from TSK's answer 2026-05-19-058 to an information request<sup class="cite"><a href="#r25">25</a></sup>. The request for the series is for the author to send, and the estimate will be added when the data arrive.</p>
 </section>
 
-<section>
+<section id="changes">
 <h2>What changed after registration</h2>
 <ul>
 <li><b>A coding error.</b> The painted-bay share counted cars with no recorded length as long. It was found in the first real output, because it gave an impossible negative loss, and fixed. The headline estimates did not change beyond the fourth decimal.</li>
@@ -173,6 +174,17 @@
 <li><b>Two points of the price bracket were not computed</b>, because no dated source was fixed. The comparison with other cities stays in their own currencies.</li>
 <li><b>The blind dry run scrambled lengths across years within each make, as registered.</b> Scrambling within each year would have kept, and so revealed, the trend being tested.</li>
 <li><b>Text 02's numbers change</b>, because the off-road variant it dropped is included (above).</li>
+<li><b>Text 03 now conflicts with Text 02.</b> Its 174 stalls a year came from Text 02's first estimate; the corrected figure is 208 (183–250), and Text 03 carries a dated correction.</li>
+<li><b>No 2026 orthophoto sample was labelled.</b> The parallel share rests on the 2019 labels, which cover Prague 4, 5, 6 and 9 only.</li>
+<li><b>The survival shape was fixed at k = 1.5</b>, and the code for the calibration rule that fixed it was written after the real run.</li>
+<li><b>H2a was less precise than planned.</b> The realised standard error was 3.9 cm against 2.4 planned, and the size check at the upper margin rejected at 0.11 instead of 0.05.</li>
+<li><b>The size component is defined</b> as the gap between the 90th and 10th percentile of a revenue-neutral length price.</li>
+<li><b>The fleet for the price section is national</b>, because Prague's fleet cannot be identified in the open data.</li>
+<li><b>The count-against-size estimate was not run</b> (awaiting TSK data), and its planned fallback on registrations was not done either.</li>
+<li><b>The variance decomposition gave two small negative shares</b> (−0.015 and −0.001), estimator noise read as zero.</li>
+<li><b>The reserved-bay fee varies by district.</b> The 10 Kč per m² a day applies in the zone districts; Prague 13 charges 5 Kč and some outer districts 1 Kč.</li>
+<li><b>Model lines matched well but are coarse in places.</b> Between 97.3 and 100 % of each year's EEA registrations matched a register model line; the line key merges a few families, such as Hyundai's i-models into one "I" line.</li>
+<li><b>Implementation shortcuts, fixed at the freeze:</b> a normal approximation for the imputation variance, an inner bootstrap of 50 draws, a reduced size check (200 simulations), and values that overflowed the extract set to missing.</li>
 </ul>
 <p>The full list, dated, is in the design file<sup class="cite"><a href="#r8">8</a></sup>. Every number comes from these scripts:</p>
 <ul>
@@ -210,18 +222,18 @@
 <li id="r16">Holm, S. (1979): A simple sequentially rejective multiple test procedure. <i>Scandinavian Journal of Statistics</i> 6(2), 65–70.</li>
 <li id="r17">Schuirmann, D. J. (1987): A comparison of the two one-sided tests procedure and the power approach for assessing the equivalence of average bioavailability. <i>Journal of Pharmacokinetics and Biopharmaceutics</i> 15(6), 657–680.</li>
 <li id="r18">Saltelli, A. et al. (2008): <i>Global Sensitivity Analysis: The Primer</i>. Wiley.</li>
-<li id="r19">Holder, D. et al. (2021): Systematic analysis of changing vehicle exterior dimensions, ICED21, <a href="https://doi.org/10.1017/pds.2021.553">10.1017/pds.2021.553</a>.</li>
+<li id="r19">Holder, D. et al. (2021): Systematic analysis of changing vehicle exterior dimensions. <i>Proceedings of the Design Society</i> 1 (International Conference on Engineering Design, ICED21), <a href="https://doi.org/10.1017/pds.2021.553">10.1017/pds.2021.553</a>.</li>
 <li id="r20">Bundesverwaltungsgericht, <a href="https://www.bverwg.de/130623U9CN2.22.0">9 CN 2.22</a>, 13 June 2023.</li>
 <li id="r21">Stadt Koblenz: <a href="https://www.koblenz.de/rathaus/verwaltung/stadtverwaltung/aemter-eigenbetriebe/buergeramt-der-stadt-koblenz/erlaeuterung-anwohnerparkgebuehren-2024/">Erläuterung Bewohnerparkgebühren 2024</a>.</li>
 <li id="r22">Stadt Köln: <a href="https://www.stadt-koeln.de/politik-und-verwaltung/presseservice/ab-1-maerz-2025-gilt-die-neue-bewohnerparkgebuehrenordnung">Ab 1. März 2025 gilt die neue Bewohnerparkgebührenordnung</a>.</li>
 <li id="r23">electrive (2024): <a href="https://www.electrive.com/2024/10/04/paris-triples-parking-fees-for-suvs/">Paris triples parking fees for SUVs</a>, 4 October 2024.</li>
 <li id="r24">Mean age and size of the Czech passenger-car fleet: ČAPPO, <a href="https://www.cappo.cz/cisla-a-fakta/stav-vozoveho-parku-v-cr">Stav vozového parku v ČR</a> (SDA data), 2016–2025; ČSÚ for 2014.</li>
-<li id="r25">TSK Praha: answers to information requests under Act 106/1999, <a href="https://www.tsk-praha.cz/wps/portal/root/o-spolecnosti/o-spolecnosti-TSK-Praha/poskytnute-informace-as/">Poskytnuté informace</a> (answer of 19 May 2026); ÚDI/TSK <i>Ročenka dopravy</i> 2012–2024 for stalls by district.</li>
+<li id="r25">TSK Praha: answers to information requests under Act 106/1999, <a href="https://www.tsk-praha.cz/wps/portal/root/o-spolecnosti/o-spolecnosti-TSK-Praha/poskytnute-informace-as/">Poskytnuté informace</a> (answer 2026-05-19-058 of 19 May 2026: 215 108 valid permits on 1 May 2026); ÚDI/TSK <i>Ročenka dopravy</i> 2012–2024 for stalls by district.</li>
 </ol>
 </section>
 
 <footer class="text-foot">
-  <p class="back"><a href="../#works">← projects</a> · <a href="prague-parking">Text 01</a> · <a href="prague-parking-2">Text 02</a> · <a href="prague-parking-3">Text 03</a> · <a href="prague-council-study">Part 1, the long version</a> · <a href="prague-rings-study">Part 2, the long version</a></p>
+  <p class="back"><a href="../#works">← projects</a> · <a href="prague-parking">Text 01</a> · <a href="prague-parking-2">Text 02</a> · <a href="prague-parking-3">Text 03</a> · <a href="prague-council-study">Part 1, the long version</a> · <a href="prague-rings-study">Part 2, the long version</a> · <a href="prague-districts">Part 3</a> · <a href="prague-housing">Part 4</a></p>
 </footer>
 </article>
 </body>
