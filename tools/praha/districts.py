@@ -12,6 +12,9 @@ Sources (downloaded into tools/data/praha3/, not committed):
 
 Functions are grouped by name, not code: education is coded 31 in most districts and 32 in some. "Town hall" is
 section 61 (state power, administration, self-government); "debt and finance" (63) is kept apart.
+Totals are MONITOR's, not consolidated: they include money a district moves between its own accounts. Class 4 items
+4131, 4132 and 4140 (transfers from the district's own funds, mostly net business income such as rents) are counted
+as own non-tax revenue, not as transfers (correction of 28 September 2026).
 Amounts are per resident, averaged over 2022-2024 (each year's spending over that year's population), because
 investment is lumpy: a district that builds a school in one year spends three times its usual budget.
 
@@ -37,6 +40,7 @@ UCJED = "https://monitor.statnipokladna.cz/data/xml/ucjed.xml"
 POPULATION = "https://csu.gov.cz/docs/107839/3e786c03-ba36-95fb-f4ed-d78f947119e9/CR_L3_MC.xlsx?version=1.7"
 ELECTION = "https://volby.gov.cz/opendata/kv2022/KV2022reg20260328_csv.zip"
 YEARS = [2022, 2023, 2024]
+OWN_FUNDS = ["4131", "4132", "4140"]  # class 4 items that move a district's own money into its budget
 GROUPS = {  # level-2 function names -> reported group
     "Vzdělávání a školské služby": "education",
     "Sociální služby a společné činnosti v sociálním zabezpečení a politice zaměstnanosti": "social",
@@ -117,11 +121,12 @@ def year_row(ico: str, year: int) -> dict:
     inc = pd.DataFrame(flat(api(f"rozpocet/druhovy?{base}&cast=p", RAW / "api" / f"{ico}_{year}_prij.json")))
     out, income = tot["outgoings"]["reality"], tot["incomes"]["reality"]
     level2 = fn[fn.depth == 2]
+    own = float(inc[inc.code.isin(OWN_FUNDS)].reality.sum())
     row = {"spent": out, "income": income,
            "capital": float(kind[(kind.depth == 1) & (kind.code == "6")].reality.sum()),
            "taxes": float(inc[(inc.depth == 1) & (inc.code == "1")].reality.sum()),
-           "non_tax": float(inc[(inc.depth == 1) & (inc.code == "2")].reality.sum()),
-           "transfers": float(inc[(inc.depth == 1) & (inc.code == "4")].reality.sum())}
+           "non_tax": float(inc[(inc.depth == 1) & (inc.code == "2")].reality.sum()) + own,
+           "transfers": float(inc[(inc.depth == 1) & (inc.code == "4")].reality.sum()) - own}
     for name, group in GROUPS.items():
         row[group] = row.get(group, 0.0) + float(level2[level2.name == name].reality.sum())
     return row

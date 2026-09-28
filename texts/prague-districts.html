@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>One city, 57 budgets</title>
-<meta name="description" content="Prague's 57 city districts spent 2022–2024 between 7 763 and 73 020 CZK a year per resident. Among the thirteen large ones the range is 8 346 to 17 604; Praha 1 spends 35 320. Most of it is the city's money: transfers are 66–92 % of every district's income. What each one spends on, and who won its 2022 election.">
+<meta name="description" content="Prague's 57 city districts spent 2022–2024 between 7 763 and 73 020 CZK a year per resident. Among the thirteen large ones the range is 8 346 to 17 604; Praha 1 spends 35 320. Most of it is money from the city and the state: transfers are 76 % of the median district's income, 38–92 % across the 57. What each one spends on, and who won its 2022 election.">
 <meta property="og:title" content="One city, 57 budgets">
 <meta property="og:description" content="What Prague's 57 city districts spend per resident, on what, where the money comes from, and who runs them.">
 <meta property="og:type" content="article">
@@ -43,11 +43,11 @@
 <header class="text-head">
   <p class="kicker">Prague, measured · Part 3 of 5 · city-district budgets, 2022–2024</p>
   <h1>One city, <em>57 budgets</em></h1>
-  <p class="deck">Prague runs on two levels: the city, and 57 districts with their own mayors, councils and budgets. Put the districts' accounts side by side, per resident, and the thirteen large ones, home to three Praguers in four, spend between 8 346 and 17 604 crowns a year. Praha 1 spends 35 320. Almost all of it is money they are given, not money they raise.</p>
+  <p class="deck">Prague runs on two levels: the city, and 57 districts with their own mayors, councils and budgets. Put the districts' accounts side by side, per resident, and the thirteen large ones, home to three Praguers in four, spend between 8 346 and 17 604 crowns a year. Praha 1 spends 35 320. Most of it is money they are given, not money they raise.</p>
   <dl class="facts">
     <div><dt>spent per resident, large districts</dt><dd>8 346–17 604 <small>CZK a year, 2022–2024 mean</small></dd></div>
     <div><dt>Praha 1</dt><dd>35 320 <small>four times Praha 4</small></dd></div>
-    <div><dt>income from transfers</dt><dd>82 % <small>median district · 66–92 %</small></dd></div>
+    <div><dt>income from transfers</dt><dd>76 % <small>median district · 38–92 %</small></dd></div>
     <div><dt>town hall, large districts</dt><dd>29 % <small>of spending, median · 24–38 %</small></dd></div>
   </dl>
 </header>
@@ -71,9 +71,9 @@
 <h2>Where the money comes from</h2>
 <figure>
   <img src="../assets/praha/04-income.svg" alt="Stacked bars of income per resident for Praha 1 and the thirteen large districts: taxes and local fees in black, other non-tax income in grey, transfers in green. Transfers are the largest part everywhere; Praha 1 has the most of all three." loading="lazy">
-  <figcaption><b>fig. 2</b> · Income per resident, CZK thousand, mean of 2022–2024. Transfers are money received from the city and the state; taxes include local fees (tourist, public-space, admission).</figcaption>
+  <figcaption><b>fig. 2</b> · Income per resident, CZK thousand, mean of 2022–2024. Transfers are money received from the city and the state; money a district moves into its budget from its own funds, mostly business income such as rents, counts as its own non-tax income; taxes include local fees (tourist, public-space, admission).</figcaption>
 </figure>
-<p>A district raises little on its own. Transfers from the city and the state are 82 % of the median district's income, and never less than 66 %. Praha 1 raises more than any: 9 676 crowns per resident in taxes and local fees against Praha 4's 1 363. Much of it is tourism. In 2024 Praha 1 collected 82.9 million crowns in the fee on overnight stays and 114.2 million for the use of public space, up from 47.5 and 97.3 million in 2022. But even Praha 1 lives mostly on transfers, 23 570 crowns per resident against Praha 4's 7 009. How the city divides its money between the districts is set by its own rules and resolutions; the accounts show the result, not the formula.</p>
+<p>A district raises little on its own. Transfers from the city and the state are 76 % of the median district's income, and 38–92 % across the 57. Praha 1 raises more than any: 9 676 crowns per resident in taxes and local fees against Praha 4's 1 363. Much of it is tourism. In 2024 Praha 1 collected 82.9 million crowns in the fee on overnight stays and 114.2 million for the use of public space, up from 47.5 and 97.3 million in 2022. Praha 1 also takes in 12 308 crowns per resident in rents, sales and other income of its own, against Praha 4's 905, and 13 655 in transfers, against Praha 4's 6 804. Praha 1 and Praha 2 are the only districts where transfers are less than half of income. How the city divides its money between the districts is set by its own rules and resolutions; the accounts show the result, not the formula.</p>
 </section>
 
 <section>
@@ -102,7 +102,7 @@
 
 <section>
 <h2>What was checked</h2>
-<p>The Ministry's bulk extract of municipal accounts leaves the Prague districts out; their figures come from MONITOR's public interface, which serves the same reports<sup class="cite"><a href="#r1">1</a></sup>. The totals are consolidated: transfers into a district's own funds are not counted twice. Spending sections are grouped by name, because the same one, education, is coded 31 in most districts' 2024 accounts and 32 in eleven. The 57 districts' residents add up to 1 397 880, Prague's population at the end of 2024<sup class="cite"><a href="#r2">2</a></sup>. Every number is produced by <code>tools/praha/districts.py</code>.</p>
+<p>The Ministry's bulk extract of municipal accounts leaves the Prague districts out; their figures come from MONITOR's public interface, which serves the same reports<sup class="cite"><a href="#r1">1</a></sup>. Income and spending include the money a district moves between its own accounts; own-fund transfers (items 4131, 4132, 4140) are counted as the district's own revenue, not as transfers. Spending sections are grouped by name, because the same one, education, is coded 31 in most districts' 2024 accounts and 32 in eleven. The 57 districts' residents add up to 1 397 880, Prague's population at the end of 2024<sup class="cite"><a href="#r2">2</a></sup>. Every number is produced by <code>tools/praha/districts.py</code>.</p>
 </section>
 
 <section class="refs" id="refs">
@@ -113,6 +113,10 @@
 <li id="r3">Český statistický úřad: <a href="https://volby.gov.cz/opendata/kv2022/kv2022_opendata.htm">open data, municipal elections 2022</a>, lists with votes and seats in each district assembly.</li>
 <li id="r4">Šandová, B. (2026): <a href="prague-council">Prague's council rarely says no</a> (Part 1); <a href="prague-rings">Prague votes in rings, not along lines</a> (Part 2).</li>
 </ol>
+</section>
+
+<section class="correction" id="correction">
+<p class="mt-note">Correction, 28 September 2026. The first version counted as transfers from the city and the state the money a district moves into its budget from its own funds, mostly business income (items 4131, 4132 and 4140), and gave transfers as 82 % of the median district's income (66–92 % across the 57), and 23 570 and 7 009 crowns per resident for Praha 1 and Praha 4, saying that even Praha 1 lived mostly on transfers. The figures above exclude them.</p>
 </section>
 
 <footer class="text-foot">
