@@ -343,12 +343,12 @@ def event_study(y: pd.DataFrame, panel: pd.DataFrame, outcome: str) -> dict:
         w = wide[pre + post]
         switch = (w[pre] == 0).all(axis=1) & (w[post] == 1).all(axis=1)
         ctrl = (w == 0).all(axis=1)
-        years = [r for r in range(pre[0], (e + 3)) if r in yy.columns]
+        years = [r for r in range(pre[0], post[0] + 3) if r in yy.columns]  # −3 … +2 around the first post year
         base = pre[-1]
         diff = {r: float((yy.loc[switch[switch].index, r].mean() - yy.loc[ctrl[ctrl].index, r].mean())
                          - (yy.loc[switch[switch].index, base].mean() - yy.loc[ctrl[ctrl].index, base].mean()))
                 for r in years}
-        res[str(e)] = {"relative_to": base, "by_year": {str(r): diff[r] for r in years},
+        res[str(e)] = {"relative_to": base, "first_post": post[0], "by_year": {str(r): diff[r] for r in years},
                        "descriptive_years": [r for r in years if r >= 2024]}
         leads_all.append((switch, ctrl, [r for r in pre if r != base], base))
     # joint pre-trend RI: sum of squared lead differences, labels permuted as in H1
