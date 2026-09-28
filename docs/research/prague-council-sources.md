@@ -24,9 +24,8 @@ Collected on 28 Sep 2026. "[unverified]" marks points taken from a single second
 - **2022–26.** Caretaker council under Hřib until the SPOLU + Piráti + STAN agreement of 15 Feb 2023; council
   elected 16 Feb 2023.
   <https://ct24.ceskatelevize.cz/clanek/regiony/spolu-pirati-a-stan-podepsali-koalicni-smlouvu-na-prazskem-magistratu-9872>
-- **17 Feb 2023.** Kordová Marvanová expelled from the SPOLU club.
-  <https://www.irozhlas.cz/zpravy-domov/praha-zastupitelstvo-spolu-marvanova-klub-vylouceni_2302171618_ank>
-  [unverified URL form; reported by iROZHLAS 17 Feb 2023]
+- **17 Feb 2023.** Kordová Marvanová expelled from the SPOLU club (iROZHLAS, 17 Feb 2023, cited in Part 1,
+  reference 4). <https://cs.wikipedia.org/wiki/Zastupitelstvo_hlavního_města_Prahy>
 - **June 2026.** Komrsková leaves the Pirates for "Jsme Team", keeping her post as deputy mayor.
   <https://prazsky.denik.cz/komunalni-volby/pirati-proti-piratum-komrskova-odchazi-k-rivalum-funkci-si-necha/>
 
