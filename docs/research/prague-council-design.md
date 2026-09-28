@@ -316,4 +316,33 @@ All three H4 categories exceed the 8-sitting rule. The weights for θ are n_plan
 
 ## Changes after registration
 
-(none)
+**28 Sep 2026, before outcomes were modelled.**
+
+- A crosswalk from councillor to list and party was built from the ČSÚ registers
+  (`docs/research/prague-council-crosswalk.csv`). 276 of 277 columns were matched: by exact name, by the suffix of a
+  double surname, or by spelling variants (Aleksandra/Alexandra, ű/ü). One 2010 column, "Novotný Petr", matches no
+  candidate of a winning list. It is left unresolved and excluded wherever a list is needed.
+
+**28 Sep 2026, after estimation.**
+
+- **H4 inference.** CR2 uses a t(G − 1) reference instead of the Satterthwaite df, with G = 36 sittings. The wild
+  cluster restricted bootstrap agrees (p 0.536 against 0.534).
+- **H1 shift-share.** The decomposition is two-way (within continuing councillors; entry, exit and mix), not the
+  registered three-way with a club term.
+- **H2 continuing members.** Everyone seated in both 2014–18 and 2018–22: 20 people.
+- **H3, exploratory.** Added after the result: which clubs formed the "not yes" side on contested votes. It shows that
+  opposition clubs rarely vote against together, which a single left-right cut can isolate. The registered comparison
+  gave the left-right rule more options (any cut, including the trivial ones) than the coalition rule (two
+  directions). That asymmetry was in the registered design; it is reported, and the test is not re-specified.
+- **IRT.** One dimension only; two dimensions were not estimated.
+- **Not run:**
+  - the conditional logit and the Kline–Santos score bootstrap for H1;
+  - Lee bounds for H1;
+  - H3 with 1 % / 5 % cut-offs and with nehlasoval coded as missing;
+  - H4 with session fixed effects;
+  - the selection audit.
+- **Run and reported:**
+  - H1 without the status adjustment;
+  - H1 on passed votes only;
+  - H1 without the 2010→2014 transition;
+  - H1 on stayers only.
