@@ -1,0 +1,702 @@
+{
+ "source": "https://storage.golemio.cz/ckan/obis/Vysledky_hlasovani_ZHMP_2022_-_2026.csv",
+ "term": "2022-2026",
+ "from": "2022-11-03",
+ "to": "2026-09-11",
+ "sessions": 42,
+ "checks": {
+  "rows_dropped_empty": 9,
+  "votes": 2468,
+  "share_rows_yes_count_matches": 0.9003,
+  "rows_yes_count_short_by": {
+   "0": 2222,
+   "1": 238,
+   "2": 8
+  },
+  "short_rows_from": "2024-10-25",
+  "votes_per_resolution_max": 2,
+  "votes_failed": 2
+ },
+ "seats_by_club": {
+  "SPOLU": 18,
+  "ANO": 15,
+  "Piráti": 13,
+  "Praha sobě": 11,
+  "STAN": 6,
+  "SPD": 3,
+  "Nezařazená": 1
+ },
+ "vote_values": {
+  "Hlas pro": 115954,
+  "Nehlasoval": 25734,
+  "Chyběl": 16638,
+  "Zdržel se": 1269,
+  "Hlas proti": 403
+ },
+ "agreement": {
+  "SPOLU": {
+   "SPOLU": 1.0,
+   "Piráti": 0.967,
+   "STAN": 0.985,
+   "Praha sobě": 0.876,
+   "ANO": 0.644,
+   "SPD": 0.524,
+   "Nezařazená": 0.487
+  },
+  "Piráti": {
+   "SPOLU": 0.967,
+   "Piráti": 1.0,
+   "STAN": 0.964,
+   "Praha sobě": 0.884,
+   "ANO": 0.625,
+   "SPD": 0.513,
+   "Nezařazená": 0.502
+  },
+  "STAN": {
+   "SPOLU": 0.985,
+   "Piráti": 0.964,
+   "STAN": 1.0,
+   "Praha sobě": 0.872,
+   "ANO": 0.641,
+   "SPD": 0.525,
+   "Nezařazená": 0.48
+  },
+  "Praha sobě": {
+   "SPOLU": 0.876,
+   "Piráti": 0.884,
+   "STAN": 0.872,
+   "Praha sobě": 1.0,
+   "ANO": 0.651,
+   "SPD": 0.541,
+   "Nezařazená": 0.537
+  },
+  "ANO": {
+   "SPOLU": 0.644,
+   "Piráti": 0.625,
+   "STAN": 0.641,
+   "Praha sobě": 0.651,
+   "ANO": 1.0,
+   "SPD": 0.625,
+   "Nezařazená": 0.554
+  },
+  "SPD": {
+   "SPOLU": 0.524,
+   "Piráti": 0.513,
+   "STAN": 0.525,
+   "Praha sobě": 0.541,
+   "ANO": 0.625,
+   "SPD": 1.0,
+   "Nezařazená": 0.537
+  },
+  "Nezařazená": {
+   "SPOLU": 0.487,
+   "Piráti": 0.502,
+   "STAN": 0.48,
+   "Praha sobě": 0.537,
+   "ANO": 0.554,
+   "SPD": 0.537,
+   "Nezařazená": 1.0
+  }
+ },
+ "yes_share_present": {
+  "SPOLU": 0.915,
+  "Piráti": 0.914,
+  "STAN": 0.934,
+  "Praha sobě": 0.773,
+  "ANO": 0.579,
+  "SPD": 0.554,
+  "Nezařazená": 0.485
+ },
+ "agreement_with_spolu_by_quarter": {
+  "2022Q4": {
+   "Piráti": 0.833,
+   "STAN": 0.859,
+   "Praha sobě": 0.821,
+   "ANO": 0.859,
+   "SPD": 0.59,
+   "Nezařazená": 0.359,
+   "votes": 78
+  },
+  "2023Q1": {
+   "Piráti": 0.986,
+   "STAN": 1.0,
+   "Praha sobě": 0.978,
+   "ANO": 0.87,
+   "SPD": 0.827,
+   "Nezařazená": 0.856,
+   "votes": 139
+  },
+  "2023Q2": {
+   "Piráti": 0.988,
+   "STAN": 0.992,
+   "Praha sobě": 0.902,
+   "ANO": 0.616,
+   "SPD": 0.753,
+   "Nezařazená": 0.571,
+   "votes": 255
+  },
+  "2023Q3": {
+   "Piráti": 1.0,
+   "STAN": 1.0,
+   "Praha sobě": 0.882,
+   "ANO": 0.72,
+   "SPD": 0.882,
+   "Nezařazená": 0.72,
+   "votes": 93
+  },
+  "2023Q4": {
+   "Piráti": 0.983,
+   "STAN": 1.0,
+   "Praha sobě": 0.908,
+   "ANO": 0.432,
+   "SPD": 0.541,
+   "Nezařazená": 0.438,
+   "votes": 229
+  },
+  "2024Q1": {
+   "Piráti": 0.953,
+   "STAN": 0.976,
+   "Praha sobě": 0.906,
+   "ANO": 0.504,
+   "SPD": 0.323,
+   "Nezařazená": 0.532,
+   "votes": 127
+  },
+  "2024Q2": {
+   "Piráti": 0.929,
+   "STAN": 0.986,
+   "Praha sobě": 0.892,
+   "ANO": 0.623,
+   "SPD": 0.491,
+   "Nezařazená": 0.668,
+   "votes": 212
+  },
+  "2024Q3": {
+   "Piráti": 0.96,
+   "STAN": 1.0,
+   "Praha sobě": 0.589,
+   "ANO": 0.444,
+   "SPD": 0.419,
+   "Nezařazená": 0.508,
+   "votes": 124
+  },
+  "2024Q4": {
+   "Piráti": 0.983,
+   "STAN": 0.994,
+   "Praha sobě": 0.923,
+   "ANO": 0.657,
+   "SPD": 0.265,
+   "Nezařazená": 0.465,
+   "votes": 181
+  },
+  "2025Q1": {
+   "Piráti": 0.962,
+   "STAN": 1.0,
+   "Praha sobě": 0.923,
+   "ANO": 0.731,
+   "SPD": 0.415,
+   "Nezařazená": 0.387,
+   "votes": 130
+  },
+  "2025Q2": {
+   "Piráti": 0.978,
+   "STAN": 0.955,
+   "Praha sobě": 0.916,
+   "ANO": 0.708,
+   "SPD": 0.601,
+   "Nezařazená": 0.44,
+   "votes": 178
+  },
+  "2025Q3": {
+   "Piráti": 0.96,
+   "STAN": 0.99,
+   "Praha sobě": 0.86,
+   "ANO": 0.77,
+   "SPD": 0.86,
+   "Nezařazená": 0.218,
+   "votes": 100
+  },
+  "2025Q4": {
+   "Piráti": 0.937,
+   "STAN": 0.979,
+   "Praha sobě": 0.853,
+   "ANO": 0.571,
+   "SPD": 0.623,
+   "Nezařazená": 0.365,
+   "votes": 191
+  },
+  "2026Q1": {
+   "Piráti": 0.978,
+   "STAN": 0.993,
+   "Praha sobě": 0.683,
+   "ANO": 0.647,
+   "SPD": 0.554,
+   "Nezařazená": 0.289,
+   "votes": 139
+  },
+  "2026Q2": {
+   "Piráti": 0.988,
+   "STAN": 1.0,
+   "Praha sobě": 0.907,
+   "ANO": 0.79,
+   "SPD": 0.056,
+   "Nezařazená": 0.394,
+   "votes": 162
+  },
+  "2026Q3": {
+   "Piráti": 0.992,
+   "STAN": 0.985,
+   "Praha sobě": 0.946,
+   "ANO": 0.646,
+   "SPD": 0.274,
+   "Nezařazená": 0.361,
+   "votes": 130
+  }
+ },
+ "coalition": [
+  "SPOLU",
+  "Piráti",
+  "STAN"
+ ],
+ "rebels": [
+  {
+   "member": "Vyhnánek Pavel M.A.",
+   "club": "Praha sobě",
+   "votes": 1542,
+   "against_club": 0.394
+  },
+  {
+   "member": "Nekolný Stanislav MBA",
+   "club": "ANO",
+   "votes": 2003,
+   "against_club": 0.366
+  },
+  {
+   "member": "Kleslová Radmila JUDr.",
+   "club": "ANO",
+   "votes": 1828,
+   "against_club": 0.314
+  },
+  {
+   "member": "Nepil Radomír",
+   "club": "ANO",
+   "votes": 1992,
+   "against_club": 0.284
+  },
+  {
+   "member": "Třeštíková Hana MgA.",
+   "club": "Praha sobě",
+   "votes": 1470,
+   "against_club": 0.278
+  },
+  {
+   "member": "Drápalová Kristýna Mgr.",
+   "club": "Praha sobě",
+   "votes": 2048,
+   "against_club": 0.254
+  },
+  {
+   "member": "Benkovič Martin Mgr.",
+   "club": "ANO",
+   "votes": 1788,
+   "against_club": 0.237
+  },
+  {
+   "member": "Hušbauer Jan",
+   "club": "ANO",
+   "votes": 2107,
+   "against_club": 0.23
+  },
+  {
+   "member": "Čapková Mariana Ing. MBA",
+   "club": "Praha sobě",
+   "votes": 1869,
+   "against_club": 0.23
+  },
+  {
+   "member": "Prokop Ondřej Ing.",
+   "club": "ANO",
+   "votes": 1961,
+   "against_club": 0.224
+  },
+  {
+   "member": "Nacher Patrik Ing.",
+   "club": "ANO",
+   "votes": 1759,
+   "against_club": 0.219
+  },
+  {
+   "member": "Zelenka Pavel",
+   "club": "Praha sobě",
+   "votes": 1814,
+   "against_club": 0.219
+  },
+  {
+   "member": "Rázga Barbora Mgr.",
+   "club": "ANO",
+   "votes": 1945,
+   "against_club": 0.206
+  },
+  {
+   "member": "Vodrážka David Ing.",
+   "club": "SPOLU",
+   "votes": 2324,
+   "against_club": 0.205
+  },
+  {
+   "member": "Gellová Marta Mgr.",
+   "club": "ANO",
+   "votes": 2000,
+   "against_club": 0.2
+  },
+  {
+   "member": "Kolář Jan Bc.",
+   "club": "ANO",
+   "votes": 1883,
+   "against_club": 0.2
+  },
+  {
+   "member": "Kaněra Tomáš Bc.",
+   "club": "ANO",
+   "votes": 1015,
+   "against_club": 0.195
+  },
+  {
+   "member": "Plesníková Marcela RNDr.",
+   "club": "ANO",
+   "votes": 2105,
+   "against_club": 0.185
+  },
+  {
+   "member": "Bílek Václav",
+   "club": "ANO",
+   "votes": 2285,
+   "against_club": 0.181
+  },
+  {
+   "member": "Hrubčík Martin Mgr. MBA",
+   "club": "ANO",
+   "votes": 1257,
+   "against_club": 0.167
+  },
+  {
+   "member": "Vedralová Lenka Mgr.",
+   "club": "ANO",
+   "votes": 2144,
+   "against_club": 0.167
+  },
+  {
+   "member": "Sedeke Martin Ing.",
+   "club": "SPOLU",
+   "votes": 2468,
+   "against_club": 0.165
+  },
+  {
+   "member": "Seidl Zdeněk prof. MUDr. Ph.D.",
+   "club": "SPD",
+   "votes": 2228,
+   "against_club": 0.154
+  },
+  {
+   "member": "Tylová Eva Ing.",
+   "club": "Piráti",
+   "votes": 2429,
+   "against_club": 0.148
+  },
+  {
+   "member": "Matějková Kamila MgA.",
+   "club": "Praha sobě",
+   "votes": 1661,
+   "against_club": 0.147
+  },
+  {
+   "member": "Komrsková Jana Ing.",
+   "club": "Piráti",
+   "votes": 2417,
+   "against_club": 0.146
+  },
+  {
+   "member": "Urban Milan Dr. Ing.",
+   "club": "SPD",
+   "votes": 2157,
+   "against_club": 0.142
+  },
+  {
+   "member": "Udženija Alexandra Ing.",
+   "club": "SPOLU",
+   "votes": 2405,
+   "against_club": 0.138
+  },
+  {
+   "member": "Pospíšil Jiří JUDr.",
+   "club": "SPOLU",
+   "votes": 2038,
+   "against_club": 0.133
+  },
+  {
+   "member": "Zajíček Zdeněk Mgr.",
+   "club": "SPOLU",
+   "votes": 1988,
+   "against_club": 0.133
+  },
+  {
+   "member": "neurčeno",
+   "club": "STAN",
+   "votes": 897,
+   "against_club": 0.132
+  },
+  {
+   "member": "Scheinherr Adam Ing. Ph.D., MSc.",
+   "club": "Praha sobě",
+   "votes": 2362,
+   "against_club": 0.119
+  },
+  {
+   "member": "Hlaváček Petr doc. Ing. arch.",
+   "club": "STAN",
+   "votes": 1956,
+   "against_club": 0.117
+  },
+  {
+   "member": "Portlík Tomáš Mgr.",
+   "club": "SPOLU",
+   "votes": 2394,
+   "against_club": 0.114
+  },
+  {
+   "member": "Zeman Petr",
+   "club": "Praha sobě",
+   "votes": 1897,
+   "against_club": 0.107
+  },
+  {
+   "member": "Mazur Daniel RNDr. PhD.",
+   "club": "Piráti",
+   "votes": 2434,
+   "against_club": 0.105
+  },
+  {
+   "member": "Procházka David",
+   "club": "STAN",
+   "votes": 1314,
+   "against_club": 0.105
+  },
+  {
+   "member": "Knitl Jiří Mgr.",
+   "club": "Praha sobě",
+   "votes": 2229,
+   "against_club": 0.097
+  },
+  {
+   "member": "Čižinský Jan Mgr.",
+   "club": "Praha sobě",
+   "votes": 2468,
+   "against_club": 0.094
+  },
+  {
+   "member": "Nerušil Josef Mgr.",
+   "club": "SPD",
+   "votes": 2176,
+   "against_club": 0.082
+  },
+  {
+   "member": "Brož Vladan Mgr. et Mgr.",
+   "club": "Praha sobě",
+   "votes": 2426,
+   "against_club": 0.08
+  },
+  {
+   "member": "Pek Tomáš Ing.",
+   "club": "SPOLU",
+   "votes": 2456,
+   "against_club": 0.078
+  },
+  {
+   "member": "Kovářík Zdeněk Ing.",
+   "club": "SPOLU",
+   "votes": 2409,
+   "against_club": 0.076
+  },
+  {
+   "member": "Mareš Pavel Mgr.",
+   "club": "SPOLU",
+   "votes": 2458,
+   "against_club": 0.076
+  },
+  {
+   "member": "Chabr Jan Mgr.",
+   "club": "SPOLU",
+   "votes": 2419,
+   "against_club": 0.075
+  },
+  {
+   "member": "Bodeček David Mgr. MBA",
+   "club": "Piráti",
+   "votes": 2369,
+   "against_club": 0.068
+  },
+  {
+   "member": "Brůžek Jiří",
+   "club": "Piráti",
+   "votes": 2362,
+   "against_club": 0.064
+  },
+  {
+   "member": "Kaštovský Tomáš MUDr.",
+   "club": "SPOLU",
+   "votes": 2370,
+   "against_club": 0.06
+  },
+  {
+   "member": "Freitas Zuzana Mgr.",
+   "club": "Piráti",
+   "votes": 2412,
+   "against_club": 0.055
+  },
+  {
+   "member": "Zábranský Adam Mgr.",
+   "club": "Piráti",
+   "votes": 2370,
+   "against_club": 0.052
+  },
+  {
+   "member": "Svoboda Bohuslav doc. MUDr. CSc.",
+   "club": "SPOLU",
+   "votes": 2423,
+   "against_club": 0.051
+  },
+  {
+   "member": "Soukup Bara Mgr.",
+   "club": "Piráti",
+   "votes": 2391,
+   "against_club": 0.049
+  },
+  {
+   "member": "Hřib Zdeněk MUDr.",
+   "club": "Piráti",
+   "votes": 2183,
+   "against_club": 0.047
+  },
+  {
+   "member": "Klecanda Antonín Mgr. et Mgr. MBA",
+   "club": "STAN",
+   "votes": 2419,
+   "against_club": 0.045
+  },
+  {
+   "member": "Lepš Jakub Mgr.",
+   "club": "SPOLU",
+   "votes": 2397,
+   "against_club": 0.044
+  },
+  {
+   "member": "Wolf Jan",
+   "club": "SPOLU",
+   "votes": 2337,
+   "against_club": 0.042
+  },
+  {
+   "member": "Lněničková Gabriela Ing. MBA",
+   "club": "Piráti",
+   "votes": 2468,
+   "against_club": 0.038
+  },
+  {
+   "member": "Arnotová Kateřina Mgr.",
+   "club": "STAN",
+   "votes": 2335,
+   "against_club": 0.037
+  },
+  {
+   "member": "Mahrik Viktor",
+   "club": "Piráti",
+   "votes": 2466,
+   "against_club": 0.036
+  },
+  {
+   "member": "Slabihoudek Tomáš Ing.",
+   "club": "SPOLU",
+   "votes": 2468,
+   "against_club": 0.034
+  },
+  {
+   "member": "Hroza Michal Bc.",
+   "club": "SPOLU",
+   "votes": 2445,
+   "against_club": 0.027
+  },
+  {
+   "member": "Beránek Jaromír Mgr. Ing.",
+   "club": "Piráti",
+   "votes": 2421,
+   "against_club": 0.024
+  },
+  {
+   "member": "Valdmanová Magdalena",
+   "club": "Piráti",
+   "votes": 2463,
+   "against_club": 0.017
+  },
+  {
+   "member": "Ptáček Jiří",
+   "club": "SPOLU",
+   "votes": 2461,
+   "against_club": 0.015
+  },
+  {
+   "member": "Hamanová Zuzana Ing. arch.",
+   "club": "STAN",
+   "votes": 2349,
+   "against_club": 0.013
+  },
+  {
+   "member": "Kubesa Lucie",
+   "club": "SPOLU",
+   "votes": 2390,
+   "against_club": 0.013
+  },
+  {
+   "member": "Marvanová Hana JUDr.",
+   "club": "Nezařazená",
+   "votes": 1836,
+   "against_club": 0.0
+  }
+ ],
+ "how_clubs_say_no": {
+  "SPOLU": {
+   "Nehlasoval": 0.976,
+   "Zdržel se": 0.018,
+   "Hlas proti": 0.006
+  },
+  "Piráti": {
+   "Nehlasoval": 0.843,
+   "Zdržel se": 0.121,
+   "Hlas proti": 0.035
+  },
+  "STAN": {
+   "Nehlasoval": 0.954,
+   "Zdržel se": 0.041,
+   "Hlas proti": 0.005
+  },
+  "Praha sobě": {
+   "Nehlasoval": 0.9,
+   "Zdržel se": 0.081,
+   "Hlas proti": 0.019
+  },
+  "ANO": {
+   "Nehlasoval": 0.981,
+   "Hlas proti": 0.01,
+   "Zdržel se": 0.009
+  },
+  "SPD": {
+   "Nehlasoval": 0.866,
+   "Zdržel se": 0.112,
+   "Hlas proti": 0.022
+  },
+  "Nezařazená": {
+   "Nehlasoval": 0.969,
+   "Zdržel se": 0.025,
+   "Hlas proti": 0.005
+  }
+ }
+}
