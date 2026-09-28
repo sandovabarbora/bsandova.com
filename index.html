@@ -100,9 +100,7 @@ img{display:block;max-width:100%}
 .filters button.on{color:var(--ink);box-shadow:inset 0 -1.5px 0 var(--ink)}
 .rows{list-style:none;border-top:1px solid var(--ink)}
 .rows li{border-bottom:1px solid var(--line)}
-.rows a{display:grid;grid-template-columns:96px 1fr 220px 70px;gap:var(--pad);align-items:center;padding:14px 0;transition:padding .25s,color .2s}
-.rows .th{width:96px;height:64px;object-fit:cover;display:block;filter:grayscale(.15);transition:filter .3s}
-.rows a:hover .th{filter:none}
+.rows a{display:grid;grid-template-columns:1fr 220px 70px;gap:var(--pad);align-items:baseline;padding:18px 0;transition:padding .25s,color .2s}
 .rows a:hover{padding-left:14px}
 .rows .t{font:500 clamp(22px,2.4vw,34px)/1.1 var(--display);letter-spacing:-.035em}
 .rows .c{font:400 13px var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--grey-ink)}
@@ -224,8 +222,7 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
   .hero .cap{display:none}
   .band .in{grid-template-columns:1fr}
   .band .big,.band p{grid-column:1/-1}
-  .rows a{grid-template-columns:64px 1fr 54px;gap:14px}
-  .rows .th{width:64px;height:43px}
+  .rows a{grid-template-columns:1fr 54px}
   .rows .c{display:none}
   .nav{grid-template-columns:1fr}
   .ask span{display:none}
@@ -354,31 +351,31 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
       </div>
     </div>
     <ul class="rows" id="rows">
-      <li data-tags="make ds" data-img="assets/photo/delayed-red-1200.jpg"><a href="texts/delayed"><img class="th" src="assets/photo/th/delayed-red.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">Delayed All the Time</span><span class="c">Sound &amp; making</span><span class="y">2025</span></a></li>
-      <li data-tags="ds" data-img="assets/photo/thesis-1200.jpg"><a href="texts/thesis"><img class="th" src="assets/photo/th/thesis.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">Persistence Dynamics and Welfare Costs of Transit Delays</span><span class="c">Thesis · award</span><span class="y">2026</span></a></li>
-      <li data-tags="ds" data-img="assets/photo/prague-parking-1200.jpg"><a href="texts/prague-parking"><img class="th" src="assets/photo/th/prague-parking.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">How many parking spaces Prague lost</span><span class="c">Data science</span><span class="y">2026</span></a></li>
-      <li data-tags="ds" data-img="assets/photo/prague-parking-2-1200.jpg"><a href="texts/prague-parking-2"><img class="th" src="assets/photo/th/prague-parking-2.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">Parking II: the fleet, measured</span><span class="c">Data science</span><span class="y">2026</span></a></li>
-      <li data-tags="ds" data-img="assets/photo/prague-parking-3-1200.jpg"><a href="texts/prague-parking-3"><img class="th" src="assets/photo/th/prague-parking-3.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">Parking III: count, not size</span><span class="c">Data science</span><span class="y">2026</span></a></li>
-      <li data-tags="ds ai" data-img="assets/photo/hockey-1200.jpg"><a href="texts/hockey"><img class="th" src="assets/photo/th/hockey.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">Player Pool Atlas · hockey</span><span class="c">Sport</span><span class="y">2026</span></a></li>
-      <li data-tags="ds ai" data-img="assets/photo/atlas-1200.jpg"><a href="texts/football"><img class="th" src="assets/photo/th/atlas.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">Player Pool Atlas · football</span><span class="c">Sport</span><span class="y">2026</span></a></li>
-      <li data-tags="ai" data-img="assets/photo/quaesitor-1200.jpg"><a href="texts/quaesitor/"><img class="th" src="assets/photo/th/quaesitor.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">Quaesitor</span><span class="c">ML &amp; AI</span><span class="y">2026</span></a></li>
-      <li data-tags="ai de" data-img="assets/photo/page-watch-1200.jpg"><a href="watch/"><img class="th" src="assets/photo/th/page-watch.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">Model release watch</span><span class="c">Monthly · live</span><span class="y">live</span></a></li>
-      <li data-tags="ai ds" data-img="assets/photo/silent-detector-1200.jpg"><a href="texts/silent-detector"><img class="th" src="assets/photo/th/silent-detector.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">Can a wrong number be seen coming?</span><span class="c">ML &amp; AI</span><span class="y">2026</span></a></li>
-      <li data-tags="ds ai" data-img="assets/photo/brand-reflection-1200.jpg"><a href="texts/brand-reflection"><img class="th" src="assets/photo/th/brand-reflection.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">Brand Reflection Series</span><span class="c">Claims, checked</span><span class="y">2026</span></a></li>
-      <li data-tags="ds ai" data-img="assets/photo/icu-1200.jpg"><a href="texts/icu"><img class="th" src="assets/photo/th/icu.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">The label says deteriorating</span><span class="c">Claims, checked</span><span class="y">2026</span></a></li>
-      <li data-tags="ds de" data-img="assets/photo/surf-1200.jpg"><a href="texts/surf"><img class="th" src="assets/photo/th/surf.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">Not worth the flight</span><span class="c">Forecasts, verified</span><span class="y">live</span></a></li>
-      <li data-tags="ds de" data-img="assets/photo/weather-1200.jpg"><a href="texts/weather"><img class="th" src="assets/photo/th/weather.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">Weather, checked</span><span class="c">Forecasts, verified</span><span class="y">live</span></a></li>
-      <li data-tags="make" data-img="assets/photo/page-atlantic-1200.jpg"><a href="atlantic/"><img class="th" src="assets/photo/th/page-atlantic.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">The Atlantic, played</span><span class="c">Sound &amp; making</span><span class="y">live</span></a></li>
-      <li data-tags="make ai" data-img="assets/photo/filmrunner-1200.jpg"><a href="texts/filmrunner"><img class="th" src="assets/photo/th/filmrunner.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">FilmRunner · the living call sheet</span><span class="c">Built to be used</span><span class="y">2025</span></a></li>
-      <li data-tags="ai" data-img="assets/photo/second-brain-1200.jpg"><a href="texts/second-brain"><img class="th" src="assets/photo/th/second-brain.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">A wiki that an agent keeps</span><span class="c">ML &amp; AI</span><span class="y">2026</span></a></li>
-      <li data-tags="de" data-img="assets/photo/quotecheck-1200.jpg"><a href="texts/quotecheck"><img class="th" src="assets/photo/th/quotecheck.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">How to catch a fabricated quote</span><span class="c">Data engineering</span><span class="y">2026</span></a></li>
-      <li data-tags="ai de" data-img="assets/photo/page-ask-1200.jpg"><a href="ask/"><img class="th" src="assets/photo/th/page-ask.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">Ask the site. It shows its work.</span><span class="c">Live</span><span class="y">2026</span></a></li>
-      <li data-tags="ai de" data-img="assets/photo/sitewitness-1200.jpg"><a href="texts/sitewitness"><img class="th" src="assets/photo/th/sitewitness.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">An agent that shows its work</span><span class="c">Data engineering</span><span class="y">2026</span></a></li>
-      <li data-tags="de" data-img="assets/photo/cutover-1200.jpg"><a href="texts/cutover"><img class="th" src="assets/photo/th/cutover.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">How to prove a cutover</span><span class="c">Data engineering</span><span class="y">2026</span></a></li>
-      <li data-tags="ai de" data-img="assets/photo/ai-over-data-1200.jpg"><a href="texts/ai-over-data"><img class="th" src="assets/photo/th/ai-over-data.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">AI over data, measured</span><span class="c">By day</span><span class="y">2025</span></a></li>
-      <li data-tags="de ai" data-img="assets/photo/engineering-1200.jpg"><a href="texts/engineering"><img class="th" src="assets/photo/th/engineering.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">The platform is code. So is the trust.</span><span class="c">By day</span><span class="y">2021</span></a></li>
-      <li data-tags="de" data-img="assets/photo/page-status-1200.jpg"><a href="status/"><img class="th" src="assets/photo/th/page-status.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">Six jobs, no server</span><span class="c">Live</span><span class="y">live</span></a></li>
-      <li data-tags="" data-img="assets/photo/page-library-1200.jpg"><a href="library/"><img class="th" src="assets/photo/th/page-library.jpg" alt="" loading="lazy" decoding="async" width="96" height="64"><span class="t">What the work was read against</span><span class="c">Library</span><span class="y">2026</span></a></li>
+      <li data-tags="make ds" data-img="assets/photo/delayed-red-1200.jpg"><a href="texts/delayed"><span class="t">Delayed All the Time</span><span class="c">Sound &amp; making</span><span class="y">2025</span></a></li>
+      <li data-tags="ds" data-img="assets/photo/thesis-1200.jpg"><a href="texts/thesis"><span class="t">Persistence Dynamics and Welfare Costs of Transit Delays</span><span class="c">Thesis · award</span><span class="y">2026</span></a></li>
+      <li data-tags="ds" data-img="assets/photo/prague-parking-1200.jpg"><a href="texts/prague-parking"><span class="t">How many parking spaces Prague lost</span><span class="c">Data science</span><span class="y">2026</span></a></li>
+      <li data-tags="ds" data-img="assets/photo/prague-parking-2-1200.jpg"><a href="texts/prague-parking-2"><span class="t">Parking II: the fleet, measured</span><span class="c">Data science</span><span class="y">2026</span></a></li>
+      <li data-tags="ds" data-img="assets/photo/prague-parking-3-1200.jpg"><a href="texts/prague-parking-3"><span class="t">Parking III: count, not size</span><span class="c">Data science</span><span class="y">2026</span></a></li>
+      <li data-tags="ds ai" data-img="assets/photo/hockey-1200.jpg"><a href="texts/hockey"><span class="t">Player Pool Atlas · hockey</span><span class="c">Sport</span><span class="y">2026</span></a></li>
+      <li data-tags="ds ai" data-img="assets/photo/atlas-1200.jpg"><a href="texts/football"><span class="t">Player Pool Atlas · football</span><span class="c">Sport</span><span class="y">2026</span></a></li>
+      <li data-tags="ai" data-img="assets/photo/quaesitor-1200.jpg"><a href="texts/quaesitor/"><span class="t">Quaesitor</span><span class="c">ML &amp; AI</span><span class="y">2026</span></a></li>
+      <li data-tags="ai de" data-img="assets/photo/page-watch-1200.jpg"><a href="watch/"><span class="t">Model release watch</span><span class="c">Monthly · live</span><span class="y">live</span></a></li>
+      <li data-tags="ai ds" data-img="assets/photo/silent-detector-1200.jpg"><a href="texts/silent-detector"><span class="t">Can a wrong number be seen coming?</span><span class="c">ML &amp; AI</span><span class="y">2026</span></a></li>
+      <li data-tags="ds ai" data-img="assets/photo/brand-reflection-1200.jpg"><a href="texts/brand-reflection"><span class="t">Brand Reflection Series</span><span class="c">Claims, checked</span><span class="y">2026</span></a></li>
+      <li data-tags="ds ai" data-img="assets/photo/icu-1200.jpg"><a href="texts/icu"><span class="t">The label says deteriorating</span><span class="c">Claims, checked</span><span class="y">2026</span></a></li>
+      <li data-tags="ds de" data-img="assets/photo/surf-1200.jpg"><a href="texts/surf"><span class="t">Not worth the flight</span><span class="c">Forecasts, verified</span><span class="y">live</span></a></li>
+      <li data-tags="ds de" data-img="assets/photo/weather-1200.jpg"><a href="texts/weather"><span class="t">Weather, checked</span><span class="c">Forecasts, verified</span><span class="y">live</span></a></li>
+      <li data-tags="make" data-img="assets/photo/page-atlantic-1200.jpg"><a href="atlantic/"><span class="t">The Atlantic, played</span><span class="c">Sound &amp; making</span><span class="y">live</span></a></li>
+      <li data-tags="make ai" data-img="assets/photo/filmrunner-1200.jpg"><a href="texts/filmrunner"><span class="t">FilmRunner · the living call sheet</span><span class="c">Built to be used</span><span class="y">2025</span></a></li>
+      <li data-tags="ai" data-img="assets/photo/second-brain-1200.jpg"><a href="texts/second-brain"><span class="t">A wiki that an agent keeps</span><span class="c">ML &amp; AI</span><span class="y">2026</span></a></li>
+      <li data-tags="de" data-img="assets/photo/quotecheck-1200.jpg"><a href="texts/quotecheck"><span class="t">How to catch a fabricated quote</span><span class="c">Data engineering</span><span class="y">2026</span></a></li>
+      <li data-tags="ai de" data-img="assets/photo/page-ask-1200.jpg"><a href="ask/"><span class="t">Ask the site. It shows its work.</span><span class="c">Live</span><span class="y">2026</span></a></li>
+      <li data-tags="ai de" data-img="assets/photo/sitewitness-1200.jpg"><a href="texts/sitewitness"><span class="t">An agent that shows its work</span><span class="c">Data engineering</span><span class="y">2026</span></a></li>
+      <li data-tags="de" data-img="assets/photo/cutover-1200.jpg"><a href="texts/cutover"><span class="t">How to prove a cutover</span><span class="c">Data engineering</span><span class="y">2026</span></a></li>
+      <li data-tags="ai de" data-img="assets/photo/ai-over-data-1200.jpg"><a href="texts/ai-over-data"><span class="t">AI over data, measured</span><span class="c">By day</span><span class="y">2025</span></a></li>
+      <li data-tags="de ai" data-img="assets/photo/engineering-1200.jpg"><a href="texts/engineering"><span class="t">The platform is code. So is the trust.</span><span class="c">By day</span><span class="y">2021</span></a></li>
+      <li data-tags="de" data-img="assets/photo/page-status-1200.jpg"><a href="status/"><span class="t">Six jobs, no server</span><span class="c">Live</span><span class="y">live</span></a></li>
+      <li data-tags="" data-img="assets/photo/page-library-1200.jpg"><a href="library/"><span class="t">What the work was read against</span><span class="c">Library</span><span class="y">2026</span></a></li>
     </ul>
   </section>
 </main>
