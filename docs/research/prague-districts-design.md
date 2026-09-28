@@ -596,4 +596,80 @@ text dumps (`city_txt/`) are excluded.
 
 ## Changes after registration
 
-(none yet)
+### 29 September 2026, before any outcome was joined: parser, bridge and investment split
+
+Built by `tools/praha/districts_grants.py` in `--structure` and `--bridge` mode. The counts are in
+`docs/research/prague-districts-grants-structure.json`, and the bridge statistic in
+`docs/research/prague-districts-bridge.json`.
+
+**Parser coverage (§4.2 rule: at least 97 %).** The share of amount-bearing item lines that were parsed, in the
+lists the design uses:
+
+| List | Years | Coverage |
+|---|---|---|
+| city's budget measures (5.3; 5.4 in 2015) | 2014–2023 | 0.9947–1.000 |
+| drawdown 5.5 (for the bridge) | 2019–2023 | 0.9796–0.9986 |
+| drawdown 2024 (5.2) | 2024 | 0.9975 |
+| drawdown 2025 (5.2.1) | 2025 | 0.9923 |
+
+The rule is met in every list. City-own rows per year range from 646 (2025) to 2 099 (2022). All 57 districts
+appear in every year. Changes to the parser, all made on structure, with amounts masked:
+
+- **Recognised forms:**
+  - resolution forms "Z 8/45", "R 1092", "R 3170 bod 2" and "2M/34";
+  - ÚZ with a ZJ suffix ("137/100") or zero padding ("000000081");
+  - the settlement markers "xx", "-" and blank;
+  - "MČ" before a district, short or abbreviated district names ("Kopanina", "Dol. Měcholupy", "D. Měcholupy",
+    "Průhonic"), and one typo ("Śtěrboholy");
+  - in 2017, six rows name a district by the city's 1–57 index ("Praha 37"). They are mapped with the order of the
+    allocation tables, read from the name column only.
+- **The 2025 layout:** district blocks ("MČ Praha 1"). The row carries RO, purpose, [ORG], ÚZ and five amounts in
+  CZK; the resolution sits inline or on the lines above.
+- **2024:** the lists are reprinted in the resolution file, which is skipped.
+
+**Outcome rule made explicit (§4.3 said "the city's own grants").** A row is counted if both of these hold:
+
+- its ÚZ is a number from 1 to 999;
+- its RO is outside the year-end settlement series 8000–8999.
+
+This excludes rows with no ÚZ, "-" or "xx": the settlement of the previous year, local-fee top-ups, refunds, and the
+"additional financial relationship" paid to every district in 2022. It also excludes state ÚZ (98xxx, 1xxxx, 3xxxx
+and longer codes). The rule was decided on row labels, before any amount was summed.
+
+**Amount per row:**
+
+- budget-measure lists: the value in the 4137 / 4251 column (the last amount on the line; the city-side 5347 / 6363
+  copy is equal);
+- drawdown lists: the first column, the budget adjustment.
+
+**Dating (§4.2).**
+
+- ZHMP resolutions resolve to Part 1's session dates, except 30 rows in the 2020 list and 7 in the 2018 list.
+- Rows without a resolvable resolution take the date of the nearest dated RO in the same list. This covers 0–92
+  rows a year: at most 6 % of city-own rows in 2014–2024, and 14 % in 2025.
+- Every city-own row has a date.
+
+**Investment split (§3, H2 fallback).**
+
+- Every list in every year has a "b) Investiční" subsection against "a) Neinvestiční", including 2014 and
+  2016–2019, where the column header shows only 4137 / 5347.
+- In 2020–2023 the 4251 / 6363 column is used where the header has it. It disagrees with the subsection on no
+  city-own row. The disagreements seen, 119–171 a year, all lie in the excluded 8xxx settlement block.
+- 2015's combined list is not separable. 2015 lies outside both event windows.
+- **So the pre-2020 split exists for 100 % of city-own rows in the event windows, and under the registered rule H2
+  uses both events.**
+
+**Bridge (§4.2).**
+
+- Lin's concordance between the city's budget-measure list (5.3) and its drawdown list (5.5), summed by district and
+  list year for 2019–2023: **0.7246 on 285 cells**, below the registered 0.9.
+- **Registered consequence, applied:** the post window of the 2023 event is regime-year 2023 only (ℓ = 0). The
+  2024–2025 drawdown lists are not used for H1 or H2.
+- The event-study lags +1 and +2 for 2023 (from the drawdown lists) are reported descriptively and marked as such.
+- The pre-join note: the two lists differ by construction. The budget-measure list records each measure including
+  returns; the drawdown list records current-year grants at their adjusted budget. The rule was fixed before the
+  check and is applied as written.
+
+**Also seen during this step (§0 addendum).** One unmasked line of the 2025 drawdown list was printed while learning
+the layout: the "CELKEM MČ Praha 1" total row, with its five amounts (adjusted budget, provided, returned, drawn,
+remaining). The 2023 event's window now ends in 2023, so that 2025 row is not part of H1.
