@@ -142,7 +142,6 @@ img{display:block;max-width:100%}
 .still.shot{background-size:cover;background-position:center}
 .credit a{text-decoration:underline;text-underline-offset:.15em}
 .film .credit,.seaband .credit{position:absolute;z-index:3;right:var(--pad);top:auto;bottom:16px;height:auto;margin:0;font:400 11px var(--mono);background:rgba(0,0,0,.42);padding:3px 8px;color:rgba(255,255,255,.85);border-radius:2px}
-.peek img{object-fit:cover;padding:0}
 /* legibility over photographs: dark at the top (header) and bottom (titles) */
 .hero::before{background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,0) 20%),linear-gradient(0deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.15) 55%,rgba(0,0,0,0) 75%),linear-gradient(90deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,0) 60%)}
 .film::before{background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,0) 20%),linear-gradient(0deg,rgba(0,0,0,.8) 0%,rgba(0,0,0,.25) 45%,rgba(0,0,0,0) 70%),linear-gradient(90deg,rgba(0,0,0,.45),rgba(0,0,0,0) 60%)!important}
@@ -212,10 +211,6 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
 .now-g .s{font:400 13px/1.5 var(--mono);color:var(--grey);margin-top:auto}
 .now-g .s b{color:var(--ink);font-weight:400}
 /* cursor preview over the index */
-.peek{position:fixed;z-index:15;width:340px;aspect-ratio:4/3;pointer-events:none;background:#0b0b0b;opacity:0;transform:translate(-50%,-50%) scale(.92);transition:opacity .25s,transform .35s cubic-bezier(.19,1,.22,1)}
-.peek.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
-.peek img{width:100%;height:100%;object-fit:contain;padding:18px}
-@media (hover:none){.peek{display:none}}
 @media (max-width:820px){
   .now-g{grid-template-columns:1fr}.now-g a,.now-g a+a{padding:22px 0;border-right:0;border-bottom:1px solid var(--line);min-height:0}
   .clock{display:none}
@@ -351,36 +346,35 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
       </div>
     </div>
     <ul class="rows" id="rows">
-      <li data-tags="ds" data-img="assets/photo/prague-council-1200.jpg"><a href="texts/prague-council"><span class="t">Prague's council rarely says no</span><span class="c">Data science · Prague, measured</span><span class="y">2026</span></a></li>
-      <li data-tags="make ds" data-img="assets/photo/delayed-red-1200.jpg"><a href="texts/delayed"><span class="t">Delayed All the Time</span><span class="c">Sound &amp; making</span><span class="y">2025</span></a></li>
-      <li data-tags="ds" data-img="assets/photo/thesis-1200.jpg"><a href="texts/thesis"><span class="t">Persistence Dynamics and Welfare Costs of Transit Delays</span><span class="c">Thesis · award</span><span class="y">2026</span></a></li>
-      <li data-tags="ds" data-img="assets/photo/prague-parking-1200.jpg"><a href="texts/prague-parking"><span class="t">How many parking spaces Prague lost</span><span class="c">Data science</span><span class="y">2026</span></a></li>
-      <li data-tags="ds" data-img="assets/photo/prague-parking-2-1200.jpg"><a href="texts/prague-parking-2"><span class="t">Parking II: the fleet, measured</span><span class="c">Data science</span><span class="y">2026</span></a></li>
-      <li data-tags="ds" data-img="assets/photo/prague-parking-3-1200.jpg"><a href="texts/prague-parking-3"><span class="t">Parking III: count, not size</span><span class="c">Data science</span><span class="y">2026</span></a></li>
-      <li data-tags="ds ai" data-img="assets/photo/hockey-1200.jpg"><a href="texts/hockey"><span class="t">Player Pool Atlas · hockey</span><span class="c">Sport</span><span class="y">2026</span></a></li>
-      <li data-tags="ds ai" data-img="assets/photo/atlas-1200.jpg"><a href="texts/football"><span class="t">Player Pool Atlas · football</span><span class="c">Sport</span><span class="y">2026</span></a></li>
-      <li data-tags="ai" data-img="assets/photo/quaesitor-1200.jpg"><a href="texts/quaesitor/"><span class="t">Quaesitor</span><span class="c">ML &amp; AI</span><span class="y">2026</span></a></li>
-      <li data-tags="ai de" data-img="assets/photo/page-watch-1200.jpg"><a href="watch/"><span class="t">Model release watch</span><span class="c">Monthly · live</span><span class="y">live</span></a></li>
-      <li data-tags="ai ds" data-img="assets/photo/silent-detector-1200.jpg"><a href="texts/silent-detector"><span class="t">Can a wrong number be seen coming?</span><span class="c">ML &amp; AI</span><span class="y">2026</span></a></li>
-      <li data-tags="ds ai" data-img="assets/photo/brand-reflection-1200.jpg"><a href="texts/brand-reflection"><span class="t">Brand Reflection Series</span><span class="c">Claims, checked</span><span class="y">2026</span></a></li>
-      <li data-tags="ds ai" data-img="assets/photo/icu-1200.jpg"><a href="texts/icu"><span class="t">The label says deteriorating</span><span class="c">Claims, checked</span><span class="y">2026</span></a></li>
-      <li data-tags="ds de" data-img="assets/photo/surf-1200.jpg"><a href="texts/surf"><span class="t">Not worth the flight</span><span class="c">Forecasts, verified</span><span class="y">live</span></a></li>
-      <li data-tags="ds de" data-img="assets/photo/weather-1200.jpg"><a href="texts/weather"><span class="t">Weather, checked</span><span class="c">Forecasts, verified</span><span class="y">live</span></a></li>
-      <li data-tags="make" data-img="assets/photo/page-atlantic-1200.jpg"><a href="atlantic/"><span class="t">The Atlantic, played</span><span class="c">Sound &amp; making</span><span class="y">live</span></a></li>
-      <li data-tags="make ai" data-img="assets/photo/filmrunner-1200.jpg"><a href="texts/filmrunner"><span class="t">FilmRunner · the living call sheet</span><span class="c">Built to be used</span><span class="y">2025</span></a></li>
-      <li data-tags="ai" data-img="assets/photo/second-brain-1200.jpg"><a href="texts/second-brain"><span class="t">A wiki that an agent keeps</span><span class="c">ML &amp; AI</span><span class="y">2026</span></a></li>
-      <li data-tags="de" data-img="assets/photo/quotecheck-1200.jpg"><a href="texts/quotecheck"><span class="t">How to catch a fabricated quote</span><span class="c">Data engineering</span><span class="y">2026</span></a></li>
-      <li data-tags="ai de" data-img="assets/photo/page-ask-1200.jpg"><a href="ask/"><span class="t">Ask the site. It shows its work.</span><span class="c">Live</span><span class="y">2026</span></a></li>
-      <li data-tags="ai de" data-img="assets/photo/sitewitness-1200.jpg"><a href="texts/sitewitness"><span class="t">An agent that shows its work</span><span class="c">Data engineering</span><span class="y">2026</span></a></li>
-      <li data-tags="de" data-img="assets/photo/cutover-1200.jpg"><a href="texts/cutover"><span class="t">How to prove a cutover</span><span class="c">Data engineering</span><span class="y">2026</span></a></li>
-      <li data-tags="ai de" data-img="assets/photo/ai-over-data-1200.jpg"><a href="texts/ai-over-data"><span class="t">AI over data, measured</span><span class="c">By day</span><span class="y">2025</span></a></li>
-      <li data-tags="de ai" data-img="assets/photo/engineering-1200.jpg"><a href="texts/engineering"><span class="t">The platform is code. So is the trust.</span><span class="c">By day</span><span class="y">2021</span></a></li>
-      <li data-tags="de" data-img="assets/photo/page-status-1200.jpg"><a href="status/"><span class="t">Six jobs, no server</span><span class="c">Live</span><span class="y">live</span></a></li>
-      <li data-tags="" data-img="assets/photo/page-library-1200.jpg"><a href="library/"><span class="t">What the work was read against</span><span class="c">Library</span><span class="y">2026</span></a></li>
+      <li data-tags="ds"><a href="texts/prague-council"><span class="t">Prague's council rarely says no</span><span class="c">Data science · Prague, measured</span><span class="y">2026</span></a></li>
+      <li data-tags="make ds"><a href="texts/delayed"><span class="t">Delayed All the Time</span><span class="c">Sound &amp; making</span><span class="y">2025</span></a></li>
+      <li data-tags="ds"><a href="texts/thesis"><span class="t">Persistence Dynamics and Welfare Costs of Transit Delays</span><span class="c">Thesis · award</span><span class="y">2026</span></a></li>
+      <li data-tags="ds"><a href="texts/prague-parking"><span class="t">How many parking spaces Prague lost</span><span class="c">Data science</span><span class="y">2026</span></a></li>
+      <li data-tags="ds"><a href="texts/prague-parking-2"><span class="t">Parking II: the fleet, measured</span><span class="c">Data science</span><span class="y">2026</span></a></li>
+      <li data-tags="ds"><a href="texts/prague-parking-3"><span class="t">Parking III: count, not size</span><span class="c">Data science</span><span class="y">2026</span></a></li>
+      <li data-tags="ds ai"><a href="texts/hockey"><span class="t">Player Pool Atlas · hockey</span><span class="c">Sport</span><span class="y">2026</span></a></li>
+      <li data-tags="ds ai"><a href="texts/football"><span class="t">Player Pool Atlas · football</span><span class="c">Sport</span><span class="y">2026</span></a></li>
+      <li data-tags="ai"><a href="texts/quaesitor/"><span class="t">Quaesitor</span><span class="c">ML &amp; AI</span><span class="y">2026</span></a></li>
+      <li data-tags="ai de"><a href="watch/"><span class="t">Model release watch</span><span class="c">Monthly · live</span><span class="y">live</span></a></li>
+      <li data-tags="ai ds"><a href="texts/silent-detector"><span class="t">Can a wrong number be seen coming?</span><span class="c">ML &amp; AI</span><span class="y">2026</span></a></li>
+      <li data-tags="ds ai"><a href="texts/brand-reflection"><span class="t">Brand Reflection Series</span><span class="c">Claims, checked</span><span class="y">2026</span></a></li>
+      <li data-tags="ds ai"><a href="texts/icu"><span class="t">The label says deteriorating</span><span class="c">Claims, checked</span><span class="y">2026</span></a></li>
+      <li data-tags="ds de"><a href="texts/surf"><span class="t">Not worth the flight</span><span class="c">Forecasts, verified</span><span class="y">live</span></a></li>
+      <li data-tags="ds de"><a href="texts/weather"><span class="t">Weather, checked</span><span class="c">Forecasts, verified</span><span class="y">live</span></a></li>
+      <li data-tags="make"><a href="atlantic/"><span class="t">The Atlantic, played</span><span class="c">Sound &amp; making</span><span class="y">live</span></a></li>
+      <li data-tags="make ai"><a href="texts/filmrunner"><span class="t">FilmRunner · the living call sheet</span><span class="c">Built to be used</span><span class="y">2025</span></a></li>
+      <li data-tags="ai"><a href="texts/second-brain"><span class="t">A wiki that an agent keeps</span><span class="c">ML &amp; AI</span><span class="y">2026</span></a></li>
+      <li data-tags="de"><a href="texts/quotecheck"><span class="t">How to catch a fabricated quote</span><span class="c">Data engineering</span><span class="y">2026</span></a></li>
+      <li data-tags="ai de"><a href="ask/"><span class="t">Ask the site. It shows its work.</span><span class="c">Live</span><span class="y">2026</span></a></li>
+      <li data-tags="ai de"><a href="texts/sitewitness"><span class="t">An agent that shows its work</span><span class="c">Data engineering</span><span class="y">2026</span></a></li>
+      <li data-tags="de"><a href="texts/cutover"><span class="t">How to prove a cutover</span><span class="c">Data engineering</span><span class="y">2026</span></a></li>
+      <li data-tags="ai de"><a href="texts/ai-over-data"><span class="t">AI over data, measured</span><span class="c">By day</span><span class="y">2025</span></a></li>
+      <li data-tags="de ai"><a href="texts/engineering"><span class="t">The platform is code. So is the trust.</span><span class="c">By day</span><span class="y">2021</span></a></li>
+      <li data-tags="de"><a href="status/"><span class="t">Six jobs, no server</span><span class="c">Live</span><span class="y">live</span></a></li>
+      <li data-tags=""><a href="library/"><span class="t">What the work was read against</span><span class="c">Library</span><span class="y">2026</span></a></li>
     </ul>
   </section>
 </main>
-<div class="peek" id="peek" aria-hidden="true"><img alt=""></div>
 
 <footer class="ft" id="contact">
   <h2 class="big"><a href="mailto:hello@bsandova.com">hello@<br>bsandova.com</a></h2>
@@ -506,14 +500,6 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
   // after a jump (menu, index, #hash) sections above the viewport are shown at once
   const revealAbove = () => document.querySelectorAll('.rv:not(.in)').forEach(el => { if (el.getBoundingClientRect().bottom < 0) el.classList.add('in'); });
   addEventListener('scroll', revealAbove, {passive: true}); addEventListener('hashchange', revealAbove); revealAbove();
-
-  // index: a photograph follows the cursor over rows that have one
-  const peek = document.getElementById('peek'), pimg = peek.querySelector('img');
-  document.querySelectorAll('#rows li[data-img]').forEach(li => {
-    li.addEventListener('mouseenter', () => { pimg.src = li.dataset.img; peek.classList.add('on'); });
-    li.addEventListener('mouseleave', () => peek.classList.remove('on'));
-  });
-  addEventListener('mousemove', e => { peek.style.left = e.clientX + 'px'; peek.style.top = e.clientY + 'px'; }, {passive: true});
 
   // menu
   const nav = document.getElementById('nav'), open = document.getElementById('open');
