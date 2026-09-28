@@ -141,7 +141,7 @@ page("taxonomy", 2,
 <section class="refs" id="refs">
 <h2>References</h2>
 <ol>
-<li id="r1">Quaesitor (2026): <a href="original/traps.html">Twenty-six ways a number comes back wrong and looks fine</a>. Taxonomy with median divergence and run counts, injected from the runs at build time. The questions, both queries behind each, the warehouse builders and the runs are in the <a href="https://github.com/sandovabarbora/quaesitor-method">method repository</a>.</li>
+<li id="r1">Quaesitor (2026): <a href="original/traps.html">Twenty-six ways a number comes back wrong and looks fine</a>. Taxonomy with median divergence and run counts, injected from the runs at build time. The questions, both queries behind each, the warehouse builders and the runs are in the method repository (private).</li>
 <li id="r2">Quaesitor (2026): <a href="original/access.html">Twelve ways an assistant answers with rows it was never allowed to see</a>. Scenarios A01–A12 with role, question and the shortcut that gets past each restriction.</li>
 </ol>
 </section>
@@ -220,7 +220,7 @@ page("why", 3,
 <li id="r14">Almohaimeed, S. et al. (2024): <a href="https://doi.org/10.1145/3605098.3636065">Ar-Spider: text-to-SQL in Arabic</a>, Proc. 39th ACM/SIGAPP SAC. 8.79 % gap outside English.</li>
 <li id="r15">Korolev, Y. (2025): <a href="https://doi.org/10.65114/aide.gmry6g41">The year of silent failures: AI technical debt and the crisis of verification</a>, Journal of Human–AI Decision-Making Systems.</li>
 <li id="r16">Rumiantsau, M. (2026): <a href="https://cube.dev/blog/why-semantic-layers-make-llm-analytics-reliable-a-paired-benchmark-across-three-frontier-models">Why semantic layers make LLM analytics reliable: a paired benchmark across three frontier models</a>, Cube, 28 April. 100 questions, three models, schema alone vs schema plus a 4 KB semantic layer.</li>
-<li id="r17"><a href="https://github.com/sandovabarbora/quaesitor-method">quaesitor-method</a>: the harness behind the figures, MIT.</li>
+<li id="r17">quaesitor-method: the harness behind the figures (private repository).</li>
 <li id="r18"><a href="https://github.com/sandovabarbora/quaesitor-zero">quaesitor-zero</a> on GitHub and <a href="https://pypi.org/project/quaesitor-zero/">PyPI</a>, v0.1.4, Apache-2.0. Offline check for abstention in text-to-SQL and RAG.</li>
 </ol>
 </section>
