@@ -1,0 +1,252 @@
+{
+ "code_sha256": "4fad464b54902dbdadb521f7b63708fa1382e143b9327033f1b51f4864686ec2",
+ "estimates": {
+  "delta1_cm": 12.718240081225899,
+  "comparator_C_cm": 10.424472130185558,
+  "b_hat": 1.474048660942528,
+  "d_cm": 2.2937679510403406,
+  "delta2_cm": 2.2957704096967246,
+  "delta_margin_cm": 4.4,
+  "eea_slope_mm_per_year": 7.072
+ },
+ "annual_means_mm": {
+  "2012": 4356.538171555185,
+  "2013": 4378.270892038169,
+  "2014": 4387.419156932474,
+  "2015": 4402.067664739856,
+  "2016": 4407.054020806846,
+  "2017": 4440.598922977237,
+  "2018": 4437.421169007833,
+  "2019": 4443.673253442499,
+  "2020": 4457.0569863046585,
+  "2021": 4467.316624246287,
+  "2022": 4500.604504831101,
+  "2023": 4502.604898500861,
+  "2024": 4513.5845157672975,
+  "2025": 4522.453192516695
+ },
+ "tests": {
+  "d_cm": 2.2937679510403406,
+  "se_d": 3.8695472642497157,
+  "p_tost": 0.2876,
+  "p_lower": 0.0483,
+  "p_upper": 0.2876,
+  "p_disagreement": 0.7125,
+  "ci90_d": [
+   -4.305812930352159,
+   9.195216768422343
+  ],
+  "ci95_d": [
+   -5.542458016241644,
+   10.633762648085808
+  ],
+  "delta2_cm": 2.2957704096967246,
+  "se_delta2": 1.322843044116336,
+  "p_h2b": 0.0072,
+  "ci95_delta2": [
+   -0.27139795089916685,
+   5.170218082181821
+  ],
+  "B": 9999
+ },
+ "holm": {
+  "H2b": {
+   "p": 0.0072,
+   "threshold": 0.025,
+   "rejected": true
+  },
+  "H2a": {
+   "p": 0.2876,
+   "threshold": 0.05,
+   "rejected": false
+  }
+ },
+ "h2a_reading": "not supported: inconclusive (underpowered)",
+ "h2b_reading": "supported",
+ "forecast_contest": "undecided",
+ "te_rounding_note_cm": 0.7,
+ "kish_effective_clusters": 37.05132585280243,
+ "lines": 796,
+ "wild_fallback_used": false,
+ "imputed_weight_by_year": {
+  "2012": {
+   "adjacent": 0.0,
+   "make_year": 0.0017,
+   "dropped_regs": 12
+  },
+  "2013": {
+   "adjacent": 0.0009,
+   "make_year": 0.0006,
+   "dropped_regs": 6
+  },
+  "2014": {
+   "adjacent": 0.0002,
+   "make_year": 0.0,
+   "dropped_regs": 8
+  },
+  "2015": {
+   "adjacent": 0.0,
+   "make_year": 0.0,
+   "dropped_regs": 2
+  },
+  "2016": {
+   "adjacent": 0.0,
+   "make_year": 0.0,
+   "dropped_regs": 0
+  },
+  "2017": {
+   "adjacent": 0.0,
+   "make_year": 0.0,
+   "dropped_regs": 2
+  },
+  "2018": {
+   "adjacent": 0.0,
+   "make_year": 0.0001,
+   "dropped_regs": 6457
+  },
+  "2019": {
+   "adjacent": 0.0,
+   "make_year": 0.0001,
+   "dropped_regs": 4
+  },
+  "2020": {
+   "adjacent": 0.0,
+   "make_year": 0.0005,
+   "dropped_regs": 0
+  },
+  "2021": {
+   "adjacent": 0.0,
+   "make_year": 0.0022,
+   "dropped_regs": 8
+  },
+  "2022": {
+   "adjacent": 0.0,
+   "make_year": 0.0,
+   "dropped_regs": 0
+  },
+  "2023": {
+   "adjacent": 0.0031,
+   "make_year": 0.0019,
+   "dropped_regs": 0
+  },
+  "2024": {
+   "adjacent": 0.0034,
+   "make_year": 0.0001,
+   "dropped_regs": 0
+  },
+  "2025": {
+   "adjacent": 0.0,
+   "make_year": 0.0003,
+   "dropped_regs": 0
+  }
+ },
+ "lomo_top": [
+  {
+   "line": "SKODA OCTAVIA",
+   "weight_share": 0.0993831882293753,
+   "d_change": 1.7658404506108276,
+   "delta2_change": 0.39372246535225663
+  },
+  {
+   "line": "HYUNDAI I",
+   "weight_share": 0.043615837099730353,
+   "d_change": 1.568144067140775,
+   "delta2_change": 0.2961822621390642
+  },
+  {
+   "line": "SKODA CITIGO",
+   "weight_share": 0.008617817970957274,
+   "d_change": -1.507823931776608,
+   "delta2_change": 0.0
+  },
+  {
+   "line": "SKODA KAMIQ",
+   "weight_share": 0.0195228910575659,
+   "d_change": 1.1177989826395756,
+   "delta2_change": 0.4677590973617045
+  },
+  {
+   "line": "FORD FIESTA",
+   "weight_share": 0.010355364185574048,
+   "d_change": -1.0769238110834234,
+   "delta2_change": -0.11529446419641332
+  },
+  {
+   "line": "SKODA KODIAQ",
+   "weight_share": 0.021889997902606935,
+   "d_change": -0.991145882424151,
+   "delta2_change": -0.3857499178850232
+  },
+  {
+   "line": "SKODA FABIA",
+   "weight_share": 0.07237822439912431,
+   "d_change": 0.5640099939971215,
+   "delta2_change": -0.2250908136137877
+  },
+  {
+   "line": "HYUNDAI IX",
+   "weight_share": 0.013463412828642987,
+   "d_change": -0.5572491891876954,
+   "delta2_change": 0.0
+  },
+  {
+   "line": "SKODA YETI",
+   "weight_share": 0.009433813540385784,
+   "d_change": -0.5216892059515033,
+   "delta2_change": 0.0
+  },
+  {
+   "line": "SKODA SCALA",
+   "weight_share": 0.019869714877919387,
+   "d_change": 0.4806902964846227,
+   "delta2_change": 0.27305703997741126
+  }
+ ],
+ "size_check": {
+  "H2a_upper(+δ)": {
+   "rejection_rate": 0.11,
+   "nsim": 200,
+   "B_inner": 199,
+   "note": "reduced B, non-studentised"
+  },
+  "H2a_lower(−δ)": {
+   "rejection_rate": 0.075,
+   "nsim": 200,
+   "B_inner": 199,
+   "note": "reduced B, non-studentised"
+  },
+  "H2b(6.0)": {
+   "rejection_rate": 0.06,
+   "nsim": 200,
+   "B_inner": 199,
+   "note": "reduced B, non-studentised"
+  }
+ },
+ "r12": {
+  "drop_2018": {
+   "delta1_cm": 12.724015240683764,
+   "d_cm": 2.299543110498206,
+   "delta2_cm": 2.295770409696506
+  },
+  "drop_2016": {
+   "delta1_cm": 12.662660194106705,
+   "d_cm": 2.2381880639211467,
+   "delta2_cm": 2.295770409696506
+  },
+  "endpoints": {
+   "delta1_cm": 14.406633327591589,
+   "d_cm": 3.9821611974060307,
+   "delta2_cm": 2.184868768559409
+  },
+  "unweighted": {
+   "delta1_cm": 12.207481368622625,
+   "d_cm": 1.7830092384370673,
+   "delta2_cm": 2.1061479190618413
+  },
+  "drop_largest_line": {
+   "delta1_cm": 14.588908591624104,
+   "d_cm": 4.164436461438546,
+   "delta2_cm": 2.689492875048927
+  }
+ }
+}

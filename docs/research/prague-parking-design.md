@@ -637,4 +637,64 @@ Holm 1979; Schuirmann 1987; Cameron, Gelbach & Miller 2008; Webb 2023; Saltelli 
 
 ## Changes after registration
 
-(none yet)
+### 2026-09-29, before any unpermuted length was read (freeze commit `e589225`)
+
+- **DS12 (dictionary).** Built from names and counts only, then frozen: `dict_model_lines.csv`, sha256 `ccfd595f…`.
+  - EEA weight matched to a register model line in the same year: 97.3 % (2018) to 100 %. No year falls back.
+  - The line key is the first token of the commercial name. It is coarse for a few makes (the Hyundai i-models share
+    one line), and it was not changed after the freeze.
+- **EEA 2023–2025 counts** pulled for post-stratification (`eea_counts_2325.py`; 2025 provisional).
+- **Compact extract.** `rsv_extract.py` writes M1/M1G/N1/N1G technical fields only, with no VIN, PČV or owner data.
+  Values above 100 000 and years outside 1900–2030 are set to missing; they overflowed the parquet types on the first
+  run.
+- **DS11, the dry run.** L, W and WB were permuted jointly **across cohorts within make**, as registered. The
+  coordinator's brief said "within manufacture year". That would keep each year's mean length, and so reveal the trend
+  that H2a/H2b test before the freeze, so the registered version was kept.
+  - The dry run completed end to end: Δ₁ = 2.1 cm, Δ₂ = 0.0 cm (make mix only).
+  - Size check at the null boundaries (reduced: 200 simulations, B = 199, not studentised): rejection rates 0.07,
+    0.03 and 0.045.
+- **Implementation choices, fixed in the frozen code:**
+  - The multiple-imputation variance of a cell mean is a normal approximation to the within-cell hot-deck variance.
+    Missing length among new-to-CZ cars is at most 0.8 %.
+  - The studentised bootstrap uses an inner B of 50.
+  - The size check is the reduced version above.
+  - The fleet-cell lengths are observed cell means, with the pre-2010 bracket u on top.
+
+### 2026-09-29, after the real run
+
+- **A coding error, found in the output and fixed.** The painted-bay share F_t(5.25 m) counted cars with a missing
+  length as longer than 5.25 m. That gave the impossible θ₁ᵖ = −11.5 %. Only non-missing lengths are now counted
+  (code sha256 `1041a3fb…`; H2a/H2b come from the frozen `4fad464b…`, and E1/E4 were re-run).
+  - After the fix, θ₁ᵖ = +0.76 %: the share of cars longer than 5.25 m rose from 0.29 % to 1.05 %.
+  - θ₁ᵘ, θ₁ and the stall figure did not move beyond the fourth decimal.
+- **The calibration rule fired.** Measured-minus-modelled 2025 mean length was +3.9 cm. The registered remedy
+  (re-choose k on [1.5, 3], intersected with DS10b's [1.4, 1.6]) finds its minimum at the boundary, k = 1.5, where
+  the gap is still 3.9 cm. It grows with k up to 4.7 cm at k = 3.
+  - k is fixed at 1.5 at both ends. The estimates equal those with k drawn to four decimals. The gap stays and is
+    reported as a limitation.
+  - A level offset common to 2012 and 2025 would move θ₁ᵘ very little. One that differs between the years would not
+    be captured.
+- **Painted bays were not measured.** Neither the orthophoto sample nor TSK's marking inventory (R-TSK-3) exists
+  yet. θ₁ is computed with every parallel stall unmarked (s_p = 0), which is an upper bound. s_p/ŝ = 0.25 and 0.5 are
+  reported alongside.
+- **No 2026 orthophoto validation sample** was labelled. ŝ uses the 2019-trained PPV and NPV only.
+- **E4.** Two members of the level bracket were not computed: land value × 4 % and garage rents, because no dated
+  source was fixed before estimation. The bracket shows its lower (second-car price) and upper (OZV) members only.
+  - X ("between a short and a long car") is operationalised as p90 − p10 of the revenue-neutral length schedule at
+    1 200 Kč.
+  - The E4 fleet is the national active fleet, because DS3 is unresolved.
+- **E3 not run:** awaiting TSK data (R-TSK-2).
+- **H2a precision.** The realised SE of d (3.9 cm) is larger than the DS8 proxy (2.4 cm), so power was lower than
+  planned. Kish = 37.1, so no wild-bootstrap fallback was needed.
+  - The size check at +δ rejected at 0.11 (reduced B, not studentised). The H2a lower-tail test may be liberal. This
+    does not affect the decision, which is "not supported".
+- **Grouped Sobol.** The pick-freeze estimates for ageing and parallel share are slightly negative (−0.001 and
+  −0.015): estimator noise at 4 000 draws, read as ≈ 0.
+- **OZV Annex 1 (DS9) checked.** For item (k), the zone districts have exemptions for named users only. Praha 13
+  charges 5 Kč, and several outer districts 1 Kč. The 10 Kč rate stands for the zone districts.
+- **Part II correction (C.6).** Part II's own pipeline, run with M1 + M1G:
+  - new-car length change 2012–2022: +13.0 cm (11.5–15.4), not +11.0 (9.7–13.1);
+  - loss: 2 709 stalls (1.58 %), band 2 378–3 250, not 2 263 (1 988–2 710).
+  - A correction note is prepared on a separate branch (`docs/PARK-2_m1g-correction`).
+  - Part III's 174 stalls a year is derived from Part II; it is left untouched, and the conflict is flagged for the
+    author.

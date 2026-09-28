@@ -310,10 +310,10 @@ def fleet_cells(t: pd.DataFrame) -> pd.DataFrame:
     e = t[t.ycz.notna() & (t.ycz <= 2025) & t.m.notna()].copy()
     e["ae"] = (e.ycz - e.m).clip(lower=0)
     g = e.groupby(["m", "ae"])
-    c = pd.DataFrame({"E": g.size(), "nL": g.L.count(), "Lmean": g.L.mean(), "share_le_525": g.L.apply(lambda v: float((v <= 5250).mean()) if v.notna().any() else np.nan)}).reset_index()
+    c = pd.DataFrame({"E": g.size(), "nL": g.L.count(), "Lmean": g.L.mean(), "share_le_525": g.L.apply(lambda v: float((v.dropna() <= 5250).mean()) if v.notna().any() else np.nan)}).reset_index()
     # cells with no observed length: same manufacture year, else neighbouring years
     bym = e.groupby("m").L.mean()
-    bym525 = e.groupby("m").L.apply(lambda v: float((v <= 5250).mean()) if v.notna().any() else np.nan)
+    bym525 = e.groupby("m").L.apply(lambda v: float((v.dropna() <= 5250).mean()) if v.notna().any() else np.nan)
     for col, ref in (("Lmean", bym), ("share_le_525", bym525)):
         miss = c[col].isna()
         c.loc[miss, col] = c.loc[miss, "m"].map(ref)
@@ -322,7 +322,7 @@ def fleet_cells(t: pd.DataFrame) -> pd.DataFrame:
     return c
 
 
-def e1(t: pd.DataFrame) -> dict:
+def e1(t: pd.DataFrame, kfix: float | None = None, apply_calibration_rule: bool = True) -> dict:
     c = fleet_cells(t)
     rng = np.random.default_rng(SEED + 2)
     m = c.m.to_numpy(float); ae = c.ae.to_numpy(float); E = c.E.to_numpy(float); Lm = c.Lmean.to_numpy(float) / 1000
@@ -350,7 +350,7 @@ def e1(t: pd.DataFrame) -> dict:
         return Lbar, F
 
     def draw(D, rng):
-        k = rng.uniform(1.4, 1.6, D); a12 = rng.uniform(13.3, 14.1, D); e = rng.uniform(-0.5, 0.5, D)
+        k = np.full(D, kfix) if kfix is not None else rng.uniform(1.4, 1.6, D); a12 = rng.uniform(13.3, 14.1, D); e = rng.uniform(-0.5, 0.5, D)
         u = rng.uniform(-1, 1, D); p = rng.triangular(4.9, 5.2, 5.5, D)
         ppv_p = rng.beta(1301 + 1, 12 + 1, D); ppv_n = rng.beta(338 + 1, 15 + 1, D); pu = rng.beta(10 + 1, 30 + 1, D)
         return dict(k=k, a12=a12, e=e, u=u, p=p, ppv_p=ppv_p, ppv_n=ppv_n, pu=pu)
@@ -376,6 +376,21 @@ def e1(t: pd.DataFrame) -> dict:
         extra = N_STALLS * s * (1 / (1 - th_u) - 1)
         return dict(theta_u=th_u, theta_u_prop=th_u_prop, theta_p=th_p, theta=th, extra=extra, s=s, g=g, **o)
 
+    # registered calibration rule (§4): measured-minus-modelled 2025 mean length at central inputs
+    act_ = t[(t.status == "PROVOZOVANÉ") & (t.ycz <= 2025)]
+    meas_ = float(act_.L.mean() / 1000)
+
+    def cen_at(kv):
+        return {k_: np.array([v]) for k_, v in dict(k=kv, a12=13.7, e=0.0, u=0.0, p=5.2, ppv_p=0.9909, ppv_n=0.9575, pu=0.25).items()}
+
+    curve = {f"{kv:.1f}": float((meas_ - model(cen_at(kv))["L25"][0]) * 100) for kv in np.round(np.arange(1.4, 3.01, 0.1), 1)}
+    calib = {"measured_active_m": meas_, "diff_cm_by_k": curve}
+    if apply_calibration_rule and kfix is None and abs(curve["1.5"]) > 2:
+        lit = min((kv for kv in curve if 1.5 <= float(kv) <= 3.0), key=lambda kv: abs(curve[kv]))
+        inter = min((kv for kv in curve if 1.5 <= float(kv) <= 1.6), key=lambda kv: abs(curve[kv]))
+        calib.update({"rule_triggered": True, "k_literal_1.5_3": float(lit), "k_intersection_DS10b": float(inter)})
+        kfix = float(inter)
+    calib["k_used"] = kfix
     P = draw(M_MC, rng)
     R = model(P)
 
@@ -409,7 +424,7 @@ def e1(t: pd.DataFrame) -> dict:
     res["te_comparison"] = {"te_prorated_13y_pct": [7.4, 12.1], "part1_reproduction_prorated_pct": [2.9, 3.4]}
 
     # tipping points: central inputs, each moved to its range ends
-    cen = {k_: np.array([v]) for k_, v in dict(k=1.5, a12=13.7, e=0.0, u=0.0, p=5.2, ppv_p=0.9909, ppv_n=0.9575, pu=0.25).items()}
+    cen = {k_: np.array([v]) for k_, v in dict(k=kfix if kfix is not None else 1.5, a12=13.7, e=0.0, u=0.0, p=5.2, ppv_p=0.9909, ppv_n=0.9575, pu=0.25).items()}
     base = model(cen)["theta"][0]
     rng_ = {"k": (1.4, 1.6), "a12": (13.3, 14.1), "e": (-0.5, 0.5), "u": (-1, 1), "p": (4.9, 5.5)}
     tip = {"central_theta": float(base), "central_band": band(base, base), "moves": {}}
@@ -444,6 +459,7 @@ def e1(t: pd.DataFrame) -> dict:
     act = t[(t.status == "PROVOZOVANÉ") & (t.ycz <= 2025)]
     meas = float(act.L.mean() / 1000)
     modl = float(model(cen)["L25"][0])
+    res["calibration_rule"] = calib
     res["calibration_2025"] = {"measured_active_m": meas, "modelled_m": modl, "diff_cm": (meas - modl) * 100,
                                "rule_triggered": abs(meas - modl) * 100 > 2}
     res["snapshot_classes"] = snap
@@ -511,15 +527,24 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     t = load(dry)
     res = {"dry_run": dry, "code_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
-    res["h2"] = h2(t)
+    only_e = "--e1" in sys.argv   # deviation 2026-09-29: rerun E1/E4 after the painted-share fix; H2 unchanged
+    if not only_e:
+        res["h2"] = h2(t)
     r1 = e1(t)
+    cal = r1.get("calibration_rule", {})
+    if cal.get("rule_triggered"):
+        lit = e1(t, kfix=cal["k_literal_1.5_3"], apply_calibration_rule=False)
+        r1["sensitivity_k_literal_rule"] = {"k": cal["k_literal_1.5_3"],
+                                            **{k: lit[k] for k in ("theta_u", "theta", "extra", "band_theta", "L12", "L25")}}
+        nocal = e1(t, kfix=None, apply_calibration_rule=False)
+        r1["sensitivity_no_calibration_rule"] = {k: nocal[k] for k in ("theta_u", "theta", "extra", "band_theta", "L12", "L25")}
     res["e1"] = r1
     res["e4"] = e4(t, r1)
     if dry:
         (OUT / "dryrun.json").write_text(json.dumps(res, indent=1, ensure_ascii=False, default=float))
         print("dry run ok")
         return
-    for k in ("h2", "e1", "e4"):
+    for k in (("e1", "e4") if only_e else ("h2", "e1", "e4")):
         (OUT / f"{k}.json").write_text(json.dumps({"code_sha256": res["code_sha256"], **res[k]}, indent=1, ensure_ascii=False, default=float))
     print("real run written")
 
