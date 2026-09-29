@@ -1,0 +1,877 @@
+{
+ "verdicts": {
+  "thesis.html": {
+   "article": "thesis.html",
+   "kind": "research",
+   "verdict": "revise-major",
+   "one_line": "The flagship research piece, but in its current form it is an abstract stretched to page length. It has no methods, no literature, no figure and no uncertainty, and nearly every number appears three or four times. It should be rebuilt as a proper thesis summary rather than trimmed.",
+   "must_fix": [
+    "No uncertainty anywhere. The AR(2) sums 0.727/0.715, the 33-min half-life, the 5.6 %/2.3 % RTI shares and the 204/60/182/40 CZK figures have no SE, CI or cluster count. At minimum, report route-clustered CIs for the persistence sums and the RTI shares.",
+    "Estimation is not described. The page never says what t indexes (consecutive stops of one trip? 5-min bins?), whether the AR(2) is pooled or route-level, which fixed effects and time-of-day seasonal terms are included, or how panel dynamic bias (Nickell) is handled given JEL C23. The equation in 'Serial correlation in Prague's delays' has no intercept, route effects or seasonal term, yet the next section decomposes variance into 'a seasonal part, a forecastable state and unforecastable noise'. Add a short 'How this was done' section, as long-articles.md requires.",
+    "'Registered' is overclaimed. The facts say '3 of 3 registered in the proposal', and 'The three hypotheses from the proposal' calls them 'registered'. A thesis proposal is not a pre-registration. Either link the dated proposal (IES SIS record) or say 'stated in the thesis proposal'. Cut the non-sequitur 'That all three failed in their registered form ... shows that the questions could not have been re-chosen once the answers were known'. Failing hypotheses do not prove the questions were fixed in advance; a timestamp does.",
+    "H3 contradicts itself: 'the null is real, but a failed placebo leaves the result conditional on education being entangled with network structure.' A null with a failed placebo is not 'real'. Call it inconclusive, or use the registered wording.",
+    "H1: 'the gap between bus and tram is a quarter of the smallest effect the design could reliably detect'. State the MDE and the observed gap in numbers.",
+    "No link to the thesis PDF (IES/CUNI repository) and no code path. A stranger cannot reproduce anything. Add the repository DOI or handle, a code repo link and a Golemio access date and endpoint.",
+    "Zero external literature, and both references are self-citations. The opening claim that 'the value-of-reliability literature prices travel-time variability with its unconditional standard deviation' needs primary sources (e.g. Noland & Small 1995; Bates et al. 2001; Fosgerau & Karlström 2010; Carrion & Levinson 2012 review). The value-of-RTI claim needs its own comparators (e.g. Brakewood & Watkins 2019).",
+    "Unit inconsistency across the site: this page says '121 197 794 vehicle-location records', while delayed.html calls the same data '121 M stop events'. These are different objects. Pick the correct one and use it on both pages.",
+    "The deck says 'This is the short version', which contradicts the house-style rule that each article exists in one form. The deck should state the question and the finding."
+   ],
+   "cut": [
+    "The tldr box. Its five bullets are near-verbatim copies of the four body sections; 'These figures index the dispersion made forecastable, not a welfare gain a passenger has been measured to pocket' appears twice word for word. Cut it, or reduce it to one line if the page is restructured.",
+    "The section 'Why the record on this site plays the delays'. It is a site-housekeeping aside and a closing moral ('the right product is a live view'), and 'They are not predictable in the way a prediction pipeline hopes' sits awkwardly next to the thesis's own point that a fraction of the dispersion is forecastable.",
+    "The sentence 'The contribution is a method that transfers beyond Prague...' in 'Limits of the estimates'. It belongs in the opening section as the contribution statement, not among the limitations.",
+    "The repetition of 0.727/0.715. It appears in the meta, the facts, the tldr, the body and the equation. Keep the facts line and the equation."
+   ],
+   "missing": [
+    "An explicit research question and contribution paragraph, placed relative to the literature (what is new: a conditional-variance correction rather than a multiplier; RTI valued without stated preference).",
+    "At least one figure: the impulse response with a band, or a stacked bar of the variance decomposition by mode (seasonal / state / noise). It should carry a caption and a data-view hook like the other articles.",
+    "A hypothesis table (H1–H3: prediction, result, registered wording), which the house style lists as a genuine table.",
+    "Robustness: the out-of-sample date split is mentioned only in passing (182/40 CZK). Say what the split was and how RTI shares behave out of sample.",
+    "Calibration constants used for the CZK levels (value of time, reliability ratio, trips per year, the commuter tier) with sources.",
+    "The metro result itself, which is only mentioned as excluded. Report it descriptively with its caveat.",
+    "Data section: Golemio API/feed, access date, cleaning (dedup, clipping), and how many routes and trips were dropped."
+   ],
+   "target_words": 1700,
+   "current_words": 1306
+  },
+  "delayed.html": {
+   "article": "delayed.html",
+   "kind": "side-project",
+   "verdict": "move-to-notes",
+   "one_line": "A charming, well-documented sonification with good code availability. It is a creative side project, not research, and it currently borrows the thesis's authority with a statistical sentence that is wrong. Trim it and move it to a notes or projects category.",
+   "must_fix": [
+    "The statistics are wrong. 'A shock to the delay at one moment is still three-quarters there in the next' misreads the AR(2): the one-step response is φ1, not φ1+φ2, and the thesis's time step is never given. The same paragraph says 'Statistically the state is an autoregression whose coefficients sum to 0.73', which conflates the thesis's route-level trip dynamics with the city-wide 5-min averages the record plays. Either state the link loosely and correctly, or drop the equation.",
+    "'the ear picks it up before the table does' is an unsupported claim. Cut it.",
+    "The facts headline '121 M stop events' inflates the source. The record plays five days, about 3.27 M events by the track table. Lead with the five days, and fix the unit conflict with thesis.html ('vehicle-location records').",
+    "The chorus rule is circular: 'On a typical weekday that rule yields exactly the two rush hours'. Say whether the 68 % threshold was chosen to produce that result; if it was, say it was tuned.",
+    "The day-selection criteria are missing. How were the five days picked? What makes 17 Jun 'the most median day'? What happened on 30 Apr ('The Meltdown', 164 s)? Give one factual sentence on its cause, or say it is unknown.",
+    "The thesis link goes to '../#works' instead of 'thesis'. Link the article.",
+    "The key naming is inconsistent. The rule lists 'ionian' but the track table says 'D major' for the Summer Sunday. Use one name.",
+    "The trains row says 'Still shown in the chart', but fig. 1 plots surface transport only. Say which chart is meant (the player's), or delete the phrase.",
+    "The mean arrival delay includes negative (early) values and is clipped to [−600, 3600] s. That belongs in the text, not only in ref 2, because early running offsets lateness in the 'mean delay' that sets each key."
+   ],
+   "cut": [
+    "The tldr box. It repeats the deck, the facts, both tables and the figure caption.",
+    "The zinger 'Any resemblance to an actual banger is purely statistical', and 'played as disco tracks by the transport system itself', which personifies the data. Both break the house style.",
+    "The triple statement that no raw records are redistributed (tldr, first section, ref 2). Say it once.",
+    "The footer 'Figure.' paragraph, which duplicates the fig. 1 caption and ref 2. Merge them into the caption.",
+    "The production-notes paragraph (58 % shuffle, side-chain, −4.5 dB shelf at 6 kHz). Keep one sentence and link the README."
+   ],
+   "missing": [
+    "Golemio access date and licence name (the page says 'please credit Golemio' but gives no licence).",
+    "A one-line statement of what each non-bus instrument maps (the tram and trolleybus rows say only 'stop events': count? delay? both?).",
+    "An audio embed or clip on the page itself, so the reader hears it without leaving."
+   ],
+   "target_words": 700,
+   "current_words": 1275
+  },
+  "icu.html": {
+   "article": "icu.html",
+   "kind": "side-project",
+   "verdict": "move-to-notes",
+   "one_line": "A careful coursework write-up with a genuinely good methods story: reversed labels, the fact that Tukey's rule deletes by class, nested CV and Nadeau–Bengio. But it is an 18-page student assignment on a non-public teaching dataset, it carries internal numeric and caption errors, and it closes with a lessons-learned moral. Trim it and file it under notes or methods, not research.",
+   "must_fix": [
+    "The meta and og description say 'ten variables agree', but the facts and body say 9 of 10 (the tenth is mis-scaled). Fix to nine.",
+    "The fig. 3 caption says 'Blue: medium effect and above; green: large', but tools/icu_figures.py colours large bars ACID (#D6FF3A, acid yellow) and medium bars MINT (green). No bar is blue.",
+    "There is an unexplained inconsistency between 'refitting them inside each fold moves SVC accuracy from 0.7681 to 0.7679' and the cleaning table, where winsorised SVC five-fold CV is 0.723. State which CV scheme, split and hyperparameters produce 0.768, or reconcile the two numbers.",
+    "Overclaim in 'Testing whether the label file is misaligned': 'That rules out misalignment and leaves mislabelling.' Only integer shifts within ±30 were tested. Say it 'rules out a simple offset of up to 30 rows', and note that a deliberately altered or synthetic teaching dataset is an equally live explanation.",
+    "Overclaim in the opening section: 'the reason for that turned up later' and 'it is also the proof that imputation happened upstream'. One constant record is evidence that this record was filled; it does not prove imputation across the dataset.",
+    "'Logistic regression is the model I would deploy' (body and tldr). No model trained on labels the article itself shows to be reversed should be deployed. Reframe it as 'would select for reporting', or state it conditionally on correct labels.",
+    "'Tukey's rule only has an upper fence to trip' is inaccurate, since Tukey has two fences. Say that on right-skewed data the lower fence falls below the minimum, so only the upper one binds.",
+    "The P/F-ratio and ARDS grading claim is cited to her own report (r1). Cite the Berlin definition (ARDS Definition Task Force, JAMA 2012). Primary references are also missing for Benjamini–Hochberg (1995), Cohen (1988), the Wald–Wolfowitz runs test and McNemar (1947).",
+    "Reference style: r2 bundles two separate works (Hastie et al. 2009; Nadeau & Bengio 2003) into one entry. Split them and number them separately."
+   ],
+   "cut": [
+    "The tldr box. It duplicates the facts and the body almost sentence for sentence (the 23.8 vs 18.9, 128/85, 97 of 8 694 and 0.852 vs 0.809 figures are all repeated).",
+    "The section 'What this taught me about datasets'. It is a closing moral in first-person lesson form, which the house style bans. At most one sentence of it can live in the opening section.",
+    "The slogan closers 'That ranking is the obvious reading, and it does not survive testing.' and 'The report states the case together with the circumstance that would flip it'. Cut both.",
+    "The McNemar paragraph and the grid-spread paragraph could merge. The SVC-grid and forest-importance material (ρ = 0.49, p = 0.078) is tangential and can go.",
+    "The title is a slogan ('The label says deteriorating. The patient is getting better.'). Use a content title, e.g. 'Reversed outcome labels in an ICU P/F-ratio dataset'."
+   ],
+   "missing": [
+    "Data availability: the dataset is 'course-supplied, not public', and tools/icu_figures.py needs a local data_dir. Say explicitly that the figures cannot be reproduced without the course files, and link the notebook if it can be shared.",
+    "Provenance of the dataset (which COVID-19 study it 'recreates', whether it is synthetic or a perturbed teaching set). Without this, the mislabelling finding has no context.",
+    "A limitations paragraph: single variable modelled, labels known to be wrong, one 80/20 split for the test-set numbers, no external validation."
+   ],
+   "target_words": 1300,
+   "current_words": 2286
+  },
+  "quotecheck.html": {
+   "article": "quotecheck.html",
+   "kind": "tool",
+   "verdict": "revise-minor",
+   "one_line": "The strongest of the four. It has a real incident, a precise mechanism, real CLI runs and a tool whose 20 tests match the text. It needs its overclaims and zingers cut, the drift metric specified, the Frankl sourcing fixed and the short-version box removed.",
+   "must_fix": [
+    "Deck: the three sentences about failures ('One day a quotation reached it...', 'The checker written the next day then nearly deleted...', 'Both failures are in the tool now...') are a run of short declaratives for effect. Rewrite them as two sentences of prose that name the tool, what it checks and the one headline result (Frankl ABSENT, 292 passages re-checked).",
+    "Short-version box ('Overwhelmed? Here's the short version'): its five bullets repeat the deck, the facts panel and the 'What it does not do' paragraph almost word for word, including the 80 % threshold and 'only as good as the extraction'. Drop the box on a ~1,500-word tool piece. At the least, retitle it: 'Overwhelmed?' is chatty, not house style.",
+    "Section 'A fabricated ISACA quotation': 'A fabrication tailored to a brief always looks like the best result in the report' overclaims with 'always' from a single case. Restate it as an observation about this case.",
+    "Section 'Splices': the closing line 'The six classes of false alarm turned out to be one bug: the tool had been comparing transcriptions rather than words.' is a colon-reveal zinger. It also sits in the wrong section, since it concerns the false-alarm section and not splices. Cut it, or fold it into 'Six classes of false alarm' as a plain sentence.",
+    "Section 'Folding, the four answers...': DRIFT is defined as 'at least 80 % similar' without naming the measure. The code uses difflib.SequenceMatcher.ratio() on folded windows (find.py, DRIFT_FLOOR = 0.80). Say so, because the threshold is meaningless without the metric.",
+    "Reference 4 (Frankl): it asserts the sentence 'does not appear in any edition', but the evidence offered is one edition (Beacon Press). Narrow the claim to what was checked, and cite a primary or documented secondary source for the misattribution history (e.g. Quote Investigator's entry, with access date) rather than 'widely reported' and 'usually traced'.",
+    "'1910 is content in Stoner' refers to a book that appears nowhere in the references or the runs. Either add it as a source or pick an example from the four books cited.",
+    "Reference 1 is the author's account of a private log. State plainly in the text that the 292-passage re-check and the 'sixteen defects, fourteen splices' count cannot be verified externally, and give the date of the count.",
+    "Reproducibility: the four runs need copyrighted full texts (the CISA manual, East of Eden, etc.) that a reader cannot obtain from the repo. Say this, and point to the test fixtures in the repo as the reproducible substitute."
+   ],
+   "cut": [
+    "The short-version box (see must_fix).",
+    "Facts row 'tests: 20 one per class, plus the cases that must fail'. It duplicates the stack line 'pytest (20)'. Keep one of the two.",
+    "'which is the test a lenient checker has to pass before its FOUND can be trusted' (end of the runs paragraph). It is a closing moral.",
+    "'Nothing normalised is ever shown, and that is what keeps a forgiving search honest'. Keep the fact, cut the 'keeps ... honest' flourish.",
+    "The literal '<code>cross-\\nvalidation</code>' renders as a backslash-n. Either show it as a real line break or describe it in words."
+   ],
+   "missing": [
+    "A sentence on prior art: fuzzy matching and quotation-verification tools (difflib / rapidfuzz, citation-checking work in LLM hallucination evaluation) and why a folding-plus-offset-map approach differs.",
+    "Any measured error rate, e.g. over the 292 re-checked passages: how many FOUND, FOUND*, DRIFT and ABSENT, and how many were confirmed by hand. Right now the tool's accuracy rests on anecdotes.",
+    "The package version number and access dates for the PyPI and GitHub links.",
+    "A link to the second-brain article, which tells the same ISACA incident under a different tool name (quote.py)."
+   ],
+   "target_words": 1300,
+   "current_words": 1850
+  },
+  "sitewitness.html": {
+   "article": "sitewitness.html",
+   "kind": "tool",
+   "verdict": "revise-major",
+   "one_line": "A solid engineering log with honest run-by-run misses. It is framed as an evaluation it cannot support: the final score only matches the old Worker's 29/30, the golden set changed between runs, and the intermediate scores exist only in terminal output. The prose also carries several slogans.",
+   "must_fix": [
+    "The facts panel says '6 evaluation runs' but lists five scores ('22 → 26 → 26 → 28 → 29 of 30'), and the text covers runs 1–5 only, with the fourth run 'of the day' cut off by budget. Reconcile the count: say what run 6 was, or which run was truncated and what it scored.",
+    "Evaluation validity. The golden-set expectations were changed during the series (run 1: jobs five→six and '3,704 vs 3704'; run 5: '2 263 vs 2262.5' called 'the evaluator's fault'). The scores 22→29 are therefore not measured against a fixed instrument. Either re-score every run against the final golden set, or state that the numbers are not comparable. Also report that the endpoint (29/30) equals the old Worker's 29/30 (eval-history.json, 2026-09-17), so the package matched rather than improved accuracy. Say that explicitly instead of implying progress.",
+    "n = 30 with one question per 'quote' kind (eval-history by_kind: quote n=1). A one-question difference is noise. Give the uncertainty (e.g. 29/30, 95 % CI roughly 83–99 %), and stop reading single-question flips as findings.",
+    "Reproducibility: the reference admits the intermediate scores 'are from the terminal output'. Only the 17 Sept (Worker) and 22 Sept runs are in ask/eval-history.json. Publish the per-run eval JSONs, or mark the 22/26/26/28 figures as unrecorded.",
+    "eval-history.json shows protocol_violations: 1 on the 22 Sept run, the final run the page implicitly reports. Mention it, and say which rule fired.",
+    "Closing paragraph: 'Nor does it make the model right; it makes the model's wrongness visible and refusable, which on the evidence of the detector text is the most a run-time system can do.' This is a banned 'not X but Y' construction plus an unsupported general claim resting on another article. Cut it, or state the specific result from silent-detector with a number.",
+    "H1 'An agent that shows its work.' ends with a period and is a slogan. The <title> reads 'sitewitness: an agent that shows its work'. Make them one descriptive title, e.g. 'sitewitness: rules enforced in code for a site Q&A agent'.",
+    "Numbered headings ('1 · Five rules...', '2 · What the golden set found...') are inconsistent with the other articles in the family. Drop the numerals.",
+    "Name the model (eval-history: claude-sonnet-5) and the date in the text. Scores and costs are model-specific."
+   ],
+   "cut": [
+    "The short-version box. It restates the deck, the facts panel and the closing paragraph (the no-streaming limitation and the 'visible and refusable' line appear twice).",
+    "Facts row 'security findings: 5 from review, all fixed before the first deploy'. It repeats section 3's first sentence. Also consider folding section 3 into one paragraph under 'Running it': the security fixes are routine hardening, not a contribution.",
+    "'what any agent needs and most demos skip' (section 1): slogan.",
+    "'all real and all cheap' (section 3): rhythm pair.",
+    "'which showed that a rewrite that looks equivalent is not necessarily equivalent, and that only a fixed test can tell' (section 2): moral, and ironic given that the test was not fixed.",
+    "'which also showed that the budget works' (end of section 2): a trivial finding presented as one."
+   ],
+   "missing": [
+    "Contribution relative to existing practice: rule-based output guards and grounding checks (e.g. Guardrails AI, NeMo Guardrails, citation-grounding evals such as RAGAS faithfulness), and what enforcing in code adds.",
+    "The false-refusal rate: how often a rule replaced a correct answer, per rule, in the final run. It is the cost side of 'enforced in code' and the most informative number the design could give.",
+    "A limitations paragraph proper. The golden set was written by the author for her own site, so the questions are in-distribution. The rules are lexical (a 'digit in the answer' heuristic, a 40-character quote threshold) and can be passed by paraphrase.",
+    "The package version and access dates; links to the golden.json and eval.py files already in the repo (ask/golden.json)."
+   ],
+   "target_words": 1200,
+   "current_words": 1670
+  },
+  "filmrunner.html": {
+   "article": "filmrunner.html",
+   "kind": "side-project",
+   "verdict": "move-to-notes",
+   "one_line": "A product write-up with no question, no measurement and only private references. Its facts are stale against the repo (nine ADR files, not five) and it contradicts itself on 'open source'. It is honest material for a notes or portfolio entry, not a journal-grade article.",
+   "must_fix": [
+    "The kicker says 'live demo · open source', but references 1 and 3 say 'private repository'. One of these is false. Fix the kicker or publish the repo.",
+    "'five architecture decision records' (facts panel, short version and body) is out of date. docs/adr/ in the repo now holds nine files (ADR-001 twice, as backend-stack and frontend-stack, plus ADR-006 to ADR-008 on location services, web push and public rate limiting). Update the count and the list.",
+    "'An independent security review found two problems': say who or what reviewed, when, and in what scope. 'Independent' is unsupported, and the reference is 'as recorded in the project; repository private'.",
+    "'it is the one document all 50 to 200 people need before they leave home' and 'conventions that are decades old and load-bearing' have no source. Cite an industry reference (e.g. a DGA or production-handbook source on call sheets and eighths), or drop the figures.",
+    "The deck opens in the first person with a slogan ('I built a whole film-production platform... Then I cut it down to the one document that actually decides whether a shoot day works'). Rewrite it as two plain sentences of prose.",
+    "'so the sheet has to be a container of ordered revisions, not one mutable row' is a 'not X but Y' device. State the design choice directly."
+   ],
+   "cut": [
+    "The short-version box. Four of its five bullets are paragraphs of the body lightly reworded (first build, security review, second build, what it leaves out).",
+    "The paragraph 'The company itself runs as one founder and an AI team...'. It is off topic for a call-sheet article and unsupported. It belongs, if anywhere, on an about or process page.",
+    "The facts row 'studio-readiness track: SSO · DPA · Sentry', which re-lists the first-build paragraph.",
+    "The live-demo section can be two sentences appended to 'The second build'."
+   ],
+   "missing": [
+    "Any evidence the wedge works: a user test with an AD or crew, a timed offline load, the number of revisions handled on a real or simulated shoot day. Without that it is a feature list.",
+    "Why the first build was cut: the decision and its rationale (ADR or DESIGN.md scope note), stated in the text rather than only referenced.",
+    "Prior art: StudioBinder, Movie Magic, Set Hero and similar call-sheet tools, and what this one does differently (offline PWA, revision container).",
+    "Access dates, and public links for anything cited, or a clear statement that the reader must take it on trust."
+   ],
+   "target_words": 500,
+   "current_words": 900
+  },
+  "second-brain.html": {
+   "article": "second-brain.html",
+   "kind": "side-project",
+   "verdict": "revise-major",
+   "one_line": "An interesting practice, but written as a showcase. Its two 'findings' are unverifiable and one rests on a reproducibility/reproduction equivocation. It re-tells the quotecheck incident under a different tool name and ends on hype. Either tighten it into a method note that points to quotecheck, or merge the incident material into quotecheck and keep this as a short notes entry.",
+   "must_fix": [
+    "Finding 2, the EU GPAI Code of Practice 'asks for reproducibility in one appendix and forbids reproducing training data in another', conflates reproducibility of results or documentation with regurgitation of training data. A referee would read it as a pun, not a tension. Either quote both passages with section numbers and explain why they actually conflict, or drop it.",
+    "Finding 1, 'the setting most likely to leak fine-tuned data is a decoding parameter', needs a primary citation (e.g. Carlini et al. 2021, 'Extracting Training Data from Large Language Models'; Nasr et al. 2023) and a section-level citation of NIST AI 600-1 showing the omission. Reference 4 currently says only 'findings as recorded on the wiki's pages', which a reader cannot check.",
+    "Inconsistency with quotecheck.html: this page says the fix was 'quote.py' and that the fabrication 'survived several passes'. The quotecheck page says the fix was the quotecheck package and that the quotation 'survived the checks that existed', with 292 passages re-checked. Use one name and one account, and link the quotecheck article instead of re-telling the incident.",
+    "Deck: 'Retrieval re-derives knowledge from raw documents on every question, and nothing accumulates' is an unsupported strawman of RAG. 'Obsidian serves as the IDE, the LLM as the programmer and the wiki as the codebase' is a borrowed triad slogan. Attribute it to Karpathy or cut it.",
+    "'which produced a code review as good as any I have had' is hype. 'The verdict, written by a page that had been compiled that morning from a database textbook' personifies a page. State what the review found, in one sentence, with a pointer.",
+    "Verify the date of the Karpathy gist given as 2026, and add access dates to both GitHub references."
+   ],
+   "cut": [
+    "The short-version box. It repeats the deck and the facts panel, and its third bullet copies the 'Two findings' paragraph almost verbatim, including 'Neither is a contradiction inside one document'.",
+    "The facts row 'caught: 1 fabricated quote and a tool so it cannot happen again'. 'Cannot happen again' overclaims; quotecheck itself says splices and bad extractions still get through.",
+    "The paragraph on thirteen subagents, unless it can carry a concrete, checkable result.",
+    "The whole 'A fabricated quotation' section, reduced to one sentence linking quotecheck.html."
+   ],
+   "missing": [
+    "A stated question or claim the page supports, e.g. whether ingest-once integration catches cross-document tensions that per-question retrieval misses. At least one worked example with the actual linked pages quoted would show it.",
+    "Quality measures for the wiki itself: the lint results over time (orphans, broken links, drift counts), the share of pages with verified quotations, and error rates found in audits. The counts (739 pages, 8 144 links, 336 sources) measure size, not quality.",
+    "Limitations: a private vault (nothing is checkable), a single author and single agent, possible confirmation bias in what the wiki 'surfaces', and the cost and time per ingest.",
+    "Relation to prior work beyond Karpathy's gist: personal knowledge management literature, and LLM-maintained knowledge bases and memory systems."
+   ],
+   "target_words": 700,
+   "current_words": 850
+  },
+  "surf.html": {
+   "article": "surf.html",
+   "kind": "tool",
+   "verdict": "revise-major",
+   "one_line": "A sound verification protocol presented as findings: the page reports no results, its headline base rate (5 of 92, 5 %) is already out of date against surf/data.json (14.2 % of 106 days), and it describes the robustness grid as computed when data.json has robustness: {}. Rewrite it as a dated protocol plus tool note, or hold it until lead 1 to 6 skill exists.",
+   "must_fix": [
+    "Stale numbers throughout. The facts row, the short-version box and the sections 'The surfable rule and the summer at Ericeira' and 'The booking decision as expected value' say 'five surfable days in 92 ... 5 %'. surf/data.json (generated 2026-09-28) gives 106 days and surfable_share 0.142. The sensitivity shares in the article (2 % / 19 % / 4 % / 5 % / 11 %) differ from data.json (8.5 % / 25.5 % / 12.3 % / 14.2 % / 18.9 %). Either freeze the article to a named snapshot ('as of 13 September 2026, 92 days') everywhere, or read the numbers from data.json. As it stands the prose contradicts the live page it links to.",
+    "Overclaim in 'Sensitivity to the surfable rule': 'The binary results are recomputed under five alternative rules' and 'The skill numbers will be shown under every one of these rules'. data.json has robustness: {}. State this as planned and not yet implemented.",
+    "'There are no skill numbers yet' is also out of date: lead 0 now has n = 14 for every spot and model (e.g. Ericeira MFWAM MAE 0.114 m, Spearman 0.93; BSS vs climatology 0.925). Lead 0 is close to self-verification and is not the booking-relevant lead. Say that explicitly, rather than implying nothing exists.",
+    "The persistence baseline is ill-defined at lead 0. 'Persistence taking the forecast for lead d to be the analysis d days before the target' makes persistence equal to the truth at d = 0, yet data.json reports bss_vs_persistence 0.722 at lead 0. Define persistence at d = 0 or exclude lead 0 from it.",
+    "Block bootstrap by ISO week (500 resamples) at 14 pairs covers two to three blocks, so the intervals are meaningless. data.json indeed has mae_swell_ci95: None. State the minimum number of weeks before an interval is shown, not just the 14-pair gate.",
+    "Pre-registration status. 'Expectations recorded on 14 September 2026' needs a verifiable timestamp: a commit hash or file path in the repo. Also state the pass/fail criterion for each claim, e.g. 'most days' in claim 1 is not operational.",
+    "The decision model treats n days as independent draws at the same p. A two-day trip needs the joint or expected count of surfable days, and p is per-day. Add this assumption, or define p as the expected share of surfable trip days.",
+    "The data sources (Open-Meteo, EMODnet) have no access dates. r4 has one (14 Sept) but r2 does not."
+   ],
+   "cut": [
+    "Short-version box: it repeats the deck, the facts row and every section's first sentence. Cut it, or reduce it to one line pointing to the live page.",
+    "The 'Data engineering' section (5 paragraphs): idempotency, 8 KB a day, 'costs nothing' and pytest details belong in the repo README. Keep two sentences (append-only, aggregation at ingest, 6 synthetic tests) and link to them.",
+    "The duplicated proxy-truth caveat. It appears in the short version, 'What is stored each morning', 'Sensitivity...' paragraph 2, and again in the data-engineering 'If a buoy feed appears' line (said twice). State it once, in a limitations section.",
+    "The footer 'Figure.' note repeats the last paragraph of 'Data engineering' ('so the figure and the page cannot disagree' appears twice).",
+    "Slogans and closing morals: kicker 'a page that gets better every morning'; 'six days out it is guessing with confidence'; 'the forecast at flight-booking lead is a coin with a bias' (inside a registered claim, which should be neutral); 'That base rate is the honest prior, and the page exists because...'; 'which would be worth knowing'; 'and the page will show it arriving'.",
+    "The decision-inputs table largely duplicates the paragraph above it. Keep one of the two."
+   ],
+   "missing": [
+    "Literature. Wave-model verification against buoys (e.g. Bidlot et al. on ECMWF WAM verification; Janssen), and multi-model ensembles with 3 members as probability forecasts, including their calibration limits. The contribution relative to existing surf-forecast verification (e.g. Surfline/Magicseaweed accuracy studies) is not stated.",
+    "A limitations section in house structure ('What this does not show'): proxy truth; one summer season versus the autumn ground-swell regime; a 3-member 'probability' limited to 4 values; daylight aggregation; a 3-spot sample.",
+    "A timeline: the date when each lead reaches 14 and 30 pairs (lead 6 reaches 14 on about 4 October), and when the three claims will be read.",
+    "The exact code path for the tests (surf/tests/test_verify.py) and the command to reproduce data.json.",
+    "A statement that the 92-day climatology is back-filled analysis, not stored forecasts. The collector started 14 Sept but the analysis starts 14 June."
+   ],
+   "target_words": 1300,
+   "current_words": 2495
+  },
+  "brand-reflection.html": {
+   "article": "brand-reflection.html",
+   "kind": "hub",
+   "verdict": "trim-hard",
+   "one_line": "A portfolio hub that summarises four weekend studies hosted elsewhere, with no uncertainty, no limitations section, several overclaims, and a slogan title. Cut it to a short, sober index of the studies plus the prediction check, and move it to notes.",
+   "must_fix": [
+    "Title and deck are slogans: 'Strategy decks talk about brand. This measures it.' Replace with a content title, e.g. 'Colour, sound and homepage language in 47 Czech TV spots'.",
+    "Episode 1 overclaim: 'The twenty in between are the main finding, since they show that most Czech spots do not choose'. 20 of 47 is 43 %, not most.",
+    "Threshold inconsistency. Paragraph 1 says 'Beyond about 90° the two are, perceptually, different colours' and fig. 1 draws a 90° line, but the classification uses <20° and >100° (tools/brand_figures.py). Justify the 20/100 cut-offs, or report the counts at 90°. The 20-degree band has no stated rationale.",
+    "'brands cluster across sector boundaries by their colour signature' and 'Saturation tension ... does split by category' are given no statistic: no cluster validity measure, no test, no number. Add numbers or drop the claims.",
+    "Episode 2: the distinguishing words for the 'institutional register' cluster are 'banka, škoda, čez, fio, česká'. These are brand and sector names, which suggests the embedding is clustering on names, not register. This undermines 'one institutional register'. Also, 'A challenger bank's positioning ... is decided in the campaign layer and quietly undone in the homepage layer' is an interpretive leap from 24 scraped pages.",
+    "'27 of 47 minor' is presented as a skew. It is 57 % (binomial p ≈ 0.4 against 50 %). Krumhansl–Schmuckler on voice-dominated audio (44 of 47 spots are voice-led) is also unreliable. Drop the claim or report it with a caveat.",
+    "Prediction check. The registered claim was over thirty days (check due 17 June), but it was run at 119 days, so this is not the registered test. With the Lidl spot private, claim A is indeterminate, not 'holds on paper' (3 813 vs 3 210 compares 2 coherent spots with 2 muddled ones). Use registered wording: 'claim A: indeterminate (one of three coherent spots unmeasurable, window deviated from 30 to 119 days); claim B: not supported'.",
+    "Promotional language to remove: 'a tool a strategist can use on Monday'; 'would have little competition in the category' (a strategy recommendation not supported by the data); 'What I would keep from the exercise is the habit...' (closing moral).",
+    "No access dates for YouTube data, no date for the homepage scrape, and no source for the brand anchor swatches."
+   ],
+   "cut": [
+    "Short-version box: all five bullets repeat the facts row and the body. Cut it.",
+    "The Spot Scorer section. The tool description can be one sentence with a link. Fold the Pilsner/Albert paragraph into Episode 1.5 or the fig. 3 caption.",
+    "Episode numbering '1 / 1.5 / 2' plus 'four artifacts' in the kicker: this is internal project jargon.",
+    "The fig. 2 caption 'Three cross the line' repeats the body text.",
+    "The intro sentence 'The series was built across a few weekends...' is fine for notes, but it confirms this is not journal research."
+   ],
+   "missing": [
+    "A limitations section: 47 spots from 13 brand YouTube channels (selection by what brands upload, not TV airtime); 1 fps sampling; the choice of k = 5; hue distance undefined for achromatic palettes (AAA Auto's greys); 24 of 30 homepages; UMAP on 54 points; the tool not validated against any outcome.",
+    "Uncertainty on any figure: bootstrap intervals by brand, or at least per-brand counts, since 5 Albert spots drive the >100° group.",
+    "Literature on advertising colour and brand recognition (e.g. Labrecque & Milne 2012 on colour in marketing; Gorn et al.), on music in advertising (Bruner 1990; Alpert & Alpert), and on distinctive brand assets (Romaniuk).",
+    "A clear statement of the kind of piece this is: a descriptive hub over four exploratory studies, not a test."
+   ],
+   "target_words": 900,
+   "current_words": 1898
+  },
+  "silent-detector.html": {
+   "article": "silent-detector.html",
+   "kind": "research",
+   "verdict": "revise-major",
+   "one_line": "A useful negative result with a clean design (GroupKFold by question, abstention-pack leakage caught). It is undermined by a private repository, no intervals, best-of-8 selection reported as 'the' AUC, an uninterpreted anti-learning artefact, and a dismissive reading of its own most interesting number.",
+   "must_fix": [
+    "Reproducibility. r1 says 'quaesitor (private) repository', so detector.py, the tests and the 125 run reports cannot be checked by a stranger. Make the parsed feature table and detector.py public, or state plainly that only detector.json is released and the analysis is not reproducible.",
+    "No uncertainty. With 87 questions and 5 folds, report the fold-to-fold SD or a question-level bootstrap CI for every AUC. The differences 0.55 vs 0.56 vs 0.64 may be within noise.",
+    "Selection. 'The best held-out AUC is 0.64' is the maximum over 4 feature sets × 2 model families, so it is optimistically biased. Say this, or use nested selection.",
+    "Within-pack AUCs of 0.29 (e-commerce) and 0.12 (taxi) are far below 0.5. They are presented as 'a query shape that means wrong for one question means right for the next'. An AUC of 0.12 under leave-group-out CV with few groups is a known anti-learning artefact: class balance shifts between folds. Report the number of questions per pack and treat it as an artefact, not a finding.",
+    "The reading of the filter result is misleading. detector.json shows the best model at threshold 0.5 forwards 3.4 % of answers at 86 % precision and 16 % recall of correct answers, against an 18 % base rate, a lift of about 4.7×. 'it keeps almost nothing' hides this. Report precision and recall, and say what a 3 % high-confidence lane would be worth.",
+    "Tautology or overclaim in the conclusions: 'a silently wrong number is by definition one that leaves no trace in how it was produced'. The data show AUC 0.64 > 0.5, so some trace exists. Rephrase as weak signal.",
+    "The repeat-sampling setup is not reported: temperature and seed of the three repeats, and the model names behind 'model alias'. Self-consistency depends entirely on sampling temperature. At temperature 0 agreement is trivial and the negative result is uninformative.",
+    "Not pre-registered and done in 'a day's work': state that the analysis is exploratory, list the 0.81 → 0.58 abstention correction as a post-hoc change, and mention the two excluded packs (<100 numeric answers) in the body, not only in r2.",
+    "Slogans and closing morals: deck 'for reasons that are more useful than a yes would have been'; 'consensus among three copies of the same blind spot is not evidence'; 'makes reconciliation a measured obligation rather than a hope'; 'The detector was worth building because it shows, with numbers, why the expensive check is necessary'; 'and that made the question worth a day's work'."
+   ],
+   "cut": [
+    "Short-version box: it repeats the deck and facts almost verbatim (5 794 / 3 839 / 0.64 / 21 % vs 18 %). Cut it.",
+    "The meta-description repeats the deck with slogans. Shorten it.",
+    "The '.stack' line ('4 new tests, 732 in the repository') is portfolio decoration. Keep the test path in the references.",
+    "The self-promotional tie-in to 'the headline of the Quaesitor texts, that trust grows faster than accuracy'. That claim is not tested here; cite it only."
+   ],
+   "missing": [
+    "Literature. Self-consistency (Wang et al. 2022); LLM calibration and knowing what they know (Kadavath et al. 2022); semantic entropy (Farquhar et al. 2024, Nature); selective prediction and abstention; text-to-SQL error analysis (BIRD, Spider 2.0). The contribution relative to these, a negative result for SQL answers on planted traps, is not stated.",
+    "A per-trap breakdown (SCD, soft delete, currency, timezone, denominator) of agreement-conditional accuracy, since the mechanism claim ('ignoring the SCD duplicates on every attempt') is asserted without a number.",
+    "A 'What this does not show' section in house structure, with the limitations split out from the 'Consequences' section. The binary label, planted traps vs production, hand-written features and a single harness are already listed; add the unknown sampling temperature and the model set.",
+    "Calibration or reliability of the best model: detector.json has Brier scores and AP that are unreported (AP_correct 0.34 against a 0.18 base rate).",
+    "An access or run date range for the 125 runs."
+   ],
+   "target_words": 1500,
+   "current_words": 1591
+  },
+  "ai-over-data.html": {
+   "article": "ai-over-data.html",
+   "kind": "tool",
+   "verdict": "revise-major",
+   "one_line": "A practitioner case study titled 'measured' that reports no measurements of the system it describes. The only outcome numbers belong to Quaesitor, and sections 2 to 5 largely repeat engineering.html section 7. Either publish anonymised eval results or reframe it as a short design note.",
+   "must_fix": [
+    "Title and deck promise 'measured' and 'measured it before anyone trusted it', but the text gives no result for the work assistant: no golden-set size, no correctness, silent-failure or refusal shares, and no before/after for the rebuild. 'Reached parity on the golden sets' (sections 2 and short box) has no n, metric or tolerance. Report at least relative or anonymised figures, e.g. 'n golden questions; correct x %, silent y %, refused z %, before vs after', or retitle.",
+    "Section 1 says 'These three numbers are how the product is measured, and every decision below was made to move them', yet none of the three numbers ever appears. Readers take this as a promise the page breaks.",
+    "Section 4 opener 'Each change in this section followed a measurement rather than a checklist' overclaims. The 40-to-15 tool cut and the confused-deputy fix are design reviews, not measurements; only the $21 / 4.07 M token cap came from a measured incident. Rephrase so it holds for each item.",
+    "Section 3 misquotes the source: 'silent-failure rate of frontier models ranges from 56 % to 92 % depending on the pack'. silent-detector.html says 'depending on the model and the pack'. Fix the attribution.",
+    "The deck's unsupported claims 'The most common AI system in a company today' and 'It is also the easiest one to ship wrong' either need a citation (a survey) or should be cut.",
+    "The stack line says quaesitor-method has '700+ tests', but engineering.html section 11 and reference 3 say the harness has '524 tests'. Pick one figure, dated.",
+    "Section 6 uses a hypothetical number as if it were evidence: 'a model that is confidently wrong 60 % of the time can have a demo that looks perfect'. Either tie it to the measured Quaesitor range or drop the figure.",
+    "'sitewitness ... with the five rules enforced in code': the five rules are never listed. Section 6 gives about six imperatives and the Ask paragraph four properties. Enumerate them or drop the count.",
+    "House-style violations: slogan paragraph openers ('A number from an LLM is a claim, and the protocol turns it...'), a rhetorical 'not X but Y' ('rests on the protocol around the model rather than on the model'), a closing zinger ('so build the cross-check instead of hoping'), and a triad in the deck ('built one, measured it..., hardened it..., and what I would tell...').",
+    "The short-version box repeats the deck and the facts strip almost line for line: 4 500 → 400, 40 → 15, $21 / 4.07 M, 14 fields, 56–92 %. On a 1 800-word page that is a third copy. Cut the box or make the deck the only summary."
+   ],
+   "cut": [
+    "The 'Overwhelmed? Here's the short version' box (it is triplicate with the deck and the facts strip).",
+    "Section 6 in its imperative-list form ('Measure before you trust... Put knowledge... Treat the agent... Cap everything...'): it is a bullet list disguised as prose and restates sections 3 to 5. Keep at most two sentences that add something new.",
+    "The sitewitness/Ask paragraph: move it to a one-line cross-link. It advertises a different project.",
+    "The facts-strip item 'public counterpart 5 794 answers': it belongs to silent-detector, not to this system.",
+    "Duplicate passages shared verbatim with engineering.html (the confused-deputy sentence, 'silently and non-deterministically discarded results', and the POC/glossary paragraph). Keep them here and cut them there, or the other way round."
+   ],
+   "missing": [
+    "Outcome table for the work system: golden-set size, how the questions were sampled, and the correctness / silent-failure / refusal / protocol-compliance shares, before vs after rebuild and hardening (anonymised or relative if necessary).",
+    "Definition of 'parity': same answer on what share of questions, and within what tolerance.",
+    "The reconciliation rule: what counts as agreement with a certified dashboard (exact, a relative tolerance?) and how often a certified figure exists at all (coverage).",
+    "Cost per run distribution after the caps (median and p95), since cost is described as 'a first-class field of every trace'.",
+    "Positioning against existing practice and literature: text-to-SQL benchmarks (Spider, BIRD), semantic-layer approaches (dbt Semantic Layer, LookML), and the Vanna/RAG pattern it replaced, with a sentence on what is new here.",
+    "Dates: when the rebuild shipped, when the $21 incident happened, and when the caps went in.",
+    "A limitations section as its own heading. The only caveat now sits in the short box and reference 1."
+   ],
+   "target_words": 1200,
+   "current_words": 1840
+  },
+  "engineering.html": {
+   "article": "engineering.html",
+   "kind": "hub",
+   "verdict": "trim-hard",
+   "one_line": "A CV page that calls itself an advertisement. It works as a hub but has no research question, three of its eleven sections duplicate ai-over-data and cutover, and it is full of the slogans the house style bans. Cut it to a lean overview that links out.",
+   "must_fix": [
+    "The deck says outright 'The page is long on purpose, because it is the one page on the site that is allowed to be an advertisement.' That sentence undercuts every other page's claim to measured tone. Delete it and let length follow content.",
+    "The title 'The platform is code. So is the trust.' is a slogan pair, which the house style forbids for headings. Use a content title, e.g. 'Data and cloud engineering at Alma Career, 2025 onwards'.",
+    "'Byte-identical' (short box and section 6) and the meta description's 'proven to the byte' overclaim. The evidence is 'zero mismatches across twenty columns' plus day fingerprints, and cutover.html itself uses float tolerances. Say 'zero mismatches across 20 columns'.",
+    "The facts-strip label 'clouds, one platform / AWS + GCP' has lost its number. '0 / 0 mismatches' is unreadable notation: write '0 mismatches'.",
+    "Test counts conflict: section 11 and reference 3 say the Quaesitor harness has '524 tests', ai-over-data.html's stack line says '700+ tests'. Reconcile and date it.",
+    "Voice is inconsistent. The short box is in third person ('the author's own records... presented as her account') while the body and references are first person. Pick one.",
+    "Number style is inconsistent with the companion pages: 'forty tools, eighteen of which' and 'fifteen-tool' here, '40 MCP tools, 18' and '15-tool' in ai-over-data; 'fourteen fields' vs '14'. Choose one convention site-wide.",
+    "House-style violations: 'A prompt is a suggestion. IAM is a wall.' (closing zinger, short declaratives), 'since no customer has ever complained about CPU', 'as it used to on a normal Tuesday', 'the answer is always \"the workflow, at 03:00, here is the log\"', 'Nothing on the platform exists only in a console; the repository is the inventory.', 'The cutover I am proudest of was uneventful by design.', 'where it is newer and rarer' (unsupported), and 'Onboarding is an access-design problem as much as a documentation problem'.",
+    "The claim 'uv took lockfile resolution from about thirty seconds to under one per app' has no measurement method (cold or warm cache, how many apps). It also cites reference 2 (Zensical/Diátaxis), which does not support it.",
+    "Section 6 has no link to cutover.html, the public tool built from exactly this method (0 links found). Section 7 links ai-over-data but then repeats it anyway."
+   ],
+   "cut": [
+    "Section 7, apart from the one-line pointer. It restates ai-over-data sections 2 to 5 nearly verbatim (4 500 → 400, the trust layer, $21 / 4.07 M, the third-party MCP schema defect, the POC and glossary).",
+    "The second paragraph of section 4 (the AI-agent access paragraph), which duplicates ai-over-data section 4. Keep a single clause and a link.",
+    "The second paragraph of section 6. Replace it with a link to cutover.html, which does this properly and reproducibly.",
+    "Section 9 'How I work': a creed list in prose form that repeats sections 1 to 6 ('infrastructure as code, always', 'no cutover without parity').",
+    "Section 11 'What runs this site': move it to the status or about page. It is about the site, not the day job, and repeats the watch, surf and hockey material from their own pages.",
+    "Most of the section 10 detail, down to one short paragraph of dated roles. Conference talks and C++ 'zero-defect' belong in a CV.",
+    "The stack line 'earlier:' list.",
+    "The short-version box, which repeats the facts strip (AWS+GCP/WIF, 40→15, 0 mismatches / 62 of 62, 4 500→400, $21).",
+    "The facts-strip items that duplicate other pages ('NL→SQL service, rebuilt', 'one unbounded question $21')."
+   ],
+   "missing": [
+    "Links from section 6 to cutover.html and from section 7 to ai-over-data only (a one-line pointer instead of a summary).",
+    "Dates for the key events (the dbt cutover, the GA4 backfill, the Dependabot cleanup) so that '792 → 332 and falling' has an as-of date.",
+    "A short, explicit 'what this does not show' paragraph near the top rather than only in reference 1: the figures are unverifiable self-report and the systems are not public.",
+    "A decision on the page's category. It is a hub or CV page and should be labelled as such, kept outside the research and journal set, rather than presented as an article."
+   ],
+   "target_words": 1300,
+   "current_words": 3119
+  },
+  "cutover.html": {
+   "article": "cutover.html",
+   "kind": "tool",
+   "verdict": "revise-minor",
+   "one_line": "The strongest of the three: a small, reproducible tool with a clear method, public code, a demo script and published reports. It needs positioning against existing data-diff tools, a justified tolerance, a benchmarked scale claim, a fixed reference and a shorter header.",
+   "must_fix": [
+    "Reference 1 cites engineering.html 'sections 6 and 11' for the two work cutovers, but section 11 is 'What runs this site'. Cite section 6 only.",
+    "The half-cent fare tolerance is under-justified. The article says every mismatch is float noise with a maximum difference of 3.6 × 10⁻¹², yet it declares 0.005, which is nine orders of magnitude looser and would also hide real cent-level differences. State the actual reason, which the demo script's comment gives (the new side rounds to cents and the legacy does not). Alternatively show that a tolerance of 1e-9 also passes.",
+    "The '12.06 arriving as 12.059999999999999' example sits right after 'the largest absolute difference is 3.6 × 10⁻¹²'. That example's difference is about 2 × 10⁻¹⁵, so the pairing implies it is the maximum. Separate the two.",
+    "The tolerance formula has both τ_abs and τ_rel, but the CLI example '--tol amount=0.01' and the demo's '--tol fare=0.005' do not say which one they set. Document the CLI mapping.",
+    "'Fine for tens of millions of rows but not for billions' is asserted without a measurement. Give a timing and memory benchmark (rows, columns, machine, seconds, peak RAM) or soften the claim.",
+    "Run 1 is described as 'three findings, none of them planted', but the third, the row set, is a matching result plus a note about the source, not a finding. Say two findings and one observation.",
+    "The short-version box is a third copy of the deck and facts strip (six steps, 5 years / 20 columns, 62 of 62, 343 mismatches, 33 / 33, 41 tests, the limits). Cut it or cut the facts strip.",
+    "The TLC data reference has no access date and names no file (yellow_tripdata_2025-01.parquet). The package reference gives no version: the reports were produced with cutover 0.1.0 on 2026-09-14, so state that."
+   ],
+   "cut": [
+    "The short-version box.",
+    "The anecdote 'which is what the first version of the tool did on the demo before the demo corrected it'. Either keep it as a dated entry in a changelog or cut it.",
+    "The closing sentence of the first section, 'In neither case did the argument for the cutover rest on having tested it; in both it rested on a count of differences, and the count was zero.' It is a rhetorical 'not X but Y' closer.",
+    "The phrase 'now with a certificate' in the limits paragraph (a zinger).",
+    "The stale unlinked files assets/cutover/report.html and report.json, which sit next to report-1 and report-2 (repository housekeeping)."
+   ],
+   "missing": [
+    "Related work: how cutover differs from datacompy, Datafold's open-source data-diff (hash bisection across databases), dbt-audit-helper (compare_relations), Great Expectations and SQLMesh table_diff. Without this the contribution is unstated.",
+    "A benchmark supporting the scale limit.",
+    "The exact hash used for fingerprints (algorithm, how rows are serialised, NULL and float encoding), so that '62 of 62 days' is reproducible outside the tool.",
+    "How NaN, ±0.0 and timezone-aware timestamps are treated in the column and fingerprint steps.",
+    "A one-line reproduction command for the demo (e.g. 'uv run tools/cutover_demo.py') with the expected runtime and download size.",
+    "A statement that the two work cutovers were not run with this package (the package postdates them), so the tool is validated only by its tests and the taxi demo."
+   ],
+   "target_words": 1500,
+   "current_words": 1788
+  },
+  "prague-council.html": {
+   "article": "texts/prague-council.html",
+   "kind": "research",
+   "verdict": "revise-minor",
+   "one_line": "The strongest of the three: a clear question, honest design and good prose. Two things must be fixed before it is journal-ready: the headline overstates H1, and the pre-registration cannot be verified from the public repository.",
+   "must_fix": [
+    "Pre-registration cannot be verified. 'How this was done' says the design was 'committed to the site's public repository before any vote was modelled', but git history shows docs/research/prague-council-design.md arriving in the same commit as the results and scripts (5a34401, 2026-09-28). Either link a registration commit or hash dated before the results, or reword to 'written and reviewed before modelling; not independently timestamped'. This applies to the 'pre-registered' kicker too.",
+    "Say in the article that the four-term fall in votes against (1.06 to 0.28 per 100) was already published and seen when H1 was registered. Design §0 records this; the article does not. H1's direction was therefore partly known in aggregate.",
+    "H1 is overclaimed in the deck and the short version: 'the same councillors vote against about half as often in each new term'. The article's own decomposition says otherwise. 2010–14→2014–18 was a fall to a fifth, 2014–18→2018–22 showed no change among stayers, and 2018–22→2022–26 fell to about two thirds. The result also fails among the 26 whose status did not change (× 0.86, p = 0.14) and weakens to × 0.72 without the first transition. Rephrase as a pooled average driven mainly by 2010–14 and flag the heterogeneity in the deck.",
+    "Causal slide in 'Yes votes in the coalition and in opposition'. The text says 'this comparison is not a causal estimate', then in the next sentence 'puts a list's voting ... down mostly to its seat in or out of the coalition rather than to its programme'. Cut the second sentence or make it descriptive.",
+    "The title 'Prague's council rarely says no' is true only of the files, which hold 55–67 % of roll calls: final votes on adopted resolutions, with procedural votes and amendments excluded, where 'government and opposition fight most'. Qualify the deck, for example 'on the resolutions it adopts', so the title does not overstate.",
+    "No references carry an access date, although open data (lkod.cz, golemio CSV, praha.eu councillor list 'as of September 2026') changes over time. Add 'accessed <date>' to refs 1, 10, 13, 14 and 16.",
+    "Explain the hypothesis numbering gap (H1, H3, H4) in the tests table: say that H2 was the demoted abstention hypothesis."
+   ],
+   "cut": [
+    "The 'Overwhelmed? Here's the short version' box repeats the deck and the six facts almost word for word (88 %, 1.06→0.28, × 0.49, 95/59 %). Drop it or cut it to one or two sentences that add nothing already in the header.",
+    "'the dataset's contact at City Hall is the right person to ask' at the end of 'What this does not show' is off-register. Cut it.",
+    "The 'Corrected 29 September 2026' note sits in the middle of 'What changed after registration'. Move it to a dated correction line at the foot, as the house pattern does.",
+    "'Every councillor' table intro: the column definitions duplicate the table footnote. Keep one of them.",
+    "Trim the fig. 3 caption's speculation ('a change in the voting system or the rules of procedure would produce it, and this text has not found one'), which the 'Abstentions before and after 2018' section already covers."
+   ],
+   "missing": [
+    "A reproduction note: environment and dependencies (the repo has no README or requirements file), the order in which to run the six scripts, and where the raw files land. figures.py, figures_extended.py and titles.py are used but not listed.",
+    "Links from the script names to the files on GitHub (they are plain text now).",
+    "Uncertainty on the descriptive headline rates (88 %, 0.28 per 100) and on the H3 error differences (10 and 6 fewer errors per 100), or a statement that they are population counts, not estimates.",
+    "A per-transition table or interval for H1 (fig. 4 shows it, but the text should give n and CI for each of the three transitions).",
+    "A one-line contribution statement against the literature: what a municipal assembly adds to Hix–Noury and Theriault."
+   ],
+   "target_words": 3400,
+   "current_words": 4216
+  },
+  "prague-rings.html": {
+   "article": "texts/prague-rings.html",
+   "kind": "research",
+   "verdict": "revise-major",
+   "one_line": "The design and data work are solid, and the composition result (θ = 0.43) is a real contribution. The title and header claim more than the registered results allow, and the turnout and minor-party material should be cut back.",
+   "must_fix": [
+    "The title 'Prague votes in rings, not along lines' asserts the metro null that H2 could not establish ('not supported: inconclusive', p = 0.28, 'a negligible metro effect cannot be told from a small one'). The strongest gradient in the article is housing type (the estates), not rings. It also uses the 'not X, but Y' device the house style bans. Retitle around the estates finding.",
+    "The facts line 'never half' ('31–44 % in 48 specifications; never half') and the short version's 'never half' are contradicted by the body. With age added, composition explains 52 %, 'and the test can no longer tell the answer from one half'. State that the registered block excludes age and that adding age reaches about half.",
+    "Pre-registration cannot be verified. The article says the design was 'committed ... before any census count or earlier election was joined', but docs/research/prague-rings-design.md first appears in the same commit as the results and scripts (1283162, 2026-09-28). Provide a dated registration commit or hash, or soften the claim.",
+    "H4 (turnout) is compromised by the article's own finding that the published register count includes voting-pass voters. It should be labelled uninformative rather than presented as 'not supported, sign reversed', or both tests should be described as unable to test the hypothesis.",
+    "The claim that '43 % is a lower bound on what composition explains' rests on classical measurement error in the controls. With 1 km cells allocated dasymetrically by flats, the allocation error is correlated with the housing measure, so the direction of the bias is not guaranteed. Either justify the claim or call it 'likely understated'.",
+    "Reference numbering is out of order: ref 22 (Part 1) is the first citation in the text. Renumber by first appearance.",
+    "No access dates on any data reference (ČSÚ open data, RÚIAN map service, PID GTFS, which changes daily and is why Flora is missing). Add them, and pin the GTFS snapshot date.",
+    "'Planners and campaigns both treat the metro as the city's spine' is uncited. Cite it or cut it."
+   ],
+   "cut": [
+    "The short-version box repeats the deck and facts (26 %/16 %, 43 %, 0.55→0.80, −0.17). Remove it or reduce it to one sentence.",
+    "The minor-party paragraph (STAN, Stačilo!, SPD, Motorists; R² 13–29 %; the 'metro's one measurable trace' for SPD) is a forking-paths aside with no registered role. Cut it to one sentence or move it to a footnote.",
+    "The intro and first section describe the map twice: the fig. 1 caption and the paragraph that follows both explain the party picker and hover.",
+    "'Housing stock or residents' restates the registered questions already listed in the opening paragraph ('asks four things...'). Merge them.",
+    "'Turnout in the centre': compress it to a single paragraph with the caveat first, given the contamination.",
+    "In 'Robustness checks', the line on the placebo that was not run (line D) belongs in 'What changed after registration'."
+   ],
+   "missing": [
+    "The effective sample for the headline tests: 282 clusters, but inference is over 57 districts. State that clearly in the facts, not only in the table note.",
+    "A reproduction path: repo README and dependencies, order of rings_data → rings_power → rings_extended → rings_robust, raw-file hashes, and links to the scripts. metro.py and figures_rings_extended.py are not all linked.",
+    "For H3, a note that matched precincts are unrepresentative (40 % vs 27 % panel) and that the 2021 census is fixed, so steepening could be compositional change. The text half-says this; the header should not present 'steepened' without that caveat.",
+    "A contribution sentence: what Prague adds relative to Maxwell (2019) and the context-vs-composition literature, beyond a local replication.",
+    "Units in the facts: 'points per 10 pp' and 'pp per pp' are both used. Harmonise them."
+   ],
+   "target_words": 3300,
+   "current_words": 4372
+  },
+  "prague-districts.html": {
+   "article": "texts/prague-districts.html",
+   "kind": "research",
+   "verdict": "trim-hard",
+   "one_line": "Two pieces are glued together: a useful descriptive note on district budgets, and a registered alignment test that by design could only detect effects two to three times the published ones, whose estimate then went through three post-result corrections. Report it honestly and much shorter as a registered null, with the budget description as a brief lead.",
+   "must_fix": [
+    "The interval '−115 to +21 %' goes below −100 %, which is impossible for grants in levels. Explain that effects are linear differences scaled by the controls' usual grants and can therefore exceed −100 %, or report them on a scale that respects the bound. As printed in the facts box it reads as an error.",
+    "Pre-registration cannot be verified. The design says 'registered, version 2 (29 September 2026)', and the only commit of docs/research/prague-districts-design.md (ff0f0ca) also contains the results and scripts. A fix commit (9b3ce92) with 'flow direction, resolution dating' corrections also exists. Give the timestamped registration hash, or drop 'pre-registered' from the kicker in favour of 'design written before analysis, then corrected after results (three disclosed corrections)'.",
+    "The headline estimate is fragile, and the header does not say so. Dropping one control district (Troja) moves it to about 0 %, dropping ODS districts turns it to +14 %, and the 2023 window was cut to one year (agreement 0.79 < 0.9), so power is below the simulated about 100 % MDE. Put the 'uninformative/underpowered' reading in the deck instead of 'detects no such premium', and do not lead the facts box with −37 %.",
+    "The literature benchmark is cherry-picked in the facts ('published premiums are a third to a half'). The body cites Portugal at 19 % and Germany at −20 to −40 % under one bloc. Give the range honestly.",
+    "Mayor coding by 'two independent coding passes by a language model' is not independent coding (same model family). Call it double-coded by an LLM with hand adjudication, and move it to 'What this does not show' as a limitation.",
+    "The 'Correction, 28 September 2026' paragraph sits after the references. Move it to 'What changed after registration' or a dated correction line above the footer.",
+    "No access dates on MONITOR, ČSÚ population tables or praha.eu closing accounts, all of which are revised. Add them."
+   ],
+   "cut": [
+    "The parsing-error story (25 m → 4.1 bn, H1 +19 % → −38 % → −37 %) is told three times: in 'How this was done', in the tests-table note, and in 'What changed after registration'. Keep it once, in the changes section.",
+    "The short-version box duplicates the deck and facts almost line for line (8 346–17 604, 35 320, 76 %, −37 %, −115 to +21 %). Remove it.",
+    "'Budget plans, capital spending and the 2024 formula' is three unregistered descriptive asides (54 of 57, 47 % capital execution, the formula change). Cut it or move it to a notes piece.",
+    "'What the districts spend on', and the table intro, can shrink to two sentences, since the table carries it.",
+    "In 'Robustness', the paragraphs of alternative estimators (−13 %, −14 %, placebo −18 %, switch-out −7 %, MONITOR side −2 100 CZK) can become one compact table.",
+    "The kicker ('Part 3 of 5 · city-district budgets, 2022–2024 · pre-registered · the city's grants to its districts, 2015–2023') is overloaded; shorten it. Also shorten the deck, whose final sentence runs past 60 words."
+   ],
+   "missing": [
+    "A clear statement early on that the study was underpowered at registration (MDE ≈ 100 % vs literature 19–47 %) and why it was run anyway: the registered-report rationale.",
+    "The title 'One city, 57 budgets' does not signal the alignment question, which takes up most of the text. Retitle, or split the budget description into a separate note.",
+    "A reproduction path: nine scripts in tools/praha/ listed as plain text with no order, no README or dependencies, and MONITOR scraped through its public interface (state the endpoint and the date of scraping, and publish the raw extracts or their hashes; docs/research/prague-districts-files.sha256 exists but is not linked from the article).",
+    "The series is labelled 'Part 3 of 5', while the footer links Part 6 and there is no Part 5. The same inconsistency appears in the other parts; fix the numbering series-wide.",
+    "Per-resident CZK equivalents for the headline percentage effect, so readers can judge the magnitude."
+   ],
+   "target_words": 2800,
+   "current_words": 4703
+  },
+  "prague-housing.html": {
+   "article": "prague-housing.html",
+   "kind": "research",
+   "verdict": "revise-major",
+   "one_line": "There is a real, registered study here with one defensible result (the permit-to-house-number lag), but the title and deck frame Prague as an under-builder when the article's own European evidence puts its metro region in the upper quarter. The only supported test rests on a lag model the text itself calls degenerate, and about a third of the page reports uninformative results at full length.",
+   "must_fix": [
+    "Title and deck contradict the body. 'Prague builds two homes for Vienna's three' and the opening fact cards set Prague against two hand-picked comparators. In 'Prague among 208 European metropolitan regions' the text says Prague's region 'places it 163rd of 208 from the bottom, in Europe's upper quarter', and 'Prague built the second most of the 14 Czech regions per resident'. The deck must say that Vienna and Warsaw are both well above the European median (the article itself says 'two metropolitan regions well above the European median of 3.55') and that Prague is above it too. Otherwise retitle around the pipeline finding.",
+    "Reconcile the H2 interval with fig. 3. The text says Prague's lag is weakly identified: 'anything from about 14 to 38 months fits almost as well, and Prague's fitted lag distribution is degenerate, with all its weight on one lag of 16 months'. Yet the difference has a tight 90 % interval of 8.7 to 12.6 months. With a 5-month rest-of-Czechia lag, that bounds Prague at roughly 17.6 months, which the profile likelihood does not support. Either the bootstrap understates uncertainty for a boundary or degenerate estimate, or the text is misdescribing the figure. Explain it, or report a profile-likelihood interval next to the bootstrap one.",
+    "State plainly what H2 identifies. The article concedes that 'five months is too short to build a block of flats, so outside Prague the fit probably also tracks common reporting timing' and that the lag 'may reflect project size rather than procedure'. If the comparator lag is partly a reporting artefact, '+11 months longer to be completed' is not a construction-time difference. The fact card '+11 months ... supported' and the lead in the short version need that qualifier, not only the body.",
+    "The intervals do not match the test level. H2 is tested one-sided at the Holm threshold 0.0167, but a 90 % interval is reported. Say which interval corresponds to the decision, or report both.",
+    "Label H5 consistently. The fact card says 'indeterminate', the table says 'not supported: indeterminate', the short version says 'indeterminate ... so the metro hypothesis is not supported', and the hub page says 'ended indeterminate'. Use one registered label everywhere and put the simulation-error caveat (0.0002 margin against about 0.0016 MC error) in the fact card as well.",
+    "The heading 'The five hypotheses and their results' conflicts with 'Only three hypotheses ... were kept as confirmatory'. Rename it to e.g. 'Registered tests and estimates'.",
+    "Disclose who the referees were. The design, the 'consolidated' referee reports (dated 29 Sep 2026), the registration and the results all fall within 28–29 Sep 2026, and the referees are described only by field. A journal-ready text must say who reviewed it, how independently, and on what timeline. If the reviews were automated or self-conducted, say so, because 'reviewed by three referees' otherwise reads as external peer review.",
+    "Git-based 'registration' should be described as a self-timestamped commit in a public repo, not as pre-registration in the registry sense (kicker: 'pre-registered'). Add a tamper-evident anchor (OSF, Zenodo DOI or a signed tag) or soften the wording.",
+    "Series numbering: the kicker says 'Part 4 of 5', but the series runs 1, 2, 3, 4, 6. Fix the numbering or explain the gap.",
+    "Add access dates to every web source (ČSÚ, Statistik Austria, BDL, ČÚZK RÚIAN, Eurostat tables). Give Eurostat table codes with URLs.",
+    "Reference r24 is defined but never cited (only r1–r23 appear in the text). Remove it or cite it.",
+    "'Warsaw, which built the most of the three cities, still had fast price growth' carries no number or citation. Support it or cut it."
+   ],
+   "cut": [
+    "The 'Overwhelmed? Here's the short version' box. It repeats the deck almost verbatim ('Counted by their own statistical offices...'), and the fact cards already carry every number. The label is also off-register for a research article. Keep either the deck plus facts or the box, not all three.",
+    "Reduce the fact cards from 8 to 4 (Prague rate, H2 result, H5 result, tests passed). The Vienna and Warsaw peaks and the 25 % non-profit card duplicate fig. 1 and fig. 4.",
+    "'Prices and permits, 2018–2024' (H3). It is an uninformative estimate on 27 quarters, in an unintuitive 'log points' unit, with a placebo and a variant. Compress to two sentences in the tests table note.",
+    "The robustness paragraph listing ranks for the failed demand model ('45th of 116 ... 123rd of 216 ... 106th of 199 ... 50th of 183 ... 137th of 208 ... 138th of 208'). Ranks against a model labelled uninformative do not need nine variants in prose. One sentence plus the JSON is enough.",
+    "The H4 Polish builders section can shrink to one paragraph. It is uninformative, and by the article's own words it 'says nothing about what limited-profit associations would do in Prague'. Keep fig. 4 (descriptive split by builder) and drop fig. 5 or move it to the repo.",
+    "The 'underpowered' rule that 'never applied' appears in both 'How this was done' and 'What changed after registration'. Keep it in one place.",
+    "The moralising line 'more homes are not the same thing as better housing'."
+   ],
+   "missing": [
+    "A literature positioning for the contribution. Glaeser/Gyourko and Caldera–Johansson are cited for concepts, but there is no statement of what is new relative to existing Czech evidence on permitting delays (e.g. Czech construction-permit studies, the Deloitte/Platforma developerů data, the OECD economic survey of Czechia on housing supply).",
+    "A direct measure of permit-granting time, the part the article says 'Czech reform has targeted'. At minimum, cite a source for it so the reader knows the magnitude of the part not measured.",
+    "A reproduction entry point: one command or a Makefile target, pinned Python dependencies, and the order in which to run housing_fetch/housing_data/housing_extended/housing_robust/figures_housing_extended.",
+    "Prague's completions per 1 000 at the metro-region level next to Vienna's and Warsaw's in fig. 1, so the headline comparison uses the unit the article itself argues is correct ('housing markets do not stop at city limits').",
+    "Uncertainty on the three-city rates, or at least a statement that they are administrative counts without sampling error, plus the definitional gap quantified (Vienna 6.2 with conversions in 2024 is given, which is good; do the same for Prague's share of conversions)."
+   ],
+   "target_words": 2800,
+   "current_words": 4491
+  },
+  "prague-parking.html": {
+   "article": "prague-parking.html",
+   "kind": "research",
+   "verdict": "trim-hard",
+   "one_line": "The core is strong and honestly reported: a register-based fleet model finds that 2012's cars would fit about 1.6 % more stalls on today's kerb, and a well-designed H2b. But the article carries three superseded texts inside it (5 of 13 figures are 'From the first estimate'), repeats the subsidy sentence four times, and makes a city-wide versus one-district comparison it cannot support.",
+   "must_fix": [
+    "Cut or reframe the Deník N comparison ('Thirteen years of bigger cars across Prague are therefore worth about ten years of permit growth in one district'). It sets a city-wide modelled stall loss against one district's reported gross permits, a number the article admits it did not check and cannot classify as gross or net. The short version and the registered band sentence ('real, and small next to the count of cars') then lean on it, although the text says the registered comparison 'could not yet' be made. Drop the 'small next to the count of cars' clause from the box and deck until the TSK series arrives.",
+    "'Implicit subsidy (forgone rent)' of 5 800 to 48 000 Kč. The lower bound is the city's own second-car tariff, which is a policy price, not a market rent, and the upper bound prices exclusive 24-hour reservation of a bay. Neither is forgone rent in the economic sense. Rename it to 'gap to the city's own tariffs', or add a market benchmark. The phrase is also repeated verbatim in the deck, a fact card, the short version and the price section.",
+    "Clarify what the intervals are. '1.6 % (1.3–1.9 %)' is an interval 'under the registered input distributions' (Monte Carlo over assumed ranges), not a sampling confidence interval, while '+2.3 cm (95 %: −0.3 to +5.2)' is a bootstrap CI. Label them differently in the facts and the box.",
+    "The deck says '2012's cars would fit between one and two and a half more in every hundred'. That is the band sentence, while the estimate is 1.3–1.9. Readers will take the band for the result. Lead with the estimate.",
+    "Reference numbering is not in order of first citation: r21 appears before r17, and r33 and r34 appear in the perpendicular section before r22–r32. The ČSN reference also points to '[21]' as plain text. Renumber.",
+    "Disclose who the three referees were (see the hub and housing notes). The registration and referee files are dated in the same days as the results.",
+    "The fleet calibration rule was coded after the real run ('the code for this rule was written after the real run, and it fixed the shape at the edge value (k = 1.5)'), and the calibration check failed by 3.9 cm. That is disclosed, but the implication belongs in 'What this does not show', not only under changes: a year-varying shortfall 'would' move the loss, and 'nothing here can rule that out'.",
+    "Series numbering: this is 'Part 6' in a series of 5 published parts. Fix it or explain it.",
+    "Add access dates to all web sources (T&E article, TSK pages, ArcGIS layers are dated, which is good; drivesize.com, Koblenz, Köln, electrive, ČAPPO, MD ČR are not). Replace drivesize.com (a commercial explainer) for the mirror allowance with a primary source, or drop the mirror claim.",
+    "Style violations against the house guide: 'The check passed with a null result, which is also a result.' (fig. 13, a zinger); 'no Simpson's paradox hides two opposite cities inside one mean' (a misuse of the term and a flourish); 'the gain is never free and never the doubling that the kerb arithmetic suggests' and 'The switch would move Prague from the dimension that has grown least to the one where the margin is already thin' (closing zingers); 'Overwhelmed? Here's the short version'.",
+    "Mixed stall figures (168 400, 168 424, 168 456) and fleet lengths (4.18 m vs 4.37 m) from two different models appear side by side in the perpendicular section. Use one model throughout, the registered one."
+   ],
+   "cut": [
+    "The four 'From the first estimate' figures on borrowed inputs (fig. 1, 6, 8, 12) and fig. 13. fig. 1 can stay as the single methodological motivation (length vs area); the rest are superseded by the registered analysis and belong in the archived texts, which are already linked.",
+    "The long EEA data-cleaning paragraph (provisional vs final rows, the '?KODA' export bug, plausibility filters) and the 'Checks on the zone data' test inventory ('27 tests ... 30 in all'). Move both to the repository methods note and leave one sentence plus a link.",
+    "The wheelbase-route history (the M1-only vs M1+M1G versions, 2 263 vs 2 709 stalls, 174 vs 208 a year). It is the audit trail of withdrawn texts. Keep the corrected figure once, and keep the correction in 'What changed'.",
+    "'Car width and the driving lane' and 'Perpendicular parking instead of parallel'. They are not registered, rest on T&E EU widths and on a standard the author 'did not open', and answer a campaign remark. Merge them into one short paragraph, or move them to a separate note.",
+    "The market-composition paragraph (Octavia, Fabia, Karoq shares) and fig. 5. They are interesting but descriptive and M1-only, and they do not feed any estimate.",
+    "The short-version box, which repeats the deck and the fact cards almost word for word.",
+    "'Permits priced by car size in other cities' can stay as the table, but drop the Paris row (the text itself notes 'secondary source; no paris.fr page was located') and the Cologne 1 mm aside."
+   ],
+   "missing": [
+    "The per-parallel-space estimate straddles two bands and 'depends above all on how long the cars made before 2010 really were' (variance share 0.92). A concrete plan or source to pin that down (e.g. historical type-approval lengths by model year) would turn the main uncertainty into a next step.",
+    "A Prague-specific fleet. The article notes that 'Prague's fleet is probably younger than the national one', which would bias the estimate. Give a direction and magnitude using the register's registration address, if it is available.",
+    "The count-of-cars estimate (third registered estimate) is 'awaiting TSK data'. Either publish without the 'small next to the count' framing, or wait.",
+    "Positioning against the parking-size literature beyond T&E (e.g. academic work on vehicle footprint and kerb capacity, and the Freiburg ruling's reasoning as a legal constraint on length pricing in Czechia).",
+    "A reproduction entry point: the order of rsv_extract → rsv_coverage → eea_* → parking6_estimate → figures, the environment, and how to obtain the 19.4 M-row register export at the hashed version."
+   ],
+   "target_words": 3800,
+   "current_words": 8217
+  },
+  "prague-measured.html": {
+   "article": "prague-measured.html",
+   "kind": "hub",
+   "verdict": "revise-minor",
+   "one_line": "A clean, useful series landing page with a good registration and data table, but it inherits the parts' numbering gap, repeats slogan titles and one overclaim from the parts, and presents unnamed 'referees' and git commits as if they were external peer review and formal pre-registration.",
+   "must_fix": [
+    "Numbering: 'parts published 5', but the list is Parts 1, 2, 3, 4 and 6. Explain the missing Part 5 (planned, withdrawn?) or renumber the series.",
+    "Registration claims: 'reviewed by three referees' and 'referee reports on the designs 15' with no statement of who the referees were. Parts 1 and 2 link no referee file ('named in the design'). Say who they are and how independent they were, and link all 15 reports. Describe the git branch commit as self-registration and add a tamper-evident timestamp (OSF/Zenodo or signed tags), since commit dates are author-set.",
+    "The Part 1 blurb overclaims: 'so a list votes according to whether it governs more than according to the party behind it' generalises from one party's (ANO's) switch, in a part where 1 of 3 tests passed. Soften it to what the data show.",
+    "The Part 2 title 'Prague votes in rings, not along lines' is the 'not X but Y' device the house style bans. It should be changed in the part and mirrored here.",
+    "The Part 4 blurb repeats the misleading Vienna/Warsaw framing. Add that Prague's metro region is above the European median by census count, and fix the H5 label to match the part.",
+    "The Part 6 blurb's last sentence ('The article replaces three shorter texts published in September 2026') is housekeeping, not a finding. Move it to the part's own notes.",
+    "The fact card 'confirmatory tests passed 4 of 16' adds up passes across five independent Holm families. That is a scoreboard that invites a misreading. Either drop it or say 'per part' explicitly in the figure, not only in the sub-caption."
+   ],
+   "cut": [
+    "The '4 of 16' and '15 referee reports' fact cards, if the referee provenance cannot be stated.",
+    "Duplicate phrasing between the intro paragraph and 'How each part was registered' (both describe design, referees and commit before join)."
+   ],
+   "missing": [
+    "A licence for the code and the published JSON.",
+    "One reproduction note for the whole series: the environment (Python version, requirements file), a Makefile or run order per part, and where raw downloads are cached with the SHA-256 lists.",
+    "Access or snapshot dates per source in the 'Data and code' paragraph (the parts should carry these too).",
+    "A one-line statement of what the series is not: not peer-reviewed in a journal sense, and a single author."
+   ],
+   "target_words": 1000,
+   "current_words": 1252
+  },
+  "football.html": {
+   "article": "football.html",
+   "kind": "research",
+   "verdict": "revise-major",
+   "one_line": "There is a real finding here: the Czech Big-5 count fell in 2014/15 and, unlike its peers', has not recovered. But the article reports two break models and two gap decompositions whose numbers disagree, never names the 'nine strongest leagues', and draws a policy lever from reform evidence it admits does not hold.",
+   "must_fix": [
+    "Two break models, two answers. 'Czech players in the Big-5 since 1995/96' reports a local-level model with two steps: the fall in 2014/15, x0.60, posterior 0.56. 'League strength estimated from players who moved' reports a one-step model: 2014-15, 62 %, x0.57 (0.38-0.86). Keep one model, or say explicitly that these are two specifications and why they differ.",
+    "Big-5 and top-9 are conflated. Para 3 of 'League strength...' says 'the count of Czech players in the top-9 leagues, 26 -> 6 -> 10 since 2007'. Everywhere else, 26 -> 6 -> 10 is the Big-5 series. Meanwhile 'Czechia has 26 such players' is the top-9 count for 2025/26. Readers will confuse the two 26s. Name the series consistently and relabel the 26 in each place.",
+    "The nine strongest leagues are never listed. Define them, with the UEFA ranking year, where the measure is introduced.",
+    "Internal arithmetic. 'Of the 192 mapped players, 27 play abroad, 63 % of them in a top-9 league' gives about 17 players. That contradicts '26 such players' in the top-9. Reconcile the pool definitions (country-page discovery vs the nationality column, r2) or correct one of the numbers.",
+    "The gap decomposition is inconsistent. 'Youth minutes, league strength...' says that against Norway 'home-league strength carries 73 % of a 7.0-per-million gap'. The later paragraph says Norway's +7.0 is 'mostly to U21 minutes (+4.2) and league strength (+5.1)'. Those sum to 9.3, which implies an unreported third channel of -2.3, and 'mostly to U21 minutes' contradicts the 73 %. Report all three channels with signs once, in one place. State that a ridge fit with three channels on n = 8 peers is descriptive.",
+    "The youth-minutes regression overclaims. The Bayesian HDI (-1.7 to +23.3, n = 8) crosses zero, while the 'pooled-panel OLS' interval (1.1-14.0) does not. Say how the panel errors were clustered by country; otherwise the OLS interval treats country-seasons as independent and is too narrow.",
+    "Causal drift. The article admits 'In neither country did the turn hold' and 'it is not a counterfactual'. It then says the sequence 'suggests that minutes for young players at home are the lever a federation holds'. The 'within reach' paragraph ('two regular under-21 starters per club ... a first move at 22-23') is policy advice, which contradicts 'gives no selection advice'. Cut both or downgrade them to a clearly labelled conjecture.",
+    "Reference r6 (FBref Big-5 tables) is never cited in the text; the Big-5 series cites r1 and r10 instead. r6 also says '2000/01 -> 2025/26', while the text says since 1995/96. Fig. 1 caption admits the image is the older 2000/01 render. Re-render the figure from the current series, or align the text to what the figure shows.",
+    "Access dates are missing. Only r1 has a read date. FBref (r2), Eurostat (r3), Wikipedia squad tables (r5, which need revision ids or a date) and UEFA coefficients (r7) all need one.",
+    "House-style violations: slogan paragraph openers ('Czechia falls out of line with its peers at the first rung.', 'That puts Czechia seventh of nine.', 'Three numbers follow the road...'); closing morals ('Fewer Czech players leave than in peer countries, and those who leave keep their places.', '...which differs from a slow decline.', 'so the forecast is honest and no better than the naive one'); personification ('the data can say on which rung', 'the build refuses to render a sentence').",
+    "The kicker's '317 tests' reads as 317 statistical tests to a journal reader. They are software unit tests. Move the figure to the reproducibility paragraph and label it as such.",
+    "Season formatting is inconsistent: '2014/15' vs '2014-15', '2025/26' vs '2025-26'. Pick one."
+   ],
+   "cut": [
+    "The short-version box repeats the deck, the facts strip and the opening paragraph almost line for line ('Every number on the page is computed from the run, with 317 tests behind it' appears twice). Cut it to two sentences or drop it.",
+    "'How it was built': the paragraph about fresh coding agents, spec-compliance reviews and 23 rulings is process colophon, not method. Reduce it to one sentence in the footer and keep only the clone-and-render command.",
+    "The paragraph about the other five editions ('Denmark's edition covers 443 players...') is a product changelog. One sentence and the Nations link are enough.",
+    "'Three models, one task' (GBM vs Bayesian vs MLP RMSE) does not answer any question the article asks. Move it to the atlas methodology.",
+    "The duplicate statement of the gap decomposition. Keep one."
+   ],
+   "missing": [
+    "Positioning in the literature. The contribution relative to existing work is never stated. The CIES Football Observatory publishes expatriate counts and club-trained/youth-minutes indices per country; there is also work on league-strength equivalences (ClubElo, Opta Power Rankings) and plus-minus/mover identification. Cite them and say what is new.",
+    "A one-sentence research question near the top: when did Czech presence in top leagues fall, and at which stage of the pathway does Czechia diverge from its peers.",
+    "A statement that the analysis is exploratory and not pre-registered, with the number of countries, editions and specifications tried (forking paths across 17 countries).",
+    "Uncertainty on the headline per-million ranks, or at least a note that the counts are single-season and that a rank change of one or two players moves Czechia past Slovakia or Hungary.",
+    "A limitations section in one place. Presence vs quality, n = 8 peers, UEFA vs mover-based multipliers, FBref coverage and the name-based dropping of women's entries are currently scattered.",
+    "The source for the 2026 World Cup squad, with a date."
+   ],
+   "target_words": 2200,
+   "current_words": 3402
+  },
+  "hockey.html": {
+   "article": "hockey.html",
+   "kind": "tool",
+   "verdict": "revise-major",
+   "one_line": "It is a competent descriptive tool write-up, not research. The headline counts contradict the article's own cohort tables, the novelty claim is unsupported, and the sensitivity claim overreaches; about a third of the text (graph, FAISS, LLM briefs) belongs in a project note.",
+   "must_fix": [
+    "The defence counts contradict the tables. The facts strip, the short version and the text say 'four Czech defencemen in the NHL in total against Finland's fourteen'. The defencemen table sums to Czechia 0+1+1+1 = 3 and Finland 0+1+5+3 = 9; only Sweden's 30 matches. The Czech total also checks out only with 3: 12 forwards + 3 D = 15 = the stated 15 players. Fix the facts strip, the short version and para 3 of 'NHL players by position and age', or fix the tables.",
+    "Check the ages. The 26-29 cell names 'Pastrňák, Nečas, Zacha and Hertl'. Hertl (b. 1993) is 30+ in 2025/26, and Pastrňák turned 30 in May 2026. State the age reference date and re-bin.",
+    "The novelty overclaim. The deck says 'one number that nobody had aggregated'. NHL players per country by birthplace are routinely compiled (Hockey-Reference, QuantHockey, NHL.com). Drop the claim or state precisely what was not aggregated before (per-capita by position x age against named peers).",
+    "The sensitivity table does not support 'the map is not sensitive to the input I was least sure of'. The mean rank shift in the top 20 reaches 4.35 places. Only Liiga and Extraliga rows are shown, not NHL/AHL/SHL/NL/first league. The 'all -20 % / all +20 %' row is trivially zero, because uniform scaling cannot change ranks. Show all perturbed leagues, drop the trivial row and soften the claim.",
+    "The shrinkage is called 'empirical-Bayes', but K = 10 is fixed, not estimated from the data. Either estimate K (method-of-moments or a beta-binomial fit) or call it a fixed-strength prior.",
+    "Median P/GP in cells of n = 1 or 2 ('1 · 0.42', '1 · 0.00') is not a comparable statistic. Grey out or suppress medians below n = 3, or say that they are single players.",
+    "The per-capita count uses birth_country = CZE, while the mapped pool uses 'Czech eligibility'. State the difference and how many players it moves (e.g. Czech-eligible players born abroad).",
+    "Population denominators (r3) have no source. Name the source (Eurostat / national statistics / UN WPP) and the date.",
+    "Access dates for the NHL API, MoneyPuck, Liiga and hokej.cz are missing. Say whether the 18 May snapshot is committed so that 'make install && make all' reproduces the published numbers rather than re-fetching (r6 is ambiguous).",
+    "House style: 'world class by any reading' (adjective carrying weight); 'two analyses that did not survive their own review' (personification in the deck); 'A scout will know all of this already...' (throat-clearing); the section closing '...and the reader does not have to accept a single reading of the pool' (moral)."
+   ],
+   "cut": [
+    "The short-version box repeats the facts strip, the deck and the limitations paragraph nearly verbatim. Remove it or cut it to two lines.",
+    "'The knowledge graph, similarity search and scouting briefs' (Neo4j, FAISS, LLM briefs, the 570-phantom-node bug) is engineering, not findings. Reduce it to one sentence with a link, or move it to a notes post.",
+    "The long cluster-archetype paragraph can be shortened. The archetype counts without a validation of the clusters (silhouette values are not reported) add little.",
+    "The kicker's 'rendered 18 May 2026 · English edition 12 September 2026' duplicates r1."
+   ],
+   "missing": [
+    "A stated research question and the contribution relative to existing work. Cite NHL-equivalency literature properly (Desjardins' league equivalencies, Sznajder/NHLe papers, hockeyviz as an actual page), not a homepage.",
+    "Year-to-year variability of the per-million counts. One season of 15 players is noisy, so show at least the 2024/25 value as well, since the data are already there.",
+    "Silhouette scores and the chosen k for the clusters, and a note that age is one of the four PCA features, which mixes profile and career stage.",
+    "A separate, specific limitations section. The current one mixes the two dropped analyses (good, keep them) with generic 'public data only' caveats.",
+    "The KHL exclusion: how many Czech-eligible players it removes from the pool."
+   ],
+   "target_words": 1300,
+   "current_words": 1838
+  },
+  "weather.html": {
+   "article": "weather.html",
+   "kind": "tool",
+   "verdict": "move-to-notes",
+   "one_line": "A careful verification protocol with no results yet (9 issue dates, already a five-day gap). The design has two leakage bugs, in lead-0 precipitation and in the persistence baseline, that would bias the very predictions it registers. Fix those and publish it as a dated note, then promote it once the gates open.",
+   "must_fix": [
+    "Persistence baseline leakage. verify.py (the lines computing mae_tmax_persistence and brier_persistence) uses the observation of target - 1 day. At leads >= 2 that observation is not available at issue time, so persistence is given future information and becomes artificially strong at long leads. That directly contaminates prediction 2 ('persistence ... an easier one from lead 3'). Use the last observation available at issue (issue - 1 day).",
+    "Lead-0 precipitation is a hindcast, not a forecast. SRA for day D covers (D-1 06:00, D 06:00], but the collector runs at 06:40 UTC on D with past_days=1. Lead-0 rainfall is therefore entirely past hours, and lead-0 TMI/TMA windows are partly past. Drop lead 0 for precipitation (and flag it for temperature), or define leads from the window end.",
+    "The Brier probability double-counts ICON. The article admits 'best_match resolves to ICON for Prague', yet the formula uses f_i = #models / 4 with best_match included. ICON gets double weight, and the probability ladder is not what it claims. Use the three distinct models (f / 3) for the ensemble probability and keep best_match only as a separate column.",
+    "Predictions dated 15 September are not tamper-evident on the page. Link the commit (hash and timestamp) where they were written. Otherwise 'written before the first pair existed' is an assertion, not evidence.",
+    "The predictions are not decidable as written: 'clearly positive', 'about zero', 'at least as good'. Give the numeric criterion and the interval rule for each. Say what happens if the CI straddles the threshold (inconclusive).",
+    "Code facts are stale. 'The whole thing is 350 lines and five tests' and r2 '5 tests' vs the repo, which has 368 lines in collect.py + verify.py and six test functions in weather/tests/test_verify.py. The facts strip also says '5 tests'.",
+    "The data gap is not disclosed. data.json lists issues 2026-09-15 and then 2026-09-21 onward; 16-20 September are missing. The page claims a missed morning 'shows as a visible gap'. Say so in the text and state how many pairs this costs toward the 14/30 gates.",
+    "A block bootstrap by ISO week with 2-5 weeks of data is degenerate. Set a minimum number of weeks (e.g. >= 8) before showing an interval, not just a minimum number of pairs.",
+    "Overclaims and house style: 'in a way nobody can argue with' (a station point vs a model grid cell has a representativeness error, which the article's own Klementinum heat-island remark concedes); 'in return \"skill\" on this page means skill against the world' (slogan close); 'Running it costs nothing.'; 'it exists because the surf verifier was built as a general verifier rather than as a surf page' (closing moral); the title 'Weather, checked.' (slogan)."
+   ],
+   "cut": [
+    "The short-version box restates the deck, the window definition and the gates, which each have their own section. Remove it.",
+    "The comparison with the surf page appears three times (deck, short version, first section). Keep it once.",
+    "'The daily job' can shrink to two sentences (cron, append-only storage, gap policy) and move to the footer."
+   ],
+   "missing": [
+    "Stating up front that this is a protocol with no results yet, and the date results are expected.",
+    "Citations for the station histories (Ruzyně since 1938, Klementinum since 1775) and for the Klementinum urban heat-island bias the first prediction relies on.",
+    "Representativeness: grid-cell elevation vs station elevation (364 m and 191 m), and whether any lapse-rate correction is applied.",
+    "Access dates for ČHMÚ open data and Open-Meteo, and the Open-Meteo model versions / resolutions at run time.",
+    "The verification literature beyond Wilks, e.g. Jolliffe & Stephenson (2012), and published ECMWF/DWD verification scores, to anchor the 1.0-1.6 °C prediction.",
+    "A power statement: what effect sizes (the ECMWF vs ICON MAE difference) are detectable with 30 or 90 pairs."
+   ],
+   "target_words": 800,
+   "current_words": 1320
+  }
+ },
+ "site": {
+  "curation": [
+   {
+    "item": "Front page film reel (currently 4: Prague measured, Delayed All the Time, Player Pool Atlas, Persistence)",
+    "action": "Cut to 3 films, in this order: 01 Persistence (the thesis, after it is rebuilt), 02 Prague, measured, 03 Quaesitor (the preprint). Delayed All the Time and Player Pool Atlas leave the reel.",
+    "reason": "The reel should show the three bodies of research the site stands on. A sonification and a sports atlas in the reel tell a reader that this is a hobby stream."
+   },
+   {
+    "item": "Front page film copy for Prague, measured",
+    "action": "Change the label 'a series in five parts' and the deck ('how little it builds') to neutral, number-free wording. Remove 'Start with Part 1' until the numbering is fixed.",
+    "reason": "'How little it builds' repeats the Part 4 framing that the referee found contradicted by the body (Prague's metro region sits in Europe's upper quarter)."
+   },
+   {
+    "item": "Front page film copy for Persistence",
+    "action": "Replace '121 million vehicle-location records' with the correct unit, which must be the same on thesis.html and delayed.html. Replace 'standard appraisal overstates' with the thesis's own hedged claim.",
+    "reason": "The unit conflicts with delayed.html, which counts the same data as 121 M stop events. The flagship blurb must be exact."
+   },
+   {
+    "item": "'Now live' strip (swell, Prague temperature, six jobs)",
+    "action": "Remove it from the front page and keep it on /status/.",
+    "reason": "A 'book it / not worth the flight' widget between the research reel and the About section undercuts the register."
+   },
+   {
+    "item": "About paragraph",
+    "action": "Rewrite it in three sober sentences: role, research interests (applied econometrics of urban systems, evaluation of LLM systems over data), thesis award. Cut 'cartographer without a licence', 'some you can hear, all of them you can check' and the pets and surf line. The personal line can move to the CV's 'outside work'.",
+    "reason": "These are slogans. The About text frames every piece below it."
+   },
+   {
+    "item": "All work list: structure",
+    "action": "Replace the 13 ad-hoc category labels (Prague measured, Thesis · award, Sport, Claims checked, Live, Library, Monthly · live, Forecasts verified, Built to be used, By day...) and the four filters (Data science / Data engineering / ML & AI / Sound) with three fixed groups rendered as headed lists: Research, Tools, Notes. Each row shows title, kind label, status (published / protocol / preprint) and date of the last substantive version.",
+    "reason": "Consistent form. A reader should know from the row what kind of claim a page makes."
+   },
+   {
+    "item": "Research group",
+    "action": "The group contains 1. Persistence (thesis), 2. Prague, measured (hub), with Parts 1–5 indented under it, 3. Quaesitor (preprint and its three texts), 4. Can a wrong number be seen coming? (a companion to Quaesitor, listed only once its must-fixes are done: public feature table, CIs, sampling temperature). About 10 rows in total.",
+    "reason": "These are the only pieces with a question, a design and inference. Everything listed here must meet the full research standard."
+   },
+   {
+    "item": "Tools group",
+    "action": "The group contains cutover, quotecheck, sitewitness (merged with the 'Ask the site' row, whose live link goes inside the article), Player Pool Atlas (one row, with hockey and football as its two write-ups), and Forecast verification (surf and weather merged, see below). Model release watch goes under Quaesitor rather than getting its own row.",
+    "reason": "Each tool is a public artefact with code and tests, reported as a tool rather than as findings."
+   },
+   {
+    "item": "Notes group",
+    "action": "The group contains Delayed All the Time, The Atlantic, played, ICU labels (retitled), Brand Reflection (trimmed to an index), FilmRunner, A wiki that an agent keeps, and AI over data (reframed as a design note). Every note carries a 'Note' kicker, a date and at most 900 words.",
+    "reason": "These are honest side projects and coursework. They stay on the site without borrowing research authority."
+   },
+   {
+    "item": "engineering.html ('The platform is code. So is the trust.')",
+    "action": "Retire it. Move the unique facts into the CV Alma Career entry, 301-redirect /texts/engineering to /cv/, and remove it from the list and the feed.",
+    "reason": "The page calls itself an advertisement, three of its eleven sections duplicate other pages, and it is full of banned slogans. The CV already carries the content."
+   },
+   {
+    "item": "ask/ row and sitewitness.html row",
+    "action": "Merge them into one row, 'sitewitness', whose page links to the live /ask/.",
+    "reason": "The two rows point to the same work, a duplicate inflated by an extra listing."
+   },
+   {
+    "item": "surf.html + weather.html",
+    "action": "Merge them into one page, 'Forecast verification: protocol', status 'protocol, no results yet', dated, about 1 000 words, with Ericeira and Prague as its two instruments. Fix the leakage bugs before republishing. Promote it to Research only when the pre-stated gates open.",
+    "reason": "Both pages describe the same verifier. Both report no results and carry stale numbers, and the weather protocol has leakage bugs."
+   },
+   {
+    "item": "status/ ('Six jobs, no server') and library/ ('What the work was read against') rows",
+    "action": "Remove them from All work and keep them as footer or nav links.",
+    "reason": "They are site infrastructure, not work."
+   },
+   {
+    "item": "Model release watch row",
+    "action": "Remove the separate row. List the watch inside the Quaesitor page as its monitoring instrument.",
+    "reason": "It belongs to Quaesitor, and a separate row adds to the count, not to substance."
+   },
+   {
+    "item": "second-brain.html",
+    "action": "Keep it as a Note of about 700 words. Replace the fabricated-quotation section with one sentence linking quotecheck, and drop 'Finding 2' (the reproducibility/regurgitation pun) unless both passages can be quoted with section numbers.",
+    "reason": "It re-tells the quotecheck incident under a different tool name. One account per incident."
+   },
+   {
+    "item": "ai-over-data.html",
+    "action": "Move it to Notes, retitled 'An LLM assistant over a data warehouse: design notes', and drop 'measured' from the title and deck. Return it to Tools or Research only when an anonymised outcome table exists (golden-set n, correct / silent / refused, before vs after).",
+    "reason": "The title promises measurements that the page never reports."
+   },
+   {
+    "item": "icu.html",
+    "action": "Move it to Notes, retitled 'Reversed outcome labels in an ICU P/F-ratio dataset (coursework)', and cut it to 1 300 words.",
+    "reason": "It is a course assignment on a non-public teaching dataset. Useful as a methods note, not as research."
+   },
+   {
+    "item": "brand-reflection.html",
+    "action": "Move it to Notes as a 900-word index of the four exploratory studies, retitled 'Colour, sound and homepage language in 47 Czech TV spots'.",
+    "reason": "It is a portfolio hub with no uncertainty, and its prediction check deviated from the registered window."
+   },
+   {
+    "item": "delayed.html",
+    "action": "Move it to Notes (700 words), remove the AR(2) sentence and the thesis-authority framing, and embed an audio clip.",
+    "reason": "It is a creative project with a wrong statistical claim attached."
+   },
+   {
+    "item": "filmrunner.html",
+    "action": "Keep it as a 500-word Note, or retire it if the repository stays private and the kicker cannot honestly say 'open source'.",
+    "reason": "There is no question and no measurement, and all references are private."
+   },
+   {
+    "item": "football.html / hockey.html",
+    "action": "List both under the Player Pool Atlas tool row. Football is framed explicitly as 'exploratory analysis, not pre-registered' at 2 200 words, and hockey as a 1 300-word tool write-up with the Neo4j / FAISS / LLM-brief material moved to the repository README.",
+    "reason": "They are descriptive data products. Presenting them as research invites the referee objections raised (inconsistent models, arithmetic errors)."
+   },
+   {
+    "item": "Prague, measured series numbering",
+    "action": "Renumber the series by publication order: Council 1, Rings 2, Districts 3, Housing 4, Parking 5. The programmes study (branch feature/PRAHA-5_programmes, registered design v2 exists) becomes Part 6 when it is published, and the hub lists it as 'in preparation' with its design link. URLs are slug-based, so no redirects are needed.",
+    "reason": "'Part 6 of a five-part series' is the most visible sign of editorial sloppiness, and it appears on six pages."
+   },
+   {
+    "item": "Footer link to 'the classic front page' (classic.html) and the variants/ directory",
+    "action": "Remove the link and stop serving the old variants (noindex, or delete from the deploy).",
+    "reason": "Alternate front pages are design drafts, not published work."
+   },
+   {
+    "item": "feed.xml",
+    "action": "Regenerate it from the new three-group list. Remove engineering, and give Notes a 'Note:' title prefix.",
+    "reason": "The feed is the second front page for returning readers and must match the curation."
+   },
+   {
+    "item": "cv/index.html",
+    "action": "Keep it and correct it: drop the 'The platform is code. So is the trust.' slogan; replace 'byte-level parity' with 'zero mismatches across 20 columns'; reconcile '700+ tests' with 524 and date the figure; remove the silent-detector link attached to the internal assistant bullet (it is a different system); change sitewitness '22 → 29 of 30 in six runs' to '29 of 30 on the final golden set, matching the previous version'; change Brand Reflection 'predictions published before the data' to 'exploratory'; link the preprint 'Equal Accuracy, Opposite Failure' with a DOI or arXiv id; fix the thesis record unit.",
+    "reason": "The CV repeats claims that the referees found overstated. The CV is where a hiring committee checks consistency first."
+   }
+  ],
+  "standard": "EDITORIAL STANDARD, bsandova.com (v1, 29 Sep 2026). It applies to every page in All work. It supersedes the line 'Length follows from content. Nothing substantive from either version is dropped' in docs/style/long-articles.md. All other prose rules in that file stay in force site-wide, not only for Prague, measured.\n\n1. KINDS. Every page is exactly one kind, which it shows in its kicker.\n- RESEARCH: states a question and a design, and reports inference.\n- TOOL: a public artefact with code, tests and a worked example.\n- NOTE: a dated, descriptive or creative piece that makes no inferential claim.\n- HUB: an index of other pages.\nA page that cannot meet the standard for its kind is moved down a kind or retired, never published half-way.\n\n2. LENGTH CAPS (body text, excluding tables, captions and references).\n- Research: 2 500–3 500 words (thesis summary 1 700).\n- Tool: 1 000–1 500.\n- Note: 400–900.\n- Hub: at most 1 000.\nExceeding a cap requires a stated reason in the change log.\n\n3. HEADER, identical order on every page.\n- Kicker: kind · series and part (if any) · object and period, at most 12 words, no status words such as 'pre-registered' unless §6 is met.\n- H1: a content title that names the object and, for research, the finding or question. Not a slogan, not two sentences, no 'not X but Y', no trailing period.\n- Deck: at most 2 sentences and 60 words, giving the question and the main result with its uncertainty and its registered label.\n- Facts strip: at most 4 cards. Each card has a number, its unit, and its interval or the words 'administrative count, no sampling error'.\n- The 'Overwhelmed? Here's the short version' / tldr box is abolished site-wide. The deck is the only summary.\n\n4. METADATA BLOCK, placed directly under the facts strip, in mono, one line each.\n- Published <date> · Updated <date> · Version <n> (link to the change log at the foot).\n- Kind and status: for research, one of published / preprint / registered study / exploratory; for tools and notes, protocol / tool vX.Y / note.\n- Registration: see §6. For unregistered work, 'Not pre-registered; exploratory'.\n- Review: who reviewed it and how. For example 'Design reviewed by three LLM-simulated referee roles (subject, statistics, data) run by the author; no external peer review', or named reviewers with their affiliation. The word 'referee' is never used without this line.\n- Data availability: sources with access or snapshot dates, the licence, and the hash list file (docs/research/*-files.sha256, linked).\n- Code availability: repository path (linked), commit hash of the published version, and the one command that reproduces the page's JSON.\n- How to cite: Šandová, B. (YYYY). Title. bsandova.com/texts/slug, version n, accessed <date>. A BibTeX link is optional.\n- Licence: code under MIT, text and JSON under CC BY 4.0, stated once on every page.\n\n5. BODY STRUCTURE.\nResearch sections, in order:\n1. The question and contribution: 1 paragraph, positioned against at least 3 external references, never self-citations only.\n2. Data.\n3. How this was done: design, model, estimand, what t indexes, fixed effects, inference unit and effective n.\n4. Registered tests and estimates, with the H table.\n5. Results per question.\n6. Robustness: as a table, not prose lists of variants.\n7. What changed after registration: dated list, each change told exactly once.\n8. What this does not show: limitations, all in one place.\n9. Reproduction.\n10. References.\n11. Change log and corrections: dated, at the foot, never mid-text.\n\nTools: What it does and prior art (at least 2 comparable tools named) · Method, precise enough to reimplement · Worked example with real output · Evaluation or tests, with the measured error rate where one exists · Limits · Install and reproduce · References · Change log.\n\nNotes: at most 3 sections, a dated kicker, and no statistical claims beyond descriptive counts with their source.\n\n6. REGISTRATION CLAIMS.\n- 'Pre-registered' may be used only with a tamper-evident anchor dated before any outcome data were joined: an OSF registration, a Zenodo DOI, or a signed git tag pushed to the public remote, cited by its id.\n- A branch commit in the author's own repository is described as 'design committed to a public branch at <hash> on <date> (self-timestamped)'.\n- Where the design first appears in the same commit as the results, as in Parts 1–4, the only permitted wording is 'design written and reviewed before modelling; not independently timestamped'.\n- Everything the author had already seen when registering (for example, earlier published aggregates) is disclosed in the article, not only in the design file.\n\n7. NUMBERS AND UNITS.\n- SI spacing for thousands (10 565); % with a thin space; percentage points written 'pp'.\n- One unit per quantity across the whole site. The same dataset has one name and one count everywhere.\n- Every estimate has an interval, labelled by type: '95 % CI', '90 % CI (one-sided test at α)', 'Monte Carlo range over assumed inputs', 'bootstrap by <cluster>'. The level must match the decision rule.\n- Population counts are marked as such.\n- Effective sample (clusters and groups) is stated next to the headline estimate.\n- Registered labels (supported / not supported / inconclusive / indeterminate / uninformative / underpowered) are used verbatim and identically in the deck, facts, table, body, hub and CV.\n- No cross-family tallies such as '4 of 16'.\n- Seasons as 2014/15. Dates as 29 September 2026.\n- Every number in the prose is generated from, or diff-checked against, the published JSON.\n\n8. FIGURES.\n- Numbered in order of appearance. Each caption states what is plotted, its unit, n, the uncertainty band, and the source with its date.\n- No 'from the first estimate' or superseded figures in a current article; those belong in the archived version.\n- At most 6 figures in research and 3 in tools and notes.\n- Every figure has a data-view hook to its JSON and alt text.\n- Colours named in a caption must match the rendered palette.\n\n9. REFERENCES.\n- Numbered by first citation. Every entry is cited, and every citation resolves.\n- One work per entry.\n- Author (year). Title. Publisher or outlet. URL. Accessed <date>. Data sources add table code and snapshot date. Software adds version.\n- Primary sources over explainers or commercial pages. Self-citations are allowed but never the only support for a claim.\n- Private material is marked '(private; not verifiable)', and the claims resting on it are flagged in the text.\n\n10. PROSE.\nThe long-articles.md rules apply site-wide: no slogans, no zingers or closing morals, no 'not X but Y' device, no personified data, no first-person lessons, no promotional adjectives ('proudest', 'world class', 'nobody had'). Also: no policy advice drawn from non-causal evidence; causal language only for identified effects; 'descriptive' said explicitly otherwise.\n\n11. SERIES.\nParts are numbered by publication order with no gaps. Unpublished parts appear on the hub as 'in preparation' with their design link. Every part links back to the hub and to its neighbours.\n\n12. GATE.\nA page enters All work only after an editor checklist pass covering §3–§10: header, metadata block, one summary, caps, labels, intervals, references with dates, reproduction command, change log. The pass is recorded as one line in the page's change log ('Checked against standard v1 on <date>'). Pages that fail stay unlisted.",
+  "worklist": [
+   "P0 · Registration and review honesty, site-wide, in one sweep, because it is the claim that most undermines credibility. In prague-council, prague-rings, prague-districts, prague-housing, prague-parking and prague-measured: remove 'pre-registered' from kickers and the hub facts. Replace 'committed ... before any outcome data were joined' with 'design written and reviewed before modelling; not independently timestamped' (Parts 1–4, whose design first appears in the results commit: 5a34401, 1283162, ff0f0ca, and the housing commit), or with the actual pre-results commit hash where one exists (check Part 6 via docs/research/prague-parking-freeze.json). Add the metadata 'Review:' line stating who or what the three referees were: the referees.md files are unnamed, consolidated and dated the same day as the designs, so if they were LLM-simulated roles, say exactly that. Delete the '15 referee reports' and '4 of 16 tests passed' hub cards. Apply the same fix to thesis.html ('stated in the thesis proposal', link the IES SIS record), surf.html and weather.html (give the commit hash for the 14/15 Sep predictions).",
+   "P0 · Renumber Prague, measured as Parts 1–5 (Parking 6→5) in all six kickers, the hub list, the hub table, the footers, the front-page film label and the CV. Add the programmes study (branch feature/PRAHA-5_programmes, design v2 at 260088b) to the hub as 'Part 6, in preparation'. For the next study, register on OSF or Zenodo before any data join, so that the series has one genuinely pre-registered part.",
+   "P0 · Kill the 'Overwhelmed? Here's the short version' / tldr box on every page (council, rings, districts, housing, parking, thesis, delayed, icu, football, hockey, weather, surf, brand-reflection, silent-detector, ai-over-data, engineering, cutover, quotecheck, sitewitness, filmrunner, second-brain). Make the deck the single summary of at most 2 sentences, and cut every facts strip to at most 4 cards.",
+   "P0 · Retitle the slogan or overclaiming titles and mirror each change on the hub, the front-page list, the feed, og tags and the CV. Part 2 'Prague votes in rings, not along lines' → e.g. 'Housing estates and the 2025 vote in Prague's 1 119 precincts'. Part 4 'Prague builds two homes for Vienna's three' → e.g. 'Prague's housing pipeline: the permit-to-completion lag, 2006–2025', with a deck that states that Prague's metro region is above the European median. Part 3 'One city, 57 budgets' → 'Party alignment and city grants to Prague's districts: an underpowered registered null'. Part 1: qualify the deck to 'on the resolutions it adopts' and rephrase H1 as a pooled average driven by 2010–14. icu → 'Reversed outcome labels in an ICU P/F-ratio dataset'. weather/surf → 'Forecast verification: protocol'. sitewitness → 'sitewitness: code-enforced rules for a site Q&A agent'. brand-reflection → 'Colour, sound and homepage language in 47 Czech TV spots'.",
+   "P1 · Rebuild the curation in index.html. Replace lines 285–312 (28 rows, 13 category labels) with three headed groups: Research (thesis; the hub and Parts 1–5; Quaesitor; silent-detector once fixed), Tools (cutover, quotecheck, sitewitness+ask, Player Pool Atlas, Forecast verification), and Notes (delayed, atlantic, icu, brand-reflection, filmrunner, second-brain, ai-over-data). Remove the rows for status/, library/, watch/, ask/ (merged) and engineering. Replace the four filter buttons with group anchors. Cut the reel to Persistence / Prague, measured / Quaesitor. Remove the 'Now live' strip. Rewrite About in three sober sentences. Remove the 'classic front page' footer link. Regenerate feed.xml and sitemap.xml.",
+   "P1 · Rebuild thesis.html as a proper 1 700-word thesis summary. It is the flagship and currently has no methods, figure, literature or uncertainty. Add: a research question and contribution against Noland & Small 1995, Bates et al. 2001, Fosgerau & Karlström 2010 and Carrion & Levinson 2012; a 'How this was done' section (what t indexes, pooled vs route-level, fixed effects, Nickell bias); route-clustered CIs for the persistence sums (0.727/0.715) and the RTI shares; an H1–H3 table with the registered wording (H3 'inconclusive'); one figure (impulse response with band, or the variance decomposition by mode); the calibration constants with sources; and links to the thesis PDF (CUNI repository handle) and the code. Fix the unit shared with delayed.html.",
+   "P1 · Part 6→5 Parking (8 217 → at most 3 800 words; the biggest single cut). Remove figs 6, 8, 12 and 13 ('From the first estimate') and the wheelbase-route history. Move the EEA cleaning and the '27 tests' inventory to the repository. Merge the car-width and perpendicular sections into one paragraph. Drop the Deník N comparison and 'small next to the count of cars'. Rename 'implicit subsidy (forgone rent)' to 'gap to the city's own tariffs'. Label the MC range vs the bootstrap CI. Renumber the references. Use one fleet model throughout. Remove the listed zingers and the Paris row.",
+   "P1 · Part 3 Districts (4 703 → 2 800). Lead with 'underpowered registered null (MDE ≈ 100 % vs literature 19–47 %)' in the deck. Do not lead the facts with −37 %; explain or rescale the −115 % bound. Tell the parsing-correction story once, in 'What changed'. Cut the budget-plans / capital / 2024-formula asides. Put the robustness estimators in one table. Relabel 'two independent LLM coding passes' as 'double-coded by an LLM with hand adjudication' under limitations. Move the 28 Sep correction to the foot. Give the literature range honestly (Portugal 19 %, Germany −20 to −40 %). Link prague-districts-files.sha256.",
+   "P1 · Part 4 Housing (4 491 → 2 800). Fix the Vienna/Warsaw framing. Reconcile the H2 bootstrap interval (8.7–12.6) with the degenerate lag profile: add a profile-likelihood interval, and give the interval that matches the one-sided Holm test. Qualify '+11 months' as possibly a reporting-timing artefact in the deck and facts. Use one H5 label everywhere, including the hub. Rename the heading to 'Registered tests and estimates'. Compress H3 to two sentences and H4 to one paragraph (drop fig. 5). Remove the rank list and the 'more homes are not better housing' moral. Remove or cite r24. Add Eurostat table codes and access dates.",
+   "P1 · Part 2 Rings (4 372 → 3 300). Fix 'never half' (age added reaches 52 %). Relabel H4 turnout as uninformative (the register count is contaminated by voting-pass voters). Change 'lower bound' to 'likely understated'. State 57 districts / 282 clusters as the effective n in the facts. Cut the minor-party paragraph to one sentence. Merge the duplicated map description and the duplicated question list. Cite or cut the 'metro as spine' claim. Renumber the references. Pin the GTFS snapshot date.",
+   "P1 · Part 1 Council (4 216 → 3 400). Add the fact that the 1.06→0.28 fall was already published when H1 was registered. Add a per-transition H1 table with n and CI. Cut the causal sentence in the coalition/opposition section. Explain H2's absence from the table. Move the 29 Sep correction to the foot. Cut the 'contact at City Hall' line and the fig. 3 speculation. Add a contribution sentence against Hix–Noury and Theriault, access dates on refs 1, 10, 13, 14 and 16, and linked script names with a run order.",
+   "P1 · One series-wide reproduction layer. Add a README, a pinned requirements/uv.lock with the Python version, and a Makefile with targets council / rings / districts / housing / parking that list the script order (e.g. rings_data → rings_power → rings_extended → rings_robust → figures). Say where raw downloads are cached and which SHA-256 lists apply. Add LICENSE (MIT code, CC BY 4.0 text and JSON). Each part's 'Code availability' line then points to its make target and commit hash.",
+   "P1 · The prague-measured.html hub (1 252 → 1 000). Update to the new numbering and titles. Soften the Part 1 blurb ('a list votes according to whether it governs' generalises from ANO alone). Correct the Part 4 blurb and the H5 label. Remove Part 6's housekeeping sentence. Add a 'What this series is not' line (single author, no journal peer review, design reviews as disclosed), plus a licence and snapshot dates per source. Merge the duplicated intro and 'How each part was registered' text.",
+   "P2 · Retire engineering.html: fold the unique facts into the CV Alma Career entry, 301-redirect in _redirects, and remove it from the feed. Apply the CV corrections (drop the slogan, 'byte-level' → 'zero mismatches across 20 columns', reconcile 700+ vs 524 tests with a date, remove the silent-detector link from the internal-assistant bullet, restate the sitewitness score honestly, Brand Reflection → exploratory, link the preprint by DOI or arXiv id, fix the thesis unit).",
+   "P2 · Merge surf.html and weather.html into texts/forecast-verification (protocol, about 1 000 words, redirect both old URLs). First fix the persistence leakage (use issue − 1 day), drop lead-0 precipitation, compute ensemble probability over the 3 distinct models (not best_match), and define persistence at d = 0. Set a minimum of 8 ISO weeks before showing any bootstrap interval. Freeze the numbers to a named snapshot or read them from data.json. Disclose the 16–20 Sep gap. Give numeric pass/fail criteria for each registered prediction.",
+   "P2 · silent-detector.html. Publish the parsed feature table and detector.py, or state that it is not reproducible. Add question-level bootstrap CIs for every AUC. Report 0.64 as the best of 8 (selection-biased), treat the 0.29 and 0.12 within-pack AUCs as anti-learning artefacts, and report the 3.4 % lane (precision 86 %, recall 16 %). Name the models and the sampling temperature. Label the page exploratory, add the literature (Wang 2022, Kadavath 2022, Farquhar 2024, BIRD/Spider) and a 'What this does not show' section. Then list it under Research as the Quaesitor companion.",
+   "P2 · Tools pass against the standard. cutover: add a related-work paragraph (datacompy, data-diff, dbt-audit-helper, SQLMesh table_diff), a benchmark for the scale claim, the real reason for the 0.005 tolerance, the hash spec, a note that the work cutovers predate the package, and fix ref 1 to 'section 6'. quotecheck: name SequenceMatcher.ratio for DRIFT, narrow the Frankl claim and cite Quote Investigator, remove the Stoner example or add it as a source, give the FOUND / DRIFT / ABSENT counts over the 292 passages. sitewitness: re-score all runs on the final golden set or say they are not comparable, report that 29/30 equals the old Worker and its CI (~83–99 %), give the protocol violation and the false-refusal rate per rule, name the model, drop the numbered headings.",
+   "P2 · Player Pool Atlas. football.html: keep one break model, separate the Big-5 and top-9 series, list the nine leagues, reconcile 27 × 63 % vs 26, report all three gap channels once, cluster the panel OLS by country, cut the policy 'lever' paragraphs, re-render fig. 1, label the page exploratory, and move the '317 tests' figure to reproduction. hockey.html: fix the defence counts (Czechia 3 and Finland 9 per the tables, or fix the tables), re-bin ages with a stated reference date, drop 'nobody had aggregated', show all perturbed leagues in the sensitivity table, and call K = 10 a fixed prior. Move the graph, FAISS and LLM-brief material to the README.",
+   "P3 · Notes pass, each capped and dated. delayed (700 words): remove the AR(2) and 'ear before the table' claims, give day-selection criteria, fix the thesis link, the key names and the licence, embed audio. icu (1 300): fix nine vs ten, the fig. 3 colours, the 0.768 vs 0.723 figures and the 'rules out misalignment' claim; drop 'would deploy' and the lessons section; add the Berlin definition and the primary statistical references. brand-reflection (900): relabel claim A as indeterminate, fix '20 of 47 = most', and add limitations. filmrunner (500): fix the 'open source' contradiction and the ADR count (9). second-brain (700): link quotecheck, drop Finding 2 or quote both passages, cite Carlini et al. 2021. ai-over-data (Note, about 900): retitle, delete the 'every decision moved three numbers' sentence, fix the 56–92 % attribution and the test count.",
+   "P3 · Quaesitor (texts/quaesitor/, 4 pages plus the preprint) has not had a referee verdict. Run the same referee pass on it before it takes the third front-page slot, and apply the standard's metadata block. Until then, the reel shows only Persistence and Prague, measured.",
+   "P3 · Enforcement: add a build check to build.sh that fails when a listed page lacks the metadata block, contains 'Overwhelmed?' or a tldr class, exceeds its kind's word cap, cites an unreferenced [n] or has an uncited reference, or uses 'pre-registered' without an OSF/Zenodo/tag id. Add 'Checked against standard v1 on <date>' to each page's change log as it passes."
+  ]
+ }
+}
