@@ -1,0 +1,191 @@
+{
+ "date": "2026-09-29",
+ "scope": "texts/quaesitor/{index,measurements,taxonomy,why}.html (original/ untouched)",
+ "standard": "docs/style/editorial-standard.md v1",
+ "note": "Referee pass in the format of audit-2026-09-29.json. Numbers were checked against the run reports in the private quaesitor repository (method/outputs, tree at b99c89e) and external sources on 29 September 2026. After revision the four pages are 328, 1 322, 1 091 and 1 460 words; the three research texts stay below the 2 500-word research floor because their data are private and cannot support the full research structure (robustness table, intervals), which is recorded here rather than padded.",
+ "verdicts": {
+  "quaesitor/index.html": {
+   "article": "quaesitor/index.html",
+   "kind": "hub",
+   "verdict": "revise-minor",
+   "one_line": "A short hub whose header was a slogan ('When the answer looks right and is not') over a facts strip with a mislabelled count and a card with no number; the structure is fine once the header, metadata and count are fixed.",
+   "dimensions": {
+    "question": "Not applicable to a hub; the deck should say what the three texts cover, not tell a story.",
+    "design": "Not applicable.",
+    "evidence": "Facts strip: '5 790 measured answers' is a model-call count, not an answer count (see must_fix); '72 % → 23 %, errors smaller, not rarer' has no n or test; 'what is left: quaesitor-zero' carries no number.",
+    "data_code": "The quaesitor repository is private (gh repo view: PRIVATE). Only quaesitor-zero is public. The footer called quaesitor-method a private repository but gave no commit or path.",
+    "limits": "None stated; the hub gives no hint that all three texts are exploratory and rest on private runs.",
+    "references": "None needed beyond links to the three texts and original/.",
+    "form": "Kicker had no kind and carried the status word 'retired'. No short version, no metadata block, no change log. 'Independent review' describes the service with a word the standard reserves."
+   },
+   "must_fix": [
+    "Answer count: the pages said '5 790 measured answers'; the CV, silent-detector, ai-over-data and detector.json say 5 794. Recomputed from method/outputs/agent_*.md: 5 790 is the sum of the 'Volání modelu' (model calls) rows that method/site/build.py count_calls() printed as 'measured answers'; the reports hold 5 794 answer blocks (one per question and repeat), of which 9 are 'unmeasured' (call failed), so 5 785 were measured. 4 reports (agent_opus_cs_benchmark_v0, agent_opus_en_taxi, agent_opus_fr_taxi, agent_sonnet_sv_saas) have one more answer block than recorded calls, because a call that exited with an error left no call record. Use 5 794 with its definition everywhere.",
+    "Kicker must name the kind (Hub) and drop the status word.",
+    "Replace the slogan h1 and the three-sentence first-person deck with a one-sentence description of the three texts.",
+    "Add details.tldr, the metadata block (status hub; data and code rows marked private; not verifiable) and a change log with the editorial-standard check line.",
+    "Row subtitles repeat slogans from the texts ('The expensive failures are not the dramatic ones', 'what documentation actually did'); make them descriptive."
+   ],
+   "cut": [
+    "The 'what is left: quaesitor-zero' facts card (no number).",
+    "'errors smaller, not rarer' as a facts gloss.",
+    "'independent review' as the description of the service."
+   ],
+   "missing": [
+    "Statement that the three texts are exploratory and rest on a private repository.",
+    "Link to detector.json, the only public file that carries the answer count and outcome breakdown."
+   ],
+   "target_words": 400,
+   "current_words": 209
+  },
+  "quaesitor/measurements.html": {
+   "article": "quaesitor/measurements.html",
+   "kind": "research",
+   "verdict": "revise-major",
+   "one_line": "The most substantive Quaesitor text, with real tables and a clean before-and-after documentation comparison with exact tests, but written as a first-person pitch with several numbers in the prose that contradict its own tables or the run data, a mislabelled model column, no limits section and private data.",
+   "dimensions": {
+    "question": "Implicit: how two assistants split non-correct answers between declining and silent errors. Not placed against any external literature ('Every text-to-SQL benchmark reports accuracy' with no citation).",
+    "design": "Planted traps, verified hand-written queries, 15 languages x 3 repeats, rule-based classification; one verdict per question-language cell. The aggregation of three repeats into one cell verdict is not described. Model identities appear only as aliases opus/sonnet; sampling temperature and seed not recorded (per silent-detector).",
+    "evidence": "Table 1 (retail, subscriptions) matches the comparison tables except sonnet/subscriptions, which recomputes to 126/38/85/3 from the files now in the repository (Czech run has 1 repeat) against the published 135/41/91/3. Table 2's 'A / B' header is wrong: every row is sonnet/opus while table 1 defines A = opus. Prose: 'both models were silently wrong four times in five' on taxi is false (sonnet 80 %, opus 70 %); 'declined 59 times on my retail pack' contradicts table 1 (55); 'declined zero times here' contradicts the taxi comparison tables (opus 8 of 80). Facts card '55 vs 1, same questions, same correct count' is false (40 vs 28 correct). Documentation result: exact McNemar p = 1.00 and sign test p = 0.0023 on 22 questions are reported properly; 'replicated three times' counts the headline run as a replication.",
+    "data_code": "quaesitor repository private; original pages carry SHA-256 run fingerprints but no reader can rebuild any number. detector.json is public and carries the total answer count.",
+    "limits": "One limits paragraph for the documentation run only; nothing on planted vs production data, tiny n outside retail (10-80 cells per model), no intervals, unrecorded temperature, private data.",
+    "references": "Seven references, six of them the author's own original pages; r7 never cited in the body; no access dates; no external literature on text-to-SQL evaluation or abstention.",
+    "form": "Kicker without kind; slogan h1 and multi-sentence deck; slogan headings ('The query ran. The answer was zero. Nobody had any customers that month.', 'Two models, one score, two personalities'); no short version, metadata block or change log."
+   },
+   "must_fix": [
+    "Answer count: the pages said '5 790 measured answers'; the CV, silent-detector, ai-over-data and detector.json say 5 794. Recomputed from method/outputs/agent_*.md: 5 790 is the sum of the 'Volání modelu' (model calls) rows that method/site/build.py count_calls() printed as 'measured answers'; the reports hold 5 794 answer blocks (one per question and repeat), of which 9 are 'unmeasured' (call failed), so 5 785 were measured. 4 reports (agent_opus_cs_benchmark_v0, agent_opus_en_taxi, agent_opus_fr_taxi, agent_sonnet_sv_saas) have one more answer block than recorded calls, because a call that exited with an error left no call record. Use 5 794 with its definition everywhere.",
+    "Relabel table 2 columns 'sonnet / opus' (recomputed from comparison_*_{retail,saas,taxi,tpcds,medallion}.md).",
+    "Correct the prose: taxi silent-failure 80 % (sonnet) and 70 % (opus), not 'both four in five'; opus declined 55 on retail (not 59) and 8 of 80 on taxi (not zero).",
+    "Correct the facts card: retail correct answers were 40 and 28, not the same.",
+    "Disclose that the sonnet subscriptions row no longer recomputes from the repository (126/38/85/3 vs 135/41/91/3).",
+    "Remove unsupported mechanism and generalisation claims: 'They do not differ in what they know', 'My synthetic warehouse ... was easier than reality' (n = 10-80), 'one of the most ordinary things that goes wrong in a warehouse'.",
+    "Describe the three documentation runs as three runs, not 'replicated three times'.",
+    "Add a 'What this does not show' section and the standard header, short version, metadata and change log."
+   ],
+   "cut": [
+    "'that is the one distinction that matters'",
+    "'Picking the \"better\" model does not fix this. It relocates it.'",
+    "'Read that again from the reader's side.'",
+    "'It shrank to a size nobody queries.'",
+    "'The effect is real and it was not the predicted one.'",
+    "'The one worth sitting with'"
+   ],
+   "missing": [
+    "External placement: Spider, BIRD, the abstention literature.",
+    "How three repeats become one cell verdict.",
+    "Intervals (e.g. Wilson intervals per cell rate, or a question-clustered bootstrap), which need the private per-answer data.",
+    "A public export of the comparison tables."
+   ],
+   "target_words": 2500,
+   "current_words": 1024
+  },
+  "quaesitor/taxonomy.html": {
+   "article": "quaesitor/taxonomy.html",
+   "kind": "research",
+   "verdict": "revise-major",
+   "one_line": "A useful catalogue that isolates each fault and reports the median error it produced, but its access section presents twelve designed scenarios as twelve observed leaks, which the one recorded run contradicts, and it closes on slogans.",
+   "dimensions": {
+    "question": "Stated in the deck as an anecdote ('Everyone in data has an anecdote') rather than as a question against prior work.",
+    "design": "Sound isolation: verified and naive queries differ only at the trap. Medians pooled across models, languages and packs without saying so.",
+    "evidence": "Catalogue table as published (medians over 6-44 runs). Facts card 'median divergence ≈ 10 %, nearly half below that' is a tautology: half of all values are below a median by definition. Access section: 'in all twelve the answer arrived with rows the asker was not entitled to' is contradicted by method/outputs/access_sonnet.md (20 August 2026, sonnet, one attempt each): 9 passed, 1 leak (A11), 1 flagged for review (A03: 1 985 vs 1 909), 1 unmeasured (A04). 'This is the most common bypass in practice' (A02) is unsupported.",
+    "data_code": "Private repository; the catalogue and access pages under original/ are the only published record.",
+    "limits": "None.",
+    "references": "Two self-references, no external work, no access dates.",
+    "form": "No kind in kicker; three-sentence deck; bold slogan 'The expensive failures are not the dramatic ones'; 'Wrong question.'; the footnote says 'Green' for rows that render in the page's coral highlight."
+   },
+   "must_fix": [
+    "Answer count (hub-wide, not on this page): the pages said '5 790 measured answers'; the CV, silent-detector, ai-over-data and detector.json say 5 794. Recomputed from method/outputs/agent_*.md: 5 790 is the sum of the 'Volání modelu' (model calls) rows that method/site/build.py count_calls() printed as 'measured answers'; the reports hold 5 794 answer blocks (one per question and repeat), of which 9 are 'unmeasured' (call failed), so 5 785 were measured. 4 reports (agent_opus_cs_benchmark_v0, agent_opus_en_taxi, agent_opus_fr_taxi, agent_sonnet_sv_saas) have one more answer block than recorded calls, because a call that exited with an error left no call record. Use 5 794 with its definition everywhere.",
+    "Rewrite the access section: the twelve are designed scenarios; report the one recorded run (1 leak, 1 review, 9 within scope, 1 unmeasured).",
+    "Drop the tautological 'nearly half below' the median.",
+    "Say that medians are pooled across models, languages and packs and carry no intervals.",
+    "Fix the caption colour ('Green') to match the rendered highlight.",
+    "Add a question section against at least three external sources, a limits section, the standard header, short version, metadata and change log."
+   ],
+   "cut": [
+    "'Nothing here is estimated.'",
+    "'The expensive failures are not the dramatic ones.'",
+    "'Wrong question.'",
+    "'None of it is adversarial. Every one is a shortcut.'",
+    "'This is the most common bypass in practice.'",
+    "'the expensive kind of finding because it creates a duty to notify'",
+    "'That is why the check reads rows.' as a closing line"
+   ],
+   "missing": [
+    "Per-trap breakdown by model, since pooling hides the model effect shown in text 1.",
+    "Recomputation of the ≈ 10 % overall median from the answers.",
+    "A leak rate with more than one attempt and one model per scenario."
+   ],
+   "target_words": 2500,
+   "current_words": 751
+  },
+  "quaesitor/why.html": {
+   "article": "quaesitor/why.html",
+   "kind": "research",
+   "verdict": "revise-major",
+   "one_line": "An argument essay titled with its own untested thesis ('Trust grows faster than accuracy'), promotional in tone, with a claim that the harness is open when the repository is private and several misreadings of the external sources it leans on.",
+   "dimensions": {
+    "question": "The thesis (checking falls as accuracy rises) is asserted in the title, deck and body; no Quaesitor run measures user checking behaviour, so it is untested.",
+    "design": "The five-step verification method is described clearly and is the strongest part.",
+    "evidence": "External claims checked 29 September 2026: BEAVER 10.8 % / 30.1 % / 9 128 correct, but 'scores in the eighties on public benchmarks' is not in the source and the 10.8 % is for an agentic framework using GPT-5.2; Chen et al. report the semantic agent had 65.7 % higher precision, not that the broader agent was '65.7 % less precise'; Zhu et al.'s ~69K instances are per backbone; Cube figures correct (50.5→67.7, 46.5→68.7, 45.5→68.7) with CIs the page omits; Omni's 4 602 / 81.2 % is a secondary report; Ghosh 271 049 / 154 050 correct; Bajaj 53 % correct; Julka 59 %/42 % correct; quaesitor-zero is v0.1.5 on PyPI, not v0.1.4. CACM blog and Ar-Spider DOI refuse automated access and were not re-read. Own claim 'The harness that produced them, open' is false: the repository is private (r17 itself says private). The 95 attempts returning 684 recomputes: on the cohort question (retail Q10, verified 621) the standard sonnet and opus runs (retail in 15 languages plus benchmark_v0 Czech) returned 684 in 95 answers; the two confidence-prompt runs (agent_opus-conf_cs, agent_sonnet-conf_cs, 24 August) add 6 more, which is the raw count of 101 (checked 29 September 2026).",
+    "data_code": "Private repository; quaesitor-zero public (Apache-2.0).",
+    "limits": "None; the essay claims 'none of this was my claim to make' while resting the headline on its own untested argument.",
+    "references": "18 entries, no access dates, 'ibid.' entry, BEAVER dated 2026 though first posted 2024.",
+    "form": "No kind in kicker; five-sentence deck; bold lead-ins in running text; slogans and closing morals throughout; 'It is the one I am proudest of'; the Roman-magistrate paragraph is brand copy."
+   },
+   "must_fix": [
+    "Answer count: the pages said '5 790 measured answers'; the CV, silent-detector, ai-over-data and detector.json say 5 794. Recomputed from method/outputs/agent_*.md: 5 790 is the sum of the 'Volání modelu' (model calls) rows that method/site/build.py count_calls() printed as 'measured answers'; the reports hold 5 794 answer blocks (one per question and repeat), of which 9 are 'unmeasured' (call failed), so 5 785 were measured. 4 reports (agent_opus_cs_benchmark_v0, agent_opus_en_taxi, agent_opus_fr_taxi, agent_sonnet_sv_saas) have one more answer block than recorded calls, because a call that exited with an error left no call record. Use 5 794 with its definition everywhere.",
+    "Remove the claim that the harness is open.",
+    "Retitle; state in the deck and body that the central argument is untested.",
+    "Correct the source misreadings (65.7 %, 69 000 per model, BEAVER model and date, '80s' on public benchmarks, quaesitor-zero version).",
+    "Remove bold lead-ins, slogans and self-promotion; add limits, access dates, a proper entry instead of 'ibid.'."
+   ],
+   "cut": [
+    "'It is the normal case, the one accuracy averages away.'",
+    "'almost nobody stands in all three'",
+    "'That work cannot be automated, and it is exactly the work everyone skips.'",
+    "'It has happened. That was the point.'",
+    "'A service that implied otherwise would be worth less, not more.'",
+    "'Whatever accuracy a vendor quotes was not measured on your schema.'",
+    "'Agreement is free to measure and worth almost nothing.'",
+    "'sixty-eight per cent is not the accuracy at which people check. It is the accuracy at which they stop.'",
+    "'You run it, you keep the result.'",
+    "'It is the one I am proudest of.'"
+   ],
+   "missing": [
+    "Any evidence on user checking behaviour as accuracy changes (automation-bias literature), which the thesis needs.",
+    "The language-effect result the text calls 'a null one, published as such': no statistic or link is given; the revised text no longer asserts it."
+   ],
+   "target_words": 2500,
+   "current_words": 1401
+  }
+ },
+ "site": {
+  "answer_count": {
+   "correct_figure": 5794,
+   "definition": "one answer per question and repeat in the 125 Quaesitor run reports (method/outputs/agent_*.md, runs started 11-25 August 2026), of which 9 unmeasured because the model call failed; 5 785 measured",
+   "superseded": {
+    "5790": "sum of the 'Volání modelu' (model calls) rows, printed as 'measured answers' by method/site/build.py count_calls(); it counts call records and misses 4 calls that errored without a record"
+   },
+   "pages_using_5794_unchanged": [
+    "cv/index.html",
+    "texts/silent-detector.html",
+    "texts/ai-over-data.html",
+    "classic.html",
+    "feed.xml",
+    "ask/eval.json",
+    "assets/detector/detector.json"
+   ],
+   "pages_corrected": [
+    "texts/quaesitor/index.html",
+    "texts/quaesitor/measurements.html",
+    "texts/quaesitor/why.html"
+   ],
+   "not_served_but_stale": [
+    "tools/quaesitor_bodies.py (generator of the version-1 pages; still says 5 790; excluded from the site by .assetsignore)",
+    "texts/quaesitor/original/about.html (as published, left untouched by rule)"
+   ]
+  },
+  "other_pages_to_check": [
+   "cv/index.html describes Quaesitor as 'an independent review of AI assistants'; the Quaesitor pages now say 'measurement service'."
+  ]
+ }
+}

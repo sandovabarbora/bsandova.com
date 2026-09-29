@@ -1,5 +1,6 @@
-"""Figures for texts/silent-detector.html from assets/detector/detector.json (written by
-quaesitor/method/src/detector.py). Site palette; nothing typed.   .venv/bin/python tools/detector_figures.py"""
+"""Static SVG fallbacks for texts/silent-detector.html from assets/detector/detector.json (written by
+quaesitor/method/src/detector.py) and assets/detector/auc.json (tools/detector/auc.py, question-level bootstrap
+95 % intervals). Site palette; nothing typed.   uv run --with matplotlib python tools/detector_figures.py"""
 
 from __future__ import annotations
 
@@ -14,6 +15,7 @@ import numpy as np  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 D = json.loads((ROOT / "assets/detector/detector.json").read_text())
+C = json.loads((ROOT / "assets/detector/auc.json").read_text())
 OUT = ROOT / "assets/detector"
 BG, FG, FG2, LINE = "#161616", "#DCDCD6", "#8A8A84", "#3A3A36"
 ACID, BUS, MINT, VIOLET = "#D6FF3A", "#FF6A3D", "#7ED9A6", "#B78CFF"
@@ -34,15 +36,17 @@ def fig1():
     gb = [D["models"][f"{n}/gbm"]["auc"] for n in names]
     fig, a = plt.subplots(figsize=(10.5, 3.6))
     y = np.arange(len(names))
-    a.barh(y - 0.18, lg, height=0.34, color=FG2, label="logistic regression")
-    a.barh(y + 0.18, gb, height=0.34, color=ACID, label="gradient boosting")
+    err = lambda k: np.array([[C["models"][f"{n}/{k}"]["auc"] - C["models"][f"{n}/{k}"]["lo"] for n in names],
+                              [C["models"][f"{n}/{k}"]["hi"] - C["models"][f"{n}/{k}"]["auc"] for n in names]])
+    a.barh(y - 0.18, lg, height=0.34, color=FG2, label="logistic regression", xerr=err("logistic"), ecolor=FG, capsize=3)
+    a.barh(y + 0.18, gb, height=0.34, color=ACID, label="gradient boosting", xerr=err("gbm"), ecolor=FG, capsize=3)
     a.axvline(0.5, color=BUS, lw=1, ls=(0, (3, 2)))
     a.text(0.505, 3.62, "0.5 = coin flip", color=BUS, fontsize=8)
     a.axvline(D["baseline"]["auc"], color=VIOLET, lw=1, ls=(0, (1, 2)))
     a.text(D["baseline"]["auc"] + 0.005, 3.85, f"rule: repeats agree · {D['baseline']['auc']:.2f}", color=VIOLET, fontsize=8)
     for i, (l, g) in enumerate(zip(lg, gb)):
-        a.text(l + 0.005, i - 0.18, f"{l:.2f}", va="center", color=FG2, fontsize=8)
-        a.text(g + 0.005, i + 0.18, f"{g:.2f}", va="center", color=ACID, fontsize=8)
+        a.text(C["models"][f"{names[i]}/logistic"]["hi"] + 0.008, i - 0.18, f"{l:.2f}", va="center", color=FG2, fontsize=8)
+        a.text(C["models"][f"{names[i]}/gbm"]["hi"] + 0.008, i + 0.18, f"{g:.2f}", va="center", color=ACID, fontsize=8)
     a.set_yticks(y); a.set_yticklabels([LABEL[n] for n in names]); a.invert_yaxis()
     a.set_xlim(0.3, 1.0); a.set_xlabel("AUC, held-out questions (GroupKFold by question)")
     a.set_title(f"can run-time evidence tell a silently wrong number from a correct one?  {D['trained_on']:,} answers, {D['questions']} questions".replace(",", " "), loc="left", color=FG2)
@@ -51,20 +55,22 @@ def fig1():
 
 
 def fig2():
-    tr = D["transfer_sql_gbm_auc"]; packs = list(tr)
-    M = np.array([[tr[a][b] for b in packs] for a in packs])
-    fig = plt.figure(figsize=(10.5, 4.0))
-    a = fig.add_axes([0.14, 0.12, 0.34, 0.78])
-    a.grid(False)
-    im = a.imshow(M, cmap="Greys_r", vmin=0.0, vmax=1.0)
-    for i in range(len(packs)):
-        for j in range(len(packs)):
-            a.text(j, i, f"{M[i, j]:.2f}", ha="center", va="center", color=ACID if M[i, j] >= 0.6 else (BUS if M[i, j] < 0.45 else FG), fontsize=11)
-    a.set_xticks(range(len(packs))); a.set_xticklabels([f"tested on\n{p}" for p in packs])
-    a.set_yticks(range(len(packs))); a.set_yticklabels([f"trained on\n{p}" for p in packs])
+    tr = C["transfer_sql_gbm"]; packs = list(tr)
+    name = {"ecommerce": "e-commerce", "saas": "SaaS", "taxi": "taxi"}
+    rows = [(a, b, tr[a][b]) for a in packs for b in packs]
+    fig, a = plt.subplots(figsize=(10.5, 4.0))
+    y = np.arange(len(rows))
+    for i, (s_, d_, r) in enumerate(rows):
+        c = FG2 if s_ == d_ else ACID
+        a.plot([r["lo"], r["hi"]], [i, i], color=c, lw=2)
+        a.plot(r["auc"], i, "o", color=c)
+        a.text(r["hi"] + 0.01, i, f"{r['auc']:.2f}", va="center", color=c, fontsize=8)
+    a.axvline(0.5, color=BUS, lw=1, ls=(0, (3, 2)))
+    a.set_yticks(y); a.set_yticklabels([f"{name[s_]}, within pack" if s_ == d_ else f"{name[s_]} → {name[d_]}" for s_, d_, _ in rows])
+    a.invert_yaxis(); a.set_xlim(0, 1.08)
+    a.set_xlabel("AUC on the scored pack, 95 % CI by question bootstrap (grey: within the pack)")
     a.set_title("SQL-shape model, AUC across warehouses", loc="left", color=FG2)
-    fig.text(0.52, 0.72, "diagonal: held-out questions within the pack\noff-diagonal: trained on the row, scored on the column\n\nbelow 0.5 (orange): the learned pattern\npoints the wrong way on the other warehouse", color=FG2, fontsize=9, va="top")
-    fig.savefig(OUT / "02-transfer.svg")
+    fig.savefig(OUT / "02-transfer.svg", bbox_inches="tight")
 
 
 fig1(); fig2(); print("ok")
