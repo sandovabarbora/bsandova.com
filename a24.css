@@ -164,3 +164,31 @@ pre code{font-size:inherit}
 .tldr:not([open]){padding-bottom:10px}
 .tldr ul{margin:10px 0 0;padding-left:1.1em}
 .tldr li{font:400 16px/1.55 var(--sans);letter-spacing:-.003em;color:#111;margin:0 0 .55rem}
+/* interactive charts (assets/charts.js): the static SVG stays as the fallback until the chart is drawn */
+figure.ch-live>img[hidden]{display:none}
+.ch{position:relative;width:100%}
+.ch-svg{display:block;width:100%;height:auto;overflow:visible;font:400 11px var(--mono);touch-action:pan-y}
+.ch-svg:focus-visible{outline:1px solid #000;outline-offset:4px;box-shadow:none}
+.ch-svg text{fill:#666}
+.ch-svg .ch-title{fill:#111;font-size:11.5px}
+.ch-svg .ch-cat,.ch-svg .ch-note,.ch-svg .ch-val{paint-order:stroke;stroke:#fff;stroke-width:3px;stroke-linejoin:round}
+.ch-svg .ch-cat{fill:#111;font-size:11.5px}
+.ch-svg .ch-val{fill:#111}
+.ch-svg .ch-lab{fill:#666}
+.ch-tip{position:absolute;left:0;top:0;z-index:3;pointer-events:none;white-space:pre;background:#111;color:#fff;font:400 12px/1.45 var(--mono);padding:7px 9px;max-width:min(360px,90vw);white-space:pre-wrap}
+.ch-legend{list-style:none;display:flex;flex-wrap:wrap;gap:6px 18px;margin:0 0 10px!important;padding:0!important;font:400 11.5px/1.3 var(--mono);color:#444}
+.text section .ch-legend li{font:inherit;color:inherit;margin:0;display:flex;align-items:center;gap:7px}
+.ch-legend i{display:inline-block;width:10px;height:10px}
+.ch-legend i.o{border-radius:50%}
+.ch-legend i.d{transform:rotate(45deg) scale(.8)}
+.ch-legend i.box{width:16px}
+.ch-ctl{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;margin:8px 0 0!important;font:400 11px var(--mono)!important;color:#666}
+.ch-ctl button{background:none;border:0;padding:2px 0;font:inherit;color:#666;cursor:pointer;text-transform:uppercase;letter-spacing:.06em}
+.ch-ctl button[aria-pressed="true"]{color:#000;box-shadow:inset 0 -1px 0 #000}
+.ch-ctl a{color:#666;text-decoration:underline;text-underline-offset:.15em}
+.ch-ctl .ch-hint{margin-left:auto;color:#999}
+@media (hover:none){.ch-ctl .ch-hint{display:none}}
+.ch-table{overflow-x:auto;max-height:420px;overflow-y:auto;border-top:1px solid #000}
+.ch-table table{width:100%;border-collapse:collapse;font:400 12px/1.4 var(--mono);font-variant-numeric:tabular-nums}
+.ch-table th{text-align:left;color:#666;font-weight:400;padding:6px 12px 6px 0;border-bottom:1px solid #000;position:sticky;top:0;background:#fff}
+.ch-table td{padding:5px 12px 5px 0;border-bottom:1px solid #eee;white-space:nowrap}
