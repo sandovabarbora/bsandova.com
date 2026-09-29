@@ -42,7 +42,7 @@ def new_cars() -> None:
     ax.plot([2012, 2022], [y0 - 5 * c, y0 + 5 * c], color=GREY, lw=1.2, ls=(0, (3, 2)), label="EEA wheelbase route (comparator)")
     v22 = v[10]
     ax.plot([2022, 2025], [v22, v22 + 0.06], color=LIGHT, lw=1.4, ls=(0, (1, 1.5)), label="T&E pace 2022→2025 (+6.0 cm)")
-    ax.plot([2022, 2025], [v22, v22 + 0.03], color=INK, lw=1.0, ls=(0, (4, 2)), label="Part II's extrapolation (+3.0 cm)")
+    ax.plot([2022, 2025], [v22, v22 + 0.03], color=INK, lw=1.0, ls=(0, (4, 2)), label="wheelbase estimate, extrapolated (+3.0 cm)")
     ax.set_xlim(2011.5, 2025.5)
     ax.set_ylabel("mean length of a new car · m")
     ax.legend(loc="upper left", fontsize=7.5, frameon=False)
@@ -68,9 +68,10 @@ def tests() -> None:
     lo, hi = T["ci95_delta2"]
     b.plot([lo, hi], [0, 0], color=HELD, lw=2.4)
     b.plot(T["delta2_cm"], 0, "o", color=HELD, ms=7)
-    for x, lab, c, yy in ((6.0, "T&E +6.0", INK, 0.42), (3.0, "Part II +3.0", GREY, 0.42), (4.5, "midpoint", LIGHT, -0.5)):
+    for x, lab, c, yy, ha in ((6.0, "T&E +6.0", INK, 0.42, "left"), (3.0, "wheelbase estimate +3.0", GREY, 0.42, "right"),
+                              (4.5, "midpoint", LIGHT, -0.5, "left")):
         b.axvline(x, color=c, lw=1, ls=(0, (3, 2)))
-        b.text(x + 0.1, yy, lab, color=c, fontsize=7.5)
+        b.text(x + (0.1 if ha == "left" else -0.1), yy, lab, color=c, fontsize=7.5, ha=ha)
     b.set_yticks([])
     b.set_ylim(-0.6, 0.6)
     b.set_xlim(-1, 7.5)
@@ -88,8 +89,8 @@ def loss() -> None:
         ("per parallel space (θ₁ᵘ)", E1["theta_u"], INK),
         ("per parallel space, gap ∝ length", E1["theta_u_prop"], INK),
     ]
-    pts = [("Part I (T&E series)", 1.60), ("Part II, as published", 1.325),
-           ("Part II, corrected (M1 + M1G)", P2["m1_m1g"]["scenarios"]["central"]["loss_pct"])]
+    pts = [("first estimate (T&E series)", 1.60), ("wheelbase estimate, M1 only", 1.325),
+           ("wheelbase estimate, M1 + M1G", P2["m1_m1g"]["scenarios"]["central"]["loss_pct"])]
     fig, ax = plt.subplots(figsize=(8, 3.4))
     for x in (1.0, 2.5):
         ax.axvline(x, color=LIGHT, lw=1, ls=(0, (2, 2)))
