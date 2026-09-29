@@ -37,6 +37,16 @@
     <div><dt>caught</dt><dd>1 fabricated quote <small>and a tool so it cannot happen again</small></dd></div>
   </dl>
 </header>
+<details class="tldr" open>
+  <summary>Overwhelmed? Here's the short version</summary>
+  <ul>
+    <li>An agent reads each primary source once and integrates it into a persistent, interlinked Obsidian wiki: 739 pages and 8 144 wikilinks from 336 sources, as of 1 September 2026. The raw sources stay immutable, the wiki belongs to the agent, and a schema written by both of us tells it what a page is and how to link.</li>
+    <li>Ingesting one source updates five to fifteen existing pages, the index and an append-only log. Contradictions between sources are recorded on the page, never smoothed into a consensus.</li>
+    <li>On the standards shelf the wiki surfaced two things: NIST AI 600-1 frames memorisation-driven data leakage without mentioning decoding parameters, although the setting most likely to leak fine-tuned data is a decoding parameter, and the EU GPAI Code of Practice asks for reproducibility in one appendix and forbids reproducing training data in another. Neither is a contradiction inside one document; both only show up when two documents are on the same page with a link between them.</li>
+    <li>A fabricated quotation survived several passes. A tool, <code>quote.py</code>, now prints the surrounding sentence from the source for every quotation, and the fabrication is its regression test; lint checks cover orphan pages, broken links, sprawl, stale seeds and index drift.</li>
+    <li>The repository is private: the counts are as recorded in its README and schema at the last commit, and the two findings as recorded on the wiki's pages.</li>
+  </ul>
+</details>
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-second-brain;--bg:url(../assets/photo/second-brain.jpg);--bg-s:url(../assets/photo/second-brain-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Bookshelves_Suzzallo_Allen_Library_University_of_Washington_Seattle_Washington_2026.jpg">Guywelch2000</a> · CC BY 4.0, colour held</p></section>
 
 

@@ -54,6 +54,16 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
     <div><dt>self-consistency</dt><dd>21 % <small>correct when all repeats agree · base rate 18 %</small></dd></div>
   </dl>
 </header>
+<details class="tldr" open>
+  <summary>Overwhelmed? Here's the short version</summary>
+  <ul>
+    <li>Of 5 794 answers from AI assistants over data warehouses, 3 839 were silently wrong: the query ran and returned a plausible number that was wrong. This text tests whether anything visible at run time, before the true answer is known, tells the wrong numbers from the right ones.</li>
+    <li>Nothing does well. The best held-out AUC is 0.64 (0.5 is a coin flip), from gradient boosting on agreement across repeats, and as a filter it forwards 3 % of answers with 86 % of them correct. The model, pack and language predict nothing (0.55–0.56).</li>
+    <li>Self-consistency adds almost nothing: when all three repeats return the same number, it is correct 21 % of the time, against a base rate of 18 %. A model on the shape of the SQL learns the traps of one warehouse and does not carry over to another.</li>
+    <li>Run-time signals cannot replace cross-checking each figure against verified ones, which is what the trust layer already does.</li>
+    <li>The answers come from one harness with planted traps, not from production questions, and the label is binary, so the size of each error is not measured.</li>
+  </ul>
+</details>
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-silent-detector;--bg:url(../assets/photo/silent-detector.jpg);--bg-s:url(../assets/photo/silent-detector-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Diagnostic_monitors_in_the_control_room_of_Wendelstein_7-X.jpg">Siarhei Besarab</a> · CC BY-SA 4.0, colour held</p></section>
 
 

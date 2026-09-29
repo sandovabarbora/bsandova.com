@@ -54,6 +54,16 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
     <div><dt>tests</dt><dd>20 <small>one per class, plus the cases that must fail</small></dd></div>
   </dl>
 </header>
+<details class="tldr" open>
+  <summary>Overwhelmed? Here's the short version</summary>
+  <ul>
+    <li>quotecheck is a Python tool on PyPI that checks whether a quotation is in its source. It was written after a fabricated ISACA quotation, produced by a PDF extraction that welded two columns together, reached the wiki; all 292 quoted passages across the fifteen CISA pages were then machine-checked.</li>
+    <li>It folds case, ligatures, hyphens, whitespace, accents and quotation marks, which covers the six classes of false alarm that once called genuine quotations fabricated. It answers FOUND, FOUND*, DRIFT or ABSENT, prints context in the source's own words, and counts drift as not found.</li>
+    <li>Lenient as it is, it still says ABSENT to the most-quoted sentence attributed to Viktor Frankl, "Between stimulus and response there is a space", which is not in <i>Man's Search for Meaning</i>. Its 20 tests cover each false-alarm class plus the cases that must fail.</li>
+    <li>Checking each quote before writing it does not catch splices of two real fragments. When two agents verified their own finished pages they found sixteen defects, fourteen of them splices, so batch mode checks every quoted span on the finished page.</li>
+    <li>It needs the source as text and is only as good as the extraction: a two-column scan still produces sentences that never existed, and the tool will find them. It cannot find a quotation in a book it has not been shown, and the 80 % drift threshold is a choice.</li>
+  </ul>
+</details>
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-quotecheck;--bg:url(../assets/photo/quotecheck.jpg);--bg-s:url(../assets/photo/quotecheck-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:ASC_Leiden_-_Library_-_South_African_newspaper_stack_of_Die_Burger_-_2012.jpg">African Studies Centre Leiden</a> · CC BY-SA 4.0, colour held</p></section>
 
 

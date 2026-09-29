@@ -53,6 +53,16 @@
   </dl>
   <a class="play" href="../surf/">The live page</a>
 </header>
+<details class="tldr" open>
+  <summary>Overwhelmed? Here's the short version</summary>
+  <ul>
+    <li>Every morning a GitHub Actions job stores the seven-day forecast of three wave models for Ericeira, Peniche and Sagres, and later pairs each forecast with what its target day turned out to be, at lead 0 through 6. The aim is to count how often a forecast five or six days out is right and turn that into a rule for when to book a flight.</li>
+    <li>There are no skill numbers yet, because no number is shown for a lead with fewer than 14 pairs. Until then the page uses the base rate: by the surfable rule, Ericeira had five surfable days in 92 from mid-June to mid-September, which is 5 %.</li>
+    <li>At 180 EUR for a trip, 120 EUR a surf day and two days, booking needs a 75 % chance of surf, so today every row says "not worth the flight".</li>
+    <li>The results are recomputed under five alternative surfable rules, and the base rate alone already ranges from 2 % to 19 % across them. Six tests on a synthetic world run before the page trusts a number, and below 30 pairs a number is marked descriptive.</li>
+    <li>The truth is a proxy: "what arrived" is the analysis of the same model family that made the forecast, since the Portuguese buoys are not available through an API. This makes the skill numbers read optimistically, and only a buoy feed would remove that bias.</li>
+  </ul>
+</details>
 <section class="film film-page" aria-hidden="false"><div class="shot" style="view-transition-name:ph-surf;--bg:url(../assets/photo/surf.jpg);--bg-s:url(../assets/photo/surf-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Ericeira-06-Ribeira_d%27Ilhas-2011-gje.jpg">Gerd Eichmann</a> · CC BY-SA 4.0, colour held</p></section>
 
 

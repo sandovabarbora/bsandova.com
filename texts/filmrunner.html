@@ -37,6 +37,16 @@
     <div><dt>skeleton, second build</dt><dd>5 ADRs <small>FastAPI · Postgres · React PWA · Fly.io</small></dd></div>
   </dl>
 </header>
+<details class="tldr" open>
+  <summary>Overwhelmed? Here's the short version</summary>
+  <ul>
+    <li>The first build was end-to-end production management for mid-budget films: script import, an AI-drafted breakdown, a stripboard schedule with a cascade engine, and the published call sheet. Around it sat what a studio's procurement asks for, including SSO/SAML, a DPA, Sentry with PII scrubbing, and Stripe, Twilio and Frame.io integrations.</li>
+    <li>An independent security review found two problems. An <code>IS_DEV</code> blocklist failed open on a blank environment variable and became an explicit allowlist, and SSO auto-provisioning moved from a client assertion to a server-side SAML claim.</li>
+    <li>The second build keeps only the call sheet: creating, revising and distributing shoot-day sheets that can be viewed offline, because call times are 5–6 am and locations are outside coverage. It runs on FastAPI, PostgreSQL and a React PWA on Fly.io, with five architecture decision records.</li>
+    <li>The live demo on GitHub Pages serves a sample shoot day. Once it has been added to a phone's home screen, the call sheet still renders with airplane mode on.</li>
+    <li>The second build leaves out budgeting, breakdowns, a scheduling optimiser and billing.</li>
+  </ul>
+</details>
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-filmrunner;--bg:url(../assets/photo/filmrunner.jpg);--bg-s:url(../assets/photo/filmrunner-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:11_fifty_9.jpg">Chris K Udoh</a> · CC BY-SA 4.0, colour held</p></section>
 
 

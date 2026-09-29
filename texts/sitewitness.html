@@ -55,6 +55,16 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
     <div><dt>security findings</dt><dd>5 <small>from review, all fixed before the first deploy</small></dd></div>
   </dl>
 </header>
+<details class="tldr" open>
+  <summary>Overwhelmed? Here's the short version</summary>
+  <ul>
+    <li>sitewitness is a Python package behind the Ask page. Five rules (tool use, numbers, code, quotations, sources) are enforced in code, and an answer that breaks one is replaced by a decline, with the rule named in the trace.</li>
+    <li>On the thirty-question golden set where the old Worker scored 29 of 30, the package's first run scored 22. Six runs in two days brought it to 29/30; each miss was read from the trace, and some were the evaluator's own stale expectations.</li>
+    <li>The runs found faults in the first version: rules that refused correct answers, and a search that clipped passages to 600 characters when the sentence sat at character 700. The six runs cost 5.3 USD, and the 4 USD daily budget cut off the fourth run of the day as configured.</li>
+    <li>An automated review found five security problems, including a spoofable client-address header. All were fixed before the first deploy, and none was in the model itself.</li>
+    <li>The package does not stream, remember a conversation or use a model other than Anthropic's. It does not make the model right; it makes the model's wrongness visible and refusable.</li>
+  </ul>
+</details>
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-sitewitness;--bg:url(../assets/photo/sitewitness.jpg);--bg-s:url(../assets/photo/sitewitness-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Magnifying_glass_with_focus_on_paper.png">Niabot</a> · CC BY-SA 3.0, colour held</p></section>
 
 
