@@ -72,7 +72,7 @@ input,textarea,select{font-family:var(--sans)}
   .text-head h1{font-size:clamp(40px,11vw,64px)}
 }
 
-/* figures: charts are recoloured to paper by tools/paper_figures.py, accent = the article's held colour */
+/* figures: charts are recoloured to paper by tools/site/paper_figures.py, accent = the article's held colour */
 
 
 
@@ -236,7 +236,7 @@ figure.mp-live>img[hidden]{display:none}
 .text dl.meta div{display:grid;grid-template-columns:14ch 1fr;gap:12px;padding:6px 0;border-right:0;border-bottom:1px solid #ececea}
 .text dl.meta div+div{padding-left:0}
 @media (max-width:600px){.text dl.meta div{grid-template-columns:1fr;gap:0}}
-/* print and PDF (tools/pdf.sh): paper, no navigation or controls, figures kept whole */
+/* print and PDF (tools/site/pdf.sh): paper, no navigation or controls, figures kept whole */
 @media print{
   @page{size:A4;margin:16mm 16mm 18mm}
   html,body{background:#fff!important;color:#000}

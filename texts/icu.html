@@ -67,7 +67,7 @@
   <div><dt>published</dt><dd>14 September 2026 · updated 29 September 2026 · <a href="#changelog">version 2</a></dd></div>
   <div><dt>status</dt><dd>note</dd></div>
   <div><dt>data</dt><dd>course-supplied CSVs (ten physiological variables, one outcome file), Universität Bayreuth, summer 2026; not public (private; not verifiable). The figures cannot be reproduced without the course files, and the notebook is not shared.</dd></div>
-  <div><dt>code</dt><dd><code>python3 tools/icu_figures.py</code> in the <a href="https://github.com/sandovabarbora/bsandova.com">site repository</a> at <code>4262352</code>; needs a local copy of the course CSVs</dd></div>
+  <div><dt>code</dt><dd><code>python3 tools/figures/icu_figures.py</code> in the <a href="https://github.com/sandovabarbora/bsandova.com">site repository</a> (at <code>4262352</code> the script was <code>tools/icu_figures.py</code>); needs a local copy of the course CSVs</dd></div>
   <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Reversed outcome labels in an ICU P/F-ratio dataset (coursework)</i>. bsandova.com/texts/icu, version 2.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text and figures CC BY 4.0; the dataset is not redistributed</dd></div>
 </dl>
@@ -80,7 +80,7 @@
 <p>A higher P/F ratio means better oxygenation. Here the group labelled <i>Deteriorating</i> has the higher mean, 23.8 against 18.9 kPa, and the rising trend, +0.11 against −0.29 kPa per half-day. Against the same label file, eight of the other nine variables in the course set (CRP, lactate, peak pressure, PaCO<sub>2</sub>, oxygen saturation, pH, bicarbonate, platelets) also describe the <i>Deteriorating</i> patients as the healthier ones. The tenth, ventilatory ratio, sits around 1 300 for a quantity that should be near 1–3, so that file is mis-scaled. The nine variables share one cohort, so this is one observation made nine ways, not nine replications<sup class="cite"><a href="#r1">1</a></sup>.</p>
 <figure>
   <img src="../assets/icu/01-trajectories.svg" alt="Mean P/F ratio over fourteen timepoints for the two outcome groups with 95 % confidence bands; the group labelled Deteriorating sits higher and rises, Improving sits lower and falls." loading="lazy">
-  <figcaption><b>fig. 1</b> · Mean P/F ratio in kPa at each of fourteen timepoints with 95 % confidence bands, by label: green <i>Improving</i> (n = 311), orange <i>Deteriorating</i> (n = 310); cleaned dataset, n = 621. Recomputed from the course CSVs (private; not verifiable) by <code>tools/icu_figures.py</code>; matches the report.</figcaption>
+  <figcaption><b>fig. 1</b> · Mean P/F ratio in kPa at each of fourteen timepoints with 95 % confidence bands, by label: green <i>Improving</i> (n = 311), orange <i>Deteriorating</i> (n = 310); cleaned dataset, n = 621. Recomputed from the course CSVs (private; not verifiable) by <code>tools/figures/icu_figures.py</code>; matches the report.</figcaption>
 </figure>
 </section>
 

@@ -1,6 +1,6 @@
 """Chart specs for the Brand Reflection article (texts/brand-reflection.html), read by assets/charts.js.
 
-Reads the two studies' spot-level metrics (CC-BY-4.0), joined exactly as tools/brand_figures.py joins them
+Reads the two studies' spot-level metrics (CC-BY-4.0), joined exactly as tools/figures/brand_figures.py joins them
 (colour table's brand_id = audio table's spot_id, 47 of 47). The join is published as assets/brand/spots.json:
 with --dump the script rebuilds that file from tools/data/br-spots.parquet and tools/data/br-spots-audio.parquet
 (needs pandas + pyarrow; the parquet files are not in the repository). Without --dump it only reads spots.json
@@ -30,7 +30,7 @@ if "--dump" in sys.argv:
              "music_fraction": round(float(r.music_fraction), 5), "tempo_bpm": round(float(r.tempo_bpm), 1), "mode": r["mode"]}
             for _, r in d.iterrows()]
     SPOTS.write_text(json.dumps({"source": "color-fingerprint-cz spots.parquet + sound-fingerprint-cz spots_audio.parquet, CC-BY-4.0; "
-                                           "joined on spot id by tools/brand_figures.py", "spots": rows}, ensure_ascii=False, indent=1))
+                                           "joined on spot id by tools/figures/brand_figures.py", "spots": rows}, ensure_ascii=False, indent=1))
     print(len(rows), "spots →", SPOTS)
 
 D = json.loads(SPOTS.read_text())["spots"]

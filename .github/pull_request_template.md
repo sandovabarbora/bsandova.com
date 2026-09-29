@@ -4,7 +4,7 @@
 
 ## Checks
 
-- [ ] `python3 tools/check_standard.py` passes (it also runs in the build)
+- [ ] `python3 tools/site/check_standard.py` passes (it also runs in the build)
 - [ ] No number in an article changed, or every change is listed with its source in that page's change log
 - [ ] Registered labels and registration wording unchanged
 - [ ] Interactive charts and maps render at desktop and phone width
