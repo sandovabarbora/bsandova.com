@@ -33,10 +33,6 @@
 .tbl td.n,.tbl th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .tbl td b{color:var(--hot);font-weight:400}.tbl .hi{color:var(--coral)}.tbl .dim{color:var(--fg-2)}
 .tbl caption{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);padding:0 0 .5rem}
-.bars{max-width:64rem;margin:1rem 0 1.5rem;font-family:var(--mono);font-size:11px}
-.bar{display:grid;grid-template-columns:5rem minmax(0,1fr) 4rem;gap:1rem;align-items:center;padding:.3rem 0}
-.bar i{display:block;height:1.1rem;background:var(--fg-2)}.bar.cz i{background:var(--coral)}
-.bar b{font-weight:400;color:var(--fg)}.bar .n{text-align:right;color:var(--fg)}.bar.cz .n,.bar.cz b{color:var(--coral)}
 /* metadata block: style.css gives .meta a three-column grid for the home page; restore one line per row here */
 .text>.meta{display:block;letter-spacing:0;text-transform:none;font-size:12px}
 .text>.meta div{border-right:0;padding:6px 0}
@@ -96,18 +92,11 @@
 <section>
 <h2>Worked example: Czechia in 2025/26</h2>
 <p>Fifteen Czech-born players meet the rule, 1.38 per million, fifth of six. The USA has the most NHL players in absolute terms and 335 million people to divide them by, the figure in the code. Slovakia, with half the Czech population, ranks above Czechia<sup class="cite"><a href="#r3">3</a></sup>.</p>
-</section>
-<div class="bars">
-<div class="bar"><b>Canada</b><i style="width:100%"></i><span class="n">8.05</span></div>
-<div class="bar"><b>Sweden</b><i style="width:89%"></i><span class="n">7.17</span></div>
-<div class="bar"><b>Finland</b><i style="width:75%"></i><span class="n">6.07</span></div>
-<div class="bar"><b>Slovakia</b><i style="width:21%"></i><span class="n">1.67</span></div>
-<div class="bar cz"><b>Czechia</b><i style="width:17%"></i><span class="n">1.38</span></div>
-<div class="bar"><b>USA</b><i style="width:8%"></i><span class="n">0.67</span></div>
-</div>
-<section>
+<figure data-chart="../assets/hockey/charts.json#per-head">
+  <img src="../assets/hockey/per-head.svg" alt="Horizontal bars, NHL players per million population, 2025/26: Canada 8.05, Sweden 7.17, Finland 6.07, Slovakia 1.67, Czechia 1.38 in blue, USA 0.67." loading="lazy">
+  <figcaption><b>fig. 1</b> · Players born in each country with at least ten NHL games in 2025/26, per million population; Czechia in blue. Populations are the constants in the atlas code. Atlas render of 18 May 2026.</figcaption>
+</figure>
 <p>Split by position and age, each cell gives the number of players with at least ten games and their median points per game. A median in a cell of one or two players is those players' own value and is not comparable across cells.</p>
-</section>
 <table class="tbl"><caption>Forwards · NHL 2025/26 · players · median P/GP · age reached in 2025 · grey: fewer than three players</caption>
 <thead><tr><th>cohort</th><th class="n">CZE</th><th class="n">FIN</th><th class="n">SWE</th><th class="n">SVK</th></tr></thead>
 <tbody>
@@ -124,23 +113,21 @@
 <tr><td>26–29</td><td class="n dim">1 · 0.60</td><td class="n">5 · 0.18</td><td class="n">5 · 0.23</td><td class="n dim">2 · 0.26</td></tr>
 <tr><td>30+</td><td class="n dim">1 · 0.23</td><td class="n">3 · 0.35</td><td class="n">8 · 0.49</td><td class="n dim">—</td></tr>
 </tbody></table>
-<section>
 <p>The youngest Czech forward cohort is one player, Kulich, against three for Finland and seven for Sweden. The 26–29 cohort of four, among them Pastrňák, Nečas and Zacha, has a median of 1.06 points per game, the highest in these tables. On defence Czechia has three NHL players in all, against nine for Finland and thirty for Sweden, and none aged 18–21. The fifteen players are the twelve forwards and three defencemen in these tables<sup class="cite"><a href="#r3">3</a></sup>.</p>
 <p>The two maps show the league adjustment openly. In the style map, on raw rates, Pastrňák and Červenka sit in the same production zone, because each produces alike in his own league; in the quality map Pastrňák moves to PC1 ≈ 8.5 and Červenka to about 2. Of the 81 players who played the 2024 or 2025 World Championship for Czechia, 42 are in the mapped pool, from both the NHL and the Extraliga<sup class="cite"><a href="#r3">3</a></sup>.</p>
-</section>
-<figure>
-  <img src="../assets/hockey/atlas-forwards.svg" alt="Two scatter plots of Czech forwards 2025/26: style projection without league multipliers, four clusters, and quality-adjusted projection, five clusters. Black rings on World Championship 2024/25 players, arrows for movement from 2024/25 to 2025/26." loading="lazy">
-  <figcaption><b>fig. 1</b> · Forwards 2025/26, first two principal components of goals, assists and penalty minutes per game and age, without (left) and with (right) league factors. Colours are K-means clusters, four on the left and five on the right; black rings mark World Championship 2024/25 players; arrows run from 2024/25 to 2025/26. Atlas render of 18 May 2026.</figcaption>
+<figure data-chart="../assets/hockey/charts.json#atlas-forwards">
+  <img src="../assets/hockey/atlas-forwards.svg" alt="Two scatter plots of Czech forwards 2025/26: style projection without league multipliers, four clusters, and quality-adjusted projection, five clusters. Black rings on World Championship 2024/25 players, arrows or lines for movement from 2024/25 to 2025/26." loading="lazy">
+  <figcaption><b>fig. 2</b> · Forwards 2025/26, first two principal components of goals, assists and penalty minutes per game and age, without (left) and with (right) league factors. K-means clusters, four on the left and five on the right, are in the tooltip and the table (colours in the static render); black rings mark World Championship 2024/25 players; grey lines run from a player's 2024/25 position to his 2025/26 point. The published map data carry no league per point, so the points are not coloured by rung. Atlas render of 18 May 2026.</figcaption>
 </figure>
-<figure>
+<figure data-chart="../assets/hockey/charts.json#atlas-defense">
   <img src="../assets/hockey/atlas-defense.svg" alt="The same two projections for Czech defencemen 2025/26, six clusters in the style map and five in the quality map." loading="lazy">
-  <figcaption><b>fig. 2</b> · Defencemen 2025/26, same projections and markings; six clusters on the left and five on the right. Atlas render of 18 May 2026.</figcaption>
+  <figcaption><b>fig. 3</b> · Defencemen 2025/26, same projections and markings; six clusters on the left and five on the right. Atlas render of 18 May 2026.</figcaption>
 </figure>
+</section>
 
 <section>
 <h2>Tests and sensitivity</h2>
 <p>The repository holds 51 software unit tests, and every stochastic step uses seed 42<sup class="cite"><a href="#r9">9</a></sup>. The Liiga and Extraliga factors were each moved by ±20 % and the quality ranking recomputed; the NHL is the reference at 1.00 and the other factors were not varied. Moving every factor by the same percentage cannot change a ranking, so those two scenarios are not shown. In the four scenarios below the top ten changes by at most one player and the four NHL forwards at the top stay there, but the mean rank shift in the top twenty reaches 4.35 places when the Liiga factor falls, so the lower part of the ranking depends on the factors<sup class="cite"><a href="#r3">3</a></sup>.</p>
-</section>
 <table class="tbl"><caption>Sensitivity · ±20 % on one league factor · quality ranking</caption>
 <thead><tr><th>scenario</th><th class="n">top-10 overlap</th><th class="n">churn</th><th class="n">mean Δ rank, top 20</th></tr></thead>
 <tbody>
@@ -149,6 +136,7 @@
 <tr><td>Extraliga −20 %</td><td class="n">9 / 10</td><td class="n">1</td><td class="n">1.30</td></tr>
 <tr><td>Extraliga +20 %</td><td class="n">10 / 10</td><td class="n">0</td><td class="n">2.50</td></tr>
 </tbody></table>
+</section>
 
 <section>
 <h2>Limits</h2>
@@ -181,14 +169,16 @@
 <ul>
 <li>14 September 2026: first published as "Who Czech hockey produces, per capita".</li>
 <li>29 September 2026, version 2: reframed as a tool page and retitled. Correction: the facts, the short version and the text gave four Czech NHL defencemen and fourteen Finnish ones; the cohort tables, which the build computes, give three and nine, and the per-head counts (15 for Czechia, 34 for Finland) match the tables, so the text now says three and nine. Correction: the per-head count was described as every Czech-born player on an NHL roster; it counts those with at least ten games. Correction: the cohort labelled 23–25 covers ages 22–25 (age reached in 2025), and is relabelled; the U22 row covers 18–21. Hertl, born 1993, falls in the 30+ cohort and is no longer named in the 26–29 cohort. Correction: the sensitivity test perturbed only the Liiga and Extraliga factors, not each factor; the claim that the map is not sensitive to them was removed, and the two uniform-scaling rows (all −20 %, all +20 %, which cannot change a ranking) and the baseline row were dropped from the table. The shrinkage is called a fixed prior, not empirical Bayes. The pool is described by its actual eligibility rules (78 players confirmed eligible) instead of "385 players with Czech eligibility". Added comparable work, the population caveat, the note that the fetched data are not committed, silhouette and age caveats for the clusters, and a caveat on medians in cells of one or two players. Removed the claim that the per-head number had not been aggregated before, "world class", the cluster archetype counts (18, 122, 9 and 92 players, median birth years 1996 and 2001), and the section on the knowledge graph, similarity search and scouting briefs (about 3 200 players, 1 177 analogs, about 570 duplicate nodes), which is reduced to one sentence pointing to the README. References split to one work each, with access or fetch dates. The US population is given as 335 million, the figure the per-head count divides by, instead of 340 million.</li>
+<li>29 September 2026: figures only, no sentence of the text or number changed. The per-head bars and the two atlases are interactive charts drawn from the atlas's data, with the static renders kept as fallbacks; the bars became fig. 1, so the forwards are now fig. 2 and the defencemen fig. 3. Tables and figures sit in the text column. The maps draw every point in the held blue and give the K-means cluster in the tooltip and a table, because the published map data carry no league for a rung colour; the movement arrows are drawn as lines.</li>
 <li>Checked against editorial standard v1 on 29 September 2026.</li>
 </ul>
 </section>
 
 <footer class="text-foot">
-  <p><b>Figures.</b> The two atlases are the atlas's own matplotlib renders, recoloured to this site's palette by a colour map; positions, arrows and labels are untouched. The per-head bars and tables are typed from the atlas summary and cohort tables.</p>
+  <p><b>Figures.</b> The per-head bars and the two atlases are drawn in the page by <code>tools/charts/hockey.py</code> from data copied out of the atlas: <a href="../assets/hockey/per-head.json">per-head.json</a> (the summary values and the code's population constants) and <a href="../assets/hockey/atlas-forwards.json">atlas-forwards.json</a> and <a href="../assets/hockey/atlas-defense.json">atlas-defense.json</a>, every point of the atlas's matplotlib renders read back to its principal components with the atlas's own axis calibration. Without JavaScript the renders show instead, recoloured to this site's palette; positions, arrows and labels are untouched. The tables are typed from the atlas summary and cohort tables.</p>
   <p class="back"><a href="../#works">← projects</a> · <a href="football">Player Pool Atlas · football</a></p>
 </footer>
 </article>
+<script src="../assets/charts.js" defer></script>
 </body>
 </html>

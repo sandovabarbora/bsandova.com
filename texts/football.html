@@ -33,10 +33,6 @@
 .tbl td.n,.tbl th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .tbl td b{color:var(--hot);font-weight:400}.tbl .hi{color:var(--coral)}.tbl .dim{color:var(--fg-2)}
 .tbl caption{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);padding:0 0 .5rem}
-.bars{max-width:64rem;margin:1rem 0 1.5rem;font-family:var(--mono);font-size:11px}
-.bar{display:grid;grid-template-columns:7rem minmax(0,1fr) 4.5rem;gap:1rem;align-items:center;padding:.3rem 0}
-.bar i{display:block;height:1.1rem;background:var(--fg-2)}.bar.cz i{background:var(--coral)}
-.bar b{font-weight:400;color:var(--fg)}.bar .n{text-align:right;color:var(--fg)}.bar.cz .n,.bar.cz b{color:var(--coral)}
 /* metadata block: style.css gives .meta a three-column grid for the home page; restore one line per row here */
 .text>.meta{display:block;letter-spacing:0;text-transform:none;font-size:12px}
 .text>.meta div{border-right:0;padding:6px 0}
@@ -96,21 +92,11 @@
 <section>
 <h2>Worked example: the Czech edition</h2>
 <p>Czechia has 26 players in the nine leagues, 2.39 per million, seventh of nine peers. Denmark, with about half the population, has five times the density. Czechia would need 35 players to pass Slovakia and would fall behind Hungary only at 17. With a 450-minute floor, Czechia has 23 players (2.11 per million) and the order of the nine is unchanged<sup class="cite"><a href="#r1">1</a></sup>.</p>
-</section>
-<div class="bars">
-<div class="bar"><b>Denmark</b><i style="width:100%"></i><span class="n">12.58</span></div>
-<div class="bar"><b>Croatia</b><i style="width:97%"></i><span class="n">12.18</span></div>
-<div class="bar"><b>Norway</b><i style="width:74%"></i><span class="n">9.37</span></div>
-<div class="bar"><b>Switzerland</b><i style="width:48%"></i><span class="n">6.03</span></div>
-<div class="bar"><b>Austria</b><i style="width:38%"></i><span class="n">4.80</span></div>
-<div class="bar"><b>Slovakia</b><i style="width:25%"></i><span class="n">3.14</span></div>
-<div class="bar cz"><b>Czechia</b><i style="width:19%"></i><span class="n">2.39</span></div>
-<div class="bar"><b>Hungary</b><i style="width:12%"></i><span class="n">1.57</span></div>
-<div class="bar"><b>Poland</b><i style="width:10%"></i><span class="n">1.23</span></div>
-</div>
-<section>
+<figure data-chart="../assets/football/charts.json#per-head">
+  <img src="../assets/football/per-head.svg" alt="Horizontal bars, players in the nine strongest leagues per million population, 2025/26: Denmark 12.58, Croatia 12.18, Norway 9.37, Switzerland 6.03, Austria 4.80, Slovakia 3.14, Czechia 2.39 in green, Hungary 1.57, Poland 1.23." loading="lazy">
+  <figcaption><b>fig. 1</b> · Distinct players of each nationality who played in one of the nine strongest leagues in 2025/26, per million population; Czechia in green. FBref via soccerdata, snapshot of 14 September 2026; Eurostat population on 1 January 2024.</figcaption>
+</figure>
 <p>By cohort the largest gap is among midfielders aged 23 to 25, two Czech players in the nine leagues against a peer median of six, and among defenders under 22 Czechia has none against a peer median of 1.5.</p>
-</section>
 <table class="tbl"><caption>Largest cohort gaps · nine strongest leagues · 2025/26 · ≥ 450 minutes</caption>
 <thead><tr><th>group</th><th>cohort</th><th class="n">CZE</th><th class="n">peer median</th></tr></thead>
 <tbody>
@@ -120,30 +106,25 @@
 <tr><td>Defenders</td><td>26–29</td><td class="n">3</td><td class="n">4.5</td></tr>
 <tr><td>Defenders</td><td>U22</td><td class="n hi">0</td><td class="n">1.5</td></tr>
 </tbody></table>
-<section>
 <p>Czech players aged 21 or younger get 6.4 % of Czech First League minutes; the same share for each country's own young players in its league is 15.3 % in Denmark, 14.1 % in Hungary, 14.0 % in Croatia and 11.5 % in Norway, and the league has 1.1 regular under-21 starters per club against Denmark's 2.5. The Czech share was 10 % in 2020/21. The first move abroad comes at a median age of 24, against 23 for Denmark and 22.5 for Norway, and the covered seasons hold 32 Czech first moves against Denmark's 112. Of the 192 mapped players, 27 play abroad, 17 of them (63 %) in the nine leagues, and 19 % moved to a league no stronger than the Czech one by its multiplier. The 17 and the 26 above count different things: the 26 include three players under 450 minutes and four goalkeepers, whom the map leaves out, and two players whose longest 2025/26 spell was in the Czech league. Abroad, Czech players keep a median 50 % of their club's minutes, third of nine behind Slovakia (76 %) and Hungary (57 %). Of the 26 players in the Czech squad for the 2026 FIFA World Cup, 35 % play in the nine leagues, against 88 % for Switzerland, 73 % for Croatia, 69 % for Austria and 65 % for Norway<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r8">8</a></sup>.</p>
 <p>The Big-5 series peaks at 26 in 2007/08, falls to 6 in 2015/16 and stands at 10 in 2025/26. The two-break model puts a rise in 2000/01 (posterior probability 0.55, level ×1.65, 90 % HDI 0.87–2.46) and a fall in 2014/15 (0.56, ×0.60, 0.39–1.03); the pair together has probability 0.36. The interval for the size of the fall reaches 1, so the model does not exclude an unchanged level. At the 2007/08 peak the Czech Big-5 players had a median age of 28 and in the season of the fall 32, with no debutant arriving. Among the sixteen other countries, Croatia fell in 2003/04 and recovered eleven seasons later and Norway fell in 2004/05 and recovered seventeen seasons later, while every other small peer's later step is a rise<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r5">5</a></sup>.</p>
-</section>
-<figure>
-  <img src="../assets/football/big5-series.svg" alt="Line chart 2000/01 to 2025/26: Czech players with 450+ minutes in the Big-5 leagues in green, peaking at 26 in 2007/08, falling to 6 in 2015/16, 10 in 2025/26; Denmark and Croatia in dark grey, other peers in light grey, Denmark rising to 38. Lower panel: Czechia, Denmark and Croatia per million population." loading="lazy">
-  <figcaption><b>fig. 1</b> · Czech players with at least 450 minutes in the Big-5 leagues (green), Denmark and Croatia (dark grey) and the other peers (light grey), 2000/01–2025/26; lower panel per million population. The render starts in 2000/01 and does not mark the model's breaks; the series behind the text starts in 1995/96. FBref via soccerdata, snapshot of 14 September 2026.</figcaption>
+<figure data-chart="../assets/football/charts.json#big5">
+  <img src="../assets/football/big5-series.svg" alt="Line chart 2000/01 to 2025/26: Czech players with 450+ minutes in the Big-5 leagues in green, peaking at 26 in 2007/08, falling to 6 in 2015/16, 10 in 2025/26; Denmark and Croatia in black, other peers in light grey, Denmark rising to 38. Lower panel: Czechia, Denmark and Croatia per million population." loading="lazy">
+  <figcaption><b>fig. 2</b> · Czech players with at least 450 minutes in the Big-5 leagues (green), Denmark and Croatia (black) and the other peers (light grey), 2000/01–2025/26; lower panel per million population. The render starts in 2000/01 and does not mark the model's breaks; the series behind the text starts in 1995/96. FBref via soccerdata, snapshot of 14 September 2026.</figcaption>
 </figure>
-<section>
 <p>The gap to each peer is split into three channels, the under-21 share of home minutes, home-league strength (the mover-based estimate) and the median age of the first move, with a ridge regression across the eight countries, Czechia and seven peers, with data on all three and a linear Oaxaca–Blinder split of the fitted gap. With three channels and eight countries this is an accounting of a correlation<sup class="cite"><a href="#r1">1</a></sup>.</p>
-</section>
 <table class="tbl"><caption>Gap to Czechia in players per million · ridge fit, n = 8 · bootstrap 90 % intervals</caption>
 <thead><tr><th>peer</th><th class="n">gap</th><th class="n">U21 minutes</th><th class="n">league strength</th><th class="n">age at first move</th><th class="n">residual</th></tr></thead>
 <tbody>
 <tr><td>Norway</td><td class="n">+7.0</td><td class="n">+4.2 (1.2–5.9)</td><td class="n">+5.1 (1.9–6.8)</td><td class="n">0.0</td><td class="n">−2.4</td></tr>
 <tr><td>Denmark</td><td class="n">+10.2</td><td class="n">+7.3 (2.2–10.3)</td><td class="n">+1.7 (0.6–2.3)</td><td class="n">0.0</td><td class="n">+1.2</td></tr>
 </tbody></table>
-<section>
 <p>Across the same eight countries a Bayesian regression of players per million on the under-21 share gives +10.1 per 10 percentage points (90 % HDI −1.7 to +23.3, R² 0.27), an interval that includes zero. Least squares on the country means gives +10.7 (−3.8 to 20.3). A pooled fit on all sixteen country-seasons gives +7.8 (1.1–14.0), but its bootstrap resamples country-seasons as if independent, with no clustering by country, so that interval is too narrow<sup class="cite"><a href="#r1">1</a></sup>.</p>
-</section>
-<figure>
-  <img src="../assets/football/atlas-mf.svg" alt="Two scatter plots of Czech midfielders 2025/26: style projection and quality-adjusted projection, clustered, national-team players ringed." loading="lazy">
-  <figcaption><b>fig. 2</b> · Midfielders 2025/26, the cohort with the largest gap, in the style projection (raw rates) and the quality projection (UEFA multipliers applied); first two principal components, colours are K-means clusters, rings mark a national-team call-up 2024–26. FBref via soccerdata, snapshot of 14 September 2026.</figcaption>
+<figure data-chart="../assets/football/charts.json#atlas-mf">
+  <img src="../assets/football/atlas-mf.svg" alt="Two scatter plots of Czech midfielders 2025/26: style projection and quality-adjusted projection, each player coloured by the rung of his league, national-team players ringed." loading="lazy">
+  <figcaption><b>fig. 3</b> · Midfielders 2025/26, the cohort with the largest gap, in the style projection (raw rates) and the quality projection (UEFA multipliers applied); first two principal components. Colour is the rung of the player's league (green top-9, grey other covered league, light grey home league; in the static render, the K-means cluster), and the tooltip and table give each player's cluster; rings mark a national-team call-up 2024–26. FBref via soccerdata, snapshot of 14 September 2026.</figcaption>
 </figure>
+</section>
 
 <section>
 <h2>Tests and measured error</h2>
@@ -180,14 +161,16 @@
 <ul>
 <li>14 September 2026: first published as "When did the train leave, and who else missed it".</li>
 <li>29 September 2026, version 2: reframed as a tool page (exploratory, not pre-registered) and retitled. The nine strongest leagues are now listed with their UEFA ranking year. Correction: the per-head measure was described as counting players with at least 450 minutes, but the atlas counts every player who appeared in 2025/26; the numbers are unchanged, and a check with the 450-minute floor (Czechia 23 players, 2.11 per million, same order) and the swing needed to change Czechia's rank (35 or 17 players) were added. The 26 per-head players and the 17 of 27 mapped players abroad are now reconciled. The page reports one break model, the two-break model the atlas now runs, with the 90 % interval of each step, and the rise is given as ×1.65 (1.648 in the atlas output) instead of ×1.66; the superseded one-step results (2014/15 at 62 %, ×0.57 (0.38–0.86), backtest error 2.8 against 2.7, coverage 0.87, forecast 11 (5–18) for 2026/27) were removed, and the backtest is reported from the current model (2.5 against 2.7, 14 of 15 covered). A sentence that called the Big-5 series "the top-9 leagues" was removed. The gap split is reported once, as a table with all three channels, the residual and bootstrap intervals; Denmark's youth-minutes contribution is corrected from +7.4 to +7.3 (7.35 in the atlas output), and the shares (73 %, 72 %) were dropped because the channels do not sum to the gap. The pooled least-squares interval is now described as unclustered, and the fit on country means (+10.7, −3.8 to 20.3) was added. Removed as policy advice drawn from descriptive data: the paragraph on what is "within reach" and the reading of the German and English academy reforms as a "lever", with their figures (5 % to 11 % by 2009/10, 3 % to 6 % by 2019/20). Also removed: the six-season changes in Big-5 presence for Norway, Denmark and Czechia (+2.7, +2.3, −0.1 per million), the model comparison (RMSE 0.0706, 0.0713, 0.0754; 91.6 % coverage; 8 850 test pairs), the paragraph on the other editions' pool sizes (443, 511, 1 047, 932), the build-process paragraph (23 rulings) and the 17-card count. The 317 tests are labelled as software tests. The fig. 1 caption now names the rendered colours and says the render starts in 2000/01. References renumbered, merged (the FBref Big-5 tables join the FBref entry) and given access or snapshot dates; related work added. Seasons written as 2014/15 throughout. The sensitivity check is reported over the 38 single-league perturbations (34 without change, four with one player) instead of 41 scenarios (37), which counted the unperturbed baseline and the two uniform-scaling runs that cannot change a ranking. The youth-minutes share is described as each country's own under-21 players, as the atlas computes it, and the eight-country regressions no longer call Czechia a peer.</li>
+<li>29 September 2026: figures only, no sentence of the text or number changed. The per-head bars, the Big-5 series and the midfielder atlas are interactive charts drawn from the atlas's data, with the static renders kept as fallbacks; the bars became fig. 1, so the Big-5 series is now fig. 2 and the atlas fig. 3. Tables and figures sit in the text column. The Big-5 title shows its range as 2000/01–2025/26 instead of a missing glyph; Denmark and Croatia are drawn in black. The atlas is coloured by the rung of each player's league instead of by K-means cluster.</li>
 <li>Checked against editorial standard v1 on 29 September 2026.</li>
 </ul>
 </section>
 
 <footer class="text-foot">
-  <p><b>Figures.</b> The Big-5 series and the midfielder atlas are the atlas's own renders, recoloured to this site's palette by a colour map; geometry and labels are untouched. Bars and tables are typed from the atlas exhibits.</p>
+  <p><b>Figures.</b> The per-head bars, the Big-5 series and the midfielder atlas are drawn in the page from the atlas's own data, copied to <a href="../assets/football/per-head.json">per-head.json</a>, <a href="../assets/football/big5.json">big5.json</a> and <a href="../assets/football/atlas-mf.json">atlas-mf.json</a> by <code>tools/charts/football.py</code>; without JavaScript the atlas's own renders show instead, recoloured to this site's palette. Rungs use one palette: top-9 league green, stepping-stone league black, other covered league grey, home league light grey, no minutes hairline. Tables are typed from the atlas exhibits.</p>
   <p class="back"><a href="../#works">← projects</a> · <a href="hockey">Player Pool Atlas · hockey</a></p>
 </footer>
 </article>
+<script src="../assets/charts.js" defer></script>
 </body>
 </html>
