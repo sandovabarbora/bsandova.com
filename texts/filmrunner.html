@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FilmRunner — the living call sheet</title>
-<meta name="description" content="A production-management platform for mid-budget films, built end to end and then cut down to the one document a 50-person crew needs before they leave home: the call sheet, revised at 5 am, readable with no signal.">
-<meta property="og:title" content="FilmRunner — the living call sheet">
-<meta property="og:description" content="A production-management platform for mid-budget films, built end to end and then cut down to the one document a 50-person crew needs before they leave home: the call sheet, revised at 5 am, readable with no signal.">
+<title>FilmRunner, an offline call sheet</title>
+<meta name="description" content="A film-production platform cut down to its call-sheet module: a web app with ordered revisions that crews can open without signal. Its data model, the first build and the code review that changed it, the second build and its nine architecture decision records, and what has not yet been tested.">
+<meta property="og:title" content="FilmRunner, an offline call sheet">
+<meta property="og:description" content="A film-production platform cut down to its call-sheet module, a web app crews can open without signal. No pilot with a working crew has run yet.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://bsandova.com/assets/og/filmrunner.jpg">
 <meta property="og:image:width" content="1200">
@@ -21,64 +21,81 @@
 <link rel="stylesheet" href="../text.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../a24.css">
+<style>/* until a24.css resets style.css .meta (3-column grid, uppercase) */
+.text>.meta{display:block;letter-spacing:0;text-transform:none;font-size:12px}
+.text>.meta div,.text>.meta div+div{padding:6px 0;border-right:0}
+</style>
+
+<!-- ld --><link rel="alternate" type="application/atom+xml" title="Barbora Šandová" href="/feed.xml">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "FilmRunner, an offline call sheet", "description": "A film-production platform cut down to its call-sheet module: a web app with ordered revisions that crews can open without signal. Its data model, the first build and the code review that changed it, the second build and its nine architecture decision records, and what has not yet been tested.", "url": "https://bsandova.com/texts/filmrunner", "image": "https://bsandova.com/assets/og/filmrunner.jpg", "dateModified": "2026-09-29T11:33:59+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
 </head>
 <body>
-<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">product · filmrunner · 2025–26 · en</span></div>
+<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">note · filmrunner · 2026 · en</span></div>
 <article class="text">
 
 <header class="text-head">
-  <p class="kicker">Product · FilmRunner · 2025–2026 · live demo · open source</p>
-  <h1>The living <em>call sheet</em></h1>
-  <p class="deck">I built a whole film-production platform, script to schedule to crew. Then I cut it down to the one document that actually decides whether a shoot day works: the call sheet, issued the night before, revised at five in the morning, opened in a parking structure with no signal.</p>
+  <p class="kicker">Note · 14 September 2026 · FilmRunner, a film call-sheet app</p>
+  <h1>FilmRunner, an offline <em>call sheet</em></h1>
+  <p class="deck">A film-production platform cut down to its call-sheet module, a web app with ordered revisions that crews can open without signal; no pilot with a working crew has run yet.</p>
   <dl class="facts">
-    <div><dt>the wedge</dt><dd>1 document <small>revisions A, B, C · offline-first · on every phone</small></dd></div>
-    <div><dt>full chain, first build</dt><dd>script → schedule → sheet <small>AI breakdown, stripboard, cascade engine</small></dd></div>
-    <div><dt>studio-readiness track</dt><dd>SSO · DPA · Sentry <small>SAML, PII scrubbing, Stripe, Twilio, Frame.io</small></dd></div>
-    <div><dt>skeleton, second build</dt><dd>5 ADRs <small>FastAPI · Postgres · React PWA · Fly.io</small></dd></div>
+    <div><dt>code review, first build</dt><dd>2 critical <small>fail-open findings, plus 4 high-severity · 13 May 2026 · administrative count, private; not verifiable</small></dd></div>
+    <div><dt>second build</dt><dd>9 ADRs <small>architecture decision records in docs/adr · administrative count, private; not verifiable</small></dd></div>
   </dl>
 </header>
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>The first build was end-to-end production management for mid-budget films: script import, an AI-drafted breakdown, a stripboard schedule with a cascade engine, and the published call sheet. Around it sat what a studio's procurement asks for, including SSO/SAML, a DPA, Sentry with PII scrubbing, and Stripe, Twilio and Frame.io integrations.</li>
-    <li>An independent security review found two problems. An <code>IS_DEV</code> blocklist failed open on a blank environment variable and became an explicit allowlist, and SSO auto-provisioning moved from a client assertion to a server-side SAML claim.</li>
-    <li>The second build keeps only the call sheet: creating, revising and distributing shoot-day sheets that can be viewed offline, because call times are 5–6 am and locations are outside coverage. It runs on FastAPI, PostgreSQL and a React PWA on Fly.io, with five architecture decision records.</li>
-    <li>The live demo on GitHub Pages serves a sample shoot day. Once it has been added to a phone's home screen, the call sheet still renders with airplane mode on.</li>
-    <li>The second build leaves out budgeting, breakdowns, a scheduling optimiser and billing.</li>
+    <li>The data model follows call-sheet conventions: lettered revisions kept in order, page counts in eighths, and fixed cast status codes.</li>
+    <li>The first build ran from script import to published sheet, with the integrations a studio's procurement asks for; it was set aside because it had grown before anyone had tested the core use.</li>
+    <li>The public demo shows the sheet rendering from the phone's cache in airplane mode. There is no evidence yet that assistant directors or crews find it better than the tools they use.</li>
+    <li>The repository is private, so its design notes, its decision records and the code review cannot be checked by a reader.</li>
   </ul>
 </details>
+<dl class="meta">
+  <div><dt>published</dt><dd>14 September 2026 · updated 29 September 2026 · <a href="#changelog">version 2</a></dd></div>
+  <div><dt>status</dt><dd>note</dd></div>
+  <div><dt>data</dt><dd>none; the demo bundles one sample shoot day</dd></div>
+  <div><dt>code</dt><dd>sandovabarbora/filmrunner, commit a9012db, 28 September 2026 (private; not verifiable); live demo public on GitHub Pages</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>FilmRunner, an offline call sheet</i>. bsandova.com/texts/filmrunner, version 2.</dd></div>
+  <div><dt>licence</dt><dd>text and figures CC BY 4.0; the FilmRunner code is private and not licensed for reuse</dd></div>
+</dl>
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-filmrunner;--bg:url(../assets/photo/filmrunner.jpg);--bg-s:url(../assets/photo/filmrunner-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:11_fifty_9.jpg">Chris K Udoh</a> · CC BY-SA 4.0, colour held</p></section>
 
 
 <section>
 <h2>Call-sheet conventions and the data model</h2>
-<p>Film call sheets follow conventions that are decades old and load-bearing. Same-day revisions are the norm, named by colour or letter, so the sheet has to be a container of ordered revisions, not one mutable row, or "what changed since the version I printed" cannot be answered. Page counts are in eighths of a page, because scripts are timed that way, so they are stored as an integer eighth-count rather than a float an assistant director does arithmetic on by hand. Cast status codes (W, SW, WF, H, SWF, R) are a constrained enum. The sheet also has to work offline, because call times are 5–6 am, locations are outside coverage, and it is the one document all 50 to 200 people need before they leave home<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>A call sheet is issued the night before a shoot day and is often revised the same morning, with revisions named by colour or letter. FilmRunner stores each sheet as an ordered series of revisions, so that the changes since the version a crew member printed can be listed. Page counts are kept as an integer number of eighths of a page, the unit scripts are timed in, to avoid rounding in figures an assistant director adds up by hand, and cast status codes (W, SW, WF, H, SWF, R) are a fixed set. The sheet also has to open offline, since call times fall early in the morning and many locations are outside mobile coverage. These conventions are taken from the project's design notes, which cite no industry source<sup class="cite"><a href="#r1">1</a></sup>.</p>
 </section>
 
 <section>
-<h2>The first build</h2>
-<p>The first build was end-to-end production management for mid-budget films: script import, an AI-drafted breakdown, a stripboard schedule with a cascade engine, and the published call sheet in every crew member's pocket. Around it sat the track a studio's procurement asks for: SSO/SAML with organisation domain mapping and post-login auto-provisioning, legal pages and a DPA, an in-app help hub, Sentry with a PII-scrubbing hook, opt-in PostHog analytics, and Stripe, Twilio, Resend, Frame.io and Google Calendar integrations. Updates ran in real time over WebSockets with unified subprotocol auth, and an offline-first PWA covered on-set conditions<sup class="cite"><a href="#r2">2</a></sup>.</p>
-<p>An independent security review found two problems worth keeping as lessons. An <code>IS_DEV</code> blocklist failed <em>open</em> on a blank environment variable and was inverted into an explicit allowlist, and SSO auto-provisioning, which had been gated on a client assertion, was moved to a server-side SAML claim<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<h2>The first build and why it was set aside</h2>
+<p>The first build, whose repository history runs from 17 January to 31 May 2026, was production management for mid-budget films: script import, an AI-drafted breakdown, a stripboard schedule and the published call sheet, with SSO/SAML, a data processing agreement, Sentry with PII scrubbing and Stripe, Twilio and Frame.io integrations around it. A code review of one day's commits, recorded in the commit of 13 May 2026 that fixed its findings, reported two critical fail-open defects; the record does not name the reviewer. A development-mode check compared the environment against "production", so a blank variable counted as development, and it was changed to an explicit list of development environments. SSO auto-provisioning trusted the browser's claim that the user came from SAML, and it now checks the provider and a verified e-mail on the server<sup class="cite"><a href="#r2">2</a></sup>. On 14 September 2026 the founder restarted around the call sheet alone, because the old repository had "accumulated surface area without a validated wedge"<sup class="cite"><a href="#r3">3</a></sup>.</p>
 </section>
 
 <section>
-<h2>The second build: only the call sheet</h2>
-<p>The skeleton keeps only the call-sheet slice: creating, revising and distributing shoot-day sheets that can be viewed offline. Budgeting, breakdowns, a scheduling optimiser and billing are left out, and what was deferred and why was written down before the code<sup class="cite"><a href="#r1">1</a></sup>. The back end is FastAPI, SQLAlchemy 2.0, Alembic and PostgreSQL. The front end is a React + Vite + TypeScript PWA with an IndexedDB cache and a Workbox service worker, so a published day still renders in airplane mode. Sign-in is by e-mail code, with no password; owners invite editors and viewers, and the API enforces the role. The API runs on Fly.io in Frankfurt with Supabase as plain Postgres, and five architecture decision records cover the frontend stack, hosting, the editor, auth and roles<sup class="cite"><a href="#r3">3</a></sup>.</p>
-<p>The company itself runs as one founder and an AI team, with an operating model, an approval contract and a rule that nothing with real-world effect happens without an approved item in an inbox file. That is written down in the repository as well, so that the process does not exist only in someone's head.</p>
-</section>
-
-<section>
-<h2>The live demo and the editor</h2>
-<p>The <a href="https://sandovabarbora.github.io/filmrunner/">live demo</a> serves the PWA from GitHub Pages with a bundled sample shoot day. Once the demo has been opened on a phone and added to the home screen, the call sheet still renders from the cache with airplane mode on. The <a href="https://sandovabarbora.github.io/filmrunner/editor.html">AD editor</a> is the assistant director's side of the same sheet.</p>
+<h2>The second build and what it lacks</h2>
+<p>The second build keeps only the call sheet. The back end is FastAPI, SQLAlchemy 2.0, Alembic and PostgreSQL, hosted on Fly.io in Frankfurt with Supabase used as plain Postgres; the front end is a React, Vite and TypeScript PWA with an IndexedDB cache and a Workbox service worker. Sign-in uses Supabase Auth with a code or link sent by e-mail, and the API enforces each production's roles. Nine decision records cover the back-end and front-end stacks, hosting, the editor, sign-in, roles, location services, web push and rate limits on public endpoints<sup class="cite"><a href="#r3">3</a></sup>. The <a href="https://sandovabarbora.github.io/filmrunner/">live demo</a> serves a sample shoot day that still renders in airplane mode once added to a phone's home screen, and the <a href="https://sandovabarbora.github.io/filmrunner/editor.html">editor</a> is the assistant director's side of the same sheet.</p>
+<p>StudioBinder, SetHero, Movie Magic Scheduling, Yamdu and Croogloo already issue call sheets. The project's own desk research, built mostly from vendor pages and search snippets, could confirm offline viewing only for Movie Magic's exported PDF<sup class="cite"><a href="#r4">4</a></sup>. No pilot with an assistant director outside the project has run: the first is blocked on the founder's own steps as of 28 September 2026, so there is no timed test or count of revisions handled on a real shoot day<sup class="cite"><a href="#r5">5</a></sup>.</p>
 </section>
 
 <section class="refs" id="refs">
 <h2>References</h2>
 <ol>
-<li id="r1">FilmRunner — Call Sheet Module: Data Model (DESIGN.md, private repository): scope note, industry conventions behind the schema, entities.</li>
-<li id="r2">First build (2025–2026): Next.js/TypeScript, FastAPI, Supabase/PostgreSQL, Docker, WebSockets, PWA, Sentry, PostHog, Stripe. Security review findings as recorded in the project; repository private.</li>
-<li id="r3">sandovabarbora/filmrunner (private repository): README, <code>docs/adr/ADR-001</code>–<code>005</code> (frontend stack, hosting, editor, auth, roles), <code>docs/company/</code> (TEAM, BRIEF, BACKLOG, INBOX). Live demo and editor on GitHub Pages; API on Fly.io.</li>
+<li id="r1">Šandová, B. (2026). FilmRunner, Call Sheet Module: Data Model (<code>DESIGN.md</code>), scope note and industry conventions. sandovabarbora/filmrunner. Private; not verifiable.</li>
+<li id="r2">Šandová, B. (2026). First build, sandovabarbora/film_runner, commit baa4ac7c of 13 May 2026, "security: fix code-review findings". Private; not verifiable.</li>
+<li id="r3">Šandová, B. (2026). sandovabarbora/filmrunner: README and <code>docs/adr/</code>, ADR-001 (backend stack; frontend stack) to ADR-008, commit a9012db, 28 September 2026. Private; not verifiable. Live demo: <a href="https://sandovabarbora.github.io/filmrunner/">sandovabarbora.github.io/filmrunner</a>. Accessed 29 September 2026.</li>
+<li id="r4">Šandová, B. (2026). Competitive teardown: call-sheet tools (<code>docs/research/competitive-teardown.md</code>), checked 14 to 25 September 2026. Private; not verifiable.</li>
+<li id="r5">Šandová, B. (2026). FilmRunner backlog, item FR-95 (first real pilot), state "blocked", and <code>docs/company/STATUS.md</code>, 28 September 2026. Private; not verifiable.</li>
 </ol>
+</section>
+
+<section id="changelog" class="changelog">
+<h2>Change log</h2>
+<ul>
+<li>14 September 2026: first published as "The living call sheet".</li>
+<li>29 September 2026: rewritten as a note and retitled. Removed "open source" from the kicker, since the repository is private. Corrected the number of architecture decision records from five to nine, as in the repository's <code>docs/adr/</code> at commit a9012db, and listed them. Replaced "an independent security review" with what the record shows: a code review dated 13 May 2026 whose reviewer is not named, with two critical and four high-severity findings. Dated the first build to its repository history (17 January to 31 May 2026) in place of "2025–2026". Removed the unsourced crew size of "50 to 200", the "5–6 am" call times (now "early in the morning", as the design notes give no source), the first-person deck, the facts card on the studio-readiness track, and the paragraph on how the company is run. Added why the first build was set aside, prior tools, the absence of a pilot, and marked private material as not verifiable.</li>
+<li>Checked against editorial standard v1 on 29 September 2026.</li>
+</ul>
 </section>
 
 <footer class="text-foot">

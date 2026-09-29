@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>How to catch a fabricated quote</title>
-<meta name="description" content="A quotation reached a 739-page knowledge base that its source never contained, and three genuine ones were nearly deleted as fabrications. The checker that came out of it folds case, ligatures, hyphens, accents and quotation marks, answers in the source's own words, and still says ABSENT to the most-quoted sentence attributed to Viktor Frankl. pip install quotecheck.">
-<meta property="og:title" content="How to catch a fabricated quote">
-<meta property="og:description" content="A quotation reached a 739-page knowledge base that its source never contained, and three genuine ones were nearly deleted as fabrications. The checker that came out of it folds case, ligatures, hyphens, accents and quotation marks, answers in the source's own words, and still says ABSENT to the most-quoted sentence attributed to Viktor Frankl. pip install quotecheck.">
+<title>quotecheck: a quotation check</title>
+<meta name="description" content="quotecheck tells whether a quotation occurs in its source, tolerant of extraction noise but not of rewording. Method, tests, limits and four runs against real books.">
+<meta property="og:title" content="quotecheck: a quotation check">
+<meta property="og:description" content="quotecheck tells whether a quotation occurs in its source, tolerant of extraction noise but not of rewording. Method, tests, limits and four runs against real books.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://bsandova.com/assets/og/quotecheck.jpg">
 <meta property="og:image:width" content="1200">
@@ -25,6 +25,10 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false})"></script>
 <style>
+/* until a24.css resets style.css .meta (3-column grid, uppercase) */
+.text>dl.meta{display:block;text-transform:none;letter-spacing:0;font-size:12px}
+.text>dl.meta div,.text>dl.meta div+div,.text>dl.meta div:last-child{border-right:0;border-bottom:1px solid #ececea;padding:6px 0}
+.text>dl.meta code{font-size:inherit;word-break:break-word}
 .tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
 .tbl th,.tbl td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
 .tbl th:first-child,.tbl td:first-child{padding-left:0}
@@ -38,51 +42,59 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 .stack{font-family:var(--mono);font-size:11px;line-height:1.8;color:var(--fg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:.8rem 0;margin:1rem 0 1.5rem;max-width:64rem}
 .stack b{color:var(--fg);font-weight:400}
 </style>
+
+<!-- ld --><link rel="alternate" type="application/atom+xml" title="Barbora Šandová" href="/feed.xml">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "quotecheck: a quotation check", "description": "quotecheck tells whether a quotation occurs in its source, tolerant of extraction noise but not of rewording. Method, tests, limits and four runs against real books.", "url": "https://bsandova.com/texts/quotecheck", "image": "https://bsandova.com/assets/og/quotecheck.jpg", "dateModified": "2026-09-29T11:33:59+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
 </head>
 <body>
-<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">knowledge · tool · en</span></div>
+<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">tool · quotecheck · 2026 · en</span></div>
 
 <article class="text">
 <header class="text-head">
-  <p class="kicker">Knowledge engineering · a tool · 2026 · pip install quotecheck</p>
-  <h1>How to catch <em>a fabricated quote</em></h1>
-  <p class="deck">The <a href="second-brain">wiki an agent keeps</a> quotes its sources, hundreds of times. One day a quotation reached it that the source never contained, shaped exactly like the finding the brief was hoping for. The checker written the next day then nearly deleted three genuine quotations as fabrications. Both failures are in the tool now, as tests, and the tool is on PyPI.</p>
+  <p class="kicker">Tool · quotecheck 0.1.0 · checking quotations against their source</p>
+  <h1>quotecheck: checking that <em>a quotation</em> is in its source</h1>
+  <p class="deck">A Python package that tells whether a quotation occurs in a source, tolerant of extraction noise but not of rewording; it reports ABSENT for a fabricated ISACA quotation and a sentence misattributed to Viktor Frankl.</p>
   <dl class="facts">
-    <div><dt>install</dt><dd>pip install quotecheck <small>no dependencies · txt, md, html, epub, pdf</small></dd></div>
-    <div><dt>false-alarm classes</dt><dd>6 <small>each a genuine quotation once called fabricated</small></dd></div>
-    <div><dt>fabrications it still rejects</dt><dd>2 <small>ISACA's, and the one attributed to Frankl</small></dd></div>
-    <div><dt>tests</dt><dd>20 <small>one per class, plus the cases that must fail</small></dd></div>
+    <div><dt>false-alarm classes</dt><dd>6 <small>genuine quotations an earlier check called fabricated · administrative count</small></dd></div>
+    <div><dt>tests</dt><dd>20 <small>passing on 29 September 2026 · administrative count</small></dd></div>
+    <div><dt>CISA passages re-checked</dt><dd>292 <small>on 15 wiki pages, 27 August 2026 · administrative count, private; not verifiable</small></dd></div>
+    <div><dt>splices found</dt><dd>14 <small>of 16 defects agents found on their finished pages · administrative count, private; not verifiable</small></dd></div>
   </dl>
 </header>
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>quotecheck is a Python tool on PyPI that checks whether a quotation is in its source. It was written after a fabricated ISACA quotation, produced by a PDF extraction that welded two columns together, reached the wiki; all 292 quoted passages across the fifteen CISA pages were then machine-checked.</li>
-    <li>It folds case, ligatures, hyphens, whitespace, accents and quotation marks, which covers the six classes of false alarm that once called genuine quotations fabricated. It answers FOUND, FOUND*, DRIFT or ABSENT, prints context in the source's own words, and counts drift as not found.</li>
-    <li>Lenient as it is, it still says ABSENT to the most-quoted sentence attributed to Viktor Frankl, "Between stimulus and response there is a space", which is not in <i>Man's Search for Meaning</i>. Its 20 tests cover each false-alarm class plus the cases that must fail.</li>
-    <li>Checking each quote before writing it does not catch splices of two real fragments. When two agents verified their own finished pages they found sixteen defects, fourteen of them splices, so batch mode checks every quoted span on the finished page.</li>
-    <li>It needs the source as text and is only as good as the extraction: a two-column scan still produces sentences that never existed, and the tool will find them. It cannot find a quotation in a book it has not been shown, and the 80 % drift threshold is a choice.</li>
+    <li>Both sides are reduced to a comparison key that ignores case, ligatures, hyphens, whitespace, accents and quotation marks, and the answer is always printed from the source's original text, so a reworded quotation stays visibly reworded.</li>
+    <li>It answers FOUND, FOUND* (two adjacent halves with scan debris between them), DRIFT (a near match, counted as not found) or ABSENT, and in batch mode it checks every quotation in a finished Markdown note.</li>
+    <li>Its accuracy has not been measured on a labelled set; the evidence is the test suite, four runs against real books and the incidents it was written after, which are recorded in a private log.</li>
+    <li>It is only as good as the extracted text it is given, and it cannot judge a quotation from a source it has not been shown.</li>
   </ul>
 </details>
+<dl class="meta">
+  <div><dt>published</dt><dd>15 September 2026 · updated 29 September 2026 · <a href="#changelog">version 2</a></dd></div>
+  <div><dt>status</dt><dd>tool v0.1.0</dd></div>
+  <div><dt>data</dt><dd>none published; the four example runs use the extracted full text of copyrighted books, which are not redistributed; the incident counts come from the wiki's own log, entries of 27 and 28 August 2026 (private; not verifiable)</dd></div>
+  <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/quotecheck">sandovabarbora/quotecheck</a>, tag v0.1.0 (commit 762bce2); test with <code>uv run pytest</code></dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>quotecheck: checking that a quotation is in its source</i>. bsandova.com/texts/quotecheck, version 2.</dd></div>
+  <div><dt>licence</dt><dd>package code Apache-2.0; text CC BY 4.0</dd></div>
+</dl>
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-quotecheck;--bg:url(../assets/photo/quotecheck.jpg);--bg-s:url(../assets/photo/quotecheck-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:ASC_Leiden_-_Library_-_South_African_newspaper_stack_of_Die_Burger_-_2012.jpg">African Studies Centre Leiden</a> · CC BY-SA 4.0, colour held</p></section>
 
 
 <section>
-<h2>A fabricated ISACA quotation in the wiki</h2>
-<p>An agent reading the ISACA <i>CISA Review Manual</i> for the wiki produced, as ISACA's own words, the sentence <i>"a security audit does not typically test information security in an organization but just indicates the extent of compliance with standards"</i>, which the manual does not contain. The clause <i>"indicates the extent of compliance with standards"</i> occurs once, in a different column of a two-column page. The manual is a 304 MB scanned PDF, and <code>pdftotext -layout</code> welds the two columns together line by line, producing sentences that read perfectly and never existed, and the reading agent accepted one of them<sup class="cite"><a href="#r1">1</a></sup>.</p>
-<p>It survived the checks that existed, because it showed the compliance profession indicting itself in its own credentialing text, which was precisely the finding the brief had asked for. A fabrication tailored to a brief always looks like the best result in the report, so the strength of a claim is the wrong trigger for verification, and every quotation has to be checked. All 292 quoted passages across the fifteen CISA pages were then machine-checked. The quote was removed, the removal was recorded on the page, and every CISA page now carries a banner saying that its terminology and structure are reliable and its verbatim sentences are not<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<h2>What it does, and comparable tools</h2>
+<p><code>quotecheck</code> answers one question: does this quotation occur in this source? It was written for <a href="second-brain">a wiki that an agent keeps</a>, which quotes its sources hundreds of times, after a fabricated quotation reached it. An agent reading the ISACA <i>CISA Review Manual</i> produced, as ISACA's own words, <i>"a security audit does not typically test information security in an organization but just indicates the extent of compliance with standards"</i>. The manual does not contain that sentence. The clause <i>"indicates the extent of compliance with standards"</i> occurs once, in the other column of a two-column page: the manual is a 304 MB scanned PDF, and <code>pdftotext -layout</code> joins the two columns line by line into sentences that read well and never existed<sup class="cite"><a href="#r1">1</a></sup>. The sentence survived review in this case because it matched what the brief was looking for, the compliance profession criticising itself in its own credentialing text, so the strength of a claim was no guide to which quotations needed checking. In the wiki's own repository the checker's earlier form is the script <code>quote.py</code> (private; not verifiable).</p>
+<p>General fuzzy matchers already find near-matches of a string in a text. Python's <code>difflib</code> scores the similarity of two sequences<sup class="cite"><a href="#r2">2</a></sup>, and RapidFuzz computes Levenshtein-based scores quickly, including a <code>partial_ratio</code> for the best-matching substring<sup class="cite"><a href="#r3">3</a></sup>. Work on citations in language-model output, such as the ALCE benchmark, asks a different question, whether a cited passage supports a generated claim, and answers it with a model<sup class="cite"><a href="#r4">4</a></sup>. <code>quotecheck</code> is narrower than either. It asks whether the words in quotation marks are in the source verbatim, it gives a named, ordered answer rather than a score, and it shows the reader only the source's original text, never the normalised form in which the match was found.</p>
 </section>
 
 <section>
-<h2>Six classes of false alarm</h2>
-<p>The first checker was <code>grep</code>, and the next day it reported three fabrications, all three of which were real quotations. <i>"Refresh belies that analogy"</i> begins a sentence, and the check was case-sensitive. <i>"reduced vibration and good cooling"</i> is hyphenated across a PDF line break and was extracted as <code>reduced vibra- tion</code>. The third spanned a line break, where the source has a newline and the typed phrase a space. False alarms are the more dangerous direction, because the purpose of checking a quote is to remove fabrications, and a checker that sees fabrication where there is none removes accurate material and records a correction that is itself wrong<sup class="cite"><a href="#r1">1</a></sup>.</p>
-<p>Three more classes followed over the next days, each from a real miss. The first was ligatures, since the PDF stores the ﬀ of <code>tradeoﬀ</code> as one glyph. The second was accents, with <i>Niccolo</i> typed for the source's <i>Niccolò</i>. The third was quotation marks: Steinbeck's <i>"For if 'Thou mayest'—it is also true that 'Thou mayest not'"</i> had been transcribed without the inner marks, and straight, curly, single and double marks all varied between transcription and source. One further miss was not a folding rule at all. Hardy's <i>"If a man has any genuine talent he should be ready to make almost any sacrifice"</i> is in the book, but the scan reads <code>talent he 4 should be ready</code>, with a page number dropped into the sentence<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<h2>Method: folding, an offset map and four answers</h2>
+<p>Both the source and the phrase are folded to a comparison key: lower case, ligatures expanded, hyphens and dashes dropped on both sides, whitespace dropped, accents stripped and quotation marks removed. Each rule exists because of a genuine quotation that an earlier check called fabricated. The first check was <code>grep</code>, which reported three fabrications that were all real: one began a sentence and the check was case-sensitive, one was hyphenated across a PDF line break as <code>vibra- tion</code>, and one spanned a line break. Ligatures (<code>tradeoﬀ</code> stored as one glyph), accents (<i>Niccolo</i> typed for <i>Niccolò</i>) and nested quotation marks followed over the next days. Hyphens are dropped on both sides because a word such as <i>cross-validation</i> broken at its own hyphen at the end of a line cannot otherwise be matched both when it is typed with the hyphen and without it. The fold keeps a map from every folded character back to its offset in the original, so the match is found on the key and the context is printed from the source<sup class="cite"><a href="#r5">5</a></sup>.</p>
+<p>The four answers are tried in order of strictness. <code>FOUND</code> gives the count and the surrounding text. <code>FOUND*</code> means the phrase occurs as two adjacent halves, each at least twelve folded characters long, with at most twelve folded characters between them, which is what a page number or running head dropped into a sentence by a scan looks like. Digits are not folded away, because a changed year or count is a changed quotation, and a splice of two fragments from different parts of a book fails because the halves are not adjacent. <code>DRIFT</code> is reported when the phrase does not occur but a window of the source as long as the phrase, aligned on their longest common run of at least eight folded characters, has a similarity of at least 0.80, measured as <code>difflib.SequenceMatcher.ratio()</code> (twice the matched characters over the total characters of the two folded strings). The tool then prints what the source says, and drift counts as not found. Anything else is <code>ABSENT</code>. In batch mode the tool extracts every blockquote line and every quoted run of six or more words from a Markdown note and checks each one<sup class="cite"><a href="#r5">5</a></sup>.</p>
 </section>
 
 <section>
-<h2>Folding, the four answers and batch mode</h2>
-<p>The tool folds both the source and the phrase to a comparison key: lower case, ligatures expanded, hyphens and dashes dropped on both sides (the only symmetric fix for <code>cross-\nvalidation</code>), whitespace dropped, accents stripped, quotation marks removed. The fold keeps a map from every folded character back to its offset in the original, so the match is found on the key and the context is printed from the source's own text. Nothing normalised is ever shown, and that is what keeps a forgiving search honest, because a real sentence relayed with subtle rewording stays visible as reworded<sup class="cite"><a href="#r2">2</a></sup>.</p>
-<p>The tool gives one of four answers, listed here in order of strictness. <code>FOUND</code> comes with the count and the surrounding sentence. <code>FOUND*</code> means the phrase was found in two adjacent halves with at most twelve folded characters between them, which is what page furniture from a scan looks like. Digits are deliberately not folded away, because <i>1910</i> is content in <i>Stoner</i> and folding them would let a fabrication through, and a splice of two real fragments from different parts of the book does not pass, because the halves are not adjacent. <code>DRIFT</code> comes with a similarity score and means that the phrase does not occur but a window of the source is at least 80 % similar; the tool then prints what the source actually says, and drift counts as <i>not found</i>. The last answer is <code>ABSENT</code>. In batch mode the tool pulls every blockquote and every quoted run of six or more words out of a Markdown note and checks them all, which is how a finished page is verified, as opposed to a single quote before it is written<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<h2>Worked example: four books</h2>
 <pre>$ quotecheck East-of-Eden/source.txt "For if Thou mayest—it is also true that Thou mayest not"
 <b>FOUND</b>   1x  For if Thou mayest—it is also true that Thou mayest not
         …That throws it right back on a man. For if ‘Thou mayest’—it is also true that ‘Thou mayest not.’ Don’t you see?…
@@ -96,32 +108,50 @@ $ quotecheck CISA-Review-Manual/source.txt "a security audit does not typically 
 
 $ quotecheck Mans-Search-for-Meaning/source.txt "Between stimulus and response there is a space"
 <i>ABSENT</i>  Between stimulus and response there is a space</pre>
-<p>The four runs above are real, made against the extracted text of the four books<sup class="cite"><a href="#r3">3</a></sup>. The last one is a finding of its own, since the most-quoted sentence attributed to Viktor Frankl, <i>"Between stimulus and response there is a space. In that space is our power to choose our response"</i>, is not in <i>Man's Search for Meaning</i>. It is widely reported as a misattribution, and the tool, although made lenient enough to find Hardy through a page number, still says ABSENT to it, which is the test a lenient checker has to pass before its FOUND can be trusted<sup class="cite"><a href="#r1">1</a>, <a href="#r4">4</a></sup>.</p>
+<p>These four runs were made against the extracted full text of the four books and are reproduced as printed<sup class="cite"><a href="#r6">6</a></sup>. Steinbeck's sentence had been transcribed without its inner quotation marks and is found. Hardy's is found in two halves because the scan put a page number, 4, inside the sentence. The ISACA sentence is absent. So is the sentence most often attributed to Viktor Frankl, <i>"Between stimulus and response there is a space. In that space is our power to choose our response"</i>, in the text of the Beacon Press edition of <i>Man's Search for Meaning</i> that was checked. Quote Investigator could not find it in Frankl's works either and traces its spread to Stephen R. Covey, who said he had read it in a book he could not identify<sup class="cite"><a href="#r7">7</a></sup>.</p>
 </section>
 
 <section>
-<h2>Splices, and verifying the finished page</h2>
-<p>Checking each quote before writing it did not prevent the ISACA fabrication, because both halves of a splice are genuinely in the source. When two agents were asked to verify their own finished pages, they found sixteen defects between them, fourteen of which were splices, two real fragments joined into a sentence the book never contains. Only re-extracting every quoted span from the finished page and checking it in place finds those. Batch mode exists for that, and verifying the page rather than the quote is now a standing rule of the vault<sup class="cite"><a href="#r1">1</a></sup>. The six classes of false alarm turned out to be one bug: the tool had been comparing transcriptions rather than words.</p>
+<h2>Tests and measured error</h2>
+<p>The package has 20 tests, run on Python 3.10 to 3.13 in GitHub Actions and passing locally on 29 September 2026. The fixture is a short invented source containing one instance of each false-alarm class, and the tests require each genuine quotation to be found, a reworded sentence to be reported as drift, a fabrication to be absent and a splice of two real fragments not to pass as FOUND*; the rest cover batch extraction and the command line<sup class="cite"><a href="#r5">5</a></sup>.</p>
+<p>No error rate has been measured on a labelled set of quotations, so the tool's accuracy rests on these tests and the runs above. The larger checks in the wiki are part of its private log and cannot be verified outside it<sup class="cite"><a href="#r1">1</a></sup>. According to that log, after the ISACA fabrication all 292 quoted passages on the 15 CISA pages were checked by machine against the source on 27 August 2026, before this tool existed; about seven more passages had no matching run of words, though their substance could be traced in the source. The fabricated quotation was removed, the removal was recorded on its page, and every CISA page now carries a note that its terminology and structure are reliable and its verbatim sentences are not. On 28 August 2026 two agents asked to re-check their own finished pages found sixteen defects between them: one misquotation in the first person, one substituted conjunction and fourteen splices, two real fragments joined into a sentence the book does not contain. A splice passes any check made on a quotation before it is written, since both halves are in the source, which is why batch mode checks the finished page.</p>
 </section>
 
 <section>
-<h2>What it does not do</h2>
-<p>It needs the source as text, and it is only as good as the extraction; a two-column scan will still produce sentences that read well and never existed, and the tool will find them, because they are in the text it was given. The 80 % drift threshold is a choice that could have been set elsewhere. The tool does not judge whether a paraphrase was legitimate, only whether quotation marks were earned, and it cannot find a quotation in a book it has not been shown, so a quotation from any other source still has to be checked by a reader.</p>
-<div class="stack">stack · Python ≥ 3.10 · no dependencies (pypdf optional) · uv · ruff · pytest (20) · GitHub Actions · Apache-2.0</div>
+<h2>Limits</h2>
+<p>The tool needs the source as text and is only as good as the extraction. A two-column scan still produces sentences that read well and never existed, and the tool will find them, because they are in the text it was given. The drift threshold of 0.80 and the twelve-character gap were set by hand on these cases and have not been tuned or validated on other material. The tool does not judge whether a paraphrase is fair, only whether quotation marks were earned, and it says nothing about a quotation from a source it has not been shown.</p>
+</section>
+
+<section>
+<h2>Install and reproduce</h2>
+<p>The package installs with <code>pip install quotecheck</code>, has no required dependencies and reads plain text, Markdown, HTML, EPUB and PDF (through <code>pdftotext</code> when installed, or <code>pip install "quotecheck[pdf]"</code> for pypdf). A single check is <code>quotecheck source.txt "phrase"</code>, and <code>quotecheck source.txt --batch note.md</code> checks a whole note. The four runs above cannot be reproduced from the repository, because the books are copyrighted and their text is not redistributed. The test fixtures in <code>tests/</code> are the reproducible substitute: cloning the repository and running <code>uv run pytest</code> exercises every rule and answer described here<sup class="cite"><a href="#r5">5</a></sup>.</p>
+<div class="stack">stack · Python ≥ 3.10 · no dependencies (pypdf optional) · uv · ruff · pytest · GitHub Actions · Apache-2.0</div>
 </section>
 
 <section class="refs" id="refs">
 <h2>References</h2>
 <ol>
-<li id="r1">Šandová, B. (2026): the wiki's own log, entries of 27 and 28 August 2026: the ISACA fabrication and its remedy (292 passages re-checked, provenance banners on 15 pages), the three false alarms, classes five and six, the sixteen self-found defects and the "verify the finished page" rule. The vault is private; this is my account of its record.</li>
-<li id="r2">Šandová, B. (2026): <a href="https://github.com/sandovabarbora/quotecheck">quotecheck</a>, Apache-2.0, on <a href="https://pypi.org/project/quotecheck/">PyPI</a>: <code>fold.py</code> (the six rules with the offset map), <code>find.py</code> (found, interleaved, drift, absent), <code>batch.py</code>, tests.</li>
-<li id="r3">Sources of the four runs: Steinbeck, J. (1952): <i>East of Eden</i>; Hardy, G. H. (1940): <i>A Mathematician's Apology</i>; ISACA (2024): <i>CISA Review Manual</i>, 28th ed.; Frankl, V. E. (1946/2006): <i>Man's Search for Meaning</i>, Beacon Press. Checked against the full extracted text of each; the outputs are reproduced as printed.</li>
-<li id="r4">On the Frankl misattribution: the sentence does not appear in any edition of <i>Man's Search for Meaning</i>; it is widely reported as a misattribution, and its spread is usually traced to Stephen R. Covey's writing in the 1990s and 2000s. The tool's ABSENT against the full text of the Beacon Press edition is the evidence offered here; the attribution history is background, not a claim of this text.</li>
+<li id="r1">Šandová, B. (2026). The wiki's own log, entries of 27 and 28 August 2026: the ISACA fabrication and its remedy, the three false alarms, classes five and six, and the sixteen defects found on finished pages. Private; not verifiable. The counts on this page that cite this entry rest on it alone.</li>
+<li id="r2">Python Software Foundation (2026). difflib: helpers for computing deltas. Python 3 documentation. <a href="https://docs.python.org/3/library/difflib.html">docs.python.org/3/library/difflib.html</a>. Accessed 29 September 2026.</li>
+<li id="r3">Bachmann, M. (2026). RapidFuzz. GitHub. <a href="https://github.com/rapidfuzz/RapidFuzz">github.com/rapidfuzz/RapidFuzz</a>. Accessed 29 September 2026.</li>
+<li id="r4">Gao, T., et al. (2023). Enabling large language models to generate text with citations. EMNLP 2023. <a href="https://arxiv.org/abs/2305.14627">arxiv.org/abs/2305.14627</a>. Accessed 29 September 2026.</li>
+<li id="r5">Šandová, B. (2026). quotecheck, version 0.1.0: <code>fold.py</code>, <code>find.py</code>, <code>batch.py</code> and tests. GitHub and PyPI. <a href="https://github.com/sandovabarbora/quotecheck">github.com/sandovabarbora/quotecheck</a>, <a href="https://pypi.org/project/quotecheck/">pypi.org/project/quotecheck</a>. Accessed 29 September 2026.</li>
+<li id="r6">Sources of the four runs: Steinbeck, J. (1952). <i>East of Eden</i>; Hardy, G. H. (1940). <i>A Mathematician's Apology</i>; ISACA (2024). <i>CISA Review Manual</i>, 28th ed.; Frankl, V. E. (1946/2006). <i>Man's Search for Meaning</i>. Beacon Press. Checked against the full extracted text of each; not redistributed.</li>
+<li id="r7">O'Toole, G. (2018, updated 2025). Between stimulus and response there is a space. In that space is our power to choose our response. Quote Investigator. <a href="https://quoteinvestigator.com/2018/02/18/response/">quoteinvestigator.com/2018/02/18/response</a>. Accessed 29 September 2026.</li>
 </ol>
 </section>
 
+<section id="changelog" class="changelog">
+<h2>Change log</h2>
+<ul>
+<li>15 September 2026: first published as "How to catch a fabricated quote".</li>
+<li>29 September 2026: retitled and restructured as a tool page. The deck is one sentence and the short version no longer repeats it, the facts or the limits. Added comparable tools (difflib, RapidFuzz, citation evaluation such as ALCE), the drift measure (<code>difflib.SequenceMatcher.ratio()</code> on folded text, window aligned on the longest common run) and the size limit of FOUND* halves. Stated that no error rate has been measured, that the 292-passage re-check predates the tool and rests on a private log, and that the four runs cannot be reproduced from the repository; the test fixtures are named as the substitute. Narrowed the Frankl claim to the edition checked and cited Quote Investigator. Removed an example from a book that was not among the sources, restated a general claim about fabrications as an observation about this case, moved the account of the false alarms into the method, and removed two closing sentences. Removed the "install" facts card, the "fabrications it still rejects" card and the stack line's test count.</li>
+<li>Checked against editorial standard v1 on 29 September 2026.</li>
+</ul>
+</section>
+
 <footer class="text-foot">
-  <p class="back"><a href="../#works">← projects</a> · <a href="second-brain">the wiki an agent keeps</a></p>
+  <p class="back"><a href="../#works">← projects</a> · <a href="second-brain">a wiki that an agent keeps</a> · <a href="cutover">cutover</a> · <a href="sitewitness">sitewitness</a></p>
 </footer>
 </article>
 

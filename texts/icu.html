@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The label says deteriorating. The patient is getting better.</title>
-<meta name="description" content="622 intensive-care patients, fourteen P/F-ratio readings each, one outcome label. The group called Deteriorating is the healthier one, ten variables agree, and the row order has a changepoint. What to do with a dataset like that, and why none of three classifiers wins.">
-<meta property="og:title" content="The label says deteriorating. The patient is getting better.">
-<meta property="og:description" content="622 intensive-care patients, fourteen P/F-ratio readings each, one outcome label. The group called Deteriorating is the healthier one, ten variables agree, and the row order has a changepoint. What to do with a dataset like that, and why none of three classifiers wins.">
+<title>Reversed outcome labels in an ICU P/F-ratio dataset (coursework)</title>
+<meta name="description" content="A methods note on a course dataset of 622 intensive-care patients whose outcome labels point the wrong way on nine of ten variables: how the direction was checked, how outlier rules delete by class, and why three classifiers could not be separated.">
+<meta property="og:title" content="Reversed outcome labels in an ICU P/F-ratio dataset (coursework)">
+<meta property="og:description" content="A methods note on a course dataset of 622 intensive-care patients whose outcome labels point the wrong way on nine of ten variables: how the direction was checked, how outlier rules delete by class, and why three classifiers could not be separated.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://bsandova.com/assets/og/icu.jpg">
 <meta property="og:image:width" content="1200">
@@ -29,66 +29,74 @@
 .tbl td.n,.tbl th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .tbl td b{color:var(--hot);font-weight:400}.tbl .hi{color:var(--coral)}.tbl .dim{color:var(--fg-2)}
 .tbl caption{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);padding:0 0 .5rem}
+/* metadata block: style.css gives .meta a three-column grid for the home page; restore one line per row here */
+.text>.meta{display:block;letter-spacing:0;text-transform:none;font-size:12px}
+.text>.meta div{border-right:0;padding:6px 0}
+.text>.meta div+div{padding-left:0}
+.text>.meta div:last-child{border-bottom:1px solid #ececea}
 </style>
+
+<!-- ld --><link rel="alternate" type="application/atom+xml" title="Barbora Šandová" href="/feed.xml">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Reversed outcome labels in an ICU P/F-ratio dataset (coursework)", "description": "A methods note on a course dataset of 622 intensive-care patients whose outcome labels point the wrong way on nine of ten variables: how the direction was checked, how outlier rules delete by class, and why three classifiers could not be separated.", "url": "https://bsandova.com/texts/icu", "image": "https://bsandova.com/assets/og/icu.jpg", "dateModified": "2026-09-29T11:33:59+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
 </head>
 <body>
 <div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">health data · icu · 2026 · en</span></div>
 
 <article class="text">
 <header class="text-head">
-  <p class="kicker">Intensive care · 622 patients · seven days · coursework, Analysis &amp; Modelling of Complex Data, summer 2026</p>
-  <h1>The label says deteriorating. <em>The patient is getting better.</em></h1>
-  <p class="deck">Fourteen readings of the P/F ratio per patient, one outcome label and an assignment to predict the label. The first finding was that the labels point the wrong way, and the second that none of three classifiers beats the others; the report presents both as results.</p>
+  <p class="kicker">Note · 14 September 2026 · coursework, an ICU P/F-ratio dataset</p>
+  <h1>Reversed outcome labels in an ICU P/F-ratio dataset <em>(coursework)</em></h1>
+  <p class="deck">A methods note on a course assignment whose outcome labels point the wrong way: how the direction was checked, how cleaning rules delete by class, and why three classifiers could not be separated.</p>
   <dl class="facts">
-    <div><dt>patients · readings</dt><dd>622 · 14 <small>twice a day, seven days · 311 vs 311</small></dd></div>
-    <div><dt>Cohen's d, admission → day 7 evening</dt><dd>0.22 → 0.95 <small>4.3× · all fourteen significant after BH</small></dd></div>
-    <div><dt>variables agreeing the labels are reversed</dt><dd>9 of 10 <small>the tenth is mis-scaled</small></dd></div>
-    <div><dt>best classifier</dt><dd>none <small>0.70–0.74 nested CV · p ≥ 0.22 for every pair</small></dd></div>
+    <div><dt>patients · readings each</dt><dd>622 · 14 <small>311 vs 311 by label · administrative count, course-supplied</small></dd></div>
+    <div><dt>variables pointing the reversed way</dt><dd>9 of 10 <small>the tenth is mis-scaled · count</small></dd></div>
+    <div><dt>readings capped by winsorising</dt><dd>97 of 8 694 <small>1.12 %, no patient deleted · count</small></dd></div>
+    <div><dt>nested CV accuracy, three classifiers</dt><dd>0.70–0.74 <small>± 0.03–0.05, fold SD · baseline 0.50</small></dd></div>
   </dl>
 </header>
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>In a course dataset of 622 intensive-care patients, the group labelled Deteriorating has the higher P/F ratio, 23.8 against 18.9 kPa, and the rising trend. Nine of the ten variables describe the "deteriorating" patients as the healthier ones; they share one cohort, so this is one finding observed nine ways.</li>
-    <li>Shifting the label file by offsets from −30 to +30 never restores the expected direction, and the association is strongest at exactly zero. That rules out misalignment and leaves mislabelling; a separate changepoint in the row order near row 500 affects nothing downstream.</li>
-    <li>Tukey's rule on the raw values would delete 128 patients, 85 of them Deteriorating. The primary dataset winsorises on the log scale instead, capping 97 readings out of 8 694 (1.12 %) and deleting nobody.</li>
-    <li>Logistic regression, an SVC and a random forest all reach 0.70 to 0.74 in nested cross-validation, and with pairwise p-values of 0.26, 0.22 and 0.60 nothing separates them. Logistic regression is the one I would deploy, because it is the most stable and its number carries the least optimism; for triage with a tuned threshold the forest's AUC of 0.852 against 0.809 makes the forest the better choice.</li>
-    <li>Because the labels point the wrong way, every clinical statement carries the caveat that the class called Deteriorating behaves like a recovering patient.</li>
+    <li>The patients labelled Deteriorating have the higher and rising oxygenation, and realigning the label file by up to 30 rows in either direction does not restore the expected sign, so a simple offset is ruled out; mislabelling or a deliberately altered teaching set remain.</li>
+    <li>The textbook outlier rule would have removed about a fifth of the patients, two-thirds of them from one class, while leaving accuracy almost unchanged.</li>
+    <li>Once hyperparameter search sits inside the cross-validation and the resampled comparison is corrected for overlapping training sets, no classifier is better than another.</li>
+    <li>Nothing here is clinical evidence: the dataset is not public, its source study is not named, the labels are known to be wrong, and only one variable was modelled.</li>
   </ul>
 </details>
+<dl class="meta">
+  <div><dt>published</dt><dd>14 September 2026 · updated 29 September 2026 · <a href="#changelog">version 2</a></dd></div>
+  <div><dt>status</dt><dd>note</dd></div>
+  <div><dt>data</dt><dd>course-supplied CSVs (ten physiological variables, one outcome file), Universität Bayreuth, summer 2026; not public (private; not verifiable). The figures cannot be reproduced without the course files, and the notebook is not shared.</dd></div>
+  <div><dt>code</dt><dd><code>python3 tools/icu_figures.py</code> in the <a href="https://github.com/sandovabarbora/bsandova.com">site repository</a> at <code>4262352</code>; needs a local copy of the course CSVs</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Reversed outcome labels in an ICU P/F-ratio dataset (coursework)</i>. bsandova.com/texts/icu, version 2.</dd></div>
+  <div><dt>licence</dt><dd>code MIT; text and figures CC BY 4.0; the dataset is not redistributed</dd></div>
+</dl>
 <section class="film film-page" aria-hidden="false"><div class="shot" style="view-transition-name:ph-icu;--bg:url(../assets/photo/icu.jpg);--bg-s:url(../assets/photo/icu-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:20250808_Intensive_care_unit_bed.jpg">Ismael Olea</a> · CC BY 4.0, colour held</p></section>
 
 
 <section>
-<p>The assignment recreates a COVID-19 study in which physiological measurements from emergency care predict a patient's outcome. My variable was the P/F ratio, PaO<sub>2</sub>/FiO<sub>2</sub> in kPa, the standard measure of oxygenation and the number used to grade acute respiratory distress<sup class="cite"><a href="#r1">1</a></sup>. The data cover 622 patients with fourteen readings each and one label, exactly balanced at 311 <i>Improving</i> and 311 <i>Deteriorating</i>. There are no identifiers, so the only thing linking a row of readings to its label is its position, and the first assertion in the notebook checks that the two files line up. There are also no missing values at all, which is implausible in clinical records, and the reason for that turned up later.</p>
-</section>
-
-<section>
-<h2>Direction of the labels across ten variables</h2>
-<p>A higher P/F ratio means better oxygenation, and a falling one is what deterioration in respiratory distress looks like. In this dataset the group labelled <i>Deteriorating</i> has both the higher ratio, 23.8 against 18.9 kPa, and the rising trend, +0.11 against −0.29 kPa per half-day, so level and direction both point the wrong way<sup class="cite"><a href="#r1">1</a></sup>.</p>
-<p>Because that could be a peculiarity of one variable, I ran the other nine feature files against the same label file. Against identical labels the <i>Deteriorating</i> group has lower CRP, lower lactate, lower peak pressure, lower PaCO<sub>2</sub>, higher oxygen saturation, higher pH, higher bicarbonate and higher platelets. Nine of the ten level differences are significant at p &lt; 0.001, and all of them describe the "deteriorating" patients as the healthier and recovering ones. The tenth variable, ventilatory ratio, differs on nothing and sits around 1 300 for a quantity that should be near 1–3, so that file is mis-scaled. The nine are not one measurement counted nine times, since their per-patient means correlate at 0.21 on average and the eigenvalues of that matrix imply about eight independent tests. They do share the cohort, which makes this one finding observed nine ways rather than nine replications<sup class="cite"><a href="#r1">1</a></sup>.</p>
-</section>
+<h2>The dataset and the direction of its labels</h2>
+<p>The assignment, for a course on the analysis of complex data at Universität Bayreuth, asked for an outcome to be predicted from one physiological variable, and it describes the data as recreating a COVID-19 study of emergency care. The course materials do not name that study or say whether the records are real, perturbed or synthetic, and the files are not public, so every statement below rests on private material<sup class="cite"><a href="#r1">1</a></sup>. The assigned variable was the P/F ratio, PaO<sub>2</sub>/FiO<sub>2</sub> in kPa, the oxygenation measure used to grade acute respiratory distress syndrome<sup class="cite"><a href="#r2">2</a></sup>. The data hold 622 patients with fourteen readings each, twice a day over seven days, and one label, balanced at 311 <i>Improving</i> and 311 <i>Deteriorating</i>. Neither file carries an identifier, so position is the only link between readings and label. There are no missing values, and one record, patient 84, holds 22.166667 at all fourteen timepoints, which is how a single value carried forward looks; that record was removed, and it suggests that at least some values were filled upstream.</p>
+<p>A higher P/F ratio means better oxygenation. Here the group labelled <i>Deteriorating</i> has the higher mean, 23.8 against 18.9 kPa, and the rising trend, +0.11 against −0.29 kPa per half-day. Against the same label file, eight of the other nine variables in the course set (CRP, lactate, peak pressure, PaCO<sub>2</sub>, oxygen saturation, pH, bicarbonate, platelets) also describe the <i>Deteriorating</i> patients as the healthier ones. The tenth, ventilatory ratio, sits around 1 300 for a quantity that should be near 1–3, so that file is mis-scaled. The nine variables share one cohort, so this is one observation made nine ways, not nine replications<sup class="cite"><a href="#r1">1</a></sup>.</p>
 <figure>
   <img src="../assets/icu/01-trajectories.svg" alt="Mean P/F ratio over fourteen timepoints for the two outcome groups with 95 % confidence bands; the group labelled Deteriorating sits higher and rises, Improving sits lower and falls." loading="lazy">
-  <figcaption><b>fig. 1</b> · Mean P/F ratio with 95 % confidence bands, cleaned dataset (n = 621). The group called Deteriorating is the one getting better. Recomputed from the CSVs for this page; matches the report.</figcaption>
+  <figcaption><b>fig. 1</b> · Mean P/F ratio in kPa at each of fourteen timepoints with 95 % confidence bands, by label: green <i>Improving</i> (n = 311), orange <i>Deteriorating</i> (n = 310); cleaned dataset, n = 621. Recomputed from the course CSVs (private; not verifiable) by <code>tools/icu_figures.py</code>; matches the report.</figcaption>
 </figure>
+</section>
 
 <section>
-<h2>Testing whether the label file is misaligned</h2>
-<p>The competing explanation is that the label file is shifted against the readings. A random shuffle cannot produce the pattern, because it would destroy the signal rather than reverse it, but a structured shift could, so I tested the row order itself. A Wald–Wolfowitz runs test on the label column gives 241 runs against an expected 312 ± 12.5, z = −5.66, which makes the order strongly non-random. The structure is not spread through the file, however. The first 500 rows are in perfectly random order (z = −0.44), and what the global test detects is one changepoint near row 500, after which the <i>Deteriorating</i> share drops from 59.6 % to 10.7 %<sup class="cite"><a href="#r1">1</a></sup>.</p>
-</section>
+<h2>Testing for a shifted label file</h2>
+<p>A random shuffle of the labels would erase the signal rather than reverse it, but a label file shifted against the readings could reverse it, so the row order was tested. A Wald–Wolfowitz runs test on the label column gives 241 runs against an expected 312 ± 12.5 (z = −5.66)<sup class="cite"><a href="#r3">3</a></sup>. The non-randomness sits at the end of the file. The first 500 rows are in random order (z = −0.44), and near row 500 the <i>Deteriorating</i> share drops from 59.6 % to 10.7 %.</p>
 <figure>
   <img src="../assets/icu/03-row-order.svg" alt="Bar chart of the share of rows labelled Deteriorating in bins of 100 rows: 56–67 % for the first five bins, then 13 % and 0 %." loading="lazy">
-  <figcaption><b>fig. 2</b> · Share of rows labelled Deteriorating by position in the label file, bins of 100. A single changepoint near row 500; χ²(6) = 101.5.</figcaption>
+  <figcaption><b>fig. 2</b> · Share of rows labelled <i>Deteriorating</i> (%) by position in the label file, in bins of 100 rows, n = 622; χ²(6) = 101.5. Counts, no band. Recomputed from the course CSVs (private; not verifiable).</figcaption>
 </figure>
-<section>
-<p>The direct test rests on the idea that if the files were offset, realigning them should strengthen the association. Scanning offsets from −30 to +30 and testing the group difference at each, the association is strongest at exactly zero (t = +8.84) and the nearest competitor is less than half as strong. No offset in the range produces a significant association in the clinically expected direction, so realigning never restores the expected sign. That rules out misalignment and leaves mislabelling. The odd row order is a second, separate defect, and it affects nothing downstream because the split is stratified and shuffled<sup class="cite"><a href="#r1">1</a></sup>. Every clinical sentence in the report carries the caveat that the class called <i>Deteriorating</i> behaves like a recovering patient.</p>
+<p>If the files were offset, realigning them should strengthen the association. Across offsets from −30 to +30 rows, the group difference is largest at zero (t = +8.84), the nearest competitor is less than half as large, and no offset gives a significant difference in the clinically expected direction. That rules out a simple offset of up to 30 rows. It does not distinguish mislabelling in the source from a teaching dataset that was altered on purpose, and both remain open. The row-order changepoint affects nothing downstream, because the train–test split is stratified and shuffled<sup class="cite"><a href="#r1">1</a></sup>.</p>
 </section>
 
 <section>
-<h2>Cleaning, and which patients each rule removes</h2>
-<p>One record fails integrity: patient 84 holds 22.166667 at all fourteen timepoints. Fourteen measurements over seven days do not agree to six decimals, and 22.166667 is 66.5/3, which is what a single value carried forward looks like. The record was removed, and it is also the proof that imputation happened upstream. Tukey's rule, applied column by column, then flags 128 patients, a fifth of the cohort. The variable is right-skewed at every timepoint (mean absolute skew 1.75) while Tukey's rule assumes symmetry, and on skewed data the upper fence just cuts through a smoothly decaying tail. On the log scale the skew drops to 0.24<sup class="cite"><a href="#r1">1</a></sup>.</p>
-</section>
+<h2>Cleaning and the comparison of classifiers</h2>
+<p>The P/F ratio is right-skewed at every timepoint (mean absolute skew 1.75, 0.24 on the log scale). On data this skewed, Tukey's lower fence falls below the minimum, so only the upper fence binds, and it cuts through a smoothly decaying tail. Applied to raw values, the rule flags 128 patients, 85 of them <i>Deteriorating</i>, because that is the higher-valued class. The table shows that accuracy spans 0.018 across five strategies, against a fold-to-fold standard deviation of about 0.04, so it cannot choose among them; the choice turns on who is deleted. The primary dataset winsorises at log-scale fences instead, deleting nobody. The report measured the leakage from fitting the fences on the whole dataset: refitting them inside each fold moved SVC accuracy from 0.7681 to 0.7679. That check used a different evaluation from the table, and the report does not record its split or hyperparameters<sup class="cite"><a href="#r1">1</a></sup>.</p>
 <table class="tbl"><caption>Five cleaning strategies · SVC accuracy, five-fold CV</caption>
 <thead><tr><th>strategy</th><th class="n">removed</th><th class="n">n left</th><th class="n">Impr. / Deter.</th><th class="n">accuracy</th></tr></thead>
 <tbody>
@@ -98,26 +106,12 @@
 <tr><td>drop, IQR k = 1.5, log</td><td class="n">57</td><td class="n">564</td><td class="n">291 / 273</td><td class="n">0.736</td></tr>
 <tr><td><b>winsorise, IQR k = 1.5, log</b></td><td class="n"><b>0</b></td><td class="n"><b>621</b></td><td class="n"><b>311 / 310</b></td><td class="n">0.723</td></tr>
 </tbody></table>
-<section>
-<p>Accuracy spans 0.018 across the five strategies, against a fold-to-fold standard deviation of about 0.04, so it cannot decide between them, and the choice turns on who gets deleted. The naive rule removes 85 <i>Deteriorating</i> patients against 43 <i>Improving</i>, because that is the higher-valued class and Tukey's rule only has an upper fence to trip. It would turn a balanced dataset into 268/225 while deleting the very readings that carry the signal. The primary dataset therefore winsorises at the log-scale fences instead, capping 97 readings out of 8 694, 1.12 %, across 57 patients, so that nobody is deleted and the balance stays intact. I measured the leakage from fitting the fences on the whole set: refitting them inside each fold moves SVC accuracy from 0.7681 to 0.7679<sup class="cite"><a href="#r1">1</a></sup>.</p>
-</section>
-
-<section>
-<h2>The gap between the groups over the week</h2>
-<p>Neither group has a dramatic course, with <i>Improving</i> drifting from 20.0 to 16.9 kPa and <i>Deteriorating</i> from 22.4 to 24.6, and what grows over the week is the gap between them. All fourteen timepoints separate the groups after Benjamini–Hochberg correction, which at n = 621 is nearly unavoidable, so the effect size is the informative number. Cohen's d rises almost monotonically from 0.22 on the first morning, below the threshold for a small effect, to 0.95 on the seventh evening, a large one. A single admission reading therefore carries almost nothing, while a week of readings carries a great deal<sup class="cite"><a href="#r1">1</a></sup>.</p>
-</section>
+<p>The gap between the labelled groups widens over the week. Cohen's d rises from 0.22 on the first morning to 0.95 on the seventh evening<sup class="cite"><a href="#r4">4</a></sup>, and all fourteen timepoints differ after Benjamini–Hochberg correction<sup class="cite"><a href="#r5">5</a></sup>, which at n = 621 says little on its own.</p>
 <figure>
   <img src="../assets/icu/02-effect-size.svg" alt="Bar chart of Cohen's d at each of fourteen timepoints rising from 0.22 to 0.95, with small, medium and large thresholds marked." loading="lazy">
-  <figcaption><b>fig. 3</b> · Cohen's d between the groups at each timepoint, equal-n pooled SD. Blue: medium effect and above; green: large. Recomputed from the CSVs; identical to the report's table.</figcaption>
+  <figcaption><b>fig. 3</b> · Cohen's d between the labelled groups at each of fourteen timepoints, equal-n pooled SD, n = 621; dotted lines at 0.2, 0.5 and 0.8. Grey: below 0.5; blue: medium (0.5 to 0.8); green: large (0.8 and above). No band. Recomputed from the course CSVs (private; not verifiable); identical to the report's table.</figcaption>
 </figure>
-<section>
-<p>Adjacent timepoints correlate at r = 0.71, and the correlation decays to 0.38 across the week, so the fourteen columns form one smooth trajectory. That predicts two things, and both were tested. Regularisation should matter for logistic regression, and it does: at C = 10 the coefficients of adjacent timepoints oscillate between −0.33 and +0.20, while at C = 0.01 they settle into a profile rising towards day seven. Hand-built summary features should add nothing, and adding the mean, SD, slope, change and the two day averages moves nested accuracy by +0.014, −0.007 and +0.001, which is no gain<sup class="cite"><a href="#r1">1</a></sup>.</p>
-</section>
-
-<section>
-<h2>Comparing three classifiers</h2>
-<p>The three models are logistic regression, an RBF support vector classifier and a random forest, fitted on one shared stratified 80/20 split with scaling inside the pipeline and grids of 7, 20 and 20 candidates. On the 125 held-out patients the forest scores 0.792, the SVC 0.776 and logistic regression 0.736, against a 0.504 baseline. That ranking is the obvious reading, and it does not survive testing.</p>
-</section>
+<p>Logistic regression, an RBF support vector classifier and a random forest were fitted on one stratified 80/20 split. On the 125 test patients the forest scores 0.792, the SVC 0.776 and logistic regression 0.736, against a baseline of 0.504. Because the three share a test set, McNemar's exact test applies, and it separates no pair (p = 0.44, 0.14, 0.83)<sup class="cite"><a href="#r6">6</a></sup>. Scoring a tuned model by cross-validation on data that chose its hyperparameters is optimistic, so the whole grid search was nested inside each outer fold<sup class="cite"><a href="#r7">7</a></sup>. That costs the SVC 0.028, the forest 0.009 and logistic regression 0.006, and with the Nadeau–Bengio correction for overlapping training sets the pairwise p-values are 0.26, 0.22 and 0.60<sup class="cite"><a href="#r8">8</a></sup>.</p>
 <table class="tbl"><caption>Classifier comparison · one shared 80/20 split · 125 test patients</caption>
 <thead><tr><th>classifier</th><th class="n">test, default</th><th class="n">test, tuned</th><th class="n">grid CV (biased)</th><th class="n">nested CV</th><th class="n">ROC AUC</th></tr></thead>
 <tbody>
@@ -125,27 +119,33 @@
 <tr><td>SVC (RBF), C = 10, γ = 0.5</td><td class="n">0.760</td><td class="n">0.776</td><td class="n">0.762 ± 0.037</td><td class="n"><b>0.739 ± 0.052</b></td><td class="n">0.806</td></tr>
 <tr><td>random forest, depth 10, 300 trees</td><td class="n">0.776</td><td class="n"><b>0.792</b></td><td class="n">0.726 ± 0.041</td><td class="n">0.725 ± 0.046</td><td class="n"><b>0.852</b></td></tr>
 </tbody></table>
-<section>
-<p>Because the three models are scored on the same test set, their accuracies are paired, and McNemar's exact test is the comparison to use; it gives p = 0.44, 0.14 and 0.83 for the three pairs. The resampled comparison had the same flaw in a subtler form, since re-scoring an already-tuned model lets every test fold contain patients that chose its hyperparameters. Nesting the whole grid search inside every outer fold costs the SVC 0.028, the forest 0.009 and logistic regression 0.006, and reorders the top two. With the Nadeau–Bengio correction for shared training data the pairwise p-values are 0.26, 0.22 and 0.60, so nothing separates the models, and all three extract about the same signal, 0.70 to 0.74 against 0.50<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup>.</p>
-<p>The SVC's grid spans 0.623 to 0.762, a range of 0.139 that is wider than the gap between the best and the worst model, so choosing γ badly costs more than choosing the wrong algorithm. Its selected setting sits on an isolated peak of the grid, which is what a search that has fitted the noise in its folds produces, and it is why the SVC's selection optimism is the largest. The forest's four most important timepoints are the four with the largest effect sizes, D7 PM, D7 AM, D6 PM and D6 AM, though across all fourteen the rank correlation is ρ = 0.49, p = 0.078, which corroborates the effect sizes without replicating them.</p>
-<p>Logistic regression is the model I would deploy, because repeating everything on the row-deleted dataset moves it by 0.001 where the SVC moves 0.033 and the forest 0.049, its regularised coefficients can be shown to a clinician, and its reported number carries the least optimism. The choice changes if the model is used for triage with a tuned threshold, because then ranking is what matters, and the forest's AUC of 0.852 against 0.809 makes it the better choice. The report states the case together with the circumstance that would flip it<sup class="cite"><a href="#r1">1</a></sup>.</p>
-</section>
-
-<section>
-<h2>What this taught me about datasets</h2>
-<p>The direction of the labels needs checking before anything else, using every variable available as well as the assigned one, and the row order needs testing too. When a cleaning rule deletes a fifth of the cohort, the thing to look at is who it deletes, because "accuracy did not change" is not the same as "nothing changed". Tuning has to happen inside the loop, or the reported number is not the number it claims to be. When three models are indistinguishable, the report should say so.</p>
+<p>If the labels were correct, logistic regression would be the model to report: rerunning everything on the row-deleted dataset moves it by 0.001, against 0.033 for the SVC and 0.049 for the forest, and its selection optimism is the smallest. For ranking patients at a tuned threshold the forest's AUC of 0.852 against 0.809 would favour the forest. With the labels as they are, the report concludes that nothing built on this dataset should be deployed. The analysis is limited to one of the ten variables, rests on labels known to be wrong, takes its test-set figures from a single 80/20 split, has no external validation, and uses a dataset nobody outside the course can inspect<sup class="cite"><a href="#r1">1</a></sup>.</p>
 </section>
 
 <section class="refs" id="refs">
 <h2>References</h2>
 <ol>
-<li id="r1">Šandová, B. (2026): <a href="../assets/icu/report.pdf"><i>Predicting COVID-19 Treatment Outcomes from Seven Days of P/F Ratio Measurements</i></a>, semester assignment, Analysis &amp; Modelling of Complex Data — Big Data (Prof. A. Faisal, Dr. C. Auepanwiriyakul), Universität Bayreuth, 30 August 2026. 18 pages, with the notebook's tables, twelve figures and a generative-AI use declaration. Dataset: course-supplied CSVs (ten physiological variables, one outcome file), not public.</li>
-<li id="r2">Hastie, T., Tibshirani, R. and Friedman, J. (2009): <i>The Elements of Statistical Learning</i>, 2nd ed., §7.10.2, on applying cross-validation to the entire modelling sequence; Nadeau, C. and Bengio, Y. (2003): <a href="https://doi.org/10.1023/A:1024068626366">Inference for the generalization error</a>, <i>Machine Learning</i> 52, for the corrected resampled t-test.</li>
+<li id="r1">Šandová, B. (2026). <i>Predicting COVID-19 Treatment Outcomes from Seven Days of P/F Ratio Measurements</i>. Semester assignment, Analysis &amp; Modelling of Complex Data (Prof. A. Faisal, Dr. C. Auepanwiriyakul), Universität Bayreuth, 30 August 2026. <a href="../assets/icu/report.pdf">bsandova.com/assets/icu/report.pdf</a>. Dataset: course-supplied CSVs, not public (private; not verifiable).</li>
+<li id="r2">ARDS Definition Task Force (2012). Acute respiratory distress syndrome: the Berlin Definition. <i>JAMA</i> 307(23), 2526–2533. <a href="https://doi.org/10.1001/jama.2012.5669">doi.org/10.1001/jama.2012.5669</a>. Accessed 29 September 2026.</li>
+<li id="r3">Wald, A. and Wolfowitz, J. (1940). On a test whether two samples are from the same population. <i>Annals of Mathematical Statistics</i> 11(2), 147–162. <a href="https://doi.org/10.1214/aoms/1177731909">doi.org/10.1214/aoms/1177731909</a>. Accessed 29 September 2026.</li>
+<li id="r4">Cohen, J. (1988). <i>Statistical Power Analysis for the Behavioral Sciences</i>, 2nd ed. Lawrence Erlbaum.</li>
+<li id="r5">Benjamini, Y. and Hochberg, Y. (1995). Controlling the false discovery rate: a practical and powerful approach to multiple testing. <i>Journal of the Royal Statistical Society, Series B</i> 57(1), 289–300. <a href="https://doi.org/10.1111/j.2517-6161.1995.tb02031.x">doi.org/10.1111/j.2517-6161.1995.tb02031.x</a>. Accessed 29 September 2026.</li>
+<li id="r6">McNemar, Q. (1947). Note on the sampling error of the difference between correlated proportions or percentages. <i>Psychometrika</i> 12(2), 153–157. <a href="https://doi.org/10.1007/BF02295996">doi.org/10.1007/BF02295996</a>. Accessed 29 September 2026.</li>
+<li id="r7">Hastie, T., Tibshirani, R. and Friedman, J. (2009). <i>The Elements of Statistical Learning</i>, 2nd ed., §7.10.2. Springer. <a href="https://hastie.su.domains/ElemStatLearn/">hastie.su.domains/ElemStatLearn</a>. Accessed 29 September 2026.</li>
+<li id="r8">Nadeau, C. and Bengio, Y. (2003). Inference for the generalization error. <i>Machine Learning</i> 52, 239–281. <a href="https://doi.org/10.1023/A:1024068626366">doi.org/10.1023/A:1024068626366</a>. Accessed 29 September 2026.</li>
 </ol>
 </section>
 
+<section id="changelog" class="changelog">
+<h2>Change log</h2>
+<ul>
+<li>14 September 2026: first published as "The label says deteriorating. The patient is getting better."</li>
+<li>29 September 2026, version 2: moved to Notes and retitled as a methods note. The page description said ten variables agree; it is nine of ten. The fig. 3 caption now names the rendered colours (grey below 0.5, blue medium, green large); it said "blue: medium and above; green: large". The 0.7681 → 0.7679 leakage check is now marked as a different evaluation from the cleaning table's 0.723, as the report does not record its setting. "Rules out misalignment" narrowed to a simple offset of up to 30 rows, with an altered teaching set named as an open explanation. Patient 84 is described as evidence that some values were filled, not as proof of imputation. "The model I would deploy" replaced by what would be reported if the labels were correct, with the report's own conclusion against deployment. The Tukey sentence corrected: on skewed data the lower fence falls below the minimum. Added the Berlin definition, Wald–Wolfowitz, Cohen, Benjamini–Hochberg and McNemar as primary references, split Hastie et al. and Nadeau–Bengio into separate entries (Nadeau–Bengio page range 239–281 added), and renumbered. Added the dataset's provenance as far as known, the private-data statement and a limits sentence. Cut the section of lessons, the two closing lines on the ranking and on the report, the paragraph on regularisation and summary features (C = 10 and C = 0.01 coefficients −0.33 to +0.20; +0.014, −0.007, +0.001), the paragraph on the SVC grid and forest importances (0.623 to 0.762, range 0.139; ρ = 0.49, p = 0.078), the correlation structure of the timepoints (r = 0.71 decaying to 0.38; mean correlation 0.21 and about eight independent tests), the per-group trajectories (20.0 to 16.9 and 22.4 to 24.6 kPa), the 57-patient winsorising count, the 43 <i>Improving</i> patients the raw rule deletes (128 less 85), the "66.5/3" arithmetic, the report's length (18 pages), "p &lt; 0.001", the "4.3×" ratio and the footer note that repeated the captions. The short version no longer repeats the deck or the facts.</li>
+<li>Checked against editorial standard v1 on 29 September 2026.</li>
+</ul>
+</section>
+
 <footer class="text-foot">
-  <p><b>Figures.</b> All three recomputed for this page from the course CSVs by <code>tools/icu_figures.py</code>: integrity removal of the constant record, log-scale Tukey winsorisation (97 of 8 694 readings), group means with 95 % CI, Cohen's d with the equal-n pooled SD, label share by row bin. The values match the report's tables.</p>
   <p class="back"><a href="../#works">← projects</a></p>
 </footer>
 </article>

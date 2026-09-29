@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Persistence Dynamics and Welfare Costs of Urban Public Transport Delays</title>
-<meta name="description" content="A master's thesis on 121 197 794 vehicle-location records from Prague: within-day delays are persistent (AR(2) sum 0.727 bus, 0.715 tram), the memory sits in a state a traveller can watch, standard appraisal overstates the cost of unreliability, and real-time information is worth 5.6 % of the reliability cost on bus and 2.3 % on tram. Defended September 2026.">
+<meta name="description" content="A summary of a master's thesis on 121 197 794 vehicle-location records from Prague, 2025: within-day bus and tram delays are persistent, and the thesis values real-time information at 5.6 % (bus) and 2.3 % (tram) of the reliability cost.">
 <meta property="og:title" content="Persistence Dynamics and Welfare Costs of Urban Public Transport Delays">
-<meta property="og:description" content="A master's thesis on 121 197 794 vehicle-location records from Prague: within-day delays are persistent (AR(2) sum 0.727 bus, 0.715 tram), the memory sits in a state a traveller can watch, standard appraisal overstates the cost of unreliability, and real-time information is worth 5.6 % of the reliability cost on bus and 2.3 % on tram. Defended September 2026.">
+<meta property="og:description" content="A summary of a master's thesis on 121 197 794 vehicle-location records from Prague, 2025: within-day bus and tram delays are persistent, and the thesis values real-time information at 5.6 % (bus) and 2.3 % (tram) of the reliability cost.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://bsandova.com/assets/og/thesis.jpg">
 <meta property="og:image:width" content="1200">
@@ -35,69 +35,126 @@
 .tbl caption{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);padding:0 0 .5rem}
 .play{display:inline-block;background:var(--coral);color:#161616;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:.8rem 1.2rem;margin:.5rem 0 1rem}
 .play:hover{background:var(--hot);color:#161616}
+/* metadata block: style.css gives .meta a three-column grid for the home page; restore one line per row here */
+.text>.meta{display:block;letter-spacing:0;text-transform:none;font-size:12px}
+.text>.meta div{border-right:0;padding:6px 0}
+.text>.meta div+div{padding-left:0}
+.text>.meta div:last-child{border-bottom:1px solid #ececea}
+.text>.meta div{grid-template-columns:13ch 1fr}
 </style>
+
+<!-- ld --><link rel="alternate" type="application/atom+xml" title="Barbora Šandová" href="/feed.xml">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Persistence Dynamics and Welfare Costs of Urban Public Transport Delays", "description": "A summary of a master's thesis on 121 197 794 vehicle-location records from Prague, 2025: within-day bus and tram delays are persistent, and the thesis values real-time information at 5.6 % (bus) and 2.3 % (tram) of the reliability cost.", "url": "https://bsandova.com/texts/thesis", "image": "https://bsandova.com/assets/og/thesis.jpg", "dateModified": "2026-09-29T11:33:59+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
 </head>
 <body>
 <div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">thesis · prague · en</span></div>
 
 <article class="text">
 <header class="text-head">
-  <p class="kicker">Master's thesis · Institute of Economic Studies, Charles University · defended September 2026 · supervisor Luboš Hanus · <a href="https://ies.fsv.cuni.cz/aktuality/reditel-ies-udelil-oceneni-za-vynikajici-zaverecne-prace-v-zari-2026">IES Director's Award</a></p>
+  <p class="kicker">Research · master's thesis summary · Prague buses and trams, 2025</p>
   <h1>Persistence Dynamics and Welfare Costs <em>of Urban Public Transport Delays</em></h1>
-  <p class="deck">A traveller who checks a live app before leaving already sees where the bus really is, yet transport economics prices unreliability as if a route's delays were independent from one trip to the next. On 121 million vehicle-location records from Prague they are not independent, and the thesis puts a price on the difference. This is the short version; the sonification <a href="delayed">Delayed All the Time</a> is what the same records sound like.</p>
+  <p class="deck">On 121 197 794 vehicle-location records from Prague, within-day bus and tram delays are persistent, and the thesis values the part of their dispersion a traveller can forecast from a live feed.</p>
   <dl class="facts">
-    <div><dt>records</dt><dd>121 197 794 <small>Prague vehicle locations, 15 March – 8 September 2025, Golemio</small></dd></div>
-    <div><dt>persistence, AR(2) sum</dt><dd>0.727 · 0.715 <small>bus (691 routes) · tram (41 routes) · half-life ≈ 33 min</small></dd></div>
-    <div><dt>value of real-time information</dt><dd>5.6 % · 2.3 % <small>of the reliability cost, bus · tram · invariant to the value of time</small></dd></div>
-    <div><dt>hypotheses</dt><dd>3 of 3 <small>registered in the proposal, all revised by the data</small></dd></div>
+    <div><dt>records</dt><dd>121 197 794 <small>Prague vehicle locations, 15 March – 8 September 2025, Golemio · administrative count</small></dd></div>
+    <div><dt>persistence, AR(2) sum</dt><dd>0.727 · 0.715 <small>bus (691 routes) · tram (41 routes) · half-life ≈ 33 min · no interval on this page</small></dd></div>
+    <div><dt>value of real-time information</dt><dd>5.6&nbsp;% · 2.3&nbsp;% <small>of the commuter-tier reliability cost, bus · tram · no interval on this page</small></dd></div>
   </dl>
 </header>
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>On 121 197 794 vehicle-location records from Prague, within-day delays are serially correlated, with AR(2) coefficient sums of 0.727 on bus across 691 routes and 0.715 on tram across 41. The memory sits in a slowly moving state that a traveller can observe, and impulse responses halve after about thirty-three minutes.</li>
-    <li>Standard appraisal, which prices unreliability with the unconditional standard deviation, overstates the cost borne by a traveller who watches that state. Real-time information is worth 5.6 % of the commuter-tier reliability cost on bus and 2.3 % on tram, a share invariant to the value of time and to the reliability ratio.</li>
-    <li>The levels in crowns are not invariant and are reported as a bracket: at a thirty-minute horizon about 204 CZK a year for a bus passenger and about 60 for a tram passenger, and 182 and 40 out of sample. They index the dispersion made forecastable, not a welfare gain a passenger has been measured to pocket.</li>
-    <li>The data revised all three hypotheses registered in the proposal. Traffic exposure does not predict persistence between bus and tram, and the socioeconomic gradient is indistinguishable from zero, though a failed placebo leaves that null conditional on education being entangled with network structure.</li>
-    <li>The estimates price schedule adherence, not the headway regularity that matters for turn-up-and-go service, describe within-day persistence only, and cover no Prague winter. Whether the figures hold outside Prague is for replication to establish.</li>
+    <li>The memory in Prague's delays sits in a slowly moving level that a traveller can observe, so the thesis corrects reliability appraisal with a smaller conditional variance; the multiplier its proposal expected points the other way.</li>
+    <li>In crowns, the forecastable dispersion comes to about 204 CZK a year for a bus passenger and 60 for a tram passenger at a thirty-minute horizon, and 182 and 40 out of sample. These index dispersion, not a measured welfare gain.</li>
+    <li>This page reports no intervals and no estimation details, because the thesis text is not yet public; the socioeconomic hypothesis is read here as inconclusive after a failed placebo.</li>
+    <li>The estimates concern schedule adherence within a day, in a sample with no winter, and say nothing about headway regularity, delays across days or cities other than Prague.</li>
   </ul>
 </details>
+<dl class="meta">
+  <div><dt>published</dt><dd>16 September 2026 · updated 29 September 2026 · <a href="#changelog">version 2</a></dd></div>
+  <div><dt>status</dt><dd>exploratory · summary of a master's thesis defended at the Institute of Economic Studies, Charles University, September 2026 (supervisor Luboš Hanus; <a href="https://ies.fsv.cuni.cz/aktuality/reditel-ies-udelil-oceneni-za-vynikajici-zaverecne-prace-v-zari-2026">IES Director's Award</a>)</dd></div>
+  <div><dt>registration</dt><dd>not pre-registered; hypotheses stated in the thesis proposal, which is not linked here</dd></div>
+  <div><dt>data</dt><dd>Prague Integrated Transport vehicle positions via <a href="https://golemio.cz">Golemio</a> (Operator ICT), 15 March – 8 September 2025; the thesis's derived data are not published</dd></div>
+  <div><dt>code</dt><dd>not published; the thesis text is not yet in the Charles University repository (searched 29 September 2026)</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Persistence Dynamics and Welfare Costs of Urban Public Transport Delays</i>. Master's thesis, Institute of Economic Studies, Charles University. Summary at bsandova.com/texts/thesis, version 2.</dd></div>
+  <div><dt>licence</dt><dd>text of this summary CC BY 4.0</dd></div>
+</dl>
 <section class="film film-page" aria-hidden="false"><div class="shot" style="view-transition-name:ph-thesis;--bg:url(../assets/photo/thesis.jpg);--bg-s:url(../assets/photo/thesis-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Praha_%E2%80%93_Zahradn%C3%AD_M%C4%9Bsto,_stanice,_2021_(55).jpg">Draceane</a> · CC BY-SA 4.0, colour held</p></section>
 
 
 <section>
-<h2>Serial correlation in Prague's delays</h2>
-<p>The value-of-reliability literature prices travel-time variability with its unconditional standard deviation, which assumes without saying so that a route's delays are drawn independently from one trip to the next. Prague's vehicle-tracking record rejects that assumption on both modes that carry inference. Within-day delays are serially correlated, with AR(2) coefficient sums of 0.727 on bus across 691 routes and 0.715 on tram across 41, and simulated impulse responses cross half their magnitude after about thirty-three minutes. Because the delay level is far more persistent than the increment, the memory sits in a slowly moving, observable state and does not build up from accumulating shocks<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<h2>Delay persistence and the value of reliability</h2>
+<p>Transport appraisal values unreliability through the dispersion of travel times. The scheduling model of Noland and Small prices the cost of arriving early or late when travel time is uncertain<sup class="cite"><a href="#r2">2</a></sup>, Bates and co-authors review how that cost and the older mean–variance approach are valued for personal travel<sup class="cite"><a href="#r3">3</a></sup>, and Fosgerau and Karlström show that under scheduling preferences the expected cost of unreliability is proportional to the standard deviation of travel time<sup class="cite"><a href="#r4">4</a></sup>; Carrion and Levinson review the empirical values that follow<sup class="cite"><a href="#r5">5</a></sup>. These measures use the unconditional dispersion, which fits a traveller who knows nothing about the current state of the route, and they implicitly treat a route's delays as independent from one trip to the next. The thesis asks whether within-day delays on Prague's buses and trams are serially correlated and, if they are, how much of their dispersion a traveller who watches a live feed can forecast<sup class="cite"><a href="#r1">1</a></sup>. The thesis states two contributions, a correction of the appraisal measure through a smaller conditional variance, where a view of delays as compounding shocks would apply a multiplier, and a value of real-time information derived from the same variance decomposition, without a stated-preference survey. The passenger-benefit studies reviewed by Brakewood and Watkins measure that value mainly through waiting times, ridership and satisfaction<sup class="cite"><a href="#r6">6</a></sup>. The decomposition needs only vehicle-location records and a timetable, which any operator running automatic vehicle location already holds.</p>
+</section>
+
+<section>
+<h2>Data</h2>
+<p>The thesis uses the vehicle positions of Prague Integrated Transport published by Golemio, Prague's open-data platform, from 15 March to 8 September 2025, 121 197 794 vehicle-location records in all<sup class="cite"><a href="#r1">1</a></sup>. Inference rests on buses, with 691 routes, and trams, with 41. The metro has three route clusters, too few for inference, and appears in the thesis only descriptively. The cleaning rules, the number of routes and trips dropped and the access dates of the feed are not reproduced on this page. Five days of the same records, aggregated into five-minute windows, underlie the sonification <a href="delayed">Delayed All the Time</a><sup class="cite"><a href="#r7">7</a></sup>.</p>
+</section>
+
+<section>
+<h2>How this was done</h2>
+<p>Persistence is measured with a second-order autoregression of delay within a day, whose two coefficients are summed, and simulated impulse responses give the time a shock takes to halve. The equation below is schematic. What the time index counts, whether routes are pooled, which route and time-of-day terms enter, and how the bias of dynamic panel estimators with fixed effects is handled are specified in the thesis and not reproduced here, since this page draws only on the thesis's abstract, Chapter 6 (results by hypothesis) and Chapter 8 (conclusion)<sup class="cite"><a href="#r1">1</a></sup>.</p>
 <div class="eq">$$d_t = \phi_1 d_{t-1} + \phi_2 d_{t-2} + \varepsilon_t,\qquad \hat\phi_1+\hat\phi_2 = 0.727\ (\text{bus}),\ 0.715\ (\text{tram})$$</div>
+<p>The cost side rests on an exact decomposition of delay variance into a seasonal part, a forecastable state and unforecastable noise. The value of real-time information is defined as the gain from watching the state instead of trusting the timetable, expressed as a share of the commuter-tier reliability cost, and converted into crowns per passenger per year at a thirty-minute horizon. The calibration constants behind the crown figures (value of time, reliability ratio, trips per year) are not listed on this page. Out-of-sample figures come from a split of the sample by date<sup class="cite"><a href="#r1">1</a></sup>.</p>
 </section>
 
 <section>
-<h2>What persistence does to the cost of unreliability</h2>
-<p>Persistence changes the dispersion a reliability calculation should price by making a fraction of it forecastable, and it does not compound it, so the correction the appraisal literature needs is a smaller conditional variance rather than a larger multiplier. A compounding multiplier describes a single decaying shock, whereas the surface modes behave as a level plus a short-memory autoregression. The multiplier is therefore reported only for metro, whose three route clusters deny it inference in any case<sup class="cite"><a href="#r1">1</a></sup>.</p>
-<p>The thesis prices the difference with an exact decomposition of delay variance into a seasonal part, a forecastable state and unforecastable noise, in which the state dominates on metro and the residual on the surface modes. The value of real-time information, meaning the gain from watching the state instead of trusting the timetable, is 5.6 % of the commuter-tier reliability cost on bus and 2.3 % on tram. Because the tiers share their calibration constants, this share is invariant to the value of time and to the reliability ratio, the two parameters that occupy much of the appraisal literature and that are not known for the Czech context. The levels in crowns per year are not invariant, and they are reported as a bracket. At a thirty-minute horizon they come to about 204 CZK a year for a bus passenger and about 60 for a tram passenger, and to 182 and 40 when held out of sample on a date split. These figures index the dispersion made forecastable, not a welfare gain a passenger has been measured to pocket<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<h2>The hypotheses in the thesis proposal</h2>
+<p>The three hypotheses were stated in the thesis proposal before estimation. A thesis proposal is not a pre-registration and the proposal is not linked here, so the order of events rests on the thesis's own account. The labels in the last column are this summary's reading of the reported results and will be replaced by the thesis's own wording once the text is public.</p>
+<table class="tbl">
+<caption>Hypotheses from the thesis proposal and the reported results</caption>
+<thead><tr><th></th><th>prediction in the proposal</th><th>reported result</th><th>label on this page</th></tr></thead>
+<tbody>
+<tr><td>H1</td><td>infrastructure segregation orders persistence across modes</td><td>traffic exposure does not predict persistence between bus and tram; within a route, higher incoming delay raises persistence</td><td>not supported</td></tr>
+<tr><td>H2</td><td>variance-based costs understate welfare through a multiplier above one</td><td>opposite sign: conventional metrics overstate the cost for a traveller who observes the state</td><td>not supported</td></tr>
+<tr><td>H3</td><td>a socioeconomic gradient in persistence</td><td>coefficient indistinguishable from zero; positive control passed, placebo failed</td><td>inconclusive</td></tr>
+</tbody>
+</table>
+<p>For the first hypothesis, the thesis reports that the gap in persistence between bus and tram is a quarter of the smallest effect the design could reliably detect, so the two modes cannot be ordered with this design; the minimum detectable effect itself is not given on this page. Within a route, the effect of incoming delay on persistence has the expected sign. The second hypothesis fails on its sign, as described in the section on real-time information below. For the third, a simulated positive control shows that the design had the power to detect a gradient, but a placebo test failed, which leaves open that education is entangled with the structure of the network, and the null therefore does not establish that no gradient exists<sup class="cite"><a href="#r1">1</a></sup>.</p>
 </section>
 
 <section>
-<h2>The three hypotheses from the proposal</h2>
-<p>The three hypotheses were fixed in the thesis proposal before any estimation, and the data revised all three. The first predicted that infrastructure segregation would order persistence across modes. Among the two modes that carry inference, traffic exposure does not predict persistence, and the gap between bus and tram is a quarter of the smallest effect the design could reliably detect, although within a route higher incoming delay does raise persistence with the expected sign. The second hypothesis predicted that variance-based costs understate welfare through a multiplier above one, and the sign runs the other way, since conventional metrics overstate the cost borne by a traveller who observes the state. The third predicted a socioeconomic gradient in persistence. Its coefficient is indistinguishable from zero, and a simulated positive control shows that the design had the power to detect a gradient, so the null is real, but a failed placebo leaves the result conditional on education being entangled with network structure. That all three failed in their registered form is part of why the exploratory result is worth reading, because it shows that the questions could not have been re-chosen once the answers were known<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<h2>Persistence in bus and tram delays</h2>
+<p>Within-day delays are serially correlated on both modes that carry inference, with AR(2) coefficient sums of 0.727 on bus across 691 routes and 0.715 on tram across 41, and simulated impulse responses cross half their magnitude after about thirty-three minutes. Because the delay level is far more persistent than its increment, the thesis locates the memory in a slowly moving, observable state rather than in accumulating shocks. Interday correlation is far lower, so the persistence is a within-day property<sup class="cite"><a href="#r1">1</a></sup>.</p>
 </section>
 
 <section>
-<h2>Limits of the estimates</h2>
-<p>The dispersion priced is schedule adherence, whereas for turn-up-and-go service the passenger cares about headway regularity instead, and this caveat binds hardest on metro. The persistence coefficients are within-day objects and interday correlation is far lower, so none of this describes a commuter accumulating risk across weeks. The sample runs from 15 March to 8 September 2025 and therefore contains no Prague winter, the season a study of delay persistence would most want to see. The contribution is a method that transfers beyond Prague, since the decomposition needs only vehicle-location records and a timetable, which any operator running automatic vehicle location already has, and no stated-preference survey. Whether the figures hold elsewhere is for replication to establish<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<h2>Real-time information and the cost of unreliability</h2>
+<p>Persistence of this kind makes a fraction of the dispersion forecastable and does not compound it, so in the thesis the correction appraisal needs is a smaller conditional variance. A compounding multiplier describes a single decaying shock, whereas the bus and tram series behave as a level plus a short-memory autoregression, and the multiplier is reported only for metro, where three route clusters deny it inference. In the variance decomposition the state dominates on metro and the unforecastable residual on bus and tram<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>The value of real-time information is 5.6&nbsp;% of the commuter-tier reliability cost on bus and 2.3&nbsp;% on tram. Because the tiers share their calibration constants, the share does not depend on the value of time or on the reliability ratio, the two parameters that occupy much of the appraisal literature and that are not known for the Czech context. The levels in crowns do depend on them and are reported as a bracket: at a thirty-minute horizon about 204 CZK a year for a bus passenger and about 60 for a tram passenger, and 182 and 40 when held out of sample on the date split. These figures index the dispersion made forecastable; no passenger has been measured to gain them<sup class="cite"><a href="#r1">1</a></sup>.</p>
 </section>
 
 <section>
-<h2>Why the record on this site plays the delays</h2>
-<p>The thesis also changed how this site treats delays. They are not predictable in the way a prediction pipeline hopes, and because their memory is real and observable, the right product is a live view of the state as it stands. For that reason the record on this site plays the delays instead of predicting them.</p>
+<h2>What this does not show</h2>
+<p>The dispersion priced is schedule adherence, whereas for turn-up-and-go service the passenger cares about headway regularity, and this caveat binds hardest on metro. The persistence coefficients are within-day objects, so none of this describes a commuter accumulating risk across weeks. The sample runs from 15 March to 8 September 2025 and contains no Prague winter, the season a study of delay persistence would most want to see. This page carries no confidence intervals, no count of the clusters behind each interval and no robustness table, because the thesis text they would come from is not yet public; until it is, the figures here are point estimates without stated uncertainty. Whether they hold outside Prague is for replication to establish<sup class="cite"><a href="#r1">1</a></sup>.</p>
+</section>
+
+<section>
+<h2>Reproduction</h2>
+<p>The Golemio vehicle-position feed is public. The thesis text, its code and its derived data are not yet available from this site or from the Charles University digital repository, which returned no record for the title when searched on 29 September 2026; this page will link the repository record when it appears.</p>
 </section>
 
 <section class="refs" id="refs">
 <h2>References</h2>
 <ol>
-<li id="r1">Šandová, B. (2026): <i>Persistence Dynamics and Welfare Costs of Urban Public Transport Delays</i>, master's thesis, Institute of Economic Studies, Faculty of Social Sciences, Charles University, Prague; supervisor Mgr. Luboš Hanus, Ph.D. Defended September 2026; <a href="https://ies.fsv.cuni.cz/aktuality/reditel-ies-udelil-oceneni-za-vynikajici-zaverecne-prace-v-zari-2026">IES Director's Award for Distinguished Theses</a>, September 2026. Abstract, Chapter 6 (results by hypothesis) and Chapter 8 (conclusion). JEL R41, R42, L92, C23, C22, D83. Data: Golemio, Prague's open-data platform, vehicle positions 15 March – 8 September 2025.</li>
-<li id="r2">Šandová, B. (2025): <a href="delayed">Delayed All the Time. On Time, Occasionally.</a>, the sonification built from five days of the same records.</li>
+<li id="r1">Šandová, B. (2026). <i>Persistence Dynamics and Welfare Costs of Urban Public Transport Delays</i>. Master's thesis, Institute of Economic Studies, Faculty of Social Sciences, Charles University, Prague; supervisor Mgr. Luboš Hanus, Ph.D. Defended September 2026; <a href="https://ies.fsv.cuni.cz/aktuality/reditel-ies-udelil-oceneni-za-vynikajici-zaverecne-prace-v-zari-2026">IES Director's Award for Distinguished Theses</a>, September 2026. Abstract, Chapter 6 (results by hypothesis) and Chapter 8 (conclusion). JEL R41, R42, L92, C23, C22, D83. Data: Golemio, Prague's open-data platform, vehicle positions 15 March – 8 September 2025. Not yet in a public repository.</li>
+<li id="r2">Noland, R. B. and Small, K. A. (1995). Travel-time uncertainty, departure time choice, and the cost of morning commutes. <i>Transportation Research Record</i> 1493, 150–158.</li>
+<li id="r3">Bates, J., Polak, J., Jones, P. and Cook, A. (2001). The valuation of reliability for personal travel. <i>Transportation Research Part E</i> 37(2–3), 191–229. <a href="https://doi.org/10.1016/S1366-5545(00)00011-9">doi:10.1016/S1366-5545(00)00011-9</a>. Accessed 29 September 2026.</li>
+<li id="r4">Fosgerau, M. and Karlström, A. (2010). The value of reliability. <i>Transportation Research Part B</i> 44(1), 38–49. <a href="https://doi.org/10.1016/j.trb.2009.05.002">doi:10.1016/j.trb.2009.05.002</a>. Accessed 29 September 2026.</li>
+<li id="r5">Carrion, C. and Levinson, D. (2012). Value of travel time reliability: a review of current evidence. <i>Transportation Research Part A</i> 46(4), 720–741. <a href="https://doi.org/10.1016/j.tra.2012.01.003">doi:10.1016/j.tra.2012.01.003</a>. Accessed 29 September 2026.</li>
+<li id="r6">Brakewood, C. and Watkins, K. (2019). A literature review of the passenger benefits of real-time transit information. <i>Transport Reviews</i> 39(3), 327–356. <a href="https://doi.org/10.1080/01441647.2018.1472147">doi:10.1080/01441647.2018.1472147</a>. Accessed 29 September 2026.</li>
+<li id="r7">Šandová, B. (2026). <a href="delayed">Delayed All the Time</a>. bsandova.com/texts/delayed, the sonification built from five days of the same records.</li>
 </ol>
+</section>
+
+<section id="changelog" class="changelog">
+<h2>Change log</h2>
+<ul>
+<li>16 September 2026: first published.</li>
+<li>29 September 2026, version 2: the kicker names the kind and object; the deck is one sentence and no longer calls the page a short version; the short version no longer repeats the deck, the facts or the body. Removed the facts card "hypotheses: 3 of 3, registered in the proposal", a tally that also overstated the proposal as a registration; the hypotheses are now "stated in the thesis proposal", with a table. The third hypothesis is read as inconclusive, replacing "the null is real", which a failed placebo does not support. Cut the sentence claiming that the failure of all three hypotheses shows the questions were fixed in advance, and the section on why the record on this site plays the delays. Added the question and contribution against five external references, a data section, a description of the estimation that marks what is not yet reproduced, a limitations section with the missing intervals, a reproduction note and the metadata block. The contribution sentence moved from the limitations to the opening. The source is named in one unit, 121 197 794 vehicle-location records, as on the front page and in Delayed All the Time. No figures were changed.</li>
+<li>29 September 2026: a full summary of about 1 700 words, with the estimation details, route-clustered intervals for the persistence sums and the real-time-information shares, a figure, the calibration constants and a robustness table, awaits the thesis text, which is not yet in the Charles University repository.</li>
+<li>Checked against editorial standard v1 on 29 September 2026.</li>
+</ul>
 </section>
 
 <footer class="text-foot">

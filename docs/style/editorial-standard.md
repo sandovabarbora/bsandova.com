@@ -45,9 +45,7 @@ A page that cannot meet the standard for its kind moves down a kind or is retire
   - tools: tool vX.Y;
   - notes: note.
 - **Registration**: see §6.
-- **Review**: who reviewed the page and how. For the Prague series the line reads: "Design reviewed in three
-  referee reports (subject, statistics, data) written by AI models at the author's request; no external peer
-  review." The word "referee" never appears without this line.
+- **Review**: only when there was an external review, named with affiliation. Otherwise the block has no review row, and the page makes no claim about referees or review anywhere.
 - **Data**: sources with access or snapshot dates, the licence, and the hash list if there is one.
 - **Code**: repository path, the commit of the published version, and the command that rebuilds the page's data.
 - **Cite as**: Šandová, B. (2026). *Title*. bsandova.com/texts/slug, version n.

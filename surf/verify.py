@@ -12,7 +12,9 @@ date (lead 0 of the default model; a proxy, labelled as one):
   probabilistic the share of the three models that call the day surfable is the forecast
                probability; Brier score, and Brier skill score against climatology.
   baselines    climatology (the base rate over the analysis window) and persistence
-               (forecast for lead d = the analysis d days before the target).
+               (the last analysis available at issue time: issue - 1 day, i.e. the analysis
+               d + 1 days before the target; corrected on 29 September 2026 from the analysis
+               of the issue day itself, which the 06:10 UTC run does not yet have).
   uncertainty  block bootstrap by ISO week (consecutive days are not independent),
                95 % intervals on MAE and on P(surfable | forecast yes).
   robustness   the binary results recomputed under alternative rules: period 7/8/9 s,
@@ -205,10 +207,10 @@ def main() -> None:
         if n >= MIN_PAIRS:
             bs = sum((p - o) ** 2 for _, p, o in items) / n
             bs_clim = sum((base - o) ** 2 for _, _, o in items) / n
-            # persistence: the analysis `lead` days before the target, as a 0/1 forecast
+            # persistence: the last analysis available at issue time (issue - 1 day), as a 0/1 forecast
             pers = []
             for t, _, o in items:
-                d0 = (date.fromisoformat(t) - timedelta(days=max(lead, 1))).isoformat()
+                d0 = (date.fromisoformat(t) - timedelta(days=lead + 1)).isoformat()
                 if d0 in truth and surfable(truth[d0]) is not None:
                     pers.append((1.0 if surfable(truth[d0]) else 0.0, o))
             bs_pers = sum((p - o) ** 2 for p, o in pers) / len(pers) if pers else None
