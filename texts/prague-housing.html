@@ -176,54 +176,9 @@
 
 <section id="changes">
 <h2>What changed after registration</h2>
-<p>These registered analyses were not run, because their inputs could not be obtained before the outcomes were joined:</p>
-<ul>
-<li>the land and planning layers for the metro question: Urban Atlas, heritage zones, flood plains, the 1999 plan and line D;</li>
-<li>the metro analysis by basic settlement unit;</li>
-<li>Polish municipal construction times: the statistics API refused connections;</li>
-<li>the stock of dwellings under construction: the Prague series has not been published since 2009;</li>
-<li>one price-index variant, and the annual version of the price question;</li>
-<li>an OECD source to stand beside the Doing Business figure, which was not verified in time.</li>
-</ul>
-<p>Two registered checks were omitted from the first runs and added after the fact-check on 29 September 2026. Neither is in the family:</p>
-<ul>
-<li>the metro test clustered by the 57 city districts;</li>
-<li>the Warsaw replication.</li>
-</ul>
-<p>The design left these choices open, and they were made as follows:</p>
-<ul>
-<li>census reference dates come from national documentation, and several are marked for verification;</li>
-<li>a metro region's core is its densest member;</li>
-<li>the Czech rebuilt numerator uses monthly regional completions;</li>
-<li>the within-Czechia comparison is the raw rate, with no model;</li>
-<li>lags are the best of 10 starting values;</li>
-<li>twelve quarterly lags leave 27 quarters, not 35;</li>
-<li>the fixed-b critical value is simulated;</li>
-<li>the Polish bootstrap is the unstudentised score version, and its effective number of clusters uses an independence working covariance;</li>
-<li>the Polish common support is 242 districts;</li>
-<li>the rail and tram distances use today's network;</li>
-<li>half-kilometre squares take their parent square's density;</li>
-<li>robustness bootstraps use 999 draws.</li>
-</ul>
-<p>After estimation:</p>
-<ul>
-<li>H5 was decided at p = 0.0252 against 0.025 and not re-run.</li>
-<li>H2's noise was 3.3 times the signal, which triggered the registered "underpowered" wording rule. It did not apply, because H2 passed.</li>
-<li>The rest of Czechia's 5-month lag and Prague's flat likelihood are flagged.</li>
-<li>Two pipeline variants had diverging bootstraps.</li>
-<li>Three relevance checks failed, and their results are labelled uninformative.</li>
-<li>Robustness variants for H4 drop district-builder cells with no dwellings at all. The main frame had none.</li>
-</ul>
-<p>The full, dated list is in the design file<sup class="cite"><a href="#r7">7</a></sup>. The numbers of the registered study come from seven scripts:</p>
-<ul>
-<li><code>tools/praha/housing_fetch.py</code></li>
-<li><code>housing_data.py</code></li>
-<li><code>housing_power.py</code></li>
-<li><code>housing_extended.py</code></li>
-<li><code>housing_robust.py</code></li>
-<li><code>housing_addenda.py</code></li>
-<li><code>figures_housing_extended.py</code></li>
-</ul>
+<p>The design left several choices open, and they were made as follows. Census reference dates come from national documentation, and several are marked for verification. A metro region's core is its densest member. The Czech rebuilt numerator uses monthly regional completions, and the within-Czechia comparison is the raw rate, with no model. Lags are the best of 10 starting values, twelve quarterly lags leave 27 quarters, not 35, and the fixed-b critical value is simulated. The Polish bootstrap is the unstudentised score version, its effective number of clusters uses an independence working covariance, and the Polish common support is 242 districts. The rail and tram distances use today's network, half-kilometre squares take their parent square's density, and robustness bootstraps use 999 draws.</p>
+<p>Other decisions followed estimation. H5 was decided at p = 0.0252 against 0.025 and not re-run. H2's noise was 3.3 times the signal, which triggered the registered "underpowered" wording rule, but the rule did not apply, because H2 passed. The rest of Czechia's 5-month lag and Prague's flat likelihood are flagged, and two pipeline variants had diverging bootstraps. Three relevance checks failed, and their results are labelled uninformative. Robustness variants for H4 drop district-builder cells with no dwellings at all, which the main frame did not have. Two registered checks, the metro test clustered by the 57 city districts and the Warsaw replication, were omitted from the first runs and added after the fact-check on 29 September 2026; neither is in the family.</p>
+<p>Some registered analyses were not run, because their inputs could not be obtained before the outcomes were joined. For the metro question these are the land and planning layers (Urban Atlas, heritage zones, flood plains, the 1999 plan and line D) and the analysis by basic settlement unit. Polish municipal construction times are missing because the statistics API refused connections, and the stock of dwellings under construction because the Prague series has not been published since 2009. One price-index variant and the annual version of the price question were not run either, nor was an OECD source added to stand beside the Doing Business figure, since it was not verified in time.</p>
 </section>
 
 <section>

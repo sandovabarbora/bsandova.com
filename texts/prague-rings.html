@@ -172,17 +172,8 @@
 
 <section id="changes">
 <h2>What changed after registration</h2>
-<ul>
-<li><b>The metro test was underpowered from the start.</b> The design-stage check found this before any outcome was joined. It was recorded then, and the margin was kept.</li>
-<li><b>Operational details the design left open:</b>
-  <ul>
-  <li>15–17 year olds are estimated as three fifths of the 15–19 group, because only five-year groups are published.</li>
-  <li>Dormitories are not flagged, because no open list exists.</li>
-  <li>The bootstrap is unrestricted.</li>
-  <li>2017 precinct geometry was not recovered from the cadastre's change files; the registered matching rule is used alone.</li>
-  </ul></li>
-<li><b>The publication-timing rule was dropped</b> before estimation.</li>
-</ul>
+<p>Two changes were made before any outcome was joined to the data. The design-stage power check found that the metro test was underpowered from the start; this was recorded then, and the margin was kept. The publication-timing rule was dropped before estimation.</p>
+<p>The design also left some operational details open, and they were settled as follows. Only five-year age groups are published, so 15–17 year olds are estimated as three fifths of the 15–19 group. Dormitories are not flagged, because no open list of them exists, and the bootstrap is unrestricted. The 2017 precinct geometry was not recovered from the cadastre's change files, so the registered matching rule is used alone.</p>
 <p>The full list is in the design file<sup class="cite"><a href="#r8">8</a></sup>. The 2025 description is produced from the published files by <code>tools/praha/metro.py</code>, and the registered study by four scripts:</p>
 <ul>
 <li><code>tools/praha/rings_data.py</code></li>
