@@ -44,7 +44,7 @@
 <header class="text-head">
   <p class="kicker">Sonification · Prague Integrated Transport · five days · Web Audio, no samples</p>
   <h1>Delayed All the Time. <em>On Time, Occasionally.</em></h1>
-  <p class="deck">Five real days of Prague public transport, played as disco tracks by the transport system itself. The metro is the kick drum because it is the most reliable pulse in the city. The buses are the chords, and they go out of tune exactly as far as they run late. When the city stops keeping up, the track lifts into the chorus.</p>
+  <p class="deck">Five real days of Prague public transport, played as disco tracks by the transport system itself. The metro is the kick drum because it is the most reliable pulse in the city, and the buses are the chords, which go further out of tune the later they run. When the city stops keeping up, the track lifts into the chorus.</p>
   <dl class="facts">
     <div><dt>source period</dt><dd>121 M stop events <small>15 March – 8 September 2025 · Golemio / PID</small></dd></div>
     <div><dt>one day</dt><dd>288 beats <small>5-minute windows · 116 BPM · 24 h ≈ 2.5 min</small></dd></div>
@@ -57,20 +57,20 @@
 
 
 <section>
-<p>This is the companion piece to <a href="../#works">a master's thesis</a> on delay persistence in the Prague network, and it started as a way of hearing the thing the thesis was about. Delays are not noise. They are a slowly moving state you can watch; the morning peak builds, holds, and lets go. Statistically it is an autoregression whose coefficients sum to 0.73:</p>
+<p>This is the companion piece to <a href="../#works">a master's thesis</a> on delay persistence in the Prague network, and it started as a way of hearing what the thesis was about. Delays in the network behave less like noise than like a slowly moving state you can watch, in which the morning peak builds, holds and lets go. Statistically the state is an autoregression whose coefficients sum to 0.73:</p>
 <div class="eq">$$d_t = \phi_1 d_{t-1} + \phi_2 d_{t-2} + \varepsilon_t,\qquad \phi_1+\phi_2 = 0.727\ (\text{bus}),\ 0.715\ (\text{tram})$$</div>
-<p>A shock to the delay at one moment is still three-quarters there in the next. Musically it is a build-up, a chorus and a breakdown, and the ear hears it before the table does<sup class="cite"><a href="#r1">1</a></sup>.</p>
-<p>The player is one self-contained HTML file: no server, no build step, no external resources, all audio synthesised live with the Web Audio API from five days of aggregated stop-time data embedded verbatim. No raw records are redistributed; the aggregates are a derived work of Golemio's open data and say so<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p>A shock to the delay at one moment is still three-quarters there in the next. In musical terms that is a build-up, a chorus and a breakdown, and the ear picks it up before the table does<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>The player is one self-contained HTML file with no server, no build step and no external resources. All audio is synthesised live with the Web Audio API from five days of aggregated stop-time data embedded verbatim in the file. No raw records are redistributed, and the aggregates are labelled as a derived work of Golemio's open data<sup class="cite"><a href="#r2">2</a></sup>.</p>
 </section>
 
 <section>
-<h2>Every musical decision comes from the data</h2>
-<p>Nothing is random. One day is 288 five-minute windows, so one day is 288 beats; at 116 BPM twenty-four hours take about two and a half minutes. Each transport mode is an instrument, and each instrument plays what its mode did in that window<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<h2>How the data maps to the instruments</h2>
+<p>The mapping from data to sound contains no randomness. One day is 288 five-minute windows and therefore 288 beats, and at 116 BPM twenty-four hours take about two and a half minutes. Each transport mode is an instrument, and each instrument plays what its mode did in that window<sup class="cite"><a href="#r2">2</a></sup>.</p>
 </section>
 <table class="tbl"><caption>Instrument · what drives it</caption>
 <thead><tr><th>element</th><th>data source</th></tr></thead>
 <tbody>
-<tr><td><b>kick drum + bass</b></td><td>metro stop events. Average delay 7 s on a typical weekday, the most reliable pulse in the city. When the metro closes at night the beat literally stops, and the first morning train is the drop.</td></tr>
+<tr><td><b>kick drum + bass</b></td><td>metro stop events. Average delay 7 s on a typical weekday, the most reliable pulse in the city. When the metro closes at night the beat stops, and the first morning train is the drop.</td></tr>
 <tr><td><b>hi-hats + guitar plucks</b></td><td>tram stop events</td></tr>
 <tr><td><b>chord stabs</b></td><td>bus stop events, 557 000 a day on a weekday, the backbone; the chord's detune in cents grows with the current bus delay</td></tr>
 <tr><td><b>claps + cowbell</b></td><td>trolleybus stop events</td></tr>
@@ -80,8 +80,8 @@
 </tbody></table>
 
 <section>
-<h2>The chorus is not on the clock</h2>
-<p>Song structure is data-driven too. Whenever the smoothed, event-weighted average delay of surface transport (bus, tram, trolleybus) exceeds 68 % of that day's own maximum, the city has stopped keeping up and the track lifts into the chorus. On a typical weekday that yields exactly the two rush hours, roughly 07:25–10:00 and 14:45–17:40, with the delay peaking at 145 s around 07:55<sup class="cite"><a href="#r2">2</a></sup>. The two beats before each chorus break down into a snare roll and a riser before the drop, because that is what the data does too.</p>
+<h2>When the chorus comes</h2>
+<p>The song structure also comes from the data. Whenever the smoothed, event-weighted average delay of surface transport (bus, tram, trolleybus) exceeds 68 % of that day's own maximum, the city has stopped keeping up and the track lifts into the chorus. On a typical weekday that rule yields exactly the two rush hours, roughly 07:25–10:00 and 14:45–17:40, with the delay peaking at 145 s around 07:55<sup class="cite"><a href="#r2">2</a></sup>. In the two beats before each chorus the track breaks down into a snare roll and a riser before the drop, mirroring the build-up in the delay itself.</p>
 </section>
 <figure>
   <img src="../assets/delayed/01-five-days.svg" alt="Five stacked line charts of surface transit delay over 24 hours for the five days on the record, with chorus regions shaded where the smoothed delay exceeds 68 percent of the day's maximum." loading="lazy">
@@ -89,8 +89,8 @@
 </figure>
 
 <section>
-<h2>Each day sings in its own key</h2>
-<p>The key is chosen by the day's mean surface delay, from bright modes to dark: under 40 s lydian, under 70 ionian, under 100 dorian, under 130 aeolian, otherwise phrygian<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<h2>The key of each day</h2>
+<p>Each day is played in its own key, chosen by the day's mean surface delay and running from bright modes to dark: under 40 s lydian, under 70 ionian, under 100 dorian, under 130 aeolian, otherwise phrygian<sup class="cite"><a href="#r2">2</a></sup>.</p>
 </section>
 <table class="tbl"><caption>The five tracks</caption>
 <thead><tr><th>day</th><th class="n">stop events</th><th class="n">mean surface delay</th><th>key</th><th>liner note</th></tr></thead>
@@ -102,7 +102,7 @@
 <tr><td><b>The Meltdown</b> · 30 Apr 2025</td><td class="n">810 798</td><td class="n hi">164 s</td><td>D phrygian</td><td>the city in distress</td></tr>
 </tbody></table>
 <section>
-<p>Production notes, for the record: the groove swings at about 58 % shuffle, everything melodic is side-chained to the metro's kick, the bassline walks chromatically into every chord change, the arrangement varies in eight-beat blocks so long off-peak stretches stay alive, and the mix is stereo (plucks left, arpeggio right, pads wide) with a −4.5 dB high shelf at 6 kHz. Title and structure are a loving homage to the disco-revival tradition. No audio was sampled. Any resemblance to an actual banger is purely statistical<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p>Beyond the data mapping, the groove swings at about 58 % shuffle, everything melodic is side-chained to the metro's kick, and the bassline walks chromatically into every chord change. The arrangement varies in eight-beat blocks so that long off-peak stretches stay alive, and the mix is stereo, with plucks left, the arpeggio right and pads wide, and a −4.5 dB high shelf at 6 kHz. The title and structure are a loving homage to the disco-revival tradition, and no audio was sampled. Any resemblance to an actual banger is purely statistical<sup class="cite"><a href="#r2">2</a></sup>.</p>
 </section>
 
 <section class="refs" id="refs">

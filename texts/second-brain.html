@@ -29,7 +29,7 @@
 <header class="text-head">
   <p class="kicker">Knowledge engineering · 2026 · private repository</p>
   <h1>A wiki that an agent <em>keeps</em></h1>
-  <p class="deck">Not retrieval. Retrieval re-derives knowledge from raw documents on every question and nothing accumulates. Here the agent reads a source once, extracts what matters, and integrates it into a persistent, interlinked wiki: updating pages, strengthening claims, flagging contradictions. Obsidian is the IDE, the LLM is the programmer, the wiki is the codebase.</p>
+  <p class="deck">Retrieval re-derives knowledge from raw documents on every question, and nothing accumulates. In this wiki the agent reads a source once, extracts what matters and integrates it into a persistent, interlinked wiki, updating existing pages, strengthening claims and flagging contradictions. Obsidian serves as the IDE, the LLM as the programmer and the wiki as the codebase.</p>
   <dl class="facts">
     <div><dt>pages</dt><dd>739 <small>8 144 wikilinks · 1 September 2026</small></dd></div>
     <div><dt>primary sources ingested</dt><dd>336 <small>books, papers, articles, transcripts</small></dd></div>
@@ -41,20 +41,20 @@
 
 
 <section>
-<h2>How it works</h2>
-<p>Three layers with different owners. Raw sources are mine and immutable; the agent reads them and never edits them. The wiki is the agent's: it creates, updates and prunes pages. The schema, the file that tells the agent what a page is, how to link, when to split, is co-evolved by both of us as we learn what works<sup class="cite"><a href="#r1">1</a></sup>. An index is generated from the pages rather than maintained by hand, and a log records every change, append-only. The pattern is Karpathy's LLM-wiki idea with a schema adapted from an open Obsidian second-brain layout<sup class="cite"><a href="#r2">2</a></sup><sup class="cite"><a href="#r3">3</a></sup>.</p>
+<h2>Three layers, a schema and the ingest step</h2>
+<p>The vault has three layers with different owners. Raw sources are mine and immutable; the agent reads them and never edits them. The wiki belongs to the agent, which creates, updates and prunes its pages. The schema, the file that tells the agent what a page is, how to link and when to split, is co-evolved by both of us as we learn what works<sup class="cite"><a href="#r1">1</a></sup>. An index is generated from the pages rather than maintained by hand, and an append-only log records every change. The pattern is Karpathy's LLM-wiki idea with a schema adapted from an open Obsidian second-brain layout<sup class="cite"><a href="#r2">2</a></sup><sup class="cite"><a href="#r3">3</a></sup>.</p>
 <p>Ingesting one source means reading it, writing a summary, updating five to fifteen existing pages, updating the index, appending to the log, and reporting what was touched and what contradicted what. Contradictions between sources are recorded on the page, never smoothed into a consensus, and coverage gaps have to be marked explicitly so they can be closed later from a different source<sup class="cite"><a href="#r1">1</a></sup>.</p>
 </section>
 
 <section>
-<h2>What it found that I did not</h2>
-<p>Two things from the standards-and-regulation shelf. NIST AI 600-1 frames memorisation-driven data leakage without mentioning decoding parameters anywhere, while the setting most likely to leak fine-tuned data is a decoding parameter. And the EU GPAI Code of Practice asks for reproducibility in one appendix and forbids reproducing training data in another. Neither is a contradiction inside one document; both only show up when two documents are on the same page with a link between them<sup class="cite"><a href="#r4">4</a></sup>.</p>
+<h2>Two findings from the standards shelf</h2>
+<p>On the standards-and-regulation shelf the wiki surfaced two things I had not noticed. NIST AI 600-1 frames memorisation-driven data leakage without mentioning decoding parameters anywhere, while the setting most likely to leak fine-tuned data is a decoding parameter. And the EU GPAI Code of Practice asks for reproducibility in one appendix and forbids reproducing training data in another. Neither is a contradiction inside one document; both only show up when two documents are on the same page with a link between them<sup class="cite"><a href="#r4">4</a></sup>.</p>
 </section>
 
 <section>
-<h2>The quotation that was not there</h2>
-<p>A quotation survived several passes because it matched what the brief was looking for. It was fabricated. The fix was a tool, not a rule: <code>quote.py</code> prints the surrounding sentence from the source's own text for every quotation on a page, so a quote either has a neighbourhood or it does not, and the fabrication is a regression test for it<sup class="cite"><a href="#r5">5</a></sup>. The wiki also lints itself: orphan pages, broken links, sprawl, stale seeds, index drift, all machine-checked.</p>
-<p>One build ran thirteen subagents in parallel and then had the wiki audit its own construction. The verdict, written by a page that had been compiled that morning from a database textbook, was that the single-writer discipline was correct and one layer too shallow. I have not had a better code review.</p>
+<h2>A fabricated quotation, and the checks that followed</h2>
+<p>A fabricated quotation survived several passes because it matched what the brief was looking for. The fix was a tool rather than a rule: <code>quote.py</code> prints the surrounding sentence from the source's own text for every quotation on a page, so a quote either has a neighbourhood or it does not, and the fabrication is a regression test for it<sup class="cite"><a href="#r5">5</a></sup>. The wiki also lints itself, with machine checks for orphan pages, broken links, sprawl, stale seeds and index drift.</p>
+<p>One build ran thirteen subagents in parallel and then had the wiki audit its own construction, which produced a code review as good as any I have had. The verdict, written by a page that had been compiled that morning from a database textbook, was that the single-writer discipline was correct and one layer too shallow.</p>
 </section>
 
 <section class="refs" id="refs">
