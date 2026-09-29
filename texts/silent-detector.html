@@ -80,7 +80,7 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 
 <section>
 <h2>Held-out AUC of the run-time features</h2>
-<figure>
+<figure data-chart="../assets/detector/charts.json#auc">
   <img src="../assets/detector/01-auc.svg" alt="Horizontal bars of held-out AUC for four feature sets and two model families; all between 0.43 and 0.64, with 0.5 marked as coin flip and the agreement rule at 0.55." loading="lazy">
   <figcaption><b>fig. 1</b> · Held-out AUC (GroupKFold by question, 5 folds) for logistic regression and gradient boosting on each feature set, 3 704 numeric answers from 87 questions. The dotted line is the plain rule "forward only when all repeats agree".</figcaption>
 </figure>
@@ -90,7 +90,7 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 
 <section>
 <h2>SQL shape across warehouses</h2>
-<figure>
+<figure data-chart="../assets/detector/charts.json#transfer">
   <img src="../assets/detector/02-transfer.svg" alt="A three by three matrix of AUC values for the SQL-shape model trained on one pack and tested on another; off-diagonal values between 0.41 and 0.62, and the ecommerce and taxi diagonals below 0.5." loading="lazy">
   <figcaption><b>fig. 2</b> · Gradient boosting on SQL-shape features, trained on one warehouse's pack and scored on the others. Diagonal: held-out questions within the same pack. Values below 0.5 mean the learned pattern points the wrong way on the new warehouse.</figcaption>
 </figure>
@@ -118,6 +118,6 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 </footer>
 </article>
 
-
+<script src="../assets/charts.js" defer></script>
 </body>
 </html>

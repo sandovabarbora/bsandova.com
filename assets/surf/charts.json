@@ -1,0 +1,3190 @@
+{
+ "ericeira-92-days": {
+  "alt": "Three panels over 92 days at Ericeira: daily maximum swell height with the 1.0–2.5 m band and five surfable days marked; mean period with the 8-second line; wind with the 25 km/h line.",
+  "layout": "rows",
+  "legend": [
+   {
+    "label": "clears the rule",
+    "c": "#1f64ad",
+    "shape": "o"
+   },
+   {
+    "label": "height band 1.0–2.5 m",
+    "c": "#1f64ad",
+    "shape": "box",
+    "o": 0.25
+   },
+   {
+    "label": "rule threshold",
+    "c": "grey",
+    "dash": "dot"
+   }
+  ],
+  "panels": [
+   {
+    "title": "daily max swell · m",
+    "h": 230,
+    "x": {
+     "kind": "linear",
+     "domain": [
+      -0.5,
+      91.5
+     ],
+     "ticks": [
+      17,
+      48,
+      79
+     ],
+     "tickLabels": {
+      "17": "1 Jul",
+      "48": "1 Aug",
+      "79": "1 Sep"
+     }
+    },
+    "y": {
+     "kind": "linear",
+     "domain": [
+      0,
+      3
+     ],
+     "ticks": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "tickfmt": {
+      "dp": 1
+     }
+    },
+    "marks": [
+     {
+      "type": "area",
+      "name": "band",
+      "c": "#1f64ad",
+      "o": 0.1,
+      "notip": true,
+      "pts": [
+       [
+        -0.5,
+        1.0,
+        2.5
+       ],
+       [
+        91.5,
+        1.0,
+        2.5
+       ]
+      ]
+     },
+     {
+      "type": "dots",
+      "r": 0.01,
+      "o": 0,
+      "c": "ink",
+      "pts": [
+       {
+        "x": 0,
+        "y": 1.22,
+        "tip": "14 June\nmax swell 1.22 m\nmean period 8.02 s\nno wind data\nclears the rule"
+       },
+       {
+        "x": 1,
+        "y": 1.02,
+        "tip": "15 June\nmax swell 1.02 m\nmean period 6.05 s\nno wind data\nfails on period"
+       },
+       {
+        "x": 2,
+        "y": 0.78,
+        "tip": "16 June\nmax swell 0.78 m\nmean period 7.32 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 3,
+        "y": 1.36,
+        "tip": "17 June\nmax swell 1.36 m\nmean period 8.62 s\nno wind data\nclears the rule"
+       },
+       {
+        "x": 4,
+        "y": 1.24,
+        "tip": "18 June\nmax swell 1.24 m\nmean period 7.55 s\nno wind data\nfails on period"
+       },
+       {
+        "x": 5,
+        "y": 0.84,
+        "tip": "19 June\nmax swell 0.84 m\nmean period 6.71 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 6,
+        "y": 0.9,
+        "tip": "20 June\nmax swell 0.90 m\nmean period 6.48 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 7,
+        "y": 0.52,
+        "tip": "21 June\nmax swell 0.52 m\nmean period 5.85 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 8,
+        "y": 0.46,
+        "tip": "22 June\nmax swell 0.46 m\nmean period 7.59 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 9,
+        "y": 0.86,
+        "tip": "23 June\nmax swell 0.86 m\nmean period 6.88 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 10,
+        "y": 0.62,
+        "tip": "24 June\nmax swell 0.62 m\nmean period 5.63 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 11,
+        "y": 0.62,
+        "tip": "25 June\nmax swell 0.62 m\nmean period 4.67 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 12,
+        "y": 1.14,
+        "tip": "26 June\nmax swell 1.14 m\nmean period 5.21 s\nno wind data\nfails on period"
+       },
+       {
+        "x": 13,
+        "y": 1.34,
+        "tip": "27 June\nmax swell 1.34 m\nmean period 6.63 s\nno wind data\nfails on period"
+       },
+       {
+        "x": 14,
+        "y": 1.06,
+        "tip": "28 June\nmax swell 1.06 m\nmean period 6.48 s\nno wind data\nfails on period"
+       },
+       {
+        "x": 15,
+        "y": 2.54,
+        "tip": "29 June\nmax swell 2.54 m\nmean period 8.80 s\nno wind data\nfails on height"
+       },
+       {
+        "x": 16,
+        "y": 2.34,
+        "tip": "30 June\nmax swell 2.34 m\nmean period 7.61 s\nno wind data\nfails on period"
+       },
+       {
+        "x": 17,
+        "y": 2.32,
+        "tip": "1 July\nmax swell 2.32 m\nmean period 7.16 s\nno wind data\nfails on period"
+       },
+       {
+        "x": 18,
+        "y": 2.76,
+        "tip": "2 July\nmax swell 2.76 m\nmean period 7.32 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 19,
+        "y": 1.5,
+        "tip": "3 July\nmax swell 1.50 m\nmean period 6.36 s\nno wind data\nfails on period"
+       },
+       {
+        "x": 20,
+        "y": 1.12,
+        "tip": "4 July\nmax swell 1.12 m\nmean period 6.53 s\nno wind data\nfails on period"
+       },
+       {
+        "x": 21,
+        "y": 0.66,
+        "tip": "5 July\nmax swell 0.66 m\nmean period 7.71 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 22,
+        "y": 0.7,
+        "tip": "6 July\nmax swell 0.70 m\nmean period 6.55 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 23,
+        "y": 0.62,
+        "tip": "7 July\nmax swell 0.62 m\nmean period 4.33 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 24,
+        "y": 0.84,
+        "tip": "8 July\nmax swell 0.84 m\nmean period 4.71 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 25,
+        "y": 0.7,
+        "tip": "9 July\nmax swell 0.70 m\nmean period 3.95 s\nwind 16.6 km/h\nfails on height, period"
+       },
+       {
+        "x": 26,
+        "y": 0.66,
+        "tip": "10 July\nmax swell 0.66 m\nmean period 4.89 s\nwind 17.5 km/h\nfails on height, period"
+       },
+       {
+        "x": 27,
+        "y": 0.96,
+        "tip": "11 July\nmax swell 0.96 m\nmean period 8.78 s\nwind 13.7 km/h\nfails on height"
+       },
+       {
+        "x": 28,
+        "y": 1.16,
+        "tip": "12 July\nmax swell 1.16 m\nmean period 7.43 s\nwind 14.8 km/h\nfails on period"
+       },
+       {
+        "x": 29,
+        "y": 0.98,
+        "tip": "13 July\nmax swell 0.98 m\nmean period 5.98 s\nwind 13.2 km/h\nfails on height, period"
+       },
+       {
+        "x": 30,
+        "y": 0.6,
+        "tip": "14 July\nmax swell 0.60 m\nmean period 4.49 s\nwind 10.9 km/h\nfails on height, period"
+       },
+       {
+        "x": 31,
+        "y": 0.5,
+        "tip": "15 July\nmax swell 0.50 m\nmean period 7.27 s\nwind 12.2 km/h\nfails on height, period"
+       },
+       {
+        "x": 32,
+        "y": 0.58,
+        "tip": "16 July\nmax swell 0.58 m\nmean period 6.41 s\nwind 12.1 km/h\nfails on height, period"
+       },
+       {
+        "x": 33,
+        "y": 0.48,
+        "tip": "17 July\nmax swell 0.48 m\nmean period 5.69 s\nwind 16.9 km/h\nfails on height, period"
+       },
+       {
+        "x": 34,
+        "y": 0.6,
+        "tip": "18 July\nmax swell 0.60 m\nmean period 3.48 s\nwind 17.0 km/h\nfails on height, period"
+       },
+       {
+        "x": 35,
+        "y": 0.94,
+        "tip": "19 July\nmax swell 0.94 m\nmean period 4.53 s\nwind 16.0 km/h\nfails on height, period"
+       },
+       {
+        "x": 36,
+        "y": 0.94,
+        "tip": "20 July\nmax swell 0.94 m\nmean period 5.03 s\nwind 14.4 km/h\nfails on height, period"
+       },
+       {
+        "x": 37,
+        "y": 1.06,
+        "tip": "21 July\nmax swell 1.06 m\nmean period 5.92 s\nwind 10.7 km/h\nfails on period"
+       },
+       {
+        "x": 38,
+        "y": 0.86,
+        "tip": "22 July\nmax swell 0.86 m\nmean period 5.84 s\nwind 10.9 km/h\nfails on height, period"
+       },
+       {
+        "x": 39,
+        "y": 0.84,
+        "tip": "23 July\nmax swell 0.84 m\nmean period 5.85 s\nwind 13.7 km/h\nfails on height, period"
+       },
+       {
+        "x": 40,
+        "y": 1.04,
+        "tip": "24 July\nmax swell 1.04 m\nmean period 4.75 s\nwind 18.7 km/h\nfails on period"
+       },
+       {
+        "x": 41,
+        "y": 1.42,
+        "tip": "25 July\nmax swell 1.42 m\nmean period 5.56 s\nwind 21.2 km/h\nfails on period"
+       },
+       {
+        "x": 42,
+        "y": 1.26,
+        "tip": "26 July\nmax swell 1.26 m\nmean period 5.93 s\nwind 20.1 km/h\nfails on period"
+       },
+       {
+        "x": 43,
+        "y": 1.3,
+        "tip": "27 July\nmax swell 1.30 m\nmean period 5.87 s\nwind 6.8 km/h\nfails on period"
+       },
+       {
+        "x": 44,
+        "y": 1.34,
+        "tip": "28 July\nmax swell 1.34 m\nmean period 7.33 s\nwind 12.4 km/h\nfails on period"
+       },
+       {
+        "x": 45,
+        "y": 0.86,
+        "tip": "29 July\nmax swell 0.86 m\nmean period 6.25 s\nwind 13.4 km/h\nfails on height, period"
+       },
+       {
+        "x": 46,
+        "y": 0.62,
+        "tip": "30 July\nmax swell 0.62 m\nmean period 6.60 s\nwind 15.7 km/h\nfails on height, period"
+       },
+       {
+        "x": 47,
+        "y": 0.58,
+        "tip": "31 July\nmax swell 0.58 m\nmean period 8.08 s\nwind 19.0 km/h\nfails on height"
+       },
+       {
+        "x": 48,
+        "y": 0.82,
+        "tip": "1 August\nmax swell 0.82 m\nmean period 6.33 s\nwind 16.3 km/h\nfails on height, period"
+       },
+       {
+        "x": 49,
+        "y": 0.68,
+        "tip": "2 August\nmax swell 0.68 m\nmean period 6.00 s\nwind 13.9 km/h\nfails on height, period"
+       },
+       {
+        "x": 50,
+        "y": 0.88,
+        "tip": "3 August\nmax swell 0.88 m\nmean period 5.54 s\nwind 12.7 km/h\nfails on height, period"
+       },
+       {
+        "x": 51,
+        "y": 0.88,
+        "tip": "4 August\nmax swell 0.88 m\nmean period 5.67 s\nwind 11.2 km/h\nfails on height, period"
+       },
+       {
+        "x": 52,
+        "y": 0.88,
+        "tip": "5 August\nmax swell 0.88 m\nmean period 7.75 s\nwind 17.6 km/h\nfails on height, period"
+       },
+       {
+        "x": 53,
+        "y": 0.88,
+        "tip": "6 August\nmax swell 0.88 m\nmean period 6.78 s\nwind 18.6 km/h\nfails on height, period"
+       },
+       {
+        "x": 54,
+        "y": 0.9,
+        "tip": "7 August\nmax swell 0.90 m\nmean period 6.75 s\nwind 15.2 km/h\nfails on height, period"
+       },
+       {
+        "x": 55,
+        "y": 0.7,
+        "tip": "8 August\nmax swell 0.70 m\nmean period 6.28 s\nwind 12.2 km/h\nfails on height, period"
+       },
+       {
+        "x": 56,
+        "y": 0.98,
+        "tip": "9 August\nmax swell 0.98 m\nmean period 5.43 s\nwind 14.5 km/h\nfails on height, period"
+       },
+       {
+        "x": 57,
+        "y": 0.82,
+        "tip": "10 August\nmax swell 0.82 m\nmean period 6.43 s\nwind 18.4 km/h\nfails on height, period"
+       },
+       {
+        "x": 58,
+        "y": 0.86,
+        "tip": "11 August\nmax swell 0.86 m\nmean period 7.31 s\nwind 16.5 km/h\nfails on height, period"
+       },
+       {
+        "x": 59,
+        "y": 0.96,
+        "tip": "12 August\nmax swell 0.96 m\nmean period 8.14 s\nwind 15.2 km/h\nfails on height"
+       },
+       {
+        "x": 60,
+        "y": 1.04,
+        "tip": "13 August\nmax swell 1.04 m\nmean period 7.96 s\nwind 17.6 km/h\nfails on period"
+       },
+       {
+        "x": 61,
+        "y": 0.94,
+        "tip": "14 August\nmax swell 0.94 m\nmean period 6.55 s\nwind 20.6 km/h\nfails on height, period"
+       },
+       {
+        "x": 62,
+        "y": 2.44,
+        "tip": "15 August\nmax swell 2.44 m\nmean period 6.79 s\nwind 17.4 km/h\nfails on period"
+       },
+       {
+        "x": 63,
+        "y": 2.32,
+        "tip": "16 August\nmax swell 2.32 m\nmean period 6.51 s\nwind 8.1 km/h\nfails on period"
+       },
+       {
+        "x": 64,
+        "y": 1.5,
+        "tip": "17 August\nmax swell 1.50 m\nmean period 6.02 s\nwind 6.2 km/h\nfails on period"
+       },
+       {
+        "x": 65,
+        "y": 1.56,
+        "tip": "18 August\nmax swell 1.56 m\nmean period 6.15 s\nwind 11.2 km/h\nfails on period"
+       },
+       {
+        "x": 66,
+        "y": 0.9,
+        "tip": "19 August\nmax swell 0.90 m\nmean period 5.24 s\nwind 9.1 km/h\nfails on height, period"
+       },
+       {
+        "x": 67,
+        "y": 1.34,
+        "tip": "20 August\nmax swell 1.34 m\nmean period 6.89 s\nwind 13.6 km/h\nfails on period"
+       },
+       {
+        "x": 68,
+        "y": 1.92,
+        "tip": "21 August\nmax swell 1.92 m\nmean period 7.58 s\nwind 21.6 km/h\nfails on period"
+       },
+       {
+        "x": 69,
+        "y": 1.56,
+        "tip": "22 August\nmax swell 1.56 m\nmean period 7.48 s\nwind 10.0 km/h\nfails on period"
+       },
+       {
+        "x": 70,
+        "y": 1.86,
+        "tip": "23 August\nmax swell 1.86 m\nmean period 7.65 s\nwind 26.2 km/h\nfails on period, wind"
+       },
+       {
+        "x": 71,
+        "y": 2.24,
+        "tip": "24 August\nmax swell 2.24 m\nmean period 6.25 s\nwind 20.4 km/h\nfails on period"
+       },
+       {
+        "x": 72,
+        "y": 1.44,
+        "tip": "25 August\nmax swell 1.44 m\nmean period 5.30 s\nwind 10.3 km/h\nfails on period"
+       },
+       {
+        "x": 73,
+        "y": 1.6,
+        "tip": "26 August\nmax swell 1.60 m\nmean period 5.13 s\nwind 21.0 km/h\nfails on period"
+       },
+       {
+        "x": 74,
+        "y": 2.06,
+        "tip": "27 August\nmax swell 2.06 m\nmean period 6.47 s\nwind 20.6 km/h\nfails on period"
+       },
+       {
+        "x": 75,
+        "y": 2.58,
+        "tip": "28 August\nmax swell 2.58 m\nmean period 8.27 s\nwind 10.9 km/h\nfails on height"
+       },
+       {
+        "x": 76,
+        "y": 2.04,
+        "tip": "29 August\nmax swell 2.04 m\nmean period 6.66 s\nwind 14.0 km/h\nfails on period"
+       },
+       {
+        "x": 77,
+        "y": 1.3,
+        "tip": "30 August\nmax swell 1.30 m\nmean period 6.69 s\nwind 17.7 km/h\nfails on period"
+       },
+       {
+        "x": 78,
+        "y": 1.46,
+        "tip": "31 August\nmax swell 1.46 m\nmean period 7.46 s\nwind 23.7 km/h\nfails on period"
+       },
+       {
+        "x": 79,
+        "y": 1.58,
+        "tip": "1 September\nmax swell 1.58 m\nmean period 7.38 s\nwind 21.7 km/h\nfails on period"
+       },
+       {
+        "x": 80,
+        "y": 1.18,
+        "tip": "2 September\nmax swell 1.18 m\nmean period 5.49 s\nwind 11.7 km/h\nfails on period"
+       },
+       {
+        "x": 81,
+        "y": 0.84,
+        "tip": "3 September\nmax swell 0.84 m\nmean period 4.56 s\nwind 4.7 km/h\nfails on height, period"
+       },
+       {
+        "x": 82,
+        "y": 0.72,
+        "tip": "4 September\nmax swell 0.72 m\nmean period 7.05 s\nwind 4.7 km/h\nfails on height, period"
+       },
+       {
+        "x": 83,
+        "y": 0.94,
+        "tip": "5 September\nmax swell 0.94 m\nmean period 8.14 s\nwind 6.5 km/h\nfails on height"
+       },
+       {
+        "x": 84,
+        "y": 1.5,
+        "tip": "6 September\nmax swell 1.50 m\nmean period 8.78 s\nwind 15.7 km/h\nclears the rule"
+       },
+       {
+        "x": 85,
+        "y": 1.58,
+        "tip": "7 September\nmax swell 1.58 m\nmean period 9.97 s\nwind 20.8 km/h\nclears the rule"
+       },
+       {
+        "x": 86,
+        "y": 1.36,
+        "tip": "8 September\nmax swell 1.36 m\nmean period 7.33 s\nwind 16.3 km/h\nfails on period"
+       },
+       {
+        "x": 87,
+        "y": 1.56,
+        "tip": "9 September\nmax swell 1.56 m\nmean period 6.74 s\nwind 21.8 km/h\nfails on period"
+       },
+       {
+        "x": 88,
+        "y": 1.64,
+        "tip": "10 September\nmax swell 1.64 m\nmean period 7.45 s\nwind 16.1 km/h\nfails on period"
+       },
+       {
+        "x": 89,
+        "y": 0.94,
+        "tip": "11 September\nmax swell 0.94 m\nmean period 4.60 s\nwind 10.8 km/h\nfails on height, period"
+       },
+       {
+        "x": 90,
+        "y": 1.18,
+        "tip": "12 September\nmax swell 1.18 m\nmean period 5.62 s\nwind 5.5 km/h\nfails on period"
+       },
+       {
+        "x": 91,
+        "y": 1.38,
+        "tip": "13 September\nmax swell 1.38 m\nmean period 9.80 s\nwind 5.9 km/h\nclears the rule"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "swell_max",
+      "c": "ink",
+      "w": 1.5,
+      "notip": true,
+      "pts": [
+       [
+        0,
+        1.22
+       ],
+       [
+        1,
+        1.02
+       ],
+       [
+        2,
+        0.78
+       ],
+       [
+        3,
+        1.36
+       ],
+       [
+        4,
+        1.24
+       ],
+       [
+        5,
+        0.84
+       ],
+       [
+        6,
+        0.9
+       ],
+       [
+        7,
+        0.52
+       ],
+       [
+        8,
+        0.46
+       ],
+       [
+        9,
+        0.86
+       ],
+       [
+        10,
+        0.62
+       ],
+       [
+        11,
+        0.62
+       ],
+       [
+        12,
+        1.14
+       ],
+       [
+        13,
+        1.34
+       ],
+       [
+        14,
+        1.06
+       ],
+       [
+        15,
+        2.54
+       ],
+       [
+        16,
+        2.34
+       ],
+       [
+        17,
+        2.32
+       ],
+       [
+        18,
+        2.76
+       ],
+       [
+        19,
+        1.5
+       ],
+       [
+        20,
+        1.12
+       ],
+       [
+        21,
+        0.66
+       ],
+       [
+        22,
+        0.7
+       ],
+       [
+        23,
+        0.62
+       ],
+       [
+        24,
+        0.84
+       ],
+       [
+        25,
+        0.7
+       ],
+       [
+        26,
+        0.66
+       ],
+       [
+        27,
+        0.96
+       ],
+       [
+        28,
+        1.16
+       ],
+       [
+        29,
+        0.98
+       ],
+       [
+        30,
+        0.6
+       ],
+       [
+        31,
+        0.5
+       ],
+       [
+        32,
+        0.58
+       ],
+       [
+        33,
+        0.48
+       ],
+       [
+        34,
+        0.6
+       ],
+       [
+        35,
+        0.94
+       ],
+       [
+        36,
+        0.94
+       ],
+       [
+        37,
+        1.06
+       ],
+       [
+        38,
+        0.86
+       ],
+       [
+        39,
+        0.84
+       ],
+       [
+        40,
+        1.04
+       ],
+       [
+        41,
+        1.42
+       ],
+       [
+        42,
+        1.26
+       ],
+       [
+        43,
+        1.3
+       ],
+       [
+        44,
+        1.34
+       ],
+       [
+        45,
+        0.86
+       ],
+       [
+        46,
+        0.62
+       ],
+       [
+        47,
+        0.58
+       ],
+       [
+        48,
+        0.82
+       ],
+       [
+        49,
+        0.68
+       ],
+       [
+        50,
+        0.88
+       ],
+       [
+        51,
+        0.88
+       ],
+       [
+        52,
+        0.88
+       ],
+       [
+        53,
+        0.88
+       ],
+       [
+        54,
+        0.9
+       ],
+       [
+        55,
+        0.7
+       ],
+       [
+        56,
+        0.98
+       ],
+       [
+        57,
+        0.82
+       ],
+       [
+        58,
+        0.86
+       ],
+       [
+        59,
+        0.96
+       ],
+       [
+        60,
+        1.04
+       ],
+       [
+        61,
+        0.94
+       ],
+       [
+        62,
+        2.44
+       ],
+       [
+        63,
+        2.32
+       ],
+       [
+        64,
+        1.5
+       ],
+       [
+        65,
+        1.56
+       ],
+       [
+        66,
+        0.9
+       ],
+       [
+        67,
+        1.34
+       ],
+       [
+        68,
+        1.92
+       ],
+       [
+        69,
+        1.56
+       ],
+       [
+        70,
+        1.86
+       ],
+       [
+        71,
+        2.24
+       ],
+       [
+        72,
+        1.44
+       ],
+       [
+        73,
+        1.6
+       ],
+       [
+        74,
+        2.06
+       ],
+       [
+        75,
+        2.58
+       ],
+       [
+        76,
+        2.04
+       ],
+       [
+        77,
+        1.3
+       ],
+       [
+        78,
+        1.46
+       ],
+       [
+        79,
+        1.58
+       ],
+       [
+        80,
+        1.18
+       ],
+       [
+        81,
+        0.84
+       ],
+       [
+        82,
+        0.72
+       ],
+       [
+        83,
+        0.94
+       ],
+       [
+        84,
+        1.5
+       ],
+       [
+        85,
+        1.58
+       ],
+       [
+        86,
+        1.36
+       ],
+       [
+        87,
+        1.56
+       ],
+       [
+        88,
+        1.64
+       ],
+       [
+        89,
+        0.94
+       ],
+       [
+        90,
+        1.18
+       ],
+       [
+        91,
+        1.38
+       ]
+      ]
+     },
+     {
+      "type": "dots",
+      "c": "#1f64ad",
+      "r": 4.5,
+      "pts": [
+       {
+        "x": 0,
+        "y": 1.22,
+        "tip": "14 June\nmax swell 1.22 m\nmean period 8.02 s\nno wind data\nclears the rule"
+       },
+       {
+        "x": 3,
+        "y": 1.36,
+        "tip": "17 June\nmax swell 1.36 m\nmean period 8.62 s\nno wind data\nclears the rule"
+       },
+       {
+        "x": 84,
+        "y": 1.5,
+        "tip": "6 September\nmax swell 1.50 m\nmean period 8.78 s\nwind 15.7 km/h\nclears the rule"
+       },
+       {
+        "x": 85,
+        "y": 1.58,
+        "tip": "7 September\nmax swell 1.58 m\nmean period 9.97 s\nwind 20.8 km/h\nclears the rule"
+       },
+       {
+        "x": 91,
+        "y": 1.38,
+        "tip": "13 September\nmax swell 1.38 m\nmean period 9.80 s\nwind 5.9 km/h\nclears the rule"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "title": "mean period · s",
+    "h": 130,
+    "x": {
+     "kind": "linear",
+     "domain": [
+      -0.5,
+      91.5
+     ],
+     "ticks": [
+      17,
+      48,
+      79
+     ],
+     "tickLabels": {
+      "17": "1 Jul",
+      "48": "1 Aug",
+      "79": "1 Sep"
+     }
+    },
+    "y": {
+     "kind": "linear",
+     "domain": [
+      3,
+      11
+     ],
+     "ticks": [
+      4,
+      6,
+      8,
+      10
+     ],
+     "tickfmt": {
+      "dp": 0,
+      "pre": " "
+     }
+    },
+    "marks": [
+     {
+      "type": "dots",
+      "r": 0.01,
+      "o": 0,
+      "c": "ink",
+      "pts": [
+       {
+        "x": 0,
+        "y": 8.02,
+        "tip": "14 June\nmax swell 1.22 m\nmean period 8.02 s\nno wind data\nclears the rule"
+       },
+       {
+        "x": 1,
+        "y": 6.05,
+        "tip": "15 June\nmax swell 1.02 m\nmean period 6.05 s\nno wind data\nfails on period"
+       },
+       {
+        "x": 2,
+        "y": 7.32,
+        "tip": "16 June\nmax swell 0.78 m\nmean period 7.32 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 3,
+        "y": 8.62,
+        "tip": "17 June\nmax swell 1.36 m\nmean period 8.62 s\nno wind data\nclears the rule"
+       },
+       {
+        "x": 4,
+        "y": 7.55,
+        "tip": "18 June\nmax swell 1.24 m\nmean period 7.55 s\nno wind data\nfails on period"
+       },
+       {
+        "x": 5,
+        "y": 6.71,
+        "tip": "19 June\nmax swell 0.84 m\nmean period 6.71 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 6,
+        "y": 6.48,
+        "tip": "20 June\nmax swell 0.90 m\nmean period 6.48 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 7,
+        "y": 5.85,
+        "tip": "21 June\nmax swell 0.52 m\nmean period 5.85 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 8,
+        "y": 7.59,
+        "tip": "22 June\nmax swell 0.46 m\nmean period 7.59 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 9,
+        "y": 6.88,
+        "tip": "23 June\nmax swell 0.86 m\nmean period 6.88 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 10,
+        "y": 5.63,
+        "tip": "24 June\nmax swell 0.62 m\nmean period 5.63 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 11,
+        "y": 4.67,
+        "tip": "25 June\nmax swell 0.62 m\nmean period 4.67 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 12,
+        "y": 5.21,
+        "tip": "26 June\nmax swell 1.14 m\nmean period 5.21 s\nno wind data\nfails on period"
+       },
+       {
+        "x": 13,
+        "y": 6.63,
+        "tip": "27 June\nmax swell 1.34 m\nmean period 6.63 s\nno wind data\nfails on period"
+       },
+       {
+        "x": 14,
+        "y": 6.48,
+        "tip": "28 June\nmax swell 1.06 m\nmean period 6.48 s\nno wind data\nfails on period"
+       },
+       {
+        "x": 15,
+        "y": 8.8,
+        "tip": "29 June\nmax swell 2.54 m\nmean period 8.80 s\nno wind data\nfails on height"
+       },
+       {
+        "x": 16,
+        "y": 7.61,
+        "tip": "30 June\nmax swell 2.34 m\nmean period 7.61 s\nno wind data\nfails on period"
+       },
+       {
+        "x": 17,
+        "y": 7.16,
+        "tip": "1 July\nmax swell 2.32 m\nmean period 7.16 s\nno wind data\nfails on period"
+       },
+       {
+        "x": 18,
+        "y": 7.32,
+        "tip": "2 July\nmax swell 2.76 m\nmean period 7.32 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 19,
+        "y": 6.36,
+        "tip": "3 July\nmax swell 1.50 m\nmean period 6.36 s\nno wind data\nfails on period"
+       },
+       {
+        "x": 20,
+        "y": 6.53,
+        "tip": "4 July\nmax swell 1.12 m\nmean period 6.53 s\nno wind data\nfails on period"
+       },
+       {
+        "x": 21,
+        "y": 7.71,
+        "tip": "5 July\nmax swell 0.66 m\nmean period 7.71 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 22,
+        "y": 6.55,
+        "tip": "6 July\nmax swell 0.70 m\nmean period 6.55 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 23,
+        "y": 4.33,
+        "tip": "7 July\nmax swell 0.62 m\nmean period 4.33 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 24,
+        "y": 4.71,
+        "tip": "8 July\nmax swell 0.84 m\nmean period 4.71 s\nno wind data\nfails on height, period"
+       },
+       {
+        "x": 25,
+        "y": 3.95,
+        "tip": "9 July\nmax swell 0.70 m\nmean period 3.95 s\nwind 16.6 km/h\nfails on height, period"
+       },
+       {
+        "x": 26,
+        "y": 4.89,
+        "tip": "10 July\nmax swell 0.66 m\nmean period 4.89 s\nwind 17.5 km/h\nfails on height, period"
+       },
+       {
+        "x": 27,
+        "y": 8.78,
+        "tip": "11 July\nmax swell 0.96 m\nmean period 8.78 s\nwind 13.7 km/h\nfails on height"
+       },
+       {
+        "x": 28,
+        "y": 7.43,
+        "tip": "12 July\nmax swell 1.16 m\nmean period 7.43 s\nwind 14.8 km/h\nfails on period"
+       },
+       {
+        "x": 29,
+        "y": 5.98,
+        "tip": "13 July\nmax swell 0.98 m\nmean period 5.98 s\nwind 13.2 km/h\nfails on height, period"
+       },
+       {
+        "x": 30,
+        "y": 4.49,
+        "tip": "14 July\nmax swell 0.60 m\nmean period 4.49 s\nwind 10.9 km/h\nfails on height, period"
+       },
+       {
+        "x": 31,
+        "y": 7.27,
+        "tip": "15 July\nmax swell 0.50 m\nmean period 7.27 s\nwind 12.2 km/h\nfails on height, period"
+       },
+       {
+        "x": 32,
+        "y": 6.41,
+        "tip": "16 July\nmax swell 0.58 m\nmean period 6.41 s\nwind 12.1 km/h\nfails on height, period"
+       },
+       {
+        "x": 33,
+        "y": 5.69,
+        "tip": "17 July\nmax swell 0.48 m\nmean period 5.69 s\nwind 16.9 km/h\nfails on height, period"
+       },
+       {
+        "x": 34,
+        "y": 3.48,
+        "tip": "18 July\nmax swell 0.60 m\nmean period 3.48 s\nwind 17.0 km/h\nfails on height, period"
+       },
+       {
+        "x": 35,
+        "y": 4.53,
+        "tip": "19 July\nmax swell 0.94 m\nmean period 4.53 s\nwind 16.0 km/h\nfails on height, period"
+       },
+       {
+        "x": 36,
+        "y": 5.03,
+        "tip": "20 July\nmax swell 0.94 m\nmean period 5.03 s\nwind 14.4 km/h\nfails on height, period"
+       },
+       {
+        "x": 37,
+        "y": 5.92,
+        "tip": "21 July\nmax swell 1.06 m\nmean period 5.92 s\nwind 10.7 km/h\nfails on period"
+       },
+       {
+        "x": 38,
+        "y": 5.84,
+        "tip": "22 July\nmax swell 0.86 m\nmean period 5.84 s\nwind 10.9 km/h\nfails on height, period"
+       },
+       {
+        "x": 39,
+        "y": 5.85,
+        "tip": "23 July\nmax swell 0.84 m\nmean period 5.85 s\nwind 13.7 km/h\nfails on height, period"
+       },
+       {
+        "x": 40,
+        "y": 4.75,
+        "tip": "24 July\nmax swell 1.04 m\nmean period 4.75 s\nwind 18.7 km/h\nfails on period"
+       },
+       {
+        "x": 41,
+        "y": 5.56,
+        "tip": "25 July\nmax swell 1.42 m\nmean period 5.56 s\nwind 21.2 km/h\nfails on period"
+       },
+       {
+        "x": 42,
+        "y": 5.93,
+        "tip": "26 July\nmax swell 1.26 m\nmean period 5.93 s\nwind 20.1 km/h\nfails on period"
+       },
+       {
+        "x": 43,
+        "y": 5.87,
+        "tip": "27 July\nmax swell 1.30 m\nmean period 5.87 s\nwind 6.8 km/h\nfails on period"
+       },
+       {
+        "x": 44,
+        "y": 7.33,
+        "tip": "28 July\nmax swell 1.34 m\nmean period 7.33 s\nwind 12.4 km/h\nfails on period"
+       },
+       {
+        "x": 45,
+        "y": 6.25,
+        "tip": "29 July\nmax swell 0.86 m\nmean period 6.25 s\nwind 13.4 km/h\nfails on height, period"
+       },
+       {
+        "x": 46,
+        "y": 6.6,
+        "tip": "30 July\nmax swell 0.62 m\nmean period 6.60 s\nwind 15.7 km/h\nfails on height, period"
+       },
+       {
+        "x": 47,
+        "y": 8.08,
+        "tip": "31 July\nmax swell 0.58 m\nmean period 8.08 s\nwind 19.0 km/h\nfails on height"
+       },
+       {
+        "x": 48,
+        "y": 6.33,
+        "tip": "1 August\nmax swell 0.82 m\nmean period 6.33 s\nwind 16.3 km/h\nfails on height, period"
+       },
+       {
+        "x": 49,
+        "y": 6.0,
+        "tip": "2 August\nmax swell 0.68 m\nmean period 6.00 s\nwind 13.9 km/h\nfails on height, period"
+       },
+       {
+        "x": 50,
+        "y": 5.54,
+        "tip": "3 August\nmax swell 0.88 m\nmean period 5.54 s\nwind 12.7 km/h\nfails on height, period"
+       },
+       {
+        "x": 51,
+        "y": 5.67,
+        "tip": "4 August\nmax swell 0.88 m\nmean period 5.67 s\nwind 11.2 km/h\nfails on height, period"
+       },
+       {
+        "x": 52,
+        "y": 7.75,
+        "tip": "5 August\nmax swell 0.88 m\nmean period 7.75 s\nwind 17.6 km/h\nfails on height, period"
+       },
+       {
+        "x": 53,
+        "y": 6.78,
+        "tip": "6 August\nmax swell 0.88 m\nmean period 6.78 s\nwind 18.6 km/h\nfails on height, period"
+       },
+       {
+        "x": 54,
+        "y": 6.75,
+        "tip": "7 August\nmax swell 0.90 m\nmean period 6.75 s\nwind 15.2 km/h\nfails on height, period"
+       },
+       {
+        "x": 55,
+        "y": 6.28,
+        "tip": "8 August\nmax swell 0.70 m\nmean period 6.28 s\nwind 12.2 km/h\nfails on height, period"
+       },
+       {
+        "x": 56,
+        "y": 5.43,
+        "tip": "9 August\nmax swell 0.98 m\nmean period 5.43 s\nwind 14.5 km/h\nfails on height, period"
+       },
+       {
+        "x": 57,
+        "y": 6.43,
+        "tip": "10 August\nmax swell 0.82 m\nmean period 6.43 s\nwind 18.4 km/h\nfails on height, period"
+       },
+       {
+        "x": 58,
+        "y": 7.31,
+        "tip": "11 August\nmax swell 0.86 m\nmean period 7.31 s\nwind 16.5 km/h\nfails on height, period"
+       },
+       {
+        "x": 59,
+        "y": 8.14,
+        "tip": "12 August\nmax swell 0.96 m\nmean period 8.14 s\nwind 15.2 km/h\nfails on height"
+       },
+       {
+        "x": 60,
+        "y": 7.96,
+        "tip": "13 August\nmax swell 1.04 m\nmean period 7.96 s\nwind 17.6 km/h\nfails on period"
+       },
+       {
+        "x": 61,
+        "y": 6.55,
+        "tip": "14 August\nmax swell 0.94 m\nmean period 6.55 s\nwind 20.6 km/h\nfails on height, period"
+       },
+       {
+        "x": 62,
+        "y": 6.79,
+        "tip": "15 August\nmax swell 2.44 m\nmean period 6.79 s\nwind 17.4 km/h\nfails on period"
+       },
+       {
+        "x": 63,
+        "y": 6.51,
+        "tip": "16 August\nmax swell 2.32 m\nmean period 6.51 s\nwind 8.1 km/h\nfails on period"
+       },
+       {
+        "x": 64,
+        "y": 6.02,
+        "tip": "17 August\nmax swell 1.50 m\nmean period 6.02 s\nwind 6.2 km/h\nfails on period"
+       },
+       {
+        "x": 65,
+        "y": 6.15,
+        "tip": "18 August\nmax swell 1.56 m\nmean period 6.15 s\nwind 11.2 km/h\nfails on period"
+       },
+       {
+        "x": 66,
+        "y": 5.24,
+        "tip": "19 August\nmax swell 0.90 m\nmean period 5.24 s\nwind 9.1 km/h\nfails on height, period"
+       },
+       {
+        "x": 67,
+        "y": 6.89,
+        "tip": "20 August\nmax swell 1.34 m\nmean period 6.89 s\nwind 13.6 km/h\nfails on period"
+       },
+       {
+        "x": 68,
+        "y": 7.58,
+        "tip": "21 August\nmax swell 1.92 m\nmean period 7.58 s\nwind 21.6 km/h\nfails on period"
+       },
+       {
+        "x": 69,
+        "y": 7.48,
+        "tip": "22 August\nmax swell 1.56 m\nmean period 7.48 s\nwind 10.0 km/h\nfails on period"
+       },
+       {
+        "x": 70,
+        "y": 7.65,
+        "tip": "23 August\nmax swell 1.86 m\nmean period 7.65 s\nwind 26.2 km/h\nfails on period, wind"
+       },
+       {
+        "x": 71,
+        "y": 6.25,
+        "tip": "24 August\nmax swell 2.24 m\nmean period 6.25 s\nwind 20.4 km/h\nfails on period"
+       },
+       {
+        "x": 72,
+        "y": 5.3,
+        "tip": "25 August\nmax swell 1.44 m\nmean period 5.30 s\nwind 10.3 km/h\nfails on period"
+       },
+       {
+        "x": 73,
+        "y": 5.13,
+        "tip": "26 August\nmax swell 1.60 m\nmean period 5.13 s\nwind 21.0 km/h\nfails on period"
+       },
+       {
+        "x": 74,
+        "y": 6.47,
+        "tip": "27 August\nmax swell 2.06 m\nmean period 6.47 s\nwind 20.6 km/h\nfails on period"
+       },
+       {
+        "x": 75,
+        "y": 8.27,
+        "tip": "28 August\nmax swell 2.58 m\nmean period 8.27 s\nwind 10.9 km/h\nfails on height"
+       },
+       {
+        "x": 76,
+        "y": 6.66,
+        "tip": "29 August\nmax swell 2.04 m\nmean period 6.66 s\nwind 14.0 km/h\nfails on period"
+       },
+       {
+        "x": 77,
+        "y": 6.69,
+        "tip": "30 August\nmax swell 1.30 m\nmean period 6.69 s\nwind 17.7 km/h\nfails on period"
+       },
+       {
+        "x": 78,
+        "y": 7.46,
+        "tip": "31 August\nmax swell 1.46 m\nmean period 7.46 s\nwind 23.7 km/h\nfails on period"
+       },
+       {
+        "x": 79,
+        "y": 7.38,
+        "tip": "1 September\nmax swell 1.58 m\nmean period 7.38 s\nwind 21.7 km/h\nfails on period"
+       },
+       {
+        "x": 80,
+        "y": 5.49,
+        "tip": "2 September\nmax swell 1.18 m\nmean period 5.49 s\nwind 11.7 km/h\nfails on period"
+       },
+       {
+        "x": 81,
+        "y": 4.56,
+        "tip": "3 September\nmax swell 0.84 m\nmean period 4.56 s\nwind 4.7 km/h\nfails on height, period"
+       },
+       {
+        "x": 82,
+        "y": 7.05,
+        "tip": "4 September\nmax swell 0.72 m\nmean period 7.05 s\nwind 4.7 km/h\nfails on height, period"
+       },
+       {
+        "x": 83,
+        "y": 8.14,
+        "tip": "5 September\nmax swell 0.94 m\nmean period 8.14 s\nwind 6.5 km/h\nfails on height"
+       },
+       {
+        "x": 84,
+        "y": 8.78,
+        "tip": "6 September\nmax swell 1.50 m\nmean period 8.78 s\nwind 15.7 km/h\nclears the rule"
+       },
+       {
+        "x": 85,
+        "y": 9.97,
+        "tip": "7 September\nmax swell 1.58 m\nmean period 9.97 s\nwind 20.8 km/h\nclears the rule"
+       },
+       {
+        "x": 86,
+        "y": 7.33,
+        "tip": "8 September\nmax swell 1.36 m\nmean period 7.33 s\nwind 16.3 km/h\nfails on period"
+       },
+       {
+        "x": 87,
+        "y": 6.74,
+        "tip": "9 September\nmax swell 1.56 m\nmean period 6.74 s\nwind 21.8 km/h\nfails on period"
+       },
+       {
+        "x": 88,
+        "y": 7.45,
+        "tip": "10 September\nmax swell 1.64 m\nmean period 7.45 s\nwind 16.1 km/h\nfails on period"
+       },
+       {
+        "x": 89,
+        "y": 4.6,
+        "tip": "11 September\nmax swell 0.94 m\nmean period 4.60 s\nwind 10.8 km/h\nfails on height, period"
+       },
+       {
+        "x": 90,
+        "y": 5.62,
+        "tip": "12 September\nmax swell 1.18 m\nmean period 5.62 s\nwind 5.5 km/h\nfails on period"
+       },
+       {
+        "x": 91,
+        "y": 9.8,
+        "tip": "13 September\nmax swell 1.38 m\nmean period 9.80 s\nwind 5.9 km/h\nclears the rule"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "period_mean",
+      "c": "ink",
+      "w": 1.5,
+      "notip": true,
+      "pts": [
+       [
+        0,
+        8.02
+       ],
+       [
+        1,
+        6.05
+       ],
+       [
+        2,
+        7.32
+       ],
+       [
+        3,
+        8.62
+       ],
+       [
+        4,
+        7.55
+       ],
+       [
+        5,
+        6.71
+       ],
+       [
+        6,
+        6.48
+       ],
+       [
+        7,
+        5.85
+       ],
+       [
+        8,
+        7.59
+       ],
+       [
+        9,
+        6.88
+       ],
+       [
+        10,
+        5.63
+       ],
+       [
+        11,
+        4.67
+       ],
+       [
+        12,
+        5.21
+       ],
+       [
+        13,
+        6.63
+       ],
+       [
+        14,
+        6.48
+       ],
+       [
+        15,
+        8.8
+       ],
+       [
+        16,
+        7.61
+       ],
+       [
+        17,
+        7.16
+       ],
+       [
+        18,
+        7.32
+       ],
+       [
+        19,
+        6.36
+       ],
+       [
+        20,
+        6.53
+       ],
+       [
+        21,
+        7.71
+       ],
+       [
+        22,
+        6.55
+       ],
+       [
+        23,
+        4.33
+       ],
+       [
+        24,
+        4.71
+       ],
+       [
+        25,
+        3.95
+       ],
+       [
+        26,
+        4.89
+       ],
+       [
+        27,
+        8.78
+       ],
+       [
+        28,
+        7.43
+       ],
+       [
+        29,
+        5.98
+       ],
+       [
+        30,
+        4.49
+       ],
+       [
+        31,
+        7.27
+       ],
+       [
+        32,
+        6.41
+       ],
+       [
+        33,
+        5.69
+       ],
+       [
+        34,
+        3.48
+       ],
+       [
+        35,
+        4.53
+       ],
+       [
+        36,
+        5.03
+       ],
+       [
+        37,
+        5.92
+       ],
+       [
+        38,
+        5.84
+       ],
+       [
+        39,
+        5.85
+       ],
+       [
+        40,
+        4.75
+       ],
+       [
+        41,
+        5.56
+       ],
+       [
+        42,
+        5.93
+       ],
+       [
+        43,
+        5.87
+       ],
+       [
+        44,
+        7.33
+       ],
+       [
+        45,
+        6.25
+       ],
+       [
+        46,
+        6.6
+       ],
+       [
+        47,
+        8.08
+       ],
+       [
+        48,
+        6.33
+       ],
+       [
+        49,
+        6.0
+       ],
+       [
+        50,
+        5.54
+       ],
+       [
+        51,
+        5.67
+       ],
+       [
+        52,
+        7.75
+       ],
+       [
+        53,
+        6.78
+       ],
+       [
+        54,
+        6.75
+       ],
+       [
+        55,
+        6.28
+       ],
+       [
+        56,
+        5.43
+       ],
+       [
+        57,
+        6.43
+       ],
+       [
+        58,
+        7.31
+       ],
+       [
+        59,
+        8.14
+       ],
+       [
+        60,
+        7.96
+       ],
+       [
+        61,
+        6.55
+       ],
+       [
+        62,
+        6.79
+       ],
+       [
+        63,
+        6.51
+       ],
+       [
+        64,
+        6.02
+       ],
+       [
+        65,
+        6.15
+       ],
+       [
+        66,
+        5.24
+       ],
+       [
+        67,
+        6.89
+       ],
+       [
+        68,
+        7.58
+       ],
+       [
+        69,
+        7.48
+       ],
+       [
+        70,
+        7.65
+       ],
+       [
+        71,
+        6.25
+       ],
+       [
+        72,
+        5.3
+       ],
+       [
+        73,
+        5.13
+       ],
+       [
+        74,
+        6.47
+       ],
+       [
+        75,
+        8.27
+       ],
+       [
+        76,
+        6.66
+       ],
+       [
+        77,
+        6.69
+       ],
+       [
+        78,
+        7.46
+       ],
+       [
+        79,
+        7.38
+       ],
+       [
+        80,
+        5.49
+       ],
+       [
+        81,
+        4.56
+       ],
+       [
+        82,
+        7.05
+       ],
+       [
+        83,
+        8.14
+       ],
+       [
+        84,
+        8.78
+       ],
+       [
+        85,
+        9.97
+       ],
+       [
+        86,
+        7.33
+       ],
+       [
+        87,
+        6.74
+       ],
+       [
+        88,
+        7.45
+       ],
+       [
+        89,
+        4.6
+       ],
+       [
+        90,
+        5.62
+       ],
+       [
+        91,
+        9.8
+       ]
+      ]
+     },
+     {
+      "type": "rule",
+      "axis": "y",
+      "v": 8.0,
+      "c": "grey",
+      "dash": "dot",
+      "w": 1.2
+     },
+     {
+      "type": "text",
+      "x": 33,
+      "y": 8.35,
+      "s": "8 s",
+      "c": "grey"
+     }
+    ]
+   },
+   {
+    "title": "wind · km/h",
+    "h": 130,
+    "x": {
+     "kind": "linear",
+     "domain": [
+      -0.5,
+      91.5
+     ],
+     "ticks": [
+      17,
+      48,
+      79
+     ],
+     "tickLabels": {
+      "17": "1 Jul",
+      "48": "1 Aug",
+      "79": "1 Sep"
+     }
+    },
+    "y": {
+     "kind": "linear",
+     "domain": [
+      0,
+      30
+     ],
+     "ticks": [
+      0,
+      10,
+      20,
+      30
+     ],
+     "tickfmt": {
+      "dp": 0,
+      "pre": " "
+     }
+    },
+    "marks": [
+     {
+      "type": "dots",
+      "r": 0.01,
+      "o": 0,
+      "c": "ink",
+      "pts": [
+       {
+        "x": 25,
+        "y": 16.56,
+        "tip": "9 July\nmax swell 0.70 m\nmean period 3.95 s\nwind 16.6 km/h\nfails on height, period"
+       },
+       {
+        "x": 26,
+        "y": 17.49,
+        "tip": "10 July\nmax swell 0.66 m\nmean period 4.89 s\nwind 17.5 km/h\nfails on height, period"
+       },
+       {
+        "x": 27,
+        "y": 13.69,
+        "tip": "11 July\nmax swell 0.96 m\nmean period 8.78 s\nwind 13.7 km/h\nfails on height"
+       },
+       {
+        "x": 28,
+        "y": 14.85,
+        "tip": "12 July\nmax swell 1.16 m\nmean period 7.43 s\nwind 14.8 km/h\nfails on period"
+       },
+       {
+        "x": 29,
+        "y": 13.19,
+        "tip": "13 July\nmax swell 0.98 m\nmean period 5.98 s\nwind 13.2 km/h\nfails on height, period"
+       },
+       {
+        "x": 30,
+        "y": 10.92,
+        "tip": "14 July\nmax swell 0.60 m\nmean period 4.49 s\nwind 10.9 km/h\nfails on height, period"
+       },
+       {
+        "x": 31,
+        "y": 12.16,
+        "tip": "15 July\nmax swell 0.50 m\nmean period 7.27 s\nwind 12.2 km/h\nfails on height, period"
+       },
+       {
+        "x": 32,
+        "y": 12.07,
+        "tip": "16 July\nmax swell 0.58 m\nmean period 6.41 s\nwind 12.1 km/h\nfails on height, period"
+       },
+       {
+        "x": 33,
+        "y": 16.95,
+        "tip": "17 July\nmax swell 0.48 m\nmean period 5.69 s\nwind 16.9 km/h\nfails on height, period"
+       },
+       {
+        "x": 34,
+        "y": 16.98,
+        "tip": "18 July\nmax swell 0.60 m\nmean period 3.48 s\nwind 17.0 km/h\nfails on height, period"
+       },
+       {
+        "x": 35,
+        "y": 15.99,
+        "tip": "19 July\nmax swell 0.94 m\nmean period 4.53 s\nwind 16.0 km/h\nfails on height, period"
+       },
+       {
+        "x": 36,
+        "y": 14.43,
+        "tip": "20 July\nmax swell 0.94 m\nmean period 5.03 s\nwind 14.4 km/h\nfails on height, period"
+       },
+       {
+        "x": 37,
+        "y": 10.72,
+        "tip": "21 July\nmax swell 1.06 m\nmean period 5.92 s\nwind 10.7 km/h\nfails on period"
+       },
+       {
+        "x": 38,
+        "y": 10.92,
+        "tip": "22 July\nmax swell 0.86 m\nmean period 5.84 s\nwind 10.9 km/h\nfails on height, period"
+       },
+       {
+        "x": 39,
+        "y": 13.67,
+        "tip": "23 July\nmax swell 0.84 m\nmean period 5.85 s\nwind 13.7 km/h\nfails on height, period"
+       },
+       {
+        "x": 40,
+        "y": 18.74,
+        "tip": "24 July\nmax swell 1.04 m\nmean period 4.75 s\nwind 18.7 km/h\nfails on period"
+       },
+       {
+        "x": 41,
+        "y": 21.16,
+        "tip": "25 July\nmax swell 1.42 m\nmean period 5.56 s\nwind 21.2 km/h\nfails on period"
+       },
+       {
+        "x": 42,
+        "y": 20.1,
+        "tip": "26 July\nmax swell 1.26 m\nmean period 5.93 s\nwind 20.1 km/h\nfails on period"
+       },
+       {
+        "x": 43,
+        "y": 6.75,
+        "tip": "27 July\nmax swell 1.30 m\nmean period 5.87 s\nwind 6.8 km/h\nfails on period"
+       },
+       {
+        "x": 44,
+        "y": 12.45,
+        "tip": "28 July\nmax swell 1.34 m\nmean period 7.33 s\nwind 12.4 km/h\nfails on period"
+       },
+       {
+        "x": 45,
+        "y": 13.36,
+        "tip": "29 July\nmax swell 0.86 m\nmean period 6.25 s\nwind 13.4 km/h\nfails on height, period"
+       },
+       {
+        "x": 46,
+        "y": 15.7,
+        "tip": "30 July\nmax swell 0.62 m\nmean period 6.60 s\nwind 15.7 km/h\nfails on height, period"
+       },
+       {
+        "x": 47,
+        "y": 18.99,
+        "tip": "31 July\nmax swell 0.58 m\nmean period 8.08 s\nwind 19.0 km/h\nfails on height"
+       },
+       {
+        "x": 48,
+        "y": 16.31,
+        "tip": "1 August\nmax swell 0.82 m\nmean period 6.33 s\nwind 16.3 km/h\nfails on height, period"
+       },
+       {
+        "x": 49,
+        "y": 13.93,
+        "tip": "2 August\nmax swell 0.68 m\nmean period 6.00 s\nwind 13.9 km/h\nfails on height, period"
+       },
+       {
+        "x": 50,
+        "y": 12.71,
+        "tip": "3 August\nmax swell 0.88 m\nmean period 5.54 s\nwind 12.7 km/h\nfails on height, period"
+       },
+       {
+        "x": 51,
+        "y": 11.15,
+        "tip": "4 August\nmax swell 0.88 m\nmean period 5.67 s\nwind 11.2 km/h\nfails on height, period"
+       },
+       {
+        "x": 52,
+        "y": 17.55,
+        "tip": "5 August\nmax swell 0.88 m\nmean period 7.75 s\nwind 17.6 km/h\nfails on height, period"
+       },
+       {
+        "x": 53,
+        "y": 18.63,
+        "tip": "6 August\nmax swell 0.88 m\nmean period 6.78 s\nwind 18.6 km/h\nfails on height, period"
+       },
+       {
+        "x": 54,
+        "y": 15.15,
+        "tip": "7 August\nmax swell 0.90 m\nmean period 6.75 s\nwind 15.2 km/h\nfails on height, period"
+       },
+       {
+        "x": 55,
+        "y": 12.15,
+        "tip": "8 August\nmax swell 0.70 m\nmean period 6.28 s\nwind 12.2 km/h\nfails on height, period"
+       },
+       {
+        "x": 56,
+        "y": 14.5,
+        "tip": "9 August\nmax swell 0.98 m\nmean period 5.43 s\nwind 14.5 km/h\nfails on height, period"
+       },
+       {
+        "x": 57,
+        "y": 18.45,
+        "tip": "10 August\nmax swell 0.82 m\nmean period 6.43 s\nwind 18.4 km/h\nfails on height, period"
+       },
+       {
+        "x": 58,
+        "y": 16.54,
+        "tip": "11 August\nmax swell 0.86 m\nmean period 7.31 s\nwind 16.5 km/h\nfails on height, period"
+       },
+       {
+        "x": 59,
+        "y": 15.16,
+        "tip": "12 August\nmax swell 0.96 m\nmean period 8.14 s\nwind 15.2 km/h\nfails on height"
+       },
+       {
+        "x": 60,
+        "y": 17.65,
+        "tip": "13 August\nmax swell 1.04 m\nmean period 7.96 s\nwind 17.6 km/h\nfails on period"
+       },
+       {
+        "x": 61,
+        "y": 20.59,
+        "tip": "14 August\nmax swell 0.94 m\nmean period 6.55 s\nwind 20.6 km/h\nfails on height, period"
+       },
+       {
+        "x": 62,
+        "y": 17.37,
+        "tip": "15 August\nmax swell 2.44 m\nmean period 6.79 s\nwind 17.4 km/h\nfails on period"
+       },
+       {
+        "x": 63,
+        "y": 8.09,
+        "tip": "16 August\nmax swell 2.32 m\nmean period 6.51 s\nwind 8.1 km/h\nfails on period"
+       },
+       {
+        "x": 64,
+        "y": 6.17,
+        "tip": "17 August\nmax swell 1.50 m\nmean period 6.02 s\nwind 6.2 km/h\nfails on period"
+       },
+       {
+        "x": 65,
+        "y": 11.25,
+        "tip": "18 August\nmax swell 1.56 m\nmean period 6.15 s\nwind 11.2 km/h\nfails on period"
+       },
+       {
+        "x": 66,
+        "y": 9.09,
+        "tip": "19 August\nmax swell 0.90 m\nmean period 5.24 s\nwind 9.1 km/h\nfails on height, period"
+       },
+       {
+        "x": 67,
+        "y": 13.62,
+        "tip": "20 August\nmax swell 1.34 m\nmean period 6.89 s\nwind 13.6 km/h\nfails on period"
+       },
+       {
+        "x": 68,
+        "y": 21.57,
+        "tip": "21 August\nmax swell 1.92 m\nmean period 7.58 s\nwind 21.6 km/h\nfails on period"
+       },
+       {
+        "x": 69,
+        "y": 9.97,
+        "tip": "22 August\nmax swell 1.56 m\nmean period 7.48 s\nwind 10.0 km/h\nfails on period"
+       },
+       {
+        "x": 70,
+        "y": 26.19,
+        "tip": "23 August\nmax swell 1.86 m\nmean period 7.65 s\nwind 26.2 km/h\nfails on period, wind"
+       },
+       {
+        "x": 71,
+        "y": 20.45,
+        "tip": "24 August\nmax swell 2.24 m\nmean period 6.25 s\nwind 20.4 km/h\nfails on period"
+       },
+       {
+        "x": 72,
+        "y": 10.3,
+        "tip": "25 August\nmax swell 1.44 m\nmean period 5.30 s\nwind 10.3 km/h\nfails on period"
+       },
+       {
+        "x": 73,
+        "y": 20.96,
+        "tip": "26 August\nmax swell 1.60 m\nmean period 5.13 s\nwind 21.0 km/h\nfails on period"
+       },
+       {
+        "x": 74,
+        "y": 20.55,
+        "tip": "27 August\nmax swell 2.06 m\nmean period 6.47 s\nwind 20.6 km/h\nfails on period"
+       },
+       {
+        "x": 75,
+        "y": 10.86,
+        "tip": "28 August\nmax swell 2.58 m\nmean period 8.27 s\nwind 10.9 km/h\nfails on height"
+       },
+       {
+        "x": 76,
+        "y": 13.99,
+        "tip": "29 August\nmax swell 2.04 m\nmean period 6.66 s\nwind 14.0 km/h\nfails on period"
+       },
+       {
+        "x": 77,
+        "y": 17.7,
+        "tip": "30 August\nmax swell 1.30 m\nmean period 6.69 s\nwind 17.7 km/h\nfails on period"
+       },
+       {
+        "x": 78,
+        "y": 23.71,
+        "tip": "31 August\nmax swell 1.46 m\nmean period 7.46 s\nwind 23.7 km/h\nfails on period"
+       },
+       {
+        "x": 79,
+        "y": 21.67,
+        "tip": "1 September\nmax swell 1.58 m\nmean period 7.38 s\nwind 21.7 km/h\nfails on period"
+       },
+       {
+        "x": 80,
+        "y": 11.7,
+        "tip": "2 September\nmax swell 1.18 m\nmean period 5.49 s\nwind 11.7 km/h\nfails on period"
+       },
+       {
+        "x": 81,
+        "y": 4.67,
+        "tip": "3 September\nmax swell 0.84 m\nmean period 4.56 s\nwind 4.7 km/h\nfails on height, period"
+       },
+       {
+        "x": 82,
+        "y": 4.67,
+        "tip": "4 September\nmax swell 0.72 m\nmean period 7.05 s\nwind 4.7 km/h\nfails on height, period"
+       },
+       {
+        "x": 83,
+        "y": 6.47,
+        "tip": "5 September\nmax swell 0.94 m\nmean period 8.14 s\nwind 6.5 km/h\nfails on height"
+       },
+       {
+        "x": 84,
+        "y": 15.7,
+        "tip": "6 September\nmax swell 1.50 m\nmean period 8.78 s\nwind 15.7 km/h\nclears the rule"
+       },
+       {
+        "x": 85,
+        "y": 20.8,
+        "tip": "7 September\nmax swell 1.58 m\nmean period 9.97 s\nwind 20.8 km/h\nclears the rule"
+       },
+       {
+        "x": 86,
+        "y": 16.28,
+        "tip": "8 September\nmax swell 1.36 m\nmean period 7.33 s\nwind 16.3 km/h\nfails on period"
+       },
+       {
+        "x": 87,
+        "y": 21.81,
+        "tip": "9 September\nmax swell 1.56 m\nmean period 6.74 s\nwind 21.8 km/h\nfails on period"
+       },
+       {
+        "x": 88,
+        "y": 16.06,
+        "tip": "10 September\nmax swell 1.64 m\nmean period 7.45 s\nwind 16.1 km/h\nfails on period"
+       },
+       {
+        "x": 89,
+        "y": 10.75,
+        "tip": "11 September\nmax swell 0.94 m\nmean period 4.60 s\nwind 10.8 km/h\nfails on height, period"
+       },
+       {
+        "x": 90,
+        "y": 5.47,
+        "tip": "12 September\nmax swell 1.18 m\nmean period 5.62 s\nwind 5.5 km/h\nfails on period"
+       },
+       {
+        "x": 91,
+        "y": 5.92,
+        "tip": "13 September\nmax swell 1.38 m\nmean period 9.80 s\nwind 5.9 km/h\nclears the rule"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "wind_mean",
+      "c": "ink",
+      "w": 1.5,
+      "notip": true,
+      "pts": [
+       [
+        25,
+        16.56
+       ],
+       [
+        26,
+        17.49
+       ],
+       [
+        27,
+        13.69
+       ],
+       [
+        28,
+        14.85
+       ],
+       [
+        29,
+        13.19
+       ],
+       [
+        30,
+        10.92
+       ],
+       [
+        31,
+        12.16
+       ],
+       [
+        32,
+        12.07
+       ],
+       [
+        33,
+        16.95
+       ],
+       [
+        34,
+        16.98
+       ],
+       [
+        35,
+        15.99
+       ],
+       [
+        36,
+        14.43
+       ],
+       [
+        37,
+        10.72
+       ],
+       [
+        38,
+        10.92
+       ],
+       [
+        39,
+        13.67
+       ],
+       [
+        40,
+        18.74
+       ],
+       [
+        41,
+        21.16
+       ],
+       [
+        42,
+        20.1
+       ],
+       [
+        43,
+        6.75
+       ],
+       [
+        44,
+        12.45
+       ],
+       [
+        45,
+        13.36
+       ],
+       [
+        46,
+        15.7
+       ],
+       [
+        47,
+        18.99
+       ],
+       [
+        48,
+        16.31
+       ],
+       [
+        49,
+        13.93
+       ],
+       [
+        50,
+        12.71
+       ],
+       [
+        51,
+        11.15
+       ],
+       [
+        52,
+        17.55
+       ],
+       [
+        53,
+        18.63
+       ],
+       [
+        54,
+        15.15
+       ],
+       [
+        55,
+        12.15
+       ],
+       [
+        56,
+        14.5
+       ],
+       [
+        57,
+        18.45
+       ],
+       [
+        58,
+        16.54
+       ],
+       [
+        59,
+        15.16
+       ],
+       [
+        60,
+        17.65
+       ],
+       [
+        61,
+        20.59
+       ],
+       [
+        62,
+        17.37
+       ],
+       [
+        63,
+        8.09
+       ],
+       [
+        64,
+        6.17
+       ],
+       [
+        65,
+        11.25
+       ],
+       [
+        66,
+        9.09
+       ],
+       [
+        67,
+        13.62
+       ],
+       [
+        68,
+        21.57
+       ],
+       [
+        69,
+        9.97
+       ],
+       [
+        70,
+        26.19
+       ],
+       [
+        71,
+        20.45
+       ],
+       [
+        72,
+        10.3
+       ],
+       [
+        73,
+        20.96
+       ],
+       [
+        74,
+        20.55
+       ],
+       [
+        75,
+        10.86
+       ],
+       [
+        76,
+        13.99
+       ],
+       [
+        77,
+        17.7
+       ],
+       [
+        78,
+        23.71
+       ],
+       [
+        79,
+        21.67
+       ],
+       [
+        80,
+        11.7
+       ],
+       [
+        81,
+        4.67
+       ],
+       [
+        82,
+        4.67
+       ],
+       [
+        83,
+        6.47
+       ],
+       [
+        84,
+        15.7
+       ],
+       [
+        85,
+        20.8
+       ],
+       [
+        86,
+        16.28
+       ],
+       [
+        87,
+        21.81
+       ],
+       [
+        88,
+        16.06
+       ],
+       [
+        89,
+        10.75
+       ],
+       [
+        90,
+        5.47
+       ],
+       [
+        91,
+        5.92
+       ]
+      ]
+     },
+     {
+      "type": "rule",
+      "axis": "y",
+      "v": 25.0,
+      "c": "grey",
+      "dash": "dot",
+      "w": 1.2,
+      "label": "25 km/h",
+      "anchor": "start"
+     }
+    ]
+   }
+  ],
+  "table": {
+   "cols": [
+    "day",
+    "max swell (m)",
+    "mean period (s)",
+    "wind (km/h)",
+    "rule"
+   ],
+   "rows": [
+    [
+     "14 June",
+     "1.22",
+     "8.02",
+     "–",
+     "clears"
+    ],
+    [
+     "15 June",
+     "1.02",
+     "6.05",
+     "–",
+     "fails: period"
+    ],
+    [
+     "16 June",
+     "0.78",
+     "7.32",
+     "–",
+     "fails: height, period"
+    ],
+    [
+     "17 June",
+     "1.36",
+     "8.62",
+     "–",
+     "clears"
+    ],
+    [
+     "18 June",
+     "1.24",
+     "7.55",
+     "–",
+     "fails: period"
+    ],
+    [
+     "19 June",
+     "0.84",
+     "6.71",
+     "–",
+     "fails: height, period"
+    ],
+    [
+     "20 June",
+     "0.90",
+     "6.48",
+     "–",
+     "fails: height, period"
+    ],
+    [
+     "21 June",
+     "0.52",
+     "5.85",
+     "–",
+     "fails: height, period"
+    ],
+    [
+     "22 June",
+     "0.46",
+     "7.59",
+     "–",
+     "fails: height, period"
+    ],
+    [
+     "23 June",
+     "0.86",
+     "6.88",
+     "–",
+     "fails: height, period"
+    ],
+    [
+     "24 June",
+     "0.62",
+     "5.63",
+     "–",
+     "fails: height, period"
+    ],
+    [
+     "25 June",
+     "0.62",
+     "4.67",
+     "–",
+     "fails: height, period"
+    ],
+    [
+     "26 June",
+     "1.14",
+     "5.21",
+     "–",
+     "fails: period"
+    ],
+    [
+     "27 June",
+     "1.34",
+     "6.63",
+     "–",
+     "fails: period"
+    ],
+    [
+     "28 June",
+     "1.06",
+     "6.48",
+     "–",
+     "fails: period"
+    ],
+    [
+     "29 June",
+     "2.54",
+     "8.80",
+     "–",
+     "fails: height"
+    ],
+    [
+     "30 June",
+     "2.34",
+     "7.61",
+     "–",
+     "fails: period"
+    ],
+    [
+     "1 July",
+     "2.32",
+     "7.16",
+     "–",
+     "fails: period"
+    ],
+    [
+     "2 July",
+     "2.76",
+     "7.32",
+     "–",
+     "fails: height, period"
+    ],
+    [
+     "3 July",
+     "1.50",
+     "6.36",
+     "–",
+     "fails: period"
+    ],
+    [
+     "4 July",
+     "1.12",
+     "6.53",
+     "–",
+     "fails: period"
+    ],
+    [
+     "5 July",
+     "0.66",
+     "7.71",
+     "–",
+     "fails: height, period"
+    ],
+    [
+     "6 July",
+     "0.70",
+     "6.55",
+     "–",
+     "fails: height, period"
+    ],
+    [
+     "7 July",
+     "0.62",
+     "4.33",
+     "–",
+     "fails: height, period"
+    ],
+    [
+     "8 July",
+     "0.84",
+     "4.71",
+     "–",
+     "fails: height, period"
+    ],
+    [
+     "9 July",
+     "0.70",
+     "3.95",
+     "16.6",
+     "fails: height, period"
+    ],
+    [
+     "10 July",
+     "0.66",
+     "4.89",
+     "17.5",
+     "fails: height, period"
+    ],
+    [
+     "11 July",
+     "0.96",
+     "8.78",
+     "13.7",
+     "fails: height"
+    ],
+    [
+     "12 July",
+     "1.16",
+     "7.43",
+     "14.8",
+     "fails: period"
+    ],
+    [
+     "13 July",
+     "0.98",
+     "5.98",
+     "13.2",
+     "fails: height, period"
+    ],
+    [
+     "14 July",
+     "0.60",
+     "4.49",
+     "10.9",
+     "fails: height, period"
+    ],
+    [
+     "15 July",
+     "0.50",
+     "7.27",
+     "12.2",
+     "fails: height, period"
+    ],
+    [
+     "16 July",
+     "0.58",
+     "6.41",
+     "12.1",
+     "fails: height, period"
+    ],
+    [
+     "17 July",
+     "0.48",
+     "5.69",
+     "16.9",
+     "fails: height, period"
+    ],
+    [
+     "18 July",
+     "0.60",
+     "3.48",
+     "17.0",
+     "fails: height, period"
+    ],
+    [
+     "19 July",
+     "0.94",
+     "4.53",
+     "16.0",
+     "fails: height, period"
+    ],
+    [
+     "20 July",
+     "0.94",
+     "5.03",
+     "14.4",
+     "fails: height, period"
+    ],
+    [
+     "21 July",
+     "1.06",
+     "5.92",
+     "10.7",
+     "fails: period"
+    ],
+    [
+     "22 July",
+     "0.86",
+     "5.84",
+     "10.9",
+     "fails: height, period"
+    ],
+    [
+     "23 July",
+     "0.84",
+     "5.85",
+     "13.7",
+     "fails: height, period"
+    ],
+    [
+     "24 July",
+     "1.04",
+     "4.75",
+     "18.7",
+     "fails: period"
+    ],
+    [
+     "25 July",
+     "1.42",
+     "5.56",
+     "21.2",
+     "fails: period"
+    ],
+    [
+     "26 July",
+     "1.26",
+     "5.93",
+     "20.1",
+     "fails: period"
+    ],
+    [
+     "27 July",
+     "1.30",
+     "5.87",
+     "6.8",
+     "fails: period"
+    ],
+    [
+     "28 July",
+     "1.34",
+     "7.33",
+     "12.4",
+     "fails: period"
+    ],
+    [
+     "29 July",
+     "0.86",
+     "6.25",
+     "13.4",
+     "fails: height, period"
+    ],
+    [
+     "30 July",
+     "0.62",
+     "6.60",
+     "15.7",
+     "fails: height, period"
+    ],
+    [
+     "31 July",
+     "0.58",
+     "8.08",
+     "19.0",
+     "fails: height"
+    ],
+    [
+     "1 August",
+     "0.82",
+     "6.33",
+     "16.3",
+     "fails: height, period"
+    ],
+    [
+     "2 August",
+     "0.68",
+     "6.00",
+     "13.9",
+     "fails: height, period"
+    ],
+    [
+     "3 August",
+     "0.88",
+     "5.54",
+     "12.7",
+     "fails: height, period"
+    ],
+    [
+     "4 August",
+     "0.88",
+     "5.67",
+     "11.2",
+     "fails: height, period"
+    ],
+    [
+     "5 August",
+     "0.88",
+     "7.75",
+     "17.6",
+     "fails: height, period"
+    ],
+    [
+     "6 August",
+     "0.88",
+     "6.78",
+     "18.6",
+     "fails: height, period"
+    ],
+    [
+     "7 August",
+     "0.90",
+     "6.75",
+     "15.2",
+     "fails: height, period"
+    ],
+    [
+     "8 August",
+     "0.70",
+     "6.28",
+     "12.2",
+     "fails: height, period"
+    ],
+    [
+     "9 August",
+     "0.98",
+     "5.43",
+     "14.5",
+     "fails: height, period"
+    ],
+    [
+     "10 August",
+     "0.82",
+     "6.43",
+     "18.4",
+     "fails: height, period"
+    ],
+    [
+     "11 August",
+     "0.86",
+     "7.31",
+     "16.5",
+     "fails: height, period"
+    ],
+    [
+     "12 August",
+     "0.96",
+     "8.14",
+     "15.2",
+     "fails: height"
+    ],
+    [
+     "13 August",
+     "1.04",
+     "7.96",
+     "17.6",
+     "fails: period"
+    ],
+    [
+     "14 August",
+     "0.94",
+     "6.55",
+     "20.6",
+     "fails: height, period"
+    ],
+    [
+     "15 August",
+     "2.44",
+     "6.79",
+     "17.4",
+     "fails: period"
+    ],
+    [
+     "16 August",
+     "2.32",
+     "6.51",
+     "8.1",
+     "fails: period"
+    ],
+    [
+     "17 August",
+     "1.50",
+     "6.02",
+     "6.2",
+     "fails: period"
+    ],
+    [
+     "18 August",
+     "1.56",
+     "6.15",
+     "11.2",
+     "fails: period"
+    ],
+    [
+     "19 August",
+     "0.90",
+     "5.24",
+     "9.1",
+     "fails: height, period"
+    ],
+    [
+     "20 August",
+     "1.34",
+     "6.89",
+     "13.6",
+     "fails: period"
+    ],
+    [
+     "21 August",
+     "1.92",
+     "7.58",
+     "21.6",
+     "fails: period"
+    ],
+    [
+     "22 August",
+     "1.56",
+     "7.48",
+     "10.0",
+     "fails: period"
+    ],
+    [
+     "23 August",
+     "1.86",
+     "7.65",
+     "26.2",
+     "fails: period, wind"
+    ],
+    [
+     "24 August",
+     "2.24",
+     "6.25",
+     "20.4",
+     "fails: period"
+    ],
+    [
+     "25 August",
+     "1.44",
+     "5.30",
+     "10.3",
+     "fails: period"
+    ],
+    [
+     "26 August",
+     "1.60",
+     "5.13",
+     "21.0",
+     "fails: period"
+    ],
+    [
+     "27 August",
+     "2.06",
+     "6.47",
+     "20.6",
+     "fails: period"
+    ],
+    [
+     "28 August",
+     "2.58",
+     "8.27",
+     "10.9",
+     "fails: height"
+    ],
+    [
+     "29 August",
+     "2.04",
+     "6.66",
+     "14.0",
+     "fails: period"
+    ],
+    [
+     "30 August",
+     "1.30",
+     "6.69",
+     "17.7",
+     "fails: period"
+    ],
+    [
+     "31 August",
+     "1.46",
+     "7.46",
+     "23.7",
+     "fails: period"
+    ],
+    [
+     "1 September",
+     "1.58",
+     "7.38",
+     "21.7",
+     "fails: period"
+    ],
+    [
+     "2 September",
+     "1.18",
+     "5.49",
+     "11.7",
+     "fails: period"
+    ],
+    [
+     "3 September",
+     "0.84",
+     "4.56",
+     "4.7",
+     "fails: height, period"
+    ],
+    [
+     "4 September",
+     "0.72",
+     "7.05",
+     "4.7",
+     "fails: height, period"
+    ],
+    [
+     "5 September",
+     "0.94",
+     "8.14",
+     "6.5",
+     "fails: height"
+    ],
+    [
+     "6 September",
+     "1.50",
+     "8.78",
+     "15.7",
+     "clears"
+    ],
+    [
+     "7 September",
+     "1.58",
+     "9.97",
+     "20.8",
+     "clears"
+    ],
+    [
+     "8 September",
+     "1.36",
+     "7.33",
+     "16.3",
+     "fails: period"
+    ],
+    [
+     "9 September",
+     "1.56",
+     "6.74",
+     "21.8",
+     "fails: period"
+    ],
+    [
+     "10 September",
+     "1.64",
+     "7.45",
+     "16.1",
+     "fails: period"
+    ],
+    [
+     "11 September",
+     "0.94",
+     "4.60",
+     "10.8",
+     "fails: height, period"
+    ],
+    [
+     "12 September",
+     "1.18",
+     "5.62",
+     "5.5",
+     "fails: period"
+    ],
+    [
+     "13 September",
+     "1.38",
+     "9.80",
+     "5.9",
+     "clears"
+    ]
+   ]
+  },
+  "data": [
+   "../surf/data/analysis.json",
+   "../surf/data.json"
+  ]
+ }
+}

@@ -79,7 +79,7 @@
 
 <section>
 <h2>Spending per resident, 2022–2024</h2>
-<figure>
+<figure data-chart="../assets/praha/charts-districts.json#per-head">
   <img src="../assets/praha/03-per-head.svg" alt="Scatter of Prague's 57 districts, spending per resident against population on a log scale. The thirteen large districts cluster between about 8 and 18 thousand crowns; Praha 1 sits at 35 thousand; small districts scatter from 8 to 35 thousand, with Praha-Lysolaje at 73 thousand." loading="lazy">
   <figcaption><b>fig. 1</b> · Spent per resident, CZK a year, mean of 2022–2024; residents at the end of 2024, log scale. Green: the thirteen districts over 40 000 residents, and Praha 1.</figcaption>
 </figure>
@@ -89,7 +89,7 @@
 
 <section>
 <h2>Where district income comes from</h2>
-<figure>
+<figure data-chart="../assets/praha/charts-districts.json#income">
   <img src="../assets/praha/04-income.svg" alt="Stacked bars of income per resident for Praha 1 and the thirteen large districts: taxes and local fees in black, other non-tax income in grey, transfers in green. Transfers are the largest part everywhere; Praha 1 has the most of all three." loading="lazy">
   <figcaption><b>fig. 2</b> · Income per resident, CZK thousand, mean of 2022–2024. Transfers are money received from the city and the state; money a district moves into its budget from its own funds, mostly business income such as rents, counts as its own non-tax income; taxes include local fees (tourist, public-space, admission).</figcaption>
 </figure>
@@ -154,7 +154,7 @@
 
 <section>
 <h2>The city's in-year grants by year</h2>
-<figure>
+<figure data-chart="../assets/praha/charts-districts.json#city-grants">
   <img src="../assets/praha/11-city-grants.svg" alt="Stacked bars of the city's own in-year grants to all districts by year, 2015 to 2023, in CZK billion: 2015 about 2.2 (not split), 2016 2.9, 2017 5.4, 2018 4.6, 2019 4.7, 2020 4.1, 2021 3.4, 2022 3.7, 2023 4.2. Investment grants, in green, are about half to three quarters of each year." loading="lazy">
   <figcaption><b>fig. 3</b> · The city's own in-year grants to all 57 districts by year of the approving resolution, CZK billion. Green: investment; grey: non-investment. The 2015 list cannot be split. 2018, 2019, 2022 and 2023 are cut at the coalition changes and scaled to a full year.</figcaption>
 </figure>
@@ -164,12 +164,12 @@
 <section>
 <h2>Districts that became aligned in 2018 and 2023</h2>
 <p>At each change the comparison takes the districts that turned aligned and stayed so, and the districts that stayed unaligned throughout. In 2018, 7 districts turned aligned for the three years after, against 31 that stayed unaligned. In 2023, 23 turned aligned against 17, and that change made 34 of the 57 districts aligned, up from 14.</p>
-<figure>
+<figure data-chart="../assets/praha/charts-districts.json#event-study">
   <img src="../assets/praha/12-event-study.svg" alt="Two lines of the difference between districts that became aligned and districts that did not, relative to the year before each change, in percent of usual grants. Before both changes the lines run within about 20 % of zero. After November 2018: +70 % in the first year, about 0 in the second, +19 % in the third. After February 2023: −59 % in the first year; the next two years, dashed, −95 % and +46 %." loading="lazy">
   <figcaption><b>fig. 4</b> · Districts that became aligned minus districts that stayed unaligned, relative to the last year before each change, in % of each change's control districts' usual grants. Year 0 is the first year under the new coalition. Dashed after 2023: from the city's drawdown lists. The registered check found them too different from the budget-measure lists to join, so those years are shown, not tested.</figcaption>
 </figure>
 <p>Before each change the two groups moved similarly, and the joint pre-trend test gives p = 0.97. After the 2018 change, districts that turned aligned received more in the first year (+70 %) and about the same in the next two, which over the three years, against the three before, comes to +20 %. After the 2023 change they received less, −59 % against 2022 and −67 % against the three years before. Pooled, the change on becoming aligned is −37 % of the controls' usual grants, with a 95 % interval from −115 to +21 %.</p>
-<figure>
+<figure data-chart="../assets/praha/charts-districts.json#estimate">
   <img src="../assets/praha/13-estimate.svg" alt="Interval chart. The pooled estimate, −37 %, with a 95 % Conley–Taber interval from −115 to +21 %, and a wider simplified HonestDiD interval from −143 to +69 %. The 2018 change alone at +20 %, the 2023 change alone at −67 %. A grey band marks ±20 %, a green band the published premiums of 26–47 %, and a dashed line at +100 % the smallest change the design could detect." loading="lazy">
   <figcaption><b>fig. 5</b> · The registered estimate against the published premiums (green band), the equivalence margin (grey band) and what the design could detect (dashed). The HonestDiD interval is a simplified version: it lets the trend after each change differ from the trend before by as much as the largest change before it<sup class="cite"><a href="#r16">16</a></sup>. At half that bound the interval is −131 to +57 %.</figcaption>
 </figure>
@@ -180,7 +180,7 @@
 
 <section>
 <h2>Robustness</h2>
-<figure>
+<figure data-chart="../assets/praha/charts-districts.json#spec-curve">
   <img src="../assets/praha/14-spec-curve.svg" alt="Thirty-six dots sorted from about −81 % to +1 %. Six are above zero. The registered alignment rule gives estimates between about −60 % and 0 %, the seat-majority rule between −81 % and −4 %, and the largest-list rule between −21 % and +1 %." loading="lazy">
   <figcaption><b>fig. 6</b> · The same estimate in 36 specifications. They combine three scalings (against 2016 formula money, per resident, log), three definitions of alignment, with and without the 2015–16 coalition interregnum, and all districts or without districts under 1 000 residents. Green: the registered alignment rule.</figcaption>
 </figure>
@@ -283,5 +283,6 @@
   draw();
 })();
 </script>
+<script src="../assets/charts.js" defer></script>
 </body>
 </html>
