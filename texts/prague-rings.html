@@ -88,7 +88,7 @@
 </figure>
 <p>ANO's share rises with distance from the centre, from 13 % within two kilometres of Můstek to 25 % between eight and ten, then falls back to 22 % beyond ten, where the estates give way to family houses and villages inside the city boundary. The Pirates run the other way, from 22 % in the centre to 13 % at the edge, while SPOLU, the largest party, moves least, from 37 % to 31 % and back to 34 %. Above the map a party, turnout or the share of panel flats can be picked, and hovering over or tapping a precinct gives its numbers.</p>
 <p>Three measurements can be put on every precinct: how far its centre is from the nearest metro station, how far it is from Můstek, and what share of its flats are in panel buildings. Of the 735 755 flats in the precincts, 32 % are in panel buildings. Figure 2 lays the three side by side on one scale.</p>
-<figure>
+<figure data-chart="../assets/praha/charts-rings.json#three-rulers">
   <img src="../assets/praha/02-three-rulers.svg" alt="Three panels on one vertical scale. By distance to the metro, ANO and the Pirates barely change. By distance from Můstek, ANO rises from 13 to 25 % and the Pirates fall from 22 to 13 %. By share of flats in panel buildings, ANO rises from 16 to 26 %." loading="lazy">
   <figcaption><b>fig. 2</b> · ANO (ochre) and the Pirates (black), % of valid votes, grouped by each ruler. Distances are from the precinct's centre; Můstek stands for the centre; a panel building is one the cadastre records as built of wall panels. Two precincts with no flats (1 117 of 1 119 remain).</figcaption>
 </figure>
@@ -132,7 +132,7 @@
 <section>
 <h2>How much of the estate gradient is composition</h2>
 <p>Across the 282 clusters, ANO's share rises by 0.99 points for every ten percentage points more flats in panel buildings, holding the distance from the centre, the distance to the metro and the share of family houses equal. Adding what the census knows about education and citizenship lowers the gradient to 0.56 points (95 % interval 0.47 to 0.66), and the census block raises the share of variation explained from 70 % to 87 %.</p>
-<figure>
+<figure data-chart="../assets/praha/charts-rings.json#attenuation">
   <img src="../assets/praha/07-attenuation.svg" alt="Arrow chart. For each row an arrow runs from the estate gradient without composition (grey dot) to the gradient with education and citizenship held equal (ochre dot), with a dashed mark at half the original. ANO 2025: 0.99 to 0.56, 43 % explained. ANO 2025 with age added: 0.99 to 0.47, 52 %. ANO 2021: 0.86 to 0.48, 44 %. SPOLU 2025: −0.60 to −0.35, 42 %. SPOLU 2021: −0.77 to −0.53, 31 %." loading="lazy">
   <figcaption><b>fig. 3</b> · The estate gradient before (grey) and after (ochre) holding education and citizenship equal; the dashed mark is half the original gradient, the line H1b had to cross. Right: the share explained. Grid clusters, weighted by valid votes.</figcaption>
 </figure>
@@ -143,7 +143,7 @@
 <section>
 <h2>Distance to the metro</h2>
 <p>Planners and campaigns both treat the metro as the city's spine, and the 2025 precinct model found no measurable effect of it on the vote. An interval around zero does not show that an effect is absent, so the registered test asked the stronger question of whether the metro's effect, in the full model with composition, is small enough not to matter. The threshold was set at a quarter of a point per doubling of the distance to a station. Across the middle half of Prague's precincts that is half a point, a fortieth of ANO's vote in the city.</p>
-<figure>
+<figure data-chart="../assets/praha/charts-rings.json#metro-equivalence">
   <img src="../assets/praha/09-metro-equivalence.svg" alt="Four horizontal intervals against a grey band from −0.25 to +0.25. Grid clusters 2025: −0.17, from −0.40 to +0.05. Precincts 2025: −0.10, from −0.28 to +0.07. Grid clusters 2021: −0.15, from −0.38 to +0.08. Spatial error model: −0.20, from −0.45 to +0.04. Every interval crosses zero and every one reaches past −0.25." loading="lazy">
   <figcaption><b>fig. 4</b> · The metro's coefficient for ANO with its 90 % interval (the interval an equivalence test at 5 % uses), against the band declared too small to matter.</figcaption>
 </figure>
@@ -153,7 +153,7 @@
 <section>
 <h2>ANO's estate gradient in 2017, 2021 and 2025</h2>
 <p>Precinct boundaries move between elections and the cadastre keeps only the current ones. The comparison over time therefore uses the 819 precincts that exist under the same number in 2017, 2021 and 2025 and whose register grew or shrank no more than 10 % beyond what new flats inside them predict. Matched precincts have more panel flats than the rest (40 % against 27 %), because the unmatched are mostly where the city is still building.</p>
-<figure>
+<figure data-chart="../assets/praha/charts-rings.json#steepening">
   <img src="../assets/praha/08-steepening.svg" alt="Line chart of ANO's estate gradient in the matched precincts: 0.55 points per 10 pp of panel flats in 2017, 0.73 in 2021, 0.80 in 2025, with a light band showing the range under 5 % and 20 % matching rules." loading="lazy">
   <figcaption><b>fig. 5</b> · ANO's estate gradient by election, 819 matched precincts; band: the same with the 5 % (410 precincts) and 20 % (982) matching rules. Distance from the centre, distance to the metro and family-house share are held equal in each year.</figcaption>
 </figure>
@@ -169,7 +169,7 @@
 
 <section>
 <h2>Robustness checks</h2>
-<figure>
+<figure data-chart="../assets/praha/charts-rings.json#spec-curve">
   <img src="../assets/praha/10-spec-curve.svg" alt="Dot chart of 48 specifications sorted by the share of ANO's estate gradient explained by composition, from 31 % to 44 %, all below a dashed line at 50 %. Ochre dots, 36 of 48, mark specifications where the remainder is significantly more than half; grey dots are indeterminate." loading="lazy">
   <figcaption><b>fig. 6</b> · Share of ANO's estate gradient explained by education and citizenship in 48 specifications: weighted or not, allocation by flats or by area, panel defined narrowly or broadly, all clusters or large precincts only or homogeneous squares only, bootstrap or spatial errors. Ochre: significantly less than half explained. Grey: indeterminate. None: more than half.</figcaption>
 </figure>
@@ -292,5 +292,6 @@
     Object.entries(names).map(([k, lab]) => row(lab, r.robustness[k])).join("");
 })();
 </script>
+<script src="../assets/charts.js" defer></script>
 </body>
 </html>

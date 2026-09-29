@@ -68,7 +68,7 @@
 <p>The first study asks whether a spot's picture commits to the brand colour or to a world. Every spot is sampled at one frame per second, the five dominant colours of each frame are found with K-means in CIE-LAB, and the spot's dominant chromatic hue is compared with the brand's own anchor swatch by the angle between them on the hue wheel. Beyond about 90° the two are, perceptually, different colours<sup class="cite"><a href="#r2">2</a></sup>.</p>
 <p>Sixteen spots sit under 20°, with Lidl, Penny, T-Mobile and Vodafone flooding the screen with their colour. Eleven sit over 100°: Albert's five spots at 150–178°, Komerční banka, AAA Auto and Pilsner Urquell, whose brand green occupies 0.2 % of the picture. The twenty in between are the main finding, since they show that most Czech spots do not choose. AAA Auto's brand yellow occupies 0.001 % of screen time, and its picture is a used-car catalogue in greys and browns with a logo on it<sup class="cite"><a href="#r2">2</a></sup>.</p>
 </section>
-<figure>
+<figure data-chart="../assets/brand/charts.json#hue-distance">
   <img src="../assets/brand/02-hue-distance.svg" alt="47 bars sorted by hue distance from the brand anchor; acid green under 20 degrees, violet over 100, grey in between, with a 90-degree threshold line." loading="lazy">
   <figcaption><b>fig. 1</b> · Hue distance between brand anchor and dominant on-screen colour, one bar per spot, sorted. Recomputed for this page from the study's published metrics.</figcaption>
 </figure>
@@ -78,9 +78,9 @@
 
 <section>
 <h2>Episode 1.5 · Voice or music</h2>
-<p>The second study takes the same 47 spots, audio only. Voice activity is detected with silero-vad, tempo by beat tracking and key by Krumhansl–Schmuckler correlation, and brightness and dynamics are measured with librosa. A spot is voice-led when more than half of its runtime is speech<sup class="cite"><a href="#r3">3</a></sup>. The spots split with nothing in the middle: 44 are voice-led, three are music-led and none is mixed. Pilsner Urquell's <i>Alfons</i> is 86 % music and two McDonald's image spots are 77 % and 76 %, while the next spot down is at 41 %. The corpus contains no music-led promotional spot at all.</p>
+<p>The second study takes the same 47 spots, audio only. Voice activity is detected with silero-vad, tempo by beat tracking and key by Krumhansl–Schmuckler correlation, and brightness and dynamics are measured with librosa. A spot is voice-led when more than half of its runtime is speech<sup class="cite"><a href="#r3">3</a></sup>. The spots split with nothing in the middle: 44 are voice-led, three are music-led and none is mixed. Pilsner Urquell's <i>Alfons</i> is 86 % music and two McDonald's image spots are 77 % and 76 %, while the next spot down is at 42 %. The corpus contains no music-led promotional spot at all.</p>
 </section>
-<figure>
+<figure data-chart="../assets/brand/charts.json#voice-music">
   <img src="../assets/brand/03-voice-music.svg" alt="47 stacked bars of voice share and music share sorted by music share; three bars cross the 50 percent line." loading="lazy">
   <figcaption><b>fig. 2</b> · Voice and music share of runtime, one bar per spot, sorted by music. Three cross the line. Recomputed from the study's metrics.</figcaption>
 </figure>
@@ -99,7 +99,7 @@
 <p>Spot Scorer turns the two pipelines into a tool a strategist can use on Monday. For a chosen spot it shows the colour and audio metrics against the sector median, along with the four or five numerical targets the spot would have to hit to leave its category default. Given any YouTube, Facebook or Instagram URL, a Modal backend runs the full pipeline in about 25 seconds<sup class="cite"><a href="#r5">5</a></sup>.</p>
 <p>With the two commitments on one plane, most spots commit on one axis and hedge on the other. Pilsner's <i>Alfons</i> is the one spot that commits to a world both by picture (102°, brand green at 0.2 %) and by sound (86 % music, 81 bpm, F♯ major), with the two pipelines agreeing about one brand. Albert is the opposite case, with five spots that commit to a world visually (150–178°) and to a voiceover in the sound (88 % speech). Each decision is extreme on its own axis, but the two point in different directions and do not reinforce each other<sup class="cite"><a href="#r1">1</a></sup>.</p>
 </section>
-<figure>
+<figure data-chart="../assets/brand/charts.json#two-commitments">
   <img src="../assets/brand/01-two-commitments.svg" alt="Scatter of 47 spots: hue distance on the x axis, music share on the y axis; Pilsner Urquell alone in the top right, Albert's five spots at the far right and bottom." loading="lazy">
   <figcaption><b>fig. 3</b> · The two commitments on one plane. Top right is empty except for Pilsner; Albert commits on the picture and hedges on the sound. Joined from both studies' spot-level metrics.</figcaption>
 </figure>
@@ -139,5 +139,6 @@
   <p class="back"><a href="../#works">← projects</a></p>
 </footer>
 </article>
+<script src="../assets/charts.js" defer></script>
 </body>
 </html>

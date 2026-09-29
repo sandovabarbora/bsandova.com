@@ -1,0 +1,326 @@
+{
+ "auc": {
+  "alt": "Horizontal bars of held-out AUC for four feature sets and two model families; all between 0.43 and 0.64, with 0.5 marked as coin flip and the agreement rule at 0.55.",
+  "legend": [
+   {
+    "label": "logistic regression",
+    "c": "grey",
+    "shape": "box",
+    "o": 0.85
+   },
+   {
+    "label": "gradient boosting",
+    "c": "held",
+    "shape": "box",
+    "o": 0.85
+   },
+   {
+    "label": "0.5 = coin flip",
+    "c": "ink",
+    "dash": "dash"
+   },
+   {
+    "label": "rule: repeats agree · 0.55",
+    "c": "ink",
+    "dash": "dot"
+   }
+  ],
+  "panels": [
+   {
+    "h": 330,
+    "title": "silently wrong or correct? 3 704 answers, 87 questions",
+    "x": {
+     "kind": "linear",
+     "domain": [
+      0.3,
+      1.0
+     ],
+     "ticks": [
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+     ],
+     "tickfmt": {
+      "dp": 1
+     },
+     "label": "AUC, held-out questions (GroupKFold by question)"
+    },
+    "y": {
+     "kind": "cat",
+     "domain": [
+      "agreement across repeats · logistic",
+      "agreement across repeats · boosting",
+      "shape of the SQL · logistic",
+      "shape of the SQL · boosting",
+      "model · pack · language · logistic",
+      "model · pack · language · boosting",
+      "everything above · logistic",
+      "everything above · boosting"
+     ]
+    },
+    "marks": [
+     {
+      "type": "hbar",
+      "rows": [
+       {
+        "y": "agreement across repeats · logistic",
+        "x0": 0.3,
+        "x1": 0.5564293312791166,
+        "c": "grey",
+        "label": "0.56",
+        "tip": "agreement across repeats\nlogistic regression\nAUC 0.56\nat a 50 % threshold: forwards 0.2 %, 67 % of them correct"
+       },
+       {
+        "y": "agreement across repeats · boosting",
+        "x0": 0.3,
+        "x1": 0.6447528214910189,
+        "c": "held",
+        "label": "0.64",
+        "tip": "agreement across repeats\ngradient boosting\nAUC 0.64\nat a 50 % threshold: forwards 3 %, 86 % of them correct"
+       },
+       {
+        "y": "shape of the SQL · logistic",
+        "x0": 0.3,
+        "x1": 0.4299125735177237,
+        "c": "grey",
+        "label": "0.43",
+        "tip": "shape of the SQL\nlogistic regression\nAUC 0.43\nat a 50 % threshold: forwards 1 %, 12 % of them correct"
+       },
+       {
+        "y": "shape of the SQL · boosting",
+        "x0": 0.3,
+        "x1": 0.5772595771737403,
+        "c": "held",
+        "label": "0.58",
+        "tip": "shape of the SQL\ngradient boosting\nAUC 0.58\nat a 50 % threshold: forwards 11 %, 42 % of them correct"
+       },
+       {
+        "y": "model · pack · language · logistic",
+        "x0": 0.3,
+        "x1": 0.5537177653057481,
+        "c": "grey",
+        "label": "0.55",
+        "tip": "model · pack · language\nlogistic regression\nAUC 0.55\nat a 50 % threshold: forwards 0.9 %, 12 % of them correct"
+       },
+       {
+        "y": "model · pack · language · boosting",
+        "x0": 0.3,
+        "x1": 0.5595074771040436,
+        "c": "held",
+        "label": "0.56",
+        "tip": "model · pack · language\ngradient boosting\nAUC 0.56\nat a 50 % threshold: forwards 2 %, 35 % of them correct"
+       },
+       {
+        "y": "everything above · logistic",
+        "x0": 0.3,
+        "x1": 0.621924360808481,
+        "c": "grey",
+        "label": "0.62",
+        "tip": "everything above\nlogistic regression\nAUC 0.62\nat a 50 % threshold: forwards 10 %, 47 % of them correct"
+       },
+       {
+        "y": "everything above · boosting",
+        "x0": 0.3,
+        "x1": 0.5894308108042013,
+        "c": "held",
+        "label": "0.59",
+        "tip": "everything above\ngradient boosting\nAUC 0.59\nat a 50 % threshold: forwards 12 %, 53 % of them correct"
+       }
+      ]
+     },
+     {
+      "type": "rule",
+      "axis": "x",
+      "v": 0.5,
+      "c": "ink",
+      "dash": "dash",
+      "tip": "0.5 = coin flip"
+     },
+     {
+      "type": "rule",
+      "axis": "x",
+      "v": 0.5544188890111637,
+      "c": "ink",
+      "dash": "dot",
+      "tip": "rule: forward only when all repeats agree\nAUC 0.55\nforwards 60 %, 21 % of them correct"
+     }
+    ]
+   }
+  ],
+  "table": {
+   "cols": [
+    "feature set",
+    "logistic regression AUC",
+    "gradient boosting AUC"
+   ],
+   "rows": [
+    [
+     "agreement across repeats",
+     "0.56",
+     "0.64"
+    ],
+    [
+     "shape of the SQL",
+     "0.43",
+     "0.58"
+    ],
+    [
+     "model · pack · language",
+     "0.55",
+     "0.56"
+    ],
+    [
+     "everything above",
+     "0.62",
+     "0.59"
+    ],
+    [
+     "rule: forward only when all repeats agree",
+     "0.55",
+     "–"
+    ]
+   ]
+  },
+  "data": [
+   "../assets/detector/detector.json"
+  ]
+ },
+ "transfer": {
+  "alt": "A three by three matrix of AUC values for the SQL-shape model trained on one pack and tested on another; off-diagonal values between 0.41 and 0.62, and the ecommerce and taxi diagonals below 0.5.",
+  "panels": [
+   {
+    "h": 300,
+    "title": "SQL-shape AUC · rows trained on, columns tested on",
+    "x": {
+     "kind": "cat",
+     "domain": [
+      "ecommerce",
+      "saas",
+      "taxi"
+     ],
+     "nogrid": true,
+     "label": "tested on"
+    },
+    "y": {
+     "kind": "cat",
+     "domain": [
+      "ecommerce",
+      "saas",
+      "taxi"
+     ]
+    },
+    "marks": [
+     {
+      "type": "cell",
+      "c": "held",
+      "domain": [
+       0.0,
+       1.25
+      ],
+      "rows": [
+       {
+        "x": "ecommerce",
+        "y": "ecommerce",
+        "v": 0.28966911651649807,
+        "s": "0.29",
+        "tip": "trained on ecommerce · tested on ecommerce\nAUC 0.29\nheld-out questions within the pack\nbelow 0.5: the pattern points the wrong way"
+       },
+       {
+        "x": "saas",
+        "y": "ecommerce",
+        "v": 0.5336577453365774,
+        "s": "0.53",
+        "tip": "trained on ecommerce · tested on saas\nAUC 0.53\ntrained on the row, scored on the column"
+       },
+       {
+        "x": "taxi",
+        "y": "ecommerce",
+        "v": 0.6217573461891643,
+        "s": "0.62",
+        "tip": "trained on ecommerce · tested on taxi\nAUC 0.62\ntrained on the row, scored on the column"
+       },
+       {
+        "x": "ecommerce",
+        "y": "saas",
+        "v": 0.5358072716463196,
+        "s": "0.54",
+        "tip": "trained on saas · tested on ecommerce\nAUC 0.54\ntrained on the row, scored on the column"
+       },
+       {
+        "x": "saas",
+        "y": "saas",
+        "v": 0.6712844687753448,
+        "s": "0.67",
+        "tip": "trained on saas · tested on saas\nAUC 0.67\nheld-out questions within the pack"
+       },
+       {
+        "x": "taxi",
+        "y": "saas",
+        "v": 0.50526572543618,
+        "s": "0.51",
+        "tip": "trained on saas · tested on taxi\nAUC 0.51\ntrained on the row, scored on the column"
+       },
+       {
+        "x": "ecommerce",
+        "y": "taxi",
+        "v": 0.4422568344660045,
+        "s": "0.44",
+        "tip": "trained on taxi · tested on ecommerce\nAUC 0.44\ntrained on the row, scored on the column\nbelow 0.5: the pattern points the wrong way"
+       },
+       {
+        "x": "saas",
+        "y": "taxi",
+        "v": 0.4115470397404704,
+        "s": "0.41",
+        "tip": "trained on taxi · tested on saas\nAUC 0.41\ntrained on the row, scored on the column\nbelow 0.5: the pattern points the wrong way"
+       },
+       {
+        "x": "taxi",
+        "y": "taxi",
+        "v": 0.12197256657483929,
+        "s": "0.12",
+        "tip": "trained on taxi · tested on taxi\nAUC 0.12\nheld-out questions within the pack\nbelow 0.5: the pattern points the wrong way"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "table": {
+   "cols": [
+    "trained on ↓ · tested on →",
+    "ecommerce",
+    "saas",
+    "taxi"
+   ],
+   "rows": [
+    [
+     "ecommerce",
+     "0.29",
+     "0.53",
+     "0.62"
+    ],
+    [
+     "saas",
+     "0.54",
+     "0.67",
+     "0.51"
+    ],
+    [
+     "taxi",
+     "0.44",
+     "0.41",
+     "0.12"
+    ]
+   ]
+  },
+  "data": [
+   "../assets/detector/detector.json"
+  ]
+ }
+}

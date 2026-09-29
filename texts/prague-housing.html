@@ -75,7 +75,7 @@
 
 <section>
 <h2>New homes per 1 000 residents in Prague, Vienna and Warsaw, 2012–2024</h2>
-<figure>
+<figure data-chart="../assets/praha/charts-housing.json#completions">
   <img src="../assets/praha/05-completions.svg" alt="Lines of dwellings completed per 1 000 residents, 2012 to 2024. Warsaw between 7.6 and 13.2, peaking in 2018. Vienna rising from 3.6 to 8.5 in 2021, falling to 5.4 in 2024. Prague between 3.1 and 4.9, never higher." loading="lazy">
   <figcaption><b>fig. 1</b> · Dwellings completed per 1 000 residents. Prague and Warsaw count every completed home, including those made by extending or converting a building; Vienna's series counts homes in new buildings only, because conversions were recorded for Vienna only from 2024. With them, Vienna's 2024 figure is 6.2.</figcaption>
 </figure>
@@ -119,7 +119,7 @@
 <p>The 2021 census round recorded when each dwelling's building was built. Dwellings in buildings from 2011 or later, per resident and per year, therefore measure the last decade's new supply on nearly the same definition across the 22 countries, although Czechia, Spain and Croatia also count reconstructions<sup class="cite"><a href="#r13">13</a></sup>. The unit is the metropolitan region, because housing markets do not stop at city limits, and Prague's region is Prague plus Středočeský kraj. Of Eurostat's 297 metropolitan regions, 208 in 22 countries have the census answer and the covariates.</p>
 <p>Per resident, Prague's metropolitan region built 5.28 dwellings a year by the census count, which places it 163rd of 208 from the bottom, in Europe's upper quarter; the median region built 3.55. Counting only completions of new houses, from the Czech Statistical Office, gives 3.88, which is mid-table at 116th of 208 on raw rates, against a median of 3.50. Vienna's region built 6.2 a year and Warsaw's 10.0, so the three-city comparison set Prague beside two metropolitan regions well above the European median of 3.55.</p>
 <p>The registered estimate goes further and compares each region with a prediction from what was known in 2011: population growth to 2011, size, output per head, dwellings per head, and whether the region holds a capital. The prediction for each country's regions comes from a model fitted on all other countries, and the gap is scaled by how well such regions are usually predicted<sup class="cite"><a href="#r14">14</a></sup><sup class="cite"><a href="#r15">15</a></sup>.</p>
-<figure>
+<figure data-chart="../assets/praha/charts-housing.json#benchmark">
   <img src="../assets/praha/11-benchmark.svg" alt="Dot chart of 208 metropolitan regions sorted by their score against a demand model for 2011–2021 construction. Prague, 5.3 dwellings per 1 000 residents a year, is 119th from the bottom, just above zero. Vienna, 6.2, is 155th. Warsaw, 10.0, is 205th, among the highest." loading="lazy">
   <figcaption><b>fig. 2</b> · Dwellings built 2011–2021 against a demand model, 208 European metropolitan regions, studentised leave-one-country-out scores; zero is "as the model predicts". The model failed its relevance check, so the ranks are shown as description, not as a benchmark.</figcaption>
 </figure>
@@ -130,7 +130,7 @@
 <section>
 <h2>From permit to house number in Prague and the rest of Czechia</h2>
 <p>Every month the Czech Statistical Office counts dwellings permitted and dwellings completed in each region. If Prague's flats take longer to finish, completions follow permits with a longer delay. The model estimates that delay as a distribution of lags between the two series, for flats in new apartment buildings, Prague against the other twelve regions. Středočeský kraj is left out of the comparison, because it absorbs Prague's overflow.</p>
-<figure>
+<figure data-chart="../assets/praha/charts-housing.json#lag-profile">
   <img src="../assets/praha/12-lag-profile.svg" alt="Two curves of relative log-likelihood against the mean lag in months. The rest of Czechia peaks at the left edge of the grid, 6 months (estimate 5.1), and falls steeply. Prague peaks at 16 months, but its curve stays close to the top from about 14 to 38 months, crossing the dashed 95 % line near 38." loading="lazy">
   <figcaption><b>fig. 3</b> · How well each mean lag fits the data (profile likelihood). A flat curve means the data barely distinguish between lags. Dashed: the 95 % cut-off.</figcaption>
 </figure>
@@ -147,13 +147,13 @@
 
 <section>
 <h2>Who builds: Vienna, Warsaw and 380 Polish districts</h2>
-<figure>
+<figure data-chart="../assets/praha/charts-housing.json#builders-2024">
   <img src="../assets/praha/06-builders.svg" alt="Two stacked bars for 2024. Vienna: limited-profit housing associations 25 %, public sector 2 %, companies 66 %, private persons 7 %. Warsaw: the city and public building societies 0.7 %, everyone else 99 %." loading="lazy">
   <figcaption><b>fig. 4</b> · Dwellings completed in 2024 by builder. Vienna: limited-profit housing associations (blue), public sector (black, 2.4 %), companies, private persons (6.8 %). Warsaw: municipal homes and public building societies (TBS) against everyone else. The Czech Statistical Office does not publish Prague's completions by builder in its series.</figcaption>
 </figure>
 <p>In 2024 a quarter of Vienna's new homes, 3 107 of 12 478, were built by limited-profit housing associations, companies whose profits Austrian law restricts, and another 2.4 % by the public sector itself. In Warsaw the city built 96 homes that year and its public building societies none, 0.7 % of the year's 14 873, so 99.3 % of Warsaw's volume came from builders other than the city. Prague's completions cannot be split the same way from the published series, and for Prague the comparison stops at volume.</p>
 <p>No yearly Austrian series by builder was found, so Vienna's associations cannot be followed over time. Poland has such a series: in each of its 380 districts, the dwellings that municipalities, social building societies (TBS) and developers begin each year. The registered question, which concerns Poland only, was whether non-market builders respond less to local price growth than developers.</p>
-<figure>
+<figure data-chart="../assets/praha/charts-housing.json#builders-poland">
   <img src="../assets/praha/13-builders.svg" alt="Intervals of the difference between non-market and market responses to local price growth. Main −0.56, from −1.52 to +0.39. Completions −0.71, cooperatives counted as non-market −0.08, primary-market prices +0.35, voivodeship clusters −0.56, without the five largest cities −0.46, 2012–2019 −0.80, negative binomial −1.52 (the only interval that excludes zero). The dashed line at −1 is the smallest difference of interest." loading="lazy">
   <figcaption><b>fig. 5</b> · Non-market minus market response of dwellings started to local price growth, 242 Polish districts, 2012–2024, with 90 % intervals. Black: p &lt; 0.05 in that variant. Dashed: the smallest difference the design cared about.</figcaption>
 </figure>
@@ -165,7 +165,7 @@
 <section>
 <h2>New flats and distance to the metro in Prague</h2>
 <p>Land near a metro station is worth more, so an unconstrained market would build more densely there, although near-metro squares are also largely built-out estates with little land left to build on. The test counts flats completed between 2012 and census day in March 2021 in each of Prague's 524 one-kilometre squares<sup class="cite"><a href="#r21">21</a></sup>, holding equal the distance from the centre and how many people already lived in the square in 2011<sup class="cite"><a href="#r22">22</a></sup>.</p>
-<figure>
+<figure data-chart="../assets/praha/charts-housing.json#metro">
   <img src="../assets/praha/14-metro.svg" alt="Intervals of the metro coefficient. Main −0.227, from −0.349 to −0.105. Conley 3 km −0.227. 2012–2024 −0.243. 500 m cells −0.229. Stations including the 2015 extension −0.185. Pre-2012 flats as density −0.206. Implausible new-build types excluded −0.246. Rail and tram distance added −0.241. Negative binomial −0.427. The 2000–2011 replication is −0.062, crossing zero. A dashed line marks −0.25." loading="lazy">
   <figcaption><b>fig. 6</b> · New-flat density per doubling of the distance to the nearest metro station (log scale), with 90 % spatial intervals; negative binomial with district-clustered intervals. Black: that variant's decision p &lt; 0.05. Dashed: the smallest effect the design cared about. Not drawn: clustering by the 57 city districts (p = 0.015).</figcaption>
 </figure>
@@ -252,5 +252,6 @@
   }).join("");
 })();
 </script>
+<script src="../assets/charts.js" defer></script>
 </body>
 </html>
