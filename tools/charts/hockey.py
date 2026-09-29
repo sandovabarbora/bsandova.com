@@ -147,7 +147,7 @@ def nhl_series() -> dict:
         {"type": "area", "name": "fitted level, 90 % interval", "c": HELD, "o": 0.14, "fmt": {"dp": 1},
          "pts": [[y, lo, hi] for y, lo, hi in zip(years, fit["lo"], fit["hi"])]},
         {"type": "line", "name": "fitted level (median)", "c": HELD, "w": 2, "fmt": {"dp": 1}, "pts": [[y, v] for y, v in zip(years, fit["median"])]},
-        {"type": "rule", "axis": "x", "v": year(fy), "c": INK, "dash": "dot", "label": f"most probable fall {fy}, p {fp:.2f}",
+        {"type": "rule", "axis": "x", "v": year(fy), "c": INK, "dash": "dot", "label": f"fall {fy}, p {fp:.2f}",
          "tip": f"most probable season of the fall: {fy}\nposterior probability {fp:.2f}\nlevel ×{df['median']:.2f} (90 % HDI {df['lo']:.2f}–{df['hi']:.2f})"},
         {"type": "dots", "c": INK, "r": 3.2, "pts": [
             {"x": y, "y": v, "tip": f"Czechia, {s}\n{v} NHL players with at least {t} games\nfitted level {f:.1f} ({lo:.1f}–{hi:.1f})",
@@ -169,7 +169,7 @@ def nhl_series() -> dict:
                    {"label": "fitted level and its 90 % interval", "c": HELD},
                    {"label": "Finland", "c": INK}, {"label": "Sweden", "c": GREY}],
         "panels": [
-            {"title": "Czech NHL players, 1995/96–2025/26 (2004/05 not played)", "h": 300, "padRight": 34, "x": {**xax}, "marks": top,
+            {"title": "Czech NHL players per season, 1995/96–2025/26", "h": 300, "padRight": 34, "x": {**xax}, "marks": top,
              "y": {"kind": "linear", "domain": [0, 70], "ticks": [0, 10, 20, 30, 40, 50, 60, 70], "label": "players"}},
             {"title": "per million inhabitants: Czechia, Finland, Sweden", "h": 190, "padRight": 34, "x": {**xax, "label": "season"}, "marks": per,
              "y": {"kind": "linear", "domain": [0, 8], "ticks": [0, 2, 4, 6, 8], "label": "NHL players per million"}},
@@ -200,7 +200,7 @@ def roster() -> dict:
         "alt": img_alt("roster.svg"),
         "legend": [{"label": name, "c": c, "shape": "box", "o": 1} for _, name, c in CATS],
         "panels": [{"h": 300,
-                    "x": {"kind": "cat", "domain": [label(e) for e in E], "label": "21 tournaments, Olympics 2010 (left) to World Championship 2026 (right)"},
+                    "x": {"kind": "cat", "domain": [label(e) for e in E], "label": "21 tournaments, 2010 (left) to 2026 (right)"},
                     "y": {"kind": "linear", "domain": [0, 30], "ticks": [0, 5, 10, 15, 20, 25, 30], "label": "roster spots"},
                     "marks": [{"type": "vbar", "rows": rows}]}],
         "table": {"cols": ["tournament", *[name for _, name, _ in CATS], "unknown", "players"],
