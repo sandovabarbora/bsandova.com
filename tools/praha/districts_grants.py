@@ -9,18 +9,28 @@ Sections (headings as printed):
   2025             5.2.1 drawdown by district block (investment, then non-investment), 5.3.x earlier years
 
 Each item row carries the budget measure (RO), the resolution, the purpose code (ÚZ), the district and the amount.
-Budget-measure lists and the 2024 list are in thousand CZK; the 2025 list is in CZK. The amount of a budget
-measure is the value in its 4137 / 4251 column (or 5347 / 6363 where only the city's side is printed); in a drawdown
-list it is the first column, the budget adjustment ("úprava rozpočtu"), i.e. the amount granted. Where one of
-the two budget-measure columns prints 0,00 (2023: the district side), the non-zero one is taken.
+Budget-measure lists and the 2024 list are in thousand CZK; the 2025 list is in CZK.
+
+The two column pairs of a budget-measure list are two directions of money, not copies (correction of 30 Sep 2026):
+5347 / 6363 is the city's expenditure, i.e. the city paying the district; 4137 / 4251 is the city's income, i.e.
+money the district pays the city (loan repayments "splátka NFV", returned grants "vratka", transfers from districts).
+Each amount is assigned to the column whose header code it sits under. The city's own grant is the amount in 5347 /
+6363; an amount in 4137 / 4251 is recorded separately as a district-to-city flow. Investment is the 6363 / 4251 pair
+where the list has one (2020-2023), otherwise the list's "b)" subsection. In a drawdown list the amount is the first
+column, the budget adjustment ("úprava rozpočtu"), i.e. the amount granted.
 
 A row is a **city's own grant** (the primary outcome, §4.3) if its ÚZ is a number from 1 to 999 (leading zeros and a
 /ZJ suffix ignored) and it is not in the year-end settlement series (RO 8000-8999). State ÚZ (98xxx, 1xxxx, 3xxxx and
-longer codes) and rows with no ÚZ, "-" or "xx" (settlements, local-fee top-ups, refunds, the additional financial
-relationship) are excluded (rule recorded 29 Sep 2026, before any amount was summed).
+longer codes) and rows with no ÚZ, "-" or "xx" (settlements, local-fee top-ups, returns carrying no ÚZ, the additional
+financial relationship) are excluded (rule recorded 29 Sep 2026, before any amount was summed). The rule keeps ÚZ 99
+(income-tax refunds passed to districts), 98 (gambling-levy shares) and 8 (repayable loans); a robustness check
+drops them.
 
-Resolutions: "8/27" is ZHMP session 8, item 27, dated from Part 1's roll-call files; the 2025 list prints the day.
-Other rows (RHMP resolutions, unrecognised session numbers) take the date of the nearest dated RO in the same list.
+Resolutions: "8/27" is ZHMP session 8, item 27. It is dated by the exact resolution number in Part 1's roll-call
+files; if the number is not there, by its session, but only when that session sat on a single day in the list's year
+(sessions continue over several days: the 2022-term session 1 sat on 3 Nov, 24 Nov, 15 Dec 2022 and 16 Feb 2023).
+Other rows (RHMP resolutions, sessions with several days, unrecognised numbers) take the date of the nearest dated RO
+in the same list (correction of 30 Sep 2026: the first version kept one date per session number).
 
 Modes:
     --structure   counts and coverage only; reads no amount (the registered pre-join step)
@@ -74,8 +84,9 @@ SUB_A = re.compile(r"^\s*a\)|^\s*Neinvestiční dotace\s*$")
 SUB_B = re.compile(r"^\s*b\)|^\s*Investiční dotace\s*$|^\s*Investiční\s*$")
 
 
-def sessions() -> dict[int, dict[int, str]]:
-    """ZHMP session dates by term and session number, from Part 1's roll-call files (tools/data/zhmp)."""
+def sessions() -> dict[int, dict]:
+    """ZHMP dates by term: {"res": resolution number -> date, "sess": session -> set of dates}, from Part 1's
+    roll-call files (tools/data/zhmp)."""
     out = {}
     for term in (2010, 2014, 2018, 2022):
         path = ROOT / "tools" / "data" / "zhmp" / f"votes{term}.csv"
@@ -84,25 +95,34 @@ def sessions() -> dict[int, dict[int, str]]:
         text = path.read_text(encoding="utf-8-sig")
         head = text.splitlines()[0]
         rows = csv.DictReader(text.splitlines(), delimiter=";" if head.count(";") > head.count(",") else ",")
+        t = out.setdefault(term, {"res": {}, "sess": {}})
         for r in rows:
-            s = r["cislousneseni"].split("/")[0].strip()
+            res = r["cislousneseni"].strip().replace(" ", "")
             day = r["datumjednani"].split()[0] if r["datumjednani"] else ""
-            if s.isdigit() and day:
+            if "/" in res and day:
                 d, m, y = day.split(".")
-                out.setdefault(term, {}).setdefault(int(s), f"{y}-{m}-{d}")
+                t["res"].setdefault(res, f"{y}-{m}-{d}")
+                t["sess"].setdefault(res.split("/")[0], set()).add(f"{y}-{m}-{d}")
     return out
 
 
 def zhmp_date(resolution: str, year: int, lookup: dict) -> str | None:
-    """The session date of a 'session/item' resolution: a session held in the list's year, else the year before."""
-    m = re.fullmatch(r"Z?(\d{1,2})/\d{1,3}", resolution or "")
+    """The date of a ZHMP 'session/item' resolution approved in the list's year or the year before: the exact
+    resolution number first, then a session that sat on one day only in that year; otherwise None."""
+    m = re.fullmatch(r"Z?(\d{1,2}M?)/(\d{1,3})", (resolution or "").replace(" ", ""))
     if not m:
         return None
-    s = int(m.group(1))
+    key = f"{m.group(1)}/{m.group(2)}"
     for want in (str(year), str(year - 1)):
-        hits = sorted(t[s] for t in lookup.values() if s in t and t[s][:4] == want)
-        if hits:
-            return hits[0]
+        exact = sorted(t["res"][key] for t in lookup.values() if key in t["res"] and t["res"][key][:4] == want)
+        if exact:
+            return exact[0]
+    for want in (str(year), str(year - 1)):
+        days = sorted({d for t in lookup.values() for d in t["sess"].get(m.group(1), set()) if d[:4] == want})
+        if len(days) == 1:
+            return days[0]
+        if len(days) > 1:
+            return None  # several sitting days: dated by RO order instead
     return None
 
 
@@ -190,10 +210,12 @@ def items(year: int, lookup: dict) -> tuple[list[dict], dict]:
             kind = role(year, sec, title)
             if not kind:
                 continue
-            c = {"candidate_lines": 0, "parsed": 0, "zhmp": 0, "zhmp_dated": 0, "undated": 0,
+            c = {"candidate_lines": 0, "parsed": 0, "zhmp": 0, "zhmp_dated": 0, "undated": 0, "direction_out": 0,
+                 "direction_in": 0, "direction_both": 0, "direction_zero": 0, "no_header": 0, "assigned_by_position": 0,
                  "column_vs_sub_conflict": 0,
                  "sub_a": 0, "sub_b": 0, "column_cap": 0, "column_cur": 0, "unmarked": 0, "city_own": 0}
             sub, header, unit, block, ro_prev = None, None, "thousand" if year < 2025 else "CZK", None, None
+            learned = {}  # column -> end position of its amounts, from the last line that printed every column
             recent = []
             for line in lines[start:end]:
                 has_amount = bool(AMOUNT.search(line))
@@ -204,6 +226,7 @@ def items(year: int, lookup: dict) -> tuple[list[dict], dict]:
                         sub = "b"
                     if CODES.search(line):
                         header = {m.group(1): m.end() for m in CODES.finditer(line)}
+                        learned = {}
                     if re.search(r"\bv Kč\b", line):
                         unit = "CZK"
                     elif re.search(r"tis\. Kč", line):
@@ -252,22 +275,43 @@ def items(year: int, lookup: dict) -> tuple[list[dict], dict]:
                     c["zhmp"] += "/" in res
                     c["zhmp_dated"] += row["date"] is not None and "/" in res
                     column = None
-                    if header and amounts:
-                        pos = amounts[-1][1]
-                        column = min(header, key=lambda k: abs(header[k] - pos))
                 if kind == "drawdown":
-                    row["amount_text"] = amounts[0][0] if amounts else None
+                    row["out_text"] = amounts[0][0] if amounts else None
+                    row["in_text"] = None
+                    row["direction"] = "out"
                 else:
-                    # the district-side (4137/4251) and city-side (5347/6363) columns carry the same amount; some
-                    # lists fill only one of them and print 0,00 in the other (2023 fills the city side), so the
-                    # last non-zero amount on the line is taken (correction of 29 Sep 2026, see the design)
-                    nonzero = [t for t, _ in amounts if float(t.replace(" ", "").replace(",", ".")) != 0.0]
-                    row["amount_text"] = nonzero[-1] if nonzero else (amounts[-1][0] if amounts else None)
+                    # each amount goes to the column whose header code it sits under: 5347 / 6363 = the city pays
+                    # the district; 4137 / 4251 = the district pays the city (correction of 30 Sep 2026)
+                    # amounts are right-aligned and offset from their header codes, so position alone misleads: a
+                    # line that prints every column (zeros included) is assigned by order and teaches the columns'
+                    # positions; a shorter line is assigned by those learned positions
+                    order = sorted(header, key=header.get) if header else []
+                    if order and len(amounts) == len(order):
+                        assigned = list(zip(order, amounts))
+                        learned = {k: pos for k, (_, pos) in assigned}
+                    elif order and path.suffix == ".pdf":  # a .docx rendition (2015) has no column layout
+                        ref = learned or header
+                        assigned = [(min(ref, key=lambda k: abs(ref[k] - pos)), (t, pos)) for t, pos in amounts]
+                        c["assigned_by_position"] += 1
+                    else:
+                        assigned = [("5347", a_) for a_ in amounts]
+                    outs, ins, cols = [], [], []
+                    for col, (t, pos) in assigned:
+                        if float(t.replace(" ", "").replace(",", ".")) == 0.0:
+                            continue
+                        cols.append(col)
+                        (outs if col in ("5347", "6363") else ins).append(t)
+                    row["out_text"] = ";".join(outs) or None
+                    row["in_text"] = ";".join(ins) or None
+                    row["direction"] = "both" if outs and ins else "out" if outs else "in" if ins else "zero"
+                    column = cols[-1] if cols else None
+                    c["direction_" + row["direction"]] += 1
+                    c["no_header"] += not header
                 row["column"] = column
-                # investment: the 4251/6363 column where the header has one (2020-2023); otherwise the list's
-                # "b)" subsection (investment transfers) against "a)" (non-investment)
+                # investment: the 6363 / 4251 pair where the list has one (2020-2023); otherwise the list's "b)"
+                # subsection (investment transfers) against "a)" (non-investment)
                 split_header = bool(header) and any(k in header for k in ("4251", "6363"))
-                if split_header and column:
+                if kind == "measures" and split_header and column:
                     row["investment"] = column in ("4251", "6363")
                     c["column_vs_sub_conflict"] += sub is not None and (sub == "b") != row["investment"] \
                         and city_own(row["uz"], row["ro"])
@@ -300,9 +344,12 @@ def date_by_ro(rows: list[dict]) -> None:
                 r.setdefault("date_source", "resolution")
 
 
-def value(r: dict) -> float:
-    v = float(r["amount_text"].replace(" ", "").replace(",", "."))
-    return v * 1000 if r["unit"] == "thousand" else v
+def value(text: str | None, unit: str) -> float:
+    """Sum of the ';'-joined amounts of one row, in CZK."""
+    if not text:
+        return 0.0
+    v = sum(float(t.replace(" ", "").replace(",", ".")) for t in text.split(";"))
+    return v * 1000 if unit == "thousand" else v
 
 
 def structure(lookup: dict) -> dict:
@@ -345,9 +392,9 @@ def main() -> None:
         for y in range(2019, 2024):
             rows, _ = items(y, lookup)
             for r in rows:
-                if r["city_own"] and r["amount_text"]:
+                if r["city_own"] and r["out_text"]:
                     key = (r["district"], y)
-                    cells.setdefault(key, {"measures": 0.0, "drawdown": 0.0})[r["kind"]] += value(r)
+                    cells.setdefault(key, {"measures": 0.0, "drawdown": 0.0})[r["kind"]] += value(r["out_text"], r["unit"])
         x = [v["measures"] for v in cells.values()]
         y = [v["drawdown"] for v in cells.values()]
         stat = {"lin_ccc": round(lin(x, y), 4), "cells": len(cells), "years": [2019, 2023],
@@ -361,7 +408,8 @@ def main() -> None:
             date_by_ro(r)
             rows += r
         for r in rows:
-            r["amount_czk"] = value(r) if r["amount_text"] else None
+            r["amount_czk"] = value(r["out_text"], r["unit"])   # city -> district
+            r["from_district_czk"] = value(r["in_text"], r["unit"])  # district -> city
         keys = sorted({k for r in rows for k in r})
         with open(RAW / "grants.csv", "w", newline="", encoding="utf-8") as f:
             w = csv.DictWriter(f, fieldnames=keys)

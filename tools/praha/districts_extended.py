@@ -39,7 +39,14 @@ YEARS = list(range(2015, 2024))  # regime-years of the budget-measure lists
 EVENTS = {2018: ([2016, 2017, 2018], [2019, 2020, 2021]), 2023: ([2020, 2021, 2022], [2023])}  # bridge: 2023 only
 B = 9999
 RNG = np.random.default_rng(20260929)
-INTERREGNUM = ("2015-11-10", "2016-04-27")
+
+
+def reseed(label: str) -> None:
+    """Every block draws from its own fixed stream, so adding a block never moves another block's p-values."""
+    global RNG
+    RNG = np.random.default_rng([20260929, sum(ord(ch) * (i + 1) for i, ch in enumerate(label))])
+INTERREGNUM = ("2015-11-10", "2016-04-27")  # registered; robustness also from the recalls of 22/23 Oct 2015
+NON_DISCRETIONARY = {8, 98, 99}  # ÚZ 8 loans (NFV), 98 gambling-levy shares, 99 income-tax refunds
 ICO = dict(pd.read_csv(RAW / "mc_ico.csv", dtype=str).values)
 
 
@@ -57,13 +64,26 @@ def regime_year(day: str) -> int:
 DAYS = {2018: 318, 2019: 412, 2022: 411, 2023: 319}
 
 
-def grants(drop_interregnum: bool = False) -> pd.DataFrame:
-    """City's own grants by district and regime-year, CZK a year (annualised), total / investment / current."""
+def grant_rows() -> pd.DataFrame:
     g = pd.read_csv(RAW / "grants.csv", dtype={"uz": str, "ro": str})
-    g = g[(g.city_own == True) & g.amount_czk.notna() & g.date.notna()]  # noqa: E712
+    g = g[(g.city_own == True) & g.date.notna()].copy()  # noqa: E712
+    g["uz_code"] = g.uz.str.split("/").str[0].astype(int)
     g["r"] = g.date.map(regime_year)
+    return g
+
+
+def grants(drop_interregnum: bool = False, variant: str = "primary",
+           interregnum: tuple[str, str] = INTERREGNUM) -> pd.DataFrame:
+    """City's own grants by district and regime-year, CZK a year (annualised), total / investment / current.
+    variant: 'primary' = the city paying the district (5347 / 6363); 'signflip' = that minus what the district paid
+    the city (4137 / 4251); 'discretionary' = primary without ÚZ 8, 98 and 99."""
+    g = grant_rows()
     if drop_interregnum:
-        g = g[~g.date.between(*INTERREGNUM)]
+        g = g[~g.date.between(*interregnum)]
+    if variant == "signflip":
+        g["amount_czk"] = g.amount_czk.fillna(0) - g.from_district_czk.fillna(0)
+    elif variant == "discretionary":
+        g = g[~g.uz_code.isin(NON_DISCRETIONARY)]
     g["cap"] = g.investment.astype(str).str.lower().eq("true")
     measures = g[g.kind == "measures"]
     draw = g[(g.kind == "drawdown") & g.year.isin([2024, 2025])]
@@ -269,7 +289,8 @@ def conley_taber(evs: list[dict], level: float = 0.95, draws: int = 20000) -> li
     return [float(est - hi), float(est - lo)]
 
 
-def regression_form(y: pd.DataFrame, panel: pd.DataFrame, outcome: str, rule: str = "A", wcr_b: int = 9999):
+def regression_form(y: pd.DataFrame, panel: pd.DataFrame, outcome: str, rule: str = "A", wcr_b: int = 9999,
+                    drop: set | None = None):
     """Y_ier = α_ie + γ_re + β·switch×post, stacked; CR2 (clusters: districts) and WCR (Webb) p-values."""
     wide = panel.pivot(index="district", columns="r", values=rule)
     yy = y.pivot_table(index="district", columns="r", values=outcome, aggfunc="sum").reindex(wide.index).fillna(0.0)
@@ -279,6 +300,8 @@ def regression_form(y: pd.DataFrame, panel: pd.DataFrame, outcome: str, rule: st
         switch = (w[pre] == 0).all(axis=1) & (w[post] == 1).all(axis=1)
         ctrl = (w == 0).all(axis=1)
         for u in w.index[switch | ctrl]:
+            if drop and u in drop:
+                continue
             for r in pre + post:
                 rows.append({"unit": f"{u}|{e}", "cl": u, "yr": f"{r}|{e}", "y": yy.loc[u, r],
                              "d": float(switch[u] and r in post)})
@@ -520,6 +543,7 @@ def main() -> None:
     ym = ym.set_index(["district", "r"]).drop(columns="source").reindex(full).fillna(0.0).reset_index()
     result = {"allocation_2016_missing": missing, "units": {}}
     # H1
+    reseed("H1")
     evs = stacked(ym, panel, "total_R")
     perms = [permutations(ev) for ev in evs]
     h1 = pooled(evs, perms)
@@ -539,6 +563,8 @@ def main() -> None:
     p_lower = pooled(shifted_dn, perms)["p_ri"]          # H0: effect ≤ −m
     h1["tost_margin_abs"] = m
     h1["tost_p"] = float(max(p_upper, p_lower))
+    h1["tost_p_upper"] = float(p_upper)  # H0: premium ≥ +20 %
+    h1["tost_p_lower"] = float(p_lower)  # H0: effect ≤ −20 %
     # H2: intersection-union
     evc = stacked(ym, panel, "cap_R")
     evd = stacked(ym, panel, "diff_R")
@@ -557,6 +583,40 @@ def main() -> None:
         holm[name] = {"p": ps[name], "threshold": thr, "rejected": ok}
     result |= {"H1": h1, "H2": h2, "holm": holm,
                "smallest_attainable_p": 1 / (B + 1)}
+    reseed("switch_out")
+    # switch-out (descriptive): aligned through the pre window, unaligned after, against always-aligned districts
+    wide = panel.pivot(index="district", columns="r", values="A")
+    so = []
+    for e, (pre, post) in EVENTS.items():
+        w = wide[pre + post]
+        out_ = (w[pre] == 1).all(axis=1) & (w[post] == 0).all(axis=1)
+        keep = (w == 1).all(axis=1)
+        units = w.index[out_ | keep]
+        yy = ym.pivot_table(index="district", columns="r", values="total_R", aggfunc="sum").reindex(wide.index).fillna(0)
+        d = yy.loc[units, post].mean(axis=1) - yy.loc[units, pre].mean(axis=1)
+        so.append({"event": e, "units": list(units), "switch": out_[units].to_numpy(), "delta": d.to_numpy(),
+                   "tier": panel.groupby("district").tier.first()[units].to_numpy(),
+                   "base0": np.ones(len(units), bool)})
+    so = [ev for ev in so if ev["switch"].sum() and (~ev["switch"]).sum()]
+    result["switch_out"] = (pooled(so, [permutations(ev, 999) for ev in so]) if so else {}) | {
+        "switch_out_units": {str(ev["event"]): int(ev["switch"].sum()) for ev in so},
+        "always_aligned_controls": {str(ev["event"]): int((~ev["switch"]).sum()) for ev in so},
+        "note": "descriptive; the sign is read as (aligned-then-not) minus (always aligned)"}
+    align = json.loads((ROOT / "docs" / "research" / "prague-districts-alignment.json").read_text())
+    result["mid_term_switches"] = align["other_switches"]
+    result["always_aligned_by_event"] = {k: v["always"] for k, v in align["events"].items()}
+    # composition of the outcome: shares of ÚZ 8 (loans), 98 (gambling levy), 99 (income-tax refunds) by year
+    gr = grant_rows()
+    gr = gr[(gr.kind == "measures") & gr.r.isin(YEARS)]
+    comp = {}
+    for r_ in YEARS:
+        t = gr[gr.r == r_].amount_czk.sum()
+        comp[str(r_)] = {str(u): float(gr[(gr.r == r_) & (gr.uz_code == u)].amount_czk.sum() / t) for u in (8, 98, 99)}
+    result["composition"] = comp
+    result["district_to_city_2016_2023"] = {
+        "rows": int(((gr.from_district_czk > 0) & (gr.amount_czk == 0) & gr.r.between(2016, 2023)).sum()),
+        "czk": float(gr[gr.r.between(2016, 2023)].from_district_czk.sum())}
+    reseed("event_study")
     # event study, honest, placebo, dCDH, party permutation
     yall = y.copy()
     for k in ["total", "cap", "cur"]:
@@ -564,7 +624,9 @@ def main() -> None:
     es = event_study(pd.concat([ym, yall[yall.source == "drawdown"][["district", "r", "total_R"]]]), panel, "total_R")
     result["event_study"] = es
     result["honest"] = honest(es, h1["estimate"], h1["se"])
+    reseed("placebo")
     result["placebo"] = placebo(ym, panel, "total_R")
+    reseed("dcdh")
     result["dcdh"] = dcdh(ym, panel, "total_R")
     result["party_permutation"] = party_permutation(ym, "total_R")
     # descriptive levels (for the article; no per-district table)
@@ -577,6 +639,7 @@ def main() -> None:
         "share_zero_district_years": float((ym.total == 0).mean()),
         "cv_within_district": float(ym.groupby("district").total_R.agg(lambda s: s.std() / s.mean() if s.mean() else np.nan).median()),
     }
+    reseed("monitor")
     # MONITOR secondary (2023 event, 2022 pre, 2023-2025 post)
     mo = monitor()
     mo["pop"] = [pop.loc[d, yr - 2] for d, yr in zip(mo.district, mo.year)]
@@ -589,6 +652,7 @@ def main() -> None:
         ev = stacked(mo, ap, out, events={2023: ([2022], [2023, 2024, 2025])})
         sec[out] = pooled(ev, [permutations(ev[0])]) | {"switch_in": int(ev[0]["switch"].sum()),
                                                         "controls": int((~ev[0]["switch"]).sum())}
+    reseed("balance")
     # covariate balance for the MONITOR stack
     ev = stacked(mo, ap, "D_pc", events={2023: ([2022], [2023, 2024, 2025])})[0]
     units = ev["units"]
@@ -600,11 +664,11 @@ def main() -> None:
     bal = {}
     for c in cov.columns:
         e2 = ev | {"delta": cov[c].to_numpy()}
-        r_ = pooled([e2], [permutations(e2, 1999)])
+        r_ = pooled([e2], [permutations(e2, B)])
         bal[c] = {"diff": r_["estimate"], "p_two_sided": float(min(1, 2 * min(r_["p_ri"], r_["p_ri_lower"])))}
     sec["balance"] = bal
-    sec["population_growth_added"] = bal["pop_growth"]["p_two_sided"] < 0.1
-    if sec["population_growth_added"]:
+    sec["population_growth_added"] = bal["pop_growth"]["p_two_sided"] < 0.1  # the registered trigger
+    if True:  # the adjusted estimate is always reported; it is primary only if the trigger fired
         for out in ["D_pc", "D_net_pc"]:
             e3 = stacked(mo, ap, out, events={2023: ([2022], [2023, 2024, 2025])})[0]
             X = np.column_stack([np.ones(len(units)), cov.pop_growth.to_numpy()])

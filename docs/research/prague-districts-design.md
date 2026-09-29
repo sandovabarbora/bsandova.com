@@ -176,31 +176,32 @@ non-investment part.
   - Solé-Ollé and Sorribas-Navarro (2008);
   - Brollo and Nannicini (2012);
   - Bracco, Lockwood, Porcelli and Redoano (2015);
-  - Migueis (2013) [verify];
-  - Curto-Grau, Solé-Ollé and Sorribas-Navarro (2018) [verify];
-  - Baskaran and Hessami (2017) on German parliamentary coalitions [verify];
-  - Kauder, Potrafke and Reischmann (2016) [verify];
-  - Fiva and Halse (2016) [verify];
-  - Muraközy and Telegdy (2016) [verify];
+  - Migueis (2013);
+  - Curto-Grau, Solé-Ollé and Sorribas-Navarro (2018);
+  - Baskaran and Hessami (2017) on German parliamentary coalitions;
   - Arulampalam et al. (2009).
+  - Related, but not clean alignment premiums (corrected 30 Sep 2026): Kauder, Potrafke and Reischmann (2016) on core
+    supporters in one discretionary programme; Fiva and Halse (2016) on local favouritism by representatives' home
+    municipalities; Muraközy and Telegdy (2016) on subsidy allocation by electoral incentives.
 - H2's premise, that visible, investment-type spending is favoured: Drazen and Eslava (2010); Veiga and Veiga
   (2007).
 - Inference with few treated clusters:
-  - MacKinnon and Webb (2017, 2018, 2020 [verify]);
+  - MacKinnon and Webb (2017, 2018, 2020);
   - Conley and Taber (2011);
   - Wu and Ding (2021);
   - Rambachan and Roth (2023);
-  - de Chaisemartin and D'Haultfœuille (2020, 2024 [verify]);
+  - de Chaisemartin and D'Haultfœuille (2020, 2026);
   - Cengiz, Dube, Lindner and Zipperer (2019);
-  - McKenzie (2012) on power with noisy, lumpy outcomes [verify].
+  - McKenzie (2012) on power with noisy, lumpy outcomes.
 
-**Literature benchmark, registered now** [verify every figure before publication]:
-
-- Solé-Ollé and Sorribas-Navarro (2008): aligned Spanish municipalities receive substantially more grants, of the
-  order of 40 % [verify].
-- Bracco et al. (2015): aligned Italian municipalities receive of the order of 10–20 % more [verify].
-
-The benchmark used for the power statements is a **premium of 20–40 % of a district's usual city grants**.
+**Literature benchmark.** As registered, it read: Solé-Ollé and Sorribas-Navarro (2008) "of the order of 40 %";
+Bracco et al. (2015) "of the order of 10–20 %"; power statements against "a premium of 20–40 %". The Bracco figure was
+wrong. **Corrected 30 Sep 2026 (after outcomes, from the independent audit; see Changes):** Spain, Brazil and Italy
+find that aligned municipalities receive roughly a third to a half more (about 40 %, 26–41 %, 36–47 %); Portugal 19 %.
+In Germany the sign depended on the governing bloc (+25 % under one state government, −20 to −40 % under the other).
+The magnitudes are taken from the audit and were not re-derived from the papers here. The power statements now
+compare the design's minimum detectable effect (about 100 %) with "roughly a third to a half". The conclusion is
+unchanged: the design could detect only a premium two to three times the published ones.
 
 ## 3. Hypotheses, tests and decision rules
 
@@ -543,9 +544,9 @@ Items refer to `docs/research/prague-districts-referees.md`.
 - **§2.10 denominators.** Adopted (§4.3).
 - **§2.11 refugee pass-throughs.** State ÚZ are excluded from the primary outcome, so the 2022 refugee money is not
   in it. They remain in the MONITOR secondary, and the 2022 pre-year of the 2023 event is flagged.
-- **§2.12 power.** Adopted and run (§6.2). The benchmark is registered (§2) [verify the published magnitudes].
+- **§2.12 power.** Adopted and run (§6.2). The benchmark is registered (§2), and was corrected after the audit.
 - **§2.13 equivalence.** Adopted: TOST at ±20 % (§3).
-- **§2.14 literature.** Added, and marked [verify].
+- **§2.14 literature.** Added. Volumes and pages checked against Crossref on 30 Sep 2026.
 - **§3, the Part 3 correction.** Done first, on its own branch, before any grant amount was touched. The figures it
   changed are recorded in §0.2.
 - **§4 framing.** Adopted (§9).
@@ -565,25 +566,25 @@ Items refer to `docs/research/prague-districts-referees.md`.
 As in v1, plus:
 
 - Baskaran, T., Hessami, Z. (2017): Political alignment and intergovernmental transfers in parliamentary systems:
-  evidence from Germany. Public Choice 171, 75–98 [verify].
+  evidence from Germany. Public Choice 171(1–2), 75–98.
 - Cengiz, D., Dube, A., Lindner, A., Zipperer, B. (2019): The effect of minimum wages on low-wage jobs. Quarterly
   Journal of Economics 134(3), 1405–1454.
 - Curto-Grau, M., Solé-Ollé, A., Sorribas-Navarro, P. (2018): Does electoral competition curb party favoritism?
-  American Economic Journal: Applied Economics 10(4), 378–407 [verify].
-- de Chaisemartin, C., D'Haultfœuille, X. (2024): Difference-in-differences estimators of intertemporal treatment
-  effects. Review of Economics and Statistics [verify].
+  American Economic Journal: Applied Economics 10(4), 378–407.
+- de Chaisemartin, C., D'Haultfœuille, X. (2026): Difference-in-differences estimators of intertemporal treatment
+  effects. Review of Economics and Statistics 108(4), 863–880.
 - Fiva, J. H., Halse, A. H. (2016): Local favoritism in at-large proportional representation systems. Journal of
-  Public Economics 143, 15–26 [verify].
+  Public Economics 143, 15–26.
 - Kauder, B., Potrafke, N., Reischmann, M. (2016): Do politicians reward core supporters? Evidence from a
-  discretionary grant program. European Journal of Political Economy 45, 39–56 [verify].
+  discretionary grant program. European Journal of Political Economy 45, 39–56.
 - MacKinnon, J. G., Webb, M. D. (2020): Randomization inference for difference-in-differences with few treated
-  clusters. Journal of Econometrics 218(2), 435–450 [verify].
+  clusters. Journal of Econometrics 218(2), 435–450.
 - McKenzie, D. (2012): Beyond baseline and follow-up: the case for more T in experiments. Journal of Development
-  Economics 99(2), 210–221 [verify].
+  Economics 99(2), 210–221.
 - Migueis, M. (2013): The effect of political alignment on transfers to Portuguese municipalities. Economics &
-  Politics 25(1), 110–133 [verify].
+  Politics 25(1), 110–133.
 - Muraközy, B., Telegdy, Á. (2016): Political incentives and state subsidy allocation: evidence from Hungarian
-  municipalities. European Economic Review 89, 324–344 [verify].
+  municipalities. European Economic Review 89, 324–344.
 - Rambachan, A., Roth, J. (2023): A more credible approach to parallel trends. Review of Economic Studies 90(5),
   2555–2591.
 - Wu, J., Ding, P. (2021): Randomization tests for weak null hypotheses in randomized experiments. Journal of the
@@ -642,6 +643,9 @@ and longer codes). The rule was decided on row labels, before any amount was sum
   copy is equal);
 - drawdown lists: the first column, the budget adjustment.
 
+*[30 Sep 2026: the "copy is equal" premise above was wrong. The two column pairs are two directions of money. See
+the audit entry at the end.]*
+
 **Dating (§4.2).**
 
 - ZHMP resolutions resolve to Part 1's session dates, except 30 rows in the 2020 list and 7 in the 2018 list.
@@ -685,13 +689,18 @@ regime-year 2023 as 24.6 m CZK, against 3–6 bn CZK in every other year, and an
 
 - **Cause.** The 2023 list prints each amount in the city-side column (5347 / 6363) and 0,00 in the district-side
   column (4137 / 4251). The parser took the last amount on the line.
-- **Fix.** The rule is now the last non-zero amount. This is consistent with the rule recorded before joining
-  ("the value in its 4137 / 4251 column, or 5347 / 6363 where only the city's side is printed").
+- **Fix.** The rule became the last non-zero amount on the line.
+  - The rule recorded before joining (commit `7be2ad5`) read: "the value in the 4137 / 4251 column (the last amount
+    on the line; the city-side 5347 / 6363 copy is equal)".
+  - The fix was prompted by the implausible 2023 total (25 m CZK against 3–6 bn in every other year), not by the
+    direction or size of H1.
+  - *[Corrected 30 Sep 2026: an earlier version of this entry misquoted the pre-join rule as "…or 5347 / 6363 where
+    only the city's side is printed".]*
   - Other years: 2016–2021 are unchanged, and 2015 changes by +0.07 %.
   - 2022 changes by +4.9 %, because regime-year 2022 includes 1 Jan – 15 Feb 2023 grants from the 2023 list.
-- **Effect.** The switch in the first run's H1 estimate, from +0.33 to −0.70 in R units, comes almost entirely from
-  this fix. Both runs are reported here. The first was wrong, because its 2023 outcome was near zero for every
-  district.
+- **Effect.** H1 moved from +0.33 R (+19 % of the controls' usual level, RI p = 0.21) to −0.70 R (−38 %,
+  p = 0.74). Almost all of the change comes from this fix. Both runs are reported. The first was wrong, because its
+  2023 outcome was near zero for every district.
 
 **Implementation choices the registration left open:**
 
@@ -735,3 +744,113 @@ regime-year 2023 as 24.6 m CZK, against 3–6 bn CZK in every other year, and an
 - **The specification curve** uses 999 permutations and 999 WCR draws per specification, 54 specifications.
   - WCR and CR2 are computed only for the full sample (18 specifications).
   - Dropping Praha 1 changes nothing: it is in neither stack.
+
+
+### 30 September 2026, after an independent audit (outcomes known)
+
+The audit reproduced H1 (−38.3 %, RI p = 0.7386) with the code of `d8270ac`/`7171ea7`. It checked about 40 alignment
+spells against official sources, all of which match the registered rule, and it confirmed that the parsed amounts
+match the PDFs. It also found the problems below. Every item is a post-outcome correction, and each one is reported
+with its effect.
+
+**1. Direction of flows (the main correction).**
+
+- In the budget-measure lists, 5347 / 6363 is the city's expenditure, i.e. the city paying the district. 4137 / 4251
+  is the city's income, i.e. the district paying the city: loan repayments ("splátka NFV", "přijetí mimořádné
+  splátky"), returned grants ("vratka dotace") and transfers from districts. They are not copies of each other, as
+  the pre-join rule and the parser assumed.
+- The parser now assigns every amount to its column, as follows:
+  - **by order,** where a line prints every column (most do, with 0,00 in the empty one);
+  - **by the positions learned from such lines,** otherwise. Amounts are right-aligned and offset from their header
+    codes, so matching by header position alone put some 6363 amounts under 4251 in 2023.
+- The city's own grant is the 5347 / 6363 amount. A 4137 / 4251 amount is a district-to-city flow, kept separately
+  and excluded from the outcome: 162 rows and 1.12 bn CZK in 2016–2023. The audit counted 164 rows and 1.11 bn.
+- The 2015 list exists only as a .docx rendition without column layout, so its single-amount lines are treated as
+  city-to-district. 2015 lies outside both event windows.
+- A sign-flip variant (city-to-district minus district-to-city) is reported as robustness.
+
+**2. Dating by resolution.**
+
+- The first version kept one date per session number. Sessions continue over several days: the 2022-term session 1
+  sat on 3 Nov, 24 Nov and 15 Dec 2022 and on 16 Feb 2023, and session 10 of 2015 sat on 22 Oct, 5 Nov and 26 Nov.
+- ZHMP resolutions are now dated by the exact resolution number in the roll-call files, then by a session that sat
+  on a single day in the list's year, and otherwise by the RO order in the same list.
+- Effect:
+  - 112 rows (208 m CZK) approved on 16 Feb 2023 move from regime-year 2022 to 2023;
+  - 117 rows (324 m CZK) approved on 22 Oct and 5 Nov 2015 get their own dates;
+  - 258 of 10 390 city-own rows are dated by RO order (1.2–6.2 % a year).
+
+**3. Results after corrections 1 and 2.**
+
+- **H1:** −0.640 R = **−37 %** of the controls' usual level. RI p = **0.704**; 95 % Conley–Taber −115 to +21 %.
+- **H2:** investment −39 %, non-investment +2 %. p = **0.759**.
+- **Holm:** neither rejected.
+- **The three runs,** for the record:
+
+  | Run | Commit | H1 | RI p |
+  |---|---|---|---|
+  | first | before `d8270ac` | +19 % | 0.21 |
+  | second | `d8270ac` | −38 % | 0.74 |
+  | third | this commit | −37 % | 0.70 |
+
+- **The TOST sides are now reported:**
+  - H0 premium ≥ +20 %: p = 0.108. A 20 % premium is not ruled out.
+  - H0 effect ≤ −20 %: p = 0.531.
+- **Bridge statistic.** Recomputed with the corrected parser for disclosure only, it is 0.795. It is still below 0.9,
+  and the registered decision, taken before outcomes, stands.
+
+**4. Outcome composition, disclosed, with a robustness check added.**
+
+- Of the city-own grants, 20–39 % a year in 2016–2023 (57 % in 2015) is not discretionary in the usual sense:
+  - ÚZ 99, income-tax refunds passed to districts: 11–28 %;
+  - ÚZ 98, shares of the gambling levy: 4–10 %;
+  - ÚZ 8, repayable loans (NFV): 1–13 %; 13 % in 2019.
+- The outcome rule (ÚZ 1–999) includes them, and the article's statement that refunds are left out was wrong.
+- Without ÚZ 8, 98 and 99: −43 %, p = 0.71. The audit got −44 %, p = 0.68.
+
+**5. Robustness added or rebuilt:**
+
+| Check | Result |
+|---|---|
+| Praha 10 in 2022 coded by its acting head (Piráti) | −36 % |
+| interregnum dated from the recalls of 22/23 Oct 2015 | −38 % (the same as from 10 Nov) |
+| alignment rule "coders' own membership", rebuilt | −36 % (p = 0.66) |
+
+- The previous version of the membership rule fell back to the registered rule whenever the coders disagreed or a
+  mayor was a non-member, so it was identical by construction. It now uses a single agreed membership where one
+  exists (535 district-years): a recorded non-member is unaligned even if nominated by a coalition party. This
+  changes 38 district-years.
+- **Leave one district out.** Dropping Praha-Troja, unaligned throughout and so a control in both events, moves the
+  estimate from −37 % to about 0 %. No other district moves it by more than 9.4 points. The earlier article's "no
+  single district decides it" was wrong.
+- **Specification curve.** The "without Praha 1" samples duplicated "all" (Praha 1 is in no stack) and are removed,
+  leaving 36 specifications. WCR and CR2 are now computed for every one, not 18.
+- **Random streams.** Each block now draws from its own fixed random stream. Adding the switch-out block had moved the
+  MONITOR balance p-values.
+
+**6. Reported now, registered but missing before:**
+
+- HonestDiD at M̄ = 0.5 (−131 to +57 %) as well as 1 (−143 to +69 %), still the simplified interval.
+- Switch-out: −7 %, p = 0.50. That is 8 units in 2018 and 4 in 2023, against 6 and 10 always-aligned districts.
+- The 12 mid-term switches and the always-aligned counts (7 and 10).
+- The smallest attainable p: 0.0001.
+
+**7. MONITOR covariate adjustment.** With 9 999 permutations, the population-growth balance is p = 0.113, so the
+registered adjustment (p < 0.1) is **not** triggered. The earlier run used 1 999 draws, got 0.098 and applied it. The
+adjusted estimate is reported either way:
+
+| Estimate | Per resident a year | p |
+|---|---|---|
+| unadjusted | −2 128 CZK | 0.77 |
+| adjusted | −2 196 CZK | 0.77 |
+
+The 0–14 share (p = 0.086) is not named by the registered rule and is not added.
+
+**8. Literature benchmark corrected** (§2). Bracco et al. were misstated as 10–20 %. The benchmark is now "roughly a
+third to a half more", with Germany's sign depending on the bloc.
+
+**9. Not done:**
+
+- the alignment check against every constituent-session resolution (about 40 spells were checked against official
+  sources by the audit);
+- E1–E4.
