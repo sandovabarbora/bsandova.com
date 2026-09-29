@@ -1,0 +1,33 @@
+name: Report an error in an article
+description: A number, a claim, a citation or a figure that looks wrong.
+title: "Correction: <article> — <short description>"
+labels: [correction]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Article
+      description: The URL of the page, e.g. https://bsandova.com/texts/prague-housing
+    validations:
+      required: true
+  - type: textarea
+    id: where
+    attributes:
+      label: Where
+      description: The sentence, table cell or figure, quoted or described.
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What looks wrong, and what you expected
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source or check
+      description: A source, a calculation or the steps that show it. Links to data are welcome.
+  - type: markdown
+    attributes:
+      value: Confirmed corrections are dated in the article's change log.

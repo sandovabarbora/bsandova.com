@@ -36,6 +36,16 @@ Every article ends with a **Reproduction** section that gives the script order a
 data. The raw inputs are public sources, listed with access dates and SHA-256 hashes in `docs/research/*-files.sha256`.
 Large raw files are not committed. The scripts download them into `tools/data/`, which is ignored.
 
+## Registration branches and releases
+
+The branches `feature/PRAHA-1x_council-extended`, `feature/PRAHA-2x_rings-extended`,
+`feature/PRAHA-3x_districts-extended`, `feature/PRAHA-4x_housing-extended`, `feature/PRAHA-6_parking-study` and
+`docs/PARK-2_m1g-correction` are kept on purpose. They hold the design and results commits in their original order,
+which the squash merges into `main` do not keep. Releases (`vX.Y.Z`) are archived on Zenodo.
+
+Errors in an article can be reported with the issue form *Report an error in an article*. Confirmed corrections are
+dated in the article's change log.
+
 ## Build and deploy
 
 The site is static and served as Cloudflare Workers static assets (`wrangler.jsonc`). Every push to `main` deploys
