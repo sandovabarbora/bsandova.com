@@ -4,7 +4,8 @@
 
    A chart spec: {alt, panels:[{title, h, w, x:axis, y:axis, marks:[...]}], legend:[{label, c, dash, shape}],
    table:{cols, rows}, data:[paths]}. An axis: {kind:'linear'|'log'|'cat', domain, ticks, fmt, label}. A fmt:
-   {dp, unit, pre, sign}. Marks: line, area, dots, hbar, range, rule, span, text (see draw() below). */
+   {dp, unit, pre, sign}. Marks: line, area, dots, hbar, vbar, range, vrange, arrow, cell, rule, span, text (see drawPanel).
+   spec.layout: 'rows' stacks the panels vertically at every width. An axis with labels:false draws no category names. */
 (() => {
   const NS = 'http://www.w3.org/2000/svg';
   const COL = {held: '#34507c', ink: '#111111', grey: '#666666', light: '#b5b5b0', grid: '#e6e6e3'};
@@ -58,8 +59,10 @@
     const targets = [];
     const g = el('g', {}, svg);
     const catY = P.y.kind === 'cat';
-    const tickFmtX = P.x.tickfmt || P.x.fmt || {dp: 0, nogroup: P.x.year};
-    const tickFmtY = P.y.tickfmt || P.y.fmt || {dp: 0};
+    // ticks without a format get as many decimals as their step needs
+    const autoDp = ax => ax.kind === 'cat' ? 0 : Math.max(0, ...niceTicks(ax).map(t => (String(t).split('.')[1] || '').length));
+    const tickFmtX = P.x.tickfmt || (P.x.fmt && {...P.x.fmt, dp: Math.max(P.x.fmt.dp ?? 0, autoDp(P.x))}) || {dp: autoDp(P.x), nogroup: P.x.year};
+    const tickFmtY = P.y.tickfmt || (P.y.fmt && {...P.y.fmt, dp: Math.max(P.y.fmt.dp ?? 0, autoDp(P.y))}) || {dp: autoDp(P.y)};
     const yLabels = niceTicks(P.y).map(t => catY ? String(t) : fmt(t, {...tickFmtY, unit: ''}));
     const stackCats = catY && narrow;              // phone: category names sit above their row, not beside it
     const left = box.x + (catY ? (stackCats ? 4 : Math.min(box.w * 0.46, 12 + 6.4 * maxLen(yLabels))) : 10 + 6.6 * maxLen(yLabels));
@@ -71,6 +74,10 @@
     if (P.title) el('text', {x: box.x, y: box.y + 12, class: 'ch-title'}, g).textContent = P.title;
     // grid and ticks
     const gx = el('g', {class: 'ch-axis'}, g);
+    if (P.x.kind === 'cat' && P.x.labels !== false) {
+      const Xc = scale(P.x, left, right), fits = Xc.step >= 6.6 * maxLen(P.x.domain.map(String)) + 6;
+      if (fits) for (const c of P.x.domain) el('text', {x: Xc(c), y: bottom + 15, 'text-anchor': 'middle', class: 'ch-cat'}, gx).textContent = c;
+    }
     if (P.x.kind !== 'cat') for (const t of niceTicks(P.x)) {
       const x = X(t);
       if (!P.x.nogrid) el('line', {x1: x, x2: x, y1: top, y2: bottom, stroke: COL.grid}, gx);
@@ -146,11 +153,50 @@
         for (const p of m.pts) {
           const x = X(p.x), y = Y(p.y), c2 = col(p.c || m.c);
           if ((p.shape || m.shape) === 'd') el('rect', {x: x - 4.5, y: y - 4.5, width: 9, height: 9, transform: `rotate(45 ${x} ${y})`, fill: c2}, g);
-          else el('circle', {cx: x, cy: y, r: p.r || m.r || 4.5, fill: c2, stroke: '#fff', 'stroke-width': 1.5}, g);
+          else el('circle', {cx: x, cy: y, r: p.r || m.r || 4.5, fill: c2, 'fill-opacity': p.o ?? m.o ?? 1, stroke: '#fff', 'stroke-width': 1.5}, g);
+          if (p.ring) el('circle', {cx: x, cy: y, r: (p.r || m.r || 4.5) + 3, fill: 'none', stroke: COL.ink, 'stroke-width': 1.2}, g);
           if (p.label && !narrow) { const w = 6.4 * p.label.length;
             const spot = [[x + 7, y + (p.dy ?? 4)], [x + 7, y - 9], [x + 7, y + 15], [x - 7 - w, y + 4]].find(([lx, ly]) => free(lx, ly, w));
             if (spot) el('text', {x: spot[0], y: spot[1], class: 'ch-note', fill: c2}, g).textContent = p.label; }
           targets.push({px: x, py: y, tip: p.tip});
+        }
+      } else if (m.type === 'vbar') {
+        // vertical bars on a category x; stacked segments share an x and give y0/y1
+        for (const r of m.rows) {
+          const x = X(r.x), bw = Math.max(2, Math.min(40, X.step * 0.7)), c2 = col(r.c || m.c);
+          const a = Y(r.y0 ?? (P.y.kind === 'log' ? P.y.domain[0] : 0)), b = Y(r.y1);
+          el('rect', {x: x - bw / 2, y: Math.min(a, b), width: bw, height: Math.max(1, Math.abs(b - a)), fill: c2, 'fill-opacity': r.o ?? m.o ?? 0.85, rx: 1}, g);
+          if (r.lo != null) el('line', {x1: x, x2: x, y1: Y(r.lo), y2: Y(r.hi), stroke: COL.ink, 'stroke-width': 1.2}, g);
+          if (r.label && bw >= 14) el('text', {x, y: Math.min(a, b) - 5, 'text-anchor': 'middle', class: 'ch-val'}, g).textContent = r.label;
+          targets.push({px: x, py: Math.min(a, b), tip: r.tip, box: [x - bw / 2, Math.min(a, b), bw, Math.abs(b - a)]});
+        }
+      } else if (m.type === 'vrange') {
+        // vertical intervals: rows {x, lo, hi, mid}
+        for (const r of m.rows) {
+          const x = X(r.x), c2 = col(r.c || m.c);
+          if (r.lo != null) el('line', {x1: x, x2: x, y1: Y(r.lo), y2: Y(r.hi), stroke: c2, 'stroke-width': m.w ?? 2, 'stroke-linecap': 'round', 'stroke-opacity': r.o ?? 1}, g);
+          const y = Y(r.mid);
+          el('circle', {cx: x, cy: y, r: m.r ?? 4, fill: c2, stroke: '#fff', 'stroke-width': 1.5}, g);
+          targets.push({px: x, py: y, tip: r.tip, box: r.lo != null ? [x - 6, Math.min(Y(r.lo), Y(r.hi)), 12, Math.abs(Y(r.hi) - Y(r.lo))] : null});
+        }
+      } else if (m.type === 'arrow') {
+        // rows {y, from, to}: a change drawn as an arrow along x
+        for (const r of m.rows) {
+          const y = catY ? barY(r.y) : Y(r.y), a = X(r.from), b = X(r.to), c2 = col(r.c || m.c), d = b >= a ? 1 : -1;
+          el('line', {x1: a, x2: b - d * 6, y1: y, y2: y, stroke: c2, 'stroke-width': 2}, g);
+          el('path', {d: `M${b},${y} l${-d * 8},-4.5 l0,9 z`, fill: c2}, g);
+          el('circle', {cx: a, cy: y, r: 4, fill: col(r.fromC || 'light'), stroke: COL.grey}, g);
+          if (r.label) el('text', {x: Math.max(a, b) + 8, y: y + 4, class: 'ch-val'}, g).textContent = r.label;
+          targets.push({px: b, py: y, tip: r.tip, box: [Math.min(a, b), y - 7, Math.abs(b - a), 14]});
+        }
+      } else if (m.type === 'cell') {
+        // a matrix on two category axes: rows {x, y, v, s (text), tip}; shade is one hue, light to dark over m.domain
+        const [v0, v1] = m.domain;
+        for (const r of m.rows) {
+          const cx = X(r.x), cy = Y(r.y), w = X.step - 4, h = Y.step - 4, t = Math.max(0, Math.min(1, (r.v - v0) / (v1 - v0)));
+          el('rect', {x: cx - w / 2, y: cy - h / 2, width: w, height: h, fill: col(m.c), 'fill-opacity': 0.08 + 0.72 * t, rx: 2}, g);
+          el('text', {x: cx, y: cy + 4, 'text-anchor': 'middle', class: 'ch-val', style: t > 0.55 ? 'fill:#fff;stroke:none' : null}, g).textContent = r.s;
+          targets.push({px: cx, py: cy, tip: r.tip, box: [cx - w / 2, cy - h / 2, w, h]});
         }
       } else if (m.type === 'text') {
         el('text', {x: X(m.x), y: Y(m.y), 'text-anchor': m.anchor || 'start', class: 'ch-note', fill: col(m.c)}, g).textContent = m.s;
@@ -182,7 +228,7 @@
     if (!W) return;
     const narrow = W < 560;
     holder.querySelector('svg')?.remove();
-    const stack = narrow && spec.panels.length > 1;
+    const stack = (narrow || spec.layout === 'rows') && spec.panels.length > 1;
     const totalW = spec.panels.reduce((s, p) => s + (p.w || 1), 0);
     const heights = spec.panels.map(p => (p.h || 260) + (p.title ? 16 : 0) + (narrow && p.y.kind === 'cat' ? p.y.domain.length * 12 : 0));
     const H = stack ? heights.reduce((a, b) => a + b + 18, 0) : Math.max(...heights);
