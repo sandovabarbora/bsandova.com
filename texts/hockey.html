@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Player Pool Atlas · hockey</title>
-<meta name="description" content="A descriptive atlas of Czech professional hockey players in the NHL, Liiga and Extraliga. Czechia has 1.38 NHL players per million people, fifth of six countries, with one U22 forward and three defencemen in the NHL.">
+<meta name="description" content="A descriptive atlas of Czech professional hockey players against nine peer nations. Czechia has 1.83 NHL players per million, 4th of 10; its NHL group fell from 58 in 2001/02 to 20 in 2025/26.">
 <meta property="og:title" content="Player Pool Atlas · hockey">
-<meta property="og:description" content="A descriptive atlas of Czech professional hockey players in the NHL, Liiga and Extraliga. Czechia has 1.38 NHL players per million people, fifth of six countries, with one U22 forward and three defencemen in the NHL.">
+<meta property="og:description" content="A descriptive atlas of Czech professional hockey players against nine peer nations. Czechia has 1.83 NHL players per million, 4th of 10; its NHL group fell from 58 in 2001/02 to 20 in 2025/26.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://bsandova.com/assets/og/hockey.jpg">
 <meta property="og:image:width" content="1200">
@@ -21,9 +21,6 @@
 <link rel="stylesheet" href="../text.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../a24.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false})"></script>
 
 <style>
 .tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
@@ -44,33 +41,34 @@
 <body>
 <div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">sport · hockey · 2026 · en</span></div>
 
+
 <article class="text">
 <header class="text-head">
-  <p class="kicker">Tool · Player Pool Atlas · Czech ice hockey players, 2024/25–2025/26</p>
-  <h1>Player Pool Atlas, hockey: <em>the Czech player pool against five countries</em></h1>
-  <p class="deck">A descriptive atlas of Czech professional hockey players in the NHL, Liiga and Extraliga, which counts NHL players per head against five countries and finds Czechia fifth of six, thinnest among young forwards and defencemen.</p>
+  <p class="kicker">Tool · Player Pool Atlas · Czech ice hockey players, 1995/96–2025/26</p>
+  <h1>Player Pool Atlas, hockey: <em>the Czech player pool against nine peers</em></h1>
+  <p class="deck">A descriptive atlas of Czech professional hockey players against nine peer nations: per head Czechia ranks 4th of 10 in the NHL, and its NHL group has worn down since 2001/02 without one clear break.</p>
   <dl class="facts">
-    <div><dt>NHL players per million Czechs, 2025/26</dt><dd>1.38 <small>15 players · fifth of six · administrative count</small></dd></div>
-    <div><dt>Czech NHL forwards aged 18–21</dt><dd>1 <small>FIN 3 · SWE 7 · administrative count</small></dd></div>
-    <div><dt>Czech NHL defencemen, all ages</dt><dd>3 <small>FIN 9 · SWE 30 · none aged 18–21 · administrative count</small></dd></div>
-    <div><dt>mapped pool</dt><dd>385 <small>NHL · Liiga · Extraliga · 2024/25 → 2025/26 · 78 confirmed Czech-eligible</small></dd></div>
+    <div><dt>NHL players per million, 2025/26</dt><dd>1.83 <small>20 players · 4th of 10 · peer median 1.21 · administrative count</small></dd></div>
+    <div><dt>Czech NHL players at the games threshold</dt><dd>58 → 20 <small>2001/02 · 2025/26 · administrative count</small></dd></div>
+    <div><dt>under-21 share of Extraliga skater games, 2014/15–2025/26</dt><dd>7.9 % <small>Liiga 14.3 % · SHL 16.7 % · administrative count</small></dd></div>
+    <div><dt>most probable season of the fall</dt><dd>2009/10 <small>posterior probability 0.09 · level ×0.83, 90 % HDI 0.56–1.14</small></dd></div>
   </dl>
 </header>
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>The atlas is a public build that places every player in the pool on two maps of playing profile, one with and one without an adjustment for league strength, and overlays the national-team cycle; this page documents its method and the Czech numbers.</li>
-    <li>Finland has roughly four times the Czech density of NHL players and Sweden five times. The Czech forwards aged 26–29 score more points per game than any other cell in the cohort tables, but there are four of them.</li>
-    <li>The counts cover one season and many cells hold one or two players, so a single trade or injury moves them. The league-strength factors are approximations, and only two of them were stress-tested.</li>
-    <li>The atlas describes where the pool is thin. It does not say why, predicts nothing, recommends no roster and leaves out the KHL and every team's internal data.</li>
+    <li>The atlas is a public, reproducible build that counts Czech players in the NHL and the four strongest European leagues against Finland, Sweden, Switzerland, Slovakia, Germany, Latvia, Denmark, Norway and Austria, with one definition of nationality for every source.</li>
+    <li>Per head the Czech pool is in the middle of the ten, far behind Sweden and Finland. The gap is in the youngest band: no Czech player aged 21 or under reached the games threshold in these leagues in 2025/26.</li>
+    <li>The per-head ranks hold under other game thresholds. The dating of the decline does not: the model spreads the fall over 2008/09–2023/24, and the interval for its size includes no change.</li>
+    <li>Everything here is description from public statistics. The page does not say why the count fell, rates no player and gives no selection advice; the KHL, the AHL and the Slovak league are not covered.</li>
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>14 September 2026 · updated 29 September 2026 · <a href="#changelog">version 2</a></dd></div>
-  <div><dt>status</dt><dd>tool v0.1.0</dd></div>
-  <div><dt>data</dt><dd>NHL Stats API, MoneyPuck, Liiga, hokej.cz and IIHF rosters via Wikipedia, fetched for the render of 18 May 2026; the fetched and processed data are not committed to the repository; population figures hard-coded in the code (about 2024, no source recorded)</dd></div>
-  <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/czehockey-player-pool-atlas">sandovabarbora/czehockey-player-pool-atlas</a> at <code>3fec8b3</code> (MIT); <code>make install &amp;&amp; make all</code> (re-fetches the sources)</dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Player Pool Atlas, hockey: the Czech player pool against five countries</i>. bsandova.com/texts/hockey, version 2.</dd></div>
+  <div><dt>published</dt><dd>14 September 2026 · updated 29 September 2026 · <a href="#changelog">version 3</a></dd></div>
+  <div><dt>status</dt><dd>tool v0.1.0 · exploratory analysis, not pre-registered</dd></div>
+  <div><dt>data</dt><dd>NHL stats REST, Liiga, SHL, hokej.cz, DEL and National League statistics, Eurostat <code>demo_gind</code> (updated 21 July 2026) and Wikipedia rosters (CC BY-SA 4.0), all fetched 29 September 2026; processed snapshot committed in <code>data/snapshot/</code> with a SHA-256 list; source data under their owners' terms, derived JSON in the repository</dd></div>
+  <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/czehockey-player-pool-atlas">sandovabarbora/czehockey-player-pool-atlas</a> at <code>d1f9f88</code> (MIT); <code>uv sync &amp;&amp; make restore-snapshot &amp;&amp; make analysis &amp;&amp; make pages</code></dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Player Pool Atlas, hockey: the Czech player pool against nine peers</i>. bsandova.com/texts/hockey, version 3.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text, figures and data CC BY 4.0</dd></div>
 </dl>
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-hockey;--bg:url(../assets/photo/hockey.jpg);--bg-s:url(../assets/photo/hockey-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Jake_Levin_(Air_Force_Falcon%27s_men%27s_ice_hockey)_during_game_against_Bentley_Falcons_men%27s_ice_hockey_at_Cadet_Arena_in_Colorado_Springs_on_November_9,_2018_(45170233234).jpg">U.S. Air Force Academy</a> · public domain, colour held</p></section>
@@ -78,90 +76,78 @@
 
 <section>
 <h2>What the atlas does and comparable work</h2>
-<p>The atlas asks where the Czech professional pool is thin compared with Finland, Sweden, Slovakia, Canada and the USA, by position and age, and what the players in it look like as producers. Counts of NHL players by birthplace are published routinely, for example on Hockey-Reference<sup class="cite"><a href="#r1">1</a></sup>, and league-equivalence factors that translate scoring between leagues go back at least to Desjardins<sup class="cite"><a href="#r2">2</a></sup>. The atlas adds a per-head count split by position and age against named peers, and a map of every player in the NHL, Liiga and Extraliga pool in one reproducible build, published at <a href="https://hockey.bsandova.com">hockey.bsandova.com</a><sup class="cite"><a href="#r3">3</a></sup>.</p>
+<p>The atlas asks how deep the Czech professional hockey pool is against nine peer nations, when its NHL presence declined, where by position and age it is thin, whether young players get ice time at home, how Czech players fare abroad and which leagues the national team is drawn from. It is published at <a href="https://hockey.bsandova.com">hockey.bsandova.com</a><sup class="cite"><a href="#r1">1</a></sup>. Hockey-Reference lists NHL players by birthplace<sup class="cite"><a href="#r2">2</a></sup>, and Elite Prospects keeps career records across leagues<sup class="cite"><a href="#r3">3</a></sup>; neither counts a nation per head against named peers across several leagues with one rule for nationality. The atlas uses the design of the football atlas<sup class="cite"><a href="#r4">4</a></sup>: the same ladder of leagues, per-head counts, a break model for the long series and a committed snapshot. It is exploratory and was not pre-registered.</p>
 </section>
 
 <section>
 <h2>Method</h2>
-<p>The per-head count takes every player born in a country (<code>birthCountry</code> in the NHL Stats API) who played at least ten NHL games in 2025/26 by MoneyPuck's totals, and divides by population<sup class="cite"><a href="#r4">4</a></sup><sup class="cite"><a href="#r5">5</a></sup>. The populations (Czechia 10.9 million) are rounded figures for about 2024 written into the code with no source recorded. Age cohorts use the age a player reaches in 2025, 2025 minus birth year: 18–21 (labelled U22), 22–25, 26–29 and 30 or older.</p>
-<p>The mapped pool of 385 players combines three routes. NHL players count as Czech when born in Czechia, the same rule as the per-head count, so Czech players born abroad are missed in both. Liiga players count by the league's nationality field. Extraliga players enter the pool by league, because hokej.cz does not publish birth country; they are marked Czech-eligible only when they match a Czech IIHF roster, so the pool includes imports. In all, 78 players are confirmed eligible<sup class="cite"><a href="#r3">3</a></sup><sup class="cite"><a href="#r6">6</a></sup><sup class="cite"><a href="#r7">7</a></sup><sup class="cite"><a href="#r8">8</a></sup>.</p>
-<p>Every player is a four-dimensional vector of goals, assists and penalty minutes per game and age, projected with PCA and clustered with K-means, with the number of clusters chosen by silhouette score from 4–8 for forwards and 3–6 for defencemen. The silhouette values are not reported, and because age is one of the four features, the clusters mix playing profile with career stage. Per-game rates for players with few games are shrunk towards the league median with a fixed prior of \(K = 10\) games, not estimated from the data:</p>
-<div class="eq">$$\hat r = \frac{\text{events} + K\,\tilde r_{\text{league}}}{\text{GP} + K}$$</div>
-<p>At one game the median carries about 91 % of the weight and at eighty games the player's own record about 89 %; a player with five points in four games, 1.25 raw, drops to 0.59. The quality map multiplies each rate by a league factor, NHL 1.00, AHL 0.55, SHL 0.45, Liiga 0.42, NL 0.40, Extraliga 0.35 and first league 0.20, set by hand with public NHL-equivalency work as a guide<sup class="cite"><a href="#r2">2</a></sup><sup class="cite"><a href="#r9">9</a></sup>.</p>
+<p><b>Sources.</b> One fetcher per source: the NHL stats REST API<sup class="cite"><a href="#r5">5</a></sup>, the Liiga<sup class="cite"><a href="#r6">6</a></sup> and SHL<sup class="cite"><a href="#r7">7</a></sup> JSON statistics, hokej.cz for the Extraliga<sup class="cite"><a href="#r8">8</a></sup>, the DEL<sup class="cite"><a href="#r9">9</a></sup> and National League<sup class="cite"><a href="#r10">10</a></sup> statistics, Eurostat population on 1 January<sup class="cite"><a href="#r11">11</a></sup> and the English Wikipedia roster articles for every World Championship and Olympics since 2010<sup class="cite"><a href="#r12">12</a></sup>. Each source was fetched once, politely, into a raw cache; regular seasons only.</p>
+<p><b>Ladder.</b> Rung 1 is the NHL. Rung 2 is the SHL, Liiga, National League and DEL; "NHL + rung 2" is the five-league headline. The Czech Extraliga is the home league. A player counts in a season when he reaches at least 20 of 82 games, pro-rated to the league-season's schedule, the 95th percentile of skater games: 20 in a full NHL season, 12 in 2012/13 and 14 in 2020/21.</p>
+<p><b>Nationality.</b> One definition for every source, in this order: citizenship where a league publishes it (the NHL's <code>nationalityCode</code>, the Liiga's and SHL's nationality); a World Championship or Olympic roster since 2010; otherwise eligibility or licence (the Extraliga's foreigner flag, the DEL's licence from 2022/23, the National League's Swiss licence). Czechoslovak-era births take the state the NHL recodes them to.</p>
+<p><b>Exclusions.</b> The KHL is left out by design, which removes a real destination, most of all before 2014. The AHL is not fetched because its terms forbid automated access, and the Slovak Extraliga because its robots.txt blocks it; Slovakia is measured through its players in the covered leagues. Elite Prospects is not scraped, by its terms.</p>
+<p><b>Linking.</b> Records are joined across leagues on the name, with diacritics folded, plus the full birth date; then on first initial, surname and birth date; records without a birth date join on the name alone when exactly one person of that name played within four seasons. The build holds 17 991 people, 14 309 with a nationality; 189 carry conflicting codes, and in 50 of them an Extraliga "Czech" flag is overridden by citizenship or a roster.</p>
+<p>The NHL series 1995/96–2025/26 is fitted with a Poisson local-level model with two step changes whose seasons are marginalised, the football atlas's series model, in PyMC<sup class="cite"><a href="#r13">13</a></sup>.</p>
 </section>
 
 <section>
 <h2>Worked example: Czechia in 2025/26</h2>
-<p>Fifteen Czech-born players meet the rule, 1.38 per million, fifth of six. The USA has the most NHL players in absolute terms and 335 million people to divide them by, the figure in the code. Slovakia, with half the Czech population, ranks above Czechia<sup class="cite"><a href="#r3">3</a></sup>.</p>
+<p>Twenty Czech players reached the games threshold in the NHL, 1.83 per million inhabitants, 4th of 10 and above the peer median of 1.21. Sweden (7.26) and Finland (7.25) have about four times the Czech rate. Counting the five leagues, Czechia has 53 players, 4.86 per million, 5th of 10 against a peer median of 3.55<sup class="cite"><a href="#r1">1</a></sup>.</p>
 <figure data-chart="../assets/hockey/charts.json#per-head">
-  <img src="../assets/hockey/per-head.svg" alt="Horizontal bars, NHL players per million population, 2025/26: Canada 8.05, Sweden 7.17, Finland 6.07, Slovakia 1.67, Czechia 1.38 in blue, USA 0.67." loading="lazy">
-  <figcaption><b>fig. 1</b> · Players born in each country with at least ten NHL games in 2025/26, per million population; Czechia in blue. Populations are the constants in the atlas code. Atlas render of 18 May 2026.</figcaption>
+  <img src="../assets/hockey/per-head.svg" alt="Horizontal bars, NHL players per million inhabitants, 2025/26: Sweden 7.26, Finland 7.25, Latvia 3.25, Czechia 1.83 in blue, Slovakia 1.29, Switzerland 1.21, Denmark 0.66, Norway 0.36, Austria 0.22, Germany 0.10; dashed line at the peer median 1.21." loading="lazy">
+  <figcaption><b>fig. 1</b> · Players of each nationality with at least the pro-rated games threshold in the NHL in 2025/26, per million inhabitants (Eurostat, 1 January 2026); Czechia in blue, peers in grey, the dashed line the median of the nine peers. n = 10 nations; administrative counts. Atlas <code>outputs/q1_per_million.json</code>, snapshot of 29 September 2026.</figcaption>
 </figure>
-<p>Split by position and age, each cell gives the number of players with at least ten games and their median points per game. A median in a cell of one or two players is those players' own value and is not comparable across cells.</p>
-<div class="scroller"><table class="tbl"><caption>Forwards · NHL 2025/26 · players · median P/GP · age reached in 2025 · grey: fewer than three players</caption>
-<thead><tr><th>cohort</th><th class="n">CZE</th><th class="n">FIN</th><th class="n">SWE</th><th class="n">SVK</th></tr></thead>
-<tbody>
-<tr><td>U22 (18–21)</td><td class="n dim">1 · 0.42</td><td class="n">3 · 0.24</td><td class="n">7 · 0.45</td><td class="n">4 · 0.33</td></tr>
-<tr><td>22–25</td><td class="n dim">2 · 0.22</td><td class="n">9 · 0.24</td><td class="n">13 · 0.32</td><td class="n dim">—</td></tr>
-<tr><td>26–29</td><td class="n"><b>4 · 1.06</b></td><td class="n">8 · 0.46</td><td class="n">11 · 0.40</td><td class="n dim">2 · 0.28</td></tr>
-<tr><td>30+</td><td class="n">5 · 0.19</td><td class="n">5 · 0.47</td><td class="n">15 · 0.58</td><td class="n dim">—</td></tr>
-</tbody></table></div>
-<div class="scroller"><table class="tbl"><caption>Defencemen · NHL 2025/26 · players · median P/GP · age reached in 2025 · grey: fewer than three players</caption>
-<thead><tr><th>cohort</th><th class="n">CZE</th><th class="n">FIN</th><th class="n">SWE</th><th class="n">SVK</th></tr></thead>
-<tbody>
-<tr><td>U22 (18–21)</td><td class="n hi">—</td><td class="n dim">—</td><td class="n">5 · 0.23</td><td class="n dim">1 · 0.38</td></tr>
-<tr><td>22–25</td><td class="n dim">1 · 0.00</td><td class="n dim">1 · 0.27</td><td class="n">12 · 0.24</td><td class="n dim">—</td></tr>
-<tr><td>26–29</td><td class="n dim">1 · 0.60</td><td class="n">5 · 0.18</td><td class="n">5 · 0.23</td><td class="n dim">2 · 0.26</td></tr>
-<tr><td>30+</td><td class="n dim">1 · 0.23</td><td class="n">3 · 0.35</td><td class="n">8 · 0.49</td><td class="n dim">—</td></tr>
-</tbody></table></div>
-<p>The youngest Czech forward cohort is one player, Kulich, against three for Finland and seven for Sweden. The 26–29 cohort of four, among them Pastrňák, Nečas and Zacha, has a median of 1.06 points per game, the highest in these tables. On defence Czechia has three NHL players in all, against nine for Finland and thirty for Sweden, and none aged 18–21. The fifteen players are the twelve forwards and three defencemen in these tables<sup class="cite"><a href="#r3">3</a></sup>.</p>
-<p>The two maps show the league adjustment openly. In the style map, on raw rates, Pastrňák and Červenka sit in the same production zone, because each produces alike in his own league; in the quality map Pastrňák moves to PC1 ≈ 8.5 and Červenka to about 2. Of the 81 players who played the 2024 or 2025 World Championship for Czechia, 42 are in the mapped pool, from both the NHL and the Extraliga<sup class="cite"><a href="#r3">3</a></sup>.</p>
-<figure data-chart="../assets/hockey/charts.json#atlas-forwards">
-  <img src="../assets/hockey/atlas-forwards.svg" alt="Two scatter plots of Czech forwards 2025/26: style projection without league multipliers, four clusters, and quality-adjusted projection, five clusters. Black rings on World Championship 2024/25 players, arrows or lines for movement from 2024/25 to 2025/26." loading="lazy">
-  <figcaption><b>fig. 2</b> · Forwards 2025/26, first two principal components of goals, assists and penalty minutes per game and age, without (left) and with (right) league factors. K-means clusters, four on the left and five on the right, are in the tooltip and the table (colours in the static render); black rings mark World Championship 2024/25 players; grey lines run from a player's 2024/25 position to his 2025/26 point. The published map data carry no league per point, so the points are not coloured by rung. Atlas render of 18 May 2026.</figcaption>
+<p>The Czech NHL group rose from 25 in 1995/96 to 58 in 2001/02 and has fallen to 20. The model dates a rise to 1998/99 (probability 0.39, level ×1.47, 90 % HDI 0.73–1.97). The most probable season of the fall is 2009/10, with probability 0.09; 87 % of the fall's probability is spread over 2008/09–2023/24, and the probability that the step lowers the level is 0.80. The fitted level is 23.1, 43 % of its 2002/03 peak of 53.1. Finland and Sweden show only rises over the same seasons<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<figure data-chart="../assets/hockey/charts.json#nhl-series">
+  <img src="../assets/hockey/nhl-series.svg" alt="Dots of Czech NHL players per season, 1995/96 to 2025/26, rising from 25 to 58 in 2001/02 and falling to 20 in 2025/26, with the fitted level as a blue line inside a pale blue 90 % band." loading="lazy">
+  <figcaption><b>fig. 2</b> · Czech NHL players at the games threshold per season (black dots, n = 30 seasons; 2004/05 not played), the model's fitted level (blue line) and its 90 % interval (pale blue band), the most probable fall season dotted; lower panel, NHL players per million for Czechia (blue), Finland (black) and Sweden (grey). Atlas <code>outputs/q1_per_million.json</code> and <code>q2_break_model.json</code>, snapshot of 29 September 2026.</figcaption>
 </figure>
-<figure data-chart="../assets/hockey/charts.json#atlas-defense">
-  <img src="../assets/hockey/atlas-defense.svg" alt="The same two projections for Czech defencemen 2025/26, six clusters in the style map and five in the quality map." loading="lazy">
-  <figcaption><b>fig. 3</b> · Defencemen 2025/26, same projections and markings; six clusters on the left and five on the right. Atlas render of 18 May 2026.</figcaption>
+<p>No Czech player aged 21 or under reached the threshold in the NHL or rung 2 in 2025/26. The largest shortfall against the peer median is forwards aged 21 or under, 6.1 players, then forwards aged 22–25 (2.8) and defencemen aged 21 or under (2.0). Forwards aged 26–29 are the one band well above the median: 15 players, 1.37 per million against 0.66.</p>
+<div class="scroller"><table class="tbl"><caption>Under-21 skaters' share of all skater games and ice time · every nationality · regular season</caption>
+<thead><tr><th>league</th><th class="n">games, mean 2014/15–2025/26</th><th class="n">ice time, mean</th><th class="n">games, 2025/26</th><th class="n">ice time, 2025/26</th></tr></thead>
+<tbody>
+<tr><td>Extraliga</td><td class="n"><b>7.9 %</b></td><td class="n"><b>5.5 %</b></td><td class="n">5.7 %</td><td class="n">4.1 %</td></tr>
+<tr><td>Liiga</td><td class="n">14.3 %</td><td class="n">11.9 %</td><td class="n">13.6 %</td><td class="n">11.1 %</td></tr>
+<tr><td>SHL</td><td class="n">16.7 %</td><td class="n">11.4 %</td><td class="n">15.0 %</td><td class="n">9.4 %</td></tr>
+</tbody></table></div>
+<p>Under-21 here means aged 20 or less. The National League and the DEL publish no birth dates, so their shares are not measured. Abroad, over 2020/21–2025/26, Czech NHL skaters played 0.98 times the median ice time of their league, season and position and scored 0.87 times its points per game; in the Liiga the ratios are 1.09 and 1.40, in the SHL 1.08 and 1.30<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>Across 21 World Championship and Olympic rosters since 2010, Czech roster spots came on average 30 % from the NHL, 28 % from the Extraliga, 25 % from the KHL, 13 % from rung 2 and 3 % from other leagues; the Czech NHL share is 2nd of the ten nations. No KHL player has been on the roster since the 2022 World Championship, and the 2026 World Championship roster had 4 NHL players, 6 from rung 2 and 14 from the Extraliga<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r12">12</a></sup>.</p>
+<figure data-chart="../assets/hockey/charts.json#roster">
+  <img src="../assets/hockey/roster.svg" alt="Stacked bars for 21 Czech World Championship and Olympic rosters, 2010 to 2026, by the league of each player's club: NHL in blue, rung 2 in black, Extraliga in light grey, KHL in mid grey, other leagues pale; the KHL part disappears after 2022." loading="lazy">
+  <figcaption><b>fig. 3</b> · Czech roster spots at every World Championship (WC) and Olympics (OG) since 2010 by the league of the player's club at the time: NHL blue, rung 2 black, Extraliga light grey, KHL mid grey, other leagues pale; n = 21 tournaments, 529 roster spots. English Wikipedia roster articles at fixed revisions; atlas <code>outputs/q6_national_team.json</code>, snapshot of 29 September 2026.</figcaption>
 </figure>
 </section>
 
 <section>
-<h2>Tests and sensitivity</h2>
-<p>The repository holds 51 software unit tests, and every stochastic step uses seed 42<sup class="cite"><a href="#r9">9</a></sup>. The Liiga and Extraliga factors were each moved by ±20 % and the quality ranking recomputed; the NHL is the reference at 1.00 and the other factors were not varied. Moving every factor by the same percentage cannot change a ranking, so those two scenarios are not shown. In the four scenarios below the top ten changes by at most one player and the four NHL forwards at the top stay there, but the mean rank shift in the top twenty reaches 4.35 places when the Liiga factor falls, so the lower part of the ranking depends on the factors<sup class="cite"><a href="#r3">3</a></sup>.</p>
-<div class="scroller"><table class="tbl"><caption>Sensitivity · ±20 % on one league factor · quality ranking</caption>
-<thead><tr><th>scenario</th><th class="n">top-10 overlap</th><th class="n">churn</th><th class="n">mean Δ rank, top 20</th></tr></thead>
-<tbody>
-<tr><td>Liiga −20 %</td><td class="n">9 / 10</td><td class="n">1</td><td class="n">4.35</td></tr>
-<tr><td>Liiga +20 %</td><td class="n">9 / 10</td><td class="n">1</td><td class="n">1.90</td></tr>
-<tr><td>Extraliga −20 %</td><td class="n">9 / 10</td><td class="n">1</td><td class="n">1.30</td></tr>
-<tr><td>Extraliga +20 %</td><td class="n">10 / 10</td><td class="n">0</td><td class="n">2.50</td></tr>
-</tbody></table></div>
+<h2>Tests and measured error</h2>
+<p>The repository's suite of data contracts per fetcher (fields, types, row counts per season), linking and snapshot-hash checks and analysis tests on fixtures runs at <code>d1f9f88</code> with 247 software tests passing and 16 skipped; the outputs record the SHA-256 of the snapshot files they were built from, and the tests fail when the snapshot changes without a rebuild<sup class="cite"><a href="#r13">13</a></sup>. The per-head ranks hold under other thresholds: counting any NHL game, Czechia has 29 players, 2.66 per million, still 4th; with a flat 20 games everywhere, 20 and 53, 4th and 5th. In 2025/26 every qualifying NHL, Liiga and DEL player has a nationality; 22 of 365 in the National League and 4 of 365 in the SHL do not. Only 2022/23–2025/26 have every rung-2 league at least 90 % identified, so the five-league series before 2022/23 is a lower bound. The break model runs four chains of 1 000 draws after 1 000 tuning steps with seed 42; over the three fits the largest R-hat is 1.007 and there is one divergent transition, in Finland's<sup class="cite"><a href="#r1">1</a></sup>.</p>
 </section>
 
 <section>
 <h2>Limits</h2>
-<p>Two analyses were dropped before publishing. An age curve for the Extraliga showed players improving into their thirties, because those still playing at 33 are the ones good enough to stay, so it measured survivorship. A youth-to-Extraliga conversion rate was right-censored: the older youth rosters had not been collected and the recent players had not had time to convert<sup class="cite"><a href="#r3">3</a></sup>.</p>
-<p>The counts are one season of small numbers, and the 2024/25 counts, which the build fetched, are not shown here because the fetched data were not kept. Birth country misses Czech players born abroad in the NHL, and the Extraliga part of the pool includes imports. The KHL is left out for sanctions and data-access reasons, and the number of Czech players this removes was not measured. The population figures have no recorded source. The league factors are judgement, and the clusters have no reported validation. The atlas uses public data only, without the video, conditioning data and tracking that a national team's staff holds.</p>
+<p>The KHL supplied 25 % of Czech roster spots since 2010, so the pool counted here is smaller than the one the national team drew on. AHL seasons appear only in NHL players' career records, a survivor-biased view. For 649 of the 867 Czech players on the pool page the only evidence of nationality is the Extraliga foreigner flag or a licence, which is eligibility, not citizenship. The National League and DEL publish no birth dates, so Switzerland and Germany drop out of the age medians. SHL, Extraliga, National League and DEL records without a birth date are linked on the name alone; unmatched and ambiguous counts are in the atlas's methodology. A per-million rate moves a lot for a small nation when a few players change. The atlas predicts nothing, and its counts measure presence, not quality.</p>
 </section>
 
 <section>
 <h2>Install and reproduce</h2>
-<p>The pipeline is public under MIT and runs with <code>make install &amp;&amp; make all</code>, and <code>make test</code> runs the tests<sup class="cite"><a href="#r9">9</a></sup>. The published numbers come from the render of 18 May 2026. The fetched data are not committed, so a rebuild fetches the current seasons and will give different numbers. The repository also holds a Neo4j player graph, a similarity search and LLM-drafted scouting briefs, described in its README. The live atlas, in English and Czech, is at <a href="https://hockey.bsandova.com">hockey.bsandova.com</a>.</p>
+<p>From a clean clone, <code>uv sync &amp;&amp; make restore-snapshot</code> puts the committed snapshot in place, <code>make verify-snapshot</code> checks its hashes, <code>make analysis</code> recomputes <code>outputs/</code> (about six minutes, mostly the break model) and <code>make pages</code> renders the report and the pool page; no fetching is needed, and <code>make test</code> runs the tests<sup class="cite"><a href="#r13">13</a></sup>. The live atlas is at <a href="https://hockey.bsandova.com">hockey.bsandova.com</a>.</p>
 </section>
 
 <section class="refs" id="refs">
 <h2>References</h2>
 <ol>
-<li id="r1">Hockey-Reference. NHL Player Birth Places. <a href="https://www.hockey-reference.com/friv/birthplaces.cgi">hockey-reference.com/friv/birthplaces.cgi</a>. Accessed 29 September 2026.</li>
-<li id="r2">Desjardins, G. (n.d.). League Equivalencies. <a href="http://hockeyanalytics.com/Research_files/League_Equivalencies.pdf">hockeyanalytics.com/Research_files/League_Equivalencies.pdf</a>. Accessed 29 September 2026.</li>
-<li id="r3">Šandová, B. (2026). <i>Czech Hockey · Player Pool Atlas</i>, edition 01, render of 18 May 2026, English edition 12 September 2026: summary, cohort tables, methodology, sensitivity table, cluster archetypes, limitations. <a href="https://hockey.bsandova.com">hockey.bsandova.com</a>. Accessed 29 September 2026.</li>
-<li id="r4">NHL Stats API, <a href="https://api-web.nhle.com/v1/">api-web.nhle.com/v1</a>: 2024/25 and 2025/26 rosters and player landing pages (<code>birthCountry</code>, birth date, position). Fetched for the render of 18 May 2026.</li>
-<li id="r5">MoneyPuck. Skater season totals, 2024/25 and 2025/26 (games played, points). <a href="https://moneypuck.com/">moneypuck.com</a>. Fetched for the render of 18 May 2026.</li>
-<li id="r6">Liiga. Season player statistics and nationality. <a href="https://www.liiga.fi/">liiga.fi</a>. Fetched for the render of 18 May 2026.</li>
-<li id="r7">hokej.cz. Tipsport Extraliga player statistics and birth dates. <a href="https://www.hokej.cz/">hokej.cz</a>. Fetched for the render of 18 May 2026.</li>
-<li id="r8">IIHF tournament rosters (World Championships 2024 and 2025, World Junior Championships 2024 and 2025) via Wikipedia. Fetched for the render of 18 May 2026.</li>
-<li id="r9">Šandová, B. (2026). <i>czehockey-player-pool-atlas</i>, v0.1.0. Software, <a href="https://github.com/sandovabarbora/czehockey-player-pool-atlas">github.com/sandovabarbora/czehockey-player-pool-atlas</a>, commit <code>3fec8b3</code>, MIT: pipeline, league factors, shrinkage, clustering, sensitivity, population constants in <code>src/international_benchmark.py</code>.</li>
+<li id="r1">Šandová, B. (2026). <i>Czech hockey: the player pool</i>, report and pool page, build of 29 September 2026 (questions 1–7, methodology, limitations). <a href="https://hockey.bsandova.com">hockey.bsandova.com</a>. Accessed 29 September 2026.</li>
+<li id="r2">Hockey-Reference. NHL Player Birth Places. <a href="https://www.hockey-reference.com/friv/birthplaces.cgi">hockey-reference.com/friv/birthplaces.cgi</a>. Accessed 29 September 2026.</li>
+<li id="r3">Elite Prospects. Hockey player database. <a href="https://www.eliteprospects.com/">eliteprospects.com</a>. Accessed 29 September 2026.</li>
+<li id="r4">Šandová, B. (2026). <i>Player Pool Atlas, football: Czech players in Europe's strongest leagues</i>. <a href="football">bsandova.com/texts/football</a>, version 2. Accessed 29 September 2026.</li>
+<li id="r5">NHL. NHL stats REST API: skater and goalie summaries and bios per season, career records (<code>nationalityCode</code>, birth date, time on ice from 1997/98). <a href="https://api.nhle.com/stats/rest/en/skater/summary">api.nhle.com/stats/rest</a>. Snapshot of 29 September 2026.</li>
+<li id="r6">Liiga. Statistics JSON API (<code>api/v2</code>), regular season: nationality, birth date, time on ice from 2014/15. <a href="https://liiga.fi/">liiga.fi</a>. Snapshot of 29 September 2026.</li>
+<li id="r7">SHL. Statistics JSON (<code>statistics-v2</code>), regular season: nationality (mostly N/A before about 2010), birth date, time on ice from 2009/10. <a href="https://www.shl.se/">shl.se</a>. Snapshot of 29 September 2026.</li>
+<li id="r8">hokej.cz. Extraliga player statistics and profiles (HTML): foreigner flag, birth date, time on ice from 2013/14. <a href="https://www.hokej.cz/">hokej.cz</a>. Snapshot of 29 September 2026.</li>
+<li id="r9">PENNY DEL. Statistics pages (HTML), regular season: licence nationality from 2022/23. <a href="https://www.penny-del.org/">penny-del.org</a>. Snapshot of 29 September 2026.</li>
+<li id="r10">Swiss Ice Hockey Federation. Statistic API, National League regular season: Swiss or foreign licence. <a href="https://data.sihf.ch/">data.sihf.ch</a>. Snapshot of 29 September 2026.</li>
+<li id="r11">Eurostat. Population change, demographic balance and crude rates at national level, table <code>demo_gind</code> (<code>indic_de=JAN</code>, population on 1 January), dataset updated 21 July 2026. <a href="https://ec.europa.eu/eurostat/databrowser/view/demo_gind/default/table">ec.europa.eu/eurostat</a>. Snapshot of 29 September 2026.</li>
+<li id="r12">Wikipedia. Roster articles of the IIHF World Championships 2010–2026 and the Olympic tournaments 2010–2026, at the revisions listed in <code>data/snapshot/rosters_sources.json</code>, CC BY-SA 4.0. <a href="https://en.wikipedia.org/">en.wikipedia.org</a>. Accessed 29 September 2026.</li>
+<li id="r13">Šandová, B. (2026). <i>czehockey-player-pool-atlas</i>, v0.1.0. Software, <a href="https://github.com/sandovabarbora/czehockey-player-pool-atlas">github.com/sandovabarbora/czehockey-player-pool-atlas</a>, commit <code>d1f9f88</code>, MIT. PyMC 5.28.5. Accessed 29 September 2026.</li>
 </ol>
 </section>
 
@@ -171,12 +157,13 @@
 <li>14 September 2026: first published as "Who Czech hockey produces, per capita".</li>
 <li>29 September 2026, version 2: reframed as a tool page and retitled. Correction: the facts, the short version and the text gave four Czech NHL defencemen and fourteen Finnish ones; the cohort tables, which the build computes, give three and nine, and the per-head counts (15 for Czechia, 34 for Finland) match the tables, so the text now says three and nine. Correction: the per-head count was described as every Czech-born player on an NHL roster; it counts those with at least ten games. Correction: the cohort labelled 23–25 covers ages 22–25 (age reached in 2025), and is relabelled; the U22 row covers 18–21. Hertl, born 1993, falls in the 30+ cohort and is no longer named in the 26–29 cohort. Correction: the sensitivity test perturbed only the Liiga and Extraliga factors, not each factor; the claim that the map is not sensitive to them was removed, and the two uniform-scaling rows (all −20 %, all +20 %, which cannot change a ranking) and the baseline row were dropped from the table. The shrinkage is called a fixed prior, not empirical Bayes. The pool is described by its actual eligibility rules (78 players confirmed eligible) instead of "385 players with Czech eligibility". Added comparable work, the population caveat, the note that the fetched data are not committed, silhouette and age caveats for the clusters, and a caveat on medians in cells of one or two players. Removed the claim that the per-head number had not been aggregated before, "world class", the cluster archetype counts (18, 122, 9 and 92 players, median birth years 1996 and 2001), and the section on the knowledge graph, similarity search and scouting briefs (about 3 200 players, 1 177 analogs, about 570 duplicate nodes), which is reduced to one sentence pointing to the README. References split to one work each, with access or fetch dates. The US population is given as 335 million, the figure the per-head count divides by, instead of 340 million.</li>
 <li>29 September 2026: figures only, no sentence of the text or number changed. The per-head bars and the two atlases are interactive charts drawn from the atlas's data, with the static renders kept as fallbacks; the bars became fig. 1, so the forwards are now fig. 2 and the defencemen fig. 3. Tables and figures sit in the text column. The maps draw every point in the held blue and give the K-means cluster in the tooltip and a table, because the published map data carry no league for a rung colour; the movement arrows are drawn as lines.</li>
+<li>29 September 2026, version 3: rewritten for the rebuilt atlas on 29 September 2026. The atlas now compares ten nations (Canada and the USA out; Switzerland, Germany, Latvia, Denmark, Norway and Austria in) over a two-rung ladder of five leagues, counts nationality by one definition instead of NHL birth country, takes population from Eurostat instead of code constants, and commits its processed snapshot. Every number is new and read from the atlas's <code>outputs/</code>: the per-head figure is 1.83 (4th of 10) instead of 1.38 (fifth of six) because the rule, threshold, peers and population changed. The style and quality maps, the clusters, the league factors and their sensitivity test, the cohort tables of points per game and the AI and video layer were withdrawn with the old atlas, and their figures and data files removed. The three figures are new interactive charts drawn from copies of the atlas outputs; the retitled page cites the new build (commit <code>d1f9f88</code>).</li>
 <li>Checked against editorial standard v1 on 29 September 2026.</li>
 </ul>
 </section>
 
 <footer class="text-foot">
-  <p><b>Figures.</b> The per-head bars and the two atlases are drawn in the page by <code>tools/charts/hockey.py</code> from data copied out of the atlas: <a href="../assets/hockey/per-head.json">per-head.json</a> (the summary values and the code's population constants) and <a href="../assets/hockey/atlas-forwards.json">atlas-forwards.json</a> and <a href="../assets/hockey/atlas-defense.json">atlas-defense.json</a>, every point of the atlas's matplotlib renders read back to its principal components with the atlas's own axis calibration. Without JavaScript the renders show instead, recoloured to this site's palette; positions, arrows and labels are untouched. The tables are typed from the atlas summary and cohort tables.</p>
+  <p><b>Figures.</b> The per-head bars, the NHL series and the roster bars are drawn in the page by <code>tools/charts/hockey.py</code> from unchanged copies of the atlas outputs: <a href="../assets/hockey/q1_per_million.json">q1_per_million.json</a>, <a href="../assets/hockey/q2_break_model.json">q2_break_model.json</a> and <a href="../assets/hockey/q6_national_team.json">q6_national_team.json</a>. Without JavaScript a static render of the same numbers shows instead. The youth table is typed from <code>outputs/q4_youth_ice_time.json</code>. Rungs use one palette: NHL jersey blue, rung 2 black, Extraliga light grey, KHL mid grey, other leagues pale.</p>
   <p class="back"><a href="../#works">← projects</a> · <a href="football">Player Pool Atlas · football</a></p>
 </footer>
 </article>
