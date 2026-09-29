@@ -46,6 +46,16 @@
     <div><dt>best classifier</dt><dd>none <small>0.70–0.74 nested CV · p ≥ 0.22 for every pair</small></dd></div>
   </dl>
 </header>
+<details class="tldr" open>
+  <summary>Overwhelmed? Here's the short version</summary>
+  <ul>
+    <li>In a course dataset of 622 intensive-care patients, the group labelled Deteriorating has the higher P/F ratio, 23.8 against 18.9 kPa, and the rising trend. Nine of the ten variables describe the "deteriorating" patients as the healthier ones; they share one cohort, so this is one finding observed nine ways.</li>
+    <li>Shifting the label file by offsets from −30 to +30 never restores the expected direction, and the association is strongest at exactly zero. That rules out misalignment and leaves mislabelling; a separate changepoint in the row order near row 500 affects nothing downstream.</li>
+    <li>Tukey's rule on the raw values would delete 128 patients, 85 of them Deteriorating. The primary dataset winsorises on the log scale instead, capping 97 readings out of 8 694 (1.12 %) and deleting nobody.</li>
+    <li>Logistic regression, an SVC and a random forest all reach 0.70 to 0.74 in nested cross-validation, and with pairwise p-values of 0.26, 0.22 and 0.60 nothing separates them. Logistic regression is the one I would deploy, because it is the most stable and its number carries the least optimism; for triage with a tuned threshold the forest's AUC of 0.852 against 0.809 makes the forest the better choice.</li>
+    <li>Because the labels point the wrong way, every clinical statement carries the caveat that the class called Deteriorating behaves like a recovering patient.</li>
+  </ul>
+</details>
 <section class="film film-page" aria-hidden="false"><div class="shot" style="view-transition-name:ph-icu;--bg:url(../assets/photo/icu.jpg);--bg-s:url(../assets/photo/icu-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:20250808_Intensive_care_unit_bed.jpg">Ismael Olea</a> · CC BY 4.0, colour held</p></section>
 
 

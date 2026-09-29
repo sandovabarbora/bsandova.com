@@ -150,7 +150,17 @@ body:has(.q-note) main p a,body:has(.q-note) main li a{text-decoration:underline
   :root:has(link[rel="canonical"][href*="/texts/"]) .text>section:not(.film) :is(figure,figcaption,.eq,.tbl,.scroller,.wide,pre){max-width:none}
   :root:has(link[rel="canonical"][href*="/texts/"]) .text>section.refs ol{columns:1}
   :root:has(link[rel="canonical"][href*="/texts/"]) .text>.text-foot{margin-left:calc(100% * 4 / 11 + clamp(40px,5vw,96px) * 7 / 11);max-width:68ch}
+  .text>.tldr{margin-left:calc(100% * 4 / 11 + clamp(40px,5vw,96px) * 7 / 11)}
 }
 /* inline code had no rule and fell back to the browser's Courier */
 code,kbd,samp{font-family:var(--mono);font-size:.88em;letter-spacing:0}
 pre code{font-size:inherit}
+/* the short version: a summary box under every article's header, for readers who want the gist first */
+.tldr{max-width:68ch;margin:0 0 clamp(40px,5vw,72px);border:1px solid #000;padding:18px 22px 10px}
+.tldr summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;font:400 12px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#000;padding-bottom:8px}
+.tldr summary::-webkit-details-marker{display:none}
+.tldr summary::after{content:"−";font-size:14px}
+.tldr:not([open]) summary::after{content:"+"}
+.tldr:not([open]){padding-bottom:10px}
+.tldr ul{margin:10px 0 0;padding-left:1.1em}
+.tldr li{font:400 16px/1.55 var(--sans);letter-spacing:-.003em;color:#111;margin:0 0 .55rem}

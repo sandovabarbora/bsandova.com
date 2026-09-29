@@ -51,6 +51,16 @@
     <div><dt>dependency alerts</dt><dd>792 → 332 <small>15 library manifests, 8 apps</small></dd></div>
   </dl>
 </header>
+<details class="tldr" open>
+  <summary>Overwhelmed? Here's the short version</summary>
+  <ul>
+    <li>This page describes the day job: a cross-cloud data platform on AWS and GCP, written entirely as infrastructure as code, with Workload Identity Federation so no long-lived key connects the two clouds. Dashboards and alarms are CDK constructs, the alarms are set on latency and 4XX/5XX error rates, and breaches go to Slack.</li>
+    <li>Access is least privilege for people and for AI agents. An assistant's MCP surface of forty tools, eighteen of which could write, was cut to a fifteen-tool read-only allowlist, and a confused-deputy problem was fixed at BigQuery IAM rather than in the prompt.</li>
+    <li>A salary-recompute pipeline moved to dbt only after the new model was proven byte-identical to the old one across five years of history, with zero mismatches across twenty columns. A GA4 backfill was validated by full-row fingerprint, 62 of 62 days identical.</li>
+    <li>A ~4 500-line NL→SQL service was replaced by a ~400-line agent that runs at parity on the golden question sets. Hard caps were added after one unbounded question consumed 4.07 million input tokens and $21 without failing.</li>
+    <li>Employer systems and data are not public, so the figures are from the author's own records of the work. Where a number cannot be checked from outside, it is presented as her account, not as a citation.</li>
+  </ul>
+</details>
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-engineering;--bg:url(../assets/photo/engineering.jpg);--bg-s:url(../assets/photo/engineering-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Panduit_Pan-Net_Cable_Management_System_detail_2.JPG">BrokenSphere</a> · CC BY-SA 3.0, colour held</p></section>
 
 

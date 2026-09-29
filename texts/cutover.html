@@ -55,6 +55,16 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
     <div><dt>demo, run 2</dt><dd>33 / 33 days <small>NYC yellow taxi, January 2025, pandas vs SQL</small></dd></div>
   </dl>
 </header>
+<details class="tldr" open>
+  <summary>Overwhelmed? Here's the short version</summary>
+  <ul>
+    <li><code>cutover</code> is a Python package that checks a migration in six steps: schema, key, row set, columns, fingerprints and verdict. It gives PASS only when the schema is clean, the key is unique, no key is missing on either side, every column has zero mismatches within its declared tolerance and every partition fingerprint matches.</li>
+    <li>The method comes from two cutovers in the day job: a salary pipeline compared over five years and twenty columns with zero mismatches, and a GA4 backfill with 62 of 62 days identical.</li>
+    <li>On a month of NYC taxi data, the first run comparing a pandas and a SQL aggregation failed. It found a date that had become a timestamp and 343 fare mismatches that were floating-point noise, none of them planted. With the day cast to a date and a declared half-cent fare tolerance, the second run passed with 33 / 33 days identical.</li>
+    <li>The package has 41 tests, and both demo reports are published as the tool wrote them, with the script that produced them.</li>
+    <li>It shows only that the new table equals the old one, not which side is right. It compares locally in DuckDB, which is fine for tens of millions of rows but not for billions.</li>
+  </ul>
+</details>
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-cutover;--bg:url(../assets/photo/cutover.jpg);--bg-s:url(../assets/photo/cutover-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Railroad_switch_details_a.jpg">Xunil</a> · Public domain, colour held</p></section>
 
 

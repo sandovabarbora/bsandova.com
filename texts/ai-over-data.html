@@ -50,6 +50,16 @@
     <div><dt>public counterpart</dt><dd>5 794 <small>answers measured in Quaesitor · monthly watch · a detector that says no</small></dd></div>
   </dl>
 </header>
+<details class="tldr" open>
+  <summary>Overwhelmed? Here's the short version</summary>
+  <ul>
+    <li>At work I built an assistant that answers business questions from a data warehouse. A ~400-line LangGraph agent replaced a ~4 500-line NL→SQL service and reached parity on the golden sets, and it reads business definitions from the data catalogue at run time instead of keeping them in code.</li>
+    <li>Each figure goes through a trust protocol: terms resolve through the glossary, the result is reconciled against a certified dashboard when one exists, and otherwise the answer says it is unreconciled. Golden questions from the stakeholders run on every change and report correctness, silent failure, refusals and protocol compliance.</li>
+    <li>The hardening followed measurements. The tool surface went from 40 MCP tools to a 15-tool read-only allowlist, access is enforced at BigQuery IAM rather than in the prompt, and hard caps were added after one question used 4.07 million input tokens and $21. Each run writes fourteen pseudonymous trace fields, which found a defect in a third-party MCP server.</li>
+    <li>In the public counterpart, Quaesitor, frontier models fail silently on 56 % to 92 % of answers depending on the pack, and nothing visible at run time predicts which answers are wrong.</li>
+    <li>Employer data is left out, and the figures about the work system are my own account from my records, so they cannot be checked from outside.</li>
+  </ul>
+</details>
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-ai-over-data;--bg:url(../assets/photo/ai-over-data.jpg);--bg-s:url(../assets/photo/ai-over-data-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Fujikura_optic_fiber_at_Science_Museum.jpg">Syced</a> · CC0, colour held</p></section>
 
 
