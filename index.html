@@ -72,6 +72,8 @@ img{display:block;max-width:100%}
 .hero .still.shot{filter:brightness(.62) contrast(1.05)}
 @media (max-width:700px){.titles a{display:inline;font-size:clamp(26px,7.6vw,40px);line-height:1.08}.titles sup{margin-left:6px;vertical-align:top}.titles li{margin-bottom:4px}}
 .titles .kick{font:400 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#bbb;margin:0 0 14px}
+.titles .kick a,.titles:hover .kick a,.titles.cycling .kick a{display:inline;font:inherit;letter-spacing:inherit;color:#bbb}
+.titles .kick a:hover,.titles .kick a:focus-visible{color:#fff}
 .titles sup{font:400 13px/1 var(--mono);letter-spacing:0;margin-top:.55em;color:#fff}
 .titles:hover a,.titles.cycling a{color:rgba(255,255,255,.6)}
 .titles a.on,.titles:hover a:hover{color:#fff}
@@ -266,7 +268,7 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
   <div class="still shot lazy" data-k="4" style="--bg:url(assets/photo/prague-housing.jpg);--bg-s:url(assets/photo/prague-housing-1200.jpg)"></div>
   <div class="still shot lazy" data-k="5" style="--bg:url(assets/photo/prague-parking.jpg);--bg-s:url(assets/photo/prague-parking-1200.jpg)"></div>
   <ul class="titles" id="titles">
-    <li class="kick">Prague, measured · a series</li>
+    <li class="kick"><a href="texts/prague-measured">Prague, measured · a series →</a></li>
     <li><a href="texts/prague-council" data-k="1" data-dek="403 votes against in four years, out of 143 360 cast while present.">Prague's council rarely says no</a></li>
     <li><a href="texts/prague-rings" data-k="2" data-dek="The vote follows the distance from the centre and the panel estates, not the metro. Who lives there explains 43 % of the estates' pull.">Prague votes in rings</a></li>
     <li><a href="texts/prague-districts" data-k="3" data-dek="The large districts spend 8 346–17 604 crowns per resident a year; Praha 1 spends 35 320. Most of it is money they are given.">One city, 57 budgets</a></li>
@@ -322,14 +324,15 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
     <div class="idx-h">
       <h2 class="big">All work</h2>
       <div class="filters" id="filters">
-        <button class="on" data-f="all">All<sup>30</sup></button>
-        <button data-f="ds">Data science<sup>17</sup></button>
+        <button class="on" data-f="all">All<sup>31</sup></button>
+        <button data-f="ds">Data science<sup>18</sup></button>
         <button data-f="de">Data engineering<sup>10</sup></button>
         <button data-f="ai">ML &amp; AI<sup>13</sup></button>
         <button data-f="make">Sound &amp; making<sup>3</sup></button>
       </div>
     </div>
     <ul class="rows" id="rows">
+      <li data-tags="ds"><a href="texts/prague-measured"><span class="t">Prague, measured: the series</span><span class="c">Prague, measured</span><span class="y">2026</span></a></li>
       <li data-tags="ds"><a href="texts/prague-parking"><span class="t">Bigger cars, the same kerb</span><span class="c">Prague, measured</span><span class="y">2026</span></a></li>
       <li data-tags="ds"><a href="texts/prague-housing"><span class="t">Prague builds two homes for Vienna's three</span><span class="c">Prague, measured</span><span class="y">2026</span></a></li>
       <li data-tags="ds"><a href="texts/prague-districts"><span class="t">One city, 57 budgets</span><span class="c">Prague, measured</span><span class="y">2026</span></a></li>
@@ -377,7 +380,7 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
   // hero: hover or focus a title to swap the still; otherwise cycle slowly
   const stills = [...document.querySelectorAll('.still')];
   const titles = document.getElementById('titles');
-  const links = [...titles.querySelectorAll('a')];
+  const links = [...titles.querySelectorAll('a[data-k]')];
   const cap = document.getElementById('cap'), capRest = cap.textContent;
   const show = k => {
     stills.forEach(s => s.classList.toggle('on', s.dataset.k === String(k)));
