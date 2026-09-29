@@ -138,7 +138,9 @@ per_ip_per_hour = 12</pre>
       else if (t.tools) {
         const p = t.protocol || {};
         el('trace').innerHTML = `<b>trace</b> · model ${esc(t.model_used||t.model||'')} · ${t.turns} turns · ${t.input_tokens} in / ${t.output_tokens} out · ${t.cost_usd} USD (configured prices) · ${t.ms} ms · budget today ${t.budget_spent_usd} USD<br>`+
-          `rules: ${Object.entries(p).map(([k,v])=>`${k} <span class="${v?'bad':'ok'}">${v?'VIOLATED':'ok'}</span>`).join(' · ')}${t.enforced?` · <span class="bad">enforced: ${esc(t.enforced)}</span>`:''} · quotes ${t.quotes_verified} verified / ${t.quotes_absent} rejected · declined ${t.declined?'yes':'no'}<ol>`+
+          (t.enforced
+            ? `rules: the model's own answer broke <span class="bad">${Object.entries(p).filter(([,v])=>v).map(([k])=>esc(k)).join(', ')}</span>, so the site withheld it and returned the decline above`
+            : `rules: ${Object.keys(p).map(k=>`${k} <span class="ok">ok</span>`).join(' · ')}`)+` · quotes ${t.quotes_verified} verified / ${t.quotes_absent} rejected · declined ${t.declined?'yes':'no'}<ol>`+
           t.tools.map(x=>`<li>${esc(x.name)} ${esc(JSON.stringify(x.input||{}))} · ${x.ms} ms · ${x.bytes} B</li>`).join('')+'</ol>';
         el('trace').hidden = false;
       }
