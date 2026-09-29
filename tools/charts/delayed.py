@@ -1,6 +1,6 @@
 """Chart specs for the sonification article (texts/delayed.html), read by assets/charts.js.
 
-Reads tools/data/sonification_days.json (the player's embedded aggregates, the same file tools/delayed_figures.py
+Reads tools/data/sonification_days.json (the player's embedded aggregates, the same file tools/figures/delayed_figures.py
 draws assets/delayed/01-five-days.svg from) and recomputes that figure exactly: the event-weighted mean of bus, tram
 and trolleybus delay per 5-minute window, a five-window moving average (numpy's convolve 'same', zeros at the edges),
 and the chorus where the smoothed value exceeds 68 % of the day's maximum.
@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[2]
 A = ROOT / "assets/delayed"
 D = json.loads((ROOT / "tools/data/sonification_days.json").read_text())
 NB = " "
-HELD = "#b3202c"  # the article's held colour (tools/paper_figures.py), the chorus fill in the static figure
+HELD = "#b3202c"  # the article's held colour (tools/site/paper_figures.py), the chorus fill in the static figure
 SURF = ["autobus", "tramvaj", "trolejbus"]
 ORDER = ["easter", "summer", "school", "typical", "meltdown"]
 

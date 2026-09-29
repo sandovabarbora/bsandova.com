@@ -1,0 +1,112 @@
+"""The gate of docs/style/editorial-standard.md, run on every build: a listed page that breaks a hard rule fails the
+deploy; soft rules (word caps) are reported as warnings.
+
+Hard rules, for every article in texts/*.html:
+  - one short-version box (details.tldr), one metadata block (dl.meta) and a change log (#changelog) that records
+    the standard check;
+  - no claim of review ("referee"), and "pre-registered" only in its negated form ("not pre-registered");
+  - references: numbered r1..rN without gaps, every entry cited, every citation resolves;
+  - figures numbered 1..n in order, and every "(fig. n)" in the text points at an existing figure;
+  - no link to a local text page that does not exist.
+
+    python3 tools/site/check_standard.py            # exit 1 on a hard failure
+"""
+from __future__ import annotations
+
+import html as H
+import re
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+TEXTS = ROOT / "texts"
+CAPS = {"research": (2500, 3500), "tool": (1000, 1500), "note": (400, 900), "hub": (0, 1000)}
+SKIP = {"forecast-verification", "thesis"}  # no word cap: a protocol note, and the thesis summary (about 1 700)
+
+
+def visible(s: str) -> str:
+    s = re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", s, flags=re.S)
+    return H.unescape(re.sub(r"<[^>]+>", " ", s))
+
+
+def body_words(s: str) -> int:
+    """Words of the sections between the metadata block and the references, without tables, figures and captions."""
+    a = s.find("</dl>", s.find('class="meta"'))
+    b = s.find('id="refs"')
+    b = b if b > 0 else s.find('id="changelog"')
+    part = s[a:b] if a > 0 and b > a else s
+    part = re.sub(r"<(table|figure|figcaption|pre)[^>]*>.*?</\1>", " ", part, flags=re.S)
+    return len(visible(part).split())
+
+
+def kind(s: str) -> str:
+    m = re.search(r'<p class="kicker">\s*([A-Za-z]+)', s)
+    k = (m.group(1).lower() if m else "")
+    return {"research": "research", "tool": "tool", "note": "note", "hub": "hub"}.get(k, "")
+
+
+def check(path: Path) -> tuple[list[str], list[str]]:
+    s = path.read_text(encoding="utf-8")
+    hard, soft = [], []
+    if s.count('class="tldr"') != 1:
+        hard.append(f"{s.count('class=\"tldr\"')} short-version boxes (need 1)")
+    if 'class="meta"' not in s:
+        hard.append("no metadata block (dl.meta)")
+    if 'id="changelog"' not in s:
+        hard.append("no change log (#changelog)")
+    elif "Checked against editorial standard" not in s:
+        hard.append("change log does not record the standard check")
+    text = visible(s)
+    if re.search(r"\breferees?\b", text, re.I):
+        hard.append('mentions "referee"')
+    for m in re.finditer(r"pre-?registered", text, re.I):
+        before = text[max(0, m.start() - 12):m.start()].lower()
+        after = text[m.end():m.end() + 2]
+        quoted = text[max(0, m.start() - 1)] in "\"“'" or after[:1] in "\"”'"
+        if "not " not in before and "no longer" not in text[max(0, m.start() - 40):m.start()] and not quoted:
+            hard.append('uses "pre-registered" without a timestamped registration')
+            break
+    ids = [int(x) for x in re.findall(r'id="r(\d+)"', s)]
+    cites = {int(x) for x in re.findall(r'href="#r(\d+)"', s)}
+    if ids and ids != list(range(1, len(ids) + 1)):
+        hard.append(f"references not numbered 1..{len(ids)} in order")
+    if set(ids) - cites:
+        hard.append(f"uncited references {sorted(set(ids) - cites)}")
+    if cites - set(ids):
+        hard.append(f"citations without an entry {sorted(cites - set(ids))}")
+    figs = [int(x) for x in re.findall(r"<b>fig\. (\d+)</b>", s)]
+    if figs and figs != list(range(1, len(figs) + 1)):
+        hard.append(f"figures numbered {figs}")
+    refs = {int(x) for x in re.findall(r"\(fig\. (\d+)\)", text)}
+    if refs - set(figs):
+        hard.append(f"text points at missing figures {sorted(refs - set(figs))}")
+    base = path.parent
+    for href in re.findall(r'href="([a-z0-9-]+)(?:\.html)?(?:#[^"]*)?"', s):
+        if not (base / f"{href}.html").exists() and not (base / href).is_dir():
+            hard.append(f"link to missing page {href}")
+    k = kind(s)
+    if k in CAPS and path.stem not in SKIP:
+        lo, hi = CAPS[k]
+        n = body_words(s)
+        if not lo * 0.9 <= n <= hi * 1.1:
+            soft.append(f"{k} body about {n} words (cap {lo}–{hi})")
+    return hard, soft
+
+
+def main() -> int:
+    failed = 0
+    for p in sorted(TEXTS.glob("*.html")):
+        if p.name.startswith("_"):
+            continue
+        hard, soft = check(p)
+        for h in hard:
+            print(f"FAIL {p.relative_to(ROOT)}: {h}")
+        for w in soft:
+            print(f"warn {p.relative_to(ROOT)}: {w}")
+        failed += bool(hard)
+    print(f"standard check: {failed} page(s) failing" if failed else "standard check: all pages pass")
+    return 1 if failed else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

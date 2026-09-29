@@ -20,7 +20,7 @@ jobs:
       - id: check
         run: |
           set +e
-          REPORT_PATH=report.txt GITHUB_TOKEN=${{ github.token }} python tools/status_check.py
+          REPORT_PATH=report.txt GITHUB_TOKEN=${{ github.token }} python tools/site/status_check.py
           rc=$?
           echo "problems=$rc" >> "$GITHUB_OUTPUT"
           echo "exit code $rc"

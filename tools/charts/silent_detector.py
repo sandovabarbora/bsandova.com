@@ -2,7 +2,7 @@
 
 Reads assets/detector/detector.json (written by quaesitor/method/src/detector.py) for the filter tips and
 assets/detector/auc.json (tools/detector/auc.py: the same AUCs refitted from assets/detector/answers.csv, with
-question-level bootstrap 95 % intervals) and writes assets/detector/charts.json. tools/detector_figures.py draws the
+question-level bootstrap 95 % intervals) and writes assets/detector/charts.json. tools/figures/detector_figures.py draws the
 static SVG fallbacks from the same two files.
 
     python3 tools/charts/silent_detector.py

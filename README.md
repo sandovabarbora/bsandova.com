@@ -11,14 +11,18 @@ and rebuilt.
 |---|---|
 | `index.html`, `texts/`, `cv/` | The site: front page, articles and CV (static HTML, no framework) |
 | `texts/prague-*.html` | *Prague, measured*: the hub and Parts 1–5 |
-| `docs/research/` | Research designs (registered analysis plans), file hashes, alignment codings |
-| `docs/style/` | Editorial standard v1, house style, and the audit it rests on |
-| `assets/` | Published data behind every figure (JSON/CSV), chart and map specs, photos, PDFs (`assets/pdf/`) |
-| `assets/charts.js`, `assets/map.js` | Dependency-free interactive charts and maps, with a table view and a data link |
-| `tools/` | Analysis and build scripts: `tools/zhmp/` (Part 1), `tools/praha/` (Parts 2–4), `tools/parking6/` (Part 5), `tools/charts/` and `tools/maps/` (figure specs), `tools/pdf.sh` |
-| `ask/`, `deploy/` | *Ask the site*, an assistant that answers only from this site's data, and its server |
-| `surf/`, `weather/` | Forecast verification pages and their daily verifiers |
+| `surf/`, `weather/`, `status/`, `watch/`, `library/`, `atlantic/`, `changelog/` | Live pages; `surf/` and `weather/` also hold their daily collectors and verifiers |
+| `assets/` | Published data behind every figure (JSON/CSV), chart and map specs, photos, PDFs; `charts.js` and `map.js` draw them |
+| `style.css`, `text.css`, `a24.css`, `404.html`, `favicon.ico` | Shared styles and site furniture |
+| `tools/site/` | Build and upkeep: editorial-standard check, changelog, sitemap, feed, top bar, OG cards, paper figures, PDFs, status check |
+| `tools/figures/` | Static figure generators for single articles |
+| `tools/zhmp/`, `tools/praha/`, `tools/parking6/` | Analyses of *Prague, measured* Parts 1, 2–4 and 5 |
+| `tools/charts/`, `tools/maps/` | Interactive chart and map specs |
+| `tools/lottery/`, `tools/detector/`, `tools/delay-atlas/`, `tools/quaesitor/`, `tools/demos/` | Other articles' analyses, the Quaesitor page generators, the cutover demo |
+| `docs/research/`, `docs/style/`, `docs/superpowers/` | Research designs and file hashes; editorial standard and audits; design specs and plans |
+| `ask/`, `deploy/`, `sitewitness.toml` | *Ask the site*, an assistant that answers only from this site's data: page, eval, Worker proxy, Fly server, config |
 | `infra/` | Cloudflare DNS and rules as Terraform |
+| `build.sh`, `wrangler.jsonc`, `_redirects`, `.assetsignore` | Build, deploy config, 301s, and what is kept off the site |
 
 ## Prague, measured
 
@@ -55,8 +59,8 @@ regenerates the sitemap, the feed and the changelog.
 Local preview:
 
 ```sh
-python3 -m http.server 8000            # then open http://localhost:8000/
-./tools/pdf.sh                         # rebuild the PDFs of the series (needs Google Chrome)
+python3 -m http.server 8000     # then open http://localhost:8000/
+./tools/site/pdf.sh             # rebuild the PDFs of the series (needs Google Chrome)
 ```
 
 The analysis scripts are Python. Each one names its dependencies in its docstring, for example:

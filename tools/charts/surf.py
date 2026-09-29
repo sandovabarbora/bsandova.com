@@ -1,7 +1,7 @@
 """Chart specs for the surf article (texts/surf.html), read by assets/charts.js.
 
 Reads surf/data/analysis.json (the MFWAM analysis, one record per spot and day) and the rule constants in
-surf/data.json, and recomputes fig. 1 exactly as tools/surf_figures.py does: Ericeira, daily max swell, mean period
+surf/data.json, and recomputes fig. 1 exactly as tools/figures/surf_figures.py does: Ericeira, daily max swell, mean period
 and mean wind, and the days that clear the surfable rule. The article's figure covers the 92 days from 14 June to
 13 September 2026; the analysis file keeps growing, so the window is fixed here. Writes assets/surf/charts.json.
 
@@ -35,7 +35,7 @@ def offshore(r: dict) -> bool:
 
 
 def surf(r: dict) -> bool:
-    """The surfable rule, as in tools/surf_figures.py."""
+    """The surfable rule, as in tools/figures/surf_figures.py."""
     if r["swell_max"] is None or r["period_mean"] is None:
         return False
     wind_ok = r.get("wind_mean") is None or r["wind_mean"] <= RULE["wind_max_kmh"] or offshore(r)
