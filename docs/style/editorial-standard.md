@@ -62,10 +62,14 @@ Research sections come in this order:
 5. Results, one section per question.
 6. Robustness, as a table.
 7. What changed after registration: a dated list, each change told once.
-8. What this does not show.
-9. Reproduction.
-10. References.
-11. Change log and corrections: dated, at the foot, never in the middle of the text.
+8. What this means: one short section (at most 200 words) that says what the results support and what they do not,
+   for someone who has to decide something about the object studied. It separates what is measured from what is
+   inferred, gives no advice that the design cannot carry, and names the decision-relevant quantity with its
+   uncertainty.
+9. What this does not show.
+10. Reproduction.
+11. References.
+12. Change log and corrections: dated, at the foot, never in the middle of the text.
 
 **Tools** follow this order:
 
