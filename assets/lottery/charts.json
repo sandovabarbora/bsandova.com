@@ -1,0 +1,2274 @@
+{
+ "counts": {
+  "alt": "Bars for the 49 Sportka numbers showing how often each was drawn in 7 550 draws, 1994–2026, against the expected 924. All lie between 858 and 984; four fall outside the 95 % range for a single number, as about 2.5 of 49 would by chance.",
+  "legend": [
+   {
+    "label": "inside the 95 % range for one number",
+    "c": "held",
+    "shape": "box",
+    "o": 0.85
+   },
+   {
+    "label": "outside it",
+    "c": "ink",
+    "shape": "box",
+    "o": 0.85
+   },
+   {
+    "label": "expected, 924.5",
+    "c": "ink"
+   },
+   {
+    "label": "95 % range, 869–981",
+    "c": "grey",
+    "dash": "dash"
+   }
+  ],
+  "panels": [
+   {
+    "h": 280,
+    "title": "times drawn, 7 550 draws of 6 of 49",
+    "x": {
+     "kind": "cat",
+     "domain": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "30",
+      "31",
+      "32",
+      "33",
+      "34",
+      "35",
+      "36",
+      "37",
+      "38",
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47",
+      "48",
+      "49"
+     ],
+     "labels": false,
+     "label": "numbers 1 to 49"
+    },
+    "y": {
+     "kind": "linear",
+     "domain": [
+      820,
+      1010
+     ],
+     "ticks": [
+      850,
+      900,
+      950,
+      1000
+     ]
+    },
+    "marks": [
+     {
+      "type": "vbar",
+      "rows": [
+       {
+        "x": "1",
+        "y0": 924.4897959183673,
+        "y1": 858.0,
+        "c": "ink",
+        "tip": "number 1\ndrawn 858 times (expected 924)\nz −2.33\np 0.020, after Benjamini–Hochberg 0.53"
+       },
+       {
+        "x": "2",
+        "y0": 924.4897959183673,
+        "y1": 932.0,
+        "c": "held",
+        "tip": "number 2\ndrawn 932 times (expected 924)\nz +0.26\np 0.792, after Benjamini–Hochberg 0.90"
+       },
+       {
+        "x": "3",
+        "y0": 924.4897959183673,
+        "y1": 910.0,
+        "c": "held",
+        "tip": "number 3\ndrawn 910 times (expected 924)\nz −0.51\np 0.623, after Benjamini–Hochberg 0.90"
+       },
+       {
+        "x": "4",
+        "y0": 924.4897959183673,
+        "y1": 922.0,
+        "c": "held",
+        "tip": "number 4\ndrawn 922 times (expected 924)\nz −0.09\np 0.944, after Benjamini–Hochberg 0.94"
+       },
+       {
+        "x": "5",
+        "y0": 924.4897959183673,
+        "y1": 915.0,
+        "c": "held",
+        "tip": "number 5\ndrawn 915 times (expected 924)\nz −0.33\np 0.752, after Benjamini–Hochberg 0.90"
+       },
+       {
+        "x": "6",
+        "y0": 924.4897959183673,
+        "y1": 969.0,
+        "c": "held",
+        "tip": "number 6\ndrawn 969 times (expected 924)\nz +1.56\np 0.118, after Benjamini–Hochberg 0.89"
+       },
+       {
+        "x": "7",
+        "y0": 924.4897959183673,
+        "y1": 900.0,
+        "c": "held",
+        "tip": "number 7\ndrawn 900 times (expected 924)\nz −0.86\np 0.399, after Benjamini–Hochberg 0.89"
+       },
+       {
+        "x": "8",
+        "y0": 924.4897959183673,
+        "y1": 900.0,
+        "c": "held",
+        "tip": "number 8\ndrawn 900 times (expected 924)\nz −0.86\np 0.399, after Benjamini–Hochberg 0.89"
+       },
+       {
+        "x": "9",
+        "y0": 924.4897959183673,
+        "y1": 915.0,
+        "c": "held",
+        "tip": "number 9\ndrawn 915 times (expected 924)\nz −0.33\np 0.752, after Benjamini–Hochberg 0.90"
+       },
+       {
+        "x": "10",
+        "y0": 924.4897959183673,
+        "y1": 899.0,
+        "c": "held",
+        "tip": "number 10\ndrawn 899 times (expected 924)\nz −0.89\np 0.380, after Benjamini–Hochberg 0.89"
+       },
+       {
+        "x": "11",
+        "y0": 924.4897959183673,
+        "y1": 892.0,
+        "c": "held",
+        "tip": "number 11\ndrawn 892 times (expected 924)\nz −1.14\np 0.261, after Benjamini–Hochberg 0.89"
+       },
+       {
+        "x": "12",
+        "y0": 924.4897959183673,
+        "y1": 936.0,
+        "c": "held",
+        "tip": "number 12\ndrawn 936 times (expected 924)\nz +0.40\np 0.686, after Benjamini–Hochberg 0.90"
+       },
+       {
+        "x": "13",
+        "y0": 924.4897959183673,
+        "y1": 964.0,
+        "c": "held",
+        "tip": "number 13\ndrawn 964 times (expected 924)\nz +1.39\np 0.166, after Benjamini–Hochberg 0.89"
+       },
+       {
+        "x": "14",
+        "y0": 924.4897959183673,
+        "y1": 939.0,
+        "c": "held",
+        "tip": "number 14\ndrawn 939 times (expected 924)\nz +0.51\np 0.611, after Benjamini–Hochberg 0.90"
+       },
+       {
+        "x": "15",
+        "y0": 924.4897959183673,
+        "y1": 903.0,
+        "c": "held",
+        "tip": "number 15\ndrawn 903 times (expected 924)\nz −0.75\np 0.461, after Benjamini–Hochberg 0.89"
+       },
+       {
+        "x": "16",
+        "y0": 924.4897959183673,
+        "y1": 894.0,
+        "c": "held",
+        "tip": "number 16\ndrawn 894 times (expected 924)\nz −1.07\np 0.292, after Benjamini–Hochberg 0.89"
+       },
+       {
+        "x": "17",
+        "y0": 924.4897959183673,
+        "y1": 935.0,
+        "c": "held",
+        "tip": "number 17\ndrawn 935 times (expected 924)\nz +0.37\np 0.712, after Benjamini–Hochberg 0.90"
+       },
+       {
+        "x": "18",
+        "y0": 924.4897959183673,
+        "y1": 936.0,
+        "c": "held",
+        "tip": "number 18\ndrawn 936 times (expected 924)\nz +0.40\np 0.686, after Benjamini–Hochberg 0.90"
+       },
+       {
+        "x": "19",
+        "y0": 924.4897959183673,
+        "y1": 906.0,
+        "c": "held",
+        "tip": "number 19\ndrawn 906 times (expected 924)\nz −0.65\np 0.527, after Benjamini–Hochberg 0.90"
+       },
+       {
+        "x": "20",
+        "y0": 924.4897959183673,
+        "y1": 967.0,
+        "c": "held",
+        "tip": "number 20\ndrawn 967 times (expected 924)\nz +1.49\np 0.136, after Benjamini–Hochberg 0.89"
+       },
+       {
+        "x": "21",
+        "y0": 924.4897959183673,
+        "y1": 919.0,
+        "c": "held",
+        "tip": "number 21\ndrawn 919 times (expected 924)\nz −0.19\np 0.861, after Benjamini–Hochberg 0.90"
+       },
+       {
+        "x": "22",
+        "y0": 924.4897959183673,
+        "y1": 930.0,
+        "c": "held",
+        "tip": "number 22\ndrawn 930 times (expected 924)\nz +0.19\np 0.847, after Benjamini–Hochberg 0.90"
+       },
+       {
+        "x": "23",
+        "y0": 924.4897959183673,
+        "y1": 930.0,
+        "c": "held",
+        "tip": "number 23\ndrawn 930 times (expected 924)\nz +0.19\np 0.847, after Benjamini–Hochberg 0.90"
+       },
+       {
+        "x": "24",
+        "y0": 924.4897959183673,
+        "y1": 887.0,
+        "c": "held",
+        "tip": "number 24\ndrawn 887 times (expected 924)\nz −1.32\np 0.194, after Benjamini–Hochberg 0.89"
+       },
+       {
+        "x": "25",
+        "y0": 924.4897959183673,
+        "y1": 899.0,
+        "c": "held",
+        "tip": "number 25\ndrawn 899 times (expected 924)\nz −0.89\np 0.380, after Benjamini–Hochberg 0.89"
+       },
+       {
+        "x": "26",
+        "y0": 924.4897959183673,
+        "y1": 952.0,
+        "c": "held",
+        "tip": "number 26\ndrawn 952 times (expected 924)\nz +0.97\np 0.334, after Benjamini–Hochberg 0.89"
+       },
+       {
+        "x": "27",
+        "y0": 924.4897959183673,
+        "y1": 901.0,
+        "c": "held",
+        "tip": "number 27\ndrawn 901 times (expected 924)\nz −0.82\np 0.419, after Benjamini–Hochberg 0.89"
+       },
+       {
+        "x": "28",
+        "y0": 924.4897959183673,
+        "y1": 932.0,
+        "c": "held",
+        "tip": "number 28\ndrawn 932 times (expected 924)\nz +0.26\np 0.792, after Benjamini–Hochberg 0.90"
+       },
+       {
+        "x": "29",
+        "y0": 924.4897959183673,
+        "y1": 967.0,
+        "c": "held",
+        "tip": "number 29\ndrawn 967 times (expected 924)\nz +1.49\np 0.136, after Benjamini–Hochberg 0.89"
+       },
+       {
+        "x": "30",
+        "y0": 924.4897959183673,
+        "y1": 959.0,
+        "c": "held",
+        "tip": "number 30\ndrawn 959 times (expected 924)\nz +1.21\np 0.226, after Benjamini–Hochberg 0.89"
+       },
+       {
+        "x": "31",
+        "y0": 924.4897959183673,
+        "y1": 945.0,
+        "c": "held",
+        "tip": "number 31\ndrawn 945 times (expected 924)\nz +0.72\np 0.472, after Benjamini–Hochberg 0.89"
+       },
+       {
+        "x": "32",
+        "y0": 924.4897959183673,
+        "y1": 899.0,
+        "c": "held",
+        "tip": "number 32\ndrawn 899 times (expected 924)\nz −0.89\np 0.380, after Benjamini–Hochberg 0.89"
+       },
+       {
+        "x": "33",
+        "y0": 924.4897959183673,
+        "y1": 898.0,
+        "c": "held",
+        "tip": "number 33\ndrawn 898 times (expected 924)\nz −0.93\np 0.361, after Benjamini–Hochberg 0.89"
+       },
+       {
+        "x": "34",
+        "y0": 924.4897959183673,
+        "y1": 946.0,
+        "c": "held",
+        "tip": "number 34\ndrawn 946 times (expected 924)\nz +0.76\np 0.450, after Benjamini–Hochberg 0.89"
+       },
+       {
+        "x": "35",
+        "y0": 924.4897959183673,
+        "y1": 913.0,
+        "c": "held",
+        "tip": "number 35\ndrawn 913 times (expected 924)\nz −0.40\np 0.699, after Benjamini–Hochberg 0.90"
+       },
+       {
+        "x": "36",
+        "y0": 924.4897959183673,
+        "y1": 958.0,
+        "c": "held",
+        "tip": "number 36\ndrawn 958 times (expected 924)\nz +1.18\np 0.240, after Benjamini–Hochberg 0.89"
+       },
+       {
+        "x": "37",
+        "y0": 924.4897959183673,
+        "y1": 911.0,
+        "c": "held",
+        "tip": "number 37\ndrawn 911 times (expected 924)\nz −0.47\np 0.648, after Benjamini–Hochberg 0.90"
+       },
+       {
+        "x": "38",
+        "y0": 924.4897959183673,
+        "y1": 937.0,
+        "c": "held",
+        "tip": "number 38\ndrawn 937 times (expected 924)\nz +0.44\np 0.661, after Benjamini–Hochberg 0.90"
+       },
+       {
+        "x": "39",
+        "y0": 924.4897959183673,
+        "y1": 932.0,
+        "c": "held",
+        "tip": "number 39\ndrawn 932 times (expected 924)\nz +0.26\np 0.792, after Benjamini–Hochberg 0.90"
+       },
+       {
+        "x": "40",
+        "y0": 924.4897959183673,
+        "y1": 934.0,
+        "c": "held",
+        "tip": "number 40\ndrawn 934 times (expected 924)\nz +0.33\np 0.739, after Benjamini–Hochberg 0.90"
+       },
+       {
+        "x": "41",
+        "y0": 924.4897959183673,
+        "y1": 952.0,
+        "c": "held",
+        "tip": "number 41\ndrawn 952 times (expected 924)\nz +0.97\np 0.334, after Benjamini–Hochberg 0.89"
+       },
+       {
+        "x": "42",
+        "y0": 924.4897959183673,
+        "y1": 930.0,
+        "c": "held",
+        "tip": "number 42\ndrawn 930 times (expected 924)\nz +0.19\np 0.847, after Benjamini–Hochberg 0.90"
+       },
+       {
+        "x": "43",
+        "y0": 924.4897959183673,
+        "y1": 922.0,
+        "c": "held",
+        "tip": "number 43\ndrawn 922 times (expected 924)\nz −0.09\np 0.944, after Benjamini–Hochberg 0.94"
+       },
+       {
+        "x": "44",
+        "y0": 924.4897959183673,
+        "y1": 984.0,
+        "c": "ink",
+        "tip": "number 44\ndrawn 984 times (expected 924)\nz +2.09\np 0.038, after Benjamini–Hochberg 0.53"
+       },
+       {
+        "x": "45",
+        "y0": 924.4897959183673,
+        "y1": 867.0,
+        "c": "ink",
+        "tip": "number 45\ndrawn 867 times (expected 924)\nz −2.02\np 0.044, after Benjamini–Hochberg 0.53"
+       },
+       {
+        "x": "46",
+        "y0": 924.4897959183673,
+        "y1": 896.0,
+        "c": "held",
+        "tip": "number 46\ndrawn 896 times (expected 924)\nz −1.00\np 0.326, after Benjamini–Hochberg 0.89"
+       },
+       {
+        "x": "47",
+        "y0": 924.4897959183673,
+        "y1": 983.0,
+        "c": "ink",
+        "tip": "number 47\ndrawn 983 times (expected 924)\nz +2.05\np 0.042, after Benjamini–Hochberg 0.53"
+       },
+       {
+        "x": "48",
+        "y0": 924.4897959183673,
+        "y1": 911.0,
+        "c": "held",
+        "tip": "number 48\ndrawn 911 times (expected 924)\nz −0.47\np 0.648, after Benjamini–Hochberg 0.90"
+       },
+       {
+        "x": "49",
+        "y0": 924.4897959183673,
+        "y1": 914.0,
+        "c": "held",
+        "tip": "number 49\ndrawn 914 times (expected 924)\nz −0.37\np 0.726, after Benjamini–Hochberg 0.90"
+       }
+      ]
+     },
+     {
+      "type": "rule",
+      "axis": "y",
+      "v": 924.4897959183673,
+      "c": "ink"
+     },
+     {
+      "type": "rule",
+      "axis": "y",
+      "v": 869.0,
+      "c": "grey",
+      "dash": "dash"
+     },
+     {
+      "type": "rule",
+      "axis": "y",
+      "v": 981.0,
+      "c": "grey",
+      "dash": "dash"
+     }
+    ]
+   }
+  ],
+  "table": {
+   "cols": [
+    "number",
+    "times drawn",
+    "z",
+    "p",
+    "p, Benjamini–Hochberg"
+   ],
+   "rows": [
+    [
+     "1",
+     "858",
+     "−2.33",
+     "0.020",
+     "0.53"
+    ],
+    [
+     "2",
+     "932",
+     "0.26",
+     "0.792",
+     "0.90"
+    ],
+    [
+     "3",
+     "910",
+     "−0.51",
+     "0.623",
+     "0.90"
+    ],
+    [
+     "4",
+     "922",
+     "−0.09",
+     "0.944",
+     "0.94"
+    ],
+    [
+     "5",
+     "915",
+     "−0.33",
+     "0.752",
+     "0.90"
+    ],
+    [
+     "6",
+     "969",
+     "1.56",
+     "0.118",
+     "0.89"
+    ],
+    [
+     "7",
+     "900",
+     "−0.86",
+     "0.399",
+     "0.89"
+    ],
+    [
+     "8",
+     "900",
+     "−0.86",
+     "0.399",
+     "0.89"
+    ],
+    [
+     "9",
+     "915",
+     "−0.33",
+     "0.752",
+     "0.90"
+    ],
+    [
+     "10",
+     "899",
+     "−0.89",
+     "0.380",
+     "0.89"
+    ],
+    [
+     "11",
+     "892",
+     "−1.14",
+     "0.261",
+     "0.89"
+    ],
+    [
+     "12",
+     "936",
+     "0.40",
+     "0.686",
+     "0.90"
+    ],
+    [
+     "13",
+     "964",
+     "1.39",
+     "0.166",
+     "0.89"
+    ],
+    [
+     "14",
+     "939",
+     "0.51",
+     "0.611",
+     "0.90"
+    ],
+    [
+     "15",
+     "903",
+     "−0.75",
+     "0.461",
+     "0.89"
+    ],
+    [
+     "16",
+     "894",
+     "−1.07",
+     "0.292",
+     "0.89"
+    ],
+    [
+     "17",
+     "935",
+     "0.37",
+     "0.712",
+     "0.90"
+    ],
+    [
+     "18",
+     "936",
+     "0.40",
+     "0.686",
+     "0.90"
+    ],
+    [
+     "19",
+     "906",
+     "−0.65",
+     "0.527",
+     "0.90"
+    ],
+    [
+     "20",
+     "967",
+     "1.49",
+     "0.136",
+     "0.89"
+    ],
+    [
+     "21",
+     "919",
+     "−0.19",
+     "0.861",
+     "0.90"
+    ],
+    [
+     "22",
+     "930",
+     "0.19",
+     "0.847",
+     "0.90"
+    ],
+    [
+     "23",
+     "930",
+     "0.19",
+     "0.847",
+     "0.90"
+    ],
+    [
+     "24",
+     "887",
+     "−1.32",
+     "0.194",
+     "0.89"
+    ],
+    [
+     "25",
+     "899",
+     "−0.89",
+     "0.380",
+     "0.89"
+    ],
+    [
+     "26",
+     "952",
+     "0.97",
+     "0.334",
+     "0.89"
+    ],
+    [
+     "27",
+     "901",
+     "−0.82",
+     "0.419",
+     "0.89"
+    ],
+    [
+     "28",
+     "932",
+     "0.26",
+     "0.792",
+     "0.90"
+    ],
+    [
+     "29",
+     "967",
+     "1.49",
+     "0.136",
+     "0.89"
+    ],
+    [
+     "30",
+     "959",
+     "1.21",
+     "0.226",
+     "0.89"
+    ],
+    [
+     "31",
+     "945",
+     "0.72",
+     "0.472",
+     "0.89"
+    ],
+    [
+     "32",
+     "899",
+     "−0.89",
+     "0.380",
+     "0.89"
+    ],
+    [
+     "33",
+     "898",
+     "−0.93",
+     "0.361",
+     "0.89"
+    ],
+    [
+     "34",
+     "946",
+     "0.76",
+     "0.450",
+     "0.89"
+    ],
+    [
+     "35",
+     "913",
+     "−0.40",
+     "0.699",
+     "0.90"
+    ],
+    [
+     "36",
+     "958",
+     "1.18",
+     "0.240",
+     "0.89"
+    ],
+    [
+     "37",
+     "911",
+     "−0.47",
+     "0.648",
+     "0.90"
+    ],
+    [
+     "38",
+     "937",
+     "0.44",
+     "0.661",
+     "0.90"
+    ],
+    [
+     "39",
+     "932",
+     "0.26",
+     "0.792",
+     "0.90"
+    ],
+    [
+     "40",
+     "934",
+     "0.33",
+     "0.739",
+     "0.90"
+    ],
+    [
+     "41",
+     "952",
+     "0.97",
+     "0.334",
+     "0.89"
+    ],
+    [
+     "42",
+     "930",
+     "0.19",
+     "0.847",
+     "0.90"
+    ],
+    [
+     "43",
+     "922",
+     "−0.09",
+     "0.944",
+     "0.94"
+    ],
+    [
+     "44",
+     "984",
+     "2.09",
+     "0.038",
+     "0.53"
+    ],
+    [
+     "45",
+     "867",
+     "−2.02",
+     "0.044",
+     "0.53"
+    ],
+    [
+     "46",
+     "896",
+     "−1.00",
+     "0.326",
+     "0.89"
+    ],
+    [
+     "47",
+     "983",
+     "2.05",
+     "0.042",
+     "0.53"
+    ],
+    [
+     "48",
+     "911",
+     "−0.47",
+     "0.648",
+     "0.90"
+    ],
+    [
+     "49",
+     "914",
+     "−0.37",
+     "0.726",
+     "0.90"
+    ]
+   ]
+  },
+  "data": [
+   "../assets/lottery/sportka_counts.csv",
+   "../assets/lottery/sportka.csv"
+  ]
+ },
+ "hottest": {
+  "alt": "Dot chart of the most frequent number: 20 in 1994–2003, 31 in 2004–2013, 47 in 2014–2026 and 44 over the whole history; in four fair simulated histories of the same size it is 23, 14, 2 and 17.",
+  "legend": [
+   {
+    "label": "Sportka draws",
+    "c": "held",
+    "shape": "o"
+   },
+   {
+    "label": "simulated fair draws",
+    "c": "grey",
+    "shape": "o"
+   }
+  ],
+  "panels": [
+   {
+    "h": 300,
+    "x": {
+     "kind": "linear",
+     "domain": [
+      0,
+      50
+     ],
+     "ticks": [
+      1,
+      10,
+      20,
+      30,
+      40,
+      49
+     ],
+     "label": "most frequent number"
+    },
+    "y": {
+     "kind": "cat",
+     "domain": [
+      "Sportka 1994–2003",
+      "Sportka 2004–2013",
+      "Sportka 2014–2026",
+      "Sportka 1994–2026",
+      "fair simulation, seed 42",
+      "fair simulation, seed 1957",
+      "fair simulation, seed 2026",
+      "fair simulation, seed 7"
+     ]
+    },
+    "marks": [
+     {
+      "type": "dots",
+      "pts": [
+       {
+        "x": 20,
+        "y": "Sportka 1994–2003",
+        "c": "held",
+        "label": "20",
+        "tip": "Sportka 1994–2003\nmost frequent: 20, drawn 271 times (expected 239)"
+       },
+       {
+        "x": 31,
+        "y": "Sportka 2004–2013",
+        "c": "held",
+        "label": "31",
+        "tip": "Sportka 2004–2013\nmost frequent: 31, drawn 300 times (expected 262)"
+       },
+       {
+        "x": 47,
+        "y": "Sportka 2014–2026",
+        "c": "held",
+        "label": "47",
+        "tip": "Sportka 2014–2026\nmost frequent: 47, drawn 469 times (expected 423)"
+       },
+       {
+        "x": 44,
+        "y": "Sportka 1994–2026",
+        "c": "held",
+        "label": "44",
+        "tip": "Sportka 1994–2026\nmost frequent: 44, drawn 984 times (expected 924)"
+       },
+       {
+        "x": 23,
+        "y": "fair simulation, seed 42",
+        "c": "grey",
+        "label": "23",
+        "tip": "fair simulation, seed 42\nmost frequent: 23, drawn 986 times (expected 924)"
+       },
+       {
+        "x": 14,
+        "y": "fair simulation, seed 1957",
+        "c": "grey",
+        "label": "14",
+        "tip": "fair simulation, seed 1957\nmost frequent: 14, drawn 1 001 times (expected 924)"
+       },
+       {
+        "x": 2,
+        "y": "fair simulation, seed 2026",
+        "c": "grey",
+        "label": "2",
+        "tip": "fair simulation, seed 2026\nmost frequent: 2, drawn 991 times (expected 924)"
+       },
+       {
+        "x": 17,
+        "y": "fair simulation, seed 7",
+        "c": "grey",
+        "label": "17",
+        "tip": "fair simulation, seed 7\nmost frequent: 17, drawn 973 times (expected 924)"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "table": {
+   "cols": [
+    "history",
+    "most frequent number",
+    "times drawn",
+    "expected"
+   ],
+   "rows": [
+    [
+     "Sportka 1994–2003",
+     "20",
+     "271",
+     "239"
+    ],
+    [
+     "Sportka 2004–2013",
+     "31",
+     "300",
+     "262"
+    ],
+    [
+     "Sportka 2014–2026",
+     "47",
+     "469",
+     "423"
+    ],
+    [
+     "Sportka 1994–2026",
+     "44",
+     "984",
+     "924"
+    ],
+    [
+     "fair simulation, seed 42",
+     "23",
+     "986",
+     "924"
+    ],
+    [
+     "fair simulation, seed 1957",
+     "14",
+     "1 001",
+     "924"
+    ],
+    [
+     "fair simulation, seed 2026",
+     "2",
+     "991",
+     "924"
+    ],
+    [
+     "fair simulation, seed 7",
+     "17",
+     "973",
+     "924"
+    ]
+   ]
+  },
+  "data": [
+   "../assets/lottery/results.json"
+  ]
+ },
+ "model": {
+  "alt": "AUC of two models predicting which numbers the next Sportka draw holds. On the 743 most recent days both score about 0.49–0.50 with 95 % intervals that include 0.5; gradient boosting scores 0.566 on its own training data.",
+  "legend": [
+   {
+    "label": "test AUC, 95 % CI bootstrap by drawing day",
+    "c": "held"
+   },
+   {
+    "label": "training AUC",
+    "c": "grey",
+    "shape": "d"
+   },
+   {
+    "label": "0.5 = chance",
+    "c": "ink",
+    "dash": "dash"
+   }
+  ],
+  "panels": [
+   {
+    "h": 220,
+    "x": {
+     "kind": "linear",
+     "domain": [
+      0.47,
+      0.6
+     ],
+     "ticks": [
+      0.48,
+      0.5,
+      0.52,
+      0.54,
+      0.56,
+      0.58,
+      0.6
+     ],
+     "tickfmt": {
+      "dp": 2
+     },
+     "label": "AUC"
+    },
+    "y": {
+     "kind": "cat",
+     "domain": [
+      "logistic regression, training",
+      "logistic regression, test",
+      "gradient boosting, training",
+      "gradient boosting, test"
+     ]
+    },
+    "marks": [
+     {
+      "type": "rule",
+      "axis": "x",
+      "v": 0.5,
+      "c": "ink",
+      "dash": "dash",
+      "tip": "0.5 = no better than chance"
+     },
+     {
+      "type": "range",
+      "w": 2.5,
+      "rows": [
+       {
+        "y": "logistic regression, test",
+        "mid": 0.49434751333232535,
+        "lo": 0.48500682889330643,
+        "hi": 0.5029835951114383,
+        "c": "held",
+        "label": "0.494",
+        "tip": "logistic regression, 743 test days\nAUC 0.494, 95 % CI 0.485 to 0.503\nlog loss vs 6/49: +0.00005"
+       },
+       {
+        "y": "gradient boosting, test",
+        "mid": 0.49669694596961755,
+        "lo": 0.4879773715914527,
+        "hi": 0.5056869581400628,
+        "c": "held",
+        "label": "0.497",
+        "tip": "gradient boosting, 743 test days\nAUC 0.497, 95 % CI 0.488 to 0.506\nlog loss vs 6/49: +0.00041"
+       }
+      ]
+     },
+     {
+      "type": "dots",
+      "pts": [
+       {
+        "x": 0.5052919940867652,
+        "y": "logistic regression, training",
+        "c": "grey",
+        "shape": "d",
+        "label": "0.505",
+        "tip": "logistic regression, 2 972 training days\nAUC 0.505 on the data it was fitted to"
+       },
+       {
+        "x": 0.5663595370796276,
+        "y": "gradient boosting, training",
+        "c": "grey",
+        "shape": "d",
+        "label": "0.566",
+        "tip": "gradient boosting, 2 972 training days\nAUC 0.566 on the data it was fitted to"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "table": {
+   "cols": [
+    "model",
+    "training AUC",
+    "test AUC",
+    "95 % CI",
+    "log loss minus baseline (95 % CI)"
+   ],
+   "rows": [
+    [
+     "logistic regression",
+     "0.505",
+     "0.494",
+     "0.485 to 0.503",
+     "0.00005 (−0.00001 to 0.00010)"
+    ],
+    [
+     "gradient boosting",
+     "0.566",
+     "0.497",
+     "0.488 to 0.506",
+     "0.00041 (0.00019 to 0.00061)"
+    ]
+   ]
+  },
+  "data": [
+   "../assets/lottery/results.json",
+   "../assets/lottery/sportka.csv"
+  ]
+ },
+ "ppc": {
+  "alt": "For six jackpot ranges, the observed number of Eurojackpot jackpot wins against the model's posterior predictive mean and 95 % interval; every observed count lies inside its interval, and the top range, €110–120 million, has 4 wins in 8 draws against about 2 predicted.",
+  "legend": [
+   {
+    "label": "observed wins",
+    "c": "held",
+    "shape": "o"
+   },
+   {
+    "label": "predicted, mean and 95 % interval",
+    "c": "grey"
+   }
+  ],
+  "panels": [
+   {
+    "h": 260,
+    "x": {
+     "kind": "cat",
+     "domain": [
+      "10–30",
+      "30–50",
+      "50–70",
+      "70–90",
+      "90–110",
+      "110–120"
+     ],
+     "label": "jackpot at the draw, € million"
+    },
+    "y": {
+     "kind": "linear",
+     "domain": [
+      0,
+      15
+     ],
+     "ticks": [
+      0,
+      5,
+      10,
+      15
+     ],
+     "label": "jackpot wins"
+    },
+    "marks": [
+     {
+      "type": "vrange",
+      "w": 6,
+      "c": "light",
+      "rows": [
+       {
+        "x": "10–30",
+        "lo": 2.0,
+        "hi": 14.0,
+        "mid": 6.761,
+        "tip": "€10–30 M, 54 draws\npredicted 6.76 wins, 95 % interval 2–14"
+       },
+       {
+        "x": "30–50",
+        "lo": 1.0,
+        "hi": 9.0,
+        "mid": 4.63475,
+        "tip": "€30–50 M, 28 draws\npredicted 4.63 wins, 95 % interval 1–9"
+       },
+       {
+        "x": "50–70",
+        "lo": 1.0,
+        "hi": 8.0,
+        "mid": 3.76125,
+        "tip": "€50–70 M, 19 draws\npredicted 3.76 wins, 95 % interval 1–8"
+       },
+       {
+        "x": "70–90",
+        "lo": 0.0,
+        "hi": 6.0,
+        "mid": 2.4395,
+        "tip": "€70–90 M, 11 draws\npredicted 2.44 wins, 95 % interval 0–6"
+       },
+       {
+        "x": "90–110",
+        "lo": 0.0,
+        "hi": 3.0,
+        "mid": 0.99175,
+        "tip": "€90–110 M, 4 draws\npredicted 0.99 wins, 95 % interval 0–3"
+       },
+       {
+        "x": "110–120",
+        "lo": 0.0,
+        "hi": 5.0,
+        "mid": 2.0935,
+        "tip": "€110–120 M, 8 draws\npredicted 2.09 wins, 95 % interval 0–5"
+       }
+      ]
+     },
+     {
+      "type": "dots",
+      "pts": [
+       {
+        "x": "10–30",
+        "y": 7,
+        "c": "held",
+        "r": 5.5,
+        "label": "7 of 54",
+        "tip": "€10–30 M\nobserved 7 wins in 54 draws\nposterior predictive p = 0.98"
+       },
+       {
+        "x": "30–50",
+        "y": 4,
+        "c": "held",
+        "r": 5.5,
+        "label": "4 of 28",
+        "tip": "€30–50 M\nobserved 4 wins in 28 draws\nposterior predictive p = 1.00"
+       },
+       {
+        "x": "50–70",
+        "y": 3,
+        "c": "held",
+        "r": 5.5,
+        "label": "3 of 19",
+        "tip": "€50–70 M\nobserved 3 wins in 19 draws\nposterior predictive p = 0.94"
+       },
+       {
+        "x": "70–90",
+        "y": 3,
+        "c": "held",
+        "r": 5.5,
+        "label": "3 of 11",
+        "tip": "€70–90 M\nobserved 3 wins in 11 draws\nposterior predictive p = 0.89"
+       },
+       {
+        "x": "90–110",
+        "y": 0,
+        "c": "held",
+        "r": 5.5,
+        "label": "0 of 4",
+        "tip": "€90–110 M\nobserved 0 wins in 4 draws\nposterior predictive p = 0.68"
+       },
+       {
+        "x": "110–120",
+        "y": 4,
+        "c": "held",
+        "r": 5.5,
+        "label": "4 of 8",
+        "tip": "€110–120 M\nobserved 4 wins in 8 draws\nposterior predictive p = 0.30"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "table": {
+   "cols": [
+    "jackpot, € million",
+    "draws",
+    "observed wins",
+    "predicted mean",
+    "95 % interval",
+    "p (two-sided)"
+   ],
+   "rows": [
+    [
+     "10–30",
+     "54",
+     "7",
+     "6.76",
+     "2–14",
+     "0.98"
+    ],
+    [
+     "30–50",
+     "28",
+     "4",
+     "4.63",
+     "1–9",
+     "1.00"
+    ],
+    [
+     "50–70",
+     "19",
+     "3",
+     "3.76",
+     "1–8",
+     "0.94"
+    ],
+    [
+     "70–90",
+     "11",
+     "3",
+     "2.44",
+     "0–6",
+     "0.89"
+    ],
+    [
+     "90–110",
+     "4",
+     "0",
+     "0.99",
+     "0–3",
+     "0.68"
+    ],
+    [
+     "110–120",
+     "8",
+     "4",
+     "2.09",
+     "0–5",
+     "0.30"
+    ]
+   ]
+  },
+  "data": [
+   "../assets/lottery/ej_draws_2025_2026.csv",
+   "../assets/lottery/results.json"
+  ]
+ },
+ "ev": {
+  "alt": "Expected payout of one €2 Eurojackpot column rises with the jackpot, from about €0.60 at €10 million to about €1.29 at the €120 million cap, and stays below the €2 price across the whole range; the lower tiers contribute about €0.54 to €0.55 throughout.",
+  "legend": [
+   {
+    "label": "expected payout, posterior mean",
+    "c": "held"
+   },
+   {
+    "label": "95 % credible band",
+    "c": "held",
+    "shape": "box",
+    "o": 0.18
+   },
+   {
+    "label": "lower tiers only",
+    "c": "grey",
+    "dash": "dash"
+   },
+   {
+    "label": "price, €2",
+    "c": "ink"
+   }
+  ],
+  "panels": [
+   {
+    "h": 280,
+    "x": {
+     "kind": "linear",
+     "domain": [
+      10,
+      120
+     ],
+     "ticks": [
+      10,
+      30,
+      50,
+      70,
+      90,
+      120
+     ],
+     "label": "jackpot, € million",
+     "fmt": {
+      "dp": 0,
+      "pre": "€",
+      "unit": " M"
+     }
+    },
+    "y": {
+     "kind": "linear",
+     "domain": [
+      0,
+      2.1
+     ],
+     "ticks": [
+      0,
+      0.5,
+      1,
+      1.5,
+      2
+     ],
+     "tickfmt": {
+      "dp": 1
+     },
+     "label": "€ per column"
+    },
+    "marks": [
+     {
+      "type": "area",
+      "name": "95 % band",
+      "c": "held",
+      "o": 0.18,
+      "fmt": {
+       "dp": 2,
+       "pre": "€"
+      },
+      "pts": [
+       [
+        10.0,
+        0.575437,
+        0.613116
+       ],
+       [
+        12.5,
+        0.600998,
+        0.62937
+       ],
+       [
+        15.0,
+        0.624669,
+        0.645696
+       ],
+       [
+        17.5,
+        0.646537,
+        0.662093
+       ],
+       [
+        20.0,
+        0.667108,
+        0.678544
+       ],
+       [
+        22.5,
+        0.686699,
+        0.695045
+       ],
+       [
+        25.0,
+        0.705161,
+        0.711591
+       ],
+       [
+        27.5,
+        0.722262,
+        0.728178
+       ],
+       [
+        30.0,
+        0.738181,
+        0.744801
+       ],
+       [
+        32.5,
+        0.753692,
+        0.761456
+       ],
+       [
+        35.0,
+        0.768896,
+        0.778142
+       ],
+       [
+        37.5,
+        0.783844,
+        0.794854
+       ],
+       [
+        40.0,
+        0.798556,
+        0.811594
+       ],
+       [
+        42.5,
+        0.81329,
+        0.828355
+       ],
+       [
+        45.0,
+        0.827767,
+        0.845129
+       ],
+       [
+        47.5,
+        0.842006,
+        0.861907
+       ],
+       [
+        50.0,
+        0.856331,
+        0.878701
+       ],
+       [
+        52.5,
+        0.870349,
+        0.895502
+       ],
+       [
+        55.0,
+        0.884133,
+        0.912296
+       ],
+       [
+        57.5,
+        0.897846,
+        0.929094
+       ],
+       [
+        60.0,
+        0.911441,
+        0.945882
+       ],
+       [
+        62.5,
+        0.924983,
+        0.962656
+       ],
+       [
+        65.0,
+        0.938264,
+        0.979418
+       ],
+       [
+        67.5,
+        0.951495,
+        0.996187
+       ],
+       [
+        70.0,
+        0.964236,
+        1.01296
+       ],
+       [
+        72.5,
+        0.976846,
+        1.02973
+       ],
+       [
+        75.0,
+        0.989492,
+        1.04649
+       ],
+       [
+        77.5,
+        1.00203,
+        1.0633
+       ],
+       [
+        80.0,
+        1.01448,
+        1.0801
+       ],
+       [
+        82.5,
+        1.02682,
+        1.09692
+       ],
+       [
+        85.0,
+        1.03901,
+        1.11374
+       ],
+       [
+        87.5,
+        1.05101,
+        1.1305
+       ],
+       [
+        90.0,
+        1.06273,
+        1.1473
+       ],
+       [
+        92.5,
+        1.07429,
+        1.16412
+       ],
+       [
+        95.0,
+        1.08571,
+        1.18084
+       ],
+       [
+        97.5,
+        1.09757,
+        1.1977
+       ],
+       [
+        100.0,
+        1.10845,
+        1.21453
+       ],
+       [
+        102.5,
+        1.11958,
+        1.23133
+       ],
+       [
+        105.0,
+        1.1309,
+        1.24815
+       ],
+       [
+        107.5,
+        1.14192,
+        1.2649
+       ],
+       [
+        110.0,
+        1.15249,
+        1.28176
+       ],
+       [
+        112.5,
+        1.16326,
+        1.29857
+       ],
+       [
+        115.0,
+        1.17361,
+        1.31541
+       ],
+       [
+        117.5,
+        1.18436,
+        1.33226
+       ],
+       [
+        120.0,
+        1.19457,
+        1.3491
+       ]
+      ]
+     },
+     {
+      "type": "line",
+      "name": "expected payout",
+      "c": "held",
+      "fmt": {
+       "dp": 2,
+       "pre": "€"
+      },
+      "pts": [
+       [
+        10.0,
+        0.603532
+       ],
+       [
+        12.5,
+        0.622763
+       ],
+       [
+        15.0,
+        0.641165
+       ],
+       [
+        17.5,
+        0.658992
+       ],
+       [
+        20.0,
+        0.676398
+       ],
+       [
+        22.5,
+        0.69348
+       ],
+       [
+        25.0,
+        0.710305
+       ],
+       [
+        27.5,
+        0.726921
+       ],
+       [
+        30.0,
+        0.743361
+       ],
+       [
+        32.5,
+        0.759652
+       ],
+       [
+        35.0,
+        0.775812
+       ],
+       [
+        37.5,
+        0.791856
+       ],
+       [
+        40.0,
+        0.807797
+       ],
+       [
+        42.5,
+        0.823645
+       ],
+       [
+        45.0,
+        0.839407
+       ],
+       [
+        47.5,
+        0.855089
+       ],
+       [
+        50.0,
+        0.870697
+       ],
+       [
+        52.5,
+        0.886235
+       ],
+       [
+        55.0,
+        0.901708
+       ],
+       [
+        57.5,
+        0.917119
+       ],
+       [
+        60.0,
+        0.93247
+       ],
+       [
+        62.5,
+        0.947764
+       ],
+       [
+        65.0,
+        0.963004
+       ],
+       [
+        67.5,
+        0.978191
+       ],
+       [
+        70.0,
+        0.993326
+       ],
+       [
+        72.5,
+        1.00841
+       ],
+       [
+        75.0,
+        1.02345
+       ],
+       [
+        77.5,
+        1.03844
+       ],
+       [
+        80.0,
+        1.05339
+       ],
+       [
+        82.5,
+        1.06829
+       ],
+       [
+        85.0,
+        1.08315
+       ],
+       [
+        87.5,
+        1.09797
+       ],
+       [
+        90.0,
+        1.11274
+       ],
+       [
+        92.5,
+        1.12747
+       ],
+       [
+        95.0,
+        1.14217
+       ],
+       [
+        97.5,
+        1.15682
+       ],
+       [
+        100.0,
+        1.17144
+       ],
+       [
+        102.5,
+        1.18602
+       ],
+       [
+        105.0,
+        1.20056
+       ],
+       [
+        107.5,
+        1.21507
+       ],
+       [
+        110.0,
+        1.22954
+       ],
+       [
+        112.5,
+        1.24397
+       ],
+       [
+        115.0,
+        1.25837
+       ],
+       [
+        117.5,
+        1.27273
+       ],
+       [
+        120.0,
+        1.28707
+       ]
+      ]
+     },
+     {
+      "type": "line",
+      "name": "lower tiers",
+      "c": "grey",
+      "dash": "dash",
+      "w": 1.4,
+      "fmt": {
+       "dp": 2,
+       "pre": "€"
+      },
+      "pts": [
+       [
+        10.0,
+        0.535945
+       ],
+       [
+        12.5,
+        0.538631
+       ],
+       [
+        15.0,
+        0.54059
+       ],
+       [
+        17.5,
+        0.542068
+       ],
+       [
+        20.0,
+        0.543211
+       ],
+       [
+        22.5,
+        0.544113
+       ],
+       [
+        25.0,
+        0.544835
+       ],
+       [
+        27.5,
+        0.545422
+       ],
+       [
+        30.0,
+        0.545903
+       ],
+       [
+        32.5,
+        0.546302
+       ],
+       [
+        35.0,
+        0.546636
+       ],
+       [
+        37.5,
+        0.546917
+       ],
+       [
+        40.0,
+        0.547156
+       ],
+       [
+        42.5,
+        0.54736
+       ],
+       [
+        45.0,
+        0.547535
+       ],
+       [
+        47.5,
+        0.547686
+       ],
+       [
+        50.0,
+        0.547818
+       ],
+       [
+        52.5,
+        0.547932
+       ],
+       [
+        55.0,
+        0.548033
+       ],
+       [
+        57.5,
+        0.548121
+       ],
+       [
+        60.0,
+        0.5482
+       ],
+       [
+        62.5,
+        0.548269
+       ],
+       [
+        65.0,
+        0.548331
+       ],
+       [
+        67.5,
+        0.548386
+       ],
+       [
+        70.0,
+        0.548436
+       ],
+       [
+        72.5,
+        0.548481
+       ],
+       [
+        75.0,
+        0.548521
+       ],
+       [
+        77.5,
+        0.548558
+       ],
+       [
+        80.0,
+        0.548591
+       ],
+       [
+        82.5,
+        0.548621
+       ],
+       [
+        85.0,
+        0.548649
+       ],
+       [
+        87.5,
+        0.548674
+       ],
+       [
+        90.0,
+        0.548697
+       ],
+       [
+        92.5,
+        0.548718
+       ],
+       [
+        95.0,
+        0.548738
+       ],
+       [
+        97.5,
+        0.548756
+       ],
+       [
+        100.0,
+        0.548772
+       ],
+       [
+        102.5,
+        0.548787
+       ],
+       [
+        105.0,
+        0.548802
+       ],
+       [
+        107.5,
+        0.548815
+       ],
+       [
+        110.0,
+        0.548827
+       ],
+       [
+        112.5,
+        0.548838
+       ],
+       [
+        115.0,
+        0.548849
+       ],
+       [
+        117.5,
+        0.548859
+       ],
+       [
+        120.0,
+        0.548868
+       ]
+      ]
+     },
+     {
+      "type": "rule",
+      "axis": "y",
+      "v": 2,
+      "c": "ink",
+      "label": "price of a column, €2",
+      "anchor": "end"
+     }
+    ]
+   }
+  ],
+  "table": {
+   "cols": [
+    "jackpot",
+    "columns sold, million (95 % CrI)",
+    "expected payout (95 % CrI)",
+    "expected loss per column"
+   ],
+   "rows": [
+    [
+     "€10 M",
+     "16.1 (5.9–32.7)",
+     "€0.60 (0.58–0.61)",
+     "€1.40"
+    ],
+    [
+     "€25 M",
+     "22.0 (12.5–34.6)",
+     "€0.71 (0.71–0.71)",
+     "€1.29"
+    ],
+    [
+     "€50 M",
+     "29.1 (17.0–44.2)",
+     "€0.87 (0.86–0.88)",
+     "€1.13"
+    ],
+    [
+     "€75 M",
+     "35.0 (17.8–57.6)",
+     "€1.02 (0.99–1.05)",
+     "€0.98"
+    ],
+    [
+     "€100 M",
+     "40.1 (17.8–72.2)",
+     "€1.17 (1.11–1.21)",
+     "€0.83"
+    ],
+    [
+     "€120 M",
+     "43.9 (17.6–84.2)",
+     "€1.29 (1.19–1.35)",
+     "€0.71"
+    ]
+   ]
+  },
+  "data": [
+   "../assets/lottery/ej_curves.csv",
+   "../assets/lottery/results.json"
+  ]
+ },
+ "importance": {
+  "alt": "Estimates, with 95 % intervals, of how much more an unpopular Eurojackpot combination returns per column at the €120 million cap than an average one; the exact value is €0.070. Plain Monte Carlo with a million columns sees no jackpot and estimates zero or an interval of ±€0.42; importance sampling recovers the value, with intervals narrowing as the jackpot is oversampled.",
+  "legend": [
+   {
+    "label": "plain Monte Carlo",
+    "c": "grey"
+   },
+   {
+    "label": "importance sampling",
+    "c": "held"
+   },
+   {
+    "label": "exact, €0.070",
+    "c": "ink",
+    "dash": "dash"
+   }
+  ],
+  "panels": [
+   {
+    "h": 280,
+    "x": {
+     "kind": "linear",
+     "domain": [
+      -0.45,
+      0.45
+     ],
+     "ticks": [
+      -0.4,
+      -0.2,
+      0,
+      0.2,
+      0.4
+     ],
+     "tickfmt": {
+      "dp": 1
+     },
+     "label": "€ per column, 10⁶ simulated columns each"
+    },
+    "y": {
+     "kind": "cat",
+     "domain": [
+      "naive, independent · 0 jackpots",
+      "naive, paired · 0 jackpots",
+      "importance sampling, ×1 000 · 6 jackpots",
+      "importance sampling, ×10 000 · 84 jackpots",
+      "importance sampling, ×100 000 · 757 jackpots",
+      "importance sampling, ×1 000 000 · 7 084 jackpots"
+     ]
+    },
+    "marks": [
+     {
+      "type": "rule",
+      "axis": "x",
+      "v": 0,
+      "c": "grey"
+     },
+     {
+      "type": "rule",
+      "axis": "x",
+      "v": 0.06994744829008072,
+      "c": "ink",
+      "dash": "dash",
+      "tip": "exact gain €0.0699 per column"
+     },
+     {
+      "type": "range",
+      "w": 2.5,
+      "rows": [
+       {
+        "y": "naive, independent · 0 jackpots",
+        "mid": -0.00936676460945729,
+        "lo": -0.427891068297959,
+        "hi": 0.4091575390790444,
+        "c": "grey",
+        "tip": "naive, independent\nestimate €−0.0094, 95 % CI −0.4279 to 0.4092\njackpots in the sample: 0"
+       },
+       {
+        "y": "naive, paired · 0 jackpots",
+        "mid": 0.0,
+        "lo": 0.0,
+        "hi": 0.0,
+        "c": "grey",
+        "tip": "naive, paired\nestimate €0.0000, 95 % CI 0.0000 to 0.0000\njackpots in the sample: 0"
+       },
+       {
+        "y": "importance sampling, ×1 000 · 6 jackpots",
+        "mid": 0.08,
+        "lo": -0.043958969273167614,
+        "hi": 0.20395896927316762,
+        "c": "held",
+        "tip": "importance sampling, ×1 000\nestimate €0.0800, 95 % CI −0.0440 to 0.2040\njackpots in the sample: 6"
+       },
+       {
+        "y": "importance sampling, ×10 000 · 84 jackpots",
+        "mid": 0.06,
+        "lo": 0.024073441227705966,
+        "hi": 0.09592655877229403,
+        "c": "held",
+        "tip": "importance sampling, ×10 000\nestimate €0.0600, 95 % CI 0.0241 to 0.0959\njackpots in the sample: 84"
+       },
+       {
+        "y": "importance sampling, ×100 000 · 757 jackpots",
+        "mid": 0.0795,
+        "lo": 0.06622368866883635,
+        "hi": 0.09277631133116365,
+        "c": "held",
+        "tip": "importance sampling, ×100 000\nestimate €0.0795, 95 % CI 0.0662 to 0.0928\njackpots in the sample: 757"
+       },
+       {
+        "y": "importance sampling, ×1 000 000 · 7 084 jackpots",
+        "mid": 0.067726,
+        "lo": 0.06387316091998105,
+        "hi": 0.07157883908001894,
+        "c": "held",
+        "tip": "importance sampling, ×1 000 000\nestimate €0.0677, 95 % CI 0.0639 to 0.0716\njackpots in the sample: 7 084"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "table": {
+   "cols": [
+    "estimator",
+    "estimate, €",
+    "95 % CI",
+    "jackpots sampled"
+   ],
+   "rows": [
+    [
+     "naive, independent",
+     "-0.0094",
+     "−0.4279 to 0.4092",
+     "0"
+    ],
+    [
+     "naive, paired",
+     "0.0000",
+     "0.0000 to 0.0000",
+     "0"
+    ],
+    [
+     "importance sampling, ×1 000",
+     "0.0800",
+     "−0.0440 to 0.2040",
+     "6"
+    ],
+    [
+     "importance sampling, ×10 000",
+     "0.0600",
+     "0.0241 to 0.0959",
+     "84"
+    ],
+    [
+     "importance sampling, ×100 000",
+     "0.0795",
+     "0.0662 to 0.0928",
+     "757"
+    ],
+    [
+     "importance sampling, ×1 000 000",
+     "0.0677",
+     "0.0639 to 0.0716",
+     "7084"
+    ]
+   ]
+  },
+  "data": [
+   "../assets/lottery/results.json"
+  ]
+ }
+}
