@@ -93,14 +93,14 @@ def estimate(e: dict) -> None:
     hon = [v / cm * 100 for v in e["honest"]["1.0"]]
     by = {k: v["estimate"] / v["pre_level_ctrl"] * 100 for k, v in h["by_event"].items()}  # each event, own level
     fig, ax = plt.subplots(figsize=(8, 3.1))
-    ax.axvspan(20, 40, color=HELD, alpha=0.14, lw=0)
-    ax.text(42, 3.55, "literature\n20–40 %", ha="left", va="top", color=HELD, fontsize=8)
+    ax.axvspan(26, 47, color=HELD, alpha=0.14, lw=0)  # Spain, Brazil, Italy: about 40 %, 26–41 %, 36–47 %
+    ax.text(49, 3.55, "published\n26–47 %", ha="left", va="top", color=HELD, fontsize=8)
     ax.axvspan(-20, 20, color=GRID, alpha=0.8, lw=0)
     ax.text(-22, 3.55, "±20 %", ha="right", va="top", color=GREY, fontsize=8)
     ax.axvline(100, color=INK, lw=0.8, ls=(0, (2, 2)))
     ax.text(104, 3.55, "detectable at\n80 % power", ha="left", va="top", color=INK, fontsize=8)
     lo, hi = -160, 150
-    rows = [(est, ct, INK), (est, hon, GREY)]
+    rows = [(est, ct, INK), (est, hon, GREY)]  # HonestDiD: the simplified interval (see the design)
     for i, (x, ci, col) in enumerate(rows):
         yv = 2.2 - i
         a, b = max(ci[0], lo), min(ci[1], hi)
@@ -112,7 +112,7 @@ def estimate(e: dict) -> None:
     ax.plot(by["2023"], 0.5, "o", color=HELD, ms=6)
     ax.set_xlim(lo, hi)
     ax.set_ylim(0, 3.6)
-    ax.set_yticks([2.2, 1.2, 0.5], ["pooled · 95 % Conley–Taber", "pooled · HonestDiD, M̄ = 1",
+    ax.set_yticks([2.2, 1.2, 0.5], ["pooled · 95 % Conley–Taber", "pooled · HonestDiD (simplified), M̄ = 1",
                                    "by event · 2018 grey, 2023 green"], color=INK)
     ax.axvline(0, color=GREY, lw=0.8)
     ax.set_xlabel("change on becoming aligned, % of the controls' usual grants")
