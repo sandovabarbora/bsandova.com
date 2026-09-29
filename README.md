@@ -72,7 +72,9 @@ uv run --no-project --with pandas --with numpy --with scipy python tools/zhmp/co
 ## Citing
 
 Each article gives its own citation and version under "cite as". For the repository as a whole, see
-[`CITATION.cff`](CITATION.cff). Releases are archived on Zenodo.
+[`CITATION.cff`](CITATION.cff). Releases are archived on Zenodo:
+[doi:10.5281/zenodo.23040133](https://doi.org/10.5281/zenodo.23040133) always resolves to the latest version; v1.1.0 is
+[doi:10.5281/zenodo.23040474](https://doi.org/10.5281/zenodo.23040474).
 
 ## Licence
 
