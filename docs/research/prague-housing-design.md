@@ -905,7 +905,7 @@ run:
   - The main estimates were produced before this line was added. The main frame was checked to contain zero such
     cells.
 
-### 2026-09-30, after an independent fact-check of the draft article
+### 2026-09-29, after an independent fact-check of the draft article
 
 - **Two registered checks were omitted from the first runs.** They were run now by `tools/praha/housing_addenda.py`,
   outside the family:
