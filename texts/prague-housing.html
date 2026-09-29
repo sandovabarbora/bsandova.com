@@ -165,6 +165,10 @@
 <section>
 <h2>New flats and distance to the metro in Prague</h2>
 <p>Land near a metro station is worth more, so an unconstrained market would build more densely there, although near-metro squares are also largely built-out estates with little land left to build on. The test counts flats completed between 2012 and census day in March 2021 in each of Prague's 524 one-kilometre squares<sup class="cite"><a href="#r21">21</a></sup>, holding equal the distance from the centre and how many people already lived in the square in 2011<sup class="cite"><a href="#r22">22</a></sup>.</p>
+<figure class="mp-fig" data-map="../assets/praha/map-housing.json">
+  <img class="mp-static" src="../assets/praha/map-housing.svg" alt="Map of Prague's 524 one-kilometre squares shaded by the flats completed from 2012 to March 2021 per 1 000 residents of the square in 2011, with the metro lines and stations of 2012 drawn in black. The historic centre is pale. The darkest squares, with 200 or more new flats per 1 000 residents, lie mostly in the outer districts, several of them near the ends of the metro lines; squares where nobody lived in 2011 are hatched." loading="lazy">
+  <figcaption><b>map</b> · Flats completed in Prague's 1 km squares from 1 January 2012 to census day, 25 March 2021, per 1 000 residents of the square in 2011; hatched: nobody lived there in 2011. Above the map the number of new flats or the distance from the square's centre to the nearest station can be picked instead, and hovering over or tapping a square gives its numbers. Black: the metro and its stations as they ran in 2012, without the 2015 extension of line A. Source: ČÚZK RÚIAN building points, GEOSTAT 2011 population grid, Census 2021 1 km grid.</figcaption>
+</figure>
 <figure data-chart="../assets/praha/charts-housing.json#metro">
   <img src="../assets/praha/14-metro.svg" alt="Intervals of the metro coefficient. Main −0.227, from −0.349 to −0.105. Conley 3 km −0.227. 2012–2024 −0.243. 500 m cells −0.229. Stations including the 2015 extension −0.185. Pre-2012 flats as density −0.206. Implausible new-build types excluded −0.246. Rail and tram distance added −0.241. Negative binomial −0.427. The 2000–2011 replication is −0.062, crossing zero. A dashed line marks −0.25." loading="lazy">
   <figcaption><b>fig. 6</b> · New-flat density per doubling of the distance to the nearest metro station (log scale), with 90 % spatial intervals; negative binomial with district-clustered intervals. Black: that variant's decision p &lt; 0.05. Dashed: the smallest effect the design cared about. Not drawn: clustering by the 57 city districts (p = 0.015).</figcaption>
@@ -253,5 +257,6 @@
 })();
 </script>
 <script src="../assets/charts.js" defer></script>
+<script src="../assets/map.js" defer></script>
 </body>
 </html>

@@ -4,7 +4,8 @@
    value of the area under the pointer (or the arrow keys), a legend, a table of all areas and a link to the data.
 
    Spec: {held, features:[{id, name, sub, r:[[[lon,lat],...]], v:{key:number|null}}],
-          views:[{key, label, fmt:{dp, unit, pct, sign}, scale:'seq'|'div', domain:[lo,hi]}],
+          views:[{key, label, fmt:{dp, unit, pct, sign}, scale:'seq'|'div', domain:[lo,hi], note,
+                  cats:[{v, label}] for a yes/no or categorical view}],
           overlay:{lines:[[[lon,lat],...]], points:[[lon,lat]], labels:[{at:[lon,lat], s}]},
           note, data:[paths]} */
 (() => {
@@ -48,6 +49,9 @@
     const leg = document.createElement('div'); leg.className = 'mp-leg';
     const table = document.createElement('div'); table.className = 'mp-table'; table.hidden = true;
     const svg = el('svg', {viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': img?.alt || '', tabindex: 0});
+    const defs = el('defs', {}, svg), pat = el('pattern', {id: 'mp-nd-' + Math.random().toString(36).slice(2), width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, defs);
+    el('rect', {width: 6, height: 6, fill: '#f4f4f1'}, pat); el('line', {x1: 0, y1: 0, x2: 0, y2: 6, stroke: '#c4c4bf', 'stroke-width': 1.6}, pat);
+    const ND = `url(#${pat.id})`;
     const gA = el('g', {}, svg), gO = el('g', {'pointer-events': 'none'}, svg);
     const paths = S.features.map((f, i) => {
       const d = f.r.map(ring => 'M' + ring.map(([x, y]) => X(x) + ',' + Y(y)).join('L') + 'Z').join('');
@@ -55,25 +59,40 @@
       return p;
     });
     const O = S.overlay || {};
-    for (const l of O.lines || []) el('path', {d: 'M' + l.map(([x, y]) => X(x) + ',' + Y(y)).join('L'), fill: 'none', stroke: '#111', 'stroke-width': 1.6}, gO);
+    for (const l of O.lines || []) el('path', {d: 'M' + l.map(([x, y]) => X(x) + ',' + Y(y)).join('L'), fill: 'none', stroke: '#111', 'stroke-width': 1.6, 'vector-effect': 'non-scaling-stroke'}, gO);
     for (const [x, y] of O.points || []) el('circle', {cx: X(x), cy: Y(y), r: 2.6, fill: '#fff', stroke: '#111', 'stroke-width': 1}, gO);
     for (const lb of O.labels || []) { const t = el('text', {x: X(lb.at[0]), y: Y(lb.at[1]), class: 'mp-lab', 'text-anchor': 'middle'}, gO); t.textContent = lb.s; }
     box.append(svg, tip);
     fig.insertBefore(bar, img); fig.insertBefore(box, img); fig.insertBefore(leg, img); fig.insertBefore(table, img);
 
+    const val = (V, x) => V.cats ? (V.cats.find(c => c.v === x)?.label ?? 'no data') : fmt(x, V.fmt);
     let cur = 0, sel = -1;
     const show = v => {
       cur = v;
       const V = S.views[v], vals = S.features.map(f => f.v[V.key]).filter(x => x != null).sort((a, b) => a - b);
+      if (V.cats) {
+        // categories: the last one takes the held colour, the others steps of grey
+        const cc = V.cats.map((c, j) => j === V.cats.length - 1 ? held : ['#e2e2de', '#b9b9b4', '#8a8a86'][j] || '#8a8a86');
+        paths.forEach((p, i) => { const x = S.features[i].v[V.key], j = V.cats.findIndex(c => c.v === x); p.setAttribute('fill', j < 0 ? ND : cc[j]); p.classList.toggle('nodata', j < 0); });
+        leg.textContent = '';
+        V.cats.forEach((c, j) => { const sw = document.createElement('span'); sw.className = 'mp-sw'; sw.style.setProperty('--c', cc[j]); sw.textContent = c.label; leg.append(sw); });
+        const t = document.createElement('span'); t.textContent = '· ' + V.label + (V.note ? ' · ' + V.note : ''); leg.append(t);
+        if (vals.length < S.features.length) { const n = document.createElement('span'); n.className = 'mp-nd'; n.textContent = 'no data'; leg.append(n); }
+        if (S.note) { const n = document.createElement('span'); n.className = 'mp-note'; n.textContent = S.note; leg.append(n); }
+        bar.querySelectorAll('button[data-v]').forEach(bt => bt.setAttribute('aria-pressed', String(+bt.dataset.v === v)));
+        buildTable(); if (sel >= 0) detail(sel);
+        return;
+      }
       let [lo, hi] = V.domain || [vals[Math.floor(0.02 * (vals.length - 1))], vals[Math.ceil(0.98 * (vals.length - 1))]];
       if (V.scale === 'div' && !V.domain) { const m = Math.max(Math.abs(lo), Math.abs(hi)); lo = -m; hi = m; }
       const ramp = rampOf(held, V.scale, S.neg);
-      paths.forEach((p, i) => { const x = S.features[i].v[V.key]; p.setAttribute('fill', x == null ? '#e6e6e3' : ramp(hi > lo ? (x - lo) / (hi - lo) : 0.5)); p.classList.toggle('nodata', x == null); });
+      paths.forEach((p, i) => { const x = S.features[i].v[V.key]; p.setAttribute('fill', x == null ? ND : ramp(hi > lo ? (x - lo) / (hi - lo) : 0.5)); p.classList.toggle('nodata', x == null); });
       leg.textContent = '';
-      const a = document.createElement('span'); a.textContent = fmt(lo, V.fmt);
+      const a = document.createElement('span'); a.textContent = (vals[0] < lo ? '≤ ' : '') + fmt(lo, V.fmt);
       const i = document.createElement('i'); i.style.background = `linear-gradient(90deg,${[0, 0.25, 0.5, 0.75, 1].map(ramp).join(',')})`;
-      const b = document.createElement('span'); b.textContent = fmt(hi, V.fmt) + ' · ' + V.label + (V.note ? ' · ' + V.note : '');
+      const b = document.createElement('span'); b.textContent = fmt(hi, V.fmt) + (vals[vals.length - 1] > hi ? '+' : '') + ' · ' + V.label + (V.note ? ' · ' + V.note : '');
       leg.append(a, i, b);
+      if (S.note) { const n = document.createElement('span'); n.className = 'mp-note'; n.textContent = S.note; leg.append(n); }
       if (vals.length < S.features.length) { const n = document.createElement('span'); n.className = 'mp-nd'; n.textContent = 'no data'; leg.append(n); }
       bar.querySelectorAll('button[data-v]').forEach(bt => bt.setAttribute('aria-pressed', String(+bt.dataset.v === v)));
       buildTable();
@@ -85,7 +104,7 @@
       tip.textContent = '';
       const h = document.createElement('b'); h.textContent = f.name + (f.sub ? ' · ' + f.sub : ''); tip.append(h);
       const t = document.createElement('table');
-      S.views.forEach((V, j) => { const r = t.insertRow(); if (j === cur) r.className = 'on'; r.insertCell().textContent = V.label; r.insertCell().textContent = fmt(f.v[V.key], V.fmt); });
+      S.views.forEach((V, j) => { const r = t.insertRow(); if (j === cur) r.className = 'on'; r.insertCell().textContent = V.label; r.insertCell().textContent = val(V, f.v[V.key]); });
       tip.append(t); tip.hidden = false;
       const R = box.getBoundingClientRect();
       let tx, ty;
@@ -100,7 +119,7 @@
       const rows = S.features.map((f, i) => [i, f.v[V.key]]).sort((a, b) => (b[1] ?? -1e18) - (a[1] ?? -1e18));
       const t = document.createElement('table'), hd = t.createTHead().insertRow(), bd = t.createTBody();
       ['', ...S.views.map(v => v.label)].forEach(c => { hd.appendChild(document.createElement('th')).textContent = c; });
-      for (const [i] of rows) { const f = S.features[i], r = bd.insertRow(); r.insertCell().textContent = f.name + (f.sub ? ' · ' + f.sub : ''); S.views.forEach(v => { r.insertCell().textContent = fmt(f.v[v.key], v.fmt); }); }
+      for (const [i] of rows) { const f = S.features[i], r = bd.insertRow(); r.insertCell().textContent = f.name + (f.sub ? ' · ' + f.sub : ''); S.views.forEach(v => { r.insertCell().textContent = val(v, f.v[v.key]); }); }
       table.replaceChildren(t);
     };
     S.views.forEach((V, j) => { const bt = document.createElement('button'); bt.type = 'button'; bt.dataset.v = j; bt.textContent = V.label; bt.onclick = () => show(j); bar.append(bt); });

@@ -214,3 +214,12 @@ figure.mp-live>img[hidden]{display:none}
 .mp-table table{width:100%;border-collapse:collapse;font:400 12px/1.4 var(--mono);font-variant-numeric:tabular-nums}
 .mp-table th{text-align:left;color:#666;font-weight:400;padding:6px 12px 6px 0;border-bottom:1px solid #000;position:sticky;top:0;background:#fff}
 .mp-table td{padding:5px 12px 5px 0;border-bottom:1px solid #eee;white-space:nowrap}
+.mp-leg[hidden]{display:none}
+.mp-leg .mp-nd::before{background:repeating-linear-gradient(45deg,#f4f4f1 0 2px,#c4c4bf 2px 3.5px)}
+.mp-leg .mp-sw::before{content:"";display:inline-block;width:12px;height:10px;background:var(--c);margin-right:5px;vertical-align:-1px}
+.mp-leg .mp-note{flex-basis:100%;color:#888}
+@media (max-width:600px){
+  .mp .mp-lab{display:none}
+  .mp-tip{position:static;margin-top:8px;min-width:0;width:100%}
+  .mp-leg i{width:110px}
+}
