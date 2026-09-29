@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forecast verification: protocol</title>
+<meta name="description" content="A protocol, with no results yet, for scoring seven-day forecasts by lead day: three wave models at three Portuguese surf spots, and four weather models against two ČHMÚ stations in Prague.">
+<meta property="og:title" content="Forecast verification: protocol">
+<meta property="og:description" content="A protocol, with no results yet, for scoring seven-day forecasts by lead day: three wave models at three Portuguese surf spots, and four weather models against two ČHMÚ stations in Prague.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://bsandova.com/assets/og/surf.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bsandova.com/assets/og/surf.jpg">
+<meta name="theme-color" content="#161616">
+<link rel="canonical" href="https://bsandova.com/texts/forecast-verification">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../style.css?v=d76e837">
+<link rel="stylesheet" href="../text.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../a24.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false})"></script>
+<style>
+.tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
+.tbl th,.tbl td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th:first-child,.tbl td:first-child{padding-left:0}
+.tbl th{font-weight:400;color:var(--fg-2);letter-spacing:.12em;text-transform:uppercase;font-size:10px}
+.tbl caption{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);padding:0 0 .5rem}
+.scroller{overflow-x:auto;max-width:64rem}
+.text>dl.meta{display:block;text-transform:none;letter-spacing:0;font-size:12px}
+.text>dl.meta div,.text>dl.meta div+div,.text>dl.meta div:last-child{border-right:0;border-bottom:1px solid #ececea;padding:6px 0}
+.text>dl.meta code{font-size:inherit}
+</style>
+
+<!-- ld --><link rel="alternate" type="application/atom+xml" title="Barbora Šandová" href="/feed.xml">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Forecast verification: protocol", "description": "A protocol, with no results yet, for scoring seven-day forecasts by lead day: three wave models at three Portuguese surf spots, and four weather models against two ČHMÚ stations in Prague.", "url": "https://bsandova.com/texts/forecast-verification", "image": "https://bsandova.com/assets/og/surf.jpg", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
+</head>
+<body>
+<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">note · forecast verification · 2026 · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Note · Forecast verification · Ericeira swell and Prague weather, September 2026</p>
+  <h1>Forecast verification: <em>protocol</em></h1>
+  <p class="deck">A protocol, with no results yet, for scoring seven-day forecasts by lead day: three wave models at three Portuguese surf spots, and four weather models against two Prague stations.</p>
+  <dl class="facts">
+    <div><dt>surf forecasts stored</dt><dd>15 <small>issue dates, 14–28 September 2026, none missing · administrative count</small></dd></div>
+    <div><dt>Prague forecasts stored</dt><dd>9 <small>issue dates, 15 and 21–28 September 2026 · administrative count</small></dd></div>
+    <div><dt>pairs at lead 1, per model</dt><dd>13 · 7 <small>surf · Prague; nothing is scored under 14 · administrative count</small></dd></div>
+    <div><dt>surfable days at Ericeira</dt><dd>15 of 106 <small>14 June – 27 September 2026, from the analysis · administrative count</small></dd></div>
+  </dl>
+  <p><a href="../surf/">The live surf page</a> · <a href="../weather/">the live Prague page</a></p>
+</header>
+<details class="tldr" open>
+  <summary>Overwhelmed? Here's the short version</summary>
+  <ul>
+    <li>The surf forecasts are checked against the wave model's own analysis, a proxy that makes them look better than they are; the Prague forecasts are checked against station thermometers and rain gauges, which is a real answer key with a representativeness error of its own.</li>
+    <li>Three faults in the baselines and the ensemble were corrected in the code on 29 September 2026. None of them changes a number shown before, because the only lead past the gate, surf lead 0, was not affected.</li>
+    <li>Six dated predictions exist, and none can be read yet: each needs 30 pairs spanning eight ISO weeks, which the leads they concern reach in the first half of November if no morning is missed.</li>
+    <li>This page shows no forecast skill. Lead 0 is close to the truth by construction and is not read, the surf season so far is summer only, and a three-model probability can take just four values.</li>
+  </ul>
+</details>
+<dl class="meta">
+  <div><dt>published</dt><dd>14 September 2026 (surf) and 15 September 2026 (Prague), merged here 29 September 2026 · updated 29 September 2026 · <a href="#changelog">version 2</a></dd></div>
+  <div><dt>status</dt><dd>note; protocol, no results yet</dd></div>
+  <div><dt>data</dt><dd>Open-Meteo Marine Weather and Forecast APIs (CC BY 4.0), fetched daily from 14 September 2026; ČHMÚ open climatological data, fetched daily from 15 September 2026; counts on this page from <code>surf/data.json</code> and <code>weather/data.json</code> as generated on 28 September 2026</dd></div>
+  <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/surf">surf/</a> and <a href="https://github.com/sandovabarbora/bsandova.com/tree/main/weather">weather/</a>, each with <code>collect.py</code>, <code>verify.py</code> and <code>tests/test_verify.py</code>; the corrections of 29 September 2026 are made on top of commit 9332550; rebuild with <code>python surf/verify.py</code> and <code>python weather/verify.py</code>, test with <code>pytest surf/tests weather/tests</code></dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Forecast verification: protocol</i>. bsandova.com/texts/forecast-verification, version 2.</dd></div>
+  <div><dt>licence</dt><dd>code MIT; text, figures and data CC BY 4.0</dd></div>
+</dl>
+<section class="film film-page" aria-hidden="false"><div class="shot" style="view-transition-name:ph-surf;--bg:url(../assets/photo/surf.jpg);--bg-s:url(../assets/photo/surf-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Ericeira-06-Ribeira_d%27Ilhas-2011-gje.jpg">Gerd Eichmann</a> · CC BY-SA 4.0, colour held</p></section>
+
+
+<section>
+<h2>What is compared, and against what</h2>
+<p>Both instruments store a seven-day forecast every morning and later pair it with what the target day brought, one pair per place, model, lead day (0–6) and date. The surf instrument runs at 06:10 UTC and takes swell, wave height and wind from three wave models (Météo-France MFWAM, DWD GWAM, DWD EWAM) for Ericeira, Peniche and Sagres, aggregated over daylight, 06:00–20:00 UTC<sup class="cite"><a href="#r1">1</a></sup>. Its truth is the MFWAM analysis of the target day, fetched the next morning. The Portuguese buoys are released by the Instituto Hidrográfico only on request, and the European in-situ portal listed no Portuguese wave platform on 14 September 2026<sup class="cite"><a href="#r2">2</a></sup><sup class="cite"><a href="#r3">3</a></sup>, so forecast and truth share a model family and every score reads better than it would against a buoy. A day is surfable when its maximum swell height is 1.0–2.5 m, its mean period at least 8 s, and the wind at most 25 km/h or offshore (east ± 60°); the live page turns the probability of such a day into a booking rule, treating each day of a trip as surfable with the same probability<sup class="cite"><a href="#r4">4</a></sup>.</p>
+<p>The Prague instrument runs at 06:40 UTC and takes hourly temperature and precipitation from Open-Meteo's <code>best_match</code>, ICON, ECMWF IFS 0.25° and GFS at two ČHMÚ stations, Praha Ruzyně (364 m) and Praha Klementinum (191 m) <sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r5">5</a></sup>. The stations report daily extremes for the 24 hours to 20:00 UTC and precipitation for the 24 hours to 06:00 UTC, and the collector aggregates the hourly forecast over exactly those windows. No lapse-rate or urban correction is applied between station and grid cell, which matters most at Klementinum. <code>best_match</code> resolves to ICON here and is kept only as its own column. The climatology is each station's 1991–2020 record, ±15 days around the day of year.</p>
+</section>
+
+<section>
+<h2>Scores, baselines and corrections</h2>
+<p>For each set of pairs the verifier computes the mean absolute error, bias and RMSE of the daily maximum swell height or temperature, with period, minimum temperature, precipitation and Spearman's rank correlation alongside. A binary event, a surfable day or at least 1 mm of rain, gives the probability of detection and the false-alarm ratio. The share \(f_i\) of models calling the event is scored against the outcome \(o_i\) with the Brier score, and its skill against climatology and persistence<sup class="cite"><a href="#r6">6</a></sup><sup class="cite"><a href="#r7">7</a></sup>:</p>
+<div class="eq">$$\mathrm{BS} = \frac{1}{N}\sum_{i=1}^{N}\left(f_i - o_i\right)^{2},\qquad \mathrm{BSS}_{\text{ref}} = 1 - \frac{\mathrm{BS}}{\mathrm{BS}_{\text{ref}}},\quad \text{ref} \in \{\text{climatology},\ \text{persistence}\}$$</div>
+<p>Intervals come from a block bootstrap by ISO week (500 resamples). A lead with fewer than 14 pairs shows no number, and under 30 a number is marked descriptive.</p>
+<p>Three faults were corrected in <code>surf/verify.py</code> and <code>weather/verify.py</code> on 29 September 2026; all twelve tests pass, and the live pages pick the change up at their next run. Persistence had used values not yet known at issue time (the surf analysis of the issue day; in Prague the observation of the day before the target, which at leads of 2 and more lies after the issue); it is now the value of the day before the issue, at every lead. Precipitation is no longer scored at lead 0, because the rain window closes at 06:00 UTC, before the run; lead-0 temperature, whose window is partly past, is flagged. The Prague ensemble now counts the three distinct models, not ICON twice. A fourth rule is not yet in the code: an interval is read only once its pairs span eight ISO weeks, because a block bootstrap over two or three weeks is degenerate. Until it is coded, with a synthetic test series longer than eight weeks, no interval on either live page is read.</p>
+</section>
+
+<section>
+<h2>State on 28 September 2026 and reading rules</h2>
+<p>The surf collector has missed no morning. At lead 1 each spot and model has 13 pairs, at lead 6 it has 8, and EWAM, which returns nothing beyond lead 3, has 43 % empty cells. Lead 0 has passed the gate but is not read, since a lead-0 forecast is nearly its own truth. The Ericeira base rate is back-filled analysis from 14 June, not stored forecasts: 15 of 106 days were surfable (14.2 %), against 5 of the first 92 (fig. 1), and 8.5 % to 25.5 % under a period threshold of 9 s or 7 s. The Prague collector missed 16–20 September, five pairs lost at every lead, and has 7 pairs at lead 1 and 2 at lead 6. Without further gaps, 14 pairs are reached at surf lead 6 on 4 October and at Prague leads 1 and 6 on 5 and 10 October, 30 pairs on 20, 21 and 26 October, and eight weeks in the first half of November.</p>
+<figure data-chart="../assets/surf/charts.json#ericeira-92-days">
+  <img src="../assets/surf/01-ericeira-92-days.svg" alt="Three panels over 92 days at Ericeira: daily maximum swell height with the 1.0–2.5 m band and five surfable days marked; mean period with the 8-second line; wind with the 25 km/h line." loading="lazy">
+  <figcaption><b>fig. 1</b> · Ericeira, 14 June – 13 September 2026, from the MFWAM analysis (n = 92 days): daily maximum swell height in m, mean period in s and mean wind in km/h, with the rule's thresholds. Blue dots are the five days that clear the rule; 81 of the other 87 fail on period and 6 on height alone. Wind is missing for 25 days, which count as passing on wind. Rendered from <code>surf/data/analysis.json</code>, snapshot of 14 September 2026.</figcaption>
+</figure>
+<p>The surf expectations were committed at <code>f815c6b</code> on 14 September 2026, 22:25, and the Prague predictions at <code>a51ec90</code> on 15 September 2026, 15:29 (CEST), each before its instrument's first pair; commit times are self-reported, and neither commit is an independent timestamp<sup class="cite"><a href="#r8">8</a></sup>. The reading rules were added on 29 September 2026; in the data of 28 September no lead concerned had passed the gate. A claim is read at 30 pairs over eight ISO weeks: supported when the condition holds, not supported when the 95 % bootstrap interval lies wholly on the other side of the threshold, inconclusive otherwise. The corrected persistence is weaker at long leads than the baseline of 15 September, which makes the second half of Prague 2 easier to meet.</p>
+<div class="scroller"><table class="tbl"><caption>Dated predictions and their reading rules</caption>
+<thead><tr><th>claim, as dated</th><th>reading rule (29 September 2026)</th></tr></thead>
+<tbody>
+<tr><td>Surf 1 (14 September): at lead 1–2 the three models agree on swell height to within 0.3 m on most days, and the rank correlation with the analysis is above 0.9.</td><td>Pooled over the three spots, the three-model spread is at most 0.3 m on more than 50 % of target days at leads 1 and 2, and Spearman's ρ exceeds 0.9 for every model at both leads.</td></tr>
+<tr><td>Surf 2: at lead 5–6 the MAE of daily maximum swell height exceeds 0.5 m, and the models disagree by more than 0.5 m on at least a third of days.</td><td>MAE above 0.5 m for MFWAM and GWAM at leads 5 and 6, and a spread above 0.5 m on at least 33 % of target days, pooled over spots.</td></tr>
+<tr><td>Surf 3: at long leads the models over-forecast swell height more often than they under-forecast it.</td><td>More than 50 % of swell errors at leads 5 and 6 are positive, pooled over spots, MFWAM and GWAM.</td></tr>
+<tr><td>Prague 1 (15 September): lead-1 daily-maximum MAE between 1.0 and 1.6 °C at Ruzyně, larger at Klementinum, and a negative Klementinum bias.</td><td>For each of ICON, ECMWF and GFS: the Ruzyně point estimate lies in 1.0–1.6 °C, the Klementinum MAE exceeds the Ruzyně MAE, and the Klementinum bias is below 0.</td></tr>
+<tr><td>Prague 2: rain skill against climatology clearly positive at leads 1–3 and about zero by lead 6; persistence harder than climatology at lead 1 and easier from lead 3.</td><td>BSS against climatology with its interval above 0 at leads 1–3 and containing 0 at lead 6; Brier score of persistence below that of climatology at lead 1 and above it at leads 3–6.</td></tr>
+<tr><td>Prague 3: ECMWF has the lowest temperature MAE at leads 3–6 but not at lead 1, where ICON is at least as good.</td><td>The paired MAE difference of ECMWF minus ICON and minus GFS is below 0 at leads 3–6, and ICON minus ECMWF is at most 0 at lead 1.</td></tr>
+</tbody></table></div>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Open-Meteo (2026). Marine Weather API (MFWAM, GWAM, EWAM) and Forecast API (<code>best_match</code>, <code>icon_seamless</code>, <code>ecmwf_ifs025</code>, <code>gfs_seamless</code>). <a href="https://open-meteo.com/en/docs/marine-weather-api">open-meteo.com/en/docs/marine-weather-api</a>, <a href="https://open-meteo.com/en/docs">open-meteo.com/en/docs</a>. Accessed daily from 14 September 2026.</li>
+<li id="r2">Instituto Hidrográfico (2026). Acesso a dados. <a href="https://www.hidrografico.pt/paginas-genericas/dt/dcdt/acesso-a-dados/">hidrografico.pt</a>. Accessed 14 September 2026.</li>
+<li id="r3">EMODnet Physics (2026). ERDDAP search for Portuguese wave platforms, no result. <a href="https://erddap.emodnet-physics.eu/">erddap.emodnet-physics.eu</a>. Accessed 14 September 2026.</li>
+<li id="r4">Richardson, D. S. (2000). Skill and relative economic value of the ECMWF ensemble prediction system. <i>Quarterly Journal of the Royal Meteorological Society</i> 126. <a href="https://doi.org/10.1002/qj.49712656313">doi.org/10.1002/qj.49712656313</a>. Accessed 29 September 2026.</li>
+<li id="r5">Czech Hydrometeorological Institute (2026). Climatological open data, daily values per station (<code>recent/data/daily/dly-{WSI}-{YYYYMM}.json</code>; TMA, TMI at 20:00 UTC, SRA at 06:00 UTC; stations 0-20000-0-11518 Praha Ruzyně and 0-203-0-11514 Praha Klementinum; historical files 1991–2020). <a href="https://opendata.chmi.cz/meteorology/climate/">opendata.chmi.cz/meteorology/climate</a>. Accessed daily from 15 September 2026.</li>
+<li id="r6">Wilks, D. S. (2011). <i>Statistical Methods in the Atmospheric Sciences</i>, 3rd ed., ch. 8. Academic Press.</li>
+<li id="r7">Jolliffe, I. T. and Stephenson, D. B., eds. (2012). <i>Forecast Verification: A Practitioner's Guide in Atmospheric Science</i>, 2nd ed. Wiley. <a href="https://doi.org/10.1002/9781119960003">doi.org/10.1002/9781119960003</a>. Accessed 29 September 2026.</li>
+<li id="r8">Šandová, B. (2026). <code>surf/</code> and <code>weather/</code>, bsandova.com repository; commits <code>f815c6b</code> (14 September 2026) and <code>a51ec90</code> (15 September 2026). <a href="https://github.com/sandovabarbora/bsandova.com">github.com/sandovabarbora/bsandova.com</a>. Accessed 29 September 2026.</li>
+</ol>
+</section>
+
+<section id="changelog" class="changelog">
+<h2>Change log</h2>
+<ul>
+<li>14 September 2026: the surf protocol published as "Not worth the flight" at /texts/surf (commit <code>f815c6b</code>).</li>
+<li>15 September 2026: the Prague protocol published as "Weather, checked." at /texts/weather (commit <code>a51ec90</code>).</li>
+<li>29 September 2026: version 2. The two pages merged into this one. Counts moved from the 92-day snapshot (5 of 92 surfable days, 5 %; alternative rules 2 %, 19 %, 4 %, 5 %, 11 %) to the data of 28 September 2026 (15 of 106, 14.2 %; alternative rules from 8.5 % to 25.5 %); the snapshot stays as fig. 1. The Prague test count corrected from five to six. The fig. 1 caption corrected: it said the non-surfable days fail on period and otherwise on wind, but 81 of the 87 fail on period (one of them also on wind) and 6 on height alone. Persistence baseline, lead-0 precipitation and the Prague ensemble corrected in the verifiers, and the eight-week interval minimum stated. The 16–20 September gap disclosed, reading rules added to the dated predictions, and the booking arithmetic, the data-engineering section and the decision table cut; the live pages keep them. Added the short version, the metadata block and this change log.</li>
+<li>Checked against editorial standard v1 on 29 September 2026.</li>
+</ul>
+</section>
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a> · <a href="../surf/">the live surf page</a> · <a href="../weather/">the live Prague page</a></p>
+</footer>
+</article>
+<script src="../assets/charts.js" defer></script>
+</body>
+</html>

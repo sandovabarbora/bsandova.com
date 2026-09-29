@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>An agent-maintained wiki</title>
-<meta name="description" content="A 739-page, 8 144-link personal wiki compiled from 336 primary sources by an agent working to a written schema: knowledge compiled once and maintained, not re-derived per query. What it found in the sources, and the fabricated quotation it caught.">
-<meta property="og:title" content="An agent-maintained wiki">
-<meta property="og:description" content="A 739-page, 8 144-link personal wiki compiled from 336 primary sources by an agent working to a written schema: knowledge compiled once and maintained, not re-derived per query. What it found in the sources, and the fabricated quotation it caught.">
+<title>A wiki that an agent keeps</title>
+<meta name="description" content="A private Obsidian wiki that an agent compiles from primary sources under a written schema: how the ingest step works, one gap between NIST AI 600-1 and the extraction literature that the linking made visible, and the limits of a vault nobody else can inspect.">
+<meta property="og:title" content="A wiki that an agent keeps">
+<meta property="og:description" content="A private Obsidian wiki that an agent compiles from primary sources under a written schema: how it works, one gap it made visible, and its limits.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://bsandova.com/assets/og/second-brain.jpg">
 <meta property="og:image:width" content="1200">
@@ -21,65 +21,94 @@
 <link rel="stylesheet" href="../text.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../a24.css">
+<style>/* until a24.css resets style.css .meta (3-column grid, uppercase) */
+.text>.meta{display:block;letter-spacing:0;text-transform:none;font-size:12px}
+.text>.meta div,.text>.meta div+div{padding:6px 0;border-right:0}
+</style>
+
+<!-- ld --><link rel="alternate" type="application/atom+xml" title="Barbora Šandová" href="/feed.xml">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "A wiki that an agent keeps", "description": "A private Obsidian wiki that an agent compiles from primary sources under a written schema: how the ingest step works, one gap between NIST AI 600-1 and the extraction literature that the linking made visible, and the limits of a vault nobody else can inspect.", "url": "https://bsandova.com/texts/second-brain", "image": "https://bsandova.com/assets/og/second-brain.jpg", "dateModified": "2026-09-29T11:33:59+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
 </head>
 <body>
-<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">knowledge · second brain · 2026 · en</span></div>
+<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">note · second brain · 2026 · en</span></div>
 <article class="text">
 
 <header class="text-head">
-  <p class="kicker">Knowledge engineering · 2026 · private repository</p>
+  <p class="kicker">Note · 14 September 2026 · a private wiki kept by an agent</p>
   <h1>A wiki that an agent <em>keeps</em></h1>
-  <p class="deck">Retrieval re-derives knowledge from raw documents on every question, and nothing accumulates. In this wiki the agent reads a source once, extracts what matters and integrates it into a persistent, interlinked wiki, updating existing pages, strengthening claims and flagging contradictions. Obsidian serves as the IDE, the LLM as the programmer and the wiki as the codebase.</p>
+  <p class="deck">A personal Obsidian wiki that an agent compiles from primary sources under a written schema, with one example of a gap between two documents that became visible once their pages were linked.</p>
   <dl class="facts">
-    <div><dt>pages</dt><dd>739 <small>8 144 wikilinks · 1 September 2026</small></dd></div>
-    <div><dt>primary sources ingested</dt><dd>336 <small>books, papers, articles, transcripts</small></dd></div>
-    <div><dt>lint rules</dt><dd>orphans · sprawl · drift <small>contradictions recorded, never smoothed</small></dd></div>
-    <div><dt>caught</dt><dd>1 fabricated quote <small>and a tool so it cannot happen again</small></dd></div>
+    <div><dt>pages</dt><dd>739 <small>under wiki/ · 1 September 2026 · administrative count, private; not verifiable</small></dd></div>
+    <div><dt>wikilinks</dt><dd>8 144 <small>between those pages · administrative count, private; not verifiable</small></dd></div>
+    <div><dt>primary sources</dt><dd>336 <small>files under raw/ · administrative count, private; not verifiable</small></dd></div>
   </dl>
 </header>
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>An agent reads each primary source once and integrates it into a persistent, interlinked Obsidian wiki: 739 pages and 8 144 wikilinks from 336 sources, as of 1 September 2026. The raw sources stay immutable, the wiki belongs to the agent, and a schema written by both of us tells it what a page is and how to link.</li>
-    <li>Ingesting one source updates five to fifteen existing pages, the index and an append-only log. Contradictions between sources are recorded on the page, never smoothed into a consensus.</li>
-    <li>On the standards shelf the wiki surfaced two things: NIST AI 600-1 frames memorisation-driven data leakage without mentioning decoding parameters, although the setting most likely to leak fine-tuned data is a decoding parameter, and the EU GPAI Code of Practice asks for reproducibility in one appendix and forbids reproducing training data in another. Neither is a contradiction inside one document; both only show up when two documents are on the same page with a link between them.</li>
-    <li>A fabricated quotation survived several passes. A tool, <code>quote.py</code>, now prints the surrounding sentence from the source for every quotation, and the fabrication is its regression test; lint checks cover orphan pages, broken links, sprawl, stale seeds and index drift.</li>
-    <li>The repository is private: the counts are as recorded in its README and schema at the last commit, and the two findings as recorded on the wiki's pages.</li>
+    <li>The agent reads each source once and folds it into existing pages, the index and an append-only log. It never edits the sources, and it records contradictions between them on the page.</li>
+    <li>One worked example: NIST's generative-AI risk profile treats leakage of memorised training data as a matter of attacks and data curation and never mentions decoding settings, although the extraction literature measures memorisation through them.</li>
+    <li>The fabricated quotation that once reached the wiki, and the checker written after it, are told once, in the quotecheck article.</li>
+    <li>The vault is private, has one author and one agent, and has no published quality measures; its counts describe size, not accuracy.</li>
   </ul>
 </details>
+<dl class="meta">
+  <div><dt>published</dt><dd>14 September 2026 · updated 29 September 2026 · <a href="#changelog">version 2</a></dd></div>
+  <div><dt>status</dt><dd>note</dd></div>
+  <div><dt>data</dt><dd>the vault itself (private; not verifiable); counts from the working copy at its commit a4395d3, 1 September 2026, including source files kept out of version control</dd></div>
+  <div><dt>code</dt><dd>scripts/quote.py, lint.py and build_index.py in the vault repository (private; not verifiable)</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>A wiki that an agent keeps</i>. bsandova.com/texts/second-brain, version 2.</dd></div>
+  <div><dt>licence</dt><dd>text CC BY 4.0; the vault and its scripts are private and not licensed for reuse</dd></div>
+</dl>
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-second-brain;--bg:url(../assets/photo/second-brain.jpg);--bg-s:url(../assets/photo/second-brain-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Bookshelves_Suzzallo_Allen_Library_University_of_Washington_Seattle_Washington_2026.jpg">Guywelch2000</a> · CC BY 4.0, colour held</p></section>
 
 
 <section>
 <h2>Three layers, a schema and the ingest step</h2>
-<p>The vault has three layers with different owners. Raw sources are mine and immutable; the agent reads them and never edits them. The wiki belongs to the agent, which creates, updates and prunes its pages. The schema, the file that tells the agent what a page is, how to link and when to split, is co-evolved by both of us as we learn what works<sup class="cite"><a href="#r1">1</a></sup>. An index is generated from the pages rather than maintained by hand, and an append-only log records every change. The pattern is Karpathy's LLM-wiki idea with a schema adapted from an open Obsidian second-brain layout<sup class="cite"><a href="#r2">2</a></sup><sup class="cite"><a href="#r3">3</a></sup>.</p>
-<p>Ingesting one source means reading it, writing a summary, updating five to fifteen existing pages, updating the index, appending to the log, and reporting what was touched and what contradicted what. Contradictions between sources are recorded on the page, never smoothed into a consensus, and coverage gaps have to be marked explicitly so they can be closed later from a different source<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>The vault has three layers with different owners. Raw sources are mine and immutable; the agent reads them and never edits them. The wiki belongs to the agent, which creates, updates and prunes its pages. The schema, the file that tells the agent what a page is, how to link and when to split, is revised by both of us as it proves itself or fails<sup class="cite"><a href="#r1">1</a></sup>. An index is generated from the pages, and an append-only log records every change. The pattern is Andrej Karpathy's LLM wiki, with a vault layout adapted from an open Obsidian second-brain repository<sup class="cite"><a href="#r2">2</a></sup><sup class="cite"><a href="#r3">3</a></sup>. It belongs to a longer line of note systems in which knowledge is written once into linked notes and revised, and it resembles LLM memory systems such as MemGPT, which move information between a model's context and an external store<sup class="cite"><a href="#r4">4</a></sup>.</p>
+<p>Ingesting one source means reading it, writing a summary, updating five to fifteen existing pages, updating the index, appending to the log, and reporting what was touched and what contradicted what. Contradictions between sources are recorded on the page rather than averaged into a consensus, and coverage gaps are marked so that a later source can close them. Machine checks look for orphan pages, broken links, sprawl, stale seeds and drift between the index and the pages<sup class="cite"><a href="#r1">1</a></sup>. The question the vault is meant to answer, informally, is whether integrating each source once into linked pages brings out tensions between documents that answering each question from separately retrieved passages would miss. The next section is one example; it is not a test of that question.</p>
 </section>
 
 <section>
-<h2>Two findings from the standards shelf</h2>
-<p>On the standards-and-regulation shelf the wiki surfaced two things I had not noticed. NIST AI 600-1 frames memorisation-driven data leakage without mentioning decoding parameters anywhere, while the setting most likely to leak fine-tuned data is a decoding parameter. And the EU GPAI Code of Practice asks for reproducibility in one appendix and forbids reproducing training data in another. Neither is a contradiction inside one document; both only show up when two documents are on the same page with a link between them<sup class="cite"><a href="#r4">4</a></sup>.</p>
+<h2>A gap between NIST AI 600-1 and the extraction literature</h2>
+<p>NIST AI 600-1, the generative-AI profile of the AI Risk Management Framework, describes data leakage in its section 2.4 (Data Privacy): "during adversarial attacks, LLMs have revealed sensitive information (from the public domain) that was included in their training data. This problem has been referred to as data memorization". Its suggested actions accordingly concern red-teaming for training-data output (MS-2.10-001) and the curation of training data (MG-3.1-004). A text search of the vault's copy of the document finds no mention of temperature, top-k, top-p or decoding<sup class="cite"><a href="#r5">5</a></sup>.</p>
+<p>The link that made this visible came from a different shelf. Raschka's textbook introduces decoding strategies with the stated aim of reducing training-data memorisation, after showing a small overfit model reciting its training text verbatim under greedy decoding<sup class="cite"><a href="#r6">6</a></sup>. The research literature supports the general point: Carlini and colleagues recovered memorised training text from GPT-2 and compared sampling strategies in doing so, and a later study defines text as extractable when greedy decoding reproduces it from a prefix<sup class="cite"><a href="#r7">7</a></sup><sup class="cite"><a href="#r8">8</a></sup>. The wiki's page puts it more strongly, as greedy decoding being the setting most likely to emit fine-tuned data, and that stronger claim rests on the textbook example and has not been tested here<sup class="cite"><a href="#r9">9</a></sup>. Whether NIST left decoding out by oversight or on purpose, as a deployment detail, cannot be told from the document.</p>
 </section>
 
 <section>
-<h2>A fabricated quotation, and the checks that followed</h2>
-<p>A fabricated quotation survived several passes because it matched what the brief was looking for. The fix was a tool rather than a rule: <code>quote.py</code> prints the surrounding sentence from the source's own text for every quotation on a page, so a quote either has a neighbourhood or it does not, and the fabrication is a regression test for it<sup class="cite"><a href="#r5">5</a></sup>. The wiki also lints itself, with machine checks for orphan pages, broken links, sprawl, stale seeds and index drift.</p>
-<p>One build ran thirteen subagents in parallel and then had the wiki audit its own construction, which produced a code review as good as any I have had. The verdict, written by a page that had been compiled that morning from a database textbook, was that the single-writer discipline was correct and one layer too shallow.</p>
+<h2>Incidents, audits and limits</h2>
+<p>A fabricated quotation once reached the wiki, and the checker written after it is now a separate tool; that incident is described in <a href="quotecheck">How to catch a fabricated quote</a> and is not retold here<sup class="cite"><a href="#r10">10</a></sup>. The log also records a parallel ingest on 26 August 2026, in which thirteen subagents took the vault from 69 to 193 pages. The same entry records that the shared files (the index, the log and the schema) kept a single writer, but that two agents both checked that a new page did not yet exist and one then overwrote the other's; nothing was lost only because the second agent noticed<sup class="cite"><a href="#r11">11</a></sup>.</p>
+<p>Nothing on this page can be checked by a reader, since the vault is private. It has one author and one agent, so what it "surfaces" is shaped by what that author chose to ingest and ask, and the lint results over time, the share of pages with verified quotations and the time and cost of an ingest are not reported. The counts in the header measure the size of the vault, not the accuracy of its pages.</p>
 </section>
 
 <section class="refs" id="refs">
 <h2>References</h2>
 <ol>
-<li id="r1">Repository README and <code>CLAUDE.md</code> (the schema); private. Counts as of the last commit, 1 September 2026: 739 pages under <code>wiki/</code>, 8 144 wikilinks, 336 files under <code>raw/</code>.</li>
-<li id="r2">Karpathy, A. (2026): <a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f">LLM Wiki</a> (gist).</li>
-<li id="r3"><a href="https://github.com/evgenirusev/obsidian-second-brain">evgenirusev/obsidian-second-brain</a>: the vault schema this adapts.</li>
-<li id="r4">NIST AI 600-1, <i>Artificial Intelligence Risk Management Framework: Generative AI Profile</i> (2024); EU <i>General-Purpose AI Code of Practice</i> (2025). Findings as recorded on the wiki's pages for each.</li>
-<li id="r5"><code>scripts/quote.py</code>, <code>scripts/lint.py</code>, <code>scripts/build_index.py</code> in the repository; the fabricated quotation is the fixture of the citation-verification test.</li>
+<li id="r1">Šandová, B. (2026). Vault README and <code>CLAUDE.md</code> (the schema). Private; not verifiable. Counts in the working copy at commit a4395d3, 1 September 2026: 739 pages under <code>wiki/</code>, 8 144 wikilinks, 336 files under <code>raw/</code>.</li>
+<li id="r2">Karpathy, A. (2026). llm-wiki. GitHub gist, created 4 April 2026. <a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f">gist.github.com/karpathy/442a6bf555914893e9891c11519de94f</a>. Accessed 29 September 2026.</li>
+<li id="r3">Rusev, E. (2026). obsidian-second-brain: How I built my second brain with Obsidian + Claude Code. GitHub. <a href="https://github.com/evgenirusev/obsidian-second-brain">github.com/evgenirusev/obsidian-second-brain</a>. Accessed 29 September 2026.</li>
+<li id="r4">Packer, C., et al. (2023). MemGPT: towards LLMs as operating systems. arXiv. <a href="https://arxiv.org/abs/2310.08560">arxiv.org/abs/2310.08560</a>. Accessed 29 September 2026.</li>
+<li id="r5">NIST (2024). Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile (NIST AI 600-1), section 2.4 and actions MS-2.10-001 and MG-3.1-004. <a href="https://doi.org/10.6028/NIST.AI.600-1">doi.org/10.6028/NIST.AI.600-1</a>. Accessed 29 September 2026.</li>
+<li id="r6">Raschka, S. (2024). Build a Large Language Model (From Scratch), chapter 5, figure 5.2 and section 5.3. Manning. <a href="https://www.manning.com/books/build-a-large-language-model-from-scratch">manning.com/books/build-a-large-language-model-from-scratch</a>. Accessed 29 September 2026.</li>
+<li id="r7">Carlini, N., et al. (2021). Extracting training data from large language models. USENIX Security 2021. <a href="https://arxiv.org/abs/2012.07805">arxiv.org/abs/2012.07805</a>. Accessed 29 September 2026.</li>
+<li id="r8">Carlini, N., et al. (2023). Quantifying memorization across neural language models. ICLR 2023. <a href="https://arxiv.org/abs/2202.07646">arxiv.org/abs/2202.07646</a>. Accessed 29 September 2026.</li>
+<li id="r9">Šandová, B. (2026). Wiki pages "NIST's GenAI Risks Against the Engineering Books" and "NIST AI 600-1 GenAI Profile (summary)". Private; not verifiable.</li>
+<li id="r10">Šandová, B. (2026). How to catch a fabricated quote. bsandova.com. <a href="quotecheck">bsandova.com/texts/quotecheck</a>.</li>
+<li id="r11">Šandová, B. (2026). Vault log, entries of 26 August 2026 (the thirteen-agent ingest and its review). Private; not verifiable.</li>
 </ol>
 </section>
 
+<section id="changelog" class="changelog">
+<h2>Change log</h2>
+<ul>
+<li>14 September 2026: first published.</li>
+<li>29 September 2026: rewritten as a note. The deck no longer characterises retrieval as re-deriving everything and no longer uses the IDE, programmer and codebase comparison; the short version no longer repeats the deck or the facts. Removed the facts card claiming a fabricated quote "cannot happen again" and the lint card. Replaced the account of the fabricated quotation (which named a different tool and a different sequence of events) with a link to the quotecheck article, the one account of that incident. Dropped the second finding on the EU General-Purpose AI Code of Practice, which set reproducibility of evaluations against reproduction of training data, two different things. Rewrote the first finding with its section of NIST AI 600-1, the textbook source and the primary extraction papers, and marked the stronger claim as untested. Replaced the paragraph praising the subagent audit with what the vault's log records about that run. Added the vault's question, prior work, limits, the gist's creation date and access dates, and marked private material as not verifiable. The counts 739, 8 144 and 336 were re-checked against the vault at commit a4395d3.</li>
+<li>Checked against editorial standard v1 on 29 September 2026.</li>
+</ul>
+</section>
+
 <footer class="text-foot">
-  <p class="back"><a href="../#works">← projects</a></p>
+  <p class="back"><a href="../#works">← projects</a> · <a href="quotecheck">quotecheck</a></p>
 </footer>
 </article>
 </body>

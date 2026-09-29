@@ -223,3 +223,16 @@ figure.mp-live>img[hidden]{display:none}
   .mp-tip{position:static;margin-top:8px;min-width:0;width:100%}
   .mp-leg i{width:110px}
 }
+/* editorial standard v1: the metadata block under the short version, and the change log at the foot */
+.meta{max-width:68ch;margin:0 0 clamp(40px,5vw,72px);padding:0;border-top:1px solid #000;font:400 12px/1.5 var(--mono);color:#444}
+.meta div{display:grid;grid-template-columns:14ch 1fr;gap:12px;padding:6px 0;border-bottom:1px solid #ececea}
+.meta dt{color:#888;text-transform:lowercase}
+.meta dd{margin:0}
+.meta a{color:#111;text-decoration:underline;text-underline-offset:.15em}
+@media (min-width:1100px){.text>.meta{margin-left:calc(100% * 4 / 11 + clamp(40px,5vw,96px) * 7 / 11)}}
+.changelog li{font:400 13px/1.55 var(--mono)!important;color:#444}
+/* style.css has an older three-column .meta for another block; the dl.meta of the standard resets it */
+.text dl.meta{display:block;grid-template-columns:none;font:400 12px/1.5 var(--mono);letter-spacing:0;text-transform:none;color:#444;margin-top:0}
+.text dl.meta div{display:grid;grid-template-columns:14ch 1fr;gap:12px;padding:6px 0;border-right:0;border-bottom:1px solid #ececea}
+.text dl.meta div+div{padding-left:0}
+@media (max-width:600px){.text dl.meta div{grid-template-columns:1fr;gap:0}}

@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>sitewitness: an agent that shows its work</title>
-<meta name="description" content="How the Ask page became a package: a trust protocol enforced in code, five tools, an eval runner, and what six evaluation runs taught in two days: which rule fired on correct answers, why paragraphs must not be clipped, why a schema is evidence, and why the first version scored 22 before it scored 29.">
-<meta property="og:title" content="sitewitness: an agent that shows its work">
-<meta property="og:description" content="A trust protocol enforced in code, packaged; and what six evaluation runs taught in two days.">
+<title>sitewitness: rules enforced in code</title>
+<meta name="description" content="sitewitness is the package behind the Ask page: five answer rules checked in code, run-time limits and an evaluation runner, with an engineering log of the runs of 21 and 22 September 2026.">
+<meta property="og:title" content="sitewitness: rules enforced in code">
+<meta property="og:description" content="sitewitness is the package behind the Ask page: five answer rules checked in code, run-time limits and an evaluation runner, with an engineering log of the runs of 21 and 22 September 2026.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://bsandova.com/assets/og/sitewitness.jpg">
 <meta property="og:image:width" content="1200">
@@ -25,6 +25,10 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false})"></script>
 <style>
+/* until a24.css resets style.css .meta (3-column grid, uppercase) */
+.text>dl.meta{display:block;text-transform:none;letter-spacing:0;font-size:12px}
+.text>dl.meta div,.text>dl.meta div+div,.text>dl.meta div:last-child{border-right:0;border-bottom:1px solid #ececea;padding:6px 0}
+.text>dl.meta code{font-size:inherit;word-break:break-word}
 .tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
 .tbl th,.tbl td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
 .tbl th:first-child,.tbl td:first-child{padding-left:0}
@@ -38,78 +42,118 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 .stack{font-family:var(--mono);font-size:11px;line-height:1.8;color:var(--fg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:.8rem 0;margin:1rem 0 1.5rem;max-width:64rem}
 .stack b{color:var(--fg);font-weight:400}
 </style>
+
+<!-- ld --><link rel="alternate" type="application/atom+xml" title="Barbora Šandová" href="/feed.xml">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "sitewitness: rules enforced in code", "description": "sitewitness is the package behind the Ask page: five answer rules checked in code, run-time limits and an evaluation runner, with an engineering log of the runs of 21 and 22 September 2026.", "url": "https://bsandova.com/texts/sitewitness", "image": "https://bsandova.com/assets/og/sitewitness.jpg", "dateModified": "2026-09-29T11:33:59+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
 </head>
 <body>
-<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">ai engineering · tool · en</span></div>
+<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">tool · sitewitness · 2026 · en</span></div>
 
 <article class="text">
 <header class="text-head">
-  <p class="kicker">AI engineering · a tool · 21–22 September 2026 · pip install sitewitness</p>
-  <h1>An agent that <em>shows its work.</em></h1>
-  <p class="deck">The <a href="../ask/">Ask page</a> started as two hundred lines in a Cloudflare Worker with four rules in a prompt. It ended as a package, with the rules moved out of the prompt into code, where they can be tested, and the whole thing was evaluated six times in two days. This page describes the package and what the evaluations taught, including two faults in the first version that could not have been seen without a golden set.</p>
+  <p class="kicker">Tool · sitewitness 0.1.0 · the agent behind Ask the site</p>
+  <h1>sitewitness: the rules behind <em>Ask the site</em>, enforced in code</h1>
+  <p class="deck">The package that answers questions on the <a href="../ask/">Ask page</a> checks five answer rules in code and replaces a failing answer with a refusal; its last evaluation matched, rather than improved on, the version it replaced.</p>
   <dl class="facts">
-    <div><dt>install</dt><dd>pip install sitewitness <small>texts + JSON in · agent, eval, trace page out</small></dd></div>
-    <div><dt>rules enforced in code</dt><dd>5 <small>tool use · numbers · code · quotations · sources</small></dd></div>
-    <div><dt>tests</dt><dd>47 <small>none touch the network; the model client is an interface</small></dd></div>
-    <div><dt>evaluation runs</dt><dd>6 <small>in two days · 22 → 26 → 26 → 28 → 29 of 30</small></dd></div>
-    <div><dt>security findings</dt><dd>5 <small>from review, all fixed before the first deploy</small></dd></div>
+    <div><dt>rules enforced in code</dt><dd>5 <small>tool use · numbers · code · quotations · sources · administrative count</small></dd></div>
+    <div><dt>tests</dt><dd>47 <small>passing on 29 September 2026, none touch the network · administrative count</small></dd></div>
+    <div><dt>last evaluation</dt><dd>29 / 30 <small>golden questions, 22 September 2026 · 95 % Wilson interval 83–99 %</small></dd></div>
+    <div><dt>rule firings, last evaluation</dt><dd>1 <small>of 30 answers, and it replaced a correct one · administrative count</small></dd></div>
   </dl>
 </header>
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>sitewitness is a Python package behind the Ask page. Five rules (tool use, numbers, code, quotations, sources) are enforced in code, and an answer that breaks one is replaced by a decline, with the rule named in the trace.</li>
-    <li>On the thirty-question golden set where the old Worker scored 29 of 30, the package's first run scored 22. Six runs in two days brought it to 29/30; each miss was read from the trace, and some were the evaluator's own stale expectations.</li>
-    <li>The runs found faults in the first version: rules that refused correct answers, and a search that clipped passages to 600 characters when the sentence sat at character 700. The six runs cost 5.3 USD, and the 4 USD daily budget cut off the fourth run of the day as configured.</li>
-    <li>An automated review found five security problems, including a spoofable client-address header. All were fixed before the first deploy, and none was in the model itself.</li>
-    <li>The package does not stream, remember a conversation or use a model other than Anthropic's. It does not make the model right; it makes the model's wrongness visible and refusable.</li>
+    <li>This is the documentation for the site's question-answering assistant. You can try it on the <a href="../ask/">Ask page</a>, where each answer comes with the trace of the tool calls behind it.</li>
+    <li>The page is an engineering log. The evaluation runs of 21 and 22 September 2026 were used to find faults, the golden questions were corrected along the way, and the scores are therefore not comparable from run to run.</li>
+    <li>Only the final run was saved and can be checked; the scores of the earlier runs and the cost of the series were read from terminal output and not kept.</li>
+    <li>The rules are lexical and the questions were written by the author for her own site, so the results say little about other sites or adversarial users.</li>
   </ul>
 </details>
+<dl class="meta">
+  <div><dt>published</dt><dd>22 September 2026 · updated 29 September 2026 · <a href="#changelog">version 2</a></dd></div>
+  <div><dt>status</dt><dd>tool v0.1.0</dd></div>
+  <div><dt>data</dt><dd>golden questions <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/ask/golden.json">ask/golden.json</a>; saved evaluations <a href="../ask/eval.json">ask/eval.json</a> (22 September 2026) and <a href="../ask/eval-history.json">ask/eval-history.json</a> (17 and 22 September 2026); model claude-sonnet-5; earlier run scores are from terminal output and were not saved</dd></div>
+  <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/sitewitness">sandovabarbora/sitewitness</a>, tag v0.1.0 (commit 364957e); instance config <code>sitewitness.toml</code> and runner <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/ask/eval.py">ask/eval.py</a> in the site repository; rerun with <code>sitewitness eval ask/golden.json --api https://api.bsandova.com</code></dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>sitewitness: the rules behind Ask the site, enforced in code</i>. bsandova.com/texts/sitewitness, version 2.</dd></div>
+  <div><dt>licence</dt><dd>package code Apache-2.0; text and data CC BY 4.0</dd></div>
+</dl>
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-sitewitness;--bg:url(../assets/photo/sitewitness.jpg);--bg-s:url(../assets/photo/sitewitness-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Magnifying_glass_with_focus_on_paper.png">Niabot</a> · CC BY-SA 3.0, colour held</p></section>
 
 
 <section>
-<h2>1 · Five rules moved from the prompt into code</h2>
-<p>The first Ask asked the model nicely to take every number from a tool, to verify every quotation and to decline when the site has no data, and the Worker checked two of those things after the fact. In the package the checks are the design, as five rules, each a function over the answer and its trace. An answer with no tool call is refused, and so is a digit in the answer when the conversation holds no <code>read_data</code>, <code>search</code> or <code>describe_source</code> result. Fenced code, <code>def</code> or an HTML tag is refused. A quotation of forty characters or more is refused when the <code>quote</code> tool did not return it as found and it does not occur verbatim in a tool result, and a <code>Sources:</code> line naming a file or page the site does not have is refused as well. The first violated rule wins, the answer is replaced by the decline sentence, and the trace names the rule. A decline is never enforced against, and the rules can be switched only in the config file, never by anything the model or a user says<sup class="cite"><a href="#r1">1</a></sup>.</p>
-<p>The package also has what any agent needs and most demos skip: a budget per day and a rate per address in a pluggable store, caps on tool calls, output tokens and wall time, a final turn with no tools when the cap is reached so the answer is never empty, cost computed from configured prices and labelled as such, and a trace with every tool call, its input, its size and its time. It uses no framework; the loop is eighty lines over an interface with two methods, which is also why the tests never touch the network<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<h2>What it does, and comparable tools</h2>
+<p>The <a href="../ask/">Ask page</a> answers questions about this site from its texts and data files. It started as about two hundred lines in a Cloudflare Worker, with four rules written into the prompt and two of them checked after the fact. <code>sitewitness</code> is the Python package that replaced it on 21 and 22 September 2026. It indexes a site's texts into passages and its JSON files into schemas, gives a model five tools (<code>search</code>, <code>read_data</code>, <code>describe_source</code>, <code>quote</code> and a page reader), runs the agent loop behind a small server, and applies five rules to every answer before it is returned. An answer that breaks a rule is replaced by a fixed refusal, and the trace records which rule fired<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>Output checks of this kind are common. Guardrails AI wraps model calls in input and output guards built from validators, many of them published on its hub<sup class="cite"><a href="#r2">2</a></sup>. NeMo Guardrails defines input, dialog, retrieval, execution and output rails, several of which are themselves model calls, such as self-checking for hallucination<sup class="cite"><a href="#r3">3</a></sup>. RAGAS measures faithfulness offline by having a model split an answer into claims and checking each claim against the retrieved context<sup class="cite"><a href="#r4">4</a></sup>. <code>sitewitness</code> is cruder. Its rules are plain functions over the answer text and the trace of tool calls, with no second model, so they are deterministic, cheap and testable, and they check only what can be read off the text, such as whether a number appears when no data were read.</p>
 </section>
 
 <section>
-<h2>2 · What the golden set found, run by run</h2>
-<p>The golden set is thirty questions with known answers, the same set on which the Worker had scored 29 of 30. With the same model, the same questions and the same site, the package's first run scored 22, which showed that a rewrite that looks equivalent is not necessarily equivalent, and that only a fixed test can tell. Each run's misses were read from the trace, and each fix was a commit<sup class="cite"><a href="#r2">2</a></sup>.</p>
-<p>Run 1 scored 22/30. Two of its misses were stale expectations, since the status page had grown from five jobs to six and a number formatted <i>3,704</i> was checked against an expected <i>3704</i>; both were the evaluator's fault and were fixed as such. The other misses were real. The sources rule refused correct answers because the model wrote <code>https://bsandova.com/texts/surf</code> where the check wanted <code>/texts/surf</code>, so the rule was right and its matching was pedantic. The quotation rule refused correct answers because the model quoted a passage it had just retrieved without calling <code>quote</code>; the evidence was in the conversation and the rule ignored it. The fixes were tolerant source matching and counting a quotation as verified when its words occur in any tool result of the conversation, punctuation aside. The same run showed that the enforced answer replaced the original, so the trace lost what the model had said. The original is kept now, which is how every later run could be read<sup class="cite"><a href="#r2">2</a></sup>.</p>
-<p>Run 2 scored 26/30, and the quotation question failed in a new way. The model searched eight times for <i>IAM is a wall</i>, retrieval returned the right paragraph first every time, and the model still said it could not find the sentence, because <code>search</code> clipped passages to 600 characters and the sentence sat at character 700. A passage is now a paragraph, returned whole. The number-without-tool rule fired on "the status page tracks 6 jobs", which had been answered from a <code>describe_source</code> result (<code>"array": 6</code>). A schema is evidence too, so such a result now counts<sup class="cite"><a href="#r2">2</a></sup>.</p>
-<p>Runs 3 and 4 scored 26 and 28. In them the model declined a weather question without calling a tool, because nothing told it the site has weather data, and it read a nine-item list one item at a time until it hit the tool cap. The system prompt now lists which data files and pages exist, one line each and never their contents, and the <code>read_data</code> description says what <code>find</code> is for. The sources rule still refused <code>surf/data.json (climatology.ericeira)</code>, a correct path with a helpful note in parentheses, so parenthetical notes are no longer treated as part of a path. In run 5, at 29/30, one rule fired: the model quoted a long note from a data file verbatim, which is what the rule is for, and the golden set expected <i>2 263</i> where the file says <i>2262.5</i>, which is again the evaluator's fault<sup class="cite"><a href="#r2">2</a></sup>.</p>
-<p>The six runs cost 5.3 USD and used up one day's budget, which also showed that the budget works: the fourth run of the day was cut off at the configured 4 USD with the message it was supposed to show. The weekly evaluation now runs on Monday morning on a clean budget<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<h2>Method: five rules and the run-time limits</h2>
+<p>An answer with no tool call is refused, and so is an answer that contains a digit when the conversation holds no result from <code>read_data</code>, <code>search</code> or <code>describe_source</code>. Fenced code, a line starting with <code>def</code> or <code>import</code>, or an HTML tag is refused. A passage of forty characters or more inside quotation marks is refused unless the <code>quote</code> tool returned it as found or its words occur in a tool result of the conversation. A <code>Sources:</code> line naming a file or page the site does not have is refused as well. The first violated rule wins, the refusal replaces the answer, and the original answer is kept in the trace. A refusal is never itself refused, and the rules can be switched off only in the configuration file<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>Around the rules sit the limits a public endpoint needs: a daily budget and a per-address rate in a pluggable store, caps on tool calls, output tokens and wall time, and a final turn without tools when a cap is reached, so that an answer is never empty. Cost is computed from configured prices, and the trace records every tool call with its input, size and time. The package uses no agent framework; the model client is an interface with two methods<sup class="cite"><a href="#r1">1</a></sup>.</p>
 </section>
 
 <section>
-<h2>3 · Five security findings before the first deploy</h2>
-<p>An automated review read each commit as it was pushed and found five things, all real and all cheap. The client-address header (<code>X-Forwarded-For</code>) was trusted unconditionally, so anyone could spoof their way past the per-address limit, and a header is now trusted only when the config names it and only if its value parses as an address. The eval key, compared with <code>==</code>, is now compared in constant time. Upstream error text that went to the client now goes to the log. A server on a public host could be reached around the proxy that adds the limits, so the server can now require a proxy key and answers 403 without it, which makes the Fly hostname useless on its own. A deploy action was pinned to <code>@master</code> and is now pinned to a commit. None of the five was in the model itself<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<h2>Worked example: one traced answer</h2>
+<p>The saved evaluation of 22 September 2026 contains one answer that a rule replaced. The record, shortened, reads as follows<sup class="cite"><a href="#r5">5</a></sup>.</p>
+<pre>q         Which September watch runs have an unverified model attribution?
+expect    unverified
+tools     describe_source, read_data × 8
+original  Only one September run has an unverified model attribution: the <b>"opus" alias run on the
+          abstention pack dated 2026-09-14 (…). Its model field is recorded as "</b>unverified" because …
+enforced  quotes_need_verification
+answer    I can't answer that from this site. This assistant answers only from the site's data files …
+ok        false</pre>
+<p>The original answer contains the expected word. The quotation rule fired because its pattern takes any run of forty or more characters between two quotation marks as a quotation, and here it spanned the text between two short quoted words, <i>"opus"</i> and <i>"unverified"</i>, marked above. The refusal was therefore a false one, and the run's only miss.</p>
 </section>
 
 <section>
-<h2>4 · Running it, and this site's instance</h2>
+<h2>Tests and the evaluation runs</h2>
+<p>The package has 47 tests, run on Python 3.10 to 3.13 in GitHub Actions and passing locally on 29 September 2026; the model client is replaced by a stub, so no test calls the network. The golden set is thirty questions about the site, each with an expected substring or an expected refusal: 18 ask for a number, 7 for text, 1 for a quotation and 4 should be declined<sup class="cite"><a href="#r5">5</a></sup>.</p>
+<p>This is a log of six runs on 21 and 22 September 2026 with claude-sonnet-5, used to find faults rather than to measure progress. Five were scored, at 22, 26, 26, 28 and 29 of 30; the sixth, the fourth run on one day, was stopped by the 4 USD daily budget as configured, and the six together cost 5.3 USD. Only the last run is saved; the earlier scores and the cost come from terminal output (not saved; not verifiable)<sup class="cite"><a href="#r5">5</a></sup>. The golden set itself was corrected three times during the series, when the status page grew from five jobs to six, when <i>3,704</i> was checked against an expected <i>3704</i>, and when the expected <i>2 263</i> stalls met a file that gives <i>2262.5</i> (the expectation is now the substring <i>226</i>). The scores were therefore not measured against a fixed instrument and cannot be compared across runs.</p>
+<p>The faults found were these. In run 1 the sources rule refused correct answers that cited <code>https://bsandova.com/texts/surf</code> where it expected <code>/texts/surf</code>, and the quotation rule refused passages the model had just retrieved without calling <code>quote</code>; source matching became tolerant, and a quotation now counts as verified when its words occur in any tool result. The same run showed that the enforced refusal overwrote the original answer, which is now kept. In run 2 the model searched eight times for the sentence <i>IAM is a wall</i> and reported that it could not find it, because <code>search</code> clipped passages to 600 characters and the sentence sat at character 700; a passage is now a whole paragraph. The numbers rule also fired on a count taken from a <code>describe_source</code> result, which now counts as evidence. In runs 3 and 4 the model declined a weather question without calling a tool, since nothing told it the site holds weather data, and read a nine-item list one item at a time until it reached the tool cap; the system prompt now lists which files and pages exist, without their contents. A source path followed by a note in parentheses is no longer read as part of the path<sup class="cite"><a href="#r6">6</a></sup>.</p>
+<p>The last run scored 29 of 30 (95 % Wilson interval 83–99 %). The Worker it replaced had scored 29 of 30 on 17 September 2026 against the golden set as it stood then, so the package matched the Worker's score and did not improve on it; with thirty questions, and a single quotation question, a difference of one answer is within noise. In that run one rule fired once, on the false refusal shown above, and the other four rules did not fire, so no refusal in the run removed a wrong answer<sup class="cite"><a href="#r5">5</a></sup>.</p>
+</section>
+
+<section>
+<h2>Limits</h2>
+<p>The golden questions were written by the author about her own site, so they test the questions she expected, not those of other readers, and they say nothing about users trying to break the rules. The rules are lexical. The numbers rule looks for any digit and the quotation rule for forty characters between quotation marks; both can be passed by rewording, such as a number written in words or a paraphrase instead of a quotation, and the false refusal above shows that the quotation rule can also misread an honest answer. The rules make a wrong answer easier to see and refuse; they do not make the model read the data correctly. The package does not stream, does not remember a conversation, and supports only Anthropic's models, although the client is an interface that another provider could implement.</p>
+</section>
+
+<section>
+<h2>Install, reproduce and this site's instance</h2>
 <pre>pip install "sitewitness[embed]"
 sitewitness index --embed                  # texts → passages, BM25 + embeddings; JSON → schemas
 sitewitness serve --port 8000              # POST /ask · GET /health
 sitewitness eval golden.json --api http://localhost:8000 --allowed-misses 1
 sitewitness page ask/ --api https://api.example.com --example "How many …?"</pre>
-<p>This site is the first instance: the config is <code>sitewitness.toml</code> in the repository, the server runs on Fly behind a twenty-line Cloudflare Worker that adds the client address and the proxy key, the index is built in the image at deploy, and the deploy runs from GitHub Actions whenever a text or a data file changes. The Ask page's trace panel and evaluation tables come from <code>sitewitness page</code> with the site's own stylesheet<sup class="cite"><a href="#r1">1</a></sup>.</p>
-<p>The package does not stream, remember a conversation or use a model other than Anthropic's, though the client is an interface with two methods. Nor does it make the model right; it makes the model's wrongness visible and refusable, which on the evidence of <a href="silent-detector">the detector text</a> is the most a run-time system can do.</p>
-<div class="stack">stack · Python 3.10–3.13 · anthropic · FastAPI · rank-bm25 · sentence-transformers (optional) · quotecheck · pytest (47) · GitHub Actions · Fly.io · Cloudflare Workers · Apache-2.0</div>
+<p>This site is the first instance. Its configuration is <code>sitewitness.toml</code> in the site repository, and the server runs on Fly behind a twenty-line Cloudflare Worker that adds the client address and a proxy key. The index is built into the image at deploy, and the deploy runs from GitHub Actions whenever a text or a data file changes. The Ask page's trace panel and evaluation tables are generated by <code>sitewitness page</code>. A rerun of the evaluation will not reproduce the saved answers exactly, because the model's output is not deterministic. Before the first deploy an automated review of the commits found five security problems, all fixed: a client-address header trusted without configuration, a non-constant-time comparison of the evaluation key, upstream error text passed to clients, a server reachable around the rate-limiting proxy, and a deploy action pinned to a branch rather than a commit<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<div class="stack">stack · Python 3.10–3.13 · anthropic · FastAPI · rank-bm25 · sentence-transformers (optional) · quotecheck · pytest · GitHub Actions · Fly.io · Cloudflare Workers · Apache-2.0</div>
 </section>
 
 <section class="refs" id="refs">
 <h2>References</h2>
 <ol>
-<li id="r1">Šandová, B. (2026): <a href="https://github.com/sandovabarbora/sitewitness">sitewitness</a>, Apache-2.0, on <a href="https://pypi.org/project/sitewitness/">PyPI</a>; design in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/superpowers/specs/2026-09-21-sitewitness-design.md">the spec</a>; modules <code>protocol.py</code>, <code>agent.py</code>, <code>limits.py</code>, <code>server.py</code>, <code>evaluate.py</code>. Instance: <code>sitewitness.toml</code>, <code>deploy/</code>, <code>ask/worker/</code> in the site repository.</li>
-<li id="r2">The evaluation runs of 21–22 September 2026: <a href="../ask/eval-history.json">eval-history.json</a> and the commit history of the package (each fix named in its commit subject). The run-by-run scores 22, 26, 26, 28, 29 are from the terminal output of <code>sitewitness eval</code> on those days; the published <code>eval.json</code> is the last run.</li>
+<li id="r1">Šandová, B. (2026). sitewitness, version 0.1.0: <code>protocol.py</code>, <code>agent.py</code>, <code>limits.py</code>, <code>server.py</code>, <code>evaluate.py</code>; design in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/superpowers/specs/2026-09-21-sitewitness-design.md">the spec</a>. GitHub and PyPI. <a href="https://github.com/sandovabarbora/sitewitness">github.com/sandovabarbora/sitewitness</a>, <a href="https://pypi.org/project/sitewitness/">pypi.org/project/sitewitness</a>. Accessed 29 September 2026.</li>
+<li id="r2">Guardrails AI (2026). guardrails. GitHub. <a href="https://github.com/guardrails-ai/guardrails">github.com/guardrails-ai/guardrails</a>. Accessed 29 September 2026.</li>
+<li id="r3">NVIDIA (2026). NeMo Guardrails. GitHub. <a href="https://github.com/NVIDIA/NeMo-Guardrails">github.com/NVIDIA/NeMo-Guardrails</a>. Accessed 29 September 2026.</li>
+<li id="r4">Ragas (2026). Faithfulness. Ragas documentation. <a href="https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/faithfulness/">docs.ragas.io/en/stable/concepts/metrics/available_metrics/faithfulness</a>. Accessed 29 September 2026.</li>
+<li id="r5">Šandová, B. (2026). Ask the site, golden questions and saved evaluations: <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/ask/golden.json">ask/golden.json</a>, <a href="../ask/eval.json">ask/eval.json</a>, <a href="../ask/eval-history.json">ask/eval-history.json</a>. bsandova.com repository. Accessed 29 September 2026. Scores of the runs before 22 September 2026 were read from terminal output and not saved.</li>
+<li id="r6">Šandová, B. (2026). sitewitness commit history, 21–22 September 2026, one commit per fix. <a href="https://github.com/sandovabarbora/sitewitness/commits/v0.1.0">github.com/sandovabarbora/sitewitness/commits/v0.1.0</a>. Accessed 29 September 2026.</li>
 </ol>
 </section>
 
+<section id="changelog" class="changelog">
+<h2>Change log</h2>
+<ul>
+<li>22 September 2026: first published as "An agent that shows its work".</li>
+<li>29 September 2026: retitled and reframed as an engineering log and as the documentation page for the Ask assistant. Added comparable tools (Guardrails AI, NeMo Guardrails, RAGAS faithfulness), a worked example from the saved run, the golden set's composition, a 95 % interval for the final score and the comparison with the Worker's 29 of 30 on 17 September 2026. Corrected the account of the one rule firing in the final run: the saved record shows a false refusal caused by the quotation pattern spanning two short quoted words, not a verbatim quotation of a data file. Reconciled the run count (five scored runs and a sixth stopped by the budget), stated that the golden set changed during the series and that earlier scores were not saved, named the model, and added a limits section. Folded the security findings into the reproduction section, dropped the numbered headings, the slogans and the closing sentence, and removed the "security findings" and "evaluation runs" facts cards and the stack line's test count.</li>
+<li>Checked against editorial standard v1 on 29 September 2026.</li>
+</ul>
+</section>
+
 <footer class="text-foot">
-  <p class="back"><a href="../#works">← projects</a> · <a href="../ask/">ask the site</a> · <a href="ai-over-data">AI over data, measured</a></p>
+  <p class="back"><a href="../#works">← projects</a> · <a href="../ask/">ask the site</a> · <a href="quotecheck">quotecheck</a> · <a href="ai-over-data">AI over data, design notes</a></p>
 </footer>
 </article>
 

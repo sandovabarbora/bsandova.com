@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Can a wrong number be seen coming?</title>
-<meta name="description" content="5 794 answers from AI assistants over data warehouses, 3 839 of them silently wrong. Everything visible at run time, agreement across repeats, the shape of the SQL, the model, the language, was tried as a predictor of the wrong ones. The best held-out AUC is 0.64; self-consistency does not work; the only thing that catches a silent failure is the true answer.">
+<meta name="description" content="On 3 704 numeric answers from AI assistants over data warehouses, run-time signals separate silently wrong numbers from correct ones only weakly; the best of eight models reaches a held-out AUC of 0.64.">
 <meta property="og:title" content="Can a wrong number be seen coming?">
-<meta property="og:description" content="5 794 answers from AI assistants over data warehouses, 3 839 of them silently wrong. Everything visible at run time, agreement across repeats, the shape of the SQL, the model, the language, was tried as a predictor of the wrong ones. The best held-out AUC is 0.64; self-consistency does not work; the only thing that catches a silent failure is the true answer.">
+<meta property="og:description" content="On 3 704 numeric answers from AI assistants over data warehouses, run-time signals separate silently wrong numbers from correct ones only weakly; the best of eight models reaches a held-out AUC of 0.64.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://bsandova.com/assets/og/silent-detector.jpg">
 <meta property="og:image:width" content="1200">
@@ -35,82 +35,167 @@
 .scroller{overflow-x:auto;max-width:64rem}
 pre{font-family:var(--mono);font-size:12px;line-height:1.6;color:var(--fg);background:#1d1d1b;border:1px solid var(--line);padding:.9rem 1rem;overflow-x:auto;max-width:64rem;margin:.5rem 0 1.2rem}
 pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:normal}
-.stack{font-family:var(--mono);font-size:11px;line-height:1.8;color:var(--fg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:.8rem 0;margin:1rem 0 1.5rem;max-width:64rem}
-.stack b{color:var(--fg);font-weight:400}
+/* metadata block: style.css gives .meta a three-column grid for the home page; restore one line per row here */
+.text>.meta{display:block;letter-spacing:0;text-transform:none;font-size:12px}
+.text>.meta div{border-right:0;padding:6px 0}
+.text>.meta div+div{padding-left:0}
+.text>.meta div:last-child{border-bottom:1px solid #ececea}
+.text>.meta div{grid-template-columns:13ch 1fr}
 </style>
+
+<!-- ld --><link rel="alternate" type="application/atom+xml" title="Barbora Šandová" href="/feed.xml">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Can a wrong number be seen coming?", "description": "On 3 704 numeric answers from AI assistants over data warehouses, run-time signals separate silently wrong numbers from correct ones only weakly; the best of eight models reaches a held-out AUC of 0.64.", "url": "https://bsandova.com/texts/silent-detector", "image": "https://bsandova.com/assets/og/silent-detector.jpg", "dateModified": "2026-09-29T12:09:51+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
 </head>
 <body>
-<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">claims, checked · ml · en</span></div>
+<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">research · ml · en</span></div>
 
 <article class="text">
 <header class="text-head">
-  <p class="kicker">Claims, checked · machine learning · 15 September 2026 · on the Quaesitor runs</p>
+  <p class="kicker">Research · companion to Quaesitor · AI answers over data warehouses, 2026</p>
   <h1>Can a wrong number <em>be seen coming?</em></h1>
-  <p class="deck">Quaesitor measured how often an AI assistant over a data warehouse returns a number that runs, looks plausible and is wrong: 3 839 times in 5 794 answers. This text asks whether anything visible <i>at run time</i>, before anyone knows the true answer, tells the wrong numbers from the right ones, which is what a trust layer would most like to know. Agreement across repeats, the shape of the SQL, the model and the language were all tried, and the answer is no, for reasons that are more useful than a yes would have been.</p>
+  <p class="deck">Across 87 held-out questions, run-time signals separate an AI assistant's silently wrong numbers from correct ones only weakly, with a best-of-eight held-out AUC of 0.64 that the selection biases upward.</p>
   <dl class="facts">
-    <div><dt>answers</dt><dd>5 794 <small>125 runs · 15 languages · 8 packs · Quaesitor harness</small></dd></div>
-    <div><dt>trained on</dt><dd>3 704 <small>numeric answers, 87 questions · 81.8 % silently wrong</small></dd></div>
-    <div><dt>best held-out AUC</dt><dd>0.64 <small>agreement features, gradient boosting · 0.5 is a coin</small></dd></div>
-    <div><dt>self-consistency</dt><dd>21 % <small>correct when all repeats agree · base rate 18 %</small></dd></div>
+    <div><dt>answers</dt><dd>5 794 <small>3 839 silently wrong · 125 runs · 15 languages · 8 packs · administrative count</small></dd></div>
+    <div><dt>trained on</dt><dd>3 704 <small>numeric answers, 87 questions · 81.8&nbsp;% silently wrong · administrative count</small></dd></div>
+    <div><dt>best held-out AUC</dt><dd>0.64 <small>best of 8 combinations, selection-biased · no interval: answer-level data private · 0.5 is chance</small></dd></div>
+    <div><dt>self-consistency</dt><dd>21&nbsp;% <small>correct when all repeats agree · base rate 18&nbsp;% · no interval</small></dd></div>
   </dl>
 </header>
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>Of 5 794 answers from AI assistants over data warehouses, 3 839 were silently wrong: the query ran and returned a plausible number that was wrong. This text tests whether anything visible at run time, before the true answer is known, tells the wrong numbers from the right ones.</li>
-    <li>Nothing does well. The best held-out AUC is 0.64 (0.5 is a coin flip), from gradient boosting on agreement across repeats, and as a filter it forwards 3 % of answers with 86 % of them correct. The model, pack and language predict nothing (0.55–0.56).</li>
-    <li>Self-consistency adds almost nothing: when all three repeats return the same number, it is correct 21 % of the time, against a base rate of 18 %. A model on the shape of the SQL learns the traps of one warehouse and does not carry over to another.</li>
-    <li>Run-time signals cannot replace cross-checking each figure against verified ones, which is what the trust layer already does.</li>
-    <li>The answers come from one harness with planted traps, not from production questions, and the label is binary, so the size of each error is not measured.</li>
+    <li>Used as a filter, the best model forwards 3.4&nbsp;% of answers, 86&nbsp;% of them correct, and so catches 16&nbsp;% of the correct answers: a narrow lane about 4.7 times richer in correct numbers than the pool, which leaves every other answer to be cross-checked.</li>
+    <li>Agreement across three repeats barely helps, because the models tend to repeat the same error; the model, the pack and the language carry almost no signal.</li>
+    <li>What the SQL of an answer looks like does not carry over from one warehouse to another. Within-pack scores far below 0.5 are read as an artefact of having few questions per fold.</li>
+    <li>The analysis is exploratory, has no intervals, rests on a private repository and on answers sampled at an unrecorded temperature, and uses planted traps, not production questions.</li>
   </ul>
 </details>
+<dl class="meta">
+  <div><dt>published</dt><dd>15 September 2026 · updated 29 September 2026 · <a href="#changelog">version 2</a></dd></div>
+  <div><dt>status</dt><dd>exploratory</dd></div>
+  <div><dt>registration</dt><dd>not pre-registered; two exclusions were decided after first results (see "What changed during the analysis")</dd></div>
+  <div><dt>data</dt><dd>125 run reports of the Quaesitor harness, committed 20–25 August 2026, in the quaesitor repository (private; not verifiable); published: the aggregate output <a href="../assets/detector/detector.json">detector.json</a> and the chart data</dd></div>
+  <div><dt>code</dt><dd><code>method/src/detector.py</code> in the quaesitor repository at <code>b99c89e</code>, 15 September 2026 (private; not verifiable); rebuild: <code>.venv/bin/python -m src.detector</code> in <code>method/</code>. A reader cannot reproduce the analysis.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Can a wrong number be seen coming?</i> bsandova.com/texts/silent-detector, version 2.</dd></div>
+  <div><dt>licence</dt><dd>text, figures and data CC BY 4.0; the code is not released</dd></div>
+</dl>
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-silent-detector;--bg:url(../assets/photo/silent-detector.jpg);--bg-s:url(../assets/photo/silent-detector-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Diagnostic_monitors_in_the_control_room_of_Wendelstein_7-X.jpg">Siarhei Besarab</a> · CC BY-SA 4.0, colour held</p></section>
 
 
 <section>
-<h2>Silent failures and the cost of cross-checking them</h2>
-<p>An assistant that answers business questions with SQL fails in a particular way, in which the query runs and returns a number that is wrong without anything saying so. Quaesitor's harness plants the reasons in a warehouse (duplicated SCD rows, soft deletes, mixed currencies, a timezone, a wrong denominator) and asks questions whose true answer is known, three times each, in fifteen languages, of several models<sup class="cite"><a href="#r1">1</a></sup>. The result over 5 794 answers is a silent-failure rate that ranges from 56 % to 92 % depending on the model and the pack. The trust layer I run at work does not try to predict that; it cross-checks every figure against certified dashboards, which is expensive and needs the dashboards to exist. If a detector could flag the wrong numbers from what is visible while the answer is being produced, the cross-check could be reserved for the flagged ones, and that made the question worth a day's work.</p>
+<h2>Run-time signals of silent failure</h2>
+<p>An assistant that answers business questions with SQL can fail silently: the query runs and returns a plausible number that is wrong. Quaesitor measured how often this happens by planting known traps in synthetic warehouses and asking questions whose true answer is known<sup class="cite"><a href="#r1">1</a></sup>. Checking every figure against a verified source is expensive, so a signal available at run time that flags the likely wrong numbers would let the check be reserved for them. Several such signals have been proposed for language models in general. Self-consistency trusts the answer that most samples agree on<sup class="cite"><a href="#r2">2</a></sup>, models can be asked to estimate the probability that their own answer is correct<sup class="cite"><a href="#r3">3</a></sup>, and semantic entropy measures disagreement between sampled answers in meaning rather than in wording<sup class="cite"><a href="#r4">4</a></sup>. Selective classification frames the use of any such score as a trade-off between the share of cases answered and the error among them<sup class="cite"><a href="#r5">5</a></sup>. Text-to-SQL benchmarks such as BIRD and Spider 2.0 report execution accuracy on realistic databases but not whether the errors can be predicted<sup class="cite"><a href="#r6">6</a>, <a href="#r7">7</a></sup>. This text asks whether agreement across repeats, the shape of the SQL and the circumstances of the run predict which numeric answers are silently wrong, on held-out questions. Its contribution is a mostly negative result for this setting, with the size of the one signal that does exist.</p>
 </section>
 
 <section>
-<h2>What a detector is allowed to see</h2>
-<p>A detector may use only what exists at run time, with no access to the true answer, and the features fall into three groups. The first is agreement across the three repeats of the same question: how many distinct SQL statements the model wrote, how many distinct numbers came back, whether this answer is the majority value and whether all repeats agree. This is the popular self-consistency idea of asking several times and trusting the consensus. The second is the shape of the SQL, meaning its length, joins, tables, WHERE terms, boolean flag filters, DISTINCT, GROUP BY, date arithmetic, casts and coalesces, subqueries and NULL checks. The third is the run itself, that is which model alias, which question pack and which language. The type of trap planted in the question is the question's label and never enters a model<sup class="cite"><a href="#r2">2</a></sup>.</p>
-<p>The evaluation has two safeguards. Cross-validation is grouped by question, so all fifteen languages of Q03 are held out together and a model cannot learn that "Q03 is the SCD one"; and the abstention pack is left out of training, because there every numeric answer is wrong by construction (the right answer is to decline), which would turn "returned a number" into the label and inflate everything. Before the pack was left out the SQL-shape model scored 0.81, and afterwards 0.58, which makes that correction the first result<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<h2>Data</h2>
+<p>The data are the 125 run reports of the Quaesitor harness, committed between 20 and 25 August 2026. The harness plants the reasons for silent failure in a warehouse (duplicated rows from a slowly changing dimension, soft deletes, mixed currencies, a timezone, a wrong denominator) and asks each question three times, in fifteen languages, of several models. Of 5 794 answers, 885 were correct, 3 839 silently wrong, 485 refused, 458 implausible, 87 invalid SQL, 31 without a figure and 9 unmeasured. The silent-failure rate ranges from 56&nbsp;% to 92&nbsp;% across packs and model configurations<sup class="cite"><a href="#r1">1</a>, <a href="#r8">8</a></sup>.</p>
+<p>Of the 3 704 numeric answers used for training, 3 698 came from Claude models called through the Claude Code command-line client under the aliases opus and sonnet, in eight configurations, and 6 from a local Llama 3.1 model (per-answer file, private; not verifiable). The harness sets neither a sampling temperature nor a seed, so the client's default applied and was not recorded. Agreement between repeats depends on that temperature, and at a temperature of zero it would be close to trivial. Training excludes the abstention pack and two packs with fewer than 100 numeric answers, which leaves five packs and 87 questions<sup class="cite"><a href="#r8">8</a></sup>.</p>
 </section>
 
 <section>
-<h2>Held-out AUC of the run-time features</h2>
+<h2>How this was done</h2>
+<p>The unit is one numeric answer, one repeat of one question, and the label is silently wrong against correct; implausible answers are a separate class and are not trained on. A detector may use only what exists at run time. The first feature set is agreement across the three repeats: how many distinct SQL statements and distinct numbers came back, whether this answer is the majority value and whether all repeats agree. The second is the shape of the SQL: its length, joins, tables, WHERE terms, boolean flag filters, DISTINCT, GROUP BY, date arithmetic, casts and coalesces, subqueries and NULL checks. The third is the run: the model alias, the pack and the language. A fourth set combines all three. The type of trap planted in a question never enters a model<sup class="cite"><a href="#r8">8</a></sup>.</p>
+<p>Each feature set is fitted with a logistic regression and with gradient boosting, eight combinations in all, and scored by the area under the ROC curve on held-out questions. Cross-validation uses five folds grouped by question, so all fifteen languages of a question are held out together and a model cannot learn which question carries which trap. The best of the eight is selected after seeing all eight scores, without nested cross-validation, so its AUC is an optimistic estimate. The per-answer data are in the private repository, and no interval has been computed for this page; with 87 questions a question-level bootstrap interval would be wide, and differences of a few hundredths between combinations should be read as within noise.</p>
+</section>
+
+<section>
+<h2>The tests</h2>
+<div class="scroller"><table class="tbl">
+<caption>Held-out performance, 3 704 numeric answers, 87 questions; filter at a 50&nbsp;% threshold</caption>
+<thead><tr><th>features</th><th>model</th><th class="n">AUC</th><th class="n">forwarded</th><th class="n">correct among forwarded</th><th class="n">share of correct caught</th><th class="n">AP, correct</th><th class="n">Brier</th></tr></thead>
+<tbody>
+<tr><td>agreement</td><td>logistic</td><td class="n">0.56</td><td class="n">0.2&nbsp;%</td><td class="n">67&nbsp;%</td><td class="n">0.6&nbsp;%</td><td class="n">0.20</td><td class="n">0.148</td></tr>
+<tr><td>agreement</td><td>boosting</td><td class="n"><b>0.64</b></td><td class="n">3.4&nbsp;%</td><td class="n">86&nbsp;%</td><td class="n">16&nbsp;%</td><td class="n">0.34</td><td class="n">0.134</td></tr>
+<tr><td>SQL shape</td><td>logistic</td><td class="n">0.43</td><td class="n">1.4&nbsp;%</td><td class="n">12&nbsp;%</td><td class="n">0.9&nbsp;%</td><td class="n">0.15</td><td class="n">0.173</td></tr>
+<tr><td>SQL shape</td><td>boosting</td><td class="n">0.58</td><td class="n">10.5&nbsp;%</td><td class="n">42&nbsp;%</td><td class="n">24&nbsp;%</td><td class="n">0.34</td><td class="n">0.159</td></tr>
+<tr><td>run</td><td>logistic</td><td class="n">0.55</td><td class="n">0.9&nbsp;%</td><td class="n">12&nbsp;%</td><td class="n">0.6&nbsp;%</td><td class="n">0.25</td><td class="n">0.150</td></tr>
+<tr><td>run</td><td>boosting</td><td class="n">0.56</td><td class="n">2.1&nbsp;%</td><td class="n">35&nbsp;%</td><td class="n">4.0&nbsp;%</td><td class="n">0.25</td><td class="n">0.150</td></tr>
+<tr><td>all</td><td>logistic</td><td class="n">0.62</td><td class="n">10.0&nbsp;%</td><td class="n">47&nbsp;%</td><td class="n">26&nbsp;%</td><td class="n">0.33</td><td class="n">0.151</td></tr>
+<tr><td>all</td><td>boosting</td><td class="n">0.59</td><td class="n">12.4&nbsp;%</td><td class="n">53&nbsp;%</td><td class="n">36&nbsp;%</td><td class="n">0.37</td><td class="n">0.145</td></tr>
+<tr><td class="dim">rule: all repeats agree</td><td class="dim">none</td><td class="n dim">0.55</td><td class="n dim">60&nbsp;%</td><td class="n dim">21&nbsp;%</td><td class="n dim">69&nbsp;%</td><td class="n dim">–</td><td class="n dim">–</td></tr>
+</tbody>
+</table></div>
+<p class="note">Base rate of correct answers 18&nbsp;%, so an uninformative score has an average precision for correct answers of about 0.18 and a Brier score of 0.149. No intervals: the per-answer predictions are private. Source: detector.json.</p>
+</section>
+
+<section>
+<h2>Agreement across repeats</h2>
 <figure data-chart="../assets/detector/charts.json#auc">
   <img src="../assets/detector/01-auc.svg" alt="Horizontal bars of held-out AUC for four feature sets and two model families; all between 0.43 and 0.64, with 0.5 marked as coin flip and the agreement rule at 0.55." loading="lazy">
-  <figcaption><b>fig. 1</b> · Held-out AUC (GroupKFold by question, 5 folds) for logistic regression and gradient boosting on each feature set, 3 704 numeric answers from 87 questions. The dotted line is the plain rule "forward only when all repeats agree".</figcaption>
+  <figcaption><b>fig. 1</b> · Held-out AUC (GroupKFold by question, 5 folds) for logistic regression (grey) and gradient boosting on each feature set, 3 704 numeric answers from 87 questions. The dotted line is the plain rule "forward only when all repeats agree". No interval bands: the per-answer predictions are private. Source: detector.json, 15 September 2026.</figcaption>
 </figure>
-<p>The best any model reaches on held-out questions is an AUC of 0.64, from gradient boosting on the agreement features; everything else sits between 0.43 and 0.62, and a logistic regression on the shape of the SQL scores below a coin flip, meaning the shapes that go with wrong answers on some questions go with right answers on others. Used as a filter at a 50 % threshold, the best model forwards 3 % of answers with 86 % of them correct, so it keeps almost nothing. The run features, model, pack and language, predict nothing at all (0.55–0.56), which also shows that the wrong answers are not a property of one model or one language<sup class="cite"><a href="#r2">2</a></sup>.</p>
-<p>Self-consistency adds almost nothing here: when all three repeats return the same number, that number is correct 21 % of the time, against a base rate of 18 %. When the three repeats wrote three different SQL statements and still agreed on the number, which sounds like the strongest possible evidence, it is correct 20 % of the time. The model is stable and consistently wrong in the same way, ignoring the SCD duplicates on every attempt and counting the soft-deleted rows every time, and consensus among three copies of the same blind spot is not evidence. This is the mechanism behind the headline of the Quaesitor texts, that trust grows faster than accuracy, since the assistant is confident and stable exactly when it is wrong in a way it cannot see<sup class="cite"><a href="#r1">1</a>, <a href="#r2">2</a></sup>.</p>
+<p>The highest held-out AUC, 0.64, comes from gradient boosting on the agreement features, the maximum over eight combinations and therefore optimistic; the other seven lie between 0.43 and 0.62 (fig. 1). The logistic regression on the shape of the SQL scores below chance, which means that the shapes that go with wrong answers on some questions go with right answers on others. The run features, model, pack and language, score 0.55 to 0.56, so the wrong answers are not concentrated in one model or one language<sup class="cite"><a href="#r8">8</a></sup>.</p>
+<p>Used as a filter at a 50&nbsp;% threshold, the best model forwards 3.4&nbsp;% of answers, 86&nbsp;% of them correct, and catches 16&nbsp;% of all correct answers; against a base rate of 18&nbsp;%, that lane is about 4.7 times richer in correct numbers than the pool. Its average precision for correct answers is 0.34 against the 0.18 of an uninformative score, and its Brier score is 0.134 against 0.149. A high-confidence lane of this size could skip the cross-check for about one answer in thirty, at a cost of one wrong number in seven among those skipped, and every other answer would still need checking, so its signal is weak but present<sup class="cite"><a href="#r8">8</a></sup>.</p>
+<p>When all three repeats return the same number, that number is correct 21&nbsp;% of the time against the base rate of 18&nbsp;%, so self-consistency on its own adds little, and when the three repeats wrote three different SQL statements and still agreed on the number, it is correct 20&nbsp;% of the time. The run reports show the models repeating the same mistake, such as ignoring the duplicated dimension rows or counting soft-deleted rows on every attempt, but the share of agreeing answers that fail on each trap type is not computed in the published output, so this mechanism is described, not measured<sup class="cite"><a href="#r1">1</a>, <a href="#r8">8</a></sup>.</p>
 </section>
 
 <section>
 <h2>SQL shape across warehouses</h2>
 <figure data-chart="../assets/detector/charts.json#transfer">
   <img src="../assets/detector/02-transfer.svg" alt="A three by three matrix of AUC values for the SQL-shape model trained on one pack and tested on another; off-diagonal values between 0.41 and 0.62, and the ecommerce and taxi diagonals below 0.5." loading="lazy">
-  <figcaption><b>fig. 2</b> · Gradient boosting on SQL-shape features, trained on one warehouse's pack and scored on the others. Diagonal: held-out questions within the same pack. Values below 0.5 mean the learned pattern points the wrong way on the new warehouse.</figcaption>
+  <figcaption><b>fig. 2</b> · Gradient boosting on SQL-shape features, trained on one warehouse's pack and scored on the others; the three packs with at least 150 numeric answers (e-commerce 26 questions, SaaS 9, taxi 10). Diagonal: held-out questions within the same pack. Values below 0.5 mean the learned pattern ranks the new answers backwards. No interval bands. Source: detector.json, 15 September 2026.</figcaption>
 </figure>
-<p>Trained on the e-commerce warehouse, the SQL-shape model scores 0.53 on the SaaS warehouse and 0.62 on the taxi one; trained on taxi it scores 0.41 on SaaS and 0.44 on e-commerce, below chance. Even within a pack, held-out questions score 0.29 (e-commerce) and 0.12 (taxi), because a query shape that means "wrong" for one question means "right" for the next. What the model can learn is what the traps of a particular warehouse look like, which amounts to memorising the questions, and a detector deployed on new questions would not have that to go on<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p>Trained on the e-commerce warehouse, the SQL-shape model scores 0.53 on the SaaS warehouse and 0.62 on the taxi one; trained on taxi, it scores 0.41 on SaaS and 0.44 on e-commerce (fig. 2). What the model can learn is what the traps of a particular warehouse look like, and a detector deployed on new questions in a new warehouse would not have that to go on. Within a pack, held-out questions score 0.29 on e-commerce and 0.12 on taxi. Values this far below 0.5 are a known artefact of leave-group-out cross-validation with few groups: holding out a question shifts the class balance of the training folds the other way, and a model that learns that balance ranks the held-out question backwards. With 10 taxi questions, each fold holds out two, so the diagonal values are treated here as an artefact, not as a finding<sup class="cite"><a href="#r8">8</a></sup>.</p>
 </section>
 
 <section>
-<h2>Consequences for the trust layer, and limits</h2>
-<p>For the trust layer there are three practical conclusions. Run-time signals cannot replace the cross-check, because a silently wrong number is by definition one that leaves no trace in how it was produced, and the best AUC measured here is 0.64. Self-consistency, the cheapest and most recommended safeguard, buys three percentage points here at three times the cost. What works is what was already built: a catalogue of verified figures the assistant must reconcile against, and a protocol that makes reconciliation a measured obligation rather than a hope. The detector was worth building because it shows, with numbers, why the expensive check is necessary<sup class="cite"><a href="#r3">3</a></sup>.</p>
-<p>The analysis has limits. The answers come from one harness with planted traps, not from production questions; production wrong answers may be easier or harder. Features are hand-written from the SQL text; an embedding of the query might do better, though the transfer result suggests it would learn the same thing, the warehouse. The label is binary, and the size of the error (a 6 % miss and a 2 000 % miss are both "silently wrong") is left for later. The code, the parsed answers and every number here are in the harness repository, with tests<sup class="cite"><a href="#r2">2</a></sup>.</p>
-<div class="stack">stack · scikit-learn (GroupKFold, logistic regression, gradient boosting) · pandas · the Quaesitor harness · 4 new tests, 732 in the repository</div>
+<h2>Robustness</h2>
+<div class="scroller"><table class="tbl">
+<caption>Training data by pack and within-pack AUC of the SQL-shape model</caption>
+<thead><tr><th>pack</th><th class="n">numeric answers</th><th class="n">questions</th><th class="n">silently wrong</th><th class="n">within-pack AUC</th></tr></thead>
+<tbody>
+<tr><td>e-commerce</td><td class="n">2 377</td><td class="n">26</td><td class="n">88&nbsp;%</td><td class="n">0.29</td></tr>
+<tr><td>SaaS</td><td class="n">651</td><td class="n">9</td><td class="n">63&nbsp;%</td><td class="n">0.67</td></tr>
+<tr><td>taxi</td><td class="n">459</td><td class="n">10</td><td class="n">79&nbsp;%</td><td class="n">0.12</td></tr>
+<tr><td>benchmark v0</td><td class="n">111</td><td class="n">23</td><td class="n">88&nbsp;%</td><td class="n dim">too small</td></tr>
+<tr><td>medallion</td><td class="n">106</td><td class="n">19</td><td class="n">56&nbsp;%</td><td class="n dim">too small</td></tr>
+</tbody>
+</table></div>
+<p class="note">Within-pack AUC is computed only for packs with at least 150 numeric answers. Excluded from training: abstention, benchmark bronze v0, TPC-DS. Source: detector.json.</p>
+</section>
+
+<section>
+<h2>What changed during the analysis</h2>
+<ul>
+<li>15 September 2026: the abstention pack was excluded after first results. Its correct response is to decline, so every numeric answer in it is wrong by construction and "returned a number" becomes the label; with the pack included the SQL-shape model scored 0.81, and without it 0.58.</li>
+<li>15 September 2026: two packs with fewer than 100 numeric answers (benchmark bronze v0 and TPC-DS) were excluded.</li>
+</ul>
+</section>
+
+<section>
+<h2>What this does not show</h2>
+<p>The answers come from one harness with planted traps, not from production questions, and production errors may be easier or harder to predict. The features are written by hand from the SQL text; an embedding of the query might score higher, although the transfer result suggests it would also learn the warehouse. The label is binary, so a 6&nbsp;% miss and a 2 000&nbsp;% miss count alike. The sampling temperature of the repeats is unknown, almost all training answers come from Claude configurations, and none of the uncertainty-based signals in the literature, such as semantic entropy or self-reported confidence, were tested. The analysis is exploratory, the best result was selected from eight, and none of the AUCs has an interval. A silently wrong number evidently leaves some trace, since the best AUC is above 0.5, but a weak one<sup class="cite"><a href="#r8">8</a></sup>.</p>
+<p>For a system that cross-checks figures against a catalogue of verified ones, such as the trust layer the author runs at work (private; not verifiable), these results do not support replacing the check with a run-time score; at most they support a narrow lane of answers that skip it, whose error rate would have to be acceptable to the user<sup class="cite"><a href="#r1">1</a></sup>.</p>
+</section>
+
+<section>
+<h2>Reproduction</h2>
+<p>The parsed answers, the features and <code>method/src/detector.py</code> are in the private quaesitor repository at commit <code>b99c89e</code>, with tests in <code>tests/test_detector.py</code>; <code>.venv/bin/python -m src.detector</code>, run in <code>method/</code>, parses the reports and writes <code>detector.json</code>. Only that output and the chart data are public, so the numbers on this page can be checked against the published JSON but not rebuilt from the answers.</p>
 </section>
 
 <section class="refs" id="refs">
 <h2>References</h2>
 <ol>
-<li id="r1">Šandová, B. (2026): <a href="quaesitor/">Quaesitor</a>, the three texts: the harness, the packs, the classification of answers (correct, silently wrong, implausible, refused) and the finding that trust grows faster than accuracy. Runs: quaesitor (private) repository, <code>method/outputs/agent_*.md</code>, 125 reports.</li>
-<li id="r2">Šandová, B. (2026): <code>method/src/detector.py</code> in the same repository: parser over the run reports, run-time features, GroupKFold by question, pack-to-pack transfer; output <a href="../assets/detector/detector.json">detector.json</a>, tests in <code>tests/test_detector.py</code>. Exclusions: the abstention pack (no contrast) and two packs under 100 numeric answers. 5 794 answers parsed, 3 704 trained on.</li>
-<li id="r3">Šandová, B. (2026): <a href="engineering#what-runs">The platform is code. So is the trust.</a>, section 7: the LLM assistant's trust layer, catalogue-first lookup and protocol compliance as an evaluation metric.</li>
+<li id="r1">Šandová, B. (2026). <a href="quaesitor/">Quaesitor</a>, the three texts: the harness, the packs and the classification of answers (correct, silently wrong, implausible, refused). Runs: quaesitor repository, <code>method/outputs/agent_*.md</code>, 125 reports (private; not verifiable).</li>
+<li id="r2">Wang, X., Wei, J., Schuurmans, D. et al. (2023). Self-consistency improves chain of thought reasoning in language models. ICLR 2023. <a href="https://arxiv.org/abs/2203.11171">arXiv:2203.11171</a>. Accessed 29 September 2026.</li>
+<li id="r3">Kadavath, S., Conerly, T., Askell, A. et al. (2022). Language models (mostly) know what they know. <a href="https://arxiv.org/abs/2207.05221">arXiv:2207.05221</a>. Accessed 29 September 2026.</li>
+<li id="r4">Farquhar, S., Kossen, J., Kuhn, L. and Gal, Y. (2024). Detecting hallucinations in large language models using semantic entropy. <i>Nature</i> 630, 625–630. <a href="https://doi.org/10.1038/s41586-024-07421-0">doi:10.1038/s41586-024-07421-0</a>. Accessed 29 September 2026.</li>
+<li id="r5">Geifman, Y. and El-Yaniv, R. (2017). Selective classification for deep neural networks. NeurIPS 2017. <a href="https://arxiv.org/abs/1705.08500">arXiv:1705.08500</a>. Accessed 29 September 2026.</li>
+<li id="r6">Li, J., Hui, B. et al. (2023). Can LLM already serve as a database interface? A big bench for large-scale database grounded text-to-SQLs (BIRD). NeurIPS 2023. <a href="https://arxiv.org/abs/2305.03111">arXiv:2305.03111</a>. Accessed 29 September 2026.</li>
+<li id="r7">Lei, F., Chen, J. et al. (2024). Spider 2.0: evaluating language models on real-world enterprise text-to-SQL workflows. <a href="https://arxiv.org/abs/2411.07763">arXiv:2411.07763</a>. Accessed 29 September 2026.</li>
+<li id="r8">Šandová, B. (2026). <code>method/src/detector.py</code>, quaesitor repository, commit <code>b99c89e</code> (private; not verifiable): parser over the run reports, run-time features, GroupKFold by question, pack-to-pack transfer; tests in <code>tests/test_detector.py</code>. Public output: <a href="../assets/detector/detector.json">detector.json</a>.</li>
 </ol>
+</section>
+
+<section id="changelog" class="changelog">
+<h2>Change log</h2>
+<ul>
+<li>15 September 2026: first published.</li>
+<li>29 September 2026, version 2: moved from "Claims, checked" to research, marked exploratory, and restructured to the research standard, with a question and contribution against six external references, a data section, the design, a table of all eight combinations, a robustness table, the post-hoc exclusions as a dated list, limitations and reproduction. The deck is one sentence and 0.64 is reported as the best of eight, selection-biased. The filter result is reported with its recall and lift (3.4&nbsp;% forwarded, 86&nbsp;% correct, 16&nbsp;% of correct answers caught, about 4.7 times the base rate) instead of "it keeps almost nothing"; the "3&nbsp;%" of version 1 is given as 3.4&nbsp;%, from detector.json. Added from detector.json: the outcome breakdown, the per-pack counts, question counts and within-pack AUC for SaaS (0.67), average precision and Brier scores, the eight-row results table and the agreement rule's forwarded share and recall. Added from the repository: the run-report dates (20–25 August 2026), the models and the absence of a set temperature or seed, the code commit and command. The within-pack AUCs of 0.29 and 0.12 are now treated as an artefact of few questions per fold. Removed the claim that a silently wrong number leaves no trace, the "three percentage points at three times the cost" line, the closing morals, the tie-in to the Quaesitor headline, the ".stack" line with its test counts (4 new tests, 732 in the repository) and the link to the retired engineering page. The repository is marked private; question-level bootstrap intervals were not computed because the per-answer data are not public, and this is stated as a limitation.</li>
+<li>29 September 2026, editorial check: the run reports were committed 20–25 August 2026, not through 15 September (the date of the detector commit); the training answers from Claude models are 3 698 in eight configurations, not 3 575 in six, which counted only configurations with at least 100 answers in detector.json; the other 6 answers came from a local Llama 3.1 model.</li>
+<li>Checked against editorial standard v1 on 29 September 2026.</li>
+</ul>
 </section>
 
 <footer class="text-foot">

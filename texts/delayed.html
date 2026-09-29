@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Delayed All the Time. On Time, Occasionally.</title>
-<meta name="description" content="Prague public transport played as disco: five real days from 121 million stop events, each day in its own key, the chorus wherever the city stops keeping up. How the data drives every musical decision, and what you hear.">
-<meta property="og:title" content="Delayed All the Time. On Time, Occasionally.">
-<meta property="og:description" content="Prague public transport played as disco: five real days from 121 million stop events, each day in its own key, the chorus wherever the city stops keeping up. How the data drives every musical decision, and what you hear.">
+<title>Delayed All the Time: Prague public transport as sound</title>
+<meta name="description" content="A note on a browser player that turns five days of Prague public transport in 2025 into synthesised disco tracks: how stop events and delays map to instruments, keys and choruses, and how the days were chosen.">
+<meta property="og:title" content="Delayed All the Time: Prague public transport as sound">
+<meta property="og:description" content="A note on a browser player that turns five days of Prague public transport in 2025 into synthesised disco tracks: how stop events and delays map to instruments, keys and choruses, and how the days were chosen.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://bsandova.com/assets/og/delayed.jpg">
 <meta property="og:image:width" content="1200">
@@ -21,9 +21,6 @@
 <link rel="stylesheet" href="../text.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../a24.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false})"></script>
 
 <style>
 .tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
@@ -35,97 +32,115 @@
 .tbl caption{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);padding:0 0 .5rem}
 .play{display:inline-block;background:var(--coral);color:#161616;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:.8rem 1.2rem;margin:.5rem 0 1rem}
 .play:hover{background:var(--hot);color:#161616}
+/* metadata block: style.css gives .meta a three-column grid for the home page; restore one line per row here */
+.text>.meta{display:block;letter-spacing:0;text-transform:none;font-size:12px}
+.text>.meta div{border-right:0;padding:6px 0}
+.text>.meta div+div{padding-left:0}
+.text>.meta div:last-child{border-bottom:1px solid #ececea}
 </style>
+
+<!-- ld --><link rel="alternate" type="application/atom+xml" title="Barbora Šandová" href="/feed.xml">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Delayed All the Time: Prague public transport as sound", "description": "A note on a browser player that turns five days of Prague public transport in 2025 into synthesised disco tracks: how stop events and delays map to instruments, keys and choruses, and how the days were chosen.", "url": "https://bsandova.com/texts/delayed", "image": "https://bsandova.com/assets/og/delayed.jpg", "dateModified": "2026-09-29T12:09:51+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
 </head>
 <body>
 <div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">cities · sonification · 2025 · en</span></div>
 
 <article class="text">
 <header class="text-head">
-  <p class="kicker">Sonification · Prague Integrated Transport · five days · Web Audio, no samples</p>
-  <h1>Delayed All the Time. <em>On Time, Occasionally.</em></h1>
-  <p class="deck">Five real days of Prague public transport, played as disco tracks by the transport system itself. The metro is the kick drum because it is the most reliable pulse in the city, and the buses are the chords, which go further out of tune the later they run. When the city stops keeping up, the track lifts into the chorus.</p>
+  <p class="kicker">Note · 14 September 2026 · Prague public transport in 2025, as sound</p>
+  <h1>Delayed All the Time: <em>Prague public transport as sound</em></h1>
+  <p class="deck">A browser player that turns five days of Prague public transport in 2025 into synthesised disco tracks, with each transport mode as an instrument and each day's key set by its mean surface delay.</p>
   <dl class="facts">
-    <div><dt>source period</dt><dd>121 M stop events <small>15 March – 8 September 2025 · Golemio / PID</small></dd></div>
-    <div><dt>one day</dt><dd>288 beats <small>5-minute windows · 116 BPM · 24 h ≈ 2.5 min</small></dd></div>
-    <div><dt>keys</dt><dd>lydian → phrygian <small>chosen by the day's mean delay</small></dd></div>
-    <div><dt>samples used</dt><dd>0 <small>every sound synthesised in the browser</small></dd></div>
+    <div><dt>stop events on the record</dt><dd>3 267 980 <small>five days of 2025, all modes · administrative count</small></dd></div>
+    <div><dt>mean surface delay by day</dt><dd>36–164 s <small>bus, tram, trolleybus · administrative count</small></dd></div>
+    <div><dt>one day</dt><dd>288 beats <small>5-minute windows · 116 BPM · 24 h ≈ 2.5 min · fixed by design</small></dd></div>
+    <div><dt>source history</dt><dd>121 197 794 <small>vehicle-location records, 15 March – 8 September 2025 · Golemio · administrative count</small></dd></div>
   </dl>
   <a class="play" href="https://sandovabarbora.github.io/delayed-all-the-time/">Play the record</a>
 </header>
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>A self-contained HTML player turns five real days of Prague public transport into disco tracks, synthesised live in the browser with no samples. Each mode is an instrument: the metro is the kick drum, and the buses are the chords, which detune as bus delay grows.</li>
-    <li>The mapping from data to sound contains no randomness. One day is 288 five-minute windows played as 288 beats at 116 BPM, and each day's key is set by its mean surface delay, from D lydian on Easter Monday (36 s) to D phrygian on The Meltdown (164 s).</li>
-    <li>The track lifts into the chorus whenever the smoothed surface delay exceeds 68 % of that day's maximum. On a typical weekday that rule yields the two rush hours, with the delay peaking at 145 s around 07:55.</li>
-    <li>It is the companion piece to a master's thesis in which bus and tram delays follow an autoregression whose coefficients sum to 0.727 and 0.715. The figure on this page is recomputed from the player's embedded aggregates, and its mean delays match the record's liner notes.</li>
-    <li>The record plays five days picked from 121 M stop events, as 5-minute aggregates. Trains are left out of the band, and no raw records are redistributed.</li>
+    <li>The same day always produces the same track: the mapping from data to sound contains no randomness, and no audio is sampled.</li>
+    <li>The rush-hour choruses and the keys come from thresholds set by hand, so the fit between the music and the working day reflects those choices and is not a finding about the network.</li>
+    <li>The piece makes no statistical claim. It shares its data source with the thesis on delay persistence but plays city-wide five-minute averages, which is a different object from the route-level trip dynamics the thesis estimates.</li>
+    <li>The mean delay behind each key counts early running as negative, so a day with many early departures sounds brighter than its lateness alone would make it.</li>
   </ul>
 </details>
+<dl class="meta">
+  <div><dt>published</dt><dd>14 September 2026 · updated 29 September 2026 · <a href="#changelog">version 2</a></dd></div>
+  <div><dt>status</dt><dd>note</dd></div>
+  <div><dt>data</dt><dd>Prague Integrated Transport stop-time history via <a href="https://golemio.cz">Golemio</a> (Operator ICT), collected 15 March – 8 September 2025; five days published as 5-minute aggregates in <code>sonification_days.json</code>; attribution to Golemio required, licence name not stated in the repository</dd></div>
+  <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/delayed-all-the-time">sandovabarbora/delayed-all-the-time</a> at <code>798f726</code> (MIT); the figure: <code>python3 tools/charts/delayed.py</code> in the site repository</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Delayed All the Time: Prague public transport as sound</i>. bsandova.com/texts/delayed, version 2.</dd></div>
+  <div><dt>licence</dt><dd>code MIT; text, figures and data CC BY 4.0</dd></div>
+</dl>
 <section class="film film-page" aria-hidden="false"><div class="shot" style="view-transition-name:ph-delayed-red;--bg:url(../assets/photo/delayed-red.jpg);--bg-s:url(../assets/photo/delayed-red-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Prague_-_8986914607.jpg">Yannick Loriot</a> · CC BY 2.0</p></section>
 
 
 <section>
-<p>This is the companion piece to <a href="../#works">a master's thesis</a> on delay persistence in the Prague network, and it started as a way of hearing what the thesis was about. Delays in the network behave less like noise than like a slowly moving state you can watch, in which the morning peak builds, holds and lets go. Statistically the state is an autoregression whose coefficients sum to 0.73:</p>
-<div class="eq">$$d_t = \phi_1 d_{t-1} + \phi_2 d_{t-2} + \varepsilon_t,\qquad \phi_1+\phi_2 = 0.727\ (\text{bus}),\ 0.715\ (\text{tram})$$</div>
-<p>A shock to the delay at one moment is still three-quarters there in the next. In musical terms that is a build-up, a chorus and a breakdown, and the ear picks it up before the table does<sup class="cite"><a href="#r1">1</a></sup>.</p>
-<p>The player is one self-contained HTML file with no server, no build step and no external resources. All audio is synthesised live with the Web Audio API from five days of aggregated stop-time data embedded verbatim in the file. No raw records are redistributed, and the aggregates are labelled as a derived work of Golemio's open data<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p>The record was made alongside <a href="thesis">a master's thesis on delay persistence in the Prague network</a>, which uses the same Golemio history of 121 197 794 vehicle-location records from 15 March to 8 September 2025<sup class="cite"><a href="#r1">1</a></sup>. The record uses five days of it, counted as stop events, one per vehicle arrival at a stop, and aggregated into 5-minute windows per mode: the number of events, the mean arrival delay and its 90th percentile. Arrivals with a delay outside −600 to 3 600 s are left out before counting and averaging, and early arrivals enter the mean as negative values, so early running offsets lateness in every mean delay on this page. Only these aggregates are published; the raw records are not redistributed<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p>The five days were chosen by rules written into the extraction script. The typical Tuesday, 17 June, is the weekday closest to the median of both the daily event count and the daily mean delay across the whole period; the Meltdown, 30 April, is the day with the highest mean delay in the data; Easter Monday, 21 April, the day with the lowest; Back to School, 1 September, the first school day of the year; and the Summer Sunday, 13 July, the holiday-season Sunday with the least traffic. The dates are fixed in the script, and the computation that ranked the days is not in the repository. The cause of the high delays on 30 April was not investigated<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<figure class="player">
+  <iframe src="https://sandovabarbora.github.io/delayed-all-the-time/" title="Delayed All the Time, the player: five days of Prague public transport synthesised in the browser" loading="lazy" style="width:100%;height:560px;border:1px solid #000;background:#130814" allow="autoplay"></iframe>
+  <figcaption>The player, embedded from its repository page. Press play inside the frame; all sound is synthesised in your browser from the aggregates.</figcaption>
+</figure>
 </section>
 
 <section>
-<h2>How the data maps to the instruments</h2>
-<p>The mapping from data to sound contains no randomness. One day is 288 five-minute windows and therefore 288 beats, and at 116 BPM twenty-four hours take about two and a half minutes. Each transport mode is an instrument, and each instrument plays what its mode did in that window<sup class="cite"><a href="#r2">2</a></sup>.</p>
-</section>
+<h2>How the data maps to the sound</h2>
+<p>One day is 288 five-minute windows played as 288 beats, and at 116 BPM twenty-four hours take about two and a half minutes. Each mode is an instrument whose volume follows its number of stop events in the window, and some instruments also follow delay. The metro averages a delay of 7 s on a typical weekday and carries the kick drum, so the beat stops when the metro closes at night. Buses, with about 557 000 stop events on a weekday, play the chord stabs, whose detune in cents grows with the current bus delay. Trains average 111 s late on a typical weekday and play no instrument, though they remain in the player's own traffic chart<sup class="cite"><a href="#r2">2</a></sup>.</p>
 <table class="tbl"><caption>Instrument · what drives it</caption>
 <thead><tr><th>element</th><th>data source</th></tr></thead>
 <tbody>
-<tr><td><b>kick drum + bass</b></td><td>metro stop events. Average delay 7 s on a typical weekday, the most reliable pulse in the city. When the metro closes at night the beat stops, and the first morning train is the drop.</td></tr>
-<tr><td><b>hi-hats + guitar plucks</b></td><td>tram stop events</td></tr>
-<tr><td><b>chord stabs</b></td><td>bus stop events, 557 000 a day on a weekday, the backbone; the chord's detune in cents grows with the current bus delay</td></tr>
-<tr><td><b>claps + cowbell</b></td><td>trolleybus stop events</td></tr>
-<tr><td><b>bell</b></td><td>ferry stop events: three rings on a typical Tuesday, dozens in summer</td></tr>
-<tr><td><b>lead melody · "Voice of the City"</b></td><td>city-wide average surface delay, quantised to the day's scale: the later Prague runs, the higher it sings</td></tr>
-<tr><td class="dim">trains</td><td class="dim">kicked out of the band: averaging 111 s late on a typical weekday, they played too far out of tune. Still shown in the chart.</td></tr>
+<tr><td><b>kick drum + bass</b></td><td>metro stop events in the window</td></tr>
+<tr><td><b>hi-hats + guitar plucks</b></td><td>tram stop events set the volume; tram delay detunes the plucks</td></tr>
+<tr><td><b>chord stabs</b></td><td>bus stop events set the volume; bus delay sets the detune in cents</td></tr>
+<tr><td><b>claps + cowbell</b></td><td>trolleybus stop events set the volume; the cowbell enters when trolleybus traffic is high and in every chorus</td></tr>
+<tr><td><b>bell</b></td><td>ferry stop events: three on a typical Tuesday, dozens in summer</td></tr>
+<tr><td><b>lead melody</b></td><td>city-wide event-weighted surface delay, quantised to the day's scale; the later the network runs, the higher the line</td></tr>
+<tr><td class="dim">trains</td><td class="dim">no instrument; shown in the player's traffic chart only</td></tr>
 </tbody></table>
+<p>The song structure follows one rule. When the smoothed, event-weighted mean delay of bus, tram and trolleybus exceeds 68 % of that day's maximum, the track moves into the chorus, and the two beats before each chorus break down into a snare roll. On the typical Tuesday the rule marks roughly 07:25–10:00 and 14:45–17:40, with the delay peaking at 145 s around 07:55. The 68 % threshold is a hand-set parameter, and the repository does not record how it was chosen, so its match with the two rush hours is a property of that choice. The arrangement, the swing and the mix are documented in the repository's README<sup class="cite"><a href="#r2">2</a></sup>.</p>
+</section>
 
 <section>
-<h2>When the chorus comes</h2>
-<p>The song structure also comes from the data. Whenever the smoothed, event-weighted average delay of surface transport (bus, tram, trolleybus) exceeds 68 % of that day's own maximum, the city has stopped keeping up and the track lifts into the chorus. On a typical weekday that rule yields exactly the two rush hours, roughly 07:25–10:00 and 14:45–17:40, with the delay peaking at 145 s around 07:55<sup class="cite"><a href="#r2">2</a></sup>. In the two beats before each chorus the track breaks down into a snare roll and a riser before the drop, mirroring the build-up in the delay itself.</p>
-</section>
+<h2>The five days and their keys</h2>
+<p>Each day is played in D, in a mode chosen by its mean surface delay and running from bright to dark: under 40 s lydian, under 70 s ionian, under 100 s dorian, under 130 s aeolian, and phrygian above that. These cut-offs, too, were set by hand. Fig. 1 is recomputed for this page from the aggregates embedded in the player, and its daily means match the table<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<table class="tbl"><caption>The five tracks</caption>
+<thead><tr><th>day</th><th class="n">stop events</th><th class="n">mean surface delay</th><th>key</th></tr></thead>
+<tbody>
+<tr><td>Easter Monday · 21 Apr 2025</td><td class="n">431 672</td><td class="n">36 s</td><td>D lydian</td></tr>
+<tr><td>Summer Sunday · 13 Jul 2025</td><td class="n">412 695</td><td class="n">43 s</td><td>D ionian</td></tr>
+<tr><td>Back to School · 1 Sep 2025</td><td class="n">802 163</td><td class="n">82 s</td><td>D dorian</td></tr>
+<tr><td>Typical Tuesday · 17 Jun 2025</td><td class="n">810 652</td><td class="n">85 s</td><td>D dorian</td></tr>
+<tr><td><b>The Meltdown</b> · 30 Apr 2025</td><td class="n">810 798</td><td class="n hi">164 s</td><td>D phrygian</td></tr>
+</tbody></table>
 <figure data-chart="../assets/delayed/charts.json#five-days">
   <img src="../assets/delayed/01-five-days.svg" alt="Five stacked line charts of surface transit delay over 24 hours for the five days on the record, with chorus regions shaded where the smoothed delay exceeds 68 percent of the day's maximum." loading="lazy">
-  <figcaption><b>fig. 1</b> · The five days as the record hears them: event-weighted surface delay per 5-minute window, chorus shaded. Recomputed from the player's embedded aggregates for this page; the mean delays match the record's liner notes.</figcaption>
+  <figcaption><b>fig. 1</b> · Event-weighted mean delay of bus, tram and trolleybus per 5-minute window, in seconds, for each of the five days (288 windows a day); chorus shaded red where the five-window moving average exceeds 68 % of the day's maximum. No uncertainty band: the values are administrative means. Recomputed by <code>tools/charts/delayed.py</code> from the player's embedded aggregates (Golemio, 2025); the daily means are 36 · 43 · 82 · 85 · 164 s, as in the table.</figcaption>
 </figure>
-
-<section>
-<h2>The key of each day</h2>
-<p>Each day is played in its own key, chosen by the day's mean surface delay and running from bright modes to dark: under 40 s lydian, under 70 ionian, under 100 dorian, under 130 aeolian, otherwise phrygian<sup class="cite"><a href="#r2">2</a></sup>.</p>
-</section>
-<table class="tbl"><caption>The five tracks</caption>
-<thead><tr><th>day</th><th class="n">stop events</th><th class="n">mean surface delay</th><th>key</th><th>liner note</th></tr></thead>
-<tbody>
-<tr><td>Easter Monday · 21 Apr 2025</td><td class="n">431 672</td><td class="n">36 s</td><td>D lydian</td><td>floating, nothing hurts</td></tr>
-<tr><td>Summer Sunday · 13 Jul 2025</td><td class="n">412 695</td><td class="n">43 s</td><td>D major</td><td>sunny with a chance of buses</td></tr>
-<tr><td>Back to School · 1 Sep 2025</td><td class="n">802 163</td><td class="n">82 s</td><td>D dorian</td><td>the first school day sounds like any other workday</td></tr>
-<tr><td>Typical Tuesday · 17 Jun 2025</td><td class="n">810 652</td><td class="n">85 s</td><td>D dorian</td><td>the everyday funk · the most median day in the data</td></tr>
-<tr><td><b>The Meltdown</b> · 30 Apr 2025</td><td class="n">810 798</td><td class="n hi">164 s</td><td>D phrygian</td><td>the city in distress</td></tr>
-</tbody></table>
-<section>
-<p>Beyond the data mapping, the groove swings at about 58 % shuffle, everything melodic is side-chained to the metro's kick, and the bassline walks chromatically into every chord change. The arrangement varies in eight-beat blocks so that long off-peak stretches stay alive, and the mix is stereo, with plucks left, the arpeggio right and pads wide, and a −4.5 dB high shelf at 6 kHz. The title and structure are a loving homage to the disco-revival tradition, and no audio was sampled. Any resemblance to an actual banger is purely statistical<sup class="cite"><a href="#r2">2</a></sup>.</p>
 </section>
 
 <section class="refs" id="refs">
 <h2>References</h2>
 <ol>
-<li id="r1">Šandová, B. (2026): <i>Persistence Dynamics and Welfare Costs of Urban Public Transport Delays</i>, master's thesis, IES, Charles University. AR(2) coefficient sum 0.727 on bus, 0.715 on tram; the persistence sits in a slowly moving state.</li>
-<li id="r2"><a href="https://github.com/sandovabarbora/delayed-all-the-time">sandovabarbora/delayed-all-the-time</a>: README (data and attribution, instrument mapping, chorus rule, keys, production notes), <code>index.html</code> (the player), <code>sonification_days.json</code> (the five days, 5-minute bins per mode: event count, mean arrival delay, p90; delays clipped to [−600, 3600] s), <code>extract_sonification_data.py</code> (how the aggregates were produced from the project's DuckDB build of the Golemio stop-time history). Data: Prague Integrated Transport stop-time history via <a href="https://golemio.cz">Golemio</a>, Operator ICT; please credit Golemio when reusing.</li>
+<li id="r1">Šandová, B. (2026). <i>Persistence Dynamics and Welfare Costs of Urban Public Transport Delays</i>. Master's thesis, Institute of Economic Studies, Charles University. Summary: <a href="thesis">bsandova.com/texts/thesis</a>.</li>
+<li id="r2">Šandová, B. (2026). <i>Delayed All the Time. On Time, Occasionally.</i> Software, <a href="https://github.com/sandovabarbora/delayed-all-the-time">github.com/sandovabarbora/delayed-all-the-time</a>, commit <code>798f726</code>: README (instrument mapping, chorus rule, keys, production notes), <code>index.html</code> (the player), <code>sonification_days.json</code> (five days, 5-minute bins per mode: event count, mean arrival delay, p90, arrivals with delays outside [−600, 3 600] s excluded), <code>extract_sonification_data.py</code> (day-selection criteria and aggregation from the Golemio stop-time history). Data: Prague Integrated Transport via <a href="https://golemio.cz">Golemio</a>, Operator ICT. Accessed 29 September 2026.</li>
 </ol>
 </section>
 
+<section id="changelog" class="changelog">
+<h2>Change log</h2>
+<ul>
+<li>14 September 2026: first published as "Delayed All the Time. On Time, Occasionally."</li>
+<li>29 September 2026, version 2: moved to Notes and retitled. Removed the AR(2) equation and its reading ("a shock … is still three-quarters there in the next"), which misstated the one-step response and conflated the thesis's route-level dynamics with the city-wide averages the record plays; with it went the 0.727 / 0.715 / 0.73 figures, which remain on the thesis page. Removed the claim that the ear hears the pattern before the table does. The facts no longer lead with "121 M stop events": the source is given in the thesis's unit, 121 197 794 vehicle-location records, and the record's own size as 3 267 980 stop events, the sum of the five days in the track table. Added the day-selection criteria from the extraction script, a statement that the cause of the 30 April delays was not investigated, that the 68 % chorus threshold and the key cut-offs were set by hand, and that mean delays include early running and leave out arrivals with delays outside [−600, 3 600] s (the extraction query filters them; it does not clip them). The Summer Sunday key is named D ionian, as in the rule, instead of D major. The trains row now says which chart shows them. Fixed the thesis link. Added what the tram and trolleybus instruments follow, the embedded player, and the data and licence lines. Cut the production-notes paragraph (58 % shuffle, side-chain, −4.5 dB shelf at 6 kHz, eight-beat blocks; now in the README only), the liner notes, the closing line of the homage disclaimer, the repeated statements that no raw records are redistributed, and the footer note that duplicated the figure caption. The short version no longer repeats the deck or the facts.</li>
+<li>Checked against editorial standard v1 on 29 September 2026.</li>
+</ul>
+</section>
+
 <footer class="text-foot">
-  <p><b>Figure.</b> Recomputed for this page by <code>tools/delayed_figures.py</code> from the player's embedded aggregates: event-weighted mean of bus, tram and trolleybus delay per window, five-window smoothing, chorus where the smoothed value exceeds 68 % of the day's maximum. Mean delays: 36 · 43 · 82 · 85 · 164 s, as in the README.</p>
-  <p class="back"><a href="../#works">← projects</a></p>
+  <p class="back"><a href="../#works">← projects</a> · <a href="thesis">the thesis</a></p>
 </footer>
 </article>
 <script src="../assets/charts.js" defer></script>

@@ -5,9 +5,13 @@
 Pairs: (station, model, lead, target date) with the observation of the target date. Per station,
 model and lead: MAE, bias and RMSE of daily max and min temperature; MAE of precipitation; the rain
 contingency table (≥ 1.0 mm), probability of detection and false-alarm ratio; the Brier score of the
-four-model rain share against day-of-year climatology (1991–2020) and against persistence (rain
-yesterday); MAE of temperature against the same two baselines. Intervals by block bootstrap over ISO
+rain share of the distinct models against day-of-year climatology (1991–2020) and against
+persistence (rain on the day before the issue); MAE of temperature against the same two baselines. Intervals by block bootstrap over ISO
 weeks. Gates as on the surf page: nothing shown under MIN_PAIRS, "descriptive" under DESCRIPTIVE.
+Protocol corrections of 29 September 2026: persistence is the last observation available at issue
+time (issue - 1 day), not the day before the target; precipitation is not scored at lead 0, whose
+06:00 UTC window has already closed when the collector runs at 06:40 UTC; the ensemble rain
+probability counts the distinct models only (best_match resolves to ICON and is left out of it).
 Quality: issues stored against expected, nulls per model, observation gaps, days the models disagree
 by more than 4 °C.
 """
@@ -26,6 +30,7 @@ OUT = ROOT / "data.json"
 RAIN_MM = 1.0
 MIN_PAIRS, DESCRIPTIVE, BOOT = 14, 30, 500
 LEADS = range(0, 7)
+NOT_IN_ENSEMBLE = {"best_match"}  # resolves to ICON for Prague; a duplicate member, kept as its own column
 
 
 def block_bootstrap(items, stat, key, reps=BOOT, seed=7):
@@ -107,6 +112,8 @@ def main() -> None:
     # multi-model rain share per (station, lead, target) for the Brier score
     share: dict[tuple, dict[str, list]] = defaultdict(lambda: defaultdict(list))
     for (s, m, lead), ps in pairs.items():
+        if lead == 0 or m in NOT_IN_ENSEMBLE:
+            continue
         for target, o, f in ps:
             share[(s, lead)][target].append(f["precip"] >= RAIN_MM)
 
@@ -121,19 +128,25 @@ def main() -> None:
                 entry = {"n": n, "descriptive": n < DESCRIPTIVE}
                 if n >= MIN_PAIRS:
                     et = [f["tmax"] - o["tmax"] for _, o, f in ps]; en = [f["tmin"] - o["tmin"] for _, o, f in ps]
-                    ep = [f["precip"] - o["precip"] for _, o, f in ps]
                     entry.update({
                         "mae_tmax": round(mean([abs(e) for e in et]), 2), "bias_tmax": round(mean(et), 2), "rmse_tmax": round((mean([e * e for e in et])) ** 0.5, 2),
                         "mae_tmin": round(mean([abs(e) for e in en]), 2), "bias_tmin": round(mean(en), 2),
-                        "mae_precip": round(mean([abs(e) for e in ep]), 2), "bias_precip": round(mean(ep), 2),
                         "mae_tmax_ci": block_bootstrap(ps, lambda xs: mean([abs(f["tmax"] - o["tmax"]) for _, o, f in xs]), lambda it: week_of(it[0])),
                     })
-                    entry.update(contingency([(o["precip"], f["precip"]) for _, o, f in ps]))
-                    # baselines for temperature: climatology mean of the day, persistence (yesterday's observation)
+                    if lead == 0:
+                        # the rain window (D-1 06:00, D 06:00] has closed before the 06:40 UTC run: a hindcast, not scored;
+                        # the temperature windows are partly past at lead 0, so lead 0 is flagged
+                        entry["lead0_window_partly_past"] = True
+                    else:
+                        ep = [f["precip"] - o["precip"] for _, o, f in ps]
+                        entry.update({"mae_precip": round(mean([abs(e) for e in ep]), 2), "bias_precip": round(mean(ep), 2)})
+                        entry.update(contingency([(o["precip"], f["precip"]) for _, o, f in ps]))
+                    # baselines for temperature: climatology mean of the day; persistence = the last observation
+                    # available at issue time (issue - 1 day = target - lead - 1), never one from after the issue
                     cl = [abs(clim[s][doy(t)]["tmax_mean"] - o["tmax"]) for t, o, _ in ps if s in clim and doy(t) in clim[s]]
                     pe = []
                     for t, o, _ in ps:
-                        y = (date.fromisoformat(t) - timedelta(days=1)).isoformat()
+                        y = (date.fromisoformat(t) - timedelta(days=lead + 1)).isoformat()
                         if y in obs[s] and "tmax" in obs[s][y]:
                             pe.append(abs(obs[s][y]["tmax"] - o["tmax"]))
                     entry["mae_tmax_climatology"] = round(mean(cl), 2) if cl else None
@@ -147,7 +160,7 @@ def main() -> None:
                 o = obs[s].get(target)
                 if o is None or "precip" not in o or not votes:
                     continue
-                y = (date.fromisoformat(target) - timedelta(days=1)).isoformat()
+                y = (date.fromisoformat(target) - timedelta(days=lead + 1)).isoformat()  # issue - 1 day
                 rows.append({"target": target, "p": sum(votes) / len(votes), "o": int(o["precip"] >= RAIN_MM),
                              "pc": clim.get(s, {}).get(doy(target), {}).get("rain1_freq"),
                              "pp": int(obs[s][y]["precip"] >= RAIN_MM) if y in obs[s] and "precip" in obs[s][y] else None})
