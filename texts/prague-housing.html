@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Prague builds two homes for Vienna's three</title>
-<meta name="description" content="New homes completed per 1 000 residents, 2012–2024, from the three statistical offices: Prague 4.5 a year on average since 2015, Vienna 6.6 counting new buildings only, Warsaw 10.4. Prague has not passed 5 in any year. Who builds: in Vienna a quarter of 2024's new homes came from limited-profit housing associations; in Warsaw the city and its housing societies built 0.7 %.">
+<meta name="description" content="New homes completed per 1 000 residents, 2012–2024: Prague 4.5 a year on average since 2015, Vienna 6.6 counting new buildings only, Warsaw 10.4. A pre-registered follow-up finds that a permitted Prague flat takes about 11 months longer than elsewhere in Czechia to get a house number; the metro association is indeterminate (p = 0.0252 against 0.025); among 208 European metropolitan regions, Prague's 2011–2021 construction per resident is in the upper quarter, and its rank against a demand model is uninformative.">
 <meta property="og:title" content="Prague builds two homes for Vienna's three">
-<meta property="og:description" content="New homes per 1 000 residents in Prague, Vienna and Warsaw, 2012–2024, and who builds them.">
+<meta property="og:description" content="Part 4 of Prague, measured: new homes per 1 000 residents in Prague, Vienna and Warsaw, who builds them, and a pre-registered study of Europe's metro regions, the permit pipeline, prices, builders and the metro.">
 <meta property="og:type" content="article">
+<meta property="og:url" content="https://bsandova.com/texts/prague-housing">
 <meta property="og:image" content="https://bsandova.com/assets/og/prague-housing.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -28,6 +29,13 @@
 .yt td{padding:5px 10px 5px 0;border-bottom:1px solid #e6e6e6;text-align:right}
 .yt td small{color:#666;font:400 11px var(--mono)}
 .yt td.p{color:#1f5fa8}
+.ht{width:100%;border-collapse:collapse;font:400 13px/1.4 var(--sans);font-variant-numeric:tabular-nums;margin:.6rem 0 1rem}
+.ht th{font:400 11px var(--mono);color:#666;text-align:left;padding:6px 10px 6px 0;border-bottom:1px solid #000;vertical-align:bottom}
+.ht td{padding:6px 10px 6px 0;border-bottom:1px solid #e6e6e6;vertical-align:top}
+.ht td.v{white-space:nowrap}
+.ht td.v b{font-weight:500;color:#1f5fa8}
+.ht small{color:#666;font:400 11px var(--mono)}
+.note{font:400 12px/1.6 var(--mono);color:#666}
 </style>
 </head>
 <body>
@@ -35,57 +43,193 @@
 
 <article class="text">
 <header class="text-head">
-  <p class="kicker">Prague, measured · Part 4 of 5 · new homes in Prague, Vienna and Warsaw, 2012–2024</p>
+  <p class="kicker">Prague, measured · Part 4 of 5 · pre-registered · new homes in Prague, Vienna and Warsaw, 2012–2024 · 208 European metropolitan regions, Czech permits 2007–2024, Prague 2012–2021</p>
   <h1>Prague builds two homes <em>for Vienna's three</em></h1>
-  <p class="deck">Three capitals of similar size, counted by their own statistical offices. Since 2015 Warsaw has completed 10.4 new homes a year for every 1 000 residents, Vienna 6.6 in new buildings alone, Prague 4.5. Prague has not passed 5 in any year since 2012. What sets Vienna apart is not only how much it builds, but who builds it.</p>
+  <p class="deck">Counted by their own statistical offices, Warsaw has completed 10.4 new homes a year for every 1 000 residents since 2015, Vienna 6.6 in new buildings alone and Prague 4.5, and Prague has not passed 5 in any year since 2012. To look for reasons, this article places Prague among Europe's metropolitan regions, follows Czech flats from permit to house number and asks where in Prague new flats are built, under tests and decision rules registered before the data were joined. Of the three confirmatory tests only the pipeline test passed, and by it a permitted Prague flat takes about 11 months longer to be completed than one elsewhere in Czechia.</p>
   <dl class="facts">
     <div><dt>Prague, per 1 000 residents</dt><dd>4.5 <small>a year, 2015–2024 mean · never above 4.9</small></dd></div>
     <div><dt>Vienna, new buildings</dt><dd>6.6 <small>peak 8.5 in 2021</small></dd></div>
     <div><dt>Warsaw</dt><dd>10.4 <small>peak 13.2 in 2018</small></dd></div>
     <div><dt>Vienna 2024, non-profit builders</dt><dd>25 % <small>Warsaw's city and TBS: 0.7 %</small></dd></div>
+    <div><dt>permit to house number, Prague against the rest of Czechia</dt><dd>+11 months <small>90 %: 8.7 to 12.6 · supported</small></dd></div>
+    <div><dt>new flats and the metro, per doubling of distance</dt><dd>indeterminate <small>γ = −0.23 · p = 0.0252 against 0.025</small></dd></div>
+    <div><dt>Prague metro region, rank against a demand model</dt><dd>119 of 208 <small>uninformative: relevance check failed</small></dd></div>
+    <div><dt>hypotheses supported, of three tested</dt><dd>1 <small>Holm, family-wise 5 %</small></dd></div>
   </dl>
 </header>
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-prague-housing;--bg:url(../assets/photo/prague-housing.jpg);--bg-s:url(../assets/photo/prague-housing-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Praha,_Sm%C3%ADchov,_v%C3%BDstavba_Sm%C3%ADchov_City_02.jpg">Aktron</a> · CC BY-SA 4.0, colour held · Smíchov City under construction, Praha 5</p></section>
 
 <section>
-<p>Prague has 1.4 million residents, Vienna 2.0 million, Warsaw 1.9 million. All three argue about housing. This text puts one number next to the argument, from each country's statistical office: how many new homes the city completes in a year, for every thousand people who live there<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup><sup class="cite"><a href="#r3">3</a></sup>.</p>
+<p>Prague has 1.4 million residents, Vienna 2.0 million and Warsaw 1.9 million, and housing is argued over in all three. One number to set beside that argument comes from each country's statistical office: how many new homes the city completes in a year for every thousand people who live there<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup><sup class="cite"><a href="#r3">3</a></sup>.</p>
 </section>
 
 <section>
-<h2>How many</h2>
+<h2>New homes per 1 000 residents in Prague, Vienna and Warsaw, 2012–2024</h2>
 <figure>
   <img src="../assets/praha/05-completions.svg" alt="Lines of dwellings completed per 1 000 residents, 2012 to 2024. Warsaw between 7.6 and 13.2, peaking in 2018. Vienna rising from 3.6 to 8.5 in 2021, falling to 5.4 in 2024. Prague between 3.1 and 4.9, never higher." loading="lazy">
   <figcaption><b>fig. 1</b> · Dwellings completed per 1 000 residents. Prague and Warsaw count every completed home, including those made by extending or converting a building; Vienna's series counts homes in new buildings only, because conversions were recorded for Vienna only from 2024. With them, Vienna's 2024 figure is 6.2.</figcaption>
 </figure>
-<p>Prague's line is the flattest, and the lowest in every year but 2016: between 3.1 homes per thousand residents in 2013 and 4.9 in 2022, 6 489 homes in 2024. Vienna climbed through the 2010s to 8.5 in 2021, 16 262 homes in new buildings in one year, and has fallen since, to 5.4 in 2024, still above Prague. Warsaw has built more than both in every year of the series, with a peak of 13.2 in 2018, 23 430 homes. Over the ten years to 2024, Prague averaged 4.5, Vienna 6.6 and Warsaw 10.4: for every home Prague completed per resident, Vienna completed one and a half and Warsaw more than two.</p>
-</section>
-
-<section>
-<h2>Who builds</h2>
-<figure>
-  <img src="../assets/praha/06-builders.svg" alt="Two stacked bars for 2024. Vienna: limited-profit housing associations 25 %, public sector 2 %, companies 66 %, private persons 7 %. Warsaw: the city and public building societies 0.7 %, everyone else 99 %." loading="lazy">
-  <figcaption><b>fig. 2</b> · Dwellings completed in 2024 by builder. Vienna: limited-profit housing associations (blue), public sector (black, 2.4 %), companies, private persons (6.8 %). Warsaw: municipal homes and public building societies (TBS) against everyone else. The Czech Statistical Office does not publish Prague's completions by builder in its series.</figcaption>
-</figure>
-<p>In 2024 a quarter of Vienna's new homes, 3 107 of 12 478, were built by limited-profit housing associations, companies whose profits Austrian law restricts, and another 2.4 % by the public sector itself. In Warsaw the city built 96 homes and its public building societies none, 0.7 % of the year's 14 873. Almost all of Warsaw's volume, 99.3 %, comes from builders other than the city. Prague's cannot be split the same way from the published series, so the comparison stops at volume for Prague.</p>
-</section>
-
-<section>
-<h2>Every year</h2>
+<p>Prague's line is the flattest of the three and the lowest in every year but 2016. It runs between 3.1 homes per thousand residents in 2013 and 4.9 in 2022, and in 2024 the city completed 6 489 homes. Vienna climbed through the 2010s to 8.5 in 2021, when 16 262 homes were completed in new buildings, and has fallen since, to 5.4 in 2024, which is still above Prague. Warsaw built more than both in every year of the series, with a peak of 13.2 in 2018, or 23 430 homes. Over the ten years to 2024 Prague averaged 4.5, Vienna 6.6 and Warsaw 10.4, so for every home Prague completed per resident, Vienna completed one and a half and Warsaw more than two.</p>
 <table class="yt">
   <thead><tr><th>Year</th><th>Prague</th><th>Vienna, new buildings</th><th>Warsaw</th></tr></thead>
   <tbody id="yt"></tbody>
 </table>
-<p class="mt-note" style="font:400 12px/1.6 var(--mono);color:#666">Per 1 000 residents, homes completed in brackets. Data: <a href="../assets/praha/cities.json">cities.json</a>.</p>
+<p class="note">Per 1 000 residents, homes completed in brackets. Data: <a href="../assets/praha/cities.json">cities.json</a>.</p>
+<p>Each city is counted by its own office with its own definition. Unlike Prague's and Warsaw's, Vienna's figure leaves out homes made by converting or extending buildings until 2024, so Vienna is if anything understated here. Prague's figures are the Czech Statistical Office's own per-thousand rates; its first release for 2024 gave 6 511 completed homes, revised to 6 489 in the current series. Warsaw's population is Statistics Poland's end-of-year count, averaged over consecutive years and revised upward from 2020 after the 2021 census, and the rates computed from it match the office's own published rate where one exists (11.50 and 11.56 for 2016 and 2017). The three-city figures are produced by <code>tools/praha/cities.py</code>.</p>
 </section>
 
 <section>
-<h2>The long version</h2>
-<p>A pre-registered follow-up puts Prague among 208 European metropolitan regions counted by one census, asks how long a permitted Prague home takes to get a house number, and asks whether the city builds near its metro. <a href="prague-housing-study">Two homes for Vienna's three, measured again</a>.</p>
+<h2>Demand, procedure and the response to prices</h2>
+<p>A city can build little for different reasons, and housing economics has names for them. Demand may be low; procedures may be slow, whether in granting permits or in building once a permit is granted; or supply may not respond when prices rise, which happens where regulation binds and prices rather than quantities take up the demand<sup class="cite"><a href="#r4">4</a></sup><sup class="cite"><a href="#r5">5</a></sup><sup class="cite"><a href="#r6">6</a></sup>. Three cities, each counted by its own office under its own definition, cannot tell these explanations apart. The rest of this article therefore makes Prague one member of larger groups: 208 European metropolitan regions counted by one census, the Czech regions month by month, and the 1 km squares of Prague itself. For the one question the Czech data cannot answer, it borrows a Polish panel of 380 districts.</p>
 </section>
 
 <section>
-<h2>What was checked</h2>
-<p>Each city is counted by its own office with its own definition, and the three differ in one way that matters: Vienna's figure leaves out homes made by converting or extending buildings until 2024, which Prague's and Warsaw's include, so Vienna is if anything understated here. Prague's figures are the Czech Statistical Office's own per-thousand rates; its first release for 2024 gave 6 511 completed homes, revised to 6 489 in the current series. Warsaw's population is Statistics Poland's end-of-year count, averaged over consecutive years, and it is revised upward from 2020 after the 2021 census. Warsaw's rates computed this way match the office's own published rate where it exists (11.50 and 11.56 for 2016 and 2017). Every number is produced by <code>tools/praha/cities.py</code>.</p>
+<h2>How this was done</h2>
+<p>The design was written up and sent to three referees, a housing economist, a statistician and a specialist in official statistics, then revised and committed to the site's public repository before any outcome was joined<sup class="cite"><a href="#r7">7</a></sup>. Following the review, this text calls the Czech Statistical Office's "zahájené byty", literally dwellings started, permitted dwellings, because they are counted from building permits, and the pipeline it measures runs from permit to house number. Only three hypotheses, H2, H4 and H5, were kept as confirmatory, and they share a 5 % family-wise error rate through Holm's procedure<sup class="cite"><a href="#r8">8</a></sup>. Two others were demoted to estimates, each with a sentence fixed in advance for what would be said: the European comparison (H1), because Prague's census numerator was effectively known from the three-city count above, and the price response (H3), because with one Prague and 27 quarters no valid test exists at those thresholds. Each question also has a relevance check, which tests whether the model sees the expected relationship where it should; if the check fails, the result is labelled uninformative whatever its p-value.</p>
+<p>Power was simulated with sealed scripts before any outcome in the confirmatory windows was seen. The simulations expected the pipeline test to be decisive at a six-month difference unless monthly noise was as large as the signal, the metro test to be decisive at a 22 % density difference, and the builders' test to be weak. In Prague the noise turned out to be 3.3 times the signal, which triggered the registered rule that a failed pipeline test must be written "underpowered", but the rule never applied, because the test passed. Everything that changed after registration is listed <a href="#changes">below</a>.</p>
+</section>
+
+<section>
+<h2>The five hypotheses and their results</h2>
+<table class="ht">
+  <thead><tr><th>Hypothesis</th><th>Test</th><th>Result</th></tr></thead>
+  <tbody>
+  <tr><td>H2 · a permitted Prague home takes longer to get a house number than one in the rest of Czechia</td><td>μ<sub>P</sub> − μ<sub>R</sub> &gt; 0</td><td class="v"><b>supported</b><br><small>+11.1 months, p &lt; 0.001</small></td></tr>
+  <tr><td>H4 · in Poland, municipal and social builders respond less to local price growth than developers</td><td>β<sub>NM</sub> − β<sub>M</sub> &lt; 0</td><td class="v">uninformative<br><small>−0.56, p = 0.17; relevance check failed</small></td></tr>
+  <tr><td>H5 · in Prague, new flats are denser near the metro</td><td>γ &lt; 0</td><td class="v">not supported: indeterminate<br><small>−0.23, p = 0.0252 against 0.025</small></td></tr>
+  <tr><td>H1 · Prague builds less than European peers with its demand <small>estimate, rule fixed in advance</small></td><td>conformal rank</td><td class="v">uninformative<br><small>rank 119 of 208, p = 0.57</small></td></tr>
+  <tr><td>H3 · Prague's permitting responds less to price growth <small>estimate, rule fixed in advance</small></td><td>90 % EWC interval</td><td class="v">uninformative<br><small>−11 (−86 to +63)</small></td></tr>
+  </tbody>
+</table>
+<p class="note">p-values are one-sided. H2 uses a stationary block bootstrap<sup class="cite"><a href="#r9">9</a></sup> with 9 999 draws; H4 a wild score bootstrap<sup class="cite"><a href="#r10">10</a></sup> over 242 Polish districts; H5 the larger of a spatial p-value (Conley<sup class="cite"><a href="#r11">11</a></sup>, 1.5 km) and a wild score bootstrap over Prague's 22 administrative districts; H3 equal-weighted cosine (EWC) intervals<sup class="cite"><a href="#r12">12</a></sup>. Holm thresholds are 0.0167, 0.025 and 0.05. H2 passes the first and H5 misses the second, so testing stops there. Data: <a href="../assets/praha/housing_extended.json">housing_extended.json</a>.</p>
+</section>
+
+<section>
+<h2>Prague among 208 European metropolitan regions</h2>
+<p>The 2021 census round recorded when each dwelling's building was built. Dwellings in buildings from 2011 or later, per resident and per year, therefore measure the last decade's new supply on nearly the same definition across the 22 countries, although Czechia, Spain and Croatia also count reconstructions<sup class="cite"><a href="#r13">13</a></sup>. The unit is the metropolitan region, because housing markets do not stop at city limits, and Prague's region is Prague plus Středočeský kraj. Of Eurostat's 297 metropolitan regions, 208 in 22 countries have the census answer and the covariates.</p>
+<p>Per resident, Prague's metropolitan region built 5.28 dwellings a year by the census count, which places it 163rd of 208 from the bottom, in Europe's upper quarter; the median region built 3.55. Counting only completions of new houses, from the Czech Statistical Office, gives 3.88, which is mid-table at 116th of 208 on raw rates, against a median of 3.50. Vienna's region built 6.2 a year and Warsaw's 10.0, so the three-city comparison set Prague beside two metropolitan regions well above the European median of 3.55.</p>
+<p>The registered estimate goes further and compares each region with a prediction from what was known in 2011: population growth to 2011, size, output per head, dwellings per head, and whether the region holds a capital. The prediction for each country's regions comes from a model fitted on all other countries, and the gap is scaled by how well such regions are usually predicted<sup class="cite"><a href="#r14">14</a></sup><sup class="cite"><a href="#r15">15</a></sup>.</p>
+<figure>
+  <img src="../assets/praha/11-benchmark.svg" alt="Dot chart of 208 metropolitan regions sorted by their score against a demand model for 2011–2021 construction. Prague, 5.3 dwellings per 1 000 residents a year, is 119th from the bottom, just above zero. Vienna, 6.2, is 155th. Warsaw, 10.0, is 205th, among the highest." loading="lazy">
+  <figcaption><b>fig. 2</b> · Dwellings built 2011–2021 against a demand model, 208 European metropolitan regions, studentised leave-one-country-out scores; zero is "as the model predicts". The model failed its relevance check, so the ranks are shown as description, not as a benchmark.</figcaption>
+</figure>
+<p>Against that model Prague's region ranks 119th from the bottom, Vienna's 155th and Warsaw's 205th. Czechia's mean score is 0.18, 8th of 22 countries from the bottom, and Prague lies 0.12 above the other Czech metro regions. The city on its own ranks 107th, and with the count rebuilt from the Czech Statistical Office's completions of new houses, Prague ranks 93rd as a metro region and 76th as a city.</p>
+<p>The rule written in advance would call this "within the range of European peers", but the model failed its relevance check: regions that grew faster before 2011 did not build more afterwards, and the coefficient is negative. By the same rule, the ranks against the model are labelled uninformative. A separate descriptive comparison, which is not part of the registration, uses the raw Czech Statistical Office rate with no model. By it, Prague built the second most of the 14 Czech regions per resident, 3.7 a year against a median of 2.1 elsewhere.</p>
+</section>
+
+<section>
+<h2>From permit to house number in Prague and the rest of Czechia</h2>
+<p>Every month the Czech Statistical Office counts dwellings permitted and dwellings completed in each region. If Prague's flats take longer to finish, completions follow permits with a longer delay. The model estimates that delay as a distribution of lags between the two series, for flats in new apartment buildings, Prague against the other twelve regions. Středočeský kraj is left out of the comparison, because it absorbs Prague's overflow.</p>
+<figure>
+  <img src="../assets/praha/12-lag-profile.svg" alt="Two curves of relative log-likelihood against the mean lag in months. The rest of Czechia peaks at the left edge of the grid, 6 months (estimate 5.1), and falls steeply. Prague peaks at 16 months, but its curve stays close to the top from about 14 to 38 months, crossing the dashed 95 % line near 38." loading="lazy">
+  <figcaption><b>fig. 3</b> · How well each mean lag fits the data (profile likelihood). A flat curve means the data barely distinguish between lags. Dashed: the 95 % cut-off.</figcaption>
+</figure>
+<p>The best-fitting mean lag is 16 months in Prague and 5 months elsewhere, a difference of 11.1 months (90 % interval 8.7 to 12.6, p &lt; 0.001), so H2 passes its threshold. The sign holds in every variant that was run: the difference is +7.6 months against Jihomoravský kraj, home of Brno, alone, +10.3 with Středočeský kraj counted as Prague, and +5.0 when family houses are added (p = 0.055).</p>
+<p>Prague's lag is weakly identified, as fig. 3 shows: anything from about 14 to 38 months fits almost as well, and Prague's fitted lag distribution is degenerate, with all its weight on one lag of 16 months. The estimates are stable in two narrower ways: no weight falls beyond the six-year window, and in the bootstrap the completion yield and the lag are almost uncorrelated (−0.05). The contrast between Prague and the rest is therefore clearer than Prague's own number. Five months is too short to build a block of flats, so outside Prague the fit probably also tracks common reporting timing. Prague's projects may also be larger, in which case the lag may reflect project size rather than procedure.</p>
+<p>Once permitted, Prague's new flats reach completion later than the rest of Czechia's, by months rather than weeks. The finding is modest, because it says nothing about how long the permit itself took, which is the part of the process Czech reform has targeted<sup class="cite"><a href="#r16">16</a></sup>.</p>
+</section>
+
+<section>
+<h2>Prices and permits, 2018–2024</h2>
+<p>Where supply responds, more dwellings are permitted after prices rise<sup class="cite"><a href="#r17">17</a></sup><sup class="cite"><a href="#r18">18</a></sup>. The registered estimate is the cumulative response over twelve quarters: the summed coefficients of permitted dwellings, on a log scale, on quarterly log price changes of flats from the cadastre's index, 2018–2024. A value of 16 means that a price rise of 1 % in each of the twelve preceding quarters goes with about 16 log points more permitted dwellings, and −11 means 11 fewer.</p>
+<p>The relevance check is the rest of Czechia's own response, and it cannot be told from zero at 16 (90 % interval −22 to +54), so the comparison is labelled uninformative. Prague's response relative to the rest is −11 (−86 to +63, with a fixed-b interval of −101 to +78), which puts Prague 5th of 13 regions, and the pre-written sentence would have read "cannot be told apart". A placebo with family-house prices gives +8 (−25 to +42), and a shorter four-quarter version over 35 quarters gives +4 (−2 to +10), and with only 27 quarters of one city the question cannot be answered.</p>
+</section>
+
+<section>
+<h2>Who builds: Vienna, Warsaw and 380 Polish districts</h2>
+<figure>
+  <img src="../assets/praha/06-builders.svg" alt="Two stacked bars for 2024. Vienna: limited-profit housing associations 25 %, public sector 2 %, companies 66 %, private persons 7 %. Warsaw: the city and public building societies 0.7 %, everyone else 99 %." loading="lazy">
+  <figcaption><b>fig. 4</b> · Dwellings completed in 2024 by builder. Vienna: limited-profit housing associations (blue), public sector (black, 2.4 %), companies, private persons (6.8 %). Warsaw: municipal homes and public building societies (TBS) against everyone else. The Czech Statistical Office does not publish Prague's completions by builder in its series.</figcaption>
+</figure>
+<p>In 2024 a quarter of Vienna's new homes, 3 107 of 12 478, were built by limited-profit housing associations, companies whose profits Austrian law restricts, and another 2.4 % by the public sector itself. In Warsaw the city built 96 homes that year and its public building societies none, 0.7 % of the year's 14 873, so 99.3 % of Warsaw's volume came from builders other than the city. Prague's completions cannot be split the same way from the published series, and for Prague the comparison stops at volume.</p>
+<p>No yearly Austrian series by builder was found, so Vienna's associations cannot be followed over time. Poland has such a series: in each of its 380 districts, the dwellings that municipalities, social building societies (TBS) and developers begin each year. The registered question, which concerns Poland only, was whether non-market builders respond less to local price growth than developers.</p>
+<figure>
+  <img src="../assets/praha/13-builders.svg" alt="Intervals of the difference between non-market and market responses to local price growth. Main −0.56, from −1.52 to +0.39. Completions −0.71, cooperatives counted as non-market −0.08, primary-market prices +0.35, voivodeship clusters −0.56, without the five largest cities −0.46, 2012–2019 −0.80, negative binomial −1.52 (the only interval that excludes zero). The dashed line at −1 is the smallest difference of interest." loading="lazy">
+  <figcaption><b>fig. 5</b> · Non-market minus market response of dwellings started to local price growth, 242 Polish districts, 2012–2024, with 90 % intervals. Black: p &lt; 0.05 in that variant. Dashed: the smallest difference the design cared about.</figcaption>
+</figure>
+<p>The point estimate goes the expected way, −0.56 (90 % interval −1.52 to +0.39, p = 0.17), with the 242 districts acting like about 63 independent clusters. The relevance check fails, however, because developers' own starts do not visibly respond to local price growth either (0.09, p = 0.32), which leaves no response for the non-market builders to be smaller than. The result is labelled uninformative, and the pre-written sentence ("non-market builders respond less") is not used.</p>
+<p>The design-stage power check had warned of this, with 19 % power at the smallest difference of interest at α = 0.0167 and 26 % at 0.05. One variant, a negative-binomial model, gives −1.52 with p = 0.046. It is the only interval that excludes zero, and it is reported only as a variant.</p>
+<p>Subsidised construction can partly replace what the market would have built<sup class="cite"><a href="#r19">19</a></sup><sup class="cite"><a href="#r20">20</a></sup>, so the Polish result does not show that a Vienna-style sector would add to Prague's output; more homes are not the same thing as better housing, and Warsaw, which built the most of the three cities, still had fast price growth.</p>
+</section>
+
+<section>
+<h2>New flats and distance to the metro in Prague</h2>
+<p>Land near a metro station is worth more, so an unconstrained market would build more densely there, although near-metro squares are also largely built-out estates with little land left to build on. The test counts flats completed between 2012 and census day in March 2021 in each of Prague's 524 one-kilometre squares<sup class="cite"><a href="#r21">21</a></sup>, holding equal the distance from the centre and how many people already lived in the square in 2011<sup class="cite"><a href="#r22">22</a></sup>.</p>
+<figure>
+  <img src="../assets/praha/14-metro.svg" alt="Intervals of the metro coefficient. Main −0.227, from −0.349 to −0.105. Conley 3 km −0.227. 2012–2024 −0.243. 500 m cells −0.229. Stations including the 2015 extension −0.185. Pre-2012 flats as density −0.206. Implausible new-build types excluded −0.246. Rail and tram distance added −0.241. Negative binomial −0.427. The 2000–2011 replication is −0.062, crossing zero. A dashed line marks −0.25." loading="lazy">
+  <figcaption><b>fig. 6</b> · New-flat density per doubling of the distance to the nearest metro station (log scale), with 90 % spatial intervals; negative binomial with district-clustered intervals. Black: that variant's decision p &lt; 0.05. Dashed: the smallest effect the design cared about. Not drawn: clustering by the 57 city districts (p = 0.015).</figcaption>
+</figure>
+<p>The estimate is γ = −0.227 (90 % interval −0.349 to −0.105), which means that each doubling of the distance to a station goes with about 20 % fewer new flats per square kilometre, yet the registered test is indeterminate. Its decision takes the larger of two p-values, 0.0011 from the spatial (Conley) standard error and 0.0252 from the wild bootstrap over Prague's 22 administrative districts, which act like fewer than 14 independent clusters. Holm's second threshold is 0.025, so H5 is not supported, and the reverse test does not come close. The margin, 0.0002, is within the bootstrap's own simulation error of about 0.0016. The test was not re-run, and under the registered rules H5 stays not supported.</p>
+<p>The coefficient stays negative with half-kilometre squares, over 2012–2024, without construction types implausible for new building, with the distance to rail and tram stops added and with clustering by the 57 city districts, and dropping any one district gives −0.27 to −0.18. In 2000–2011 the gradient was about a quarter as steep and uncertain (−0.06). Even a supported result would have left the reason open, because squares near stations differ from others in the land left to build on and in what the plan allows there. Those layers could not be obtained in time and were not run.</p>
+</section>
+
+<section>
+<h2>How far the results hold</h2>
+<table class="ht">
+  <thead><tr><th>Specification curve</th><th>specifications</th><th>same sign</th><th>p &lt; 0.05</th><th>robust by the registered rule</th></tr></thead>
+  <tbody id="sc"></tbody>
+</table>
+<p class="note">Registered rule: robust if at least 75 % of specifications share the sign and at least 50 % reach p &lt; 0.05. Data: <a href="../assets/praha/housing_extended_robust.json">housing_extended_robust.json</a>.</p>
+<p>Against the demand model, which failed its relevance check, Prague stays out of both tails in every variant, from 45th of 116 to 138th of 208. It ranks 123rd of 216 without GDP, 120th of 208 counting only 2016 and later, and 106th of 199 with the stricter 5 % threshold for unknown construction dates. Without Spain and the other Czech metro regions, whose censuses count reconstructions, and with Prague on the rebuilt numerator, it ranks 50th of 183. With a shift-share employment shock in place of population growth it ranks 45th of 116, weighted by population 137th of 208, and with population growth over 2011–2021, which is endogenous to the construction it predicts, 138th of 208.</p>
+<p>Two pipeline variants, an exponential lag and one without the COVID months, have bootstraps in which a few draws run off to unbounded lags; their tests carry no information and are counted as failures. The Warsaw replication of the price question, with notified starts of works rather than permits, is not tested, because there is only one Warsaw; it gives Warsaw a cumulative relative response of −5.7, 4th of 376 districts given the same treatment.</p>
+</section>
+
+<section id="changes">
+<h2>What changed after registration</h2>
+<p>These registered analyses were not run, because their inputs could not be obtained before the outcomes were joined:</p>
+<ul>
+<li>the land and planning layers for the metro question: Urban Atlas, heritage zones, flood plains, the 1999 plan and line D;</li>
+<li>the metro analysis by basic settlement unit;</li>
+<li>Polish municipal construction times: the statistics API refused connections;</li>
+<li>the stock of dwellings under construction: the Prague series has not been published since 2009;</li>
+<li>one price-index variant, and the annual version of the price question;</li>
+<li>an OECD source to stand beside the Doing Business figure, which was not verified in time.</li>
+</ul>
+<p>Two registered checks were omitted from the first runs and added after the fact-check on 29 September 2026. Neither is in the family:</p>
+<ul>
+<li>the metro test clustered by the 57 city districts;</li>
+<li>the Warsaw replication.</li>
+</ul>
+<p>The design left these choices open, and they were made as follows:</p>
+<ul>
+<li>census reference dates come from national documentation, and several are marked for verification;</li>
+<li>a metro region's core is its densest member;</li>
+<li>the Czech rebuilt numerator uses monthly regional completions;</li>
+<li>the within-Czechia comparison is the raw rate, with no model;</li>
+<li>lags are the best of 10 starting values;</li>
+<li>twelve quarterly lags leave 27 quarters, not 35;</li>
+<li>the fixed-b critical value is simulated;</li>
+<li>the Polish bootstrap is the unstudentised score version, and its effective number of clusters uses an independence working covariance;</li>
+<li>the Polish common support is 242 districts;</li>
+<li>the rail and tram distances use today's network;</li>
+<li>half-kilometre squares take their parent square's density;</li>
+<li>robustness bootstraps use 999 draws.</li>
+</ul>
+<p>After estimation:</p>
+<ul>
+<li>H5 was decided at p = 0.0252 against 0.025 and not re-run.</li>
+<li>H2's noise was 3.3 times the signal, which triggered the registered "underpowered" wording rule. It did not apply, because H2 passed.</li>
+<li>The rest of Czechia's 5-month lag and Prague's flat likelihood are flagged.</li>
+<li>Two pipeline variants had diverging bootstraps.</li>
+<li>Three relevance checks failed, and their results are labelled uninformative.</li>
+<li>Robustness variants for H4 drop district-builder cells with no dwellings at all. The main frame had none.</li>
+</ul>
+<p>The full, dated list is in the design file<sup class="cite"><a href="#r7">7</a></sup>. The numbers of the registered study come from seven scripts:</p>
+<ul>
+<li><code>tools/praha/housing_fetch.py</code></li>
+<li><code>housing_data.py</code></li>
+<li><code>housing_power.py</code></li>
+<li><code>housing_extended.py</code></li>
+<li><code>housing_robust.py</code></li>
+<li><code>housing_addenda.py</code></li>
+<li><code>figures_housing_extended.py</code></li>
+</ul>
+</section>
+
+<section>
+<h2>What this does not show</h2>
+<p>The European comparison is a description and establishes no cause, and its demand model failed its relevance check. The pipeline result starts at the permit, so it does not measure the time it takes to get one. Because prices respond to supply as well, the price questions measure responsiveness rather than an elasticity. The builders' test is Polish, and it says nothing about what limited-profit associations would do in Prague.</p>
+<p>The cadastre keeps only standing buildings and dates the building rather than the flats added to it; the census also dates buildings and, in Czechia, Spain and Croatia, counts their reconstruction; one-kilometre squares and fourteen regions are coarse units<sup class="cite"><a href="#r23">23</a></sup>.</p>
 </section>
 
 <section class="refs" id="refs">
@@ -94,7 +238,27 @@
 <li id="r1">Český statistický úřad, Prague office: <a href="https://csu.gov.cz/pha/casove-rady-ekonomika">Bytová výstavba v Praze 1994–2024</a>; <a href="https://csu.gov.cz/pha/prazska-bytova-vystavba-2024">Pražská bytová výstavba 2024</a>.</li>
 <li id="r2">Statistik Austria: <a href="https://www.statistik.at/statistiken/bevoelkerung-und-soziales/wohnen/baufertigstellungen">Baufertigstellungen</a>, dwellings completed 2011–2024 by Bundesland and 2024 results by builder; <a href="https://www.statistik.at/statistiken/bevoelkerung-und-soziales/bevoelkerung/bevoelkerungsstand/bevoelkerung-im-jahresdurchschnitt">annual average population</a>.</li>
 <li id="r3">Statistics Poland: <a href="https://bdl.stat.gov.pl/">Local Data Bank</a>, Capital City Warszawa, dwellings completed (total, municipal, TBS) and population.</li>
-<li id="r4">Šandová, B. (2026): Parts <a href="prague-council">1</a>, <a href="prague-rings">2</a> and <a href="prague-districts">3</a> of this series.</li>
+<li id="r4">Glaeser, E. L., Gyourko, J. (2018): The economic implications of housing supply. <i>Journal of Economic Perspectives</i> 32(1), 3–30.</li>
+<li id="r5">Glaeser, E. L., Gyourko, J., Saks, R. (2005): Why is Manhattan so expensive? Regulation and the rise in housing prices. <i>Journal of Law and Economics</i> 48(2), 331–369.</li>
+<li id="r6">Gyourko, J., Molloy, R. (2015): Regulation and housing supply. <i>Handbook of Regional and Urban Economics</i> 5, 1289–1337.</li>
+<li id="r7">Šandová, B. (2026): <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-housing-design.md">Prague builds two homes for Vienna's three: research design</a>, registered version 2 with dated changes; <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-housing-referees.md">referee reports</a>; <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-housing-power.json">design-stage power</a>.</li>
+<li id="r8">Holm, S. (1979): A simple sequentially rejective multiple test procedure. <i>Scandinavian Journal of Statistics</i> 6(2), 65–70.</li>
+<li id="r9">Politis, D. N., Romano, J. P. (1994): The stationary bootstrap. <i>Journal of the American Statistical Association</i> 89(428), 1303–1313.</li>
+<li id="r10">Kline, P., Santos, A. (2012): A score based approach to wild bootstrap inference. <i>Journal of Econometric Methods</i> 1(1), 23–41.</li>
+<li id="r11">Conley, T. G. (1999): GMM estimation with cross sectional dependence. <i>Journal of Econometrics</i> 92(1), 1–45.</li>
+<li id="r12">Lazarus, E., Lewis, D. J., Stock, J. H., Watson, M. W. (2018): HAR inference: recommendations for practice. <i>Journal of Business &amp; Economic Statistics</i> 36(4), 541–559.</li>
+<li id="r13">Eurostat: Census 2021, conventional dwellings by period of construction and NUTS 3 region (cens_21dwop_r3); Census 2011 dwellings; population, GDP, employment by industry (nama_10r_3empers) and area by NUTS 3; NUTS 2021 metropolitan typology.</li>
+<li id="r14">Vovk, V., Gammerman, A., Shafer, G. (2005): <i>Algorithmic Learning in a Random World</i>. Springer.</li>
+<li id="r15">Lei, J., G'Sell, M., Rinaldo, A., Tibshirani, R. J., Wasserman, L. (2018): Distribution-free predictive inference for regression. <i>Journal of the American Statistical Association</i> 113(523), 1094–1111.</li>
+<li id="r16">Act No. 283/2021 Coll., the building act; World Bank (2020): <i>Doing Business 2020</i>, Czech Republic, dealing with construction permits (a warehouse case; the series was discontinued in 2021).</li>
+<li id="r17">Mayer, C. J., Somerville, C. T. (2000): Residential construction: using the urban growth model to estimate housing supply. <i>Journal of Urban Economics</i> 48(1), 85–109.</li>
+<li id="r18">Caldera, A., Johansson, Å. (2013): The price responsiveness of housing supply in OECD countries. <i>Journal of Housing Economics</i> 22(3), 231–249.</li>
+<li id="r19">Sinai, T., Waldfogel, J. (2005): Do low-income housing subsidies increase the occupied housing stock? <i>Journal of Public Economics</i> 89(11–12), 2137–2164.</li>
+<li id="r20">Eriksen, M. D., Rosenthal, S. S. (2010): Crowd out effects of place-based subsidized rental housing. <i>Journal of Public Economics</i> 94(11–12), 953–966.</li>
+<li id="r21">ČÚZK: <a href="https://ags.cuzk.gov.cz/arcgis/rest/services/RUIAN/MapServer">RÚIAN map service</a>, building points (flats, completion date, construction type), city and administrative districts; Český statistický úřad: open data on permitted and completed dwellings by region (STA09B), price indices of flats (icncr), Census 2021 1 km grid; Statistics Poland: Local Data Bank.</li>
+<li id="r22">Eurostat, GISCO: GEOSTAT 2011 1 km population grid.</li>
+<li id="r23">Openshaw, S. (1984): <i>The Modifiable Areal Unit Problem</i>. CATMOG 38, Geo Books.</li>
+<li id="r24">Šandová, B. (2026): Parts <a href="prague-council">1</a>, <a href="prague-rings">2</a> and <a href="prague-districts">3</a> of this series.</li>
 </ol>
 </section>
 
@@ -111,6 +275,15 @@
     const p = c.prague[y], v = c.vienna[y], w = c.warsaw[y];
     return `<tr><td>${y}</td><td class="p">${p.per_1000.toFixed(1)} <small>(${n(p.completed)})</small></td>` +
       `<td>${v.per_1000.toFixed(1)} <small>(${n(v.completed_new_buildings)})</small></td><td>${w.per_1000.toFixed(1)} <small>(${n(w.completed)})</small></td></tr>`;
+  }).join("");
+})();
+(async () => {
+  let r; try { r = await (await fetch("../assets/praha/housing_extended_robust.json")).json(); } catch (e) { return; }
+  const names = {H2: "H2 · permit to house number", H4: "H4 · builders, Poland", H5: "H5 · the metro"};
+  const pc = v => Math.round(100 * v) + " %";
+  document.getElementById("sc").innerHTML = Object.entries(names).map(([k, lab]) => {
+    const s = r.spec_curve[k];
+    return `<tr><td>${lab}</td><td>${s.specifications.length}</td><td>${pc(s.share_same_sign)}</td><td>${pc(s.share_p_below_005)}</td><td>${s.robust ? "yes" : "no"}</td></tr>`;
   }).join("");
 })();
 </script>
