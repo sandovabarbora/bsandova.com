@@ -80,7 +80,7 @@
   <div><dt>registration</dt><dd>design written before modelling; not independently timestamped (<a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-rings-design.md">design file</a>)</dd></div>
   <div><dt>data</dt><dd>ČSÚ election open data 2017, 2021, 2025 and Census 2021 1 km grid, accessed 28 September 2026; ČÚZK RÚIAN, accessed 28 September 2026; PID GTFS, snapshot of 28 September 2026; <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-rings-files.sha256">SHA-256 list</a></dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/praha">tools/praha/</a>, results commit 1283162; rebuild: the scripts under <a href="#reproduction">Reproduction</a>, in order; the tests are <code>python tools/praha/rings_extended.py</code>, run with the <code>uv</code> command in its header</dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Housing estates and the 2025 vote in Prague's precincts</i>. bsandova.com/texts/prague-rings, version 2.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Housing estates and the 2025 vote in Prague's precincts</i>. bsandova.com/texts/prague-rings, version 2. · <a href="../assets/pdf/prague-rings.pdf">PDF</a></dd></div>
   <div><dt>licence</dt><dd>code MIT; text, figures and data CC BY 4.0</dd></div>
 </dl>
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-prague-rings;--bg:url(../assets/photo/prague-rings.jpg);--bg-s:url(../assets/photo/prague-rings-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Opatov,_z_l%C3%A1vky_sm%C4%9Br_Modletick%C3%A1.jpg">ŠJů</a> · CC BY-SA 3.0, colour held</p></section>
@@ -207,6 +207,11 @@
 </section>
 
 <section>
+<h2>What this means</h2>
+<p>The results locate ANO's vote in the housing estates and measure how much of it goes with who lives there, without identifying any effect of the estates on anyone's vote. Measured are the votes, the housing and the distances: ANO takes 26 % where more than seven flats in ten are in panel buildings and 16 % where fewer than one in ten are. Inferred, from 1 km census squares, is the share of that gradient going with education and citizenship, 43 % under the registered block and 31–44 % across 48 specifications, likely understated, and about half once age is added. The rest cannot be credited to the estates as places, since income, tenure and length of residence are unmeasured. Between 2017 and 2025 the gradient rose by 0.26, from 0.55 to 0.80 pp per 10 pp of panel flats (+0.24 to +0.30 across matching rules), in the older, matched precincts; with residents not held fixed, it shows the vote concentrating in the estates without saying why. The metro's association, −0.17 pp per doubling of distance (90 % CI −0.40 to +0.05), is neither distinguishable from zero nor shown to be negligible, and the turnout tests are uninformative.</p>
+</section>
+
+<section>
 <h2>What this does not show</h2>
 <p>No result here says how any resident votes, because every measurement is of areas<sup class="cite"><a href="#r5">5</a></sup>. The census is from March 2021, four and a half years before the 2025 election, taken during distance teaching and before the refugees of 2022. The grid is coarse, which limits what composition can explain. The areas are Prague's, and a different grid would give somewhat different numbers<sup class="cite"><a href="#r21">21</a></sup>. The leftover estate gradient is what the census does not measure, and the place itself is only one candidate for it: income, tenure and how long people have lived there are not in the grid, and any of them could carry it. The steepening since 2017 describes the matched, older precincts, with residents' composition not held fixed over time. None of the estimates is a causal effect of living in a panel building.</p>
 </section>
@@ -259,6 +264,7 @@
 <li>29 September 2026: corrected "never half", which holds only for the registered block without age; with age added composition explains 52 %. H4a and H4b relabelled from "not supported" to "uninformative". "43 % is a lower bound" changed to "likely understated". Bootstrap groups corrected from 57 to 56 districts (rings_extended.json, G = 56); the effective sample is now stated beside the headline, with 49 districts for H3 and 44 for H4, from the same file.</li>
 <li>29 September 2026: cut the minor-party paragraph to one sentence (removed: the panel gradients of STAN and Stačilo!, the centre gradients of SPD and the Motorists, and SPD's metro interval, 0.02 to 0.17) and the uncited sentence on the metro as the city's spine. Merged the duplicated map description and question list; compressed the turnout section; moved the line D placebo to "What changed after registration"; added the contribution sentence, the further-checks table, the metadata block and the Reproduction section.</li>
 <li>29 September 2026: references renumbered by first citation, with access and snapshot dates; the Part 1 reference replaced by a link. Series renumbered: the parking study is Part 5.</li>
+<li>29 September 2026: added the section What this means.</li>
 <li>Checked against editorial standard v1 on 29 September 2026.</li>
 </ul>
 </section>

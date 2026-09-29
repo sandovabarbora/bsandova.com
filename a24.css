@@ -236,3 +236,30 @@ figure.mp-live>img[hidden]{display:none}
 .text dl.meta div{display:grid;grid-template-columns:14ch 1fr;gap:12px;padding:6px 0;border-right:0;border-bottom:1px solid #ececea}
 .text dl.meta div+div{padding-left:0}
 @media (max-width:600px){.text dl.meta div{grid-template-columns:1fr;gap:0}}
+/* print and PDF (tools/pdf.sh): paper, no navigation or controls, figures kept whole */
+@media print{
+  @page{size:A4;margin:16mm 16mm 18mm}
+  html,body{background:#fff!important;color:#000}
+  .top,.hd,.nav,.skip,.ch-ctl,.mp-bar,.ch-hint,.where,footer.text-foot .back,.pm-bar{display:none!important}
+  .text{padding:0!important}
+  .text-head{margin:0 0 8mm!important;padding:0 0 6mm!important;grid-template-columns:1fr!important}
+  .text-head h1{font-size:30pt!important}
+  .text section.film.film-page{height:70mm!important;min-height:0!important;margin:0 0 8mm!important}
+  .film::after{display:none}
+  figure,table,.meta,.ht{break-inside:avoid}
+  details.tldr summary::after{display:none}
+  [id$="-filter"],.tw button,.ht button{display:none!important}
+  .tw,.ch-table,.mp-table,[class*="table-wrap"]{overflow:visible!important;max-height:none!important}
+  table{width:100%!important;table-layout:auto}
+  .text table,.text table *{font-size:7.5pt!important;line-height:1.25!important}
+  .text td,.text th{padding:1.5px 5px 1.5px 0!important;height:auto!important;white-space:normal!important}
+  .ch-table{display:none!important}
+  h2,h3{break-after:avoid}
+  details.tldr{border:1px solid #000}
+  details.tldr>*:not(summary){display:block!important}
+  a{color:#000;text-decoration:none}
+  .text p,.text li{font-size:10.5pt!important;line-height:1.5!important}
+  :root:has(link[rel="canonical"][href*="/texts/"]) .text>section:not(.film){display:block!important}
+  :root:has(link[rel="canonical"][href*="/texts/"]) .text>section:not(.film)>h2{position:static!important;max-width:none!important}
+  .text>.tldr,.text>.meta,:root:has(link[rel="canonical"][href*="/texts/"]) .text>.text-foot{margin-left:0!important}
+}
