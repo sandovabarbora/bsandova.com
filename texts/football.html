@@ -32,6 +32,7 @@
 .tbl th{font-weight:400;color:var(--fg-2);letter-spacing:.12em;text-transform:uppercase;font-size:10px}
 .tbl td.n,.tbl th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .tbl td b{color:var(--hot);font-weight:400}.tbl .hi{color:var(--coral)}.tbl .dim{color:var(--fg-2)}
+.scroller{overflow-x:auto;max-width:64rem}
 .tbl caption{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);padding:0 0 .5rem}
 /* metadata block: style.css gives .meta a three-column grid for the home page; restore one line per row here */
 .text>.meta{display:block;letter-spacing:0;text-transform:none;font-size:12px}
@@ -97,7 +98,7 @@
   <figcaption><b>fig. 1</b> · Distinct players of each nationality who played in one of the nine strongest leagues in 2025/26, per million population; Czechia in green. FBref via soccerdata, snapshot of 14 September 2026; Eurostat population on 1 January 2024.</figcaption>
 </figure>
 <p>By cohort the largest gap is among midfielders aged 23 to 25, two Czech players in the nine leagues against a peer median of six, and among defenders under 22 Czechia has none against a peer median of 1.5.</p>
-<table class="tbl"><caption>Largest cohort gaps · nine strongest leagues · 2025/26 · ≥ 450 minutes</caption>
+<div class="scroller"><table class="tbl"><caption>Largest cohort gaps · nine strongest leagues · 2025/26 · ≥ 450 minutes</caption>
 <thead><tr><th>group</th><th>cohort</th><th class="n">CZE</th><th class="n">peer median</th></tr></thead>
 <tbody>
 <tr><td>Midfielders</td><td>23–25</td><td class="n hi">2</td><td class="n">6</td></tr>
@@ -105,7 +106,7 @@
 <tr><td>Midfielders</td><td>30+</td><td class="n">1</td><td class="n">3.5</td></tr>
 <tr><td>Defenders</td><td>26–29</td><td class="n">3</td><td class="n">4.5</td></tr>
 <tr><td>Defenders</td><td>U22</td><td class="n hi">0</td><td class="n">1.5</td></tr>
-</tbody></table>
+</tbody></table></div>
 <p>Czech players aged 21 or younger get 6.4 % of Czech First League minutes; the same share for each country's own young players in its league is 15.3 % in Denmark, 14.1 % in Hungary, 14.0 % in Croatia and 11.5 % in Norway, and the league has 1.1 regular under-21 starters per club against Denmark's 2.5. The Czech share was 10 % in 2020/21. The first move abroad comes at a median age of 24, against 23 for Denmark and 22.5 for Norway, and the covered seasons hold 32 Czech first moves against Denmark's 112. Of the 192 mapped players, 27 play abroad, 17 of them (63 %) in the nine leagues, and 19 % moved to a league no stronger than the Czech one by its multiplier. The 17 and the 26 above count different things: the 26 include three players under 450 minutes and four goalkeepers, whom the map leaves out, and two players whose longest 2025/26 spell was in the Czech league. Abroad, Czech players keep a median 50 % of their club's minutes, third of nine behind Slovakia (76 %) and Hungary (57 %). Of the 26 players in the Czech squad for the 2026 FIFA World Cup, 35 % play in the nine leagues, against 88 % for Switzerland, 73 % for Croatia, 69 % for Austria and 65 % for Norway<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r8">8</a></sup>.</p>
 <p>The Big-5 series peaks at 26 in 2007/08, falls to 6 in 2015/16 and stands at 10 in 2025/26. The two-break model puts a rise in 2000/01 (posterior probability 0.55, level ×1.65, 90 % HDI 0.87–2.46) and a fall in 2014/15 (0.56, ×0.60, 0.39–1.03); the pair together has probability 0.36. The interval for the size of the fall reaches 1, so the model does not exclude an unchanged level. At the 2007/08 peak the Czech Big-5 players had a median age of 28 and in the season of the fall 32, with no debutant arriving. Among the sixteen other countries, Croatia fell in 2003/04 and recovered eleven seasons later and Norway fell in 2004/05 and recovered seventeen seasons later, while every other small peer's later step is a rise<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r5">5</a></sup>.</p>
 <figure data-chart="../assets/football/charts.json#big5">
@@ -113,12 +114,12 @@
   <figcaption><b>fig. 2</b> · Czech players with at least 450 minutes in the Big-5 leagues (green), Denmark and Croatia (black) and the other peers (light grey), 2000/01–2025/26; lower panel per million population. The render starts in 2000/01 and does not mark the model's breaks; the series behind the text starts in 1995/96. FBref via soccerdata, snapshot of 14 September 2026.</figcaption>
 </figure>
 <p>The gap to each peer is split into three channels, the under-21 share of home minutes, home-league strength (the mover-based estimate) and the median age of the first move, with a ridge regression across the eight countries, Czechia and seven peers, with data on all three and a linear Oaxaca–Blinder split of the fitted gap. With three channels and eight countries this is an accounting of a correlation<sup class="cite"><a href="#r1">1</a></sup>.</p>
-<table class="tbl"><caption>Gap to Czechia in players per million · ridge fit, n = 8 · bootstrap 90 % intervals</caption>
+<div class="scroller"><table class="tbl"><caption>Gap to Czechia in players per million · ridge fit, n = 8 · bootstrap 90 % intervals</caption>
 <thead><tr><th>peer</th><th class="n">gap</th><th class="n">U21 minutes</th><th class="n">league strength</th><th class="n">age at first move</th><th class="n">residual</th></tr></thead>
 <tbody>
 <tr><td>Norway</td><td class="n">+7.0</td><td class="n">+4.2 (1.2–5.9)</td><td class="n">+5.1 (1.9–6.8)</td><td class="n">0.0</td><td class="n">−2.4</td></tr>
 <tr><td>Denmark</td><td class="n">+10.2</td><td class="n">+7.3 (2.2–10.3)</td><td class="n">+1.7 (0.6–2.3)</td><td class="n">0.0</td><td class="n">+1.2</td></tr>
-</tbody></table>
+</tbody></table></div>
 <p>Across the same eight countries a Bayesian regression of players per million on the under-21 share gives +10.1 per 10 percentage points (90 % HDI −1.7 to +23.3, R² 0.27), an interval that includes zero. Least squares on the country means gives +10.7 (−3.8 to 20.3). A pooled fit on all sixteen country-seasons gives +7.8 (1.1–14.0), but its bootstrap resamples country-seasons as if independent, with no clustering by country, so that interval is too narrow<sup class="cite"><a href="#r1">1</a></sup>.</p>
 <figure data-chart="../assets/football/charts.json#atlas-mf">
   <img src="../assets/football/atlas-mf.svg" alt="Two scatter plots of Czech midfielders 2025/26: style projection and quality-adjusted projection, each player coloured by the rung of his league, national-team players ringed." loading="lazy">

@@ -32,6 +32,7 @@
 .tbl th{font-weight:400;color:var(--fg-2);letter-spacing:.12em;text-transform:uppercase;font-size:10px}
 .tbl td.n,.tbl th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .tbl td b{color:var(--hot);font-weight:400}.tbl .hi{color:var(--coral)}.tbl .dim{color:var(--fg-2)}
+.scroller{overflow-x:auto;max-width:64rem}
 .tbl caption{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);padding:0 0 .5rem}
 /* metadata block: style.css gives .meta a three-column grid for the home page; restore one line per row here */
 .text>.meta{display:block;letter-spacing:0;text-transform:none;font-size:12px}
@@ -97,22 +98,22 @@
   <figcaption><b>fig. 1</b> · Players born in each country with at least ten NHL games in 2025/26, per million population; Czechia in blue. Populations are the constants in the atlas code. Atlas render of 18 May 2026.</figcaption>
 </figure>
 <p>Split by position and age, each cell gives the number of players with at least ten games and their median points per game. A median in a cell of one or two players is those players' own value and is not comparable across cells.</p>
-<table class="tbl"><caption>Forwards · NHL 2025/26 · players · median P/GP · age reached in 2025 · grey: fewer than three players</caption>
+<div class="scroller"><table class="tbl"><caption>Forwards · NHL 2025/26 · players · median P/GP · age reached in 2025 · grey: fewer than three players</caption>
 <thead><tr><th>cohort</th><th class="n">CZE</th><th class="n">FIN</th><th class="n">SWE</th><th class="n">SVK</th></tr></thead>
 <tbody>
 <tr><td>U22 (18–21)</td><td class="n dim">1 · 0.42</td><td class="n">3 · 0.24</td><td class="n">7 · 0.45</td><td class="n">4 · 0.33</td></tr>
 <tr><td>22–25</td><td class="n dim">2 · 0.22</td><td class="n">9 · 0.24</td><td class="n">13 · 0.32</td><td class="n dim">—</td></tr>
 <tr><td>26–29</td><td class="n"><b>4 · 1.06</b></td><td class="n">8 · 0.46</td><td class="n">11 · 0.40</td><td class="n dim">2 · 0.28</td></tr>
 <tr><td>30+</td><td class="n">5 · 0.19</td><td class="n">5 · 0.47</td><td class="n">15 · 0.58</td><td class="n dim">—</td></tr>
-</tbody></table>
-<table class="tbl"><caption>Defencemen · NHL 2025/26 · players · median P/GP · age reached in 2025 · grey: fewer than three players</caption>
+</tbody></table></div>
+<div class="scroller"><table class="tbl"><caption>Defencemen · NHL 2025/26 · players · median P/GP · age reached in 2025 · grey: fewer than three players</caption>
 <thead><tr><th>cohort</th><th class="n">CZE</th><th class="n">FIN</th><th class="n">SWE</th><th class="n">SVK</th></tr></thead>
 <tbody>
 <tr><td>U22 (18–21)</td><td class="n hi">—</td><td class="n dim">—</td><td class="n">5 · 0.23</td><td class="n dim">1 · 0.38</td></tr>
 <tr><td>22–25</td><td class="n dim">1 · 0.00</td><td class="n dim">1 · 0.27</td><td class="n">12 · 0.24</td><td class="n dim">—</td></tr>
 <tr><td>26–29</td><td class="n dim">1 · 0.60</td><td class="n">5 · 0.18</td><td class="n">5 · 0.23</td><td class="n dim">2 · 0.26</td></tr>
 <tr><td>30+</td><td class="n dim">1 · 0.23</td><td class="n">3 · 0.35</td><td class="n">8 · 0.49</td><td class="n dim">—</td></tr>
-</tbody></table>
+</tbody></table></div>
 <p>The youngest Czech forward cohort is one player, Kulich, against three for Finland and seven for Sweden. The 26–29 cohort of four, among them Pastrňák, Nečas and Zacha, has a median of 1.06 points per game, the highest in these tables. On defence Czechia has three NHL players in all, against nine for Finland and thirty for Sweden, and none aged 18–21. The fifteen players are the twelve forwards and three defencemen in these tables<sup class="cite"><a href="#r3">3</a></sup>.</p>
 <p>The two maps show the league adjustment openly. In the style map, on raw rates, Pastrňák and Červenka sit in the same production zone, because each produces alike in his own league; in the quality map Pastrňák moves to PC1 ≈ 8.5 and Červenka to about 2. Of the 81 players who played the 2024 or 2025 World Championship for Czechia, 42 are in the mapped pool, from both the NHL and the Extraliga<sup class="cite"><a href="#r3">3</a></sup>.</p>
 <figure data-chart="../assets/hockey/charts.json#atlas-forwards">
@@ -128,14 +129,14 @@
 <section>
 <h2>Tests and sensitivity</h2>
 <p>The repository holds 51 software unit tests, and every stochastic step uses seed 42<sup class="cite"><a href="#r9">9</a></sup>. The Liiga and Extraliga factors were each moved by ±20 % and the quality ranking recomputed; the NHL is the reference at 1.00 and the other factors were not varied. Moving every factor by the same percentage cannot change a ranking, so those two scenarios are not shown. In the four scenarios below the top ten changes by at most one player and the four NHL forwards at the top stay there, but the mean rank shift in the top twenty reaches 4.35 places when the Liiga factor falls, so the lower part of the ranking depends on the factors<sup class="cite"><a href="#r3">3</a></sup>.</p>
-<table class="tbl"><caption>Sensitivity · ±20 % on one league factor · quality ranking</caption>
+<div class="scroller"><table class="tbl"><caption>Sensitivity · ±20 % on one league factor · quality ranking</caption>
 <thead><tr><th>scenario</th><th class="n">top-10 overlap</th><th class="n">churn</th><th class="n">mean Δ rank, top 20</th></tr></thead>
 <tbody>
 <tr><td>Liiga −20 %</td><td class="n">9 / 10</td><td class="n">1</td><td class="n">4.35</td></tr>
 <tr><td>Liiga +20 %</td><td class="n">9 / 10</td><td class="n">1</td><td class="n">1.90</td></tr>
 <tr><td>Extraliga −20 %</td><td class="n">9 / 10</td><td class="n">1</td><td class="n">1.30</td></tr>
 <tr><td>Extraliga +20 %</td><td class="n">10 / 10</td><td class="n">0</td><td class="n">2.50</td></tr>
-</tbody></table>
+</tbody></table></div>
 </section>
 
 <section>
