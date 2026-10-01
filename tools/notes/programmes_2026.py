@@ -45,24 +45,34 @@ page = re.sub(r"\{\{ref:([A-Z0-9]+)\}\}", lambda m: cite([m.group(1)]), page)
 
 
 def list_section(l: dict) -> str:
-    trs = []
+    cards = []
     for p, k, can, cannot, rc, rn in l["rows"]:
-        trs.append(f"      <tr><td>{e(p)}</td><td class=\"v\">{chip(k)}</td>"
-                   f"<td><b>Why it can:</b> {e(can)}{cite(rc, l['source'])}<br><b>Why not:</b> {e(cannot)}{cite(rn, l['source'])}</td></tr>")
+        cards.append(f"""    <article class="pr pr-{k}">
+      <div class="pr-head">{chip(k)}<h3>{e(p)}</h3></div>
+      <div class="pr-why">
+        <div class="pr-can"><p class="pr-lab">Why it can</p><p>{e(can)}{cite(rc, l['source'])}</p></div>
+        <div class="pr-not"><p class="pr-lab">Why not</p><p>{e(cannot)}{cite(rn, l['source'])}</p></div>
+      </div>
+    </article>""")
     unv = "".join(f"<li>{e(u)}</li>" for u in l["unverified"])
     return f"""<details class="prog" id="{l['id']}">
-  <summary>List {l['no']} · {e(l['name'])} <small>{len(l['rows'])} promises</small></summary>
-  <p>{e(l['verdict'])}</p>
-  <div class="ht-wrap"><table class="ht">
-    <thead><tr><th>Promise</th><th>Within one term</th><th>Why it can, and why not</th></tr></thead>
-    <tbody>
-{chr(10).join(trs)}
-    </tbody>
-  </table></div>
-  <p><b>Not checked here:</b></p><ul>{unv}</ul>
-  <p><b>Overall:</b> {e(l['overall'])}</p>
+  <summary><span class="prog-no">{l['no']}</span><span class="prog-name">{e(l['name'])}</span><span class="prog-n">{len(l['rows'])} promises</span></summary>
+  <p class="prog-verdict">{e(l['verdict'])}</p>
+  <div class="prs">
+{chr(10).join(cards)}
+  </div>
+  <div class="prog-foot">
+    <div><p class="pr-lab">Not checked here</p><ul>{unv}</ul></div>
+    <div><p class="pr-lab">Overall</p><p>{e(l['overall'])}</p></div>
+  </div>
   <p class="note">Source: <a href="{l['source']}">{e(l['source'].split('//')[1].rstrip('/'))}</a>, {e(l['captured'])}. A reason with no reference rests on the author's reading of the programme and of the city's practice.</p>
 </details>"""
+
+
+def bar(c: collections.Counter, n: int) -> str:
+    segs = "".join(f'<span class="seg rt-{k}" style="flex:{c[k]}" title="{LABEL[k]}: {c[k]}"></span>' for k in LABEL if c[k])
+    leg = "".join(f'<li><span class="sw rt-{k}"></span>{LABEL[k]} <b>{c[k]}</b></li>' for k in LABEL)
+    return f'<div class="bar" role="img" aria-label="{n} promises by rating">{segs}</div><ul class="bar-leg">{leg}</ul>'
 
 
 SECTIONS = "\n".join(list_section(l) for l in D["lists"])
@@ -73,7 +83,7 @@ REFLIST = "\n".join(
     f'<li id="r{i}">' + re.sub(r"(https://\S+)", lambda m: f'<a href="{m.group(1)}">{e(m.group(1).split("//")[1])}</a>', e(REFS[k])) + " Accessed 1 October 2026.</li>"
     for i, k in enumerate(order, 1))
 for k, v in {"{{N}}": len(rows), "{{DOABLE}}": c["yes"] + c["likely"], "{{OTHER}}": c["other"], "{{NO}}": c["no"],
-             "{{PARTLY}}": c["partly"], "{{SECTIONS}}": SECTIONS, "{{REFS}}": REFLIST}.items():
+             "{{PARTLY}}": c["partly"], "{{SECTIONS}}": SECTIONS, "{{BAR}}": bar(c, len(rows)), "{{JUMP}}": "".join(f'<a href="#{l["id"]}">{l["no"]} {e(l["name"])}</a>' for l in D["lists"]), "{{REFS}}": REFLIST}.items():
     page = page.replace(k, str(v))
 (ROOT / "texts/prague-programmes-2026.html").write_text(page, encoding="utf-8")
 print(f"{len(rows)} promises: {dict(c)}; {len(order)} references")
