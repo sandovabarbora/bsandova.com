@@ -57,6 +57,31 @@ All three are descriptive.
 - After all five parts are published, a short note compares them: the focal songs' places in Q1 (with intervals),
   the top five countries in Q2 for each artist, and Q3's share sold out per artist. No test across artists is made.
 
+## 4. Two more questions, for all five parts (added before any data of the series were read)
+
+These apply to part 1 as well; its design points here.
+
+- **Q4 (one song or a catalogue).** How much of the artist's Spotify streams come from one song?
+  - Source: the kworb.net artist songs page (`artist/<id>_songs.html`), every song listed there, collected once.
+  - Measures: the top song's share of the artist's total streams; the top three songs' share; the Gini coefficient
+    over songs, with its Lorenz curve. These are counts over the full list, so no interval is given.
+  - Songs where the artist is featured count as listed on that page; the article states this.
+- **Q5 (what a ticket costs where).** What does an average ticket cost, measured in days of the host country's
+  income?
+  - Units: Boxscore entries from Q3 with both revenue and tickets sold.
+  - Average price = revenue / tickets sold (US dollars, as reported). Per country: the sum of revenue / the sum of
+    tickets sold over that country's entries.
+  - Income: World Bank GDP per capita, current US dollars (indicator NY.GDP.PCAP.CD), for the country and the
+    entry's year; the latest earlier year if that year is missing. A day of income = GDP per capita / 365.
+  - Output: countries ranked by days of income per ticket, with the ticket's price in dollars beside it.
+  - Limits stated in the article: GDP per capita is not a fan's income; Boxscore's gross mixes all seat prices and
+    fees; exchange rates are those used when the gross was reported.
+- **Czechia across the series.** Each part reports Czechia's place in Q2 (ratio and rank, or "not ranked"). The
+  comparison note (§3) lists the five places side by side.
+- **Reading Q3.** The 90 %-sold-out rule in part 1, §3 is the only way a "sold out everywhere" result is read: the
+  data show demand at or above capacity and cannot say how far above. No statement about which artist is "more in
+  demand" is made from Q3.
+
 ## References
 
 - As in part 1. Kaplan, E. L. and Meier, P. (1958), *JASA* 53(282), 457–481.

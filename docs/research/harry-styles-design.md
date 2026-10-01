@@ -101,3 +101,6 @@ All three are descriptive. None says why a song lasted or why a run sold.
   parts 2–5: *Love On Tour* and *Harry Styles: Live on Tour* (2018), pooled, each entry keeping its tour name. The
   reason is comparability across the series. *As It Was* stays the focal song; it is also the song the series rule
   would be checked against, and if the rule picks another song, both are reported.
+- **1 October 2026, before any data of part 1 were parsed or any figure computed.** Q4 (one song or a catalogue)
+  and Q5 (what a ticket costs, in days of the host country's income) are added for this part as for the whole
+  series; their definitions are in `pop-measured-design.md`, §4.
