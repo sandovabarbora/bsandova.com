@@ -132,3 +132,27 @@ estimate would be biased towards an effect.
 - Státní fond kinematografie (2014–2024). Zápisy z jednání Rady. https://oldfondkinematografie.cz/zapisy-z-jednani-rady-statniho-fondu-kinematografie.html. Accessed 1 October 2026.
 - Unie filmových distributorů (2026). Premiéry v českých kinech. https://www.ufd.cz/prehledy-statistiky/premiery-v-ceskych-kinech. Accessed 1 October 2026.
 - European Audiovisual Observatory (2026). LUMIERE database. https://lumiere.obs.coe.int/. Accessed 1 October 2026.
+
+## Changes after registration
+
+**1 October 2026 (1) — linking recall audit, written before it is run.**
+
+- **Trigger.** The match-rate check in §3, run after the links were frozen at `9fc6666`, linked 51 % of funded and
+  31 % of unfunded feature-length applications from 2016–2021 to a Czech release. A funded feature is expected to
+  be released far more often than 51 %, so title changes are probably leaving many released films unmatched.
+  Funded projects may be easier to trace, which would bias O1 towards an effect. No points-based estimate has been
+  computed; only this match rate by funding status has been seen.
+- **Audit.**
+  - Draw, with seed 20261002, 30 funded and 30 unfunded unmatched applications from the primary sample.
+  - Shuffle them into one sheet that does not show funding or points.
+  - For each, search by hand for a released film: candidates by title similarity (top 5), plus LUMIERE films whose
+    Wikidata production company (P272) matches the applicant within the 0–6-year window.
+  - Record "found / not found" with the film. Recall by group is computed only after every row is decided.
+- **New rule 4 (producer), applied blind to every application if the audit finds released films missed in either
+  group.**
+  - Same production company (normalized name, via Wikidata P272 on LUMIERE films).
+  - Release within the window.
+  - Title token overlap of at least one distinctive word, or a unique candidate for that company in that window.
+  - Every rule-4 link is hand-reviewed as in §3.
+- **Reporting.** The audit's recall by group is reported in the article, whatever it shows. If recall still differs
+  by group after rule 4, Q1 O1 reports the bounds from the §6 sensitivity as its primary range.
