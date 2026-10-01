@@ -55,23 +55,28 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
   <h1>Can a wrong number <em>be seen coming?</em></h1>
   <p class="deck">On 87 held-out questions, run-time signals barely separate an AI assistant's silently wrong numbers from correct ones; the best of eight models, selected after the fact, reaches an AUC of 0.64 (95&nbsp;% CI 0.51–0.77).</p>
   <dl class="facts">
-    <div><dt>answers</dt><dd>5 794 <small>3 839 silently wrong · 125 runs · 15 languages · 8 packs · administrative count</small></dd></div>
-    <div><dt>trained on</dt><dd>3 704 <small>numeric answers in 87 questions, the bootstrap clusters · 81.8&nbsp;% silently wrong · administrative count</small></dd></div>
-    <div><dt>best held-out AUC</dt><dd>0.64 <small>95&nbsp;% CI 0.51–0.77, bootstrap by question · best of 8 combinations, selection-biased · 0.5 is chance</small></dd></div>
-    <div><dt>self-consistency</dt><dd>21&nbsp;% <small>correct when all repeats agree · 95&nbsp;% CI 9–35&nbsp;%, bootstrap by question · base rate 18&nbsp;% (9–28&nbsp;%)</small></dd></div>
+    <div><dt>answers</dt><dd>5 794 <small>3 839 silently wrong · administrative count</small></dd></div>
+    <div><dt>trained on</dt><dd>3 704 <small>87 questions · 81.8&nbsp;% silently wrong · administrative count</small></dd></div>
+    <div><dt>best held-out AUC</dt><dd>0.64 <small>95&nbsp;% CI 0.51–0.77 · selection-biased · 0.5 is chance</small></dd></div>
+    <div><dt>self-consistency</dt><dd>21&nbsp;% <small>correct when all repeats agree · 95&nbsp;% CI 9–35&nbsp;% · base rate 18&nbsp;%</small></dd></div>
   </dl>
 </header>
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>Used as a filter, the best model forwards 3.4&nbsp;% of answers, 86&nbsp;% of them correct, and so catches 16&nbsp;% of the correct answers; 120 of the 126 answers it forwards are repeats of one e-commerce question, so the lane rests on what the model learned about that question, and every other answer still needs a cross-check.</li>
-    <li>Of the eight combinations, only the selected one has an interval that excludes 0.5, and it ranks first in 43&nbsp;% of bootstrap resamples. When all three repeats agree, the share of correct answers is 2.7&nbsp;pp higher than overall (95&nbsp;% CI −4.6 to 9.2&nbsp;pp), a difference indistinguishable from zero.</li>
-    <li>What the SQL of an answer looks like does not carry over from one warehouse to another: every transfer interval includes 0.5. The within-taxi score of 0.12 lies below chance and is read as an anti-predictive artefact of holding out questions from ten, not as a finding.</li>
-    <li>The analysis is exploratory. The parsed answers and the analysis script are public and reproduce every AUC exactly; the parser and the run reports stay private, the sampling temperature was not recorded, and the traps are planted, not production questions.</li>
+    <li>Used as a filter, the best model forwards 3.4&nbsp;% of answers; every other answer still needs a cross-check.</li>
+    <li>Only one of eight combinations beats chance, and it was chosen after the fact.</li>
+    <li>Agreement across repeated runs does not make an answer measurably more likely to be correct.</li>
+    <li>What an answer's SQL looks like does not carry over from one warehouse to another.</li>
+    <li>The analysis is exploratory, and the traps are planted, not production questions.</li>
   </ul>
 </details>
 <dl class="meta">
   <div><dt>published</dt><dd>15 September 2026 · updated 29 September 2026 · <a href="#changelog">version 3</a></dd></div>
+</dl>
+<details class="meta-more">
+  <summary>About this study</summary>
+<dl class="meta">
   <div><dt>status</dt><dd>exploratory</dd></div>
   <div><dt>registration</dt><dd>not pre-registered; two exclusions were decided after first results (see "What changed during the analysis")</dd></div>
   <div><dt>data</dt><dd>125 run reports of the Quaesitor harness, committed 20–25 August 2026, in the quaesitor repository (private; not verifiable); published: the parsed answers with their run-time features, <a href="../assets/detector/answers.csv">answers.csv</a> (3 704 rows of model answers to synthetic benchmark packs, no personal data; SHA-256 <code>f4f329a5…</code>; written by <code>detector.py</code> at <code>b99c89e</code>, not committed in the quaesitor repository), the intervals <a href="../assets/detector/auc.json">auc.json</a>, the aggregate output <a href="../assets/detector/detector.json">detector.json</a> and the chart data</dd></div>
@@ -79,6 +84,7 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
   <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Can a wrong number be seen coming?</i> bsandova.com/texts/silent-detector, version 3.</dd></div>
   <div><dt>licence</dt><dd>code (<code>tools/detector/auc.py</code>) MIT; text, figures and data CC BY 4.0; the parser is not released</dd></div>
 </dl>
+</details>
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-silent-detector;--bg:url(../assets/photo/silent-detector.jpg);--bg-s:url(../assets/photo/silent-detector-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Diagnostic_monitors_in_the_control_room_of_Wendelstein_7-X.jpg">Siarhei Besarab</a> · CC BY-SA 4.0, colour held</p></section>
 
 

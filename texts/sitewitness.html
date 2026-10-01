@@ -26,9 +26,9 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false})"></script>
 <style>
 /* until a24.css resets style.css .meta (3-column grid, uppercase) */
-.text>dl.meta{display:block;text-transform:none;letter-spacing:0;font-size:12px}
-.text>dl.meta div,.text>dl.meta div+div,.text>dl.meta div:last-child{border-right:0;border-bottom:1px solid #ececea;padding:6px 0}
-.text>dl.meta code{font-size:inherit;word-break:break-word}
+.text dl.meta{display:block;text-transform:none;letter-spacing:0;font-size:12px}
+.text dl.meta div,.text dl.meta div+div,.text dl.meta div:last-child{border-right:0;border-bottom:1px solid #ececea;padding:6px 0}
+.text dl.meta code{font-size:inherit;word-break:break-word}
 .tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
 .tbl th,.tbl td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
 .tbl th:first-child,.tbl td:first-child{padding-left:0}
@@ -64,20 +64,25 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>This is the documentation for the site's question-answering assistant. You can try it on the <a href="../ask/">Ask page</a>, where each answer comes with the trace of the tool calls behind it.</li>
-    <li>The page is an engineering log. The evaluation runs of 21 and 22 September 2026 were used to find faults, the golden questions were corrected along the way, and the scores are therefore not comparable from run to run.</li>
-    <li>Only the final run was saved and can be checked; the scores of the earlier runs and the cost of the series were read from terminal output and not kept.</li>
-    <li>The rules are lexical and the questions were written by the author for her own site, so the results say little about other sites or adversarial users.</li>
+    <li>This documents the site's question-answering assistant; try it on the <a href="../ask/">Ask page</a>.</li>
+    <li>The page is an engineering log, so its scores are not comparable from run to run.</li>
+    <li>Only the final evaluation run was saved and can be checked.</li>
+    <li>The author wrote the questions for her own site, so the results say little about other sites.</li>
   </ul>
 </details>
 <dl class="meta">
   <div><dt>published</dt><dd>22 September 2026 · updated 29 September 2026 · <a href="#changelog">version 2</a></dd></div>
+</dl>
+<details class="meta-more">
+  <summary>About this tool</summary>
+<dl class="meta">
   <div><dt>status</dt><dd>tool v0.1.0</dd></div>
   <div><dt>data</dt><dd>golden questions <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/ask/golden.json">ask/golden.json</a>; saved evaluations <a href="../ask/eval.json">ask/eval.json</a> (22 September 2026) and <a href="../ask/eval-history.json">ask/eval-history.json</a> (17 and 22 September 2026); model claude-sonnet-5; earlier run scores are from terminal output and were not saved</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/sitewitness">sandovabarbora/sitewitness</a>, tag v0.1.0 (commit 364957e); instance config <code>sitewitness.toml</code> and runner <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/ask/eval.py">ask/eval.py</a> in the site repository; rerun with <code>sitewitness eval ask/golden.json --api https://api.bsandova.com</code></dd></div>
   <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>sitewitness: the rules behind Ask the site, enforced in code</i>. bsandova.com/texts/sitewitness, version 2.</dd></div>
   <div><dt>licence</dt><dd>package code Apache-2.0; text and data CC BY 4.0</dd></div>
 </dl>
+</details>
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-sitewitness;--bg:url(../assets/photo/sitewitness.jpg);--bg-s:url(../assets/photo/sitewitness-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Magnifying_glass_with_focus_on_paper.png">Niabot</a> · CC BY-SA 3.0, colour held</p></section>
 
 

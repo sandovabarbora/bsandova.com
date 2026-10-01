@@ -42,10 +42,10 @@
 .ht td.v b{font-weight:500;color:#3f6b2a}
 .ht small{color:#666;font:400 11px var(--mono)}
 .note{font:400 12px/1.6 var(--mono);color:#666}
-.text>dl.meta{display:block;letter-spacing:0;text-transform:none;font-size:12px;margin-top:0;border-top:1px solid #000}
-.text>dl.meta div{padding:6px 0;border-right:0;border-bottom:1px solid #ececea}
-.text>dl.meta div+div{padding-left:0}
-.text>dl.meta code{font-size:inherit}
+.text dl.meta{display:block;letter-spacing:0;text-transform:none;font-size:12px;margin-top:0;border-top:1px solid #000}
+.text dl.meta div{padding:6px 0;border-right:0;border-bottom:1px solid #ececea}
+.text dl.meta div+div{padding-left:0}
+.text dl.meta code{font-size:inherit}
 .text p.note{font:400 12px/1.6 var(--mono);color:#666}
 @media (max-width:600px){.ht td.v{white-space:normal}}
 </style>
@@ -71,15 +71,19 @@
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>The negative pooled estimate comes from the 2023 coalition change. After the 2018 change, districts that turned aligned received about a fifth more over three years, and the equivalence test is inconclusive, so a modest premium is not ruled out.</li>
-    <li>The sign rests on a few districts. Leaving out those with ODS mayors, the party that entered the coalition in 2023, turns the estimate to about +14 %, and dropping one control district, Troja, brings it to about 0 %.</li>
-    <li>The analysis plan was committed before the results, on the author's own branch. Three corrections to the grant data followed the first results; each is listed below with the estimate before and after.</li>
-    <li>Two coalition changes cannot separate alignment from anything else the switching districts shared, and the grant lists miss what the city builds in a district itself.</li>
-    <li>Outside the test, the thirteen large districts spend 8 346 to 17 604 crowns a year per resident, Praha 1 spends 35 320, and transfers are 76 % of the median district's income.</li>
+    <li>A grant premium for districts that joined the city's coalition is not supported, and the test is underpowered.</li>
+    <li>The negative estimate comes from 2023 and rests on a few districts.</li>
+    <li>After the 2018 change, a modest premium is not ruled out.</li>
+    <li>The plan was committed before the results; three later data corrections are listed below.</li>
+    <li>Two coalition changes cannot separate alignment from everything else those districts shared.</li>
   </ul>
 </details>
 <dl class="meta">
   <div><dt>published</dt><dd>28 September 2026 · updated 29 September 2026 · version 2 (<a href="#changelog">change log</a>)</dd></div>
+</dl>
+<details class="meta-more">
+  <summary>About this study</summary>
+<dl class="meta">
   <div><dt>status</dt><dd>research, registered analysis plan (self-timestamped)</dd></div>
   <div><dt>registration</dt><dd>registered analysis plan: design committed at <code>683b0c8</code> on 29 September 2026, 01:19 CEST, before the results commit <code>d8270ac</code> (01:29 CEST); commit times are self-reported, and the branch <code>feature/PRAHA-3x_districts-extended</code> was pushed after the analysis, on 29 September 2026, 05:18 CEST. The <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-districts-design.md">design file</a> lists every later change.</dd></div>
   <div><dt>data</dt><dd>MONITOR, Ministry of Finance, district reports 2015–2025, accessed 28 September 2026; ČSÚ residents by district 1991–2025, accessed 28 September 2026; the city's closing accounts, part III, 2014–2025, and approved budgets, praha.eu, accessed 28 September 2026; ČSÚ candidate registers 2014, 2018 and 2022 (2022 register of 28 March 2026). Raw files are not redistributed; their SHA-256 hashes are in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-districts-files.sha256">prague-districts-files.sha256</a>. Derived data: <a href="../assets/praha/districts.json">districts.json</a>, <a href="../assets/praha/districts_extended.json">districts_extended.json</a>, <a href="../assets/praha/districts_extended_robust.json">districts_extended_robust.json</a>.</dd></div>
@@ -87,6 +91,7 @@
   <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>City grants to Prague's 57 districts and party alignment</i>. bsandova.com/texts/prague-districts, version 2. · archive: <a href="https://doi.org/10.5281/zenodo.23040133">doi:10.5281/zenodo.23040133</a> · <a href="../assets/pdf/prague-districts.pdf">PDF</a></dd></div>
   <div><dt>licence</dt><dd>code MIT; text, figures and data CC BY 4.0.</dd></div>
 </dl>
+</details>
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-prague-districts;--bg:url(../assets/photo/prague-districts.jpg);--bg-s:url(../assets/photo/prague-districts-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Libe%C5%88sk%C3%BD_z%C3%A1mek_2019.jpg">Praguegirl15</a> · CC BY-SA 4.0, colour held · Libeň chateau, Praha 8 town hall</p></section>
 
 <section>

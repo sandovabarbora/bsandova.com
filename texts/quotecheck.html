@@ -26,9 +26,9 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false})"></script>
 <style>
 /* until a24.css resets style.css .meta (3-column grid, uppercase) */
-.text>dl.meta{display:block;text-transform:none;letter-spacing:0;font-size:12px}
-.text>dl.meta div,.text>dl.meta div+div,.text>dl.meta div:last-child{border-right:0;border-bottom:1px solid #ececea;padding:6px 0}
-.text>dl.meta code{font-size:inherit;word-break:break-word}
+.text dl.meta{display:block;text-transform:none;letter-spacing:0;font-size:12px}
+.text dl.meta div,.text dl.meta div+div,.text dl.meta div:last-child{border-right:0;border-bottom:1px solid #ececea;padding:6px 0}
+.text dl.meta code{font-size:inherit;word-break:break-word}
 .tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
 .tbl th,.tbl td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
 .tbl th:first-child,.tbl td:first-child{padding-left:0}
@@ -64,20 +64,25 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>Both sides are reduced to a comparison key that ignores case, ligatures, hyphens, whitespace, accents and quotation marks, and the answer is always printed from the source's original text, so a reworded quotation stays visibly reworded.</li>
-    <li>It answers FOUND, FOUND* (two adjacent halves with scan debris between them), DRIFT (a near match, counted as not found) or ABSENT, and in batch mode it checks every quotation in a finished Markdown note.</li>
-    <li>Its accuracy has not been measured on a labelled set; the evidence is the test suite, four runs against real books and the incidents it was written after, which are recorded in a private log.</li>
-    <li>It is only as good as the extracted text it is given, and it cannot judge a quotation from a source it has not been shown.</li>
+    <li>It compares a quotation with its source, ignoring case, ligatures, hyphens, accents and quotation marks.</li>
+    <li>It answers FOUND, FOUND*, DRIFT or ABSENT, and can check every quotation in a note.</li>
+    <li>Its accuracy has not been measured on a labelled set.</li>
+    <li>It can only judge a quotation against a source it has been shown.</li>
   </ul>
 </details>
 <dl class="meta">
   <div><dt>published</dt><dd>15 September 2026 · updated 29 September 2026 · <a href="#changelog">version 2</a></dd></div>
+</dl>
+<details class="meta-more">
+  <summary>About this tool</summary>
+<dl class="meta">
   <div><dt>status</dt><dd>tool v0.1.0</dd></div>
   <div><dt>data</dt><dd>none published; the four example runs use the extracted full text of copyrighted books, which are not redistributed; the incident counts come from the wiki's own log, entries of 27 and 28 August 2026 (private; not verifiable)</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/quotecheck">sandovabarbora/quotecheck</a>, tag v0.1.0 (commit 762bce2); test with <code>uv run pytest</code></dd></div>
   <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>quotecheck: checking that a quotation is in its source</i>. bsandova.com/texts/quotecheck, version 2.</dd></div>
   <div><dt>licence</dt><dd>package code Apache-2.0; text CC BY 4.0</dd></div>
 </dl>
+</details>
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-quotecheck;--bg:url(../assets/photo/quotecheck.jpg);--bg-s:url(../assets/photo/quotecheck-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:ASC_Leiden_-_Library_-_South_African_newspaper_stack_of_Die_Burger_-_2012.jpg">African Studies Centre Leiden</a> · CC BY-SA 4.0, colour held</p></section>
 
 

@@ -44,8 +44,8 @@
 :root:has(link[rel="canonical"][href*="/texts/"]) .text>section.series ol.parts{max-width:none;padding-left:0;margin:0 0 clamp(40px,5vw,72px)}
 :root:has(link[rel="canonical"][href*="/texts/"]) .text>section.series>h2{position:static;max-width:none;margin-bottom:clamp(20px,2.4vw,32px)}
 @media (max-width:760px){.text section .parts>li{grid-template-columns:1fr}}
-.text>dl.meta{display:block;text-transform:none;letter-spacing:0}
-.text>dl.meta div,.text>dl.meta div+div,.text>dl.meta div:last-child{border-right:0;border-bottom:1px solid #ececea;padding:6px 0}
+.text dl.meta{display:block;text-transform:none;letter-spacing:0}
+.text dl.meta div,.text dl.meta div+div,.text dl.meta div:last-child{border-right:0;border-bottom:1px solid #ececea;padding:6px 0}
 .regnote{font:400 12px/1.5 var(--mono);color:#666}
 </style>
 </head>
@@ -66,7 +66,7 @@
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>Each part fixes its hypotheses, tests and reporting sentences in a design written before the analysis, and its results are read within that part only.</li>
+    <li>Each part fixes its hypotheses and tests in a design written before its analysis.</li>
     <li>The order of design and results rests on the author's own git commits, not on an independent registry.</li>
     <li>Each article ends with what its data do not show.</li>
   </ul>
@@ -74,12 +74,17 @@
 
 <dl class="meta">
   <div><dt>published</dt><dd>29 September 2026 · updated 29 September 2026 · <a href="#changelog">version 2</a></dd></div>
+</dl>
+<details class="meta-more">
+  <summary>About this series</summary>
+<dl class="meta">
   <div><dt>status</dt><dd>hub, index of five research articles</dd></div>
   <div><dt>data</dt><dd>public sources, listed in each part's design with a SHA-256 file list; <a href="#data">table below</a></dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com">github.com/sandovabarbora/bsandova.com</a>, one folder under <code>tools/</code> per part; <a href="#data">table below</a></dd></div>
   <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Prague, measured</i>. bsandova.com/texts/prague-measured, version 2. · archive: <a href="https://doi.org/10.5281/zenodo.23040133">doi:10.5281/zenodo.23040133</a> · <a href="../assets/pdf/prague-measured.pdf">PDF</a></dd></div>
   <div><dt>licence</dt><dd>code MIT; text, figures and data CC BY 4.0</dd></div>
 </dl>
+</details>
 
 <section class="series">
 <h2>The parts</h2>

@@ -26,9 +26,9 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false})"></script>
 <style>
 /* until a24.css resets style.css .meta (3-column grid, uppercase) */
-.text>dl.meta{display:block;text-transform:none;letter-spacing:0;font-size:12px}
-.text>dl.meta div,.text>dl.meta div+div,.text>dl.meta div:last-child{border-right:0;border-bottom:1px solid #ececea;padding:6px 0}
-.text>dl.meta code{font-size:inherit;word-break:break-word}
+.text dl.meta{display:block;text-transform:none;letter-spacing:0;font-size:12px}
+.text dl.meta div,.text dl.meta div+div,.text dl.meta div:last-child{border-right:0;border-bottom:1px solid #ececea;padding:6px 0}
+.text dl.meta code{font-size:inherit;word-break:break-word}
 .tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
 .tbl th,.tbl td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
 .tbl th:first-child,.tbl td:first-child{padding-left:0}
@@ -64,20 +64,25 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>The tool reads two tables, a key and an optional partition column, and reports FAIL with machine-readable reasons unless schema, key, rows, values and per-partition hashes all agree. Float columns may carry a declared absolute or relative tolerance, printed in the report.</li>
-    <li>The two differences in the demo were a day column that the conversion to pandas had turned into a timestamp, and fare sums that one side rounded to cents and the other did not; the half-cent tolerance declared for the fare is printed in the report.</li>
-    <li>Its evidence is its own test suite and that one public demo. The two cutovers at work that the method comes from were done by hand before the package existed.</li>
-    <li>It shows that two tables are equal, not that either is right, and it has not been measured on inputs larger than the demo.</li>
+    <li>It compares two tables by schema, key, rows, values and per-partition hashes, and fails with reasons.</li>
+    <li>The demo found a day column turned into a timestamp, and fares rounded differently on each side.</li>
+    <li>Its evidence is its own test suite and one public demo.</li>
+    <li>It shows that two tables are equal, not that either is right.</li>
   </ul>
 </details>
 <dl class="meta">
   <div><dt>published</dt><dd>14 September 2026 · updated 29 September 2026 · <a href="#changelog">version 2</a></dd></div>
+</dl>
+<details class="meta-more">
+  <summary>About this tool</summary>
+<dl class="meta">
   <div><dt>status</dt><dd>tool v0.1.0</dd></div>
   <div><dt>data</dt><dd>NYC TLC yellow taxi trip records, January 2025, <code>yellow_tripdata_2025-01.parquet</code>, downloaded 14 September 2026; reports <a href="../assets/cutover/report-1.json">report-1.json</a> and <a href="../assets/cutover/report-2.json">report-2.json</a>, written by cutover 0.1.0 on 14 September 2026</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/cutover">sandovabarbora/cutover</a>, tag v0.1.0 (commit 3bf9b72); demo <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/demos/cutover_demo.py">tools/demos/cutover_demo.py</a>, rebuilt with <code>uv run --with cutover --with pandas python tools/demos/cutover_demo.py</code></dd></div>
   <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>cutover: checking that a table migration changed nothing</i>. bsandova.com/texts/cutover, version 2.</dd></div>
   <div><dt>licence</dt><dd>package code Apache-2.0; demo script MIT; text, figures and data CC BY 4.0</dd></div>
 </dl>
+</details>
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-cutover;--bg:url(../assets/photo/cutover.jpg);--bg-s:url(../assets/photo/cutover-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Railroad_switch_details_a.jpg">Xunil</a> · Public domain, colour held</p></section>
 
 
