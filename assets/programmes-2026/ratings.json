@@ -1,115 +1,933 @@
 {
- "about": "Feasibility of the Prague city-election programmes, 2026, within one four-year term: one row per promise. rating: yes | likely | partly | no (not within one term) | other (decided by the state or another body). Text captured 24-29 September 2026; rated 1 October 2026.",
+ "about": "Feasibility of the Prague city-election programmes, 2026, within one four-year term: one row per promise: [promise, rating, why it can be done, why it cannot (or what limits it)]. rating: yes | likely | partly | no (not within one term) | other (decided by the state or another body). Text captured 24-29 September 2026; rated 1 October 2026. Each row also lists the references (keys of 'refs'; PROG = the list's own programme) for why it can and why it cannot be done; a reason without a key rests on the author's reading of the programme and the city's practice.",
  "lists": [
-  {"no": "05", "id": "praha-sobe", "name": "Praha Sobě", "source": "https://prahasobe.cz/praha-sobe-volebni-program-2026.pdf", "captured": "PDF dated 24 September 2026, archived 29 September 2026",
+  {
+   "no": "05",
+   "id": "praha-sobe",
+   "name": "Praha Sobě",
+   "source": "https://prahasobe.cz/praha-sobe-volebni-program-2026.pdf",
+   "captured": "PDF dated 24 September 2026, archived 29 September 2026",
    "verdict": "Most of the programme can be done as 'we will start preparing', not as 'it will be finished'; the programme mostly words its large promises that way.",
    "rows": [
-    ["Stop selling city flats and land", "yes", "A decision of the City Assembly."],
-    ["Relax parking minimums for new buildings", "yes", "The Prague building regulations are a city regulation."],
-    ["Bring back the 'Prague package' for children's school meals and clubs; trees, wildlife care", "yes", "Small sums within the city's powers."],
-    ["Repair the Hlávka, Mánes and Čech bridges, with speed as a tender criterion", "likely", "Builds on preparation under way; the city has used a speed criterion before."],
-    ["'Start preparing' 8 000 city flats", "partly", "Preparation, not construction: 8 000 is more than the whole market completes in a year."],
-    ["Take developer contributions as flats instead of money", "partly", "Only by agreement in a planning contract, case by case."],
-    ["Set up an investment fund with cheap loans", "partly", "Legally possible; setting it up takes much of a term."],
-    ["More secondary-school places; buy places in private schools for 2027/28 meanwhile", "partly", "The city runs secondary schools as the region; paying for private places has no tested mechanism, and new buildings take longer than four years."],
-    ["City ring road, stage 'Blanka II': start the geological survey", "yes", "A concrete, small step."],
-    ["Ring metro line O, Hloubětín tunnel, Industrial half-ring, new Holešovice bridge", "no", "Decade-long projects; within a term, studies and design."],
-    ["'Finish building metro D'", "no", "At most a first section can open."],
-    ["100 % step-free crossings and public-transport stops", "no", "Thousands of sites; improvement yes, all of them no."],
-    ["The Prague motorway ring", "other", "Built by the state road agency; the programme says so itself."],
-    ["Regulate Airbnb; raise the tourist fee", "other", "The city has no legal power to restrict short-term rentals, and the fee's ceiling of 50 Kč a night is set by law."]],
-   "unverified": ["'Prague has 175 billion crowns lying idle in its accounts': how much is committed to projects under way.", "'We cut Prague's debt to a historic low.'"],
-   "overall": "More concrete than usual, and it calls its large projects preparation. Its weak points are numbers without a timeframe (8 000 flats), absolute targets ('100 %', 'finish metro D') and a funding plan resting on an unchecked sum."},
-  {"no": "07", "id": "pirati", "name": "Piráti", "source": "https://program2026.praha.pirati.cz/program/", "captured": "29 September 2026",
+    [
+     "Stop selling city flats and land",
+     "yes",
+     "The City Assembly decides on selling city property, so one resolution is enough.",
+     "Nothing in law blocks it; a later assembly can reverse it.",
+     [
+      "L131"
+     ],
+     []
+    ],
+    [
+     "Relax parking minimums for new buildings",
+     "yes",
+     "Parking minimums are set in the Prague building regulations, which the city issues itself.",
+     "A change has to go through the regulation's adoption process, which takes months, not years.",
+     [
+      "PSP"
+     ],
+     []
+    ],
+    [
+     "Bring back the 'Prague package' for children's school meals and clubs; trees, wildlife care",
+     "yes",
+     "The city funds these from its own budget, and the sums are small against it.",
+     "Nothing blocks it.",
+     [
+      "L131"
+     ],
+     []
+    ],
+    [
+     "Repair the Hlávka, Mánes and Čech bridges, with speed as a tender criterion",
+     "likely",
+     "The bridges are the city's, repairs are already being prepared, and the city has used speed as a tender criterion before.",
+     "Each repair still needs its permit and tender, so all three may not be finished in four years.",
+     [
+      "PROG"
+     ],
+     []
+    ],
+    [
+     "'Start preparing' 8 000 city flats",
+     "partly",
+     "Preparing projects on city land is the city's own work.",
+     "Building 8 000 flats takes far longer: the whole market completes about 6 000 a year, and permits in Prague take longer than elsewhere.",
+     [
+      "L131"
+     ],
+     [
+      "P4"
+     ]
+    ],
+    [
+     "Take developer contributions as flats instead of money",
+     "partly",
+     "A developer can agree to hand over flats in a planning contract with the city.",
+     "The city cannot order it across the board; each contract is negotiated.",
+     [],
+     []
+    ],
+    [
+     "Set up an investment fund with cheap loans",
+     "partly",
+     "The city may set up a fund and borrow.",
+     "Setting the fund up, its rules and its first loans take much of a term.",
+     [
+      "L131"
+     ],
+     []
+    ],
+    [
+     "More secondary-school places; buy places in private schools for 2027/28 meanwhile",
+     "partly",
+     "The city runs secondary schools as the region and can expand them.",
+     "New school buildings take longer than four years, and paying private schools for places has no tested legal route.",
+     [
+      "L131",
+      "L561"
+     ],
+     []
+    ],
+    [
+     "City ring road, stage 'Blanka II': start the geological survey",
+     "yes",
+     "A geological survey is a small, concrete step the city can order.",
+     "Nothing blocks the survey; the road itself is years away.",
+     [
+      "PROG"
+     ],
+     []
+    ],
+    [
+     "Ring metro line O, Hloubětín tunnel, Industrial half-ring, new Holešovice bridge",
+     "no",
+     "The city can commission studies and design.",
+     "Each is a decade-long project from preparation to opening, so none can be finished in one term.",
+     [],
+     []
+    ],
+    [
+     "'Finish building metro D'",
+     "no",
+     "The city can keep building.",
+     "No section is due to open within the term: the first is planned for 2032, after the term.",
+     [],
+     [
+      "PIR"
+     ]
+    ],
+    [
+     "100 % step-free crossings and public-transport stops",
+     "no",
+     "The city and its transport companies can rebuild stops and crossings every year.",
+     "There are thousands of them, so all of them in four years is out of reach.",
+     [
+      "L194"
+     ],
+     []
+    ],
+    [
+     "The Prague motorway ring",
+     "other",
+     "The city can help with land and connections.",
+     "The motorway ring is planned and built by the state road agency.",
+     [],
+     [
+      "L13",
+      "PROG"
+     ]
+    ],
+    [
+     "Regulate Airbnb; raise the tourist fee",
+     "other",
+     "The city can enforce existing rules and charge the fee up to the ceiling.",
+     "Short-term rental rules are set by state law, and the fee cannot exceed the legal ceiling of 50 Kč a night.",
+     [
+      "L565"
+     ],
+     [
+      "L159",
+      "U104",
+      "L565"
+     ]
+    ]
+   ],
+   "unverified": [
+    "'Prague has 175 billion crowns lying idle in its accounts': how much is committed to projects under way.",
+    "'We cut Prague's debt to a historic low.'"
+   ],
+   "overall": "More concrete than usual, and it calls its large projects preparation. Its weak points are numbers without a timeframe (8 000 flats), absolute targets ('100 %', 'finish metro D') and a funding plan resting on an unchecked sum."
+  },
+  {
+   "no": "07",
+   "id": "pirati",
+   "name": "Piráti",
+   "source": "https://program2026.praha.pirati.cz/program/",
+   "captured": "29 September 2026",
    "verdict": "Most can be done as preparation and administrative steps; the housing and transport numbers cannot be finished within one term.",
    "rows": [
-    ["'Prague will build several hundred flats every year' through its development company", "partly", "Starts, yes; the programme itself says most building comes in the next term."],
-    ["An investment fund repaid from rents, 'no burden on the budget'", "partly", "Founding the fund and borrowing, yes; no effect on the budget is uncertain without costs and rents."],
-    ["Long-term goal of at least 10 000 new flats a year", "no", "About 6 000 are completed a year now, most by the market; the programme calls it long-term."],
-    ["Ask up to 30 % of flats from developers for 30 years, 30 % below market rent, in exchange for zoning changes", "partly", "Negotiating through planning contracts, yes; requiring 30 % across the board is legally uncertain."],
-    ["Multiple property tax on long-empty and wholly tourist buildings; short-term rental rules", "other", "Set by law; a municipality may set a local coefficient (0.5–5) by area or property group, but not for empty flats."],
-    ["Minimum flat size 16 → 30 m²; lower parking minimums", "likely", "The Prague building regulations are the city's own."],
-    ["New districts (West City, New Kolovraty, East City) and an acceleration-zone act", "partly", "Competitions and plans, yes; the act is for Parliament, and the districts are decades of work."],
-    ["Finish tunnelling metro D, open the first section in 2032; prepare A, B, C extensions", "partly", "Tunnelling and preparation, yes; no opening in this term (the programme itself says 2032)."],
-    ["Tram lines to Malešice, Jarov, Nové Dvory, Strahov; trams on Wenceslas Square", "partly", "Shorter lines are doable; the permit status of each line is uncertain."],
-    ["Trams back on the Libeň bridge within two years; a new Vltava bridge", "partly", "The two-year deadline depends on the bridge's condition; the new bridge only as preparation."],
-    ["City ring road, Industrial half-ring with Hloubětín tunnel, Radlice radial", "partly", "As preparation ('we will prepare'), yes; as construction, no."],
-    ["Low-emission zone inside the city ring road", "likely", "The city council may set one by a general measure, effective at least 12 months after it is announced; a charge to enter would need a law."],
-    ["New secondary schools (Hradčanská, Barrandov, Písnická, Braník)", "partly", "The city runs secondary schools; all new buildings within four years is uncertain."],
-    ["City rental agency from 75 to 500 flats", "likely", "The city's budget and organisation; the pace depends on private landlords."],
-    ["Take over the Na Františku hospital; raise the tourist fee", "other", "The hospital's founder is the Prague 1 district; the fee's ceiling is set by law."]],
-   "unverified": ["City flats are 'only 4 % of the housing stock'; the development company added '4 billion' in land value.", "Flats permitted: 9 446 (2021), 8 191 (2024), 7 380 (2025).", "'At least ten thousand flats' used for tourists; an infrastructure backlog 'over 30 billion'.", "That a fund repaid from rents will not burden the budget."],
-   "overall": "Concrete in places (lines, stations, schools, 75 → 500, 16 → 30 m²) and often gives its own timelines. The weakest parts are the housing numbers and promises that rest on state law; the two-year deadline for the Libeň bridge is uncertain."},
-  {"no": "09", "id": "stan", "name": "STAN", "source": "https://www.starostove.cz/zastupitelstvo-hl-mesta-prahy", "captured": "29 September 2026",
+    [
+     "'Prague will build several hundred flats every year' through its development company",
+     "partly",
+     "The city's development company can get permits and start building on city land.",
+     "The programme itself says most of the building comes in the next term.",
+     [
+      "L131"
+     ],
+     [
+      "PROG"
+     ]
+    ],
+    [
+     "An investment fund repaid from rents, 'no burden on the budget'",
+     "partly",
+     "The city may set up a fund and borrow from banks.",
+     "Whether rents will cover the repayments is unknown without costs and rent levels.",
+     [
+      "L131"
+     ],
+     []
+    ],
+    [
+     "Long-term goal of at least 10 000 new flats a year",
+     "no",
+     "The city can plan and permit faster and build some flats itself.",
+     "About 6 000 flats are completed a year now, mostly by private builders; 10 000 is a long-term goal, as the programme says.",
+     [],
+     [
+      "P4",
+      "PROG"
+     ]
+    ],
+    [
+     "Ask up to 30 % of flats from developers for 30 years, 30 % below market rent, in exchange for zoning changes",
+     "partly",
+     "The city can ask for flats in exchange for zoning changes through planning contracts.",
+     "Requiring 30 % from every developer is legally uncertain; each contract is negotiated.",
+     [],
+     []
+    ],
+    [
+     "Multiple property tax on long-empty and wholly tourist buildings; short-term rental rules",
+     "other",
+     "The city may raise the local coefficient on property tax, from 0.5 to 5, by area or type of property.",
+     "The law has no category for empty flats, so a tax aimed at them needs Parliament; short-term rental rules are also set by law.",
+     [
+      "L338"
+     ],
+     [
+      "L338",
+      "L159"
+     ]
+    ],
+    [
+     "Minimum flat size 16 → 30 m²; lower parking minimums",
+     "likely",
+     "The minimum flat size and parking minimums are in the Prague building regulations, which the city issues.",
+     "The change has to go through the regulation's adoption process.",
+     [
+      "PSP"
+     ],
+     []
+    ],
+    [
+     "New districts (West City, New Kolovraty, East City) and an acceleration-zone act",
+     "partly",
+     "The city can run design competitions and plan the districts.",
+     "The acceleration-zone act is for Parliament, and building whole districts takes decades.",
+     [],
+     [
+      "PROG"
+     ]
+    ],
+    [
+     "Finish tunnelling metro D, open the first section in 2032; prepare A, B, C extensions",
+     "partly",
+     "Tunnelling and preparing extensions are in the city's hands.",
+     "The first section opens in 2032 by the programme's own date, after the term; extensions take a decade or more.",
+     [],
+     [
+      "PIR"
+     ]
+    ],
+    [
+     "Tram lines to Malešice, Jarov, Nové Dvory, Strahov; trams on Wenceslas Square",
+     "partly",
+     "The city and its transport company build tram lines, and shorter lines fit within a term.",
+     "Each line needs its permit and land; how far each one is, the programme does not say.",
+     [
+      "L194"
+     ],
+     []
+    ],
+    [
+     "Trams back on the Libeň bridge within two years; a new Vltava bridge",
+     "partly",
+     "The bridge is the city's, and the city decides on its repair.",
+     "The two-year deadline depends on the bridge's condition; a new bridge is years of preparation.",
+     [],
+     []
+    ],
+    [
+     "City ring road, Industrial half-ring with Hloubětín tunnel, Radlice radial",
+     "partly",
+     "The city can prepare the projects, as the programme says.",
+     "Tunnels and ring roads take a decade or more to build.",
+     [
+      "PROG"
+     ],
+     []
+    ],
+    [
+     "Low-emission zone inside the city ring road",
+     "likely",
+     "The city council may set a low-emission zone by a general measure.",
+     "It takes effect at least 12 months after it is announced, and a charge to enter would need a law.",
+     [
+      "L201"
+     ],
+     [
+      "L201"
+     ]
+    ],
+    [
+     "New secondary schools (Hradčanská, Barrandov, Písnická, Braník)",
+     "partly",
+     "The city runs secondary schools as the region and can build new ones.",
+     "Each building needs a permit and several years of work, so all of them by the end of the term is uncertain.",
+     [
+      "L131",
+      "L561"
+     ],
+     []
+    ],
+    [
+     "City rental agency from 75 to 500 flats",
+     "likely",
+     "The agency is funded and run by the city, so it can grow.",
+     "It depends on how many private landlords want to rent through it.",
+     [
+      "L131"
+     ],
+     []
+    ],
+    [
+     "Take over the Na Františku hospital; raise the tourist fee",
+     "other",
+     "The city can negotiate with the hospital's founder and ask for a higher fee.",
+     "The hospital's founder is the Prague 1 district, which must agree; the fee's ceiling of 50 Kč a night is set by law.",
+     [],
+     [
+      "NNFP",
+      "L565"
+     ]
+    ]
+   ],
+   "unverified": [
+    "City flats are 'only 4 % of the housing stock'; the development company added '4 billion' in land value.",
+    "Flats permitted: 9 446 (2021), 8 191 (2024), 7 380 (2025).",
+    "'At least ten thousand flats' used for tourists; an infrastructure backlog 'over 30 billion'.",
+    "That a fund repaid from rents will not burden the budget."
+   ],
+   "overall": "Concrete in places (lines, stations, schools, 75 → 500, 16 → 30 m²) and often gives its own timelines. The weakest parts are the housing numbers and promises that rest on state law; the two-year deadline for the Libeň bridge is uncertain."
+  },
+  {
+   "no": "09",
+   "id": "stan",
+   "name": "STAN",
+   "source": "https://www.starostove.cz/zastupitelstvo-hl-mesta-prahy",
+   "captured": "29 September 2026",
    "verdict": "Most can be done as preparation and starting construction; only the smaller items are promised finished, and several transport promises are not the city's to decide.",
    "rows": [
-    ["Start building 2 000 city flats (Nové Dvory, Palmovka, Vršovice, Dolní Počernice, Jinonice)", "partly", "Starting, yes; finishing most of them within the term, no."],
-    ["Long-term funding and management of city rental housing, with the European Investment Bank", "likely", "The city's budget and organisation; the loan terms are uncertain."],
-    ["Offer city flats first to young families, seniors and needed professions", "yes", "The city sets its own allocation rules."],
-    ["Complete metro D; a concept for line E", "partly", "A first section and the concept, yes; all of metro D, no."],
-    ["Tram lines to Nové Dvory, Strahov, Suchdol, Komořany 'and other parts'", "partly", "Some lines, yes; all within four years, no, and their preparation status is uncertain."],
-    ["Main station rebuild, metro S, rail link to the airport, the motorway ring", "other", "Railways and the motorway ring belong to the state; the city ring road is the city's but takes more than a term."],
-    ["'We will start building the Vltava Philharmonic'", "partly", "The start depends on a final permit and the contractor tender."],
-    ["'We will start turning the Magistrála into a city avenue'", "likely", "Starting prepared projects, yes; the whole road, no."],
-    ["Recruit the 270 missing municipal police officers", "partly", "Pay and benefits, yes; hiring all of them is uncertain."],
-    ["More places in kindergartens, schools, children's centres and art schools", "partly", "Secondary schools, yes; kindergartens and primary schools are run by the districts."],
-    ["A new hospital in Letňany", "other", "The programme says itself that it depends on the state and partners."],
-    ["Short-term rental rules 'using new legal options'", "other", "Without a new law the city can do little."],
-    ["Shared bikes and scooters only at designated stands", "likely", "The city manages public space; its power to fine operators is uncertain."],
-    ["Stable funding for the city districts", "yes", "The city statute is changed by the City Assembly."]],
-   "unverified": ["That exactly 270 municipal police officers are missing.", "That the sites for 2 000 flats are 'ready' (permits, land).", "Whether the EIB loan is agreed, and its size.", "That the budget ends unspent because projects are late."],
-   "overall": "Concrete in places (sites, routes, the police number) and words large promises as starts. The weakest parts are transport promises held by the state, the city ring road and the hospital; costs and schedules are missing."},
-  {"no": "10", "id": "spd", "name": "SPD", "source": "https://www.spdpraha.cz/program/", "captured": "29 September 2026",
+    [
+     "Start building 2 000 city flats (Nové Dvory, Palmovka, Vršovice, Dolní Počernice, Jinonice)",
+     "partly",
+     "The flats are on city land, and the programme promises starts.",
+     "Building takes years, so most flats will not be finished by the end of the term.",
+     [
+      "PROG"
+     ],
+     [
+      "P4"
+     ]
+    ],
+    [
+     "Long-term funding and management of city rental housing, with the European Investment Bank",
+     "likely",
+     "Funding and managing its flats is the city's budget and organisation.",
+     "The terms of a European Investment Bank loan are not in the city's hands.",
+     [
+      "L131"
+     ],
+     []
+    ],
+    [
+     "Offer city flats first to young families, seniors and needed professions",
+     "yes",
+     "The city sets the rules for allocating its own flats.",
+     "Flats managed by the districts follow the districts' rules.",
+     [
+      "L131"
+     ],
+     []
+    ],
+    [
+     "Complete metro D; a concept for line E",
+     "partly",
+     "Building on and drawing up line E are within the city's reach.",
+     "The first section is planned for 2032, after the term, and the whole line takes many more years.",
+     [],
+     [
+      "PIR"
+     ]
+    ],
+    [
+     "Tram lines to Nové Dvory, Strahov, Suchdol, Komořany 'and other parts'",
+     "partly",
+     "The city and its transport company build tram lines.",
+     "Each needs a permit and land, so all of them in four years is out of reach.",
+     [
+      "L194"
+     ],
+     []
+    ],
+    [
+     "Main station rebuild, metro S, rail link to the airport, the motorway ring",
+     "other",
+     "The city can plan with the state and argue for these projects.",
+     "Railways belong to the state railway agency and the motorway ring to the state road agency; the city ring road is the city's but takes more than a term.",
+     [],
+     [
+      "L77",
+      "L13"
+     ]
+    ],
+    [
+     "'We will start building the Vltava Philharmonic'",
+     "partly",
+     "The project and its money are the city's.",
+     "The start depends on a final permit and the contractor tender.",
+     [],
+     []
+    ],
+    [
+     "'We will start turning the Magistrála into a city avenue'",
+     "likely",
+     "The road is the city's and projects are prepared, so works can start.",
+     "Rebuilding the whole road takes longer than a term.",
+     [],
+     []
+    ],
+    [
+     "Recruit the 270 missing municipal police officers",
+     "partly",
+     "The city pays its municipal police and can raise pay and benefits.",
+     "Whether 270 people can be hired depends on the labour market.",
+     [
+      "L553"
+     ],
+     []
+    ],
+    [
+     "More places in kindergartens, schools, children's centres and art schools",
+     "partly",
+     "The city runs secondary schools and can fund the districts.",
+     "Kindergartens and primary schools are run by the districts, so the city can only add money.",
+     [
+      "L561",
+      "L131"
+     ],
+     [
+      "L561"
+     ]
+    ],
+    [
+     "A new hospital in Letňany",
+     "other",
+     "The city can offer land and transport links.",
+     "The programme says itself that the hospital depends on the state and partners.",
+     [],
+     [
+      "PROG"
+     ]
+    ],
+    [
+     "Short-term rental rules 'using new legal options'",
+     "other",
+     "The city can enforce what the law allows.",
+     "Without a new state law the city has little power over short-term rentals.",
+     [
+      "U104"
+     ],
+     [
+      "L159",
+      "U104"
+     ]
+    ],
+    [
+     "Shared bikes and scooters only at designated stands",
+     "likely",
+     "The city manages public space and can set where bikes and scooters stand.",
+     "How far it may fine operators is uncertain.",
+     [],
+     []
+    ],
+    [
+     "Stable funding for the city districts",
+     "yes",
+     "The city statute, which sets the districts' money, is changed by the City Assembly.",
+     "Nothing blocks it.",
+     [
+      "L131"
+     ],
+     []
+    ]
+   ],
+   "unverified": [
+    "That exactly 270 municipal police officers are missing.",
+    "That the sites for 2 000 flats are 'ready' (permits, land).",
+    "Whether the EIB loan is agreed, and its size.",
+    "That the budget ends unspent because projects are late."
+   ],
+   "overall": "Concrete in places (sites, routes, the police number) and words large promises as starts. The weakest parts are transport promises held by the state, the city ring road and the hospital; costs and schedules are missing."
+  },
+  {
+   "no": "10",
+   "id": "spd",
+   "name": "SPD",
+   "source": "https://www.spdpraha.cz/program/",
+   "captured": "29 September 2026",
    "verdict": "Fares, parking and the rules for city flats can be done; the ring road, radials and Airbnb rules cannot, because of construction time or because the city does not decide them.",
    "rows": [
-    ["Finish the Prague motorway ring and the radials", "other", "The ring is built by the state; the city's radials take a decade or more."],
-    ["An annual public-transport pass for 1 000 Kč for residents", "yes", "The city sets fares through its transport authority; the lost revenue is not costed."],
-    ["Greatly expand park-and-ride", "partly", "Some car parks, yes; larger capacity mostly prepared."],
-    ["Underground car parks 'where possible'", "partly", "Preparation and first builds; more than a few within a term, no."],
-    ["Cheaper residents' parking, no further price rises", "yes", "Parking-zone prices are set by city regulation."],
-    ["A city-wide annual parking card for tradespeople", "likely", "The zone rules are the city's; it needs the districts' agreement."],
-    ["One app for transport, parking and city services", "likely", "A city IT project; the risk is in procurement and integration."],
-    ["Repair empty city flats 'at once'", "likely", "Many flats are managed by the districts."],
-    ["A new points system for city flats, priority for locals and some professions, end 'Housing First' in its current form", "yes", "The city approves the rules; how far local priority can go is uncertain."],
-    ["Cooperative housing on city land, 'thousands of further flats'", "partly", "Land and a model, yes; thousands of finished flats within a term, no."],
-    ["Faster permits, high-rise building near the metro", "partly", "Regulations and staff, yes; the building act is the state's, and zoning changes take years."],
-    ["Reasonable regulation of short-term rentals", "other", "Set by law."],
-    ["More money for crime prevention; supervised shelter for homeless people", "likely", "The city's budget and police; new sites may meet local opposition."]],
-   "unverified": ["'About 60 000 flats are missing.'", "That money 'disappears in operating and inefficient spending', and how much could be saved.", "That savings would pay for the ring road, radials, car parks and flats; the revenue lost to the 1 000 Kč pass."],
-   "overall": "The most concrete items (the tradespeople's card, the 1 000 Kč pass, the allocation rules) are within the city's powers. The weakest are the road projects and short-term rental rules; the housing plans lack numbers, dates and money."},
-  {"no": "12", "id": "spolu", "name": "SPOLU", "source": "https://www.spoluproprahu26.cz/", "captured": "29 September 2026",
+    [
+     "Finish the Prague motorway ring and the radials",
+     "other",
+     "The city can prepare its radials and push the state on the ring.",
+     "The motorway ring is built by the state road agency, and the radials take a decade or more.",
+     [],
+     [
+      "L13"
+     ]
+    ],
+    [
+     "An annual public-transport pass for 1 000 Kč for residents",
+     "yes",
+     "The city sets public-transport fares through its transport authority.",
+     "The revenue lost has to be paid from the budget, and the programme does not say how much.",
+     [
+      "L194",
+      "L131"
+     ],
+     []
+    ],
+    [
+     "Greatly expand park-and-ride",
+     "partly",
+     "Car parks are on city land and paid by the city, so some can open.",
+     "A large increase needs new buildings, which take more than a term.",
+     [
+      "L131"
+     ],
+     []
+    ],
+    [
+     "Underground car parks 'where possible'",
+     "partly",
+     "The city can choose sites, design and start the first builds.",
+     "Underground building in the city takes long to permit and build, so only a few could be finished.",
+     [],
+     []
+    ],
+    [
+     "Cheaper residents' parking, no further price rises",
+     "yes",
+     "Parking-zone prices are set by the city's own regulation.",
+     "Nothing blocks it.",
+     [
+      "PSP"
+     ],
+     []
+    ],
+    [
+     "A city-wide annual parking card for tradespeople",
+     "likely",
+     "The parking-zone rules are the city's.",
+     "The districts run parts of the system and have to agree.",
+     [],
+     []
+    ],
+    [
+     "One app for transport, parking and city services",
+     "likely",
+     "It is a city IT project.",
+     "Procurement and joining existing systems often delay such projects.",
+     [],
+     []
+    ],
+    [
+     "Repair empty city flats 'at once'",
+     "likely",
+     "The flats are city property and repairs are the city's decision.",
+     "Many flats are managed by the districts, which decide on those.",
+     [
+      "L131"
+     ],
+     []
+    ],
+    [
+     "A new points system for city flats, priority for locals and some professions, end 'Housing First' in its current form",
+     "yes",
+     "The city approves the rules for allocating its flats.",
+     "How far priority for locals can go before it is unlawful discrimination is uncertain.",
+     [
+      "L131"
+     ],
+     []
+    ],
+    [
+     "Cooperative housing on city land, 'thousands of further flats'",
+     "partly",
+     "The city can choose land and a model for cooperatives.",
+     "Thousands of finished flats take longer than a term.",
+     [
+      "L131"
+     ],
+     [
+      "P4"
+     ]
+    ],
+    [
+     "Faster permits, high-rise building near the metro",
+     "partly",
+     "The city can change its building regulations and add staff.",
+     "The building act is the state's, and changing the zoning plan takes years.",
+     [
+      "PSP"
+     ],
+     []
+    ],
+    [
+     "Reasonable regulation of short-term rentals",
+     "other",
+     "The city can enforce existing rules.",
+     "Short-term rental rules are set by state law.",
+     [
+      "U104"
+     ],
+     [
+      "L159",
+      "U104"
+     ]
+    ],
+    [
+     "More money for crime prevention; supervised shelter for homeless people",
+     "likely",
+     "Crime prevention and the municipal police are in the city's budget.",
+     "New shelter sites may meet local opposition.",
+     [
+      "L553",
+      "L131"
+     ],
+     []
+    ]
+   ],
+   "unverified": [
+    "'About 60 000 flats are missing.'",
+    "That money 'disappears in operating and inefficient spending', and how much could be saved.",
+    "That savings would pay for the ring road, radials, car parks and flats; the revenue lost to the 1 000 Kč pass."
+   ],
+   "overall": "The most concrete items (the tradespeople's card, the 1 000 Kč pass, the allocation rules) are within the city's powers. The weakest are the road projects and short-term rental rules; the housing plans lack numbers, dates and money."
+  },
+  {
+   "no": "12",
+   "id": "spolu",
+   "name": "SPOLU",
+   "source": "https://www.spoluproprahu26.cz/",
+   "captured": "29 September 2026",
    "verdict": "Most of the programme can be done as preparation and as decisions within the city's powers; large builds, 10 000 flats a year and its demands on the state cannot be met within four years.",
    "rows": [
-    ["Set conditions so that 10 000 new flats can be built every year", "partly", "Conditions, yes; 10 000 completions a year, no: about 6 000 now."],
-    ["Metro D: start work on all sections from Písnice to Náměstí Míru in the following term", "partly", "Preparation, yes; starting every section is uncertain, and the term meant is unclear."],
-    ["Speed up preparation of a ring metro line", "likely", "As preparation only."],
-    ["Complete the city ring road; a memorandum with the state", "partly", "The memorandum, yes; the road, no."],
-    ["Tender the Radlice radial; start preparing the Břevnov radial", "likely", "As preparation; the construction start is uncertain."],
-    ["Start the Hloubětín tunnel; get a new Libeň bridge built", "partly", "A start is possible, completion is not; the preparation status is uncertain."],
-    ["Push the state on the northern motorway ring", "other", "Built by the state road agency."],
-    ["Dynamic parking prices, visitor credits, a city-wide parking card", "likely", "The city sets parking zones and prices."],
-    ["A 'Pražanda' app for parking, transport pass, waste fee and discounts", "likely", "A city IT project; the risk is in procurement."],
-    ["Raise the tourist fee to the European average", "partly", "Up to the legal ceiling of 50 Kč a night, yes; above it, no."],
-    ["Reasonable regulation of Airbnb", "other", "Set by law."],
-    ["800 care-home places, 1 000 care workers, at least 150 respite places", "partly", "Home care, likely; 800 beds and the staff are uncertain."],
-    ["Fiscal rules with a minimum level of investment", "yes", "The City Assembly sets its own budget."],
-    ["Change the tax-sharing law, state co-funding, a pre-emption right, state land in Letňany", "other", "Parliament and the government; the city can only negotiate."]],
-   "unverified": ["An Aa3 rating as 'the best possible' and among the best of European capitals.", "District funding reform 'a billion a year extra'.", "A heat plant 'for up to 200 000 people'; the Soutok park 'ten times larger than Stromovka'.", "VAT on public transport 'further billions a year'."],
-   "overall": "Concrete mainly on named projects and on social-care numbers; much of transport is worded as preparation or as pressure on the state. The weakest parts are 10 000 flats a year and promises that depend on the state; for the projects it would start, the text does not show how far preparation is."},
-  {"no": "22", "id": "ano", "name": "ANO", "source": "https://janhusbauer.cz/", "captured": "29 September 2026; the party's programme PDF returned HTTP 404 at capture",
+    [
+     "Set conditions so that 10 000 new flats can be built every year",
+     "partly",
+     "The zoning plan, building regulations and city land are in the city's hands.",
+     "Completions follow years later; about 6 000 flats are completed a year now, and the building act is the state's.",
+     [
+      "PSP",
+      "L131"
+     ],
+     [
+      "P4"
+     ]
+    ],
+    [
+     "Metro D: start work on all sections from Písnice to Náměstí Míru in the following term",
+     "partly",
+     "The city can speed up preparation and permits.",
+     "Starting every section depends on permits, and the programme does not say which term it means.",
+     [],
+     [
+      "PIR"
+     ]
+    ],
+    [
+     "Speed up preparation of a ring metro line",
+     "likely",
+     "Preparing a new line is the city's work.",
+     "Building it takes a decade or more.",
+     [],
+     []
+    ],
+    [
+     "Complete the city ring road; a memorandum with the state",
+     "partly",
+     "The city can sign a memorandum on co-funding if the state agrees.",
+     "The money is the state's decision, and the road takes a decade or more.",
+     [],
+     []
+    ],
+    [
+     "Tender the Radlice radial; start preparing the Břevnov radial",
+     "likely",
+     "Preparing the tender is in the city's hands.",
+     "When building starts depends on the permit.",
+     [],
+     []
+    ],
+    [
+     "Start the Hloubětín tunnel; get a new Libeň bridge built",
+     "partly",
+     "The city is the builder, so it can start if permits and design are ready.",
+     "Completion takes longer than a term, and the programme does not say how far preparation is.",
+     [],
+     []
+    ],
+    [
+     "Push the state on the northern motorway ring",
+     "other",
+     "The city can press and cooperate.",
+     "The northern motorway ring is built by the state road agency.",
+     [],
+     [
+      "L13"
+     ]
+    ],
+    [
+     "Dynamic parking prices, visitor credits, a city-wide parking card",
+     "likely",
+     "Parking zones and prices are set by the city.",
+     "The districts have to agree, and the system needs changing.",
+     [],
+     []
+    ],
+    [
+     "A 'Pražanda' app for parking, transport pass, waste fee and discounts",
+     "likely",
+     "It is a city IT project.",
+     "Procurement and joining systems are the risk.",
+     [],
+     []
+    ],
+    [
+     "Raise the tourist fee to the European average",
+     "partly",
+     "The city may raise the fee up to the legal ceiling.",
+     "The ceiling of 50 Kč a night is set by law, so above it needs Parliament.",
+     [
+      "L565"
+     ],
+     [
+      "L565"
+     ]
+    ],
+    [
+     "Reasonable regulation of Airbnb",
+     "other",
+     "The city can enforce what the law allows.",
+     "Short-term rental rules are set by state law.",
+     [
+      "U104"
+     ],
+     [
+      "L159",
+      "U104"
+     ]
+    ],
+    [
+     "800 care-home places, 1 000 care workers, at least 150 respite places",
+     "partly",
+     "The city funds social services as the region and can expand home care.",
+     "New care homes take years to build, and staff are short.",
+     [
+      "L108"
+     ],
+     []
+    ],
+    [
+     "Fiscal rules with a minimum level of investment",
+     "yes",
+     "The City Assembly sets its own budget rules.",
+     "Nothing blocks it.",
+     [
+      "L131"
+     ],
+     []
+    ],
+    [
+     "Change the tax-sharing law, state co-funding, a pre-emption right, state land in Letňany",
+     "other",
+     "The city can negotiate.",
+     "Tax sharing and a pre-emption right need Parliament; co-funding and state land are the government's decision.",
+     [],
+     [
+      "L243",
+      "U104"
+     ]
+    ]
+   ],
+   "unverified": [
+    "An Aa3 rating as 'the best possible' and among the best of European capitals.",
+    "District funding reform 'a billion a year extra'.",
+    "A heat plant 'for up to 200 000 people'; the Soutok park 'ten times larger than Stromovka'.",
+    "VAT on public transport 'further billions a year'."
+   ],
+   "overall": "Concrete mainly on named projects and on social-care numbers; much of transport is worded as preparation or as pressure on the state. The weakest parts are 10 000 flats a year and promises that depend on the state; for the projects it would start, the text does not show how far preparation is."
+  },
+  {
+   "no": "22",
+   "id": "ano",
+   "name": "ANO",
+   "source": "https://janhusbauer.cz/",
+   "captured": "29 September 2026; the party's programme PDF returned HTTP 404 at capture",
    "verdict": "Most promises can be done as preparation and management; the one number, 1 000 flats started a year, is uncertain within four years. The source is the lead candidate's page, not a full programme.",
    "rows": [
-    ["Be starting 1 000 city flats a year by the end of the term", "partly", "First builds, yes; that pace by the end of the term is uncertain."],
-    ["Repair empty city flats; clearer allocation", "likely", "The city's property; many flats are managed by the districts."],
-    ["One coordinator for road works, a public closure plan, speed as a tender criterion", "yes", "Organisation and tender conditions."],
-    ["Make completing the city ring road an investment priority", "partly", "A budget priority, yes; completion, no."],
-    ["The motorway ring: 'an active partner of the state'", "other", "Built by the state road agency."],
-    ["Continue building metro D", "partly", "Continuing, yes; at most a first section opens."],
-    ["Car parks and decks on housing estates; more park-and-ride", "partly", "Individual buildings, yes; the scale is not stated."],
-    ["More municipal police, a beat officer in every neighbourhood, security on night transport", "likely", "Within the city's powers; recruitment is uncertain."],
-    ["A city-wide programme to renew housing estates", "likely", "Starting it, yes; results depend on the districts too."],
-    ["Develop the IKEM, Thomayer, Motol and Bulovka hospitals", "other", "Founded by the Ministry of Health."]],
-   "unverified": ["'Prague has able people, property and money': not quantified.", "How many city flats stand empty.", "The cost and funding of 1 000 flats a year.", "Whether parking-zone revenue goes back into parking today."],
-   "overall": "Mostly qualitative, without costs or dates. The weakest parts are the large transport promises and the items that depend on the state. The rating covers the 6 priorities captured of the 10 the page announces."}
- ]
+    [
+     "Be starting 1 000 city flats a year by the end of the term",
+     "partly",
+     "The city can start building on its own land.",
+     "Reaching 1 000 starts a year needs projects prepared and permitted, and the text does not cost it.",
+     [
+      "L131"
+     ],
+     [
+      "P4"
+     ]
+    ],
+    [
+     "Repair empty city flats; clearer allocation",
+     "likely",
+     "The flats are city property and the city sets its allocation rules.",
+     "Many flats are managed by the districts.",
+     [
+      "L131"
+     ],
+     []
+    ],
+    [
+     "One coordinator for road works, a public closure plan, speed as a tender criterion",
+     "yes",
+     "It is the city's own organisation and its tender conditions.",
+     "Nothing blocks it.",
+     [],
+     []
+    ],
+    [
+     "Make completing the city ring road an investment priority",
+     "partly",
+     "The city decides its investment priorities.",
+     "Finishing the road takes a decade or more.",
+     [
+      "L131"
+     ],
+     []
+    ],
+    [
+     "The motorway ring: 'an active partner of the state'",
+     "other",
+     "The city can cooperate on land and links.",
+     "The motorway ring is built by the state road agency.",
+     [],
+     [
+      "L13"
+     ]
+    ],
+    [
+     "Continue building metro D",
+     "partly",
+     "The city builds metro D and can continue.",
+     "The first section is planned for 2032, after the term.",
+     [],
+     [
+      "PIR"
+     ]
+    ],
+    [
+     "Car parks and decks on housing estates; more park-and-ride",
+     "partly",
+     "The city can build on its land on the estates.",
+     "Each building needs preparation and a permit, and the text gives no scale.",
+     [
+      "L131"
+     ],
+     []
+    ],
+    [
+     "More municipal police, a beat officer in every neighbourhood, security on night transport",
+     "likely",
+     "The municipal police and night-transport security are the city's.",
+     "Hiring depends on the labour market.",
+     [
+      "L553"
+     ],
+     []
+    ],
+    [
+     "A city-wide programme to renew housing estates",
+     "likely",
+     "The city can start the programme and set a cleaning standard.",
+     "Upkeep is partly the districts', so results depend on them.",
+     [],
+     []
+    ],
+    [
+     "Develop the IKEM, Thomayer, Motol and Bulovka hospitals",
+     "other",
+     "The city can offer land and transport links.",
+     "Motol, Thomayer and Bulovka are university hospitals founded by the Ministry of Health; IKEM is a state institute (its founder not checked here).",
+     [],
+     [
+      "L372"
+     ]
+    ]
+   ],
+   "unverified": [
+    "'Prague has able people, property and money': not quantified.",
+    "How many city flats stand empty.",
+    "The cost and funding of 1 000 flats a year.",
+    "Whether parking-zone revenue goes back into parking today."
+   ],
+   "overall": "Mostly qualitative, without costs or dates. The weakest parts are the large transport promises and the items that depend on the state. The rating covers the 6 priorities captured of the 10 the page announces."
+  }
+ ],
+ "refs": {
+  "L131": "Zákon č. 131/2000 Sb., o hlavním městě Praze: §1 odst. 1 (Prague is a region and a municipality), §17 odst. 3 (the Statute is a generally binding ordinance), §59 odst. 2 písm. e, i, l and odst. 3 písm. c, i (budget, legal persons, funds, loans, transfers of real estate). https://www.zakonyprolidi.cz/cs/2000-131",
+  "L561": "Zákon č. 561/2004 Sb., školský zákon, §177 odst. 1 (regions establish secondary schools; municipalities kindergartens and primary schools). https://www.zakonyprolidi.cz/cs/2004-561",
+  "L13": "Zákon č. 13/1997 Sb., o pozemních komunikacích, §9 odst. 1 and §9a (the state owns motorways; Ředitelství silnic a dálnic builds and manages them). https://www.zakonyprolidi.cz/cs/1997-13",
+  "L77": "Zákon č. 77/2002 Sb., §19–21 (Správa železnic is a state organisation managing the state's rail infrastructure). https://www.zakonyprolidi.cz/cs/2002-77",
+  "L194": "Zákon č. 194/2010 Sb., o veřejných službách v přepravě cestujících, §3 odst. 1–2 (regions set and ensure public passenger transport). https://www.zakonyprolidi.cz/cs/2010-194",
+  "L553": "Zákon č. 553/1991 Sb., o obecní policii, §1 odst. 1 (the municipal assembly establishes the municipal police). https://www.zakonyprolidi.cz/cs/1991-553",
+  "L108": "Zákon č. 108/2006 Sb., o sociálních službách, §95 (the region ensures the availability of social services). https://www.zakonyprolidi.cz/cs/2006-108",
+  "L565": "Zákon č. 565/1990 Sb., o místních poplatcích, §3d (the tourist fee is at most 50 Kč), version effective 1 January 2025. https://www.zakonyprolidi.cz/cs/1990-565",
+  "L201": "Zákon č. 201/2012 Sb., o ochraně ovzduší, §14 odst. 1 and 6 (the municipal council sets a low-emission zone by a general measure, effective at least 12 months after it is announced). https://www.zakonyprolidi.cz/cs/2012-201",
+  "L338": "Zákon č. 338/1992 Sb., o dani z nemovitých věcí, §12 (a local coefficient of 0.5–5 by area or group of property; no category for empty flats). https://www.zakonyprolidi.cz/cs/1992-338",
+  "L159": "Zákon č. 159/1999 Sb. (tourism business act), version effective 1 March 2021: contains no rules on short-term rentals and no municipal power to restrict them. https://www.zakonyprolidi.cz/cs/1999-159",
+  "L243": "Zákon č. 243/2000 Sb., o rozpočtovém určení daní, §1 (tax sharing between the state, regions and municipalities is set by law). https://www.zakonyprolidi.cz/cs/2000-243",
+  "L372": "Zákon č. 372/2011 Sb., o zdravotních službách, §111 odst. 1 (university hospitals are state organisations founded by the Ministry of Health). https://www.zakonyprolidi.cz/cs/2011-372",
+  "U104": "Ústava České republiky, čl. 104 (an assembly's powers are set only by law; ordinances within those powers). https://www.zakonyprolidi.cz/cs/1993-1",
+  "PSP": "Nařízení č. 10/2016 Sb. hl. m. Prahy, Pražské stavební předpisy (parking and building requirements issued by the city). Title and number from the author's knowledge; not checked online for this note.",
+  "NNFP": "Nemocnice Na Františku, O nemocnici: 'Naším zřizovatelem je městská část Praha 1.' https://www.nnfp.cz/nemocnice",
+  "P4": "Šandová, B. (2026). New housing in Prague: permits, completions and the metro (Prague, measured, Part 4): 4.5 completions per 1 000 residents a year, 2015–2024; permit to completion about 11 months longer than elsewhere in Czechia. https://bsandova.com/texts/prague-housing",
+  "PIR": "Piráti Praha (2026). Program 2026: the first section of metro D in operation in 2032. https://program2026.praha.pirati.cz/program/doprava/"
+ }
 }
