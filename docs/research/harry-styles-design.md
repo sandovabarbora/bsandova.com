@@ -104,3 +104,7 @@ All three are descriptive. None says why a song lasted or why a run sold.
 - **1 October 2026, before any data of part 1 were parsed or any figure computed.** Q4 (one song or a catalogue)
   and Q5 (what a ticket costs, in days of the host country's income) are added for this part as for the whole
   series; their definitions are in `pop-measured-design.md`, §4.
+- **1 October 2026, after the results were seen.** Q2 also reports the countries ranked by the focal song's days
+  alone (no denominator), labelled *added after the results*. Reason: in small markets many songs are number one
+  for a single day (Luxembourg: 299 number ones, median 7 days), which inflates the registered ratio. The registered
+  ratio and its ranking are reported unchanged.
