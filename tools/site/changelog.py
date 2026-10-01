@@ -133,7 +133,7 @@ def render(items: list[dict]) -> str:
     <div><dt>data</dt><dd><a href="data.json">data.json</a> <small>one record per commit</small></dd></div>
   </dl>
 </header>
-<section class="film film-page"><div class="shot" style="view-transition-name:ph-page-changelog;--bg:url(../assets/photo/page-changelog.jpg);--bg-s:url(../assets/photo/page-changelog-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Olivetti_Lettera_82_portable_mechanical_typewriter.jpg">Suyash Dwivedi</a> · CC BY-SA 4.0, colour held</p></section>
+<section class="film film-page"><div class="shot" style="view-transition-name:ph-page-changelog;--bg:url(../assets/photo/page-changelog.jpg);--bg-s:url(../assets/photo/page-changelog-1200.jpg)"></div><p class="credit">Photo: <a href="https://stocksnap.io/photo/dark-room-KR8L2PXHCS">Alexa Mazzarello</a> · CC0, toned</p></section>
 {"".join(rows)}
 <footer class="text-foot"><p class="back"><a href="../#works">← projects</a> · <a href="../status/">status</a></p></footer>
 </article>
