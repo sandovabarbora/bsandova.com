@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>What a Czech film fund grant changes at the cut-off, 2016–2021</title>
-<meta name="description" content="A registered study of 588 production applications to the Czech film fund, 2016–2021: at the funding cut-off, funded projects reached cinemas more often, but the estimate is underpowered, and the Council's points did not foresee admissions.">
+<meta name="description" content="A registered study of 588 production applications to the Czech film fund, 2016–2021: at the funding cut-off, funded projects reached cinemas more often, but the estimate is underpowered, and whether the Council's points foresee admissions could not be told.">
 <meta property="og:title" content="What a Czech film fund grant changes at the cut-off, 2016–2021">
-<meta property="og:description" content="588 production applications, 40 calls: the jump in release at the funding cut-off is +39 percentage points but underpowered; the Council's points did not foresee admissions (ρ −0.09).">
+<meta property="og:description" content="588 production applications, 40 calls: the jump in release at the funding cut-off is +39 percentage points but underpowered; points and admissions show no clear relation (ρ −0.09).">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://bsandova.com/texts/film-fund">
 <meta property="og:image" content="https://bsandova.com/assets/og.png">
@@ -29,10 +29,10 @@
 .ht small{color:#666;font:400 11px var(--mono)}
 .ht-wrap{overflow-x:auto;max-width:100%}
 .note{font:400 12px/1.6 var(--mono);color:#666}
-.text>dl.meta{display:block;letter-spacing:normal;text-transform:none;font-size:12px}
-.text>dl.meta div{border-right:0;padding-left:0;grid-template-columns:13ch 1fr}
-.text>dl.meta dd{overflow-wrap:anywhere}
-@media (max-width:560px){.text>dl.meta div{grid-template-columns:1fr}.ht{font-size:12px}.ht td.v{white-space:normal}}
+.text dl.meta{display:block;letter-spacing:normal;text-transform:none;font-size:12px}
+.text dl.meta div{border-right:0;padding-left:0;grid-template-columns:13ch 1fr}
+.text dl.meta dd{overflow-wrap:anywhere}
+@media (max-width:560px){.text dl.meta div{grid-template-columns:1fr}.ht{font-size:12px}.ht td.v{white-space:normal}}
 </style>
 </head>
 <body>
@@ -42,9 +42,9 @@
 <header class="text-head">
   <p class="kicker">Research · Czech film fund · production calls 2016–2021</p>
   <h1>What a Czech film fund grant changes at the cut-off, <em>2016–2021</em></h1>
-  <p class="deck">At the funding cut-off of 40 calls, funded projects reached Czech cinemas more often, an estimate labelled underpowered; the Council's points did not foresee how many people saw the films.</p>
+  <p class="deck">At the funding cut-off of 40 calls, funded projects reached Czech cinemas more often, an estimate labelled underpowered; whether the Council's points foresee audiences could not be told.</p>
   <dl class="facts">
-    <div><dt>release jump at the cut-off</dt><dd>+39 pp <small>95 % CI −14 to +100, robust, clustered by call · 182 applications within 5.1 points · underpowered</small></dd></div>
+    <div><dt>release jump at the cut-off</dt><dd>+39 pp <small>95 % CI −14 to +100 · underpowered</small></dd></div>
     <div><dt>points against admissions, within call</dt><dd>ρ = −0.09 <small>95 % CI −0.22 to +0.04, bootstrap by call · 254 released projects</small></dd></div>
     <div><dt>rejected near the cut-off, funded in a later call</dt><dd>28 of 88 <small>administrative count</small></dd></div>
     <div><dt>production applications studied</dt><dd>588 <small>40 calls · administrative count</small></dd></div>
@@ -53,21 +53,26 @@
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>The fund ranks applications by points and funds them until the money runs out, so projects just above and just below the line are close to alike.</li>
-    <li>Just above the line, about 39 percentage points more projects reached Czech cinemas, but the data are too few to tell that from no difference.</li>
-    <li>A third of the projects rejected near the line were funded in a later call: a "no" was often a "not yet".</li>
-    <li>Among films that were released, higher points did not go with larger audiences; until 2025 the points did not ask about audiences.</li>
+    <li>The fund funds projects by points until the money runs out, so those near the line are close to alike.</li>
+    <li>Just above the line, more projects reached cinemas, but the data are too few to be sure.</li>
+    <li>A third of the projects rejected near the line were funded later: a "no" was often a "not yet".</li>
+    <li>Among released films, points and audiences showed no clear relation either way.</li>
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>1 October 2026 · updated 1 October 2026 · <a href="#changelog">version 1</a></dd></div>
+  <div><dt>published</dt><dd>1 October 2026 · updated 1 October 2026 · <a href="#changelog">version 2</a></dd></div>
+</dl>
+<details class="meta-more">
+  <summary>About this study</summary>
+<dl class="meta">
   <div><dt>status</dt><dd>research, registered analysis plan (self-timestamped)</dd></div>
   <div><dt>registration</dt><dd>registered analysis plan: design committed at <code>3ddd69c</code> on 1 October 2026, before the results commit <code>5a48067</code>; commit times are self-reported, and the branch was pushed after the analysis. Everything seen before the design is listed in its §0; two dated changes followed (see <a href="#changes">What changed after registration</a>).</dd></div>
   <div><dt>data</dt><dd>decision tables of the State Cinematography Fund and the State Audiovisual Fund, 514 files 2014–2026, accessed 1 October 2026<sup class="cite"><a href="#r5">5</a></sup><sup class="cite"><a href="#r6">6</a></sup>; UFD premiere lists 2016–2025<sup class="cite"><a href="#r7">7</a></sup>; LUMIERE, 999 films with Czech (co-)production, accessed 1 October 2026<sup class="cite"><a href="#r8">8</a></sup>; Wikidata production companies<sup class="cite"><a href="#r9">9</a></sup>. Hashes in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/film-fund-files.sha256">film-fund-files.sha256</a>; the study's rows in <a href="../assets/film/applications.csv">applications.csv</a>.</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/film">tools/film/</a> at the commit that publishes this page; rebuild: <code>uv run … python tools/film/analyse.py</code> (full order under <a href="#reproduction">Reproduction</a>)</dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>What a Czech film fund grant changes at the cut-off, 2016–2021</i>. bsandova.com/texts/film-fund, version 1.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>What a Czech film fund grant changes at the cut-off, 2016–2021</i>. bsandova.com/texts/film-fund, version 2.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text, figures and data CC BY 4.0</dd></div>
 </dl>
+</details>
 
 <section>
 <p>Public film funds decide which films are made, but it is hard to say what their money changes, because the projects they fund are the ones that look most likely to succeed anyway. A ranking with a hard budget line offers a way round this. When applications are funded in order of their points until the money runs out, those just above the line and those just below it were judged almost alike, and comparing them estimates the effect of the money itself. Jacob and Lefgren used the funding line of the US National Institutes of Health in this way to estimate what a research grant changes<sup class="cite"><a href="#r1">1</a></sup>, and Li asked whether reviewers' scores foresee the later success of what they fund<sup class="cite"><a href="#r2">2</a></sup>; the method is set out by Cattaneo, Idrobo and Titiunik<sup class="cite"><a href="#r3">3</a></sup>. The Czech film fund publishes, for every call, the points and the award of every application, funded or not, which makes the same two questions answerable for Czech film: does production support change whether a project reaches cinemas and how many people see it, and do the Council's points foresee audiences.</p>
@@ -88,7 +93,7 @@
 <h2>How this was done</h2>
 <p>In every one of the 77 production calls in the tables the line is sharp: every funded application has more points than every unfunded one (fig. 1). The running variable is an application's points minus its call's cut-off, the treatment is an award above zero, and the estimand is the effect of support for a project at the cut-off. It is estimated as a pooled regression discontinuity across calls: a local linear fit on each side, a triangular kernel, the bandwidth that minimizes mean squared error, and robust bias-corrected 95 % confidence intervals clustered by call<sup class="cite"><a href="#r3">3</a></sup>. The effective sample, the applications inside the bandwidth, is given next to every estimate.</p>
 <p>The weak point is linking an application to a released film, because working titles change. The linking was done blind: the code that matched titles never loaded the points or the awards. An exact match of the normalized title within six years of the call counted directly; every looser match was checked by hand without the funding status, and the links were frozen before any points were joined. A blind audit of 60 unmatched applications then searched for films released under other titles (see <a href="#changes">What changed after registration</a>). The second outcome is Czech admissions, analysed as the logarithm of one plus admissions, with zero for a project that was not released; 15 linked projects have no admissions figure and are left out of that outcome.</p>
-<p>The Council scores knowing how much money a call has, so it could in principle place projects just above or below the line on purpose. Two checks look for that: a test of whether applications bunch on one side of the cut-off<sup class="cite"><a href="#r4">4</a></sup>, and a test of whether the budget, the amount requested, the share of the budget requested and the producer's earlier funded applications jump at the cut-off.</p>
+<p>The Council scores knowing how much money a call has, so it could in principle place projects just above or below the line on purpose. Two checks look for that: a test of whether applications bunch on one side of the cut-off<sup class="cite"><a href="#r4">4</a></sup>, and a test of whether the budget, the amount requested, the share of the budget requested and the producer's earlier funded applications jump at the cut-off. The density test is weaker than its p-value suggests: the cut-off is placed between the last funded and the first unfunded project after the money was allocated, so by construction no application sits right at it and few sit close to it.</p>
 <p>How much the data can show was worked out before any outcome was joined, from the points alone. Within five points of the cut-off there are about 250 applications from 2016–2021. With that many, a difference in the share released of about 25 percentage points would be detected four times in five at the 5 % level; a difference of 10 points, which would still matter to a producer, would mostly be missed. The labels were fixed accordingly: an interval that excludes zero is "supported", one that stays within ten points of zero is "not supported", and anything between is "underpowered".</p>
 </section>
 
@@ -116,7 +121,7 @@
   <img src="../assets/film/02-release.svg" alt="Share of applications that reached Czech cinemas by 30 September 2026, in 1-point bins around the cut-off, with local linear fits within 5.1 points on each side." loading="lazy">
   <figcaption><b>fig. 2</b> · Share of production applications released in Czech cinemas by 30 September 2026, by points from the call's cut-off, 1-point bins (dot size: number of applications), with triangular-kernel local linear fits within 5.1 points on each side; 2016–2021, n = 588. Blue: the funded side; grey: the unfunded side. The fit is drawn for reading only; the estimate and its interval are in the table above. Data: fund decision tables<sup class="cite"><a href="#r5">5</a></sup><sup class="cite"><a href="#r6">6</a></sup>, UFD<sup class="cite"><a href="#r7">7</a></sup> and LUMIERE<sup class="cite"><a href="#r8">8</a></sup>, accessed 1 October 2026.</figcaption>
 </figure>
-<p>Part of why the jump is hard to measure is in the fund's own records. Of the 88 applications rejected within the bandwidth below the cut-off, 28 were funded in a later call. For a third of the near misses, then, the fund's answer was "not yet" rather than "no", and the comparison at the first application measures the effect of being funded at once against being funded later or never. Czech admissions show the same pattern: a positive estimate at the cut-off, +3.18 on the log scale, with an interval from −2.30 to +9.23, labelled <b>underpowered</b>.</p>
+<p>Part of why the jump is hard to measure is in the fund's own records. Of the 88 applications rejected within the bandwidth below the cut-off, 28 were funded in a later call. For a third of the near misses, then, the fund's answer was "not yet" rather than "no", and the comparison at the first application measures the effect of being funded at once against being funded later or never. Czech admissions show the same pattern: a positive estimate at the cut-off, +3.18 on the log scale, with an interval from −2.30 to +9.23, labelled <b>underpowered</b>. That outcome, the logarithm of one plus admissions with zero for unreleased projects, mixes whether a film was released with how many people saw it, depends on the unit in which admissions are counted and is driven by the zeros<sup class="cite"><a href="#r10">10</a></sup>; it is not an elasticity and is read here only by its sign.</p>
 <p>The near misses can also be followed descriptively. Of the 94 projects funded within the bandwidth above the line, 54 % reached cinemas. Of the 28 rejected projects that were funded in a later call, 54 % did too, and of the 60 that never received support from these calls, 25 %. These shares are not estimates of an effect, because the projects that tried again and succeeded may differ from those that did not, but they fit the reading that what mattered was being funded at some point, not at the first attempt.</p>
 <div class="ht-wrap">
 <table class="ht">
@@ -135,7 +140,7 @@
 
 <section>
 <h2>Do the Council's points foresee audiences?</h2>
-<p>Among the 254 projects from these calls that reached cinemas and have an admissions figure, the median was 14 100 Czech admissions. Within a call, projects with more points did not draw more people: the rank correlation between points and admissions is −0.09, with a 95 % interval from −0.22 to +0.04 when calls are resampled (fig. 3). The interval rules out more than a weak positive relation. This is descriptive and needs its context. Until 2025 the Council's criteria rated artistic quality, the project's contribution to Czech cinema, the team and the production plan, and none of them asked about audiences; the criterion "potential for an audience" was introduced in the 2025 scheme, and none of its films has been released yet.</p>
+<p>Among the 254 projects from these calls that reached cinemas and have an admissions figure, the median was 14 100 Czech admissions. Within a call, the rank correlation between points and admissions is −0.09, with a 95 % interval from −0.22 to +0.04 when calls are resampled (fig. 3). This does not show that the points fail to foresee audiences. It is computed among released films only, a selection that happens after the funding decision, and within a call their points vary less than all applications' points do; the interval excludes a strong positive relation but cannot tell a weak one from none. It is descriptive and needs its context too. Until 2025 the Council's criteria rated artistic quality, the project's contribution to Czech cinema, the team and the production plan, and none of them asked about audiences; the criterion "potential for an audience" was introduced in the 2025 scheme, and none of its films has been released yet.</p>
 <figure data-chart="../assets/film/charts.json#audience">
   <img src="../assets/film/03-audience.svg" alt="Scatter of 254 released projects: points relative to their call's mean against Czech admissions on a log scale; Spearman rho within call −0.09." loading="lazy">
   <figcaption><b>fig. 3</b> · Released production projects from calls of 2016–2021: points relative to the mean of their call against Czech admissions, log scale; n = 254 in 32 calls (calls with at least two released projects). Blue: funded; grey: not funded. Spearman ρ within call −0.09, 95 % CI −0.22 to +0.04, bootstrap over calls, 2 000 resamples. Data: fund decision tables<sup class="cite"><a href="#r5">5</a></sup><sup class="cite"><a href="#r6">6</a></sup> and LUMIERE<sup class="cite"><a href="#r8">8</a></sup>, accessed 1 October 2026.</figcaption>
@@ -172,12 +177,12 @@
 
 <section>
 <h2>What this means</h2>
-<p>Measured: in production calls of 2016–2021, projects just above the funding line reached Czech cinemas by an estimated 39 percentage points more often than projects just below it, with a 95 % interval from −14 to +100 points; with 182 applications near the line, an effect smaller than about 25 points cannot be told apart from none. A third of the projects rejected near the line were funded later. Among released films, the Council's points did not go with larger audiences (ρ −0.09, 95 % CI −0.22 to +0.04). For someone deciding how the fund should work, what the data support is narrow: a rejection near the line is often temporary, and points given for artistic and production merit say little about audiences. Whether a single grant decides if a film is made remains open: the sign of the estimate points that way, its size is not pinned down, and a design with more calls, or one that follows projects through their later applications, would be needed to settle it.</p>
+<p>Measured: in production calls of 2016–2021, projects just above the funding line reached Czech cinemas by an estimated 39 percentage points more often than projects just below it, with a 95 % interval from −14 to +100 points; with 182 applications near the line, an effect smaller than about 25 points cannot be told apart from none. A third of the projects rejected near the line were funded later. Among released films, points and admissions showed no clear relation (ρ −0.09, 95 % CI −0.22 to +0.04), which cannot separate a weak relation from none. For someone deciding how the fund should work, what the data support is narrow: a rejection near the line is often temporary, and these data cannot show that points given for artistic and production merit foresee audiences. Whether a single grant decides if a film is made remains open: the sign of the estimate points that way, its size is not pinned down, and a design with more calls, or one that follows projects through their later applications, would be needed to settle it.</p>
 </section>
 
 <section>
 <h2>What this does not show</h2>
-<p>The effect is estimated at the funding line only and says nothing about projects far above or below it. Release means release in Czech cinemas; television premieres, streaming and festival screenings are not in the data, so a documentary made for television counts as unreleased. Linking misses films whose titles changed beyond recognition, about one in ten unmatched applications in the audit, slightly more often among unfunded ones. The fund's award is the only money observed: Czech Television, regional funds and the separate production incentives are not, and a rejected project may have found them. The points cannot show whether a funded film was better than it would have been without support. None of this evaluates the fund as a whole, its other programmes or the 2025 scheme.</p>
+<p>The effect is estimated at the funding line only and says nothing about projects far above or below it. Release means release in Czech cinemas; television premieres, streaming and festival screenings are not in the data, so a documentary made for television counts as unreleased. Linking misses films whose titles changed beyond recognition, about one in ten unmatched applications in the audit, slightly more often among unfunded ones, which pushes the estimated effect on release upward. The fund's award is the only money observed: Czech Television, regional funds and the separate production incentives are not, and a rejected project may have found them. The points cannot show whether a funded film was better than it would have been without support. None of this evaluates the fund as a whole, its other programmes or the 2025 scheme.</p>
 </section>
 
 <section id="reproduction">
@@ -205,6 +210,7 @@
 <li id="r7">Unie filmových distributorů (2016–2025). Premiéry v českých kinech, annual lists. <a href="https://www.ufd.cz/prehledy-statistiky/premiery-v-ceskych-kinech">ufd.cz</a>. Accessed 1 October 2026.</li>
 <li id="r8">European Audiovisual Observatory (2026). LUMIERE, admissions of films released in Europe; search by producing country CZ including minority co-production, production years 2014–2026. <a href="https://lumiere.obs.coe.int/">lumiere.obs.coe.int</a>. Accessed 1 October 2026.</li>
 <li id="r9">Wikidata (2026). Production company (P272) of the LUMIERE films' items, SPARQL query. <a href="https://query.wikidata.org/">query.wikidata.org</a>. Accessed 1 October 2026.</li>
+<li id="r10">Chen, J., Roth, J. (2024). Logs with zeros? Some problems and solutions. <i>Quarterly Journal of Economics</i> 139(2), 891–936. <a href="https://doi.org/10.1093/qje/qjad054">doi:10.1093/qje/qjad054</a>. Accessed 1 October 2026.</li>
 </ol>
 </section>
 
@@ -213,6 +219,7 @@
 <ul>
 <li>1 October 2026, version 1: first published.</li>
 <li>Checked against editorial standard v1 on 1 October 2026.</li>
+<li>1 October 2026, version 2: the text now states that the density test is weak because the cut-off is placed after the allocation, that the log outcome is not an elasticity and is driven by unreleased projects, that the correlation among released films cannot separate a weak relation from none (the deck and summary said too strongly that points did not foresee audiences), and that the linking error pushes the release estimate upward. No number changed.</li>
 </ul>
 </section>
 
