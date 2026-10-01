@@ -156,3 +156,16 @@ estimate would be biased towards an effect.
   - Every rule-4 link is hand-reviewed as in §3.
 - **Reporting.** The audit's recall by group is reported in the article, whatever it shows. If recall still differs
   by group after rule 4, Q1 O1 reports the bounds from the §6 sensitivity as its primary range.
+
+**1 October 2026 (2) — result of the recall audit (`docs/research/film-fund-recall-audit.csv`).** All 60 rows were
+decided blind before the funding key was opened.
+
+| group | audited | released under another title | unsure | not found |
+|---|---|---|---|---|
+| funded | 30 | 3 | 0 | 26 (+1 with no cinema release) |
+| unfunded | 30 | 2 | 1 | 27 |
+
+- **Implied linking recall** for released films: about 91 % among funded and 82–87 % among unfunded applications.
+  The gap is small and goes the way that would inflate an effect, so Q1 O1 is reported with the §6 bounds.
+- **Rule 4 (producer) runs as planned**, but Wikidata gives a production company for only 52 of the 999 LUMIERE
+  films, so it can add little. This limitation is stated in the article.
