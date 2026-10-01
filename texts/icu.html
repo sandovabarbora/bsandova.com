@@ -57,20 +57,25 @@
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>The patients labelled Deteriorating have the higher and rising oxygenation, and realigning the label file by up to 30 rows in either direction does not restore the expected sign, so a simple offset is ruled out; mislabelling or a deliberately altered teaching set remain.</li>
-    <li>The textbook outlier rule would have removed about a fifth of the patients, two-thirds of them from one class, while leaving accuracy almost unchanged.</li>
-    <li>Once hyperparameter search sits inside the cross-validation and the resampled comparison is corrected for overlapping training sets, no classifier is better than another.</li>
-    <li>Nothing here is clinical evidence: the dataset is not public, its source study is not named, the labels are known to be wrong, and only one variable was modelled.</li>
+    <li>The labels look reversed, and shifting the label file does not fix them.</li>
+    <li>The textbook outlier rule would have removed about a fifth of the patients.</li>
+    <li>With proper cross-validation, no classifier beats another.</li>
+    <li>Nothing here is clinical evidence: the dataset is private and its labels are wrong.</li>
   </ul>
 </details>
 <dl class="meta">
   <div><dt>published</dt><dd>14 September 2026 · updated 29 September 2026 · <a href="#changelog">version 2</a></dd></div>
+</dl>
+<details class="meta-more">
+  <summary>About this note</summary>
+<dl class="meta">
   <div><dt>status</dt><dd>note</dd></div>
   <div><dt>data</dt><dd>course-supplied CSVs (ten physiological variables, one outcome file), Universität Bayreuth, summer 2026; not public (private; not verifiable). The figures cannot be reproduced without the course files, and the notebook is not shared.</dd></div>
   <div><dt>code</dt><dd><code>python3 tools/figures/icu_figures.py</code> in the <a href="https://github.com/sandovabarbora/bsandova.com">site repository</a> (at <code>4262352</code> the script was <code>tools/icu_figures.py</code>); needs a local copy of the course CSVs</dd></div>
   <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Reversed outcome labels in an ICU P/F-ratio dataset (coursework)</i>. bsandova.com/texts/icu, version 2.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text and figures CC BY 4.0; the dataset is not redistributed</dd></div>
 </dl>
+</details>
 <section class="film film-page" aria-hidden="false"><div class="shot" style="view-transition-name:ph-icu;--bg:url(../assets/photo/icu.jpg);--bg-s:url(../assets/photo/icu-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:20250808_Intensive_care_unit_bed.jpg">Ismael Olea</a> · CC BY 4.0, colour held</p></section>
 
 

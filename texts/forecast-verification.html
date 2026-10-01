@@ -31,9 +31,9 @@
 .tbl th{font-weight:400;color:var(--fg-2);letter-spacing:.12em;text-transform:uppercase;font-size:10px}
 .tbl caption{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);padding:0 0 .5rem}
 .scroller{overflow-x:auto;max-width:64rem}
-.text>dl.meta{display:block;text-transform:none;letter-spacing:0;font-size:12px}
-.text>dl.meta div,.text>dl.meta div+div,.text>dl.meta div:last-child{border-right:0;border-bottom:1px solid #ececea;padding:6px 0}
-.text>dl.meta code{font-size:inherit}
+.text dl.meta{display:block;text-transform:none;letter-spacing:0;font-size:12px}
+.text dl.meta div,.text dl.meta div+div,.text dl.meta div:last-child{border-right:0;border-bottom:1px solid #ececea;padding:6px 0}
+.text dl.meta code{font-size:inherit}
 </style>
 
 <!-- ld --><link rel="alternate" type="application/atom+xml" title="Barbora Šandová" href="/feed.xml">
@@ -58,20 +58,25 @@
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>The surf forecasts are checked against the wave model's own analysis, a proxy that makes them look better than they are; the Prague forecasts are checked against station thermometers and rain gauges, which is a real answer key with a representativeness error of its own.</li>
-    <li>Three faults in the baselines and the ensemble were corrected in the code on 29 September 2026. None of them changes a number shown before, because the only lead past the gate, surf lead 0, was not affected.</li>
-    <li>Six dated predictions exist, and none can be read yet: each needs 30 pairs spanning eight ISO weeks, which the leads they concern reach in the first half of November if no morning is missed.</li>
-    <li>This page shows no forecast skill. Lead 0 is close to the truth by construction and is not read, the surf season so far is summer only, and a three-model probability can take just four values.</li>
+    <li>Surf forecasts are checked against the wave model's own analysis, Prague forecasts against weather stations.</li>
+    <li>Three faults were corrected on 29 September 2026; no number shown before changed.</li>
+    <li>Six dated predictions exist, and none can be read before November.</li>
+    <li>This page shows no forecast skill yet.</li>
   </ul>
 </details>
 <dl class="meta">
   <div><dt>published</dt><dd>14 September 2026 (surf) and 15 September 2026 (Prague), merged here 29 September 2026 · updated 29 September 2026 · <a href="#changelog">version 2</a></dd></div>
+</dl>
+<details class="meta-more">
+  <summary>About this note</summary>
+<dl class="meta">
   <div><dt>status</dt><dd>note; protocol, no results yet</dd></div>
   <div><dt>data</dt><dd>Open-Meteo Marine Weather and Forecast APIs (CC BY 4.0), fetched daily from 14 September 2026; ČHMÚ open climatological data, fetched daily from 15 September 2026; counts on this page from <code>surf/data.json</code> and <code>weather/data.json</code> as generated on 28 September 2026</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/surf">surf/</a> and <a href="https://github.com/sandovabarbora/bsandova.com/tree/main/weather">weather/</a>, each with <code>collect.py</code>, <code>verify.py</code> and <code>tests/test_verify.py</code>; the corrections of 29 September 2026 are made on top of commit 9332550; rebuild with <code>python surf/verify.py</code> and <code>python weather/verify.py</code>, test with <code>pytest surf/tests weather/tests</code></dd></div>
   <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Forecast verification: protocol</i>. bsandova.com/texts/forecast-verification, version 2.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text, figures and data CC BY 4.0</dd></div>
 </dl>
+</details>
 <section class="film film-page" aria-hidden="false"><div class="shot" style="view-transition-name:ph-surf;--bg:url(../assets/photo/surf.jpg);--bg-s:url(../assets/photo/surf-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Ericeira-06-Ribeira_d%27Ilhas-2011-gje.jpg">Gerd Eichmann</a> · CC BY-SA 4.0, colour held</p></section>
 
 

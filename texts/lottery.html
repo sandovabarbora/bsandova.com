@@ -29,10 +29,10 @@
 .ht small{color:#666;font:400 11px var(--mono)}
 .ht-wrap{overflow-x:auto;max-width:100%}
 .note{font:400 12px/1.6 var(--mono);color:#666}
-.text>dl.meta{display:block;letter-spacing:normal;text-transform:none;font-size:12px}
-.text>dl.meta div{border-right:0;padding-left:0;grid-template-columns:13ch 1fr}
-.text>dl.meta dd{overflow-wrap:anywhere}
-@media (max-width:560px){.text>dl.meta div{grid-template-columns:1fr}.ht{font-size:12px}.ht td.v{white-space:normal}}
+.text dl.meta{display:block;letter-spacing:normal;text-transform:none;font-size:12px}
+.text dl.meta div{border-right:0;padding-left:0;grid-template-columns:13ch 1fr}
+.text dl.meta dd{overflow-wrap:anywhere}
+@media (max-width:560px){.text dl.meta div{grid-template-columns:1fr}.ht{font-size:12px}.ht td.v{white-space:normal}}
 </style>
 
 <!-- ld --><link rel="alternate" type="application/atom+xml" title="Barbora Šandová" href="/feed.xml">
@@ -47,8 +47,8 @@
   <h1>What a lottery player can choose: <em>Sportka 1994–2026 and Eurojackpot 2025–2026</em></h1>
   <p class="deck">This exploratory study asks what a lottery player can choose: 7 550 Sportka draws show no favoured number, and at Eurojackpot's cap an unpopular combination adds €0.07 to a €2 column worth €1.29.</p>
   <dl class="facts">
-    <div><dt>Sportka numbers against uniform</dt><dd>p = 0.55 <small>χ² 41.2 · 7 550 draws · Monte Carlo null, 10 000 fair histories · MC s.e. 0.005</small></dd></div>
-    <div><dt>predicting the next draw, test AUC</dt><dd>0.497 <small>95 % CI 0.488–0.506, bootstrap by drawing day · gradient boosting · 743 days</small></dd></div>
+    <div><dt>Sportka numbers against uniform</dt><dd>p = 0.55 <small>χ² 41.2 · 7 550 draws · Monte Carlo null</small></dd></div>
+    <div><dt>predicting the next draw, test AUC</dt><dd>0.497 <small>95 % CI 0.488–0.506, bootstrap by drawing day</small></dd></div>
     <div><dt>expected payout of a €2 Eurojackpot column at the €120 M cap</dt><dd>€1.29 <small>95 % CrI 1.19–1.35 · 124 draws · exploratory</small></dd></div>
     <div><dt>gain from an unpopular combination at the cap</dt><dd>€0.069 <small>95 % CrI 0.031–0.118 · assumed popularity 0.4 of average</small></dd></div>
   </dl>
@@ -56,14 +56,19 @@
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>The chance of winning is fixed by the rules and the prize pool is set by everyone else's tickets, so the only thing a player's choice of numbers changes is how many people share a prize. Sportka's history gives no reason to doubt the first part, and a model fitted to it predicts the next draw no better than a coin.</li>
-    <li>In Eurojackpot the expected payout of a column stays below its price at every jackpot seen, rising from about 30 % of the stake at the €10 million minimum to about 64 % at the cap. Avoiding popular numbers raises it by a few cents, and only at large jackpots.</li>
-    <li>The value of an unpopular combination sits entirely in jackpot wins, which a million simulated columns almost never contain; a plain simulation therefore reports zero or noise, and importance sampling is needed to measure it.</li>
-    <li>Everything is exploratory and not pre-registered. How popular a combination is was assumed, not measured, because no Czech data on players' choices were available, and the sales model rests on 21 jackpot wins.</li>
+    <li>The only thing a player's choice of numbers changes is how many people share a prize.</li>
+    <li>Sportka's history shows no favoured number, and past draws do not predict the next one.</li>
+    <li>A Eurojackpot column pays back less than its price at every jackpot seen.</li>
+    <li>Avoiding popular numbers adds a few cents, and only at large jackpots.</li>
+    <li>Everything is exploratory; how popular a combination is was assumed, not measured.</li>
   </ul>
 </details>
 <dl class="meta">
   <div><dt>published</dt><dd>29 September 2026 · updated 29 September 2026 · <a href="#changelog">version 1</a></dd></div>
+</dl>
+<details class="meta-more">
+  <summary>About this study</summary>
+<dl class="meta">
   <div><dt>status</dt><dd>research, exploratory</dd></div>
   <div><dt>registration</dt><dd>not pre-registered; exploratory. The analyses were first run in May and June 2026 for an earlier, unpublished draft; everything seen then is listed under "What changed during the analysis".</dd></div>
   <div><dt>data</dt><dd>Sportka history, Sazka a.s. (Allwyn), 3 775 drawing days 9 January 1994 – 5 July 2026, exported July 2026 (exact date not recorded)<sup class="cite"><a href="#r1">1</a></sup>; Eurojackpot draws with jackpot and win flag, 28 February 2025 – 5 May 2026, transcribed from lotto.net in May 2026<sup class="cite"><a href="#r9">9</a></sup>; prize-fund shares from euro-jackpot.net, accessed 29 September 2026<sup class="cite"><a href="#r10">10</a></sup>; Sportka results May 2025 – August 2026 from sportkasazka.cz as a cross-check<sup class="cite"><a href="#r11">11</a></sup>. The draw results are public facts published by the operators; the files here are released under CC BY 4.0 as far as the author's rights extend, with their sources named. Hashes in <a href="../assets/lottery/SHA256SUMS">SHA256SUMS</a>.</dd></div>
@@ -71,6 +76,7 @@
   <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>What a lottery player can choose: Sportka 1994–2026 and Eurojackpot 2025–2026</i>. bsandova.com/texts/lottery, version 1.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text, figures and data CC BY 4.0</dd></div>
 </dl>
+</details>
 
 <section>
 <p>A lotto ticket is a choice of numbers, and in a pari-mutuel game that choice touches three quantities: the probability of winning each prize, the size of the prize pool, and the number of other winners who share a prize when it is won. The first is fixed by the rules as long as the draw is fair, the second depends on how many tickets everyone else buys, and only the third depends on which numbers a player picks, because players do not choose uniformly. Cook and Clotfelter showed that lotto sales rise with the jackpot and that the jackpot is shared among players who choose alike<sup class="cite"><a href="#r2">2</a></sup>, Farrell and co-authors estimated how conscious selection of numbers concentrates winners in UK Lotto<sup class="cite"><a href="#r3">3</a></sup>, and Walker and Forrest, Gulley and Simmons estimated how demand responds to the jackpot<sup class="cite"><a href="#r4">4</a></sup><sup class="cite"><a href="#r5">5</a></sup>. This study puts the three quantities side by side on Czech data. It tests whether 32 years of Sportka draws are uniform and whether the past predicts the next draw, estimates how Eurojackpot sales respond to the jackpot and what one column is worth at each jackpot, and measures the only lever a player holds, the popularity of a combination, together with the reason a plain simulation cannot see it. The work began as a question the author asked herself before a large Sportka jackpot in May 2026.</p>

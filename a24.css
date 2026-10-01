@@ -151,6 +151,7 @@ body:has(.q-note) main p a,body:has(.q-note) main li a{text-decoration:underline
   :root:has(link[rel="canonical"][href*="/texts/"]) .text>section.refs ol{columns:1}
   :root:has(link[rel="canonical"][href*="/texts/"]) .text>.text-foot{margin-left:calc(100% * 4 / 11 + clamp(40px,5vw,96px) * 7 / 11);max-width:68ch}
   .text>.tldr{margin-left:calc(100% * 4 / 11 + clamp(40px,5vw,96px) * 7 / 11)}
+  .text>details.meta-more{margin-left:calc(100% * 4 / 11 + clamp(40px,5vw,96px) * 7 / 11);max-width:68ch}
 }
 /* inline code had no rule and fell back to the browser's Courier */
 code,kbd,samp{font-family:var(--mono);font-size:.88em;letter-spacing:0}
@@ -263,3 +264,12 @@ figure.mp-live>img[hidden]{display:none}
   :root:has(link[rel="canonical"][href*="/texts/"]) .text>section:not(.film)>h2{position:static!important;max-width:none!important}
   .text>.tldr,.text>.meta,:root:has(link[rel="canonical"][href*="/texts/"]) .text>.text-foot{margin-left:0!important}
 }
+
+/* the metadata block: the first line stays, the rest folds (editorial standard §4) */
+.text details.meta-more{margin-top:0;margin-bottom:1.5rem;border-bottom:1px solid #ececea}
+.text details.meta-more>summary{cursor:pointer;list-style:none;font:400 12px/1.5 var(--mono);color:#666;padding:6px 0}
+.text details.meta-more>summary::-webkit-details-marker{display:none}
+.text details.meta-more>summary::before{content:"+ ";color:#999}
+.text details.meta-more[open]>summary::before{content:"− "}
+.text details.meta-more>dl.meta{margin-bottom:.5rem}
+.text dl.meta:has(+details.meta-more){margin-bottom:0}
