@@ -1,0 +1,171 @@
+{
+ "sample": {
+  "applications": 588,
+  "calls": 40,
+  "funded": 246,
+  "linked_share_funded": 0.496,
+  "linked_share_unfunded": 0.287,
+  "o2_missing_admissions": 15
+ },
+ "density_p": 0.4503,
+ "balance": {
+  "log_budget": {
+   "coef": -0.696,
+   "lo": -2.6122,
+   "hi": 0.9826,
+   "h": 5.63,
+   "n_left": 103,
+   "n_right": 103,
+   "calls": 39,
+   "pv": 0.3743
+  },
+  "log_requested": {
+   "coef": -0.674,
+   "lo": -2.0618,
+   "hi": 0.5848,
+   "h": 5.86,
+   "n_left": 105,
+   "n_right": 108,
+   "calls": 39,
+   "pv": 0.274
+  },
+  "share_requested": {
+   "coef": 0.049,
+   "lo": -0.1488,
+   "hi": 0.282,
+   "h": 5.51,
+   "n_left": 99,
+   "n_right": 101,
+   "calls": 39,
+   "pv": 0.5446
+  },
+  "prior_funded": {
+   "coef": -2.1682,
+   "lo": -7.3513,
+   "hi": 2.7813,
+   "h": 4.43,
+   "n_left": 70,
+   "n_right": 74,
+   "calls": 33,
+   "pv": 0.3767
+  }
+ },
+ "Q1": {
+  "O1_release": {
+   "coef": 0.3903,
+   "lo": -0.1395,
+   "hi": 0.9954,
+   "h": 5.08,
+   "n_left": 88,
+   "n_right": 94,
+   "calls": 37,
+   "pv": 0.1393,
+   "label": "underpowered"
+  },
+  "O2_log_admissions": {
+   "coef": 3.1817,
+   "lo": -2.3029,
+   "hi": 9.2309,
+   "h": 5.1,
+   "n_left": 86,
+   "n_right": 91,
+   "calls": 37,
+   "pv": 0.2391,
+   "label": "underpowered"
+  }
+ },
+ "sensitivity": {
+  "O1_half_bw": {
+   "coef": 0.0301,
+   "lo": -3.234,
+   "hi": -0.4569,
+   "h": 2.54,
+   "n_left": 29,
+   "n_right": 28,
+   "calls": 21,
+   "pv": 0.0092
+  },
+  "O1_double_bw": {
+   "coef": 0.2494,
+   "lo": -0.092,
+   "hi": 0.9211,
+   "h": 10.16,
+   "n_left": 175,
+   "n_right": 188,
+   "calls": 40,
+   "pv": 0.1087
+  },
+  "O1_donut": {
+   "coef": 0.5715,
+   "lo": 0.0612,
+   "hi": 1.2234,
+   "h": 4.42,
+   "n_left": 70,
+   "n_right": 73,
+   "calls": 33,
+   "pv": 0.0303
+  },
+  "O1_unsure_as_released": {
+   "coef": 0.4379,
+   "lo": -0.0854,
+   "hi": 1.0543,
+   "h": 5.01,
+   "n_left": 86,
+   "n_right": 89,
+   "calls": 36,
+   "pv": 0.0957
+  },
+  "O1_2016_2022": {
+   "coef": 0.2389,
+   "lo": -0.2597,
+   "hi": 0.7529,
+   "h": 5.41,
+   "n_left": 119,
+   "n_right": 117,
+   "calls": 45,
+   "pv": 0.3398
+  },
+  "O1_all_applications_cluster_project": {
+   "coef": 0.5028,
+   "lo": -0.0591,
+   "hi": 1.221,
+   "h": 3.88,
+   "n_left": 75,
+   "n_right": 75,
+   "calls": 32,
+   "pv": 0.0753
+  },
+  "O2_half_bw": {
+   "coef": -0.8067,
+   "lo": -32.0535,
+   "hi": -3.4481,
+   "h": 2.55,
+   "n_left": 28,
+   "n_right": 27,
+   "calls": 21,
+   "pv": 0.015
+  },
+  "O2_double_bw": {
+   "coef": 2.027,
+   "lo": -1.463,
+   "hi": 8.7447,
+   "h": 10.2,
+   "n_left": 173,
+   "n_right": 183,
+   "calls": 40,
+   "pv": 0.1621
+  }
+ },
+ "rejected_near_cut_later_funded": {
+  "rejected_in_bw": 88,
+  "later_funded": 28
+ },
+ "Q2": {
+  "rho": -0.094,
+  "lo": -0.224,
+  "hi": 0.039,
+  "n": 254,
+  "calls": 32,
+  "median_admissions": 14133
+ }
+}
