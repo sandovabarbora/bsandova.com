@@ -96,7 +96,7 @@ with their source.
   written and reviewed before modelling; not independently timestamped."
 - Everything the author had already seen when registering is disclosed in the article, not only in the design
   file.
-- The next registered study is registered on OSF before any outcome is observed.
+- A registered study commits its design before any outcome is joined, and the article cites that commit and its date with the wording above. An OSF registration is optional (author's decision, 1 October 2026).
 
 ## 7. Numbers and units
 
