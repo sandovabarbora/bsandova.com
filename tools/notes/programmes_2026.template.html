@@ -21,21 +21,54 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../a24.css">
 <style>
-.ht{width:100%;border-collapse:collapse;font:400 13px/1.45 var(--sans);margin:.6rem 0 1rem}
-.ht th{font:400 11px var(--mono);color:#666;text-align:left;padding:6px 10px 6px 0;border-bottom:1px solid #000;vertical-align:bottom}
-.ht td{padding:7px 10px 7px 0;border-bottom:1px solid #e6e6e6;vertical-align:top}
-.ht td.v{white-space:nowrap}
-.ht-wrap{overflow-x:auto;max-width:100%}
 .note{font:400 12px/1.6 var(--mono);color:#666}
-.rt{display:inline-block;font:400 11px/1.3 var(--mono);padding:2px 7px;border-radius:3px}
-.rt-yes,.rt-likely{background:#e3f0e8;color:#1f6b45}
-.rt-partly{background:#f6ecd7;color:#7a5200}
-.rt-no{background:#f5e1de;color:#9a3329}
-.rt-other{background:#e8ebef;color:#4b5561}
-details.prog{border-top:1px solid #000;padding:12px 0}
-details.prog>summary{cursor:pointer;font:500 16px/1.4 var(--sans)}
-details.prog>summary small{font:400 11px var(--mono);color:#666;margin-left:8px}
-@media (max-width:560px){.ht{font-size:12px}.ht td.v{white-space:normal}}
+.rt{display:inline-block;font:400 10.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:5px 8px;border-radius:2px;white-space:nowrap}
+.rt-yes,.rt-likely{background:#dcefe3;color:#17603c}
+.rt-partly{background:#f4e7c9;color:#6e4a00}
+.rt-no{background:#f3dad5;color:#8f2e24}
+.rt-other{background:#e4e7ec;color:#434c57}
+.rt-likely{background:#ebf5ee}
+/* the overall distribution */
+.bar{display:flex;gap:2px;height:14px;margin:18px 0 10px}
+.bar .seg{display:block;border-radius:1px}
+.bar .seg.rt-yes,.bar-leg .sw.rt-yes{background:#2f8a5b}.bar .seg.rt-likely,.bar-leg .sw.rt-likely{background:#8cc6a2}.bar .seg.rt-partly,.bar-leg .sw.rt-partly{background:#d9a83a}.bar .seg.rt-no,.bar-leg .sw.rt-no{background:#c0503f}.bar .seg.rt-other,.bar-leg .sw.rt-other{background:#8a939e}
+.bar-leg{display:flex;flex-wrap:wrap;gap:6px 18px;list-style:none;padding:0;margin:0 0 6px;font:400 12px var(--mono);color:#444}
+.bar-leg .sw{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px;border-radius:1px}
+.bar-leg b{font-weight:500;color:#111}
+/* jump links */
+.jump{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 18px}
+.jump a{font:400 12px var(--mono);color:#111;text-decoration:none;border:1px solid #111;padding:6px 10px}
+.jump a:hover,.jump a:focus-visible{background:#111;color:#fff;outline:none}
+/* a programme */
+details.prog{border-top:1px solid #111;padding:14px 0 6px}
+details.prog>summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:14px}
+details.prog>summary::-webkit-details-marker{display:none}
+details.prog>summary::after{content:"+";margin-left:auto;font:400 18px var(--mono)}
+details.prog[open]>summary::after{content:"−"}
+.prog-no{font:400 12px var(--mono);color:#888}
+.prog-name{font:500 clamp(20px,2.2vw,26px)/1.2 var(--sans);letter-spacing:-.01em}
+.prog-n{font:400 11px var(--mono);color:#888}
+.prog-verdict{font:400 17px/1.5 var(--sans);margin:14px 0 18px;max-width:62ch}
+/* a promise */
+.prs{display:grid;gap:0}
+.pr{border-top:1px solid #e3e3e0;padding:16px 0}
+.pr-head{display:grid;grid-template-columns:150px 1fr;gap:16px;align-items:start}
+.pr-head .rt{justify-self:start;margin-top:3px}
+.pr-head h3{font:500 16px/1.4 var(--sans);margin:0;letter-spacing:-.005em}
+.pr-why{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:10px 0 0 166px}
+.pr-why p{margin:0;font:400 14px/1.55 var(--sans);color:#333}
+.pr-lab{font:400 10.5px/1.4 var(--mono)!important;letter-spacing:.08em;text-transform:uppercase;color:#888!important;margin:0 0 4px!important}
+.pr-can .pr-lab{color:#17603c!important}
+.pr-not .pr-lab{color:#8f2e24!important}
+.prog-src{font:400 11px var(--mono);margin-left:4px}
+.prog-foot{display:grid;grid-template-columns:1fr 1fr;gap:24px;border-top:1px solid #111;padding-top:14px;margin-top:6px}
+.prog-foot ul{margin:0;padding-left:1.1em;font-size:14px}
+.prog-foot p{font-size:14px;margin:0}
+@media (max-width:760px){
+  .pr-head{grid-template-columns:1fr;gap:8px}
+  .pr-why{grid-template-columns:1fr;gap:10px;margin-left:0}
+  .prog-foot{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -63,7 +96,7 @@ details.prog>summary small{font:400 11px var(--mono);color:#666;margin-left:8px}
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>1 October 2026 · updated 1 October 2026 · <a href="#changelog">version 2</a></dd></div>
+  <div><dt>published</dt><dd>1 October 2026 · updated 1 October 2026 · <a href="#changelog">version 3</a></dd></div>
 </dl>
 <details class="meta-more">
   <summary>About this note</summary>
@@ -71,7 +104,7 @@ details.prog>summary small{font:400 11px var(--mono);color:#666;margin-left:8px}
   <div><dt>status</dt><dd>note</dd></div>
   <div><dt>data</dt><dd>the programme texts of six lists, captured 24–29 September 2026 (sources in each section); the statutes named in the text, accessed 1 October 2026<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup><sup class="cite"><a href="#r3">3</a></sup><sup class="cite"><a href="#r4">4</a></sup>; every rating in <a href="../assets/programmes-2026/ratings.json">ratings.json</a></dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/notes/programmes_2026.py">tools/notes/programmes_2026.py</a> builds this page from the ratings file: <code>python3 tools/notes/programmes_2026.py</code></dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>What Prague's 2026 programmes can do in one term</i>. bsandova.com/texts/prague-programmes-2026, version 2.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>What Prague's 2026 programmes can do in one term</i>. bsandova.com/texts/prague-programmes-2026, version 3.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text and data CC BY 4.0</dd></div>
 </dl>
 </details>
@@ -84,6 +117,7 @@ details.prog>summary small{font:400 11px var(--mono);color:#666;margin-left:8px}
 
 <section>
 <h2>What the programmes share</h2>
+{{BAR}}
 <p>Of the {{N}} promises read, {{DOABLE}} are within the city's powers and can be done in one term, {{PARTLY}} can be done only in part, {{NO}} cannot be done in one term, and {{OTHER}} are decided by the state or another body.</p>
 <p>Housing is the main topic of every programme and its weakest point. Promises of 10 000 flats a year cannot be met when about 6 000 are completed now, most of them by private builders, and even 8 000 city flats would be more than the whole market completes in a year. Promises worded as starts, 2 000 city flats or 1 000 a year, are closer to what a term allows. Large transport projects, metro D (its first section is planned for 2032{{ref:PIR}}), a ring metro line, the city ring road, tunnels and new bridges, cannot be finished in four years in any programme, and most programmes say they will prepare them. Rules for Airbnb and a higher tourist fee appear in almost every programme, but the city has no legal power to restrict short-term rentals, and the fee's ceiling is set by law. The steps most clearly in the city's own hands are its building regulations, its parking and fares, the rules for allocating city flats and its own budget rules.</p>
 </section>
@@ -91,6 +125,7 @@ details.prog>summary small{font:400 11px var(--mono);color:#666;margin-left:8px}
 <section>
 <h2>The six programmes</h2>
 <p class="note">This note sits beside the series <a href="prague-measured">Prague, measured</a> and is not one of its parts. Lists in ballot order. Each section gives the verdict, the rated promises, what was not checked and the source with its capture date. The text of list 22 is the lead candidate's page, because the party's programme document returned an error when it was captured.</p>
+<nav class="jump" aria-label="Programmes">{{JUMP}}</nav>
 {{SECTIONS}}
 </section>
 
@@ -105,6 +140,7 @@ details.prog>summary small{font:400 11px var(--mono);color:#666;margin-left:8px}
 <h2>Change log</h2>
 <ul>
 <li>1 October 2026, version 1: first published.</li>
+<li>1 October 2026, version 3: a new layout (one card per promise, the reasons side by side, a bar of all ratings); the Prague building regulations are cited as regulation 12/2024, in force since 1 July 2024, which replaces an earlier wrong number; IKEM's founder is now checked; for the 16 m² flat minimum the page says where it is set was not confirmed.</li>
 <li>1 October 2026, version 2: every promise now gives why it can be done and why not, each with its legal or published source; the references are numbered by first citation. Metro D: the first section is planned for 2032, so no section opens within the term; the earlier wording "at most a first section" was corrected.</li>
 <li>Checked against editorial standard v1 on 1 October 2026.</li>
 </ul>
