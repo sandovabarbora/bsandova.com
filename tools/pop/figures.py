@@ -108,7 +108,8 @@ def main(slug: str) -> None:
 
     # 3 tickets in days of income (widget), static fallback horizontal bars
     q5 = res["q5"]
-    tickets = [{"n": c["country"], "p": round(c["price_usd"]), "d": round(c["days_of_income"], 2), "s": c["sold"]}
+    short = {"Czech Republic": "Czechia", "United Kingdom": "UK", "United States": "US"}
+    tickets = [{"n": short.get(c["country"], c["country"]), "p": round(c["price_usd"]), "d": round(c["days_of_income"], 2), "s": c["sold"]}
                for c in q5.get("countries", [])]
     if tickets:
         f, ax = plt.subplots(figsize=(6.4, 0.18 * len(tickets) + 0.8))
@@ -124,15 +125,15 @@ def main(slug: str) -> None:
     segs, x = [], 0.0
     for s in songs[:8]:
         w = int(s["streams"]) / total
-        segs.append({"y": "streams", "x0": 100 * x, "x1": 100 * (x + w), "tip": f"{s['title']}: {100 * w:.1f} % of streams"})
+        segs.append({"y": " ", "x0": 100 * x, "x1": 100 * (x + w), "tip": f"{s['title']}: {100 * w:.1f} % of streams"})
         x += w
-    segs.append({"y": "streams", "x0": 100 * x, "x1": 100.0, "tip": f"{len(songs) - 8} other songs: {100 * (1 - x):.1f} % of streams"})
+    segs.append({"y": " ", "x0": 100 * x, "x1": 100.0, "tip": f"{len(songs) - 8} other songs: {100 * (1 - x):.1f} % of streams"})
     spec_catalogue = {
         "alt": f"Share of all Spotify streams by song: {songs[0]['title']} {100 * int(songs[0]['streams']) / total:.0f} %, "
                f"the top three {100 * res['q4']['top3_share']:.0f} %, {len(songs)} songs in all.",
         "panels": [{"h": 60, "x": {"kind": "linear", "domain": [0, 100], "ticks": [0, 25, 50, 75, 100], "fmt": {"dp": 0, "unit": " %"},
                                    "label": "share of the artist's streams"},
-                    "y": {"kind": "cat", "domain": ["streams"], "labels": False},
+                    "y": {"kind": "cat", "domain": [" "]},
                     "marks": [{"type": "hbar", "rows": [dict(sg, c="held" if i == 0 else ("ink" if i < 3 else "light")) for i, sg in enumerate(segs)]}]}],
         "table": {"cols": ["song", "streams", "share"],
                   "rows": [[s["title"], int(s["streams"]), f"{100 * int(s['streams']) / total:.1f} %"] for s in songs]},
