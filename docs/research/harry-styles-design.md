@@ -96,4 +96,8 @@ All three are descriptive. None says why a song lasted or why a run sold.
 
 ## Changes after registration
 
-None yet.
+- **1 October 2026, before any data of part 1 were parsed or any figure computed.** Q3 now uses every tour since
+  2017 with attendance cells on English Wikipedia, as the series design (`pop-measured-design.md`, §2) fixes for
+  parts 2–5: *Love On Tour* and *Harry Styles: Live on Tour* (2018), pooled, each entry keeping its tour name. The
+  reason is comparability across the series. *As It Was* stays the focal song; it is also the song the series rule
+  would be checked against, and if the rule picks another song, both are reported.
