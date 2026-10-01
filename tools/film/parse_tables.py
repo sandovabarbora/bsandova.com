@@ -78,6 +78,9 @@ def parse(path: Path, url: str) -> tuple[list[dict], str | None]:
     names = {k: head[k] or norm(v.iat[hdr + 1, k]) for k in crit}
     experts = [k for k, h in enumerate(head) if "expert" in h]
     cid = call_id(path.name, title)
+    if cid is None:
+        # some tables name the call only in their header block ("Evidenční číslo výzvy: 2016-2-1-2")
+        cid = call_id("", " ".join(norm(c) for c in v.iloc[:hdr].values.ravel()))
     start = (rng_row if rng_row is not None else hdr) + 1
     rows = []
     for i in range(start, len(v)):
