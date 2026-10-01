@@ -139,8 +139,16 @@ def tour(artist: dict) -> list[dict]:
         if "parse" not in page:
             print("no page:", name)
             continue
-        out.extend(dict(e, tour=name) for e in tour_tables(page))
+        # a table without a year in its caption or header takes the tour's start year from the infobox
+        start = re.search(r"\|\s*start_date\s*=[^\n]*?(20\d\d)", page["parse"]["wikitext"]["*"])
+        out.extend(dict(e, tour=name, year=e["year"] or (start.group(1) if start else "")) for e in tour_tables(page))
     return out
+
+
+def year_of(date: str, table_year) -> str:
+    """The show's year: written in its date, else the table's caption or header, else empty."""
+    m = re.search(r"\b(20\d\d)\b", date) or table_year
+    return m.group(1) if m else ""
 
 
 def tour_tables(page: dict) -> list[dict]:
@@ -153,7 +161,8 @@ def tour_tables(page: dict) -> list[dict]:
         if "Attendance" not in head or "Date" not in head[0]:
             continue
         ix = {h: i for i, h in enumerate(head)}
-        year = re.search(r"\d{4}", table.find("tr").get_text(" "))
+        cap = table.find("caption")
+        year = re.search(r"\b(20\d\d)\b", (cap.get_text(" ") if cap else "") + " " + table.find("tr").get_text(" "))
         entries: dict[int, dict] = {}
         for row in body:
             if len(row) <= ix["Attendance"] or row[0][1].lower().startswith("total"):
@@ -163,7 +172,7 @@ def tour_tables(page: dict) -> list[dict]:
             if not m:
                 continue
             get = lambda h: row[ix[h]][1] if h in ix and ix[h] < len(row) else ""
-            e = entries.setdefault(aid, {"year": year.group() if year else "", "first_date": row[0][1], "city": get("City"), "country": get("Country"),
+            e = entries.setdefault(aid, {"year": year_of(row[0][1], year), "first_date": row[0][1], "city": get("City"), "country": get("Country"),
                                          "venue": get("Venue"), "nights": 0,
                                          "sold": int(m.group(1).replace(",", "")),
                                          "available": int(m.group(2).replace(",", "")),

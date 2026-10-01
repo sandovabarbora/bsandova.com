@@ -108,3 +108,7 @@ All three are descriptive. None says why a song lasted or why a run sold.
   alone (no denominator), labelled *added after the results*. Reason: in small markets many songs are number one
   for a single day (Luxembourg: 299 number ones, median 7 days), which inflates the registered ratio. The registered
   ratio and its ranking are reported unchanged.
+- **2 October 2026, after the results: a parsing error corrected.** The 2017–2018 tour table carries the year in each
+  date, not in its caption, so the parser left those 74 entries without a year and joined them to the latest GDP
+  per capita instead of their own year's, as §4 of the series design requires. Fixed in `tools/pop/parse.py`; Q5
+  changed (the Philippines from 9.7 to 10.4 days, Norway now the lowest); Q1–Q4 did not change.

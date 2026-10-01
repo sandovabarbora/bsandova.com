@@ -82,6 +82,11 @@ def q2() -> dict:
     for i, c in enumerate(ranked, 1):
         c["rank"] = i
     cz = next((c for c in out if c["country"] == "cz"), None)
+    # added after the results were seen (labelled so in the article): rank by days alone, without the country's
+    # own number ones, because small markets with many one-day number ones inflate the registered ratio
+    by_days = sorted(out, key=lambda c: -c["days"])
+    for i, c in enumerate(by_days, 1):
+        c["rank_by_days_post_hoc"] = i
     return {"countries": sorted(out, key=lambda c: -c["ratio"]), "n_ranked": len(ranked), "czechia": cz}
 
 
@@ -136,7 +141,8 @@ def q5() -> dict:
     t = [r for r in rows(f"{SLUG}-tour.csv") if r["revenue_usd"] and r["iso3"] and r["gdppc_usd"]]
     by: dict[str, dict] = {}
     for r in t:
-        c = by.setdefault(r["iso3"], {"country": r["country"], "revenue": 0, "sold": 0, "income_day_weighted": 0.0})
+        name = {"GBR": "United Kingdom", "USA": "United States"}.get(r["iso3"], r["country"])
+        c = by.setdefault(r["iso3"], {"country": name, "revenue": 0, "sold": 0, "income_day_weighted": 0.0})
         c["revenue"] += int(r["revenue_usd"])
         c["sold"] += int(r["sold"])
         c["income_day_weighted"] += int(r["sold"]) * float(r["gdppc_usd"]) / 365
