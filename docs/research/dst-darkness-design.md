@@ -176,3 +176,12 @@ planted evening ratio of 1.40 and morning ratio of 0.80 and recovered 1.34 (1.08
 
 **2 October 2026 (correction, before data).** The east–west spread of the region centroids is 5.2° of longitude
 (12.74°–17.95° E), about 21 minutes of dusk, not 4.5° and 18 minutes as written in the previous note.
+
+**3 October 2026 (data step; deviation in prepare.py).** The first run of `prepare.py` on the records dropped
+every time with minute 60. In the form, minute 60 means "minute unknown" with a known hour, so those records have a
+valid hour; only hour 25 ("hour unknown") is invalid. `parse_hour` was corrected to accept minute 60 before any
+estimate was run; the only output seen from the first run was the per-year count of dropped times, and the forms of
+the dropped values (hour 25 or minute 60, counted for 2016 and 2025). After the fix, 1 479–2 081 window records a
+year (about 13 %) have an unknown hour and are dropped; this share is reported by crash kind with the results.
+Cells: 164 640 (14 regions × 10 years × 49 days × 24 hours), SHA-256 of `cells.parquet` d64c1bcaebc858b10fe7afb20858a780ba5d44842e0aed246456b5c89d39e510. Archive hashes and
+per-year counts: `docs/research/dst-darkness-data.json`.

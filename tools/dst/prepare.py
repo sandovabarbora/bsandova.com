@@ -56,13 +56,14 @@ def parse_date(s: str):
 
 
 def parse_hour(s: str):
-    """p2b is HHMM (as text or number, also 'HH:MM'); hour 25 or minute 60 mean unknown."""
+    """p2b is HHMM (as text or number, also 'HH:MM'); hour 25 = unknown hour (dropped), minute 60 = unknown minute
+    with a known hour (kept)."""
     s = s.strip().strip('"').replace(":", "")
     if not s.isdigit():
         return None
     v = int(s)
     h, m = divmod(v, 100)
-    return h if 0 <= h <= 23 and 0 <= m <= 59 else None
+    return h if 0 <= h <= 23 and 0 <= m <= 60 else None
 
 
 def records(year: int):
