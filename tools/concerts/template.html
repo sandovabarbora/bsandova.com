@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Does a concert move the charts? Harry Styles's first tour on Spotify, 2017–2018</title>
+<meta name="description" content="A registered staggered difference-in-differences study of {{n_countries}} countries: in the week of Harry Styles's first show in a country, his share of its Spotify Top 200 rose by about {{w0_rel}} %, and within three weeks the rise was gone.">
+<meta property="og:title" content="Does a concert move the charts? Harry Styles's first tour on Spotify, 2017–2018">
+<meta property="og:description" content="In the week of his first show in a country, Harry Styles's share of its Spotify Top 200 rose by about {{w0_rel}} %; within three weeks it was gone.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://bsandova.com/texts/concert-effect">
+<meta property="og:image" content="https://bsandova.com/assets/og/concert-effect.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bsandova.com/assets/og/concert-effect.jpg">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://bsandova.com/texts/concert-effect">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../text.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../a24.css">
+<style>
+.text dl.meta{display:block;letter-spacing:normal;text-transform:none;font-size:12px}
+.text dl.meta div{border-right:0;padding-left:0;grid-template-columns:13ch 1fr}
+.text dl.meta dd{overflow-wrap:anywhere}
+@media (max-width:560px){.text dl.meta div{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">research · pop · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Research · Pop, measured · concerts and streaming, 2017–2018</p>
+  <h1>Does a concert move the charts? <em>Harry Styles's first tour on Spotify</em></h1>
+  <p class="deck">A registered difference-in-differences across {{n_countries}} countries: the week of his first show in a country lifted his chart share by about {{w0_rel}} %, but the registered five-week effect is {{label}}.</p>
+  <dl class="facts">
+    <div><dt>effect in the week of the first show</dt><dd>+{{w0}} pp <small>of the country's Top-200 streams · 95 % uniform band {{w0_lo}} to {{w0_hi}}</small></dd></div>
+    <div><dt>average effect, weeks 0 to +4 (registered)</dt><dd>+{{sum}} pp <small>95 % CI {{sum_lo}} to {{sum_hi}} · {{label}}</small></dd></div>
+    <div><dt>his share before the show</dt><dd>{{base_pp}} % <small>of Top-200 streams, treated countries, weeks −12 to −2 · administrative count</small></dd></div>
+    <div><dt>countries</dt><dd>{{n_countries}} <small>{{n_treated}} with a show, {{n_never}} without · administrative count</small></dd></div>
+  </dl>
+</header>
+<details class="tldr" open>
+  <summary>Overwhelmed? Here's the short version</summary>
+  <ul>
+    <li>Where he played, people streamed him clearly more in the week of the show, and a little more the week after.</li>
+    <li>Three weeks later his share was back where it had been, so the show was an event rather than a lasting gain.</li>
+    <li>The registered summary averaged five weeks, which diluted the spike; it is reported as it came out.</li>
+    <li>Leaving out any one country does not change the sign, but only the Top 200 is seen, and the study covers one tour.</li>
+  </ul>
+</details>
+<dl class="meta">
+  <div><dt>published</dt><dd>2 October 2026 · updated 2 October 2026 · <a href="#changelog">version 1</a></dd></div>
+</dl>
+<details class="meta-more">
+  <summary>About this study</summary>
+<dl class="meta">
+  <div><dt>status</dt><dd>research, registered analysis plan (self-timestamped)</dd></div>
+  <div><dt>registration</dt><dd>registered analysis plan: design committed at <code>54fe975</code> on 2 October 2026, before the chart data were downloaded; code <code>2682c33</code> and the panel <code>03c2e42</code> before estimation; results commit <code>b156dfb</code>. Commit times are self-reported. No change after registration.</dd></div>
+  <div><dt>data</dt><dd>Spotify Charts, daily Top 200 by country, 2017–2021, Kaggle (ODbL), accessed 2 October 2026<sup class="cite"><a href="#r6">6</a></sup>; Wikipedia, <i>Harry Styles: Live on Tour</i>, revision 1342196247<sup class="cite"><a href="#r7">7</a></sup>. Hash in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/concert-effect-files.sha256">concert-effect-files.sha256</a>; the panel in <a href="../assets/concerts/panel.csv">panel.csv</a>, the shows in <a href="../assets/concerts/shows.csv">shows.csv</a>.</dd></div>
+  <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/concerts">tools/concerts/</a> at the commit that publishes this page; rebuild: <code>uv run --with csdid --with pandas --with numpy python tools/concerts/estimate.py</code> (csdid {{csdid}})</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Does a concert move the charts? Harry Styles's first tour on Spotify, 2017–2018</i>. bsandova.com/texts/concert-effect, version 1.</dd></div>
+  <div><dt>licence</dt><dd>code MIT; text and figures CC BY 4.0; the panel is derived from Spotify Charts and published under ODbL</dd></div>
+</dl>
+</details>
+
+{{photo}}
+
+<section>
+<p>For most artists, concerts now earn more than recordings, and the two are often treated as complements: a show sells the songs, and the songs sell the show. Connolly and Krueger traced how musicians' income moved towards live performance<sup class="cite"><a href="#r1">1</a></sup>, and Papies and van Heerde found, for German artists before streaming, that concerts and record sales moved together in ways that depended on the artist<sup class="cite"><a href="#r2">2</a></sup>. Streaming makes the question sharper, because listening is now counted every day in every country and can follow a concert within days<sup class="cite"><a href="#r3">3</a></sup>. A tour that reaches countries at different dates is close to a natural experiment: the countries not yet visited show what would have happened to the others without a show. Recent methods for such staggered timing<sup class="cite"><a href="#r4">4</a></sup><sup class="cite"><a href="#r5">5</a></sup> make the comparison clean. This study asks it of Harry Styles's first solo tour, which visited {{n_treated}} countries with a Spotify chart between September 2017 and June 2018: did his share of a country's chart rise after he played there, and for how long? It belongs to <a href="pop-harry-styles">Pop, measured</a>, whose first part describes the same artist's charts and tours.</p>
+</section>
+
+<section>
+<h2>Data</h2>
+<p>Spotify publishes a daily Top 200 for each country, with every song's streams that day; a copy of every chart from 2017 to 2021 is on Kaggle<sup class="cite"><a href="#r6">6</a></sup>. From it the study takes the charts of countries from March 2017 to December 2018 and sums them by week. In each country and week, the outcome is Harry Styles's share of the streams in the Top 200: his songs' streams divided by all the chart's streams. The share removes the size of each market and the growth of Spotify over the period. {{n_songs}} of his songs appear in the window, almost all from his first album; the three most streamed are {{top3}}.</p>
+<p>The tour article on Wikipedia lists every show<sup class="cite"><a href="#r7">7</a></sup>: {{n_shows}} dated shows, the first in San Francisco on 19 September 2017 and the last of a new country in Mexico in June 2018. A country is treated from the week of its first show. Of the {{n_countries}} countries with a chart in every week of the window, {{n_treated}} had a show and {{n_never}} did not, among them Czechia, Poland and Austria. {{n_dropped}} countries whose charts start or stop during the window are left out: {{dropped}}. Thailand had a show but no full chart, so it is among them.</p>
+<p>The tour came in waves. It opened in North America in September and October 2017, crossed to western Europe in late October and November, went on to Singapore, Australia, New Zealand and Japan in November and December, returned to Europe in March and April 2018 for the countries it had skipped, and ended with South-East Asia in May and Latin America in May and June. The {{n_treated}} visited countries therefore fall into {{cohorts}} groups by the week of their first show, most of them of one to three countries, spread over nine months. That spread is what the method needs: in almost every week of the tour some countries had been visited and others had not yet.</p>
+<p>The raw numbers already tell most of the story, though they cannot be read as an effect. In the visited countries, his average share of the chart's streams fell from {{raw_m12}} % twelve weeks before the show to {{raw_m2}} % two weeks before, as his first album aged; it jumped to {{raw_0}} % in the show week, then fell again, to {{raw_p4}} % four weeks after and {{raw_p12}} % at twelve. The fall before the show would make any simple before-and-after comparison misleading, because the share was dropping everywhere, visited or not; that is why the comparison has to be with countries not yet visited, which were ageing out of his first album at the same time.</p>
+<figure data-chart="../assets/concerts/charts.json#raw">
+  <img src="../assets/concerts/00-raw.svg" alt="Line chart: the visited countries' average share of Top-200 streams for Harry Styles by week from the first show, falling from {{raw_m12}} % to {{raw_m2}} %, jumping to {{raw_0}} % in the show week, then falling towards zero." loading="lazy">
+  <figcaption><b>fig. 1</b> · Average share of the country's Spotify Top-200 streams for Harry Styles, visited countries, by week from their first show; descriptive, no comparison group; n = {{n_treated}} countries. Data: Spotify Charts<sup class="cite"><a href="#r6">6</a></sup>.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>How this was done</h2>
+<p>The design, the outcomes and the rule for reading the result were committed before the chart data were downloaded; the code and the weekly panel were committed before the first estimate. The estimator is Callaway and Sant'Anna's for staggered adoption<sup class="cite"><a href="#r4">4</a></sup>. For each group of countries first visited in the same week, it compares their change in share with the change, over the same weeks, in countries not yet visited or never visited. These comparisons are averaged by weeks since the first show, from 12 weeks before to 12 after. Inference uses a bootstrap that resamples countries, and the bands are uniform: they hold for all weeks at once, which is stricter than a separate interval for each week.</p>
+<p>The registered summary is the average effect over weeks 0 to +4. It was labelled in advance: "supported" if its interval excludes zero and the weeks before the show show no trend, "not supported" if its interval includes zero and stays within ten percent of the share before the show, and "inconclusive" otherwise. The share before the show was {{base_pp}} % of a country's Top-200 streams, so ten percent of it is a small number, and the rule asks a lot of the data. The method rests on two assumptions. The first is parallel trends: without the show, a visited country's share would have moved like that of the countries not yet visited. The second is no anticipation beyond what the event window allows: the share does not move because a show is coming. Neither can be proven, but both leave traces in the weeks before the show, which is why those weeks are reported. A simpler regression with country and week effects would mix up the comparisons, using countries already visited as controls for those visited later; when effects change over time, as a spike that fades does, that can bias the estimate and even flip its sign<sup class="cite"><a href="#r8">8</a></sup>. The estimator used here avoids those comparisons. The weeks before the show test whether visited and unvisited countries were already drifting apart; a placebo moves every first show 26 weeks earlier; and the summary is re-estimated leaving out each visited country in turn.</p>
+</section>
+
+<section>
+<h2>What a show did</h2>
+<p>In the week of the first show, Harry Styles's share of the country's Top-200 streams rose by {{w0}} percentage points (95 % uniform band {{w0_lo}} to {{w0_hi}}), about {{w0_rel}} % of his share before the show. The band excludes zero even though it covers all 25 weeks at once. In the week after, the estimate is {{w1}} points ({{w1_lo}} to {{w1_hi}}), still higher but no longer clearly above zero; it is {{w2}} points in the second week and {{w3}} in the third. From the fifth week to the twelfth the average is {{late}}: the share had returned to where it was, if anything a little below. The week before the show shows {{wm1}} points: there is no sign that the anticipation alone moved the chart.</p>
+<p>The registered summary over weeks 0 to +4 is {{sum}} points (95 % CI {{sum_lo}} to {{sum_hi}}), about {{sum_rel}} % of the share before the show. Its interval includes zero and is too wide to rule out an effect of ten percent, so by the rule set in advance it is {{label}}: {{why}}. The five-week window was chosen before the data were seen, on the expectation that an effect would last a few weeks. It did not, and averaging two strong weeks with three flat ones diluted it. Both the single week and the registered summary are reported here; the headline does not swap one for the other.</p>
+<p>In streams, the effect is modest. A visited country's Top 200 held on average {{w0_total}} million streams in the show week, so {{w0}} percentage points is roughly {{extra}} extra streams of his songs in that country that week, and about {{extra_all}} million across the {{n_treated}} countries together. This is a back-of-the-envelope figure, the share effect times the average chart, and it counts only streams of songs that were in the chart. A sold-out arena holds ten to twenty thousand people, so the extra streams in a week are a few per person in the hall, or a little from many others; the data cannot say which.</p>
+<figure data-chart="../assets/concerts/charts.json#event">
+  <img src="../assets/concerts/01-event.svg" alt="Event study of {{n_countries}} countries: effects around zero before the first show, a clear rise in the show week to {{w0}} percentage points, and a return to zero within three weeks." loading="lazy">
+  <figcaption><b>fig. 2</b> · Effect of the first show on Harry Styles's share of the country's Spotify Top-200 streams, by week from the show, percentage points, with 95 % uniform bootstrap bands; staggered difference-in-differences<sup class="cite"><a href="#r4">4</a></sup>, n = {{n_countries}} countries ({{n_treated}} visited). Blue: from the show week. Data: Spotify Charts<sup class="cite"><a href="#r6">6</a></sup>.</figcaption>
+</figure>
+<p>The same pattern holds for the number of his songs in the chart. In the show week the chart held {{y2_w0}} more of his songs on an average day (band {{y2_w0_lo}} to {{y2_w0_hi}}), against {{y2_base}} before the show; over five weeks this outcome too is {{y2_label}}. Restricted to his three biggest songs, the summary is {{y3_sum}} points and {{y3_label}}, almost the whole of the main effect: the show lifted the songs people already knew rather than bringing new ones into the chart.</p>
+</section>
+
+<section>
+<h2>Where the jump was largest</h2>
+<p>The following is descriptive and was not registered: for each visited country, the change in his raw share from the four weeks before the show to the show week, without any comparison group. The largest jumps, in percentage points, were in {{jump_top}}: all visited after the opening legs in North America and western Europe, while his album was still in their charts. In {{jump_neg}} the raw share fell in the show week; these were among the first countries visited, in the autumn of 2017, when his album was leaving the charts quickly from a high level, and the fall before the show simply went on. In {{n_zero}} countries, {{jump_zero}}, he was not in the Top 200 in those weeks at all, so any effect was below what the chart shows. These raw changes are not effects: the estimate in fig. 2 compares each country with others at the same time, which is what turns a falling line into a measured rise.</p>
+</section>
+
+<section>
+<h2>Checks</h2>
+<p>Comparing with countries never visited only, rather than also with those visited later, gives a summary of {{never}} points ({{never_lo}} to {{never_hi}}), close to the main estimate. Leaving out each visited country in turn keeps the summary between {{loo_min}} (without {{loo_min_c}}) and {{loo_max}} points (without {{loo_max_c}}); without the United States it is {{loo_us}}, without the United Kingdom {{loo_uk}}. No single country carries the result. The placebo, which pretends every show happened 26 weeks earlier, gives {{placebo}} points with a wide interval ({{placebo_lo}} to {{placebo_hi}}) that includes zero: it finds no false effect, but it is a weak test, because moving early shows back pushes them out of the window.</p>
+<p>Of the eleven weeks from −12 to −2, {{n_bad_pre}} has a band that excludes zero: {{bad_pre}} ({{bad_pre_band}} points). One week in eleven is about what chance produces, and the weeks nearest the show are flat, but the registered rule counts it, and it is one reason the label is not "supported".</p>
+<p>How large an effect could the design have caught? The interval of the five-week summary is about ±{{mde}} % of his share before the show. An average effect over five weeks smaller than that could not be told apart from none, which is why the rule's ten-percent threshold for "not supported" was out of reach. A single strong week clears that bar easily; a lasting effect of a few percent would not have. With {{n_treated}} visited countries and one tour, that is the limit of what these data can say, and more tours, later in an artist's career, would be needed to narrow it.</p>
+<figure data-chart="../assets/concerts/charts.json#loo">
+  <img src="../assets/concerts/02-loo.svg" alt="Bar chart: the five-week summary effect re-estimated without each of {{n_treated}} visited countries; all between {{loo_min}} and {{loo_max}} percentage points." loading="lazy">
+  <figcaption><b>fig. 3</b> · The five-week summary effect without each visited country in turn, percentage points; the dashed line is the estimate with all countries. Data: Spotify Charts<sup class="cite"><a href="#r6">6</a></sup>.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>What this means</h2>
+<p>Measured: a first concert in a country lifted Harry Styles's share of its Spotify chart by about {{w0_rel}} % in the week of the show, and the lift was gone within three weeks. Over the registered five weeks the average effect is positive but {{label}}. For someone planning a tour, what the data support is narrow: a show is a spike in local listening, concentrated on songs fans already played, and not, in this tour, a lasting gain in the chart. That fits a picture in which most of the people at a show were already listeners and played the songs before and after it, while the rest of the country did not catch on. Whether a larger tour, a later career stage or a country's first visit by a star would differ is open; the next parts of Pop, measured can ask the same of other artists.</p>
+</section>
+
+<section>
+<h2>What this does not show</h2>
+<p>Only the Top 200 is published, so listening below it is invisible; in a country where he was outside the chart before and after the show, a rise that did not reach the chart counts as nothing. Spotify is one service, and radio, video and the show itself are not measured. The estimate bundles everything that came with a show: the performance, the press and social media around it, and fans preparing for it. The tour started months after his first album, so the effect is for an artist on his first record and may not hold for one with many. His second and larger tour, <i>Love On Tour</i> (2021–2023), would be the natural test, but the public daily charts end in 2021, when that tour had played only in the United States; he has not toured since July 2023. Countries were not visited at random: promoters chose large and nearby markets first, and the method relies on the countries visited later being a fair comparison for those visited earlier, which the flat weeks before the shows support but cannot prove. Nothing here says anything about revenue.</p>
+</section>
+
+<section id="reproduction">
+<h2>Reproduction</h2>
+<p>Every number on this page is filled in from <a href="../assets/concerts/results.json"><code>assets/concerts/results.json</code></a> by a script. Download the Kaggle file to <code>tools/data/concerts/charts.csv</code> and check its hash; then, from the repository root:</p>
+<ol>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/concerts/prepare.py"><code>tools/concerts/prepare.py</code></a>: the weekly panel, the shows and the songs.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/concerts/estimate.py"><code>estimate.py</code></a>: the registered estimates and checks.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/concerts/article.py"><code>article.py</code></a>: the figures and this page.</li>
+</ol>
+<p>The design is <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/concert-effect-design.md"><code>docs/research/concert-effect-design.md</code></a>.</p>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Connolly, M., Krueger, A. B. (2006). Rockonomics: the economics of popular music. In <i>Handbook of the Economics of Art and Culture</i>, vol. 1, 667–719. Elsevier. <a href="https://doi.org/10.1016/S1574-0676(06)01020-9">doi:10.1016/S1574-0676(06)01020-9</a>. Accessed 2 October 2026.</li>
+<li id="r2">Papies, D., van Heerde, H. J. (2017). The dynamic interplay between recorded music and live concerts: the role of piracy, unbundling, and artist characteristics. <i>Journal of Marketing</i> 81(4), 67–87. <a href="https://doi.org/10.1509/jm.14.0473">doi:10.1509/jm.14.0473</a>. Accessed 2 October 2026.</li>
+<li id="r3">Aguiar, L., Waldfogel, J. (2018). As streaming reaches flood stage, does it stimulate or depress music sales? <i>International Journal of Industrial Organization</i> 57, 278–307. <a href="https://doi.org/10.1016/j.ijindorg.2017.06.004">doi:10.1016/j.ijindorg.2017.06.004</a>. Accessed 2 October 2026.</li>
+<li id="r4">Callaway, B., Sant'Anna, P. H. C. (2021). Difference-in-differences with multiple time periods. <i>Journal of Econometrics</i> 225(2), 200–230. <a href="https://doi.org/10.1016/j.jeconom.2020.12.001">doi:10.1016/j.jeconom.2020.12.001</a>. Software: csdid for Python. Accessed 2 October 2026.</li>
+<li id="r5">Roth, J., Sant'Anna, P. H. C., Bilinski, A., Poe, J. (2023). What's trending in difference-in-differences? A synthesis of the recent econometrics literature. <i>Journal of Econometrics</i> 235(2), 2218–2244. <a href="https://doi.org/10.1016/j.jeconom.2023.03.008">doi:10.1016/j.jeconom.2023.03.008</a>. Accessed 2 October 2026.</li>
+<li id="r6">Dave, D. (2022). Spotify Charts: daily Top 200 and Viral 50 by region, 2017–2021. Kaggle, Open Database License. <a href="https://www.kaggle.com/datasets/dhruvildave/spotify-charts">kaggle.com/datasets/dhruvildave/spotify-charts</a>. Accessed 2 October 2026.</li>
+<li id="r7">Wikipedia contributors (2026). Harry Styles: Live on Tour, revision 1342196247. <a href="https://en.wikipedia.org/w/index.php?oldid=1342196247">en.wikipedia.org</a>. Accessed 1 October 2026.</li>
+<li id="r8">Goodman-Bacon, A. (2021). Difference-in-differences with variation in treatment timing. <i>Journal of Econometrics</i> 225(2), 254–277. <a href="https://doi.org/10.1016/j.jeconom.2021.03.014">doi:10.1016/j.jeconom.2021.03.014</a>. Accessed 2 October 2026.</li>
+</ol>
+</section>
+
+<section id="changelog" class="changelog">
+<h2>Change log</h2>
+<ul>
+<li>2 October 2026, version 1: first published.</li>
+<li>Checked against editorial standard v1 on 2 October 2026.</li>
+</ul>
+</section>
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a></p>
+</footer>
+</article>
+
+<script src="../assets/charts.js" defer></script>
+</body>
+</html>
