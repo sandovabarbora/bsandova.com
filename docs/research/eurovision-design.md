@@ -149,3 +149,23 @@ table of the largest diaspora dyads. Data, code and the per-cell tables publishe
   margin for "not supported" is therefore reachable only if the estimate is close to zero.
 
 Nothing in §1–§6 changes.
+
+**3 October 2026 (sources; files downloaded, only headers, round labels and country codes read).** All inputs were
+downloaded and hashed (`tools/eurovision/collect.py`, `tools/data/eurovision/manifest.json`). Read so far: the
+header lines, the distinct round labels and voter codes of the vote files, the Mirovision country list, the header
+rows of the UN DESA workbook (and its world-total row, which appears above the headers), the CEPII column names, the
+UNHCR and World Bank JSON keys, and the captions and header layout of the Wikipedia tables with digits masked.
+
+- Mirovision's `votes.csv` ends in **2022** and its `jurors.csv` covers 2016–2022, not 2023 as assumed in §2.
+  Spijkervet's `votes.csv` (to 2023) carries `tele_points` and `jury_points` as well. **Change:** split votes
+  2016–2023 come from Spijkervet; Mirovision 2016–2022 is used as a cross-check (rows and points compared, counts
+  of mismatches reported); the individual-juror check covers 2016–2022.
+- The Wikipedia parser is validated on 2023 against Spijkervet (not Mirovision).
+- The UN DESA file is the 2024 revision, with stock years 1990–2024; 2015, 2020 and 2024 are used as in §2.
+- CEPII GeoDist is the 2004 file (`dist_cepii.xls`): Romania is `ROM`, and Serbia appears as `YUG`, which is used
+  for Serbia; Montenegro and any country absent from the file have no contiguity or language value and are left out
+  of that check only.
+
+Code registered with this note: `prepare.py`, `estimate.py`. `estimate.py` was run once on synthetic tables with
+planted effects (H1 latent 0.25, H3 latent 0.3): H1 recovered β = 0.19 (0.13–0.24), labelled supported; H3 recovered
++0.013 in share (+41 % of the pre mean), supported.
