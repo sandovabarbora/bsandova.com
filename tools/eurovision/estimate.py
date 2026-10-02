@@ -19,6 +19,8 @@ import pandas as pd
 import pyfixest as pf
 
 ROOT = Path(__file__).resolve().parents[2]
+EU_2016 = {"BE", "FR", "DE", "IT", "LU", "NL", "DK", "IE", "GR", "PT", "ES", "AT", "FI", "SE", "CY", "CZ", "EE", "HU",
+           "LV", "LT", "MT", "PL", "SK", "SI", "BG", "RO", "HR"}
 D = Path(os.environ.get("ESC_DATA", ROOT / "tools" / "data" / "eurovision"))
 
 
@@ -103,6 +105,15 @@ def main() -> None:
     dropped = int(h3[h3.g.notna()].pair.nunique() - len(keep))
     h3 = h3[h3.g.isna() | h3.pair.isin(keep)].copy()
     h3["treat"] = (h3.e >= 0).astype(int)
+    # rows the first stage cannot use (pairs or years with no untreated row, pairs seen once) are dropped up front,
+    # because pyfixest's did2s variance step does not handle rows dropped inside the first stage
+    while True:
+        n0 = len(h3)
+        un = h3[h3.treat == 0]
+        h3 = h3[h3.pair.isin(un.pair) & h3.year.isin(un.year)]
+        h3 = h3[h3.groupby("pair").year.transform("size") > 1]
+        if len(h3) == n0:
+            break
     h3["w05"] = ((h3.e >= 0) & (h3.e <= 5)).astype(int)
     h3["w6"] = (h3.e >= 6).astype(int)
     fit = pf.did2s(h3, yname="share", first_stage="~ 0 | pair + year", second_stage="~ w05 + w6",
@@ -121,6 +132,32 @@ def main() -> None:
     fe = pf.did2s(h3, yname="share", first_stage="~ 0 | pair + year", second_stage="~ " + " + ".join(terms),
                   treatment="treat", cluster="upair")
     res["H3_event"] = {t: coef(fe, t) for t in terms}
+
+    # registered H3 checks (§6), added after the first run because they were missing from the registered code
+    def h3_fit(d):
+        return coef(pf.did2s(d, yname="share", first_stage="~ 0 | pair + year", second_stage="~ w05 + w6",
+                             treatment="treat", cluster="upair"), "w05")
+
+    def usable(d):
+        while True:
+            n0 = len(d)
+            un = d[d.treat == 0]
+            up, uy = un.pair.value_counts(), un.year.value_counts()
+            d = d[d.pair.isin(up[up > 1].index) & d.year.isin(uy[uy > 1].index)]
+            if len(d) == n0:
+                return d
+    res["H3_checks"] = {"finals_only": h3_fit(usable(h3[h3.r == "final"])),
+                        "without_2004_cohort": h3_fit(usable(h3[h3.g.isna() | (h3.g != 2004)]))}
+    # Brexit (exploratory): UK ↔ EU pairs against UK ↔ non-EU pairs, 2016–2019 against 2021–2025
+    bx = pd.read_parquet(D / "h3.parquet")
+    bx = bx[(bx.i.eq("GB") | bx.j.eq("GB")) & bx.year.between(2016, 2025)].copy()
+    other = np.where(bx.i.eq("GB"), bx.j, bx.i)
+    bx["eu_partner"] = [c in EU_2016 for c in other]
+    bx["post"] = (bx.year >= 2021).astype(int)
+    bx["pe"] = bx.post * bx.eu_partner
+    bx["pair"] = bx.i + ">" + bx.j
+    bx["upair"] = [">".join(sorted(p)) for p in zip(bx.i, bx.j)]
+    res["brexit"] = coef(pf.feols("share ~ pe | pair + year", data=bx, vcov={"CRV1": "upair"}), "pe")
     res["versions"] = {"pyfixest": pf.__version__}
     (D / "results.json").write_text(json.dumps(res, indent=1))
     print(json.dumps({k: res[k] for k in ("H1", "H2", "H3")}, indent=1))

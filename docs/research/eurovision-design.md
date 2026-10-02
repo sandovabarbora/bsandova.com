@@ -193,3 +193,12 @@ one per pair, year and round. It nests the registered effect and absorbs more (a
 contest, e.g. a song in the voter's language), and β is still identified only from the televote against the jury of
 the same voter for the same song. The cost is the cells of pair-rounds with no point from either audience, which
 carry no information and drop out (17 372 → about 11 300 cells). All H1 checks use the same effects.
+
+**3 October 2026 (estimation run; code changes after the first estimates were seen).** (1) pyfixest's `did2s` failed
+in its variance step when its first stage dropped rows (pairs or years without an untreated row, pairs seen once);
+those rows are now dropped before the call. The main H3 estimate was produced with this filter. (2) The registered
+H3 checks of §6 (finals only; without the 2004 cohort) and the exploratory Brexit comparison were missing from the
+registered code; they were added after the first H1–H3 estimates had been printed, as specified in §6, with a
+stricter filter (pairs and years with at least two untreated rows) needed for `did2s` on the subsets. (3) The
+registered check "H3 with juries only and televotes only, 2016–2025" cannot be estimated: no country joined the EU
+between 2016 and 2025 (the last accession was Croatia's in 2013), so there is no treated change in that window.
