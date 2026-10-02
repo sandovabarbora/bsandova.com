@@ -65,37 +65,6 @@
    "target_words": 700,
    "current_words": 1275
   },
-  "icu.html": {
-   "article": "icu.html",
-   "kind": "side-project",
-   "verdict": "move-to-notes",
-   "one_line": "A careful coursework write-up with a genuinely good methods story: reversed labels, the fact that Tukey's rule deletes by class, nested CV and Nadeau–Bengio. But it is an 18-page student assignment on a non-public teaching dataset, it carries internal numeric and caption errors, and it closes with a lessons-learned moral. Trim it and file it under notes or methods, not research.",
-   "must_fix": [
-    "The meta and og description say 'ten variables agree', but the facts and body say 9 of 10 (the tenth is mis-scaled). Fix to nine.",
-    "The fig. 3 caption says 'Blue: medium effect and above; green: large', but tools/icu_figures.py colours large bars ACID (#D6FF3A, acid yellow) and medium bars MINT (green). No bar is blue.",
-    "There is an unexplained inconsistency between 'refitting them inside each fold moves SVC accuracy from 0.7681 to 0.7679' and the cleaning table, where winsorised SVC five-fold CV is 0.723. State which CV scheme, split and hyperparameters produce 0.768, or reconcile the two numbers.",
-    "Overclaim in 'Testing whether the label file is misaligned': 'That rules out misalignment and leaves mislabelling.' Only integer shifts within ±30 were tested. Say it 'rules out a simple offset of up to 30 rows', and note that a deliberately altered or synthetic teaching dataset is an equally live explanation.",
-    "Overclaim in the opening section: 'the reason for that turned up later' and 'it is also the proof that imputation happened upstream'. One constant record is evidence that this record was filled; it does not prove imputation across the dataset.",
-    "'Logistic regression is the model I would deploy' (body and tldr). No model trained on labels the article itself shows to be reversed should be deployed. Reframe it as 'would select for reporting', or state it conditionally on correct labels.",
-    "'Tukey's rule only has an upper fence to trip' is inaccurate, since Tukey has two fences. Say that on right-skewed data the lower fence falls below the minimum, so only the upper one binds.",
-    "The P/F-ratio and ARDS grading claim is cited to her own report (r1). Cite the Berlin definition (ARDS Definition Task Force, JAMA 2012). Primary references are also missing for Benjamini–Hochberg (1995), Cohen (1988), the Wald–Wolfowitz runs test and McNemar (1947).",
-    "Reference style: r2 bundles two separate works (Hastie et al. 2009; Nadeau & Bengio 2003) into one entry. Split them and number them separately."
-   ],
-   "cut": [
-    "The tldr box. It duplicates the facts and the body almost sentence for sentence (the 23.8 vs 18.9, 128/85, 97 of 8 694 and 0.852 vs 0.809 figures are all repeated).",
-    "The section 'What this taught me about datasets'. It is a closing moral in first-person lesson form, which the house style bans. At most one sentence of it can live in the opening section.",
-    "The slogan closers 'That ranking is the obvious reading, and it does not survive testing.' and 'The report states the case together with the circumstance that would flip it'. Cut both.",
-    "The McNemar paragraph and the grid-spread paragraph could merge. The SVC-grid and forest-importance material (ρ = 0.49, p = 0.078) is tangential and can go.",
-    "The title is a slogan ('The label says deteriorating. The patient is getting better.'). Use a content title, e.g. 'Reversed outcome labels in an ICU P/F-ratio dataset'."
-   ],
-   "missing": [
-    "Data availability: the dataset is 'course-supplied, not public', and tools/icu_figures.py needs a local data_dir. Say explicitly that the figures cannot be reproduced without the course files, and link the notebook if it can be shared.",
-    "Provenance of the dataset (which COVID-19 study it 'recreates', whether it is synthetic or a perturbed teaching set). Without this, the mislabelling finding has no context.",
-    "A limitations paragraph: single variable modelled, labels known to be wrong, one 80/20 split for the test-set numbers, no external validation."
-   ],
-   "target_words": 1300,
-   "current_words": 2286
-  },
   "quotecheck.html": {
    "article": "quotecheck.html",
    "kind": "tool",
@@ -764,11 +733,6 @@
     "reason": "Each tool is a public artefact with code and tests, reported as a tool rather than as findings."
    },
    {
-    "item": "Notes group",
-    "action": "The group contains Delayed All the Time, The Atlantic, played, ICU labels (retitled), Brand Reflection (trimmed to an index), FilmRunner, A wiki that an agent keeps, and AI over data (reframed as a design note). Every note carries a 'Note' kicker, a date and at most 900 words.",
-    "reason": "These are honest side projects and coursework. They stay on the site without borrowing research authority."
-   },
-   {
     "item": "engineering.html ('The platform is code. So is the trust.')",
     "action": "Retire it. Move the unique facts into the CV Alma Career entry, 301-redirect /texts/engineering to /cv/, and remove it from the list and the feed.",
     "reason": "The page calls itself an advertisement, three of its eleven sections duplicate other pages, and it is full of banned slogans. The CV already carries the content."
@@ -802,11 +766,6 @@
     "item": "ai-over-data.html",
     "action": "Move it to Notes, retitled 'An LLM assistant over a data warehouse: design notes', and drop 'measured' from the title and deck. Return it to Tools or Research only when an anonymised outcome table exists (golden-set n, correct / silent / refused, before vs after).",
     "reason": "The title promises measurements that the page never reports."
-   },
-   {
-    "item": "icu.html",
-    "action": "Move it to Notes, retitled 'Reversed outcome labels in an ICU P/F-ratio dataset (coursework)', and cut it to 1 300 words.",
-    "reason": "It is a course assignment on a non-public teaching dataset. Useful as a methods note, not as research."
    },
    {
     "item": "brand-reflection.html",
@@ -854,7 +813,6 @@
    "P0 · Registration and review honesty, site-wide, in one sweep, because it is the claim that most undermines credibility. In prague-council, prague-rings, prague-districts, prague-housing, prague-parking and prague-measured: remove 'pre-registered' from kickers and the hub facts. Replace 'committed ... before any outcome data were joined' with 'design written and reviewed before modelling; not independently timestamped' (Parts 1–4, whose design first appears in the results commit: 5a34401, 1283162, ff0f0ca, and the housing commit), or with the actual pre-results commit hash where one exists (check Part 6 via docs/research/prague-parking-freeze.json). Add the metadata 'Review:' line stating who or what the three referees were: the referees.md files are unnamed, consolidated and dated the same day as the designs, so if they were LLM-simulated roles, say exactly that. Delete the '15 referee reports' and '4 of 16 tests passed' hub cards. Apply the same fix to thesis.html ('stated in the thesis proposal', link the IES SIS record), surf.html and weather.html (give the commit hash for the 14/15 Sep predictions).",
    "P0 · Renumber Prague, measured as Parts 1–5 (Parking 6→5) in all six kickers, the hub list, the hub table, the footers, the front-page film label and the CV. Add the programmes study (branch feature/PRAHA-5_programmes, design v2 at 260088b) to the hub as 'Part 6, in preparation'. For the next study, register on OSF or Zenodo before any data join, so that the series has one genuinely pre-registered part.",
    "P0 · Kill the 'Overwhelmed? Here's the short version' / tldr box on every page (council, rings, districts, housing, parking, thesis, delayed, icu, football, hockey, weather, surf, brand-reflection, silent-detector, ai-over-data, engineering, cutover, quotecheck, sitewitness, filmrunner, second-brain). Make the deck the single summary of at most 2 sentences, and cut every facts strip to at most 4 cards.",
-   "P0 · Retitle the slogan or overclaiming titles and mirror each change on the hub, the front-page list, the feed, og tags and the CV. Part 2 'Prague votes in rings, not along lines' → e.g. 'Housing estates and the 2025 vote in Prague's 1 119 precincts'. Part 4 'Prague builds two homes for Vienna's three' → e.g. 'Prague's housing pipeline: the permit-to-completion lag, 2006–2025', with a deck that states that Prague's metro region is above the European median. Part 3 'One city, 57 budgets' → 'Party alignment and city grants to Prague's districts: an underpowered registered null'. Part 1: qualify the deck to 'on the resolutions it adopts' and rephrase H1 as a pooled average driven by 2010–14. icu → 'Reversed outcome labels in an ICU P/F-ratio dataset'. weather/surf → 'Forecast verification: protocol'. sitewitness → 'sitewitness: code-enforced rules for a site Q&A agent'. brand-reflection → 'Colour, sound and homepage language in 47 Czech TV spots'.",
    "P1 · Rebuild the curation in index.html. Replace lines 285–312 (28 rows, 13 category labels) with three headed groups: Research (thesis; the hub and Parts 1–5; Quaesitor; silent-detector once fixed), Tools (cutover, quotecheck, sitewitness+ask, Player Pool Atlas, Forecast verification), and Notes (delayed, atlantic, icu, brand-reflection, filmrunner, second-brain, ai-over-data). Remove the rows for status/, library/, watch/, ask/ (merged) and engineering. Replace the four filter buttons with group anchors. Cut the reel to Persistence / Prague, measured / Quaesitor. Remove the 'Now live' strip. Rewrite About in three sober sentences. Remove the 'classic front page' footer link. Regenerate feed.xml and sitemap.xml.",
    "P1 · Rebuild thesis.html as a proper 1 700-word thesis summary. It is the flagship and currently has no methods, figure, literature or uncertainty. Add: a research question and contribution against Noland & Small 1995, Bates et al. 2001, Fosgerau & Karlström 2010 and Carrion & Levinson 2012; a 'How this was done' section (what t indexes, pooled vs route-level, fixed effects, Nickell bias); route-clustered CIs for the persistence sums (0.727/0.715) and the RTI shares; an H1–H3 table with the registered wording (H3 'inconclusive'); one figure (impulse response with band, or the variance decomposition by mode); the calibration constants with sources; and links to the thesis PDF (CUNI repository handle) and the code. Fix the unit shared with delayed.html.",
    "P1 · Part 6→5 Parking (8 217 → at most 3 800 words; the biggest single cut). Remove figs 6, 8, 12 and 13 ('From the first estimate') and the wheelbase-route history. Move the EEA cleaning and the '27 tests' inventory to the repository. Merge the car-width and perpendicular sections into one paragraph. Drop the Deník N comparison and 'small next to the count of cars'. Rename 'implicit subsidy (forgone rent)' to 'gap to the city's own tariffs'. Label the MC range vs the bootstrap CI. Renumber the references. Use one fleet model throughout. Remove the listed zingers and the Paris row.",

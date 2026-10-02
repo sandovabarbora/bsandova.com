@@ -41,7 +41,6 @@ HELD = {
     "delayed": "#b3202c",
     "football": None,
     "hockey": None,
-    "icu": "#1f4fad",
     "parking": "#1f4fad",
     "parking2": "#ad4a1f",
     "parking3": "#1f64ad",
