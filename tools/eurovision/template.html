@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eurovision, not Brussels? Diaspora, juries and the EU in Eurovision votes, 1975–2025</title>
+<meta name="description" content="A registered study of Eurovision votes: where a performer's diaspora is large, the public gives it about {{R}} times the points the jury gives; joining the EU earns a country no points at all.">
+<meta property="og:title" content="Eurovision, not Brussels? Diaspora, juries and the EU in Eurovision votes">
+<meta property="og:description" content="Where a performer's diaspora is large, the televote gives it about {{R}} times the jury's points; neighbours and a shared language move both alike, and joining the EU earns nothing.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://bsandova.com/texts/eurovision">
+<meta property="og:image" content="https://bsandova.com/assets/og/eurovision.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bsandova.com/assets/og/eurovision.jpg">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://bsandova.com/texts/eurovision">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../text.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../a24.css">
+<style>
+.text dl.meta{display:block;letter-spacing:normal;text-transform:none;font-size:12px}
+.text dl.meta div{border-right:0;padding-left:0;grid-template-columns:13ch 1fr}
+.text dl.meta dd{overflow-wrap:anywhere}
+@media (max-width:560px){.text dl.meta div{grid-template-columns:1fr}}
+.text table.pairs{width:100%;border-collapse:collapse;font-size:14px;margin:1.2em 0}
+.text table.pairs th,.text table.pairs td{text-align:left;padding:.35em .5em;border-bottom:1px solid var(--line)}
+.text table.pairs td:nth-child(n+3),.text table.pairs th:nth-child(n+3){text-align:right;font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">research · pop · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Research · pop music · Eurovision, 1975–2025</p>
+  <h1>Eurovision, not Brussels? <em>Diaspora, juries and the EU in Eurovision votes</em></h1>
+  <p class="deck">A registered study of how Europe votes for its songs. Where a performer's diaspora is large, the public gives it about {{R}} times the points the jury gives. Neighbours and a shared language move both alike. Joining the European Union earns a country no points.</p>
+  <dl class="facts">
+    <div><dt>televote over jury, large diaspora</dt><dd>×{{R}} <small>at {{per90}} migrants per 1 000 inhabitants · 95 % CI {{R_lo}} to {{R_hi}} · {{label}}</small></dd></div>
+    <div><dt>neighbours, televote over jury</dt><dd>×{{ct}} <small>95 % CI {{ct_lo}} to {{ct_hi}} · no difference</small></dd></div>
+    <div><dt>both countries in the EU</dt><dd>{{h3_pp}} pp <small>share of points, years 0 to +5 · 95 % CI {{h3_lo}} to {{h3_hi}} · {{h3_label}}</small></dd></div>
+    <div><dt>contests and countries</dt><dd>9 · {{n_voters}} <small>split jury and televote, 2016–2025 · administrative count</small></dd></div>
+  </dl>
+</header>
+<details class="tldr" open>
+  <summary>Overwhelmed? Here's the short version</summary>
+  <ul>
+    <li>Since 2016 every country gives Eurovision points twice: once from five professional jurors and once from its public, for the same songs on the same night.</li>
+    <li>Where many people from the performing country live, the public gives that song about twice the points the jury gives. Where almost nobody does, the public gives less than the jury.</li>
+    <li>Neighbours and countries sharing a language favour each other too, but the public and the jury do so equally. Diaspora is the one thing only the public brings.</li>
+    <li>Two countries both being in the EU does not make them give each other more points. The registered estimate is negative, driven by the 2004 enlargement, and does not survive leaving it out.</li>
+  </ul>
+</details>
+<dl class="meta">
+  <div><dt>published</dt><dd>3 October 2026 · updated 3 October 2026 · <a href="#changelog">version 1</a></dd></div>
+</dl>
+<details class="meta-more">
+  <summary>About this study</summary>
+<dl class="meta">
+  <div><dt>status</dt><dd>research, registered analysis plan (self-timestamped)</dd></div>
+  <div><dt>registration</dt><dd>registered analysis plan: design committed at <code>f304d8c</code> on 3 October 2026, before any vote was downloaded; power at <code>ba65ce5</code>; code at <code>00e8e38</code>; data step at <code>c5ff4c8</code>; a change of fixed effects at <code>d9abe43</code>, before any estimate was seen; results commit <code>70f75a9</code>. Commit times are self-reported. Several changes after registration, listed under <a href="#changes">Changes</a>.</dd></div>
+  <div><dt>data</dt><dd>Eurovision votes 1975–2023 (Spijkervet)<sup class="cite"><a href="#r3">3</a></sup>, 2016–2022 cross-checked against Mirovision<sup class="cite"><a href="#r4">4</a></sup>; 2024–2025 from Wikipedia<sup class="cite"><a href="#r5">5</a></sup>; UN DESA migrant stock<sup class="cite"><a href="#r6">6</a></sup>; UNHCR<sup class="cite"><a href="#r8">8</a></sup>; World Bank population<sup class="cite"><a href="#r7">7</a></sup>; CEPII<sup class="cite"><a href="#r9">9</a></sup>. Hashes in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/eurovision-data.json">eurovision-data.json</a>; per-pair averages in <a href="../assets/eurovision/pairs.csv">pairs.csv</a>.</dd></div>
+  <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/eurovision">tools/eurovision/</a> at the commit that publishes this page; rebuild: <code>uv run --with pandas --with pyarrow --with pyfixest python tools/eurovision/estimate.py</code> (pyfixest {{pyfixest}})</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Eurovision, not Brussels? Diaspora, juries and the EU in Eurovision votes, 1975–2025</i>. bsandova.com/texts/eurovision, version 1.</dd></div>
+  <div><dt>licence</dt><dd>code MIT; text and figures CC BY 4.0; vote data as licensed by their sources (MIT, CC BY-SA)</dd></div>
+</dl>
+</details>
+
+{{photo}}
+
+<section>
+<p>Every May, someone explains that Eurovision is political: the Nordics vote for each other, the Balkans vote for each other, Greece and Cyprus exchange twelves, and the song barely matters. Economists have checked. Ginsburgh and Noury found that most of the apparent bloc voting disappears once you account for language and culture: countries that share them also share taste<sup class="cite"><a href="#r1">1</a></sup>. Spierdijk and Vellekoop found that the bias in the votes follows geography and culture, and in part migration<sup class="cite"><a href="#r2">2</a></sup>. What those studies could not do well is separate two things that move together: cultural closeness, which makes people like the same songs, and diaspora, which gives a country a crowd of voters from somewhere else.</p>
+<p>Since 2016, the contest has made that separation possible by accident. Each country now gives points twice: once from a jury of five music professionals and once from a public televote, for the same songs, performed the same night. A shared taste should show up in both. A diaspora, people who moved from one country to another and still feel for their old one, can only show up in the public vote: Poles in Ireland can call; the Irish jury has no reason to. So the difference between a country's televote and its jury, for the same song, measures what a public brings that a panel does not. This study measures how much of it follows diaspora.</p>
+<p>A second question came out of a joke: is Eurovision a stronger European project than the European Union? That cannot be measured. A narrower version can: when two countries are both in the EU, do they give each other more points than before? The study asks that of fifty years of votes.</p>
+</section>
+
+<section>
+<h2>Data</h2>
+<p>The votes come from three sources. Janne Spijkervet's dataset has every country-to-country vote from 1957 to 2023, with jury and televote points separated since 2016<sup class="cite"><a href="#r3">3</a></sup>. The Mirovision data by Burgoyne, Spijkervet and Baker cover 2016 to 2022 and include each juror's ranking<sup class="cite"><a href="#r4">4</a></sup>; they agree with Spijkervet's points on every pair they share. The 2024 and 2025 contests were read from the detailed voting tables of their Wikipedia articles at fixed revisions<sup class="cite"><a href="#r5">5</a></sup>; the same parser, run on 2023, reproduces Spijkervet's 740 non-zero 2023 votes exactly. The "rest of the world" online vote, which belongs to no country, is left out.</p>
+<p>Diaspora is measured from the United Nations' international migrant stock<sup class="cite"><a href="#r6">6</a></sup>: the number of people born in the performing country who live in the voting country, per 1 000 of its inhabitants (population from the World Bank<sup class="cite"><a href="#r7">7</a></sup>), for the nearest of 2015, 2020 and 2024. The UN does not list every origin for every destination: for some countries, such as the United Kingdom, small origins are pooled into "other". Pairs without a figure are dropped, as the design said, and the result is reported again with those pairs counted as zero. Ukrainian refugees come from the UNHCR<sup class="cite"><a href="#r8">8</a></sup>, and shared borders and official languages from the CEPII distance database<sup class="cite"><a href="#r9">9</a></sup>.</p>
+<p>The raw numbers already point one way (fig. 1). Where the performer's diaspora is tiny, under 0.01 per 1 000, the public gives it fewer points than the jury: {{bin_lo_tele}} against {{bin_lo_jury}} on average, a difference of {{bin_lo_gap}}. As the diaspora grows, the gap closes and turns. Where it is over five per 1 000, the public gives {{bin_hi_tele}} points and the jury {{bin_hi_jury}}, a difference of {{bin_hi_gap}}. The jury hardly moves with diaspora at all; the public does.</p>
+<figure data-chart="../assets/eurovision/charts.json#gap">
+  <img src="../assets/eurovision/01-gap.svg" alt="Bar chart of the average televote minus jury points by diaspora size: {{bin_lo_gap}} for the smallest diasporas, rising to {{bin_hi_gap}} for diasporas over five per thousand." loading="lazy">
+  <figcaption><b>fig. 1</b> · Average televote minus jury points from a voting country to a performer, by the performer's diaspora in the voting country (people born there per 1 000 inhabitants), 2016–2025, rounds with both audiences; descriptive, no model. Data: Spijkervet<sup class="cite"><a href="#r3">3</a></sup>, Wikipedia<sup class="cite"><a href="#r5">5</a></sup>, UN DESA<sup class="cite"><a href="#r6">6</a></sup>.</figcaption>
+</figure>
+<p>The pairs with the largest gaps read like a map of European migration since 2004. {{top1}}. Poland, Lithuania, Romania, Albania and Serbia collect public points in the countries where their workers moved: Ireland, the United Kingdom, Germany, Italy, Switzerland, Slovenia. At the other end, juries sometimes reward what the public ignores: from {{neg1}}, the televote gave {{neg1_tele}} points on average and the jury {{neg1_jury}}.</p>
+<table class="pairs">
+  <caption>The voting pairs with the largest televote premium, 2016–2025 (at least five rounds together), with the diaspora per 1 000 inhabitants of the voting country. Descriptive.</caption>
+  <thead><tr><th>voting country</th><th>performer</th><th>diaspora per 1 000</th><th>televote</th><th>jury</th><th>rounds</th></tr></thead>
+  <tbody>{{top_rows}}</tbody>
+</table>
+</section>
+
+<section>
+<h2>How this was done</h2>
+<p>The design, the hypotheses and the rule for reading each result were committed before any vote was downloaded, and the power was simulated from the contest's structure alone. The registration is self-timestamped: commits are recorded by the author's machine and pushed to a public repository, so they show the order of steps, not an independent seal. This study needed more changes after registration than the earlier ones; each is dated and listed at the end, and none was made after its result was seen.</p>
+<p>The model for diaspora compares the two audiences of the same voting country for the same song. Each row is a voting country, a performer, a contest round and an audience, with the points given (zero for most). A Poisson regression, estimated by pseudo-maximum likelihood, which handles counts with many zeros<sup class="cite"><a href="#r10">10</a></sup>, includes three sets of fixed levels. One for every voting country, round and audience absorbs how generous each audience is. One for every performer, round and audience absorbs how much each audience liked each song. One for every pair of countries in every round absorbs everything about the pair in that contest that both audiences share: neighbours, language, history, a song sung in the voter's language. What remains is how the televote's points to a performer differ from the jury's, and the estimate is how that difference grows with the diaspora. Standard errors are clustered by pair of countries.</p>
+<p>The rule was set in advance. Let the ratio be the televote's points relative to the jury's for a pair at the 90th percentile of diaspora, {{per90}} per 1 000, against a pair with none. The hypothesis is "supported" if the estimate's interval lies wholly above zero, "not supported" if the ratio's interval lies within 0.90 to 1.10, and "inconclusive" otherwise.</p>
+</section>
+
+<section>
+<h2>What diaspora does</h2>
+<p>At {{per90}} migrants per 1 000 inhabitants, the public gives a performer {{R}} times the points the jury gives (95 % CI {{R_lo}} to {{R_hi}}). The interval lies far above 1, so the hypothesis is {{label}}. The estimate rests on {{n_cells}} rows, the pair-rounds in which either audience gave a point.</p>
+<p>It holds however the data are cut (fig. 2). Without 2022, the year almost every public voted for Ukraine, the ratio is {{r_no22}}. In finals only it is {{r_fin}}, in semi-finals only {{r_sf}}. Compared with each of the five jurors separately rather than with the jury's combined points, it is {{r_jur}}. Counting the pairs the UN does not list as zero migrants, it is {{r_zero}}.</p>
+<p>The most telling check adds shared borders and shared official languages, each allowed to matter differently for the public and the jury. The diaspora ratio stays at {{r_cl}}. Neighbours' public votes are {{ct}} times their juries' (95 % CI {{ct_lo}} to {{ct_hi}}), and a shared language's {{lt}} ({{lt_lo}} to {{lt_hi}}): no difference. Neighbours and countries that share a language do favour each other, which earlier studies found<sup class="cite"><a href="#r1">1</a></sup>, and which the pair-level effects here absorb, but the public and the jury favour them equally. That is cultural taste: it reaches professionals as much as viewers. Diaspora is different. It reaches only the phones.</p>
+<figure data-chart="../assets/eurovision/charts.json#checks">
+  <img src="../assets/eurovision/02-checks.svg" alt="Televote-to-jury ratio for a large diaspora in the registered estimate and every check, all between {{r_fin}} and {{r_jur}}; the ratios for neighbours and a shared language are near 1." loading="lazy">
+  <figcaption><b>fig. 2</b> · Televote points relative to jury points for a pair at the 90th percentile of diaspora, against none, with 95 % intervals clustered by pair, log scale; blue, the registered estimate. Grey: the ratio for neighbours and for a shared official language, from the same model. Poisson pseudo-maximum likelihood<sup class="cite"><a href="#r10">10</a></sup>. Data: as fig. 1.</figcaption>
+</figure>
+<p>Seen from two countries (fig. 3), the pattern is concrete. Czechia's public gave more than its jury above all to {{cz_top}} (average points, televote minus jury): countries with communities in Czechia, by far the largest of them Ukrainian. Germany's public did so for {{de_top}}. Where a diaspora is small, the public often gives less than the jury, which is the other half of the same fact: the jury spreads its points by craft, while the public concentrates them on the songs it has a reason to call for.</p>
+<figure>
+  <img src="../assets/eurovision/03-map.svg" alt="Two maps of Europe coloured by the average televote minus jury points from Czechia and from Germany to each performer: red where the public gave more, mostly to countries with large diasporas." loading="lazy">
+  <figcaption><b>fig. 3</b> · Average televote minus jury points from Czechia (left) and Germany (right) to each performer, 2016–2025, performers met in at least three rounds; red, the public gave more; descriptive. Data: as fig. 1; borders: Natural Earth<sup class="cite"><a href="#r11">11</a></sup>.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>Ukraine</h2>
+<p>The registered second test asked whether, from 2022, countries hosting more Ukrainian refugees per inhabitant gave Ukraine more public points relative to their juries than before. The estimate is {{h2}} points per unit of the refugee measure ({{h2_lo}} to {{h2_hi}}), {{h2_label}}, across {{h2_voters}} voting countries. The reason is visible in the votes themselves: in 2022 most publics in Europe gave Ukraine their top points, so there was little room left for refugees to add more. A test built on differences between countries cannot see an effect that every country shared.</p>
+</section>
+
+<section>
+<h2>Does the EU earn points?</h2>
+<p>The third test follows pairs of countries through fifty years of contests and asks what happens to the share of points they give each other once both are in the European Union<sup class="cite"><a href="#r12">12</a></sup>. Countries joined at different times, in 1981, 1986, 1995, 2004, 2007 and 2013, so pairs that became joint members can be compared with pairs that were not yet, or never, both members. The estimator is Gardner's two-stage difference in differences<sup class="cite"><a href="#r13">13</a></sup>, which is built for such staggered timing, as implemented in pyfixest<sup class="cite"><a href="#r14">14</a></sup>. The outcome is the share of a voter's points that went to the other country, so the change in 2016 from one set of points to two does not matter. {{h3_pairs}} pairs became joint members with at least three contests observed before; {{h3_dropped}} had too few and were dropped.</p>
+<p>In the first six contests after both were in the EU, their mutual share of points changed by {{h3_pp}} percentage points (95 % CI {{h3_lo}} to {{h3_hi}}), against an average of {{h3_base}} % before: about {{h3_pct}} %. The registered rule expected a rise or nothing, so a fall is labelled {{h3_label}}. It should not be read as "the EU makes Europeans like each other less". The contests before accession move up and down (fig. 4), and almost all of the fall comes from the 2004 enlargement, which coincided with the introduction of semi-finals and with the arrival of new countries from the east that never joined the EU. Leaving the 2004 cohort out, the estimate is {{h3_no04}} points ({{h3_no04_lo}} to {{h3_no04_hi}}): nothing. In finals only it is {{h3_fin}}.</p>
+<p>Brexit was the reverse case, and it is exploratory: the United Kingdom's mutual share with EU countries, 2021–2025 against 2016–2019, relative to its pairs outside the EU, changed by {{bx}} percentage points ({{bx_lo}} to {{bx_hi}}). Leaving cost no points either.</p>
+<figure data-chart="../assets/eurovision/charts.json#eu">
+  <img src="../assets/eurovision/04-eu.svg" alt="Event study of EU accession on the share of points between two countries: estimates before accession move around zero, after accession they are mostly slightly negative, with wide intervals." loading="lazy">
+  <figcaption><b>fig. 4</b> · Effect of both countries being in the EU on the share of points they give each other, by contest year from the first year both were members, percentage points, with 95 % intervals clustered by pair; two-stage difference in differences<sup class="cite"><a href="#r13">13</a></sup>; reference year −1. Data: Spijkervet<sup class="cite"><a href="#r3">3</a></sup>, Wikipedia<sup class="cite"><a href="#r5">5</a></sup>.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>What this means</h2>
+<p>Measured: the largest thing a public adds to a jury's verdict is its migrants. Where a performer's diaspora is large, the televote gives about twice the jury's points; where it is tiny, the televote gives less. Neighbours and shared languages matter too, but they move professionals and viewers alike, which makes them taste rather than loyalty. Two countries sitting together in the European Union does not change what they give each other at all.</p>
+<p>So is Eurovision a stronger European project than the EU? On this narrow measure, the answer is that they work on different things. The EU did not make anyone vote for a fellow member. What the votes do show is that the movement of people the EU made possible, from Poland, Lithuania and Romania to Ireland, Britain and Italy, now sends points back home every May. Free movement, not membership, is what reaches the scoreboard.</p>
+</section>
+
+<section>
+<h2>What this does not show</h2>
+<p>Points are not friendship. They are a public's and a jury's taste for one song on one night, and a country that sends a weak song loses points from friends too. The diaspora estimate cannot say why migrants vote: identity, organisation, or simply that a community that cares calls more than once. It uses migrants by birthplace, so second generations and refugees not yet counted as migrants are missing. A third of the rows have no UN figure; counting them as zero gives the same answer, but the true figures could differ. The EU test bundles accession with everything that came with it, and the years before accession are noisy, so it can rule out a large gain from membership but not every small one. And all of this is televotes and juries from 2016 on: the decades before, when one jury or one public decided alone, are seen only in the EU test.</p>
+</section>
+
+<section id="changes">
+<h2>Changes after registration</h2>
+<p>All are dated in the design file. Before any vote was read: the Mirovision files end in 2022, so split votes for 2016–2023 come from Spijkervet, with Mirovision as a check, and the juror check covers 2016–2022. During the data step: the Wikipedia parser's header detection was made robust; country names in one source were mapped to codes; the rest-of-the-world vote was dropped from the EU test; pairs without a UN figure were dropped as registered, and a check counting them as zero was added. Before any estimate was seen: the registered pair fixed effects did not converge, so pair × contest effects, which contain them, were used. After the first estimates: a software problem in the two-stage estimator was worked around by dropping rows it cannot use, and the registered EU checks and the Brexit comparison, missing from the first code, were added; the check by audience for the EU test cannot be run, because no country joined between 2016 and 2025.</p>
+</section>
+
+<section id="reproduction">
+<h2>Reproduction</h2>
+<p>Every number on this page is filled in from <a href="../assets/eurovision/results.json"><code>assets/eurovision/results.json</code></a> and the published tables by a script. From the repository root:</p>
+<ol>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/eurovision/collect.py"><code>tools/eurovision/collect.py</code></a>: every source and its hash.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/eurovision/prepare.py"><code>prepare.py</code></a>: the three tables and the validation.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/eurovision/estimate.py"><code>estimate.py</code></a>: the registered estimates and checks.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/eurovision/article.py"><code>article.py</code></a>: the figures, the table and this page.</li>
+</ol>
+<p>The design is <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/eurovision-design.md"><code>docs/research/eurovision-design.md</code></a>; the power simulations are <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/eurovision/power.py"><code>power.py</code></a> and <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/eurovision/power_h3.py"><code>power_h3.py</code></a>. Related: <a href="pop-measured">Pop, measured</a>.</p>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Ginsburgh, V., Noury, A. G. (2008). The Eurovision Song Contest. Is voting political or cultural? <i>European Journal of Political Economy</i> 24(1), 41–52. <a href="https://doi.org/10.1016/j.ejpoleco.2007.05.004">doi:10.1016/j.ejpoleco.2007.05.004</a>. Accessed 3 October 2026.</li>
+<li id="r2">Spierdijk, L., Vellekoop, M. (2009). The structure of bias in peer voting systems: lessons from the Eurovision Song Contest. <i>Empirical Economics</i> 36(2), 403–425. <a href="https://doi.org/10.1007/s00181-008-0202-5">doi:10.1007/s00181-008-0202-5</a>. Accessed 3 October 2026.</li>
+<li id="r3">Spijkervet, J. The Eurovision Song Contest Dataset, release 2023. <a href="https://github.com/Spijkervet/eurovision-dataset">github.com/Spijkervet/eurovision-dataset</a>; <a href="https://doi.org/10.5281/zenodo.4036457">doi:10.5281/zenodo.4036457</a>. Accessed 3 October 2026.</li>
+<li id="r4">Burgoyne, J. A., Spijkervet, J., Baker, D. J. (2023). Mirovision: data and code (MIT), commit d70e25d. <a href="https://github.com/Amsterdam-Music-Lab/mirovision">github.com/Amsterdam-Music-Lab/mirovision</a>. Accessed 3 October 2026.</li>
+<li id="r5">Wikipedia contributors. Eurovision Song Contest 2023 (revision 1375641667), 2024 (1378019076), 2025 (1378018909), CC BY-SA. <a href="https://en.wikipedia.org/wiki/Eurovision_Song_Contest_2025">en.wikipedia.org</a>. Accessed 3 October 2026.</li>
+<li id="r6">United Nations, Department of Economic and Social Affairs, Population Division (2024). International Migrant Stock 2024, by destination and origin. <a href="https://www.un.org/development/desa/pd/content/international-migrant-stock">un.org</a>. Accessed 3 October 2026.</li>
+<li id="r7">World Bank. Population, total (SP.POP.TOTL), 2015–2024. <a href="https://data.worldbank.org/indicator/SP.POP.TOTL">data.worldbank.org</a>. Accessed 3 October 2026.</li>
+<li id="r8">UNHCR. Refugee Data Finder: refugees from Ukraine by country of asylum, 2022 and 2024. <a href="https://www.unhcr.org/refugee-statistics/">unhcr.org/refugee-statistics</a>. Accessed 3 October 2026.</li>
+<li id="r9">Mayer, T., Zignago, S. (2011). Notes on CEPII's distances measures: the GeoDist database. CEPII Working Paper 2011-25. <a href="https://www.cepii.fr/CEPII/en/bdd_modele/bdd_modele_item.asp?id=6">cepii.fr</a>. Accessed 3 October 2026.</li>
+<li id="r10">Santos Silva, J. M. C., Tenreyro, S. (2006). The log of gravity. <i>The Review of Economics and Statistics</i> 88(4), 641–658. <a href="https://doi.org/10.1162/rest.88.4.641">doi:10.1162/rest.88.4.641</a>. Accessed 3 October 2026.</li>
+<li id="r11">Natural Earth. Admin 0 – countries, 1:50m. Public domain. <a href="https://www.naturalearthdata.com/">naturalearthdata.com</a>. Accessed 3 October 2026.</li>
+<li id="r12">European Union. EU member countries and their dates of accession. <a href="https://european-union.europa.eu/principles-countries-history/eu-countries_en">european-union.europa.eu</a>. Accessed 3 October 2026.</li>
+<li id="r13">Gardner, J. (2022). Two-stage differences in differences. arXiv:2207.05943. <a href="https://arxiv.org/abs/2207.05943">arxiv.org/abs/2207.05943</a>. Accessed 3 October 2026.</li>
+<li id="r14">Fischer, A., and contributors. pyfixest: fast high-dimensional fixed-effects regression in Python, version {{pyfixest}}. <a href="https://github.com/py-econometrics/pyfixest">github.com/py-econometrics/pyfixest</a>. Accessed 3 October 2026.</li>
+</ol>
+</section>
+
+<section id="changelog" class="changelog">
+<h2>Change log</h2>
+<ul>
+<li>3 October 2026, version 1: first published.</li>
+<li>Checked against editorial standard v1 on 3 October 2026.</li>
+</ul>
+</section>
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a></p>
+</footer>
+</article>
+
+<script src="../assets/charts.js" defer></script>
+</body>
+</html>
