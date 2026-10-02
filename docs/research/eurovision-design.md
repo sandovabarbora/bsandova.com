@@ -182,3 +182,14 @@ such dyads are dropped: 8 944 of 26 316 H1 cells (661 directed pairs, listed in 
 Validation: the Wikipedia parser reproduces Spijkervet's 2023 points exactly (740 rows, no difference; Spijkervet's
 10 extra rows are the rest-of-the-world televote); Spijkervet and Mirovision agree on every matched 2016–2022 row
 (televote and jury points identical; 367 rows unmatched between the two files, reported).
+
+**3 October 2026 (H1 fixed effects; after the data step, before any estimate was seen).** The registered H1 model
+(pair + voter×year×round×audience + performer×year×round×audience) does not converge in pyfixest (demeaning fails
+after 100 000 iterations, with and without the iterative separation check), and a Poisson GLM with the effects as
+dummies diverges (infinite weights), a sign of separation among the three sets of effects. Testing which
+combinations converge (no coefficient printed): voter + performer effects alone, pair + voter, and pair×year×round +
+voter + performer all converge; pair + performer does not. **Change:** the pair effect μ(i, j) becomes μ(i, j, t, r),
+one per pair, year and round. It nests the registered effect and absorbs more (anything about the pair in that
+contest, e.g. a song in the voter's language), and β is still identified only from the televote against the jury of
+the same voter for the same song. The cost is the cells of pair-rounds with no point from either audience, which
+carry no information and drop out (17 372 → about 11 300 cells). All H1 checks use the same effects.

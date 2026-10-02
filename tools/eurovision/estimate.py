@@ -1,6 +1,6 @@
 """Registered estimates of design §3–§6 from tools/data/eurovision/{h1,h2,h3}.parquet.
 
-H1: PPML, points ~ x·Televote | pair + voter×year×round×audience + performer×year×round×audience, clustered by
+H1: PPML, points ~ x·Televote | pair×year×round (change note) + voter×year×round×audience + performer×year×round×audience, clustered by
 undirected pair. H2: OLS, televote − jury points to Ukraine ~ refugees·Post | voter + year, clustered by voter.
 H3: Gardner's two-stage DiD (pyfixest did2s) on the share of a voter's points, dyad and year effects, clustered by
 undirected pair; summary = event years 0 … +5. Labels as registered.
@@ -30,11 +30,15 @@ def h1_frame(h1: pd.DataFrame) -> pd.DataFrame:
     d["upair"] = [">".join(sorted(p)) for p in zip(d.i, d.j)]
     d["vra"] = d.i + d.year.astype(str) + d.r + d.aud
     d["pra"] = d.j + d.year.astype(str) + d.r + d.aud
+    d["prr"] = d.pair + d.year.astype(str) + d.r
     return d
 
 
 def h1_fit(d: pd.DataFrame, extra: str = ""):
-    return pf.fepois(f"points ~ xt{extra} | pair + vra + pra", data=d, vcov={"CRV1": "upair"})
+    # pair × year × round effects in place of the registered pair effects (change note: the registered
+    # specification does not converge; this one nests it, and β is still identified from televote against jury
+    # within the same pair and round)
+    return pf.fepois(f"points ~ xt{extra} | prr + vra + pra", data=d, vcov={"CRV1": "upair"}, fixef_maxiter=100_000)
 
 
 def coef(fit, term: str) -> dict:
