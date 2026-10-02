@@ -1,0 +1,187 @@
+# When the clocks go back: evening darkness and pedestrian crashes in Czechia — research design
+
+**Status: design committed 2 October 2026, before any accident record was downloaded or opened.** Registration is
+self-timestamped, as for the concert-effect study: design → code → data → results, each in a dated commit. In the
+article: "registered analysis plan: design committed at `<hash>` on 2 October 2026, before the data commit; commit
+times are self-reported". Deviations are listed, dated, under "Changes after registration".
+
+## 0. What has already been seen
+
+- **Source pages.** The Police of the Czech Republic accident-statistics pages (archiv.policie.gov.cz, "Statistika
+  nehodovosti"): the list of monthly and yearly files (`data-web-*`, `datagis-*`, at least back to 2017) and the
+  monthly summary PDFs' titles. No file of records was downloaded.
+- **Field dictionary.** `polozky-formulare-web-1.xlsx` (the form's items): p1 id, p2a date, p2b time, p4a–c region,
+  district and police unit, p5a in or outside a municipality, p6 kind of accident (4 = collision with a pedestrian),
+  p7 kind of vehicle collision, p8 kind of fixed obstacle. The remaining items were not read.
+- **Prior expectation.** The author expects more pedestrian crashes in the evening rush after the autumn change and
+  fewer in the morning rush, as in the international literature [R1, R2].
+
+## 1. Question and hypotheses
+
+On the last Sunday of October, Czech clocks go back one hour (CEST → CET). Sunset moves from about 17:40 to about
+16:40 by the clock, so the evening rush falls into darkness overnight, while the morning rush gets lighter. Nothing
+else about the day changes: people keep their clock times for work and school. The change is an exogenous,
+well-timed shift of darkness across clock hours.
+
+- **H1 (primary).** After the change, pedestrian crashes in the evening hours (16:00–18:59) rise relative to the
+  daytime control hours (10:00–13:59).
+- **H2.** After the change, pedestrian crashes in the morning hours (06:00–07:59) fall relative to the control
+  hours.
+- **H3 (extension).** Darkness raises the hourly rate of pedestrian crashes. The clock change is used as an
+  instrument for darkness (§5).
+
+## 2. Data
+
+- **Records.** Every police-recorded road accident in Czechia [D1], from the yearly files. Years: every autumn whose
+  file has the same item layout, from the earliest available up to 2025, with 2017 as the minimum. The set of years
+  is fixed from file availability and item layout only (headers and the dictionary), before any record's date,
+  time or kind is read, and is logged in a change note before the data commit.
+- **Window.** For each year, days −14 to −1 and +1 to +14 around the change day 0 (the last Sunday of October:
+  29 Oct 2017, 28 Oct 2018, 27 Oct 2019, 25 Oct 2020, 31 Oct 2021, 30 Oct 2022, 29 Oct 2023, 27 Oct 2024,
+  26 Oct 2025; earlier years by the same rule). Day 0 itself, which has 25 hours, is dropped.
+- **Time.** p2b is read as local clock time (the form records the clock). Records with a missing or invalid time
+  are counted, reported and dropped.
+- **Unit of analysis.** District (okres, p4b, 77 districts with Prague as one) × date × clock hour. Cells with no
+  crash are zeros.
+- **Outcome.** Y = number of crashes with p6 = 4 (collision with a pedestrian) in the cell.
+- **Sun position.** For each district's population-weighted centroid (or the geometric centroid if weights are not
+  available; logged), the sun's altitude at the middle of every clock hour of the window, computed with the NOAA
+  solar-position algorithm [R3]. **Dark** = altitude below −6° (after civil dusk or before civil dawn); **twilight**
+  = between −6° and 0°.
+
+## 3. Primary model (H1, H2)
+
+Poisson pseudo-maximum likelihood on the district × date × hour cells of the evening, morning and control hours:
+
+  log E[Y] = α(district × year) + γ(day of week) + δ(hour) + θ·Post + β_E·Post×Evening + β_M·Post×Morning
+             + λ_E·t×Evening + λ_M·t×Morning + λ·t
+
+where Post = 1 for days +1 to +14, t is the day relative to the change (−14 … +14), and Evening / Morning mark
+the hour groups. The day trends absorb the steady shortening of the days and the seasonal drift that runs through
+the window, so β_E and β_M measure the **jump** at the change, not the trend.
+
+- **Estimands.** exp(β_E) and exp(β_M): the ratio by which the clock change multiplies evening (morning) pedestrian
+  crashes relative to the control hours.
+- **Inference.** Standard errors clustered by calendar date (about 27 dates × years). 95 % intervals.
+- **Software.** Python `pyfixest` (`fepois`), version recorded at run time. If it fails, `statsmodels` GLM Poisson
+  with the same dummies and cluster-robust errors, logged.
+
+## 4. Labels
+
+- **H1 supported** if the 95 % interval of exp(β_E) lies wholly above 1. **Not supported** if it lies within
+  0.90–1.10 (equivalence margin ±10 %). Otherwise **inconclusive**, and the article says which condition failed.
+- **H2** is labelled by the same rule, with the direction reversed (interval wholly below 1).
+- The headline is H1. H2 and H3 do not change it.
+
+## 5. Extension: darkness as the treatment (H3)
+
+The clock change moves darkness only in some clock hours. Linear two-stage least squares on the same cells and
+fixed effects:
+
+- **First stage.** Dark (share of the hour after civil dusk or before civil dawn at the district centroid) on
+  Post × hour-of-day dummies for 06–07 and 16–18, plus the controls and day trends of §3.
+- **Second stage.** Y (per cell) on predicted Dark. The coefficient is the effect of one hour of darkness on the
+  expected number of pedestrian crashes in a district, reported also as a percentage of the cell mean in the
+  pre-change evening hours.
+- First-stage F statistic reported (Kleibergen–Paap). If F < 10, H3 is reported as weakly identified and not
+  interpreted.
+- Districts differ in longitude by about 6°, so dusk comes about 24 minutes earlier in the east than in the west;
+  this cross-district variation enters through the centroid sun position.
+
+## 6. Validity checks (all reported)
+
+- **Placebo date.** The same model with a fake change at day −14, on days −28 to −1 (no real change inside).
+- **Event study.** Evening-minus-control log ratio by day, −14 to +14, plotted with 95 % bands. No pre-change jump
+  is expected.
+- **COVID autumns.** 2020 and 2021 dropped (curfews and closures in autumn 2020); the estimate is reported.
+- **Window.** ±7 and ±21 days.
+- **Other crash kinds.** The same model on crashes with p6 ≠ 4 (secondary, not a placebo: darkness can affect them
+  too).
+- **Police-recorded light.** If the records carry a lighting-condition item, its share "dark" by hour group,
+  before and after, is reported as a check on the sun-position measure.
+
+## 7. Power
+
+Computed before the data commit from the police's published monthly summary PDFs (aggregates for October and
+November, not records): the expected number of pedestrian crashes in the evening and control cells over all
+windows, and the minimum detectable ratio at 80 % power and α = 0.05 for β_E. Logged in a change note.
+
+## 8. Outputs
+
+- A Research article (2 500–3 500 words) with: the hour-by-before/after figure, the event-study figure, and a map
+  of districts showing how many minutes of the 16:00–18:59 rush fall after civil dusk before and after the change
+  (astronomy only, no crash data).
+- Data hashes, the code and the per-cell table published, as for the other studies. Records are aggregated to cells;
+  no record-level field beyond those listed is published.
+
+## 9. What this will not show
+
+- Crashes the police did not record (minor ones without injury may be missing; the share is unknown).
+- Exposure: how many people walk or drive in each hour. The design compares hours within the same days, so it
+  holds exposure fixed only to the extent that clock-time routines do not change with the clocks.
+- The spring change, sleep loss, or health effects.
+- Whether permanent summer or winter time would be better overall; a one-hour shift of darkness in two rush hours
+  is not a full welfare comparison.
+
+## References
+
+- [R1] Sullivan, J. M., Flannagan, M. J. (2002). The role of ambient light level in fatal crashes: inferences from
+  daylight saving time transitions. *Accident Analysis & Prevention* 34(4), 487–498. [verify DOI before publication]
+- [R2] Smith, A. C. (2016). Spring forward at your own risk: daylight saving time and fatal vehicle crashes.
+  *American Economic Journal: Applied Economics* 8(2), 65–91. [verify DOI before publication]
+- [R3] NOAA Global Monitoring Laboratory, Solar Calculation Details (the solar-position equations).
+- [D1] Policie České republiky, Statistika nehodovosti, yearly data files and form items (archiv.policie.gov.cz).
+
+## Changes after registration
+
+**2 October 2026 (years and power; before any record was downloaded).** The yearly record files exist for 2016–2025
+only (archive pages list `datagis2016` … `data-web-12-2025`; 2015 and earlier are yearbooks in PDF, without
+records). The sample is therefore the ten autumns 2016–2025.
+
+The power computation of §7 (`tools/dst/power.py`; inputs: the police's monthly summaries for October and November
+2025, 2 268 and 2 556 pedestrian crashes cumulative from January, so about 9.6 a day in November; hour shares
+assumed, not measured: evening 25 %, morning 10 %, control 22 % of a day's pedestrian crashes) gives, for the
+model of §3 as registered, a standard error of about 0.27 on log β_E: 34 % power at a ratio of 1.50, and a minimum
+detectable ratio of about 2.0 at 80 % power. The hour-group-specific day trends (λ_E, λ_M) cost most of it.
+
+**Change.** The primary model of §3 drops λ_E·t×Evening and λ_M·t×Morning and keeps the common day trend λ·t.
+Its standard error is about 0.12: power 0.72 at a ratio of 1.35 and 0.95 at 1.50; minimum detectable ratio about
+1.41 at 80 % power. The original specification, with the group-specific trends, becomes a registered sensitivity
+check (§6) and is reported beside the primary.
+
+**What the change costs.** Without the group trends, β_E also contains the natural darkening of the evening hours
+between the two halves of the window (about 25 minutes of earlier dusk, besides the 60 minutes of the clock change).
+Two registered checks bound it: the placebo date of §6 (a fake change at day −14) measures the effect of two weeks
+of natural darkening alone, and H3 (§5) separates the jump from the drift through the sun's position. The article
+reports β_E together with the placebo estimate and says that the clock change is not the only darkening inside the
+window. Labels (§4) are unchanged.
+
+**2 October 2026 (unit of analysis and layouts; archives downloaded, no record read).** The ten yearly archives
+were downloaded and hashed (`tools/dst/collect.py`, `tools/data/dst/manifest.json`). Only their member lists, the
+field count of the first CSV line (64, no header) and the header row of `Inehody.xls` were read, plus the list of
+distinct region codes in the 2025 file (no counts). Two layouts: 2016–2022 are headerless CSVs, one per region,
+named by region code, in the documented 64-field order without p4b (district); 2023–2025 are HTML tables with p4a
+and p4b. Districts therefore exist for three years only.
+
+**Change.** The unit is the **region** (kraj, 14, codes 00–07 and 14–19, the same in both layouts) × date × clock
+hour, for all ten years. The fixed effects of §3 become region × year. The sun's position is computed at each
+region's geometric centroid (Natural Earth 10m admin-1, v5.1.2; population weights not available). The
+east–west spread of the regions' centroids (about 4.5° of longitude, 18 minutes of dusk) remains as variation for
+H3. The district-level map of §8 stays, computed from astronomy only. Power is unchanged in practice (it was
+computed nationally).
+
+Code registered with this note: `tools/dst/sun.py` (NOAA altitude; checked: Prague, 26 Oct 2025, sunset 16:50 CET,
+civil dusk 17:23), `prepare.py` (cells), `estimate.py` (§3–§6). The estimation was run once on synthetic cells with a
+planted evening ratio of 1.40 and morning ratio of 0.80 and recovered 1.34 (1.08–1.66) and 0.70 (0.52–0.96).
+
+**2 October 2026 (correction, before data).** The east–west spread of the region centroids is 5.2° of longitude
+(12.74°–17.95° E), about 21 minutes of dusk, not 4.5° and 18 minutes as written in the previous note.
+
+**2 October 2026, late evening (data step; deviation in prepare.py).** The first run of `prepare.py` on the records dropped
+every time with minute 60. In the form, minute 60 means "minute unknown" with a known hour, so those records have a
+valid hour; only hour 25 ("hour unknown") is invalid. `parse_hour` was corrected to accept minute 60 before any
+estimate was run; the only output seen from the first run was the per-year count of dropped times, and the forms of
+the dropped values (hour 25 or minute 60, counted for 2016 and 2025). After the fix, 1 479–2 081 window records a
+year (about 13 %) have an unknown hour and are dropped; this share is reported by crash kind with the results.
+Cells: 164 640 (14 regions × 10 years × 49 days × 24 hours), SHA-256 of `cells.parquet` d64c1bcaebc858b10fe7afb20858a780ba5d44842e0aed246456b5c89d39e510. Archive hashes and
+per-year counts: `docs/research/dst-darkness-data.json`.
