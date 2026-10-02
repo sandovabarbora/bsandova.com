@@ -81,6 +81,9 @@ def main() -> None:
     src = (ROOT / "texts" / "prague-measured.html").read_text(encoding="utf-8")
     head = src[:src.index("</style>") + len("</style>")]
     head = re.sub(r"<title>.*?</title>", "<title>Pop, measured</title>", head)
+    head = head.replace("</style>", ".minis{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px 24px;margin:1rem 0 0}"
+                        ".minis figure{margin:0}.minis img{display:block;width:100%;height:auto}"
+                        ".minis figcaption{font:400 12px var(--mono);color:#666;margin-top:4px}\n</style>")
     head = re.sub(r'<meta name="description" content="[^"]*">', '<meta name="description" content="Five registered studies of five artists on Spotify\'s charts and on tour, asking the same five questions, with a comparison across them.">', head)
     head = re.sub(r'<meta property="og:title" content="[^"]*">', '<meta property="og:title" content="Pop, measured">', head)
     head = re.sub(r'<meta property="og:description" content="[^"]*">', '<meta property="og:description" content="Harry Styles, Taylor Swift, BTS, Bad Bunny and Billie Eilish, measured the same way: how long a hit lasts, where, whether it is one song or many, how many nights a city fills and what a ticket costs.">', head)
@@ -103,16 +106,28 @@ def main() -> None:
         + (f"{n(p['top_ticket']['days_of_income'], 1)} · {p['top_ticket']['country']}" if p["top_ticket"] else "–") + "</td></tr>"
         for (slug, k, *_), p in zip(PARTS, ps))
     english = [p for p in ps if p["slug"] in ("harry-styles", "taylor-swift", "billie-eilish")]
+    t6 = json.loads((R / "pop-measured-part6-results.json").read_text())
+    m1, m2 = t6["m1"], t6["m2"]
+    items.append(f'''  <li>
+    <a class="still" href="pop-together" aria-label="Part 6, the five together"><span class="shot" style="view-transition-name:ph-pop-together;--bg:url(../assets/photo/pop-together.jpg);--bg-s:url(../assets/photo/pop-together-1200.jpg)"></span></a>
+    <div>
+      <p class="n">Part 6 · all five artists · two exploratory models</p>
+      <h2><a href="pop-together">A hit lasts three times as long in its own language, and tickets barely follow income</a></h2>
+      <p>Across {m1["n"]} artist–country pairs, with artist and country fixed effects, a song lasted {1 + m1["pct"]:.1f} times as long in a country speaking its language (95 % CI {1 + m1["pct_lo"]:.1f}–{1 + m1["pct_hi"]:.1f}). Across {m2["n"]} tour entries, the average ticket rose with the host country's income at an elasticity of {m2["coef"]:.2f} ({m2["lo"]:.2f} to {m2["hi"]:.2f}), so a show cost several times more days of income in poorer countries. Exploratory: models fixed before estimation, inputs seen in parts 1–5.</p>
+    </div>
+  </li>''')
+    maps = "".join(f'<figure class="mini"><a href="pop-{slug}"><img src="../assets/pop/{slug}/map.svg" alt="World map for {NAME[slug]}: where the focal song lasted longer than local number ones, and ticket prices in days of income." loading="lazy"></a><figcaption>{NAME[slug]}</figcaption></figure>'
+                   for slug, *_ in PARTS)
     body = f'''<body>
 <div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">hub · pop · en</span></div>
 
 <article class="text">
 <header class="text-head">
-  <p class="kicker">Hub · Pop, measured · five artists, the same five questions</p>
+  <p class="kicker">Hub · Pop, measured · five artists, the same five questions, and the five together</p>
   <h1>Pop, <em>measured</em></h1>
   <p class="deck">Five artists measured the same way: how long their biggest song lasted, where, whether their listening is one song or many, how many nights a city could fill and what a ticket cost in days of income.</p>
   <dl class="facts">
-    <div><dt>parts published</dt><dd>5 <small>numbered by series design</small></dd></div>
+    <div><dt>parts published</dt><dd>6 <small>five artists and one part across them</small></dd></div>
     <div><dt>designs committed</dt><dd>1–2 Oct 2026 <small>CEST, commit times self-reported</small></dd></div>
   </dl>
 </header>
@@ -133,7 +148,7 @@ def main() -> None:
 <details class="meta-more">
   <summary>About this series</summary>
 <dl class="meta">
-  <div><dt>status</dt><dd>hub, index of five research articles and one related study</dd></div>
+  <div><dt>status</dt><dd>hub, index of six research articles and one related study</dd></div>
   <div><dt>data</dt><dd>kworb.net Spotify chart totals, Wikipedia tour articles (Boxscore), World Bank GDP per capita, Eurostat HICP; hashes in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/pop-measured-files.sha256">pop-measured-files.sha256</a></dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/pop">tools/pop/</a>, the same scripts for every part; this page is built by <code>tools/pop/hub.py</code></dd></div>
   <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Pop, measured</i>. bsandova.com/texts/pop-measured, version 1.</dd></div>
@@ -146,6 +161,12 @@ def main() -> None:
 <ol class="parts">
 {chr(10).join(items)}
 </ol>
+</section>
+
+<section id="maps">
+<h2>Five maps</h2>
+<p>Each part's map shades the countries by how many times as long the artist's biggest song lasted in the national chart as the local median number one, blue where longer and grey where shorter, with circles for the average ticket in days of income. Side by side, they show where each artist's audience is: much of the world for Harry Styles and Billie Eilish, the English-speaking world and Asia more than Latin America for Taylor Swift, East and South-East Asia for BTS, and Latin America, Spain and the United States for Bad Bunny.</p>
+<div class="minis">{maps}</div>
 </section>
 
 <section id="compare">

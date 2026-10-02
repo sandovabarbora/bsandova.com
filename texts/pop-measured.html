@@ -47,6 +47,7 @@
 .text dl.meta{display:block;text-transform:none;letter-spacing:0}
 .text dl.meta div,.text dl.meta div+div,.text dl.meta div:last-child{border-right:0;border-bottom:1px solid #ececea;padding:6px 0}
 .regnote{font:400 12px/1.5 var(--mono);color:#666}
+.minis{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px 24px;margin:1rem 0 0}.minis figure{margin:0}.minis img{display:block;width:100%;height:auto}.minis figcaption{font:400 12px var(--mono);color:#666;margin-top:4px}
 </style>
 </head>
 <body>
@@ -54,11 +55,11 @@
 
 <article class="text">
 <header class="text-head">
-  <p class="kicker">Hub · Pop, measured · five artists, the same five questions</p>
+  <p class="kicker">Hub · Pop, measured · five artists, the same five questions, and the five together</p>
   <h1>Pop, <em>measured</em></h1>
   <p class="deck">Five artists measured the same way: how long their biggest song lasted, where, whether their listening is one song or many, how many nights a city could fill and what a ticket cost in days of income.</p>
   <dl class="facts">
-    <div><dt>parts published</dt><dd>5 <small>numbered by series design</small></dd></div>
+    <div><dt>parts published</dt><dd>6 <small>five artists and one part across them</small></dd></div>
     <div><dt>designs committed</dt><dd>1–2 Oct 2026 <small>CEST, commit times self-reported</small></dd></div>
   </dl>
 </header>
@@ -79,7 +80,7 @@
 <details class="meta-more">
   <summary>About this series</summary>
 <dl class="meta">
-  <div><dt>status</dt><dd>hub, index of five research articles and one related study</dd></div>
+  <div><dt>status</dt><dd>hub, index of six research articles and one related study</dd></div>
   <div><dt>data</dt><dd>kworb.net Spotify chart totals, Wikipedia tour articles (Boxscore), World Bank GDP per capita, Eurostat HICP; hashes in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/pop-measured-files.sha256">pop-measured-files.sha256</a></dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/pop">tools/pop/</a>, the same scripts for every part; this page is built by <code>tools/pop/hub.py</code></dd></div>
   <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Pop, measured</i>. bsandova.com/texts/pop-measured, version 1.</dd></div>
@@ -130,7 +131,21 @@
       <p><i>BIRDS OF A FEATHER</i> spent 867 days in Spotify's global Top 200 and is still there; 16.4 % of number ones since 2017 lasted longer (95 % CI 10.6 % to 22.9 %). It outlasted the local median number one in 56 of 71 national charts; in Czechia it lasted 1.69 times as long, 38th of 71. Half of Billie Eilish's streams come from 14 songs. 92 % of 118 Boxscore entries sold out, and the dearest ticket relative to income was in Philippines, 15.3 days of GDP per capita.</p>
     </div>
   </li>
+  <li>
+    <a class="still" href="pop-together" aria-label="Part 6, the five together"><span class="shot" style="view-transition-name:ph-pop-together;--bg:url(../assets/photo/pop-together.jpg);--bg-s:url(../assets/photo/pop-together-1200.jpg)"></span></a>
+    <div>
+      <p class="n">Part 6 · all five artists · two exploratory models</p>
+      <h2><a href="pop-together">A hit lasts three times as long in its own language, and tickets barely follow income</a></h2>
+      <p>Across 348 artist–country pairs, with artist and country fixed effects, a song lasted 2.9 times as long in a country speaking its language (95 % CI 2.1–4.0). Across 428 tour entries, the average ticket rose with the host country's income at an elasticity of 0.22 (0.10 to 0.34), so a show cost several times more days of income in poorer countries. Exploratory: models fixed before estimation, inputs seen in parts 1–5.</p>
+    </div>
+  </li>
 </ol>
+</section>
+
+<section id="maps">
+<h2>Five maps</h2>
+<p>Each part's map shades the countries by how many times as long the artist's biggest song lasted in the national chart as the local median number one, blue where longer and grey where shorter, with circles for the average ticket in days of income. Side by side, they show where each artist's audience is: much of the world for Harry Styles and Billie Eilish, the English-speaking world and Asia more than Latin America for Taylor Swift, East and South-East Asia for BTS, and Latin America, Spain and the United States for Bad Bunny.</p>
+<div class="minis"><figure class="mini"><a href="pop-harry-styles"><img src="../assets/pop/harry-styles/map.svg" alt="World map for Harry Styles: where the focal song lasted longer than local number ones, and ticket prices in days of income." loading="lazy"></a><figcaption>Harry Styles</figcaption></figure><figure class="mini"><a href="pop-taylor-swift"><img src="../assets/pop/taylor-swift/map.svg" alt="World map for Taylor Swift: where the focal song lasted longer than local number ones, and ticket prices in days of income." loading="lazy"></a><figcaption>Taylor Swift</figcaption></figure><figure class="mini"><a href="pop-bts"><img src="../assets/pop/bts/map.svg" alt="World map for BTS: where the focal song lasted longer than local number ones, and ticket prices in days of income." loading="lazy"></a><figcaption>BTS</figcaption></figure><figure class="mini"><a href="pop-bad-bunny"><img src="../assets/pop/bad-bunny/map.svg" alt="World map for Bad Bunny: where the focal song lasted longer than local number ones, and ticket prices in days of income." loading="lazy"></a><figcaption>Bad Bunny</figcaption></figure><figure class="mini"><a href="pop-billie-eilish"><img src="../assets/pop/billie-eilish/map.svg" alt="World map for Billie Eilish: where the focal song lasted longer than local number ones, and ticket prices in days of income." loading="lazy"></a><figcaption>Billie Eilish</figcaption></figure></div>
 </section>
 
 <section id="compare">
