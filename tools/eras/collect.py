@@ -4,7 +4,7 @@ Eurostat `prc_hicp_midx`, unit I15, COICOP CP112, CP111 and CP00, EU and EEA cou
 January 2022 to December 2025. Writes tools/data/eras/hicp.json (not committed) and its SHA-256 to
 docs/research/eras-inflation-files.sha256, and the long table docs/research/eras-inflation-hicp.csv.
 
-    python3 tools/eras/collect.py
+    uv run --with certifi python tools/eras/collect.py
 """
 
 from __future__ import annotations
@@ -13,6 +13,7 @@ import csv
 import hashlib
 import itertools
 import json
+import ssl
 import urllib.parse
 import urllib.request
 from pathlib import Path
@@ -27,7 +28,9 @@ def main() -> None:
     q = [("format", "JSON"), ("unit", "I15"), ("sinceTimePeriod", "2022-01"), ("untilTimePeriod", "2025-12")]
     q += [("coicop", c) for c in COICOP] + [("geo", g) for g in GEO]
     url = "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/prc_hicp_midx?" + urllib.parse.urlencode(q)
-    data = urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "bsandova.com research"}), timeout=120).read()
+    import certifi   # the system store lacks Eurostat's issuer on some machines
+    ctx = ssl.create_default_context(cafile=certifi.where())
+    data = urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "bsandova.com research"}), timeout=120, context=ctx).read()
     RAW.mkdir(parents=True, exist_ok=True)
     (RAW / "hicp.json").write_bytes(data)
     (ROOT / "docs" / "research" / "eras-inflation-files.sha256").write_text(f"{hashlib.sha256(data).hexdigest()}  hicp.json\n")
