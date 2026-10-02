@@ -18,69 +18,111 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../a24.css">
 <style>
-.ask{max-width:64rem;border:1px solid var(--line);background:var(--bg-2);padding:1.25rem;margin:1.5rem 0}
-.ask form{display:flex;gap:.5rem;flex-wrap:wrap}
-.ask input{flex:1;min-width:16rem;font:inherit;font-size:1.05rem;background:var(--bg);color:var(--fg);border:1px solid var(--line);padding:.7rem .9rem}
-.ask input:focus{outline:0;border-color:var(--coral)}
-.ask button{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;background:var(--coral);color:#fff;border:0;padding:.7rem 1rem;cursor:pointer}
-.ask button:disabled{opacity:.5;cursor:wait}
-.ex{display:flex;flex-wrap:wrap;gap:.4rem;margin:.8rem 0 0}
-.ex button{background:transparent;color:var(--fg);border:1px solid var(--line);font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:none;padding:.4rem .6rem}
-.ex button:hover{color:var(--hot);border-color:var(--fg-2)}
-.ans{margin-top:1.25rem;font-size:1.02rem;line-height:1.6;white-space:pre-wrap;min-height:1.5rem}
-.ans .src{display:block;margin-top:.6rem;font-family:var(--mono);font-size:11px;color:var(--fg-2)}
-.trace{margin-top:1rem;border-top:1px solid var(--line);padding-top:.8rem;font-family:var(--mono);font-size:11px;color:var(--fg-2);line-height:1.7}
-.trace b{color:var(--fg);font-weight:400}.trace .ok{color:#7ED9A6}.trace .bad{color:#FF6A3D}
-.trace ol{margin:.3rem 0 0;padding-left:1.2rem}
-.tbl{width:100%;max-width:64rem;border-collapse:collapse;font-family:var(--mono);font-size:11px;margin:1rem 0 1.5rem}
-.tbl th,.tbl td{text-align:left;padding:.45rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
+/* Ask the site: the question first, the answer large, everything technical one click away */
+.ask-page{--ink:#111;--soft:#666;--rule:#e2e2dd;--held:#34507c;--chip:#f3f3ef}
+.ask-hero{margin-bottom:0}
+.ask-hero .lede{font:400 clamp(17px,1.6vw,21px)/1.5 var(--sans);color:#222;max-width:40em}
+.askbox{margin:clamp(24px,4vh,40px) 0 10px;max-width:58rem}
+.askbox form{display:flex;gap:0;border:1.5px solid var(--ink);border-radius:999px;padding:5px 5px 5px 22px;background:#fff;transition:box-shadow .2s}
+.askbox form:focus-within{box-shadow:0 0 0 4px rgba(52,80,124,.15)}
+.askbox input{flex:1;min-width:0;border:0;outline:0;background:none;font:400 clamp(16px,1.5vw,19px)/1.4 var(--sans);color:var(--ink);padding:12px 0}
+.askbox button{flex:none;border:0;border-radius:999px;background:var(--ink);color:#fff;font:500 15px var(--sans);padding:0 26px;cursor:pointer;transition:background .2s,transform .1s}
+.askbox button:hover{background:var(--held)}.askbox button:active{transform:scale(.97)}
+.askbox button:disabled{opacity:.45;cursor:wait}
+.try{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0;padding:0;list-style:none}
+.try li{margin:0}
+.try button{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--rule);background:var(--chip);border-radius:999px;padding:8px 14px;font:400 13.5px/1.3 var(--sans);color:#222;cursor:pointer;text-align:left;transition:border-color .15s,background .15s,transform .1s}
+.try button:hover{border-color:var(--ink);background:#fff;transform:translateY(-1px)}
+.try i{font-style:normal;font:400 10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--soft);display:inline-flex;align-items:center;gap:6px}
+.try i::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--dot,#999)}
+.answer{max-width:58rem;margin:26px 0 0;min-height:0}
+.answer .a{font:400 clamp(18px,1.7vw,22px)/1.55 var(--sans);color:var(--ink);white-space:pre-wrap;margin:0}
+.answer .q{font:400 12px var(--mono);color:var(--soft);margin:0 0 10px;letter-spacing:.02em}
+.answer .src{display:block;margin-top:12px;font:400 12px/1.6 var(--mono);color:var(--soft);white-space:pre-wrap}
+.answer .wait{font:400 15px var(--sans);color:var(--soft)}
+.answer .wait span{display:inline-block;animation:blink 1.2s infinite both}.answer .wait span:nth-child(2){animation-delay:.2s}.answer .wait span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.15}40%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.answer .wait span{animation:none}}
+details.how{margin:18px 0 0;border-top:1px solid var(--rule);padding-top:10px}
+details.how summary{cursor:pointer;font:400 12px var(--mono);color:var(--soft);letter-spacing:.02em}
+details.how summary:hover{color:var(--ink)}
+.steps{list-style:none;counter-reset:s;margin:14px 0 0;padding:0}
+.steps li{counter-increment:s;display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--rule);font:400 12.5px/1.45 var(--mono);color:#333}
+.steps li::before{content:counter(s);color:var(--soft)}
+.steps b{font-weight:500;color:var(--held)}
+.steps .t{color:var(--soft);white-space:nowrap}
+.rules{display:flex;flex-wrap:wrap;gap:6px 14px;margin:12px 0 0;padding:0;list-style:none;font:400 12px var(--mono);color:#333}
+.rules .ok::before{content:"✓ ";color:#2f7d4f}.rules .bad::before{content:"✗ ";color:#c2410c}
+.stats{display:flex;flex-wrap:wrap;gap:6px 22px;margin:36px 0 0;padding:14px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);font:400 12px var(--mono);color:var(--soft);max-width:58rem}
+.stats b{color:var(--ink);font-weight:500}
+.how4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,2vw,24px);margin:clamp(40px,7vh,72px) 0 0;max-width:72rem}
+.how4 div{border-top:2px solid var(--ink);padding-top:14px}
+.how4 h3{font:500 17px/1.25 var(--sans);margin:0 0 6px;letter-spacing:-.01em}
+.how4 p{font:400 14.5px/1.5 var(--sans);color:#333;margin:0}
+@media (max-width:860px){.how4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.how4{grid-template-columns:1fr}.askbox button{padding:0 18px}.try li:nth-child(n+5){display:none}}
+.more{margin:clamp(40px,7vh,72px) 0 0;max-width:64rem;border-top:1px solid var(--ink)}
+.more details{border-bottom:1px solid var(--rule)}
+.more summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:18px 0;font:500 clamp(18px,1.6vw,22px)/1.3 var(--sans);letter-spacing:-.015em}
+.more summary::-webkit-details-marker{display:none}
+.more summary::after{content:"+";font:400 22px var(--sans);color:var(--soft)}
+.more details[open] summary::after{content:"−"}
+.more summary small{font:400 12px var(--mono);color:var(--soft);letter-spacing:0;margin-left:auto}
+.more .in{padding:0 0 22px}
+.tbl{width:100%;border-collapse:collapse;font:400 11.5px/1.45 var(--mono);margin:.6rem 0 0}
+.tbl th,.tbl td{text-align:left;padding:.45rem .6rem;border-bottom:1px solid var(--rule);vertical-align:top}
 .tbl th:first-child,.tbl td:first-child{padding-left:0}
-.tbl th{font-weight:400;color:var(--fg-2);letter-spacing:.12em;text-transform:uppercase;font-size:10px}
+.tbl th{font-weight:400;color:var(--soft);letter-spacing:.1em;text-transform:uppercase;font-size:10px}
 .tbl td.n,.tbl th.n{text-align:right;font-variant-numeric:tabular-nums}
-.tbl .ok{color:#7ED9A6}.tbl .miss{color:#FF6A3D}.tbl .dim{color:var(--fg-2)}
-.scroller{overflow-x:auto;max-width:64rem}
-pre{font-family:var(--mono);font-size:12px;line-height:1.6;color:var(--fg);background:#1d1d1b;border:1px solid var(--line);padding:.9rem 1rem;overflow-x:auto;max-width:64rem;margin:.5rem 0 1.2rem}pre i{color:var(--fg-2);font-style:normal}
+.tbl .ok{color:#2f7d4f}.tbl .miss{color:#c2410c}.tbl .dim{color:var(--soft)}
+.scroller{overflow-x:auto}
+.more pre{font:400 12px/1.6 var(--mono);color:#222;background:var(--chip);border:1px solid var(--rule);padding:.9rem 1rem;overflow-x:auto;margin:.5rem 0 1.2rem}.more pre i{color:var(--soft);font-style:normal}
 </style>
 </head>
 <body>
 <div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">ask · live · en</span></div>
 
-<article class="text">
-<header class="text-head">
-  <p class="kicker">Ask the site · an agent over this site's data and texts · the trust rules from the day job, in public</p>
+<article class="text ask-page">
+<header class="text-head ask-hero">
+  <p class="kicker">Ask the site · live</p>
   <h1>Ask the site. <em>It shows its work.</em></h1>
-  <p class="deck">A small agent with five tools: list this site's data files, describe one's schema, read a slice of it, search the texts, verify a quotation verbatim. Five rules it is scored on and that are enforced in code: every number comes from a tool result, every quotation is verified before it is quoted, no code in an answer, every source named must exist, and it declines when the site has no such data; plus a cap per question and a budget per day. The trace, tools called, tokens, cost and the rule checks, is shown under each answer. It is deliberately small; the rules are the point, and they are the same rules the assistant at work runs on. Since 21 September it runs on <a href="https://github.com/sandovabarbora/sitewitness">sitewitness</a>, the package that came out of it, and this site is its first instance<sup class="cite"><a href="#r1">1</a></sup>.</p>
-  <dl class="facts">
-    <div><dt>tools</dt><dd>5 <small>list_sources · describe_source · read_data · search · quote</small></dd></div>
-    <div><dt>caps</dt><dd id="f-caps">…</dd></div>
-    <div><dt>golden questions</dt><dd id="f-eval">…</dd></div>
-    <div><dt>today</dt><dd id="f-today">…</dd></div>
-  </dl>
+  <p class="lede">A small agent that knows this site's data and texts, and nothing else. Every number it gives you comes from a file it actually read, every quotation is checked word for word, and when the site doesn't know, it says so. Go on, try to catch it out.</p>
 </header>
-<section class="film film-page"><div class="shot" style="view-transition-name:ph-page-ask;--bg:url(../assets/photo/page-ask.jpg);--bg-s:url(../assets/photo/page-ask-1200.jpg)"></div><p class="credit">Photo: <a href="https://stocksnap.io/photo/london-telephone-YCKTOMUYZW">NegativeSpace</a> · CC0, toned</p></section>
 
-
-<div class="ask">
-  <form id="f"><input id="q" placeholder="e.g. How many surfable days did Ericeira have in the climatology window on the surf page?" maxlength="300" autocomplete="off"><button id="go">ask</button></form>
-  <div class="ex" id="ex"></div>
-  <div class="ans" id="ans"></div>
-  <div class="trace" id="trace" hidden></div>
+<div class="askbox">
+  <form id="f"><input id="q" placeholder="Ask about surf, Prague, cars, pop, the thesis…" maxlength="300" autocomplete="off" aria-label="Your question"><button id="go">Ask →</button></form>
+  <ul class="try" id="ex" aria-label="Example questions"></ul>
 </div>
 
-<section>
-<h2>How it is scored</h2>
+<div class="answer" id="answer" aria-live="polite"></div>
+
+<p class="stats" id="stats"><span><b>5</b> tools</span><span id="s-caps">…</span><span id="s-eval">…</span><span id="s-today">…</span></p>
+
+<section class="how4" aria-label="How it works">
+  <div><h3>It reads, it doesn't guess</h3><p>Five tools: list the data files, describe one, read a slice, search the texts, verify a quotation. A number without a file behind it is withheld.</p></div>
+  <div><h3>Quotes are checked</h3><p>Every quotation is matched word for word against the text before you see it.</p></div>
+  <div><h3>It says no</h3><p>No phone numbers, no forecasts for next Christmas, no poems: when the site has no data, it declines.</p></div>
+  <div><h3>You get the receipt</h3><p>Under each answer: which files it read, how long it took, what it cost and which rules it passed.</p></div>
+</section>
+
+<div class="more">
+<details>
+  <summary>How it is scored <small id="m-eval"></small></summary>
+  <div class="in">
 <p>Thirty golden questions with known answers, run against the live API by <code>ask/eval.py</code>, results below as they came back. Eighteen ask for a number in a data file, seven for something said in a text, one demands a verbatim quotation, and four should be declined: a phone number, a forecast for Christmas, a poem, a question about the assistant's own configuration. A question counts as correct when the expected value is in the answer, or when the right response is a refusal and it refused. Two protocol flags are computed from the trace, not from the text: a number stated without any tool result in the conversation, and a quotation without a verified <code>quote</code> call<sup class="cite"><a href="#r1">1</a></sup>.</p>
-</section>
 <div id="eval"></div>
-
-<section>
-<h2>Every evaluation</h2>
+  </div>
+</details>
+<details>
+  <summary>Every evaluation <small>weekly, every Monday</small></summary>
+  <div class="in">
 <p>The golden set runs every Monday morning against the live API and appends one row here, so a change in the model, the prompt or the data files shows up as a change in the score, not as a quiet drift. Same idea as the <a href="../watch/">model release watch</a>, pointed at this site's own agent.</p>
-</section>
 <div id="history"></div>
-
-<section>
-<h2>Run this on your own site</h2>
+  </div>
+</details>
+<details>
+  <summary>Run this on your own site <small>pip install sitewitness</small></summary>
+  <div class="in">
 <p>Everything on this page is <code>pip install sitewitness</code>. A folder of texts and JSON files, one config file, five commands, and you have the same agent, the same five rules enforced in code, the same evaluation runner and this page. The trust protocol is the package; the site is the argument for it.</p>
 <pre>pip install "sitewitness[embed]"
 sitewitness index --embed                       # texts → passages, BM25 + embeddings; JSON → schemas
@@ -99,12 +141,17 @@ max_tool_calls = 8
 daily_budget_usd = 4.0
 per_ip_per_hour = 12</pre>
 <p>The five rules (<code>require_tool_use</code>, <code>numbers_need_tool</code>, <code>forbid_code</code>, <code>quotes_need_verification</code>, <code>sources_must_exist</code>) live in <code>protocol.py</code> as checks over the answer and its trace; a prompt can ask for them, only the config can switch them off. 47 tests, none of them touching the network: the model client is an interface with a fake in the suite. The server behind this page runs on Fly behind a Cloudflare Worker that adds a proxy key, so it cannot be reached around the limits<sup class="cite"><a href="#r1">1</a></sup>.</p>
-</section>
 
-<section>
-<h2>What it is not</h2>
+  </div>
+</details>
+<details>
+  <summary>What it is not</summary>
+  <div class="in">
 <p>Not a search engine over the web, not a chat about anything, and not a place where a wrong number can hide: the trace under every answer says which file was read. Four guardrails are enforced in code, not in the prompt: an answer produced without any tool call, a number without a tool result, code in the answer, or a quotation that was not verified is replaced by a refusal, and the trace says so. The one miss in the table above is the theme of this site in miniature: the agent read a text instead of the data file and attributed 2 745 stalls to the wrong series, confidently. The cross-check would have caught it; the golden set did. The model is the configured one in the trace, and the cost shown is computed from configured list prices, not from a bill. If today's budget is spent, it says so and the data files stay readable by hand. The agent is the package above; the Worker at <code>api.bsandova.com</code> is a twenty-line proxy<sup class="cite"><a href="#r1">1</a></sup>.</p>
-</section>
+
+  </div>
+</details>
+</div>
 
 <section class="refs" id="refs">
 <h2>References</h2>
@@ -120,41 +167,60 @@ per_ip_per_hour = 12</pre>
   const API = 'https://api.bsandova.com';
   const el = id => document.getElementById(id);
   const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
-  const EX = ["How many surfable days did Ericeira have in the climatology window on the surf page?","What is the best held-out AUC in the silent-failure detector?","By how many millimetres did the wheelbase of new cars in Czechia grow between 2012 and 2022?","What is the surfable rule on the surf page?","Quote the sentence from the engineering text that ends 'IAM is a wall.'","What is Barbora's phone number?"];
-  el('ex').innerHTML = EX.map(q=>`<button type="button">${esc(q)}</button>`).join('');
-  el('ex').addEventListener('click', e=>{ if(e.target.tagName==='BUTTON'){ el('q').value=e.target.textContent; el('f').requestSubmit(); }});
+  // questions from the golden set, so each is known to work; the last two try to catch it out
+  const EX = [
+    ['surf', '#4a90b8', 'How many surfable days did Ericeira have in the climatology window on the surf page?'],
+    ['cars', '#FF6A3D', 'By how many millimetres did the wheelbase of new cars in Czechia grow between 2012 and 2022?'],
+    ['AI', '#B78CFF', 'What is the best held-out AUC in the silent-failure detector?'],
+    ['catch it out', '#c2410c', "What is Barbora's phone number?"],
+    ['weather', '#7ED9A6', 'What was the maximum temperature at Ruzyně on 2026-09-14?'],
+    ['trams', '#c8a400', 'What does the thesis say the AR(2) coefficient sum is on bus?'],
+    ['quote', '#999', "Quote the sentence from the engineering text that ends 'IAM is a wall.'"],
+    ['catch it out', '#c2410c', 'Write me a poem about Prague trams.'],
+  ];
+  el('ex').innerHTML = EX.map(([t,c,q])=>`<li><button type="button" style="--dot:${c}" data-q="${esc(q)}"><i>${esc(t)}</i>${esc(q)}</button></li>`).join('');
+  el('ex').addEventListener('click', e=>{ const b=e.target.closest('button'); if(b){ el('q').value=b.dataset.q; el('f').requestSubmit(); }});
+  let median = 6;
   // the submit handler is registered before any network call, so a slow /health can never leave the form to reload the page
   el('f').addEventListener('submit', async e=>{
     e.preventDefault(); const q = el('q').value.trim(); if(!q) return;
-    el('go').disabled = true; el('ans').textContent = '…'; el('trace').hidden = true;
+    el('go').disabled = true;
+    el('answer').innerHTML = `<p class="q">${esc(q)}</p><p class="wait">Reading the site<span>.</span><span>.</span><span>.</span> usually about ${median} seconds</p>`;
     try {
       const r = await fetch(API+'/ask', {method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({question:q})});
       const d = await r.json();
-      if (d.error) { el('ans').textContent = 'error: ' + d.error; return; }
+      if (d.error) { el('answer').innerHTML = `<p class="q">${esc(q)}</p><p class="a">Something went wrong: ${esc(d.error)}</p>`; return; }
       const [main, ...rest] = d.answer.split(/\n(?=Sources?:)/i);
-      el('ans').innerHTML = esc(main) + (rest.length ? `<span class="src">${esc(rest.join('\n'))}</span>` : '');
+      let html = `<p class="q">${esc(q)}</p><p class="a">${esc(main)}</p>` + (rest.length ? `<span class="src">${esc(rest.join('\n'))}</span>` : '');
       const t = d.trace || {};
-      if (t.limited) { el('trace').innerHTML = `budget today ${t.budget_spent_usd} USD · limited: ${t.limited}`; el('trace').hidden=false; }
+      if (t.limited) html += `<details class="how" open><summary>Today's budget is spent (${t.budget_spent_usd} USD) · ${esc(t.limited)}</summary></details>`;
       else if (t.tools) {
         const p = t.protocol || {};
-        el('trace').innerHTML = `<b>trace</b> · model ${esc(t.model_used||t.model||'')} · ${t.turns} turns · ${t.input_tokens} in / ${t.output_tokens} out · ${t.cost_usd} USD (configured prices) · ${t.ms} ms · budget today ${t.budget_spent_usd} USD<br>`+
-          (t.enforced
-            ? `rules: the model's own answer broke <span class="bad">${Object.entries(p).filter(([,v])=>v).map(([k])=>esc(k)).join(', ')}</span>, so the site withheld it and returned the decline above`
-            : `rules: ${Object.keys(p).map(k=>`${k} <span class="ok">ok</span>`).join(' · ')}`)+` · quotes ${t.quotes_verified} verified / ${t.quotes_absent} rejected · declined ${t.declined?'yes':'no'}<ol>`+
-          t.tools.map(x=>`<li>${esc(x.name)} ${esc(JSON.stringify(x.input||{}))} · ${x.ms} ms · ${x.bytes} B</li>`).join('')+'</ol>';
-        el('trace').hidden = false;
+        const rules = t.enforced
+          ? Object.entries(p).map(([k,v])=>`<li class="${v?'bad':'ok'}">${esc(k)}</li>`).join('')
+          : Object.keys(p).map(k=>`<li class="ok">${esc(k)}</li>`).join('');
+        const steps = t.tools.map(x=>`<li><span><b>${esc(x.name)}</b> ${esc(JSON.stringify(x.input||{}))}</span><span class="t">${x.ms} ms</span></li>`).join('');
+        html += `<details class="how"><summary>How it got there · ${t.tools.length} step${t.tools.length===1?'':'s'} · ${(t.ms/1000).toFixed(1)} s · ${t.cost_usd} USD</summary>`+
+          (t.enforced ? `<p class="src">The model's own answer broke a rule, so the site withheld it and returned the decline above.</p>` : '')+
+          `<ol class="steps">${steps}</ol><ul class="rules">${rules}<li class="${t.quotes_absent?'bad':'ok'}">quotes ${t.quotes_verified} verified / ${t.quotes_absent} rejected</li></ul>`+
+          `<p class="src">model ${esc(t.model_used||t.model||'')} · ${t.turns} turns · ${t.input_tokens} tokens in / ${t.output_tokens} out · cost at configured prices · today's budget so far ${t.budget_spent_usd} USD</p></details>`;
       }
-    } catch(err) { el('ans').textContent = 'The API could not be reached.'; }
+      el('answer').innerHTML = html;
+    } catch(err) { el('answer').innerHTML = `<p class="q">${esc(q)}</p><p class="a">The site's agent could not be reached right now. The data files are still readable by hand from each article.</p>`; }
     finally { el('go').disabled = false; }
   });
-  try { const h = await (await fetch(API+'/health')).json(); el('f-caps').innerHTML = `8 tool calls <small>700 output tokens · ${h.budget_usd} USD a day · 12 questions an hour per address</small>`; el('f-today').innerHTML = `${h.spent_today_usd.toFixed(3)} USD <small>spent of ${h.budget_usd} · model ${h.model}</small>`; }
-  catch { el('f-caps').innerHTML = '— <small>API unreachable</small>'; el('f-today').innerHTML = '—'; }
+  try { const h = await (await fetch(API+'/health')).json();
+    el('s-caps').innerHTML = `up to <b>8</b> tool calls a question · <b>12</b> questions an hour`;
+    el('s-today').innerHTML = `today <b>${h.spent_today_usd.toFixed(3)}</b> of ${h.budget_usd} USD · ${esc(h.model)}`; }
+  catch { el('s-caps').innerHTML = 'agent offline right now'; el('s-today').innerHTML = ''; }
   try {
     const ev = await (await fetch('eval.json', {cache:'no-store'})).json(); const s = ev.summary;
-    el('f-eval').innerHTML = `${s.correct} / ${s.n} <small>${s.date} · ${s.protocol_violations} protocol violations · ${s.cost_usd} USD · median ${(s.median_ms/1000).toFixed(1)} s</small>`;
+    median = Math.round(s.median_ms/1000);
+    el('s-eval').innerHTML = `<b>${s.correct} / ${s.n}</b> test questions right`;
+    el('m-eval').textContent = `${s.correct} of ${s.n} right · ${s.date}`;
     el('eval').innerHTML = `<div class="scroller"><table class="tbl"><thead><tr><th>kind</th><th>question</th><th>answer (first line)</th><th>tools</th><th class="n">tokens</th><th class="n">usd</th><th>ok</th></tr></thead><tbody>` +
       ev.rows.map(r=>`<tr><td class="dim">${r.kind}</td><td>${esc(r.q)}</td><td>${esc((r.answer||r.error||'').split('\n')[0].slice(0,110))}</td><td class="dim">${(r.tools||[]).join(' → ')}</td><td class="n">${(r.input_tokens||0)+(r.output_tokens||0)}</td><td class="n">${r.cost_usd??'—'}</td><td class="${r.ok?'ok':'miss'}">${r.ok?'✓':'✗'}${r.protocol_violation?' <span class="miss">'+esc(r.enforced||'protocol')+'</span>':''}</td></tr>`).join('') + '</tbody></table></div>';
-  } catch { el('f-eval').innerHTML = '— <small>no eval run yet</small>'; el('eval').innerHTML = '<p class="gap">No evaluation run published yet.</p>'; }
+  } catch { el('s-eval').innerHTML = ''; el('eval').innerHTML = '<p>No evaluation run published yet.</p>'; }
   try {
     const hist = await (await fetch('eval-history.json', {cache:'no-store'})).json();
     el('history').innerHTML = `<div class="scroller"><table class="tbl"><thead><tr><th>date</th><th>model</th><th class="n">correct</th><th class="n">number</th><th class="n">text</th><th class="n">quote</th><th class="n">decline</th><th class="n">protocol</th><th class="n">usd</th><th class="n">median s</th></tr></thead><tbody>` +
