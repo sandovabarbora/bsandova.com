@@ -53,6 +53,7 @@ img{display:block;max-width:100%}
 .nav ul{list-style:none}
 .nav li a{font:500 clamp(40px,7vw,96px)/1.02 var(--display);letter-spacing:-.045em;color:#fff;transition:color .2s}
 .nav ul:hover a{color:#555}.nav ul a:hover{color:#fff}
+.nav li a small{display:block;font:400 13px/1.4 var(--mono);letter-spacing:.02em;color:#888;margin:4px 0 10px}
 .nav .side{align-self:end;font:400 13px/1.9 var(--mono);color:#888}
 .nav .side a{color:#fff}
 .close{position:absolute;top:24px;left:var(--pad);background:none;border:0;color:#fff;font:400 14px var(--display);text-transform:uppercase;letter-spacing:.02em;cursor:pointer;display:flex;gap:14px;align-items:center}
@@ -109,6 +110,7 @@ img{display:block;max-width:100%}
 .ft .row{margin-top:clamp(40px,6vw,80px);display:flex;justify-content:space-between;gap:var(--pad);flex-wrap:wrap;font:400 12px var(--mono);color:#888}
 .ft .row a{color:#fff}
 .ft .row nav{display:flex;gap:22px;flex-wrap:wrap}
+.ft .row.side{margin-top:14px}
 
 .seaband{position:relative;margin-top:clamp(80px,12vh,140px);height:100svh;min-height:600px;background:#050b11;color:#fff;overflow:hidden}
 .seaband::after{content:"";position:absolute;inset:0;background:url(assets/grain.png);opacity:.14;mix-blend-mode:screen;pointer-events:none}
@@ -210,8 +212,8 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
     <li><a href="#works">All work</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="cv/">CV</a></li>
-    <li><a href="ask/">Ask</a></li>
-    <li><a href="status/">Status</a></li>
+    <li><a href="ask/">Ask<small>an agent that answers from this site's data and shows its sources</small></a></li>
+    <li><a href="status/">Status<small>what runs this site, live</small></a></li>
   </ul>
   <div class="side">
     <div><a href="mailto:hello@bsandova.com">hello@bsandova.com</a></div>
@@ -323,7 +325,11 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
   <h2 class="big"><a href="mailto:hello@bsandova.com">hello@<br>bsandova.com</a></h2>
   <div class="row">
     <span>Barbora Šandová · Prague 50.08° N 14.43° E</span>
-    <nav><a href="https://github.com/sandovabarbora" rel="me">github</a><a href="https://www.linkedin.com/in/barbora-sandova" rel="me">linkedin</a><a href="cv/">cv</a><a href="changelog/">changelog</a><a href="feed.xml" type="application/atom+xml">feed</a><a href="status/">status</a><a href="library/">library</a><a href="watch/">model watch</a></nav>
+    <nav><a href="https://github.com/sandovabarbora" rel="me">github</a><a href="https://www.linkedin.com/in/barbora-sandova" rel="me">linkedin</a><a href="cv/">cv</a><a href="changelog/">changelog</a><a href="feed.xml" type="application/atom+xml">feed</a></nav>
+  </div>
+  <div class="row side">
+    <span>Also running here, for fun:</span>
+    <nav><a href="surf/">surf forecast</a><a href="weather/">weather check</a><a href="library/">library</a><a href="watch/">model watch</a><a href="ask/">ask the site</a><a href="status/">status</a></nav>
   </div>
 </footer>
 
