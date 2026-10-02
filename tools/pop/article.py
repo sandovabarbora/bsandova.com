@@ -43,7 +43,8 @@ def values(slug: str) -> dict:
     v |= {"q1_n": n(q1["n_number_ones"]), "q1_excluded": n(q1["excluded_before_2017"]), "q1_censored": n(q1["censored"]),
           "q1_median": n(q1["median_days"]), "focal_title": focal["label"].split(" - ", 1)[1], "focal_days": n(focal["days"]),
           "focal_longer": pct(focal["share_longer"], 1), "focal_lo": pct(focal["ci95"][0], 1), "focal_hi": pct(focal["ci95"][1], 1),
-          "focal_one_in": n(round(1 / focal["share_longer"]))}
+          "focal_one_in": n(round(1 / focal["share_longer"])), "focal_beat": pct(1 - focal["share_longer"]),
+          "focal_still": "still in the chart" if focal["still_charting"] else "no longer in the chart"}
     surv = lambda t: next((v_ for d_, v_ in q1["curve"] if d_ >= t), q1["curve"][-1][1])
     v |= {"s730": pct(surv(730)), "s1000": pct(surv(1000))}
     others = [p for p in q1["own"] if not p["focal"]]
@@ -64,54 +65,102 @@ def values(slug: str) -> dict:
     ranked = [c for c in cs if c["ranked"]]
     second = ranked[1:4]
     v["q2_top_ratio"] = ", ".join(f"{name.get(c['country'], c['country'].upper())} ({n(c['ratio'], 1)}×)" for c in second)
-    cc = {c["country"]: c for c in cs}
-    for k in ("lv", "lt", "ee", "sk", "mx", "jp"):
-        v |= {f"{k}_ratio": n(cc[k]["ratio"], 1), f"{k}_days": n(cc[k]["days"]), f"{k}_median": n(cc[k]["median_ones_days"]),
-              f"{k}_rank": n(cc[k]["rank"])}
-    lu = next(c for c in cs if c["country"] == "lu")
-    v |= {"lu_ratio": n(lu["ratio"]), "lu_median": n(lu["median_ones_days"]), "lu_ones": n(lu["ones"])}
+    for c in cs:   # every country's values, so a template can name any of them: <cc>_ratio, <cc>_days, …
+        k = c["country"]
+        v |= {f"{k}_ratio": n(c["ratio"], 1 if c["ratio"] < 10 else 0), f"{k}_ratio2": n(c["ratio"], 2), f"{k}_days": n(c["days"]),
+              f"{k}_median": n(c["median_ones_days"]), f"{k}_ones": n(c["ones"]), f"{k}_rank": n(c.get("rank", 0)),
+              f"{k}_rank_days": n(c["rank_by_days_post_hoc"])}
     low = sorted(cs, key=lambda c: c["ratio"])[:2]
     v["q2_low"] = " and ".join(f"{name.get(c['country'], c['country'].upper())} ({n(c['ratio'], 2)}×, {n(c['days'])} days against a median of {n(c['median_ones_days'])})" for c in low)
 
-    tour = rows(f"{slug}-tour.csv")
-    longest = max(tour, key=lambda t: int(t["nights"]))
-    least = min(tour, key=lambda t: int(t["sold"]) / int(t["available"]))
-    v |= {"q3_entries": n(q3["entries"]), "q3_shows": n(q3["shows"]), "q3_sold_out": pct(q3["share_sold_out"]),
-          "q3_rho": n(q3["spearman_rho"], 2), "q3_lo": n(q3["ci95"][0], 2), "q3_hi": n(q3["ci95"][1], 2),
-          "q3_min": pct(q3["sell_through_min"]), "q3_rev_night": n(q3["revenue_per_night_median_usd"] / 1e6, 2),
-          "long_venue": longest["venue"], "long_city": longest["city"], "long_nights": n(int(longest["nights"])),
-          "long_sold": n(int(longest["sold"])), "least_city": least["city"], "least_tour": least["tour"],
-          "q3_tours": " and ".join(f"<i>{t}</i>" for t in q3["tours"])}
+    tour = [t for t in rows(f"{slug}-tour.csv") if t.get("multi_venue") != "True" and t.get("hybrid") != "True"]
+    if q3.get("answerable"):
+        longest = max(tour, key=lambda t: int(t["nights"]))
+        least = min(tour, key=lambda t: int(t["sold"]) / int(t["available"]))
+        v |= {"q3_entries": n(q3["entries"]), "q3_shows": n(q3["shows"]), "q3_sold_out": pct(q3["share_sold_out"]),
+              # with every entry sold out the correlation is undefined (no variation in the share sold)
+              "q3_rho": n(q3["spearman_rho"], 2) if q3["spearman_rho"] is not None else "undefined",
+              "q3_lo": n(q3["ci95"][0], 2) if q3["ci95"] else "", "q3_hi": n(q3["ci95"][1], 2) if q3["ci95"] else "",
+              "q3_min": pct(q3["sell_through_min"]), "q3_rev_night": n(q3["revenue_per_night_median_usd"] / 1e6, 2),
+              "long_venue": longest["venue"], "long_city": longest["city"], "long_nights": n(int(longest["nights"])),
+              "long_sold": n(int(longest["sold"])), "least_city": least["city"], "least_tour": least["tour"],
+              "least_sold": n(int(least["sold"])), "least_avail": n(int(least["available"])), "least_year": least["year"],
+              "q3_multi": n(q3.get("multi_venue_excluded", 0)), "q3_hybrid": n(q3.get("hybrid_excluded", 0)),
+              "q3_tours": ", ".join(f"<i>{t}</i>" for t in q3["tours"][:-1]) + (" and " if len(q3["tours"]) > 1 else "") + f"<i>{q3['tours'][-1]}</i>"}
     v |= {"q4_songs": n(q4["songs"]), "q4_top": q4["top_song"], "q4_top_share": pct(q4["top_share"]),
           "q4_top3": pct(q4["top3_share"]), "q4_gini": n(q4["gini"], 2)}
     songs = rows(f"{slug}-songs.csv")
+    total = sum(int(s["streams"]) for s in songs)
+    cum, half = 0, 0
+    for half, s_ in enumerate(songs, 1):
+        cum += int(s_["streams"])
+        if cum >= total / 2:
+            break
     v |= {"q4_second": songs[1]["title"], "q4_third": songs[2]["title"],
-          "q4_second_share": pct(int(songs[1]["streams"]) / sum(int(s["streams"]) for s in songs))}
-    t5 = q5["countries"]
-    get = lambda name_: next(c for c in t5 if c["country"] == name_)
-    v |= {"q5_countries": n(len(t5)), "q5_entries": n(q5["entries_used"]),
-          "q5_top": t5[0]["country"], "q5_top_days": n(t5[0]["days_of_income"], 1), "q5_top_price": n(t5[0]["price_usd"]),
-          "q5_second": t5[1]["country"], "q5_second_days": n(t5[1]["days_of_income"], 1),
-          "q5_last": t5[-1]["country"], "q5_last_days": n(t5[-1]["days_of_income"], 2), "q5_last_price": n(t5[-1]["price_usd"]),
-          "us_price": n(get("United States")["price_usd"]), "us_days": n(get("United States")["days_of_income"], 1),
-          "pl_price": n(get("Poland")["price_usd"]), "pl_days": n(get("Poland")["days_of_income"], 1),
-          "cz_price": n(get("Czech Republic")["price_usd"]), "cz_tdays": n(get("Czech Republic")["days_of_income"], 1),
-          "dear": max(t5, key=lambda c: c["price_usd"])["country"], "dear_price": n(max(c["price_usd"] for c in t5)),
-          "cheap": min(t5, key=lambda c: c["price_usd"])["country"], "cheap_price": n(min(c["price_usd"] for c in t5)),
-          "q5_price_x": n(max(c["price_usd"] for c in t5) / min(c["price_usd"] for c in t5), 1),
-          "q5_days_x": n(t5[0]["days_of_income"] / t5[-1]["days_of_income"]),
-          "q5_over2": n(sum(c["days_of_income"] > 2 for c in t5)), "q5_under1": n(sum(c["days_of_income"] < 1 for c in t5))}
-    prague = next(t for t in tour if t["country"] == "Czech Republic")
-    v |= {"prague_venue": prague["venue"], "prague_date": f"{prague['first_date']} {prague['year']}", "prague_sold": n(int(prague["sold"])),
-          "prague_rev": n(int(prague["revenue_usd"]))}
+          "q4_second_share": pct(int(songs[1]["streams"]) / total), "q4_half": n(half),
+          "q4_over1": n(sum(int(s_["streams"]) / total >= 0.01 for s_ in songs))}
+    if q3.get("answerable"):   # average price per ticket of each tour: tp_<tour slug>
+        for name in q3["tours"]:
+            es = [t for t in tour if t["tour"] == name and t["revenue_usd"]]
+            if es:
+                key = re.sub(r"[^a-z0-9]+", "_", name.lower()).strip("_")
+                v[f"tp_{key}"] = n(sum(int(t["revenue_usd"]) for t in es) / sum(int(t["sold"]) for t in es))
+    t5 = q5.get("countries", [])
+    if t5:
+        v |= {"q5_countries": n(len(t5)), "q5_entries": n(q5["entries_used"]),
+              "q5_top": t5[0]["country"], "q5_top_days": n(t5[0]["days_of_income"], 1), "q5_top_price": n(t5[0]["price_usd"]),
+              "q5_second": t5[1]["country"], "q5_second_days": n(t5[1]["days_of_income"], 1),
+              "q5_last": t5[-1]["country"], "q5_last_days": n(t5[-1]["days_of_income"], 2), "q5_last_price": n(t5[-1]["price_usd"]),
+              "dear": max(t5, key=lambda c: c["price_usd"])["country"], "dear_price": n(max(c["price_usd"] for c in t5)),
+              "cheap": min(t5, key=lambda c: c["price_usd"])["country"], "cheap_price": n(min(c["price_usd"] for c in t5)),
+              "q5_price_x": n(max(c["price_usd"] for c in t5) / min(c["price_usd"] for c in t5), 1),
+              "q5_days_x": n(t5[0]["days_of_income"] / t5[-1]["days_of_income"]),
+              "q5_over2": n(sum(c["days_of_income"] > 2 for c in t5)), "q5_under1": n(sum(c["days_of_income"] < 1 for c in t5))}
+        for c in t5:   # t_<iso3>_price and t_<iso3>_days for every country
+            v |= {f"t_{c['iso3'].lower()}_price": n(c["price_usd"]), f"t_{c['iso3'].lower()}_days": n(c["days_of_income"], 1)}
+        v |= {"us_price": v.get("t_usa_price", ""), "us_days": v.get("t_usa_days", ""), "pl_price": v.get("t_pol_price", ""),
+              "pl_days": v.get("t_pol_days", ""), "cz_price": v.get("t_cze_price", ""), "cz_tdays": v.get("t_cze_days", "")}
+    prague = next((t for t in tour if t["country"] == "Czech Republic"), None)
+    if prague:
+        d = re.sub(r"^([A-Z][a-z]+) (\d{1,2})$", r"\2 \1", prague["first_date"].strip())   # "June 1" -> "1 June"
+        v |= {"prague_venue": prague["venue"].replace("O 2", "O2"), "prague_date": f"{d} {prague['year']}",
+              "prague_sold": n(int(prague["sold"])), "prague_rev": n(int(prague["revenue_usd"])) if prague["revenue_usd"] else ""}
     photo = next(p for p in json.loads((ROOT / "assets" / "photo" / "sources.json").read_text()) if p["slug"] == f"pop-{slug}")
     v["photo"] = (f'<section class="film film-page"><div class="shot" style="view-transition-name:ph-pop-{slug};'
                   f'--bg:url(../assets/photo/pop-{slug}.jpg);--bg-s:url(../assets/photo/pop-{slug}-1200.jpg)"></div>'
                   f'<p class="credit">Photo: <a href="{photo["page"]}">{photo["author"]}</a> · {photo["licence"]}, toned</p></section>')
     meta = json.loads((RAW / "collected.json").read_text())
     v |= {"kworb_date": "1 October 2026" if meta["date"] == "2026-10-01" else meta["date"], "kworb_charts": n(len(meta["countries"]))}
-    for key, page in (("rev_lot", "love-on-tour"), ("rev_lot2018", "harry-styles-live-on-tour")):
-        v[key] = str(json.loads((RAW / "wiki" / f"{page}.json").read_text())["parse"]["revid"])
+    for other in ("harry-styles", "taylor-swift", "bts", "bad-bunny", "billie-eilish"):   # Czechia across the series
+        path = R / f"{other}-results.json"
+        if path.exists():
+            o = json.loads(path.read_text())
+            key = other.replace("-", "_")
+            c = o["q2"]["czechia"]
+            v |= {f"s_{key}_cz_ratio": n(c["ratio"], 2), f"s_{key}_cz_rank": n(c["rank"]), f"s_{key}_n": n(o["q2"]["n_ranked"])}
+            t = next((x for x in o["q5"].get("countries", []) if x["iso3"] == "CZE"), None)
+            if t:
+                v |= {f"s_{key}_cz_tdays": n(t["days_of_income"], 2), f"s_{key}_cz_tprice": n(t["price_usd"])}
+    eras = R / "eras-inflation-results.json"
+    if slug == "taylor-swift" and eras.exists():   # the Eras Tour price study, registered separately
+        e = json.loads(eras.read_text())
+        for k in ("accommodation", "restaurants", "all_items"):
+            m = e[k]["month0"]
+            v |= {f"e_{k}": n(m["att"], 2), f"e_{k}_lo": n(m["lo"], 2), f"e_{k}_hi": n(m["hi"], 2),
+                  f"e_{k}_p": n(e[k]["permutation_p"], 2), f"e_{k}_label": e[k]["label"]}
+        v |= {"e_countries": n(e["accommodation"]["countries"]), "e_treated": n(len(e["accommodation"]["treated"])),
+              "e_never": n(e["never_treated_only"]["att"], 2), "e_placebo": n(e["placebo_2023"]["att"], 2),
+              "e_placebo_lo": n(e["placebo_2023"]["lo"], 2), "e_placebo_hi": n(e["placebo_2023"]["hi"], 2),
+              "e_loo_min": n(min(e["leave_one_out"].values()), 2), "e_loo_max": n(max(e["leave_one_out"].values()), 2),
+              "e_at": n(e["austria_aug2024"]["yoy"], 1), "e_at_pct": n(100 * e["austria_aug2024"]["percentile_among_controls"]),
+              "e_m1": n(next(r["att"] for r in e["accommodation"]["event"] if r["e"] == 1), 2)}
+    artist = json.loads((Path(__file__).with_name("artists.json")).read_text(encoding="utf-8"))[slug]
+    for name in artist["tours"]:   # rev_<tour slug>: the Wikipedia revision of each tour article
+        key = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
+        page = json.loads((RAW / "wiki" / f"{key}.json").read_text())
+        if "parse" in page:
+            v[f"rev_{key.replace('-', '_')}"] = str(page["parse"]["revid"])
+    v |= {"rev_lot": v.get("rev_love_on_tour", ""), "rev_lot2018": v.get("rev_harry_styles_live_on_tour", "")}
     return v
 
 

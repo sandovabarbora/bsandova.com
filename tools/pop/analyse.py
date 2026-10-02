@@ -103,7 +103,8 @@ def spearman(x: np.ndarray, y: np.ndarray) -> float:
 def q3() -> dict:
     if not (R / f"{SLUG}-tour.csv").exists():
         return {"answerable": False}
-    t = rows(f"{SLUG}-tour.csv")
+    every = rows(f"{SLUG}-tour.csv")
+    t = [r for r in every if r.get("multi_venue") != "True" and r.get("hybrid") != "True"]
     nights = np.array([int(r["nights"]) for r in t])
     sell = np.array([int(r["sold"]) / int(r["available"]) for r in t])
     rho = spearman(nights, sell) if sell.std() > 0 else None
@@ -114,7 +115,8 @@ def q3() -> dict:
             boot.append(spearman(nights[i], sell[i]))
     full = float((sell >= 0.995).mean())
     rev = [int(r["revenue_usd"]) / int(r["nights"]) for r in t if r["revenue_usd"]]
-    return {"answerable": True, "entries": len(t), "tours": sorted({r["tour"] for r in t}), "shows": int(nights.sum()), "share_sold_out": full,
+    return {"answerable": True, "entries": len(t), "multi_venue_excluded": sum(r.get("multi_venue") == "True" for r in every),
+            "hybrid_excluded": sum(r.get("hybrid") == "True" for r in every), "tours": sorted({r["tour"] for r in t}), "shows": int(nights.sum()), "share_sold_out": full,
             "demand_at_capacity": full >= 0.9, "spearman_rho": rho,
             "ci95": [float(np.percentile(boot, 2.5)), float(np.percentile(boot, 97.5))] if boot else None,
             "sell_through_min": float(sell.min()), "nights_max": int(nights.max()),
@@ -138,7 +140,7 @@ def q4() -> dict:
 def q5() -> dict:
     if not (R / f"{SLUG}-tour.csv").exists():
         return {"answerable": False}
-    t = [r for r in rows(f"{SLUG}-tour.csv") if r["revenue_usd"] and r["iso3"] and r["gdppc_usd"]]
+    t = [r for r in rows(f"{SLUG}-tour.csv") if r["revenue_usd"] and r["iso3"] and r["gdppc_usd"] and r.get("hybrid") != "True"]
     by: dict[str, dict] = {}
     for r in t:
         name = {"GBR": "United Kingdom", "USA": "United States"}.get(r["iso3"], r["country"])

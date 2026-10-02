@@ -88,4 +88,14 @@ These apply to part 1 as well; its design points here.
 
 ## Changes after registration
 
-None yet.
+- **2 October 2026, after the part 2–5 results were first computed: a data definition.** An attendance cell that
+  spans show rows in more than one venue is a leg's total, not a run in one venue, so it cannot answer Q3. Such
+  entries are flagged (`multi_venue`) and left out of Q3; they stay in Q5, where the average price per ticket in the
+  country is still defined. Only BTS has such entries (Los Angeles and Tokyo, 2018); part 1 is unaffected.
+- **2 October 2026, same note.** Taylor Swift's focal song by the series rule, *Cruel Summer*, peaked at 2 in the
+  global chart, so her Q1 reference set is the songs with global peak 2, as §2 fixes; their track pages were
+  collected for this (`collect_extra.py peers`).
+- **2 October 2026, same note.** An entry whose venue names an online platform (Weverse, YouTube and the like), or
+  that reports more tickets sold than available, mixes online viewers with the hall. Its sell-through and its price
+  per ticket are not a hall's, so it is flagged (`hybrid`) and left out of Q3 and Q5. This affects BTS's
+  *Permission to Dance on Stage* (2021–2022).
