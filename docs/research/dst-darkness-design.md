@@ -177,7 +177,7 @@ planted evening ratio of 1.40 and morning ratio of 0.80 and recovered 1.34 (1.08
 **2 October 2026 (correction, before data).** The east–west spread of the region centroids is 5.2° of longitude
 (12.74°–17.95° E), about 21 minutes of dusk, not 4.5° and 18 minutes as written in the previous note.
 
-**3 October 2026 (data step; deviation in prepare.py).** The first run of `prepare.py` on the records dropped
+**2 October 2026, late evening (data step; deviation in prepare.py).** The first run of `prepare.py` on the records dropped
 every time with minute 60. In the form, minute 60 means "minute unknown" with a known hour, so those records have a
 valid hour; only hour 25 ("hour unknown") is invalid. `parse_hour` was corrected to accept minute 60 before any
 estimate was run; the only output seen from the first run was the per-year count of dropped times, and the forms of
