@@ -53,7 +53,7 @@
 <header class="text-head">
   <p class="kicker">Research · master's thesis summary · Prague buses and trams, 2025</p>
   <h1>Persistence Dynamics and Welfare Costs <em>of Urban Public Transport Delays</em></h1>
-  <p class="deck">On 121 197 794 vehicle-location records from Prague, within-day bus and tram delays are persistent, and the thesis values the part of their dispersion a traveller can forecast from a live feed.</p>
+  <p class="deck">On 121 197 794 vehicle-location records from Prague, a jump in a bus or tram delay is still half there about half an hour later. That makes a live feed worth something: about 5.6 % of the reliability cost of a bus commute, roughly 204 CZK a year, as an index rather than a measured gain.</p>
   <dl class="facts">
     <div><dt>records</dt><dd>121 197 794 <small>Prague vehicle locations, 15 March – 8 September 2025, Golemio · administrative count</small></dd></div>
     <div><dt>persistence, AR(2) sum</dt><dd>0.727 · 0.715 <small>bus · tram · half-life ≈ 33 min · no interval on this page</small></dd></div>
@@ -63,7 +63,7 @@
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>Prague's bus and tram delays persist within a day, in a level a traveller can see on a live feed.</li>
+    <li>Prague's bus and tram delays persist within a day: a sudden delay is still half there after about 33 minutes, in a level a traveller can see on a live feed.</li>
     <li>Valued in crowns, the forecastable part is about 204 CZK a year by bus and 60 by tram: an index, not a measured gain.</li>
     <li>This page reports no intervals, because the thesis text is not yet public.</li>
     <li>The data cover delays within a day, in one Prague season without winter.</li>
@@ -120,7 +120,7 @@
 
 <section>
 <h2>Persistence in bus and tram delays</h2>
-<p>Within-day delays are serially correlated on both modes that carry inference, with AR(2) coefficient sums of 0.727 on bus across 691 routes and 0.715 on tram across 41, and simulated impulse responses cross half their magnitude after about thirty-three minutes. Because the delay level is far more persistent than its increment, the thesis locates the memory in a slowly moving, observable state rather than in accumulating shocks. Interday correlation is far lower, so the persistence is a within-day property<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>Within-day delays are serially correlated on both modes that carry inference, with AR(2) coefficient sums of 0.727 on bus across 691 routes and 0.715 on tram across 41, and simulated impulse responses cross half their magnitude after about thirty-three minutes. In plain terms: if a bus suddenly falls three minutes behind, about a minute and a half of it is still there half an hour later. A coefficient sum near 0 would mean a delay vanishes at the next observation, and near 1 that it never fades; 0.727 is closer to the second. Because the delay level is far more persistent than its increment, the thesis locates the memory in a slowly moving, observable state rather than in accumulating shocks. Interday correlation is far lower, so the persistence is a within-day property<sup class="cite"><a href="#r1">1</a></sup>.</p>
 </section>
 
 <section>
@@ -155,6 +155,7 @@
 <section id="changelog" class="changelog">
 <h2>Change log</h2>
 <ul>
+<li>3 October 2026: after a reader's review, the deck and short version now say what the persistence means for a traveller (a sudden delay is half there after about 33 minutes) and lead with the value of a live feed; a plain-language reading of the AR(2) sum was added. No number changed.</li>
 <li>16 September 2026: first published.</li>
 <li>29 September 2026, version 2: the kicker names the kind and object; the deck is one sentence and no longer calls the page a short version; the short version no longer repeats the deck, the facts or the body. Removed the facts card "hypotheses: 3 of 3, registered in the proposal", a tally that also overstated the proposal as a registration; the hypotheses are now "stated in the thesis proposal", with a table. The third hypothesis is read as inconclusive, replacing "the null is real", which a failed placebo does not support. Cut the sentence claiming that the failure of all three hypotheses shows the questions were fixed in advance, and the section on why the record on this site plays the delays. Added the question and contribution against five external references, a data section, a description of the estimation that marks what is not yet reproduced, a limitations section with the missing intervals, a reproduction note and the metadata block. The contribution sentence moved from the limitations to the opening. The source is named in one unit, 121 197 794 vehicle-location records, as on the front page and in Delayed All the Time. No figures were changed.</li>
 <li>29 September 2026: a full summary of about 1 700 words, with the estimation details, route-clustered intervals for the persistence sums and the real-time-information shares, a figure, the calibration constants and a robustness table, awaits the thesis text, which is not yet in the Charles University repository.</li>
