@@ -155,3 +155,21 @@ Two registered checks bound it: the placebo date of §6 (a fake change at day �
 of natural darkening alone, and H3 (§5) separates the jump from the drift through the sun's position. The article
 reports β_E together with the placebo estimate and says that the clock change is not the only darkening inside the
 window. Labels (§4) are unchanged.
+
+**2 October 2026 (unit of analysis and layouts; archives downloaded, no record read).** The ten yearly archives
+were downloaded and hashed (`tools/dst/collect.py`, `tools/data/dst/manifest.json`). Only their member lists, the
+field count of the first CSV line (64, no header) and the header row of `Inehody.xls` were read, plus the list of
+distinct region codes in the 2025 file (no counts). Two layouts: 2016–2022 are headerless CSVs, one per region,
+named by region code, in the documented 64-field order without p4b (district); 2023–2025 are HTML tables with p4a
+and p4b. Districts therefore exist for three years only.
+
+**Change.** The unit is the **region** (kraj, 14, codes 00–07 and 14–19, the same in both layouts) × date × clock
+hour, for all ten years. The fixed effects of §3 become region × year. The sun's position is computed at each
+region's geometric centroid (Natural Earth 10m admin-1, v5.1.2; population weights not available). The
+east–west spread of the regions' centroids (about 4.5° of longitude, 18 minutes of dusk) remains as variation for
+H3. The district-level map of §8 stays, computed from astronomy only. Power is unchanged in practice (it was
+computed nationally).
+
+Code registered with this note: `tools/dst/sun.py` (NOAA altitude; checked: Prague, 26 Oct 2025, sunset 16:50 CET,
+civil dusk 17:23), `prepare.py` (cells), `estimate.py` (§3–§6). The estimation was run once on synthetic cells with a
+planted evening ratio of 1.40 and morning ratio of 0.80 and recovered 1.34 (1.08–1.66) and 0.70 (0.52–0.96).
