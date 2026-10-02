@@ -194,7 +194,7 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
   .menu-btn span{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}.rv{opacity:1;transform:none}.film:hover .shot,.film.in .shot{transform:scale(1.03)}}
-.what{position:absolute;z-index:2;top:clamp(92px,13vh,140px);left:var(--pad);max-width:44ch;margin:0;font:400 clamp(16px,1.5vw,20px)/1.45 var(--sans);color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.55)}.what b{font-weight:500}@media (max-width:640px){.what{max-width:calc(100vw - 2*var(--pad));font-size:15px}}
+.what{position:absolute;z-index:2;top:clamp(96px,14vh,150px);left:var(--pad);margin:0;font:400 clamp(11px,.9vw,13px)/2 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.6)}.what span{display:block;opacity:0;animation:card .9s ease forwards}.what span:nth-child(2){animation-delay:.5s}.what span:nth-child(3){animation-delay:1s;color:#cfd6da}@keyframes card{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}@media (prefers-reduced-motion:reduce){.what span{animation:none;opacity:1}}@media (max-width:640px){.what{font-size:10.5px;letter-spacing:.16em}}
 </style>
 </head>
 <body>
@@ -227,7 +227,7 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
 <nav class="where" id="where" aria-label="Sections"><ol><li><a href="#f-prague-measured" data-t="f-prague-measured"><span>01</span>Prague, measured</a></li><li><a href="#f-pop-measured" data-t="f-pop-measured"><span>02</span>Pop, measured</a></li><li><a href="#f-persistence" data-t="f-persistence"><span>03</span>Persistence</a></li><li><a href="#f-player-pool-atlas" data-t="f-player-pool-atlas"><span>04</span>Player Pool Atlas</a></li></ol></nav>
 <main id="work">
   <section class="film" style="--tint:#0d0c05;--move:translate3d(0,2.5%,0) scale(1.08)" id="f-prague-measured" aria-label="Prague, measured">
-    <p class="what"><b>Barbora Šandová</b>, data and cloud engineer in Prague. This is my workshop: questions I find interesting, answered from open data, with the design, data and code published.</p>
+    <p class="what"><span>Barbora Šandová presents</span><span>studies from open data</span><span>design · data · code, all public</span></p>
     <div class="shot" style="view-transition-name:ph-prague-rings;--bg:url(assets/photo/prague-rings.jpg);--bg-s:url(assets/photo/prague-rings-1200.jpg)"></div>
     <div class="film-in">
       <div class="film-txt"><p class="lbl">Data · Prague · a series in five parts</p><h1 class="huge">Prague,<br>measured</h1><p class="dek">Studies of one city from the data it publishes about itself: how its City Assembly votes, how its precincts vote in national elections, how it funds its districts, how housing moves from permit to completion, and how it prices kerb space.</p><div class="ctas"><a class="cta" href="texts/prague-measured"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Read the series</a><a class="cta" href="texts/prague-council"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Start with Part 1</a></div></div>
