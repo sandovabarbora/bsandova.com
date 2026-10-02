@@ -135,4 +135,17 @@ table of the largest diaspora dyads. Data, code and the per-cell tables publishe
 
 ## Changes after registration
 
-None yet.
+**3 October 2026 (power; before any vote was read).** Power was simulated as §7 promised.
+
+- **H1** (`tools/eurovision/power.py`; structure from the rules, diaspora distribution assumed): with nine contests
+  the registered model detects a televote premium of R = 1.18 at the 90th percentile of x with power about 1.00, and
+  R = 1.09 with power 0.63; with no effect it rejects in 7 % of draws (nominal 5 %).
+- **H3** (`tools/eurovision/power_h3.py`): participation by country and year was taken from Spijkervet's
+  `contestants.csv`, reading only its `year` and `to_country` columns (its points columns were not read). With a
+  simplified final-only structure, the standard error of the 0 … +5 average is about 0.0016 in share of points,
+  about 4 % of the pre-accession mean (≈ 0.04); the minimum detectable effect at 80 % power is about 12 % of that
+  mean. With no effect the simulated test rejects in 10 % of draws and the mean estimate is −3 % of the mean, because
+  the simulation ignores the first stage's uncertainty; the registered estimator (did2s) accounts for it. The ±10 %
+  margin for "not supported" is therefore reachable only if the estimate is close to zero.
+
+Nothing in §1–§6 changes.
