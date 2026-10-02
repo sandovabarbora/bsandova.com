@@ -134,4 +134,24 @@ windows, and the minimum detectable ratio at 80 % power and α = 0.05 for β_E. 
 
 ## Changes after registration
 
-None yet.
+**2 October 2026 (years and power; before any record was downloaded).** The yearly record files exist for 2016–2025
+only (archive pages list `datagis2016` … `data-web-12-2025`; 2015 and earlier are yearbooks in PDF, without
+records). The sample is therefore the ten autumns 2016–2025.
+
+The power computation of §7 (`tools/dst/power.py`; inputs: the police's monthly summaries for October and November
+2025, 2 268 and 2 556 pedestrian crashes cumulative from January, so about 9.6 a day in November; hour shares
+assumed, not measured: evening 25 %, morning 10 %, control 22 % of a day's pedestrian crashes) gives, for the
+model of §3 as registered, a standard error of about 0.27 on log β_E: 34 % power at a ratio of 1.50, and a minimum
+detectable ratio of about 2.0 at 80 % power. The hour-group-specific day trends (λ_E, λ_M) cost most of it.
+
+**Change.** The primary model of §3 drops λ_E·t×Evening and λ_M·t×Morning and keeps the common day trend λ·t.
+Its standard error is about 0.12: power 0.72 at a ratio of 1.35 and 0.95 at 1.50; minimum detectable ratio about
+1.41 at 80 % power. The original specification, with the group-specific trends, becomes a registered sensitivity
+check (§6) and is reported beside the primary.
+
+**What the change costs.** Without the group trends, β_E also contains the natural darkening of the evening hours
+between the two halves of the window (about 25 minutes of earlier dusk, besides the 60 minutes of the clock change).
+Two registered checks bound it: the placebo date of §6 (a fake change at day −14) measures the effect of two weeks
+of natural darkening alone, and H3 (§5) separates the jump from the drift through the sun's position. The article
+reports β_E together with the placebo estimate and says that the clock change is not the only darkening inside the
+window. Labels (§4) are unchanged.
