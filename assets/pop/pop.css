@@ -15,3 +15,6 @@
 .pop-v{color:#666;white-space:nowrap}
 .pop-t.cz .pop-v{color:#000}
 @media (max-width:520px){.pop-t{grid-template-columns:86px 1fr;row-gap:2px}.pop-v{grid-column:2}}
+.pop-map{display:block;width:100%;height:auto}
+.pop-map path:hover{opacity:.75}
+.pop-map circle{cursor:default}

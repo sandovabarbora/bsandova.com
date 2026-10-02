@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pop, measured, together: a hit lasts three times as long in its own language, and tickets barely follow income</title>
+<meta name="description" content="Pop, measured, part 6. Two exploratory models across five artists: songs last about {{m1_x}} times as long in countries that speak their language, and ticket prices follow host-country income with an elasticity of {{m2_th}}.">
+<meta property="og:title" content="Pop, measured, together: a hit lasts three times as long in its own language, and tickets barely follow income">
+<meta property="og:description" content="Across five artists, a song lasted about {{m1_x}} times as long where people speak its language; tickets rose only {{m2_th}} % for each 1 % of host-country income.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://bsandova.com/texts/pop-together">
+<meta property="og:image" content="https://bsandova.com/assets/og/pop-together.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bsandova.com/assets/og/pop-together.jpg">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://bsandova.com/texts/pop-together">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../text.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../a24.css">
+<link rel="stylesheet" href="../assets/pop/pop.css">
+<style>
+.note{font:400 12px/1.6 var(--mono);color:#666}
+.text dl.meta{display:block;letter-spacing:normal;text-transform:none;font-size:12px}
+.text dl.meta div{border-right:0;padding-left:0;grid-template-columns:13ch 1fr}
+.text dl.meta dd{overflow-wrap:anywhere}
+@media (max-width:560px){.text dl.meta div{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">research · pop · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Research · Pop, measured, part 6 · five artists together, 2017–2026</p>
+  <h1>A hit lasts three times as long in its own language, <em>and tickets barely follow income</em></h1>
+  <p class="deck">Exploratory: across five artists, songs lasted about {{m1_x}} times as long in countries that speak their language, and ticket prices rose only {{m2_th}} % for each 1 % of the host country's income.</p>
+  <dl class="facts">
+    <div><dt>same language, days in the chart</dt><dd>{{m1_x}}× <small>95 % CI {{m1_lo}}–{{m1_hi}} · {{m1_n}} artist–country pairs, artist and country fixed effects</small></dd></div>
+    <div><dt>income elasticity of the average ticket</dt><dd>{{m2_th}} <small>95 % CI {{m2_lo}} to {{m2_hi}} · {{m2_n}} entries, tour fixed effects</small></dd></div>
+    <div><dt>a ticket in a country ten times poorer</dt><dd>about {{burden_x}}× <small>the days of income · derived from the elasticity</small></dd></div>
+  </dl>
+</header>
+<details class="tldr" open>
+  <summary>Overwhelmed? Here's the short version</summary>
+  <ul>
+    <li>Put the five artists side by side and the strongest pattern is language: a hit stays far longer where people speak it.</li>
+    <li>That holds after allowing for countries where every hit lingers and for songs that are simply bigger, and under every check.</li>
+    <li>Tour prices hardly move with local incomes, so the same show costs several times more of a day's pay in poorer countries.</li>
+    <li>Czech listeners kept the three English-language songs longer than the model expects and the Korean and Spanish ones shorter.</li>
+    <li>This is exploratory: the inputs were already seen in parts 1–5, and five artists are not a sample of pop.</li>
+  </ul>
+</details>
+<dl class="meta">
+  <div><dt>published</dt><dd>2 October 2026 · updated 2 October 2026 · <a href="#changelog">version 1</a></dd></div>
+</dl>
+<details class="meta-more">
+  <summary>About this study</summary>
+<dl class="meta">
+  <div><dt>status</dt><dd>research, exploratory; models committed before estimation</dd></div>
+  <div><dt>registration</dt><dd>exploratory: the models, the coding of languages and the checks were committed at <code>4fe0484</code> on 2 October 2026, and the code at <code>9545ead</code>, before estimation; results commit <code>85b798f</code>. The inputs had been seen as descriptive results in parts 1–5, so no result here is confirmatory. Commit times are self-reported.</dd></div>
+  <div><dt>data</dt><dd>the published results of <a href="pop-measured">Pop, measured</a>, parts 1–5: <a href="../assets/pop/together/panel.csv">panel.csv</a> ({{m1_n}} artist–country pairs) and <a href="../assets/pop/together/tickets.csv">tickets.csv</a> ({{m2_n}} Boxscore entries), drawn from kworb.net, Wikipedia (Boxscore) and the World Bank</dd></div>
+  <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/pop/together.py">tools/pop/together.py</a> at the commit that publishes this page; rebuild: <code>uv run --with pandas --with numpy --with statsmodels python tools/pop/together.py</code></dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Pop, measured, together: a hit lasts three times as long in its own language, and tickets barely follow income</i>. bsandova.com/texts/pop-together, version 1.</dd></div>
+  <div><dt>licence</dt><dd>code MIT; text, figures and data CC BY 4.0</dd></div>
+</dl>
+</details>
+
+{{photo}}
+
+<section>
+<p>Parts 1 to 5 of <a href="pop-measured">Pop, measured</a> asked the same questions of five artists one at a time, and each part could say only how its own artist compared with a reference: other number ones, other countries' hits, other cities. Set side by side, the five parts allow two questions none of them could answer alone. The first is whether a song lasts longer in countries that speak its language. Ferreira and Waldfogel showed, for half a century of national charts, that listeners favour music from their own country and language even as music trade has grown<sup class="cite"><a href="#r1">1</a></sup>; streaming lets the question be asked song by song and day by day<sup class="cite"><a href="#r2">2</a></sup>. The second is whether concert prices follow the incomes of the places a tour visits. Krueger described how the concert market prices superstars<sup class="cite"><a href="#r3">3</a></sup>, and Courty and Pagliero how much of that pricing is set before a promoter knows each city<sup class="cite"><a href="#r4">4</a></sup>; a tour that plays the Philippines, Mexico and Switzerland in one year shows whether its prices move with the country or stay put. Both questions are answered here with fixed-effects regressions on the parts' published results.</p>
+</section>
+
+<section>
+<h2>Data</h2>
+<p>The first model uses every pair of an artist and a country in which the artist's focal song entered the national Spotify Top 200: {{m1_n}} pairs across five artists and {{m1_clusters}} countries, each with the song's days in that chart. Pairs where the song never charted are not in the data, so the model describes how long a song lasted once it had entered, not whether it entered. {{m1_still}} of the pairs are songs still in the chart, whose days are a lower bound. Each pair is coded for whether the song's language is the country's main official language: English for Harry Styles, Taylor Swift and Billie Eilish, Spanish for Bad Bunny, Korean for BTS; English-speaking countries are those where English is an official national language, Spanish-speaking those of Spain and Latin America, and Korean only South Korea. {{m1_same}} pairs share a language.</p>
+<p>The second model uses every Boxscore entry with gross and tickets sold from the five artists' tours, as in the parts' ticket question: {{m2_n}} entries from {{m2_tours}} tours in {{m2_clusters}} countries, with entries that counted online viewers left out. The outcome is the average ticket, gross divided by tickets sold, and the regressor the host country's GDP per capita in current dollars for the year of the show.</p>
+</section>
+
+<section>
+<h2>How this was done</h2>
+<p>For language, the model is log(days in the chart) = artist effect + country effect + β × same language. The country effects absorb everything about a country that makes all hits linger or pass, such as how many people use Spotify and how fast its chart turns over; the artist effects absorb how strong each focal song is everywhere. What is left to identify β is the difference, within a country, between songs in its language and songs not in it, compared with the same difference elsewhere: Spain comparing Bad Bunny with the English-language songs, the United States comparing the English-language songs with BTS and Bad Bunny. exp(β) is the multiple of days. A second version lets the effect differ for English and Spanish songs; the Korean effect rests on one country and is shown but not read.</p>
+<p>For prices, the model is log(average ticket) = tour effect + θ × log(GDP per capita). The tour effects absorb each tour's general price level, so θ compares the cities within a tour: an elasticity of 0 means a tour charged the same everywhere, 1 that it charged in proportion to local incomes. A second version adds the venue's capacity per night. In both models the standard errors are clustered by country, since the same country appears for several artists<sup class="cite"><a href="#r5">5</a></sup>. The models, the coding of languages and the checks were committed before anything was estimated, but the inputs had already been seen in parts 1–5, so the results are exploratory: they show what the data say under rules fixed in advance, not a test of a hypothesis made before the data.</p>
+</section>
+
+<section>
+<h2>Language keeps a hit</h2>
+<p>A song lasted {{m1_x}} times as long in a country that speaks its language as in one that does not, holding fixed the country and the song (95 % CI {{m1_lo}}–{{m1_hi}}). Split by language, English songs in English-speaking countries lasted {{en_x}} times as long ({{en_lo}}–{{en_hi}}, {{en_pairs}} pairs), and Bad Bunny's Spanish song in Spanish-speaking countries {{es_x}} times as long ({{es_lo}}–{{es_hi}}, {{es_pairs}} pairs). The Korean estimate, {{ko_x}} times, rests on South Korea alone and says nothing on its own. The English effect is the smaller and less certain of the two, which fits English being the default language of global pop: an English song is foreign in fewer places, and in many non-English countries it is heard as the normal thing, so the gap between home and abroad is narrower.</p>
+<figure data-chart="../assets/pop/together/charts.json#language">
+  <img src="../assets/pop/together/01-language.svg" alt="Same-language effect on days in the chart, with 95 % intervals: about {{m1_x}} times overall, {{en_x}} for English songs and {{es_x}} for the Spanish song." loading="lazy">
+  <figcaption><b>fig. 1</b> · How many times as long a focal song lasted in the national Top 200 of a country speaking its language, artist and country fixed effects, 95 % intervals clustered by country; exploratory, n = {{m1_n}} pairs. Data: Pop, measured, parts 1–5.</figcaption>
+</figure>
+<p>The estimate holds under each check fixed in advance. Without the songs still in the chart, whose days are lower bounds, the multiple is {{ck_without_still_charting}} ({{ck_without_still_charting_lo}}–{{ck_without_still_charting_hi}}); coding BTS's <i>Dynamite</i> as English, which it is sung in, it is {{ck_dynamite_as_english}}; treating the United States as Spanish-speaking for Bad Bunny, because of its large Spanish-speaking population, {{ck_us_spanish_for_bad_bunny}}; and without Luxembourg, whose one-day number ones distort the parts' ratios, {{ck_without_luxembourg}}. Every interval stays above one. The smallest estimate is the one without songs still charting, because those are mostly Bad Bunny's in Latin America, the strongest same-language pairs; the effect does not depend on them, but they make it larger.</p>
+<p>Which pairs carry the effect is easy to see in the countries where the five songs meet. In the United Kingdom the three English songs lasted {{d_gb_harry_styles}}, {{d_gb_taylor_swift}} and {{d_gb_billie_eilish}} days, BTS's {{d_gb_bts}} and Bad Bunny's {{d_gb_bad_bunny}}; in the United States the English songs between {{d_us_harry_styles}} and {{d_us_taylor_swift}} days, BTS's {{d_us_bts}}. In South Korea BTS's song lasted {{d_kr_bts}} days and Bad Bunny's {{d_kr_bad_bunny}}. The Spanish-speaking countries are the subtler case. Bad Bunny's song lasted {{d_es_bad_bunny}} days in Spain and {{d_mx_bad_bunny}} in Mexico, every day since it came out, while Harry Styles's lasted {{d_es_harry_styles}} and {{d_mx_harry_styles}}: within those countries alone, the Spanish song does not win, because it is younger and has not had time to. What sets it apart is how quickly it passed everywhere else, {{d_gb_bad_bunny}} days in the United Kingdom and {{d_cz_bad_bunny}} in Czechia. The artist effect measures a song's strength across all countries, so the same-language effect is the gap between how a song did at home and how it did abroad, compared across the five; for Bad Bunny that gap is the widest.</p>
+<figure data-chart="../assets/pop/together/charts.json#checks">
+  <img src="../assets/pop/together/02-checks.svg" alt="The same-language multiple under each check: the registered model and four variations, every interval above one." loading="lazy">
+  <figcaption><b>fig. 2</b> · The same-language multiple under each check committed with the model, 95 % intervals clustered by country; exploratory. Blue: the main model. Data: Pop, measured, parts 1–5.</figcaption>
+</figure>
+<p>What the model does not show is why. Radio plays songs in the country's language; playlists are built by country; a song people understand may stay with them longer; local promotion follows the language too. The data cannot separate these, and they are all part of what "language" means here. They do show that the effect is not the familiar point that some countries love music in general, nor that some songs are simply bigger: both are held fixed.</p>
+</section>
+
+<section>
+<h2>Czechia, against the model</h2>
+<p>The model predicts how long each song should have lasted in Czechia, from how long hits last there and how strong each song was. Against that prediction, Czech listeners kept Taylor Swift's song {{cz_taylor_swift}} longer, Billie Eilish's {{cz_billie_eilish}} and Harry Styles's {{cz_harry_styles}}, and kept BTS's {{cz_bts}} and Bad Bunny's {{cz_bad_bunny}}. Czech is not English, so none of the five pairs counts as same-language, and the pattern is the one the parts suggested: Czech listeners treat English-language pop much as an English-speaking country would, and Korean and Spanish pop as foreign. With five songs these are descriptions of five pairs, not estimates of a Czech taste.</p>
+<figure data-chart="../assets/pop/together/charts.json#czechia">
+  <img src="../assets/pop/together/03-czechia.svg" alt="Czechia against the model: longer than predicted for Taylor Swift, Billie Eilish and Harry Styles, shorter for BTS and Bad Bunny." loading="lazy">
+  <figcaption><b>fig. 3</b> · Each focal song's days in the Czech Top 200 against the language model's prediction, percent; exploratory, residuals of five pairs. Data: Pop, measured, parts 1–5.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>Tickets barely follow income</h2>
+<p>Within a tour, a city ten times richer paid on average only {{ten_x}} times as much per ticket: the income elasticity of the average ticket is {{m2_th}} (95 % CI {{m2_lo}} to {{m2_hi}}, {{m2_n}} entries). Put the other way round, a country ten times poorer paid about {{ten_pct}} % less per ticket, so the same show cost its fans about {{burden_x}} times as many days of income. Adding the venue's capacity per night barely changes it ({{m2b_th}}). Dropping each artist in turn keeps it between {{drop_min}} (without {{drop_min_a}}) and {{drop_max}}. Tours do charge less in poorer countries, but far less than in proportion to income: prices are set, roughly, in dollars, with a modest discount.</p>
+<p>Across the five artists' tours, the host countries' incomes run from {{inc_lo}} dollars per person a year in {{inc_lo_c}} to {{inc_hi}} in {{inc_hi_c}}, a ratio of about {{inc_span}}. At an elasticity of {{m2_th}}, a tour that charged 100 dollars in {{inc_hi_c}} would charge about {{example_price}} dollars in {{inc_lo_c}}: a ticket {{span_price}} times cheaper in a country {{inc_span}} times poorer, and so about {{span_burden}} times dearer measured in days of income. That is the arithmetic behind the large ticket squares in parts 1, 3, 4 and 5.</p>
+<figure data-chart="../assets/pop/together/charts.json#prices">
+  <img src="../assets/pop/together/04-prices.svg" alt="Scatter of {{m2_n}} tour entries: average ticket against the host country's GDP per capita on log scales, with a fitted slope of {{m2_th}} and a steeper dashed line for prices in proportion to income." loading="lazy">
+  <figcaption><b>fig. 4</b> · Average ticket against the host country's GDP per capita, both log scales, one dot per Boxscore entry, coloured by artist; black: the fitted elasticity with tour effects; dashed: prices in proportion to income, for comparison. Exploratory, n = {{m2_n}}. Data: Boxscore via Wikipedia, World Bank, as in parts 1–5.</figcaption>
+</figure>
+<p>The artists differ. Bad Bunny's tours followed income most, with an elasticity of {{e_bad_bunny}} ({{e_bad_bunny_lo}} to {{e_bad_bunny_hi}}), the only artist whose tours played many countries across a wide range of incomes, from Honduras to Sweden. Harry Styles's came next at {{e_harry_styles}} ({{e_harry_styles_lo}} to {{e_harry_styles_hi}}), then Billie Eilish's at {{e_billie_eilish}} ({{e_billie_eilish_lo}} to {{e_billie_eilish_hi}}). BTS's tours priced almost the same everywhere, {{e_bts}} ({{e_bts_lo}} to {{e_bts_hi}}), which is why a ticket in Mexico cost them more than a week of income. Taylor Swift's estimate, {{e_taylor_swift}}, rests on one tour of seven rich countries and has an interval too wide to read. No artist's tours came close to pricing in proportion to income.</p>
+<figure data-chart="../assets/pop/together/charts.json#elasticity">
+  <img src="../assets/pop/together/05-elasticity.svg" alt="Income elasticity of the average ticket for all five artists together and for each, with 95 % intervals; all well below 1." loading="lazy">
+  <figcaption><b>fig. 5</b> · Income elasticity of the average ticket, tour fixed effects, 95 % intervals clustered by country; 0 is one price everywhere, 1 prices in proportion to income. Exploratory. Data: as fig. 4.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>What these models can and cannot separate</h2>
+<p>Three limits shape how far the language result goes. First, the model sees a pair only once the song entered the country's chart. Songs that never entered a chart abroad are missing, and those are mostly the ones that did worst away from their language, so the effect among songs that charted is, if anything, smaller than the effect on whether a song charts at all. Second, the language groups are tied to artists: every Spanish pair is Bad Bunny's and the only Korean pair is BTS's in Korea. The artist effects remove how strong each song is overall, but they cannot tell a language effect from something else that sets Bad Bunny's audience apart, such as the regional strength of reggaeton. Third, with {{m1_clusters}} country clusters the clustered standard errors are reliable by the usual rules of thumb<sup class="cite"><a href="#r5">5</a></sup>, but for the language groups they rest on fewer contrasts: {{en_pairs}} English pairs and {{es_pairs}} Spanish ones.</p>
+<p>The price model has its own limits. Tour effects remove each tour's level, so the elasticity comes from cities within a tour; a promoter who priced a whole leg in a poorer region lower would show up partly in the tour effect, which is one reason the estimate is a lower bound on how much prices adapt to income across regions. The average ticket mixes cheap and dear seats, and a tour that sold more cheap seats in poorer countries would show a lower average without changing any one price. Neither model is causal: they describe how the five artists' songs and tours behaved, under rules fixed before the estimates were seen.</p>
+</section>
+
+<section id="changes">
+<h2>What changed after registration</h2>
+<ul>
+<li>Nothing. The models and checks are those committed at <code>4fe0484</code>, and the data definitions of parts 2–5 (leg totals and online entries) apply as they did there.</li>
+</ul>
+</section>
+
+<section>
+<h2>What this means</h2>
+<p>Read together, the five parts say two things that none says alone. A hit lasts far longer where people speak its language, about {{m1_x}} times as long once the country and the song are held fixed, and more so for a Spanish song than an English one, English being the language global pop already shares. And concert tours price in something close to one currency: within a tour, prices fall only a little where incomes are low, so the same night out takes several times more of a fan's income in the Philippines or Honduras than in Norway. Both findings are exploratory, from five artists picked for a series, and both rest on the parts' own data and limits. They are strong enough, under every check fixed beforehand, to be worth testing on more artists with a design written before the data.</p>
+</section>
+
+<section>
+<h2>What this does not show</h2>
+<p>Five artists are not a sample of pop, and their languages are tied to the artists: the Spanish effect is Bad Bunny's, the Korean one BTS's in one country. Language is coded by official national language, which misses large minorities, as the check on the United States shows only in part. The model covers songs once they entered a chart, not whether they entered. Days in the chart are Spotify's and are not days in a row. The price model uses the average ticket, which mixes every seat; it cannot see resale prices, fees outside the gross, or who bought the tickets. GDP per capita is a rough stand-in for what fans earn. And neither model says why: radio, playlists, promotion, understanding and price-setting habits are all inside the estimates.</p>
+</section>
+
+<section id="reproduction">
+<h2>Reproduction</h2>
+<p>Every number on this page is filled in from <a href="../assets/pop/together/results.json"><code>assets/pop/together/results.json</code></a> by a script. From the repository root, after parts 1–5 have been built: <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/pop/together.py"><code>tools/pop/together.py</code></a> builds the two tables and fits the models; <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/pop/together_article.py"><code>together_article.py</code></a> draws the figures and this page. The design is <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/pop-measured-part6-design.md"><code>docs/research/pop-measured-part6-design.md</code></a>.</p>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Ferreira, F., Waldfogel, J. (2013). Pop internationalism: has half a century of world music trade displaced local culture? <i>The Economic Journal</i> 123(569), 634–664. <a href="https://doi.org/10.1111/ecoj.12003">doi:10.1111/ecoj.12003</a>. Accessed 2 October 2026.</li>
+<li id="r2">Aguiar, L., Waldfogel, J. (2018). As streaming reaches flood stage, does it stimulate or depress music sales? <i>International Journal of Industrial Organization</i> 57, 278–307. <a href="https://doi.org/10.1016/j.ijindorg.2017.06.004">doi:10.1016/j.ijindorg.2017.06.004</a>. Accessed 2 October 2026.</li>
+<li id="r3">Krueger, A. B. (2005). The economics of real superstars: the market for rock concerts in the material world. <i>Journal of Labor Economics</i> 23(1), 1–30. <a href="https://doi.org/10.1086/425431">doi:10.1086/425431</a>. Accessed 2 October 2026.</li>
+<li id="r4">Courty, P., Pagliero, M. (2014). The pricing of art and the art of pricing: pricing styles in the concert industry. In <i>Handbook of the Economics of Art and Culture</i>, vol. 2, 299–356. Elsevier. <a href="https://doi.org/10.1016/B978-0-444-53776-8.00013-1">doi:10.1016/B978-0-444-53776-8.00013-1</a>. Accessed 2 October 2026.</li>
+<li id="r5">Cameron, A. C., Miller, D. L. (2015). A practitioner's guide to cluster-robust inference. <i>Journal of Human Resources</i> 50(2), 317–372. <a href="https://doi.org/10.3368/jhr.50.2.317">doi:10.3368/jhr.50.2.317</a>. Accessed 2 October 2026.</li>
+</ol>
+</section>
+
+<section id="changelog" class="changelog">
+<h2>Change log</h2>
+<ul>
+<li>2 October 2026, version 1: first published.</li>
+<li>Checked against editorial standard v1 on 2 October 2026.</li>
+</ul>
+</section>
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a></p>
+</footer>
+</article>
+
+<script src="../assets/charts.js" defer></script>
+</body>
+</html>

@@ -117,8 +117,32 @@
     fig.classList.add('ch-live');
   }
 
+  // <figure data-pop="map" data-src="…/map.svg">: the map is inlined so each country can show its values on hover
+  async function map(fig) {
+    const img = fig.querySelector('img');
+    const svg = new DOMParser().parseFromString(await (await fetch(fig.dataset.src)).text(), 'image/svg+xml').documentElement;
+    svg.classList.add('pop-map');
+    const wrap = h('div', {class: 'pop-wrap'});
+    const tip = h('div', {class: 'ch-tip', hidden: ''}, wrap);
+    wrap.appendChild(svg);
+    img.after(wrap);
+    img.hidden = true;
+    fig.classList.add('ch-live');
+    svg.querySelectorAll('title').forEach(t => { t.parentNode.dataset.tip = t.textContent; t.remove(); });
+    svg.addEventListener('pointermove', e => {
+      const s = e.target.closest('[data-tip]');
+      if (!s) { tip.hidden = true; return; }
+      const r = wrap.getBoundingClientRect();
+      tip.textContent = s.dataset.tip.replace(/ · /g, '\n');
+      tip.hidden = false;
+      tip.style.transform = `translate(${Math.min(e.clientX - r.left + 12, r.width - 240)}px, ${e.clientY - r.top + 12}px)`;
+    });
+    svg.addEventListener('pointerleave', () => { tip.hidden = true; });
+  }
+
   const run = () => document.querySelectorAll('figure[data-pop]').forEach(async fig => {
     try {
+      if (fig.dataset.pop === 'map') return await map(fig);
       const data = await (await fetch(fig.dataset.src)).json();
       ({ones, tickets})[fig.dataset.pop]?.(fig, data);
     } catch (e) { /* the static figure stays */ }
