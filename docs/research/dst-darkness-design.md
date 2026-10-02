@@ -173,3 +173,6 @@ computed nationally).
 Code registered with this note: `tools/dst/sun.py` (NOAA altitude; checked: Prague, 26 Oct 2025, sunset 16:50 CET,
 civil dusk 17:23), `prepare.py` (cells), `estimate.py` (§3–§6). The estimation was run once on synthetic cells with a
 planted evening ratio of 1.40 and morning ratio of 0.80 and recovered 1.34 (1.08–1.66) and 0.70 (0.52–0.96).
+
+**2 October 2026 (correction, before data).** The east–west spread of the region centroids is 5.2° of longitude
+(12.74°–17.95° E), about 21 minutes of dusk, not 4.5° and 18 minutes as written in the previous note.
