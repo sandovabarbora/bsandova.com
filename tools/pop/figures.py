@@ -59,7 +59,8 @@ def main(slug: str) -> None:
 
     # 1 every number one as a dot (widget), static fallback a dot histogram
     ones = [r for r in rows(f"{slug}-ones.csv") if r["kept"] == "True"]
-    dots = sorted(({"t": r["label"], "d": int(r["days"]), "c": r["still_charting"] == "True", "o": r["own"] == "True"}
+    dots = sorted(({"t": r["label"], "d": int(r["days"]), "c": r["still_charting"] == "True", "o": r["own"] == "True",
+                    "f": r["focal"] == "True"}
                    for r in ones), key=lambda x: x["d"])
     q1 = res["q1"]
     f, ax = plt.subplots(figsize=(7.2, 2.6))
@@ -168,7 +169,8 @@ def main(slug: str) -> None:
         f.tight_layout(); f.savefig(out / "05-tour.svg"); plt.close(f)
 
     (out / "charts.json").write_text(json.dumps(charts, ensure_ascii=False))
-    (out / "widgets.json").write_text(json.dumps({"ones": dots, "median": q1["median_days"], "tickets": tickets},
+    (out / "widgets.json").write_text(json.dumps({"ones": dots, "median": q1["median_days"], "tickets": tickets,
+                                                  "peak": int(rows(f"{slug}-ones.csv")[0]["peak"])},
                                                  ensure_ascii=False))
     print("written", out.relative_to(ROOT))
 

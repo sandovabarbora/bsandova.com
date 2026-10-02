@@ -29,8 +29,10 @@
     const img = fig.querySelector('img');
     const box = h('div', {class: 'pop-ones'});
     const form = h('label', {class: 'pop-find'}, box);
-    h('span', {text: 'Find a number one'}, form);
-    const input = h('input', {type: 'search', placeholder: 'e.g. Flowers, Blinding Lights', autocomplete: 'off', list: 'pop-ones-list'}, form);
+    const what = data.peak > 1 ? `song that peaked at ${data.peak}` : 'number one';
+    const whats = data.peak > 1 ? `songs that peaked at ${data.peak}` : 'number ones';
+    h('span', {text: `Find a ${what}`}, form);
+    const input = h('input', {type: 'search', placeholder: data.peak > 1 ? 'type a title' : 'e.g. Flowers, Blinding Lights', autocomplete: 'off', list: 'pop-ones-list'}, form);
     const list = h('datalist', {id: 'pop-ones-list'}, box);
     for (const s of songs) h('option', {value: s.t}, list);
     const out = h('p', {class: 'pop-out', 'aria-live': 'polite'}, box);
@@ -44,7 +46,7 @@
     const say = s => {
       const longer = songs.filter(o => o.d > s.d).length;
       out.textContent = `${s.t}: ${num(s.d)} days${s.c ? ', still in the chart' : ''}. ` +
-        `${longer} of ${n} number ones since 2017 have more days.`;
+        `${longer} of ${n} ${whats} since 2017 have more days.`;
     };
     function draw() {
       wrap.querySelectorAll('svg').forEach(s => s.remove());
@@ -55,7 +57,7 @@
       for (const s of songs) { const b = Math.floor(s.d / bin); stack[b] = (stack[b] || 0) + 1; s._b = b; s._k = stack[b]; }
       const H = Math.max(...Object.values(stack)) * step + 34;
       const svg = el('svg', {class: 'ch-svg', viewBox: `0 0 ${W} ${H}`, role: 'img',
-        'aria-label': `${n} global number ones since 2017, by days in the global Top 200; the median is ${data.median} days.`}, wrap);
+        'aria-label': `${n} ${whats} since 2017 in the global chart, by days in the global Top 200; the median is ${data.median} days.`}, wrap);
       const base = H - 24;
       el('line', {x1: 10, x2: W - 10, y1: base + 2, y2: base + 2, stroke: GREY, 'stroke-width': 0.6}, svg);
       for (let t = 0; t <= max; t += 500) {
@@ -79,8 +81,8 @@
         });
         c.addEventListener('pointerleave', () => { tip.hidden = true; });
         c.addEventListener('click', () => { marked = s; say(s); draw(); });
-        if (isM || s.o) el('text', {x: Math.min(cx + r + 4, W - 120), y: cy - r - 3, class: 'ch-note', fill: isM && !s.o ? INK : HELD,
-          'font-weight': s.d === Math.max(...songs.filter(o => o.o).map(o => o.d)) ? 600 : null}, svg)
+        if (isM || s.f) el('text', {x: Math.min(cx + r + 4, W - 120), y: cy - r - 3, class: 'ch-note', fill: isM && !s.o ? INK : HELD,
+          'font-weight': s.f ? 600 : null}, svg)
           .textContent = s.t.replace(/^.*? - /, '');
       }
     }
@@ -88,7 +90,7 @@
       const q = fold(input.value.trim());
       if (q.length < 2) return;
       const hit = songs.find(s => fold(s.t).includes(q));
-      if (!hit) { out.textContent = 'Not among the global number ones since 2017.'; return; }
+      if (!hit) { out.textContent = `Not among the ${whats} since 2017.`; return; }
       marked = hit; say(hit); draw();
     });
     draw();

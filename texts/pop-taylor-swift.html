@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Taylor Swift, measured: a catalogue that sells out everything</title>
+<meta name="description" content="Pop, measured, part 2. A registered descriptive study of Taylor Swift on Spotify's charts and on tour, and a registered difference-in-differences of whether the Eras Tour moved prices in the European countries it played.">
+<meta property="og:title" content="Taylor Swift, measured: a catalogue that sells out everything">
+<meta property="og:description" content="Every one of Taylor Swift's Boxscore entries sold out; half her streams come from 57 songs; and the Eras Tour left no measurable mark on restaurant prices in the countries it played.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://bsandova.com/texts/pop-taylor-swift">
+<meta property="og:image" content="https://bsandova.com/assets/og/pop-taylor-swift.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bsandova.com/assets/og/pop-taylor-swift.jpg">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://bsandova.com/texts/pop-taylor-swift">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../text.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../a24.css">
+<link rel="stylesheet" href="../assets/pop/pop.css">
+<style>
+.note{font:400 12px/1.6 var(--mono);color:#666}
+.text dl.meta{display:block;letter-spacing:normal;text-transform:none;font-size:12px}
+.text dl.meta div{border-right:0;padding-left:0;grid-template-columns:13ch 1fr}
+.text dl.meta dd{overflow-wrap:anywhere}
+@media (max-width:560px){.text dl.meta div{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">research · pop · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Research · Pop, measured, part 2 · Taylor Swift, 2017–2026</p>
+  <h1>Taylor Swift, measured: <em>a catalogue that sells out everything</em></h1>
+  <p class="deck">Registered: every one of her 85 Boxscore entries sold out, half her streams come from 57 songs, and the Eras Tour moved no measurable price for residents of the countries it played.</p>
+  <dl class="facts">
+    <div><dt>Boxscore entries that sold 99.5 % of their tickets or more</dt><dd>100 % <small>administrative count · 85 entries, 194 shows</small></dd></div>
+    <div><dt>songs that make up half her Spotify streams</dt><dd>57 <small>administrative count · of the 500 listed</small></dd></div>
+    <div><dt>songs peaking at 2 that lasted longer than <i>Cruel Summer</i></dt><dd>8.9 % <small>95 % CI 4.0 % to 14.5 % · 128 songs</small></dd></div>
+    <div><dt>Eras Tour show month: restaurant inflation in host countries</dt><dd>−0.12 pp <small>95 % CI −0.54 to 0.31 · not supported</small></dd></div>
+  </dl>
+</header>
+<details class="tldr" open>
+  <summary>Overwhelmed? Here's the short version</summary>
+  <ul>
+    <li>Her biggest song never reached number one globally, yet it outlasted almost every song that peaked where it did, partly because it returned years after its release.</li>
+    <li>Her listening is the most spread of the series: no song holds more than a few percent of it.</li>
+    <li>Every show on her two stadium tours with figures sold out, so the data cannot say how much more she could have sold.</li>
+    <li>Where the Eras Tour played in Europe in 2024, restaurant prices and overall inflation did not move in the show month; hotel prices are too noisy at the national level to tell.</li>
+    <li>Her 2018 tickets cost under a day and a half of income in every country she played; the Eras Tour has no gross figures in the source.</li>
+  </ul>
+</details>
+<dl class="meta">
+  <div><dt>published</dt><dd>2 October 2026 · updated 2 October 2026 · <a href="#changelog">version 1</a></dd></div>
+</dl>
+<details class="meta-more">
+  <summary>About this study</summary>
+<dl class="meta">
+  <div><dt>status</dt><dd>research, registered analysis plans (self-timestamped); the chart and tour results descriptive, the price study a difference-in-differences</dd></div>
+  <div><dt>registration</dt><dd>registered analysis plans: the series design was committed at <code>e890c27</code> and <code>12417ae</code> on 1 October 2026, before any data of this part were parsed; the price study's design at <code>f5d702c</code> on 2 October 2026, before any price index was downloaded, with its code (<code>d1d25cd</code>) and data (<code>dc9dba3</code>) committed before the results (<code>4401fda</code>). Commit times are self-reported. See <a href="#changes">What changed after registration</a>.</dd></div>
+  <div><dt>data</dt><dd>kworb.net Spotify chart totals for the global chart and 76 national charts, accessed 1 October 2026<sup class="cite"><a href="#r6">6</a></sup>; Wikipedia tour articles at revisions 1376322065 and 1376835990, Boxscore figures as cited there<sup class="cite"><a href="#r7">7</a></sup>; World Bank GDP per capita<sup class="cite"><a href="#r8">8</a></sup>; Eurostat HICP monthly indices, accessed 2 October 2026<sup class="cite"><a href="#r10">10</a></sup>. Hashes in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/pop-measured-files.sha256">pop-measured-files.sha256</a> and <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/eras-inflation-files.sha256">eras-inflation-files.sha256</a>; the study's rows in <a href="../assets/pop/taylor-swift/ones.csv">ones.csv</a>, <a href="../assets/pop/taylor-swift/countries.csv">countries.csv</a>, <a href="../assets/pop/taylor-swift/songs.csv">songs.csv</a>, <a href="../assets/pop/taylor-swift/tour.csv">tour.csv</a> and <a href="../assets/pop/taylor-swift/eras-hicp.csv">eras-hicp.csv</a>.</dd></div>
+  <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/pop">tools/pop/</a> and <a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/eras">tools/eras/</a> at the commit that publishes this page; rebuild: <code>uv run --with numpy python tools/pop/analyse.py taylor-swift</code> and <code>uv run --with csdid --with pandas --with numpy python tools/eras/estimate.py</code></dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Taylor Swift, measured: a catalogue that sells out everything</i>. bsandova.com/texts/pop-taylor-swift, version 1.</dd></div>
+  <div><dt>licence</dt><dd>code MIT; text, figures and data CC BY 4.0</dd></div>
+</dl>
+</details>
+
+<section class="film film-page"><div class="shot" style="view-transition-name:ph-pop-taylor-swift;--bg:url(../assets/photo/pop-taylor-swift.jpg);--bg-s:url(../assets/photo/pop-taylor-swift-1200.jpg)"></div><p class="credit">Photo: <a href="https://stocksnap.io/photo/people-men-PJ3XCKIFKU">Redd Angelo</a> · CC0, toned</p></section>
+
+<section>
+<p>This is the second part of <a href="pop-harry-styles">Pop, measured</a>, which asks five questions of five artists: how long the artist's biggest song lasted against comparable hits, where it lasted longest, whether the listening is one song or many, whether longer runs in one venue sold less of their tickets, and what a ticket cost in days of local income. The questions draw on work on the life of chart songs<sup class="cite"><a href="#r1">1</a></sup>, on the shift of musicians' income to live shows<sup class="cite"><a href="#r2">2</a></sup>, on concert pricing<sup class="cite"><a href="#r3">3</a></sup> and on streaming's effect on music sales<sup class="cite"><a href="#r4">4</a></sup>. Taylor Swift's part adds a sixth, because her last tour became an economic story of its own: when the Eras Tour came to a city, did the people who live there pay more for a hotel night or a meal out? That question has a causal design of its own, registered separately, and its answer closes this page.</p>
+</section>
+
+<section>
+<h2>Data</h2>
+<p>The chart data are the series' common collection, made once on 1 October 2026: for the global chart and 76 national Spotify charts, every song that has entered the Top 200 with its days, peak and total streams, and the artist's page with every song's streams<sup class="cite"><a href="#r6">6</a></sup>. By the series rule, the focal song is her song with the most global streams, <i>Cruel Summer</i>, released in 2019; its highest global position was number two, so its reference set is the 128 songs since 2017 that also peaked at two and whose start can be seen, not the number ones. The artist page lists 500 songs; she has more than that, counting re-recorded versions, so the page may stop short of her whole catalogue, which would slightly overstate the shares of her largest songs.</p>
+<p>For the tours, the Wikipedia articles on the <i>Reputation Stadium Tour</i> (2018) and <i>The Eras Tour</i> (2023–2024) list Billboard's Boxscore figures<sup class="cite"><a href="#r7">7</a></sup>: 85 entries covering 194 shows. The Eras Tour's tables give tickets but no gross, so the price question rests on the 2018 tour alone. Income is the World Bank's GDP per capita in current dollars<sup class="cite"><a href="#r8">8</a></sup>. The price study uses Eurostat's monthly harmonised consumer price indices for 29 European countries<sup class="cite"><a href="#r10">10</a></sup>, described in its own section.</p>
+</section>
+
+<section>
+<h2>How this was done</h2>
+<p>The chart and tour methods are those of the series, fixed before any data of this part were parsed. How long a song lasted is its total days in the global Top 200; songs still in the chart are treated as unfinished by the Kaplan–Meier estimator<sup class="cite"><a href="#r5">5</a></sup>, and a song's place is the share of songs in its reference set estimated to last longer, with a 95 % bootstrap interval. For countries, the focal song's days in each national chart are divided by the median days of that country's own number ones. Runs are compared with the share of tickets sold, under the rule set in advance that if nine entries in ten sold out, the data show demand at or above capacity and nothing more. Ticket prices are gross divided by tickets sold, then divided by a day of the host country's GDP per capita. These results are descriptive. The price study's method is set out with its results.</p>
+</section>
+
+<section>
+<h2>How long <i>Cruel Summer</i> lasted</h2>
+<p><i>Cruel Summer</i> spent 1 026 days in the global Top 200, more than any other song in its reference set but a handful: only 8.9 % of songs that also peaked at number two are estimated to have lasted longer (95 % CI 4.0 % to 14.5 %). The median such song lasted 258 days. Its story explains part of that. It came out on an album in 2019 without being a single, and returned four years later, when she put it into the Eras Tour and released it to radio; most of its days come from that second life. The measure counts days in the chart, not days in a row, which is exactly what a revival adds. Her other songs that peaked at two behaved more like their peers: <i>Lover</i> lasted 518 days, and most of the rest, album tracks and re-recordings that entered high for one release week, were gone within months.</p>
+<p>The rest of the reference set is a reminder of how a big release week shows up. Re-recorded songs from her "Taylor's Version" albums and tracks from new albums entered the global chart near the top on the strength of release day, then left within a few weeks: <i>Back To December (Taylor's Version)</i> lasted 21 days, <i>The Tortured Poets Department</i> 42. A peak of two says how many people played a song in its first days; how long it stays says whether they went on playing it. For <i>Cruel Summer</i>, they did, more than for almost any comparable song.</p>
+<figure data-pop="ones" data-src="../assets/pop/taylor-swift/widgets.json">
+  <img src="../assets/pop/taylor-swift/01-ones.svg" alt="Dot chart of 128 songs since 2017 that peaked at number two in Spotify's global chart, by days in the global Top 200; Cruel Summer sits at 1 026, near the right end." loading="lazy">
+  <figcaption><b>fig. 1</b> · Every song since 2017 that peaked at number two in the global chart, one dot each, by days in Spotify's global Top 200; administrative count, n = 128. Blue: Taylor Swift; an open dot is still charting. Search to mark any song. Data: kworb.net<sup class="cite"><a href="#r6">6</a></sup>, accessed 1 October 2026.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>Where it lasted</h2>
+<p><i>Cruel Summer</i> entered 68 national charts and outlasted the local median number one in 37 of them. By days alone it lasted longest in Singapore, 1 517 days and still in the chart, and in the Philippines (1 369), the United Arab Emirates (1 244) and Taiwan (1 158). Relative to local hits it stood out most in the United Arab Emirates (3.8×), the United States (3.1×), Switzerland (3.1×), Iceland (3.1×), Taiwan (2.8×) and Canada (2.8×); Luxembourg tops the registered ranking at 60× for the reason given in part 1. Its home market and the English-speaking world kept it long: 0.7 days in the United States, 891 in the United Kingdom.</p>
+<p>In Czechia it spent 444 days against 431 for the median Czech number one: 1.0 times as long (95 % CI 0.9–1.2), 35th of 68 countries, almost exactly the world's middle, as for Harry Styles in part 1. Slovakia kept it 1.6 times as long as its median number one, Poland 0.8 times. In Mexico (0.4×) and Japan (0.7×) it lasted less than local number ones, and in Colombia and Turkey it barely entered the chart at all, for a day or two.</p>
+<figure data-chart="../assets/pop/taylor-swift/charts.json#countries">
+  <img src="../assets/pop/taylor-swift/02-countries.svg" alt="Dot and interval chart of 68 countries: Cruel Summer's days in the national chart divided by the median days of the country's number ones, on a log scale; Czechia at 1.0 times." loading="lazy">
+  <figcaption><b>fig. 2</b> · <i>Cruel Summer</i>'s days in each national Top 200 divided by the median days of that country's number ones, log scale, with 95 % bootstrap intervals; n = 68 charts. Blue: Czechia. An asterisk marks a chart where it is still in (1), a lower bound. Data: kworb.net<sup class="cite"><a href="#r6">6</a></sup>.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>One song or a catalogue</h2>
+<p>Of the 500 songs on her Spotify page, the largest, <i>Cruel Summer</i>, holds 3 % of their streams; <i>Blank Space</i> and <i>I Don’t Wanna Live Forever (Fifty Shades Darker)</i>, a duet from a film soundtrack, follow, and the top three together hold 6 %. Half of all the streams come from 57 songs, the most of any artist in the series: six for Harry Styles, 41 for BTS, 46 for Bad Bunny and 14 for Billie Eilish. Only 13 songs hold one percent or more each. The Gini coefficient is 0.64. Her listeners do not play a few hits; they play albums, eras and re-recordings, and the long tail of her catalogue is where most of the listening is. Re-recorded versions count as separate songs here, so part of the spread is the same song in two versions.</p>
+<figure data-chart="../assets/pop/taylor-swift/charts.json#catalogue">
+  <img src="../assets/pop/taylor-swift/04-catalogue.svg" alt="One bar split by song: Cruel Summer 3 % of Taylor Swift's Spotify streams, the top three 6 %, 500 songs listed." loading="lazy">
+  <figcaption><b>fig. 3</b> · Share of Taylor Swift's Spotify streams by song, the eight largest shown and the rest together; administrative count, 500 songs listed. Blue: <i>Cruel Summer</i>; black: the next two. Data: kworb.net artist page<sup class="cite"><a href="#r6">6</a></sup>, accessed 1 October 2026.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>How many nights a city can fill</h2>
+<p>Her two tours with figures, <i>Reputation Stadium Tour</i> and <i>The Eras Tour</i>, played 194 shows in 85 Boxscore entries, all in stadiums. Every entry sold 99.5 % of its tickets or more; most report exactly as many sold as available. The longest run was 6 nights at SoFi Stadium in Inglewood . Because the share sold is the same everywhere, its correlation with the length of the run is undefined: there is nothing for it to measure. By the rule set in advance, the data show demand at or above capacity everywhere and cannot say how far above; for the Eras Tour, reports of millions of fans failing to get tickets suggest far above, but those reports are not data of this study. The median entry grossed 6.67 million dollars a night.</p>
+<figure data-chart="../assets/pop/taylor-swift/charts.json#tour">
+  <img src="../assets/pop/taylor-swift/05-tour.svg" alt="Scatter of 85 Boxscore entries: share of tickets sold against nights in the run; every entry sits at 100 %." loading="lazy">
+  <figcaption><b>fig. 4</b> · Share of tickets sold against nights in the run, one dot per Boxscore entry; administrative count, n = 85 entries, 194 shows. Data: Wikipedia tour articles, Boxscore figures as cited there<sup class="cite"><a href="#r7">7</a></sup>.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>What a ticket cost, in days of income</h2>
+<p>With gross figures only for the <i>Reputation Stadium Tour</i>, the price question covers 7 countries in 2018. The average ticket cost 1.3 days of the local GDP per capita in Japan (148 dollars), and less than a day everywhere else: 0.9 in Canada, 0.7 in the United States (129 dollars), 0.29 in Ireland (64 dollars). The average across the tour was 120 dollars a ticket. All the countries were rich, and none of them in Latin America or South-East Asia, where the other parts of the series found tickets costing several days of income; that is a fact about where this tour went, not about her pricing. The Eras Tour, which did play Latin America and South-East Asia, would be the test, and its gross is not in the source.</p>
+<figure data-pop="tickets" data-src="../assets/pop/taylor-swift/widgets.json">
+  <img src="../assets/pop/taylor-swift/03-tickets.svg" alt="Bar chart of 7 countries: average ticket price on the 2018 tour in days of GDP per capita, from 1.3 days in Japan to 0.29 in Ireland." loading="lazy">
+  <figcaption><b>fig. 5</b> · Average ticket (gross ÷ tickets sold) in days of the host country's GDP per capita, <i>Reputation Stadium Tour</i>, 2018, each square one day; administrative count, 36 entries. Data: Boxscore via Wikipedia<sup class="cite"><a href="#r7">7</a></sup>; World Bank<sup class="cite"><a href="#r8">8</a></sup>.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>Did the Eras Tour raise prices for residents?</h2>
+<p>When Beyoncé opened her 2023 tour in Stockholm, economists asked whether her shows had pushed up Swedish hotel prices that month; the Eras Tour in 2024 prompted the same question across Europe. This part answers it with a registered design. The tour's first European show in each country fell in a different month: May 2024 in France, Sweden, Portugal and Spain, June in Ireland, July in the Netherlands, Switzerland, Italy and Germany, August in Poland. That staggering lets the 10 host countries be compared, month by month, with the countries the tour had not yet reached and the ones it never played, using Callaway and Sant'Anna's estimator for staggered timing<sup class="cite"><a href="#r9">9</a></sup>. The outcome is year-on-year inflation in Eurostat's harmonised price index<sup class="cite"><a href="#r10">10</a></sup> for accommodation services, for restaurants and cafés, and for the whole basket, in 29 countries. The United Kingdom has no harmonised index after 2020, and Austria, whose three Vienna shows were cancelled the day before the first, is reported separately. The design, the outcomes and the labels were committed before any index was downloaded.</p>
+<p>In the month of the first show, year-on-year inflation in restaurants and cafés changed by −0.12 percentage points (95 % CI −0.54 to 0.31; permutation p = 0.54), and in the whole basket by 0.23 points (−0.21 to 0.67; p = 0.17). Both intervals lie within one percentage point of zero, so by the rule fixed in advance both are <b>not supported</b>: for the prices residents pay most often, any effect large enough to notice at the national level is ruled out. For accommodation the estimate is 0.79 points, with an interval from −3.02 to 4.59 and p = 0.56: <b>inconclusive</b>. National hotel prices move several points from month to month for reasons of their own, and one weekend of shows in one city is too small a part of a country's hotel nights to stand out from that. One of the months before the shows, month −4, has a band that excludes zero, a further reason the label is not stronger.</p>
+<figure data-chart="../assets/pop/taylor-swift/charts.json#eras">
+  <img src="../assets/pop/taylor-swift/06-eras.svg" alt="Event study: effect of the first Eras Tour show on year-on-year inflation in accommodation and restaurants, months −6 to +6; restaurant estimates stay near zero, accommodation estimates are wide." loading="lazy">
+  <figcaption><b>fig. 6</b> · Effect of a country's first Eras Tour show on year-on-year inflation, by month from the show, percentage points, with 95 % uniform bands; staggered difference-in-differences<sup class="cite"><a href="#r9">9</a></sup>, n = 29 countries (10 hosts). Blue: accommodation services; black: restaurants and cafés. Data: Eurostat HICP<sup class="cite"><a href="#r10">10</a></sup>.</figcaption>
+</figure>
+<p>The checks agree. Comparing with never-visited countries only gives 0.91 points for accommodation. Leaving out each host country in turn keeps the accommodation estimate between −0.39 and 1.55. A placebo that puts every show twelve months earlier, in 2023, gives 0.32 (−2.28 to 2.92). Austria's accommodation inflation in August 2024, the month of the cancelled shows, was 5.4 %, higher than in 63 % of the comparison countries: nothing unusual. Germany's show month coincided with the European football championship, which it hosted, and dropping Germany does not change the picture. What this does not say is what happened in Lisbon, Madrid or Warsaw on the weekend of the shows: a city's hotels can be full and dear for three nights without moving a national monthly index. It says that residents, at the level of their country's prices, did not pay for the tour.</p>
+</section>
+
+<section id="changes">
+<h2>What changed after registration</h2>
+<ul>
+<li>1 October 2026, before any data of this part were parsed: the series rule that the reference set is the songs with the focal song's peak applies here with a peak of two; the track pages of those songs were collected for it.</li>
+<li>2 October 2026: two data definitions were added to the series design after the results of parts 2–5 were first computed, for attendance figures covering several venues and for entries counting online viewers. Neither applies to any Taylor Swift entry.</li>
+<li>The price study had no change after registration.</li>
+<li>Countries are also ranked by days alone, as in part 1, because small markets with many one-day number ones inflate the ratio.</li>
+</ul>
+</section>
+
+<section>
+<h2>What this means</h2>
+<p>Measured: Taylor Swift's biggest song never topped the global chart and still outlasted all but 8.9 % of the songs that peaked where it did, helped by a revival four years after its release. Her listening is the most spread in the series, with half her streams in 57 songs. Every show on her two stadium tours with figures sold out, so the limit of her demand is not in these data. Her 2018 tickets cost less than a day and a half of income in every country she played. And in the European countries the Eras Tour played in 2024, the prices residents pay for restaurants and for their whole basket did not move in the show month by anything near a percentage point; hotel prices, at the level of whole countries, are too noisy to say. A stadium tour is enormous for a city for a weekend and small for a country for a month.</p>
+</section>
+
+<section>
+<h2>What this does not show</h2>
+<p>Spotify is one service among several. Days in the chart are not days in a row, and her focal song's revival is counted as part of its run. The artist page may not list her whole catalogue. A sold-out show hides how many more wanted tickets, and the Eras Tour's gross is not in the source, so its prices are not measured here. The price study is national and monthly: it cannot see a city's prices over a weekend, prices that tourists paid as distinct from residents, or prices in the United Kingdom. It covers one tour in one summer, alongside a football championship in one host country. GDP per capita is a rough stand-in for what fans earn.</p>
+</section>
+
+<section id="reproduction">
+<h2>Reproduction</h2>
+<p>Every number on this page is filled in from <a href="../assets/pop/taylor-swift/results.json"><code>assets/pop/taylor-swift/results.json</code></a> and <a href="../assets/pop/taylor-swift/eras-results.json"><code>eras-results.json</code></a> by a script. From the repository root: <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/pop/collect.py"><code>tools/pop/collect.py</code></a> and <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/pop/collect_extra.py"><code>collect_extra.py</code></a> collect the chart and tour files, and <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/eras/collect.py"><code>tools/eras/collect.py</code></a> the price indices; <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/pop/parse.py"><code>parse.py</code></a>, <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/pop/analyse.py"><code>analyse.py</code></a> and <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/eras/estimate.py"><code>tools/eras/estimate.py</code></a> make the estimates; <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/pop/figures.py"><code>figures.py</code></a>, <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/eras/figures.py"><code>tools/eras/figures.py</code></a> and <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/pop/article.py"><code>article.py taylor-swift</code></a> build the figures and this page. The designs are <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/pop-measured-design.md"><code>pop-measured-design.md</code></a> and <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/eras-inflation-design.md"><code>eras-inflation-design.md</code></a>.</p>
+</section>
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Bradlow, E. T., Fader, P. S. (2001). A Bayesian lifetime model for the "Hot 100" Billboard songs. <i>Journal of the American Statistical Association</i> 96(454), 368–381. <a href="https://doi.org/10.1198/016214501753168091">doi:10.1198/016214501753168091</a>. Accessed 2 October 2026.</li>
+<li id="r2">Connolly, M., Krueger, A. B. (2006). Rockonomics: the economics of popular music. In <i>Handbook of the Economics of Art and Culture</i>, vol. 1, 667–719. Elsevier. <a href="https://doi.org/10.1016/S1574-0676(06)01020-9">doi:10.1016/S1574-0676(06)01020-9</a>. Accessed 2 October 2026.</li>
+<li id="r3">Courty, P., Pagliero, M. (2014). The pricing of art and the art of pricing: pricing styles in the concert industry. In <i>Handbook of the Economics of Art and Culture</i>, vol. 2, 299–356. Elsevier. <a href="https://doi.org/10.1016/B978-0-444-53776-8.00013-1">doi:10.1016/B978-0-444-53776-8.00013-1</a>. Accessed 2 October 2026.</li>
+<li id="r4">Aguiar, L., Waldfogel, J. (2018). As streaming reaches flood stage, does it stimulate or depress music sales? <i>International Journal of Industrial Organization</i> 57, 278–307. <a href="https://doi.org/10.1016/j.ijindorg.2017.06.004">doi:10.1016/j.ijindorg.2017.06.004</a>. Accessed 2 October 2026.</li>
+<li id="r5">Kaplan, E. L., Meier, P. (1958). Nonparametric estimation from incomplete observations. <i>Journal of the American Statistical Association</i> 53(282), 457–481. <a href="https://doi.org/10.1080/01621459.1958.10501452">doi:10.1080/01621459.1958.10501452</a>. Accessed 2 October 2026.</li>
+<li id="r6">kworb.net (2026). Spotify charts: daily totals for the global and national charts, current daily charts, track pages and artist song lists. <a href="https://kworb.net/spotify/">kworb.net/spotify</a>. Accessed 1 October 2026.</li>
+<li id="r7">Wikipedia contributors (2026). Reputation Stadium Tour, revision 1376322065; The Eras Tour, revision 1376835990; Boxscore figures as cited there. <a href="https://en.wikipedia.org/w/index.php?oldid=1376835990">en.wikipedia.org</a>. Accessed 1 October 2026.</li>
+<li id="r8">World Bank (2026). GDP per capita, current US$ (NY.GDP.PCAP.CD), 2016–2025. <a href="https://data.worldbank.org/indicator/NY.GDP.PCAP.CD">data.worldbank.org</a>. Accessed 1 October 2026.</li>
+<li id="r9">Callaway, B., Sant'Anna, P. H. C. (2021). Difference-in-differences with multiple time periods. <i>Journal of Econometrics</i> 225(2), 200–230. <a href="https://doi.org/10.1016/j.jeconom.2020.12.001">doi:10.1016/j.jeconom.2020.12.001</a>. Software: csdid for Python. Accessed 2 October 2026.</li>
+<li id="r10">Eurostat (2026). HICP, monthly data (index, 2015 = 100), <code>prc_hicp_midx</code>: CP112 accommodation services, CP111 restaurants and cafés, CP00 all items, January 2022 to December 2025. <a href="https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_midx/default/table">ec.europa.eu/eurostat</a>. Accessed 2 October 2026.</li>
+</ol>
+</section>
+
+<section id="changelog" class="changelog">
+<h2>Change log</h2>
+<ul>
+<li>2 October 2026, version 1: first published.</li>
+<li>Checked against editorial standard v1 on 2 October 2026.</li>
+</ul>
+</section>
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a></p>
+</footer>
+</article>
+
+<script src="../assets/charts.js" defer></script>
+<script src="../assets/pop/pop.js" defer></script>
+</body>
+</html>

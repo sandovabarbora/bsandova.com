@@ -3,6 +3,7 @@
   wiki      the Wikipedia article of every tour listed in artists.json (rendered HTML and wikitext, revision id)
   worldbank GDP per capita, current US dollars (NY.GDP.PCAP.CD), every country, 2016–2025
   songs     the kworb.net artist songs page of every artist (Q4)
+  peers     track pages of the songs sharing each focal song's global peak (Q1), when that peak is not 1
 
 Raw files go to tools/data/pop/raw/; run `collect.py` first for the chart pages. Requests are slow on purpose.
 
@@ -73,7 +74,23 @@ def songs() -> None:
         print("songs", key, flush=True)
 
 
+def peers() -> None:
+    """Track pages of every song with the same global peak as each artist's focal song (series design §2, Q1)."""
+    sys.path.insert(0, str(Path(__file__).parent))
+    from parse import ARTISTS as A, focal, totals
+    rows = totals("global")
+    for key, a in A.items():
+        peak = focal(a)["peak"]
+        for r in rows:
+            if r["peak"] != peak:
+                continue
+            path = RAW / "tracks" / f"{r['track']}.html"
+            if not path.exists():
+                path.write_bytes(get(f"https://kworb.net/spotify/track/{r['track']}.html", 3))
+        print("peers", key, "peak", peak, flush=True)
+
+
 if __name__ == "__main__":
     RAW.mkdir(parents=True, exist_ok=True)
     for step in sys.argv[1:]:
-        {"wiki": wiki, "worldbank": worldbank, "songs": songs}[step]()
+        {"wiki": wiki, "worldbank": worldbank, "songs": songs, "peers": peers}[step]()

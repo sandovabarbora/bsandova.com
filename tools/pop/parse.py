@@ -72,7 +72,7 @@ def ones(artist: dict, song: dict) -> list[dict]:
         first = first_date(r["track"])
         if first is None:
             missing.append(r["track"])
-        out.append({"track": r["track"], "label": r["label"], "own": artist["spotify"] in r["artists"],
+        out.append({"track": r["track"], "label": r["label"], "peak": r["peak"], "own": artist["spotify"] in r["artists"],
                     "focal": r["track"] == song["track"], "days": r["days"], "first_listed": first or "",
                     "still_charting": r["track"] in now, "kept": bool(first) and first >= "2017-01-08"})
     if missing:
@@ -164,6 +164,7 @@ def tour_tables(page: dict) -> list[dict]:
         cap = table.find("caption")
         year = re.search(r"\b(20\d\d)\b", (cap.get_text(" ") if cap else "") + " " + table.find("tr").get_text(" "))
         entries: dict[int, dict] = {}
+        venues: dict[int, set] = {}
         for row in body:
             if len(row) <= ix["Attendance"] or row[0][1].lower().startswith("total"):
                 continue
@@ -178,13 +179,21 @@ def tour_tables(page: dict) -> list[dict]:
                                          "available": int(m.group(2).replace(",", "")),
                                          "revenue_usd": num(get("Revenue")) or ""})
             e["nights"] += 1
+            if "Venue" in ix and ix["Venue"] < len(row):
+                venues.setdefault(aid, set()).add(row[ix["Venue"]][0])
+        for aid, e in entries.items():
+            # an attendance cell spanning several venues is a leg's total, not a run in one venue (Q3)
+            e["multi_venue"] = len(venues.get(aid, ())) > 1
+            # a hybrid entry counts online viewers with the hall, so neither its sell-through nor its price is a hall's
+            e["hybrid"] = bool(re.search(r"weverse|online|youtube|livestream|virtual|streaming", e["venue"], re.I)) \
+                or e["sold"] > e["available"]
         out.extend(entries.values())
     return out
 
 
 ALIAS = {"England": "GBR", "Scotland": "GBR", "Wales": "GBR", "Northern Ireland": "GBR", "United Kingdom": "GBR",
          "United States": "USA", "South Korea": "KOR", "Czech Republic": "CZE", "Czechia": "CZE", "Turkey": "TUR",
-         "Russia": "RUS", "Hong Kong": "HKG", "Macau": "MAC", "Taiwan": None}
+         "Russia": "RUS", "Hong Kong": "HKG", "Macau": "MAC", "Puerto Rico": "PRI", "Taiwan": None}
 
 
 def with_income(entries: list[dict]) -> list[dict]:
