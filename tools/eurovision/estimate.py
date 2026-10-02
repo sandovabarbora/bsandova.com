@@ -72,6 +72,10 @@ def main() -> None:
     tele = h1[(h1.aud == "tele") & h1.year.between(2016, 2022)][["year", "r", "i", "j", "aud", "points", "x"]]
     jd = h1_frame(pd.concat([tele, jur]))
     res["H1_checks"]["individual_jurors"] = coef(h1_fit(jd), "xt")
+    # deviation (change note): origins absent from the UN table counted as zero migrants
+    az = pd.read_parquet(D / "h1_absent_zero.parquet")
+    az["x"] = az.x0
+    res["H1_checks"]["absent_origin_as_zero"] = coef(h1_fit(h1_frame(az)), "xt")
 
     # H2
     h2 = pd.read_parquet(D / "h2.parquet")

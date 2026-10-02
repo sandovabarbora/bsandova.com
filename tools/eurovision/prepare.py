@@ -65,9 +65,12 @@ def spijkervet() -> pd.DataFrame:
 def performers_spijkervet() -> pd.DataFrame:
     c = pd.read_csv(RAW / "spijkervet_contestants.csv")
     c = c[c.year >= 1975]
+    names = {k.upper(): v for k, v in name_to_code().items()}
+    names["BOSNIA & HERZEGOVINA"] = "BA"
     rows = []
     for _, x in c.iterrows():
         code = str(x.to_country_id).upper()
+        code = names.get(code, code) if len(code) > 2 else code  # some years carry the country name
         if pd.notna(x.place_final) or pd.notna(x.running_final):
             rows.append((int(x.year), "final", code))
         if pd.notna(x.sf_num):
@@ -100,7 +103,8 @@ def wiki_tables(year: int) -> list[dict]:
         rows = re.findall(r"<tr[^>]*>(.*?)</tr>", body, re.S)
         cell = lambda c: re.sub(r"\[[^\]]*\]", "", html.unescape(re.sub(r"<[^>]+>", "", c))).strip()  # noqa: E731
         parsed = [[(tag, cell(c)) for tag, _, c in re.findall(r"<(t[hd])([^>]*)>(.*?)</t[hd]>", x, re.S)] for x in rows]
-        head = next(p for p in parsed if len(p) > 10 and all(tag == "th" for tag, _ in p))
+        # the voters' row: the row with the most country names and no digits
+        head = max(parsed, key=lambda p: sum(c in names for _, c in p) if not any(ch.isdigit() for _, c in p for ch in c) else -1)
         voters = [names.get(n, n) for _, n in head]
         data = []
         for p in parsed:
@@ -229,6 +233,9 @@ def main() -> None:
     h1["per1000"] = 1000 * h1.migrants / h1["pop"]
     h1["x"] = np.log1p(h1.per1000)
     h1 = h1.merge(cepii(), on=["i", "j"], how="left")
+    # sensitivity (change note): an origin absent from the UN table counted as zero migrants
+    h1["x0"] = h1.x.fillna(np.log1p(0.0))
+    h1.copy().to_parquet(D / "h1_absent_zero.parquet", index=False)
     n_missing = int(h1.x.isna().sum())
     h1_missing_pairs = sorted({f"{a}>{b}" for a, b in h1[h1.x.isna()][["i", "j"]].itertuples(index=False)})
     h1 = h1.dropna(subset=["x"])
@@ -249,6 +256,7 @@ def main() -> None:
     tot = sp[["year", "r", "i", "j", "total_points"]].rename(columns={"total_points": "points"})
     wk_tot = wk.groupby(["year", "r", "i", "j"], as_index=False).points.sum()
     tot = pd.concat([tot[tot.year <= 2023], wk_tot]).dropna()
+    tot = tot[tot.i.isin(CODES) | (tot.year < 2016)]  # "rest of the world" (WLD) is not a country
     rows = []
     for (y, r), g in tot.groupby(["year", "r"]):
         voters = set(g.i)

@@ -169,3 +169,16 @@ UNHCR and World Bank JSON keys, and the captions and header layout of the Wikipe
 Code registered with this note: `prepare.py`, `estimate.py`. `estimate.py` was run once on synthetic tables with
 planted effects (H1 latent 0.25, H3 latent 0.3): H1 recovered β = 0.19 (0.13–0.24), labelled supported; H3 recovered
 +0.013 in share (+41 % of the pre mean), supported.
+
+**3 October 2026 (data step; deviations in prepare.py and estimate.py, before any estimate).** The first run of
+`prepare.py` stopped: one Wikipedia table's voters' row was not all header cells. The row is now chosen as the one
+with the most country names and no digits. The second run showed two code errors and one data fact, from counts
+only: (1) Spijkervet's `contestants.csv` carries country names instead of codes in some years, so those performers
+were unmatched; names are now mapped to codes. (2) The "rest of the world" televote (`WLD`) entered H3 as a voter in
+2023; non-country voters are now dropped in H3 as in H1. (3) The UN table lists, for some destinations (e.g. the
+United Kingdom), only the main origins; an absent origin is "not reported separately", not zero. As registered (§2),
+such dyads are dropped: 8 944 of 26 316 H1 cells (661 directed pairs, listed in `eurovision-data.json`).
+**Added check** (deviation, labelled as such): the same H1 model with absent origins counted as zero migrants.
+Validation: the Wikipedia parser reproduces Spijkervet's 2023 points exactly (740 rows, no difference; Spijkervet's
+10 extra rows are the rest-of-the-world televote); Spijkervet and Mirovision agree on every matched 2016–2022 row
+(televote and jury points identical; 367 rows unmatched between the two files, reported).
