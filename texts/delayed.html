@@ -52,23 +52,24 @@
   <p class="deck">A browser player that turns five days of Prague public transport in 2025 into synthesised disco tracks, with each transport mode as an instrument and each day's key set by its mean surface delay.</p>
   <dl class="facts">
     <div><dt>stop events on the record</dt><dd>3 267 980 <small>five days of 2025, all modes · administrative count</small></dd></div>
-    <div><dt>mean surface delay by day</dt><dd>36–164 s <small>bus, tram, trolleybus · administrative count</small></dd></div>
+    <div><dt>mean surface delay by day</dt><dd>36–164 s <small>bus, tram, trolleybus · event-weighted mean of administrative records</small></dd></div>
     <div><dt>one day</dt><dd>288 beats <small>5-minute windows · 116 BPM · 24 h ≈ 2.5 min · fixed by design</small></dd></div>
-    <div><dt>source history</dt><dd>121 197 794 <small>vehicle-location records, 15 March – 8 September 2025 · Golemio · administrative count</small></dd></div>
+    <div><dt>thesis source</dt><dd>121 197 794 <small>records, 15 March – 8 September 2025 · Golemio · vehicle locations on the thesis page, stop events in the player's README; unit unresolved</small></dd></div>
   </dl>
   <a class="play" href="https://sandovabarbora.github.io/delayed-all-the-time/">Play the record</a>
 </header>
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>The same day always produces the same track; nothing is random and no audio is sampled.</li>
-    <li>The rush-hour choruses and the keys come from thresholds set by hand, not from a finding.</li>
-    <li>The piece makes no statistical claim.</li>
-    <li>Early running counts as negative delay, so a day with early departures sounds brighter.</li>
+    <li>At default settings the same day always produces the same track; nothing is random and no audio is sampled.</li>
+    <li>A chorus marks each day's own worst stretch, above 68 % of its peak delay: both rush hours on the typical Tuesday, the afternoon on most other days. That threshold and the key cut-offs were set by hand.</li>
+    <li>Loudness and melody are scaled to each day's own peak, so they compare moments within a day; only the key compares days.</li>
+    <li>The five dates are hard-coded in the extraction script; the computation that ranked them is not published. The piece makes no statistical claim.</li>
+    <li>Early arrivals count as negative delay in the daily mean, so they can move a day into a brighter key; they add no detune.</li>
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>14 September 2026 · updated 29 September 2026 · <a href="#changelog">version 2</a></dd></div>
+  <div><dt>published</dt><dd>14 September 2026 · updated 3 October 2026 · <a href="#changelog">version 2</a></dd></div>
 </dl>
 <details class="meta-more">
   <summary>About this note</summary>
@@ -84,8 +85,8 @@
 
 
 <section>
-<p>The record was made alongside <a href="thesis">a master's thesis on delay persistence in the Prague network</a>, which uses the same Golemio history of 121 197 794 vehicle-location records from 15 March to 8 September 2025<sup class="cite"><a href="#r1">1</a></sup>. The record uses five days of it, counted as stop events, one per vehicle arrival at a stop, and aggregated into 5-minute windows per mode: the number of events, the mean arrival delay and its 90th percentile. Arrivals with a delay outside −600 to 3 600 s are left out before counting and averaging, and early arrivals enter the mean as negative values, so early running offsets lateness in every mean delay on this page. Only these aggregates are published; the raw records are not redistributed<sup class="cite"><a href="#r2">2</a></sup>.</p>
-<p>The five days were chosen by rules written into the extraction script. The typical Tuesday, 17 June, is the weekday closest to the median of both the daily event count and the daily mean delay across the whole period; the Meltdown, 30 April, is the day with the highest mean delay in the data; Easter Monday, 21 April, the day with the lowest; Back to School, 1 September, the first school day of the year; and the Summer Sunday, 13 July, the holiday-season Sunday with the least traffic. The dates are fixed in the script, and the computation that ranked the days is not in the repository. The cause of the high delays on 30 April was not investigated<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p>The record was made alongside <a href="thesis">a master's thesis on delay persistence in the Prague network</a>, which draws on the Golemio history of Prague Integrated Transport from 15 March to 8 September 2025. The thesis page counts 121 197 794 vehicle-location records<sup class="cite"><a href="#r1">1</a></sup>, the player's README about 121 million stop events; which unit is right is not settled here. The record reads five days from the stop-time table of that history, one stop event per vehicle arrival at a stop, aggregated into 5-minute windows per mode: the number of events, the mean arrival delay and its 90th percentile, which is published in the data file but drives no sound. Arrivals with a delay outside −600 to 3 600 s are left out before counting and averaging, and early arrivals enter the mean as negative values, so early running offsets lateness in every mean delay on this page. Only these aggregates are published; the raw records are not redistributed<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p>The five days were chosen by rules written into the extraction script. The typical Tuesday, 17 June, is the weekday closest to the median of both the daily event count and the daily mean delay across the whole period; the Meltdown, 30 April, is the day with the highest daily mean delay in the data; Easter Monday, 21 April, the day with the lowest; Back to School, 1 September, the first school day of the year; and the Summer Sunday, 13 July, the holiday-season Sunday with the least traffic. The dates are fixed in the script, and the computation that ranked the days is not in the repository. Nor does the script say which mean it ranks by: its label for 30 April, "avg 158 s", matches the mean over all modes, metro, rail and ferry included, while this page and the player's key use the bus, tram and trolleybus mean, 164 s. Whether 30 April is also the worst day by that surface mean cannot be checked here. The cause of the high delays on 30 April was not investigated<sup class="cite"><a href="#r2">2</a></sup>.</p>
 <figure class="player">
   <iframe src="https://sandovabarbora.github.io/delayed-all-the-time/" title="Delayed All the Time, the player: five days of Prague public transport synthesised in the browser" loading="lazy" style="width:100%;height:560px;border:1px solid #000;background:#130814" allow="autoplay"></iframe>
   <figcaption>The player, embedded from its repository page. Press play inside the frame; all sound is synthesised in your browser from the aggregates.</figcaption>
@@ -94,24 +95,24 @@
 
 <section>
 <h2>How the data maps to the sound</h2>
-<p>One day is 288 five-minute windows played as 288 beats, and at 116 BPM twenty-four hours take about two and a half minutes. Each mode is an instrument whose volume follows its number of stop events in the window, and some instruments also follow delay. The metro averages a delay of 7 s on a typical weekday and carries the kick drum, so the beat stops when the metro closes at night. Buses, with about 557 000 stop events on a weekday, play the chord stabs, whose detune in cents grows with the current bus delay. Trains average 111 s late on a typical weekday and play no instrument, though they remain in the player's own traffic chart<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p>One day is 288 five-minute windows played as 288 beats, and at 116 beats a minute twenty-four hours take about two and a half minutes. Each mode is an instrument whose volume follows the square root of its stop events relative to that mode's busiest window of the day, so a holiday at its peak is as loud as a weekday; some also follow delay. On the typical Tuesday, 17 June, the metro averages a delay of 7 s; it carries the kick drum, so the beat stops when the metro closes at night. Buses, with about 557 000 stop events that day, play the chord stabs, whose detune (in cents, hundredths of a semitone) grows with bus delay from 0 to 180 s and stays flat above it. On the Meltdown bus delay sits at the cap in 82 of 288 windows. A slider in the player scales the detune; this describes its default. Trains average 111 s late on the typical Tuesday and play no instrument, though they remain in the player's own traffic chart<sup class="cite"><a href="#r2">2</a></sup>.</p>
 <table class="tbl"><caption>Instrument · what drives it</caption>
 <thead><tr><th>element</th><th>data source</th></tr></thead>
 <tbody>
 <tr><td><b>kick drum + bass</b></td><td>metro stop events in the window</td></tr>
-<tr><td><b>hi-hats + guitar plucks</b></td><td>tram stop events set the volume; tram delay detunes the plucks</td></tr>
-<tr><td><b>chord stabs</b></td><td>bus stop events set the volume; bus delay sets the detune in cents</td></tr>
+<tr><td><b>hi-hats + guitar plucks</b></td><td>tram stop events set the volume; tram delay detunes the plucks, up to 180 s</td></tr>
+<tr><td><b>chord stabs</b></td><td>bus stop events set the volume; bus delay sets the detune, up to 180 s</td></tr>
 <tr><td><b>claps + cowbell</b></td><td>trolleybus stop events set the volume; the cowbell enters when trolleybus traffic is high and in every chorus</td></tr>
 <tr><td><b>bell</b></td><td>ferry stop events: three on a typical Tuesday, dozens in summer</td></tr>
-<tr><td><b>lead melody</b></td><td>city-wide event-weighted surface delay, quantised to the day's scale; the later the network runs, the higher the line</td></tr>
+<tr><td><b>lead melody</b></td><td>smoothed city-wide surface delay divided by the day's own peak, quantised to the day's scale; the line is highest at each day's worst moment, so it compares moments within a day, not days with each other</td></tr>
 <tr><td class="dim">trains</td><td class="dim">no instrument; shown in the player's traffic chart only</td></tr>
 </tbody></table>
-<p>The song structure follows one rule. When the smoothed, event-weighted mean delay of bus, tram and trolleybus exceeds 68 % of that day's maximum, the track moves into the chorus, and the two beats before each chorus break down into a snare roll. On the typical Tuesday the rule marks roughly 07:25–10:00 and 14:45–17:40, with the delay peaking at 145 s around 07:55. The 68 % threshold is a hand-set parameter, and the repository does not record how it was chosen, so its match with the two rush hours is a property of that choice. The arrangement, the swing and the mix are documented in the repository's README<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p>The song structure starts from a threshold. The player takes the mean delay of bus, tram and trolleybus per window, weighted by stop events so busier modes count more, and averages each window with the two on either side (25 minutes). Where this smoothed delay exceeds 68 % of the day's maximum, the track moves into the chorus, and the two beats before each chorus break down into a snare roll. The player then drops chorus runs shorter than four windows (20 minutes), joins choruses less than three windows (15 minutes) apart, and plays the hours before 05:00 and after 22:30 without metro service as night, never as chorus. The chorus thus marks each day's own worst stretch. On the typical Tuesday the chorus runs 07:25–10:00 and 14:45–17:40, with the smoothed delay peaking at 145 s around 07:55. The 68 % threshold is a hand-set parameter, and the repository does not record how it was chosen, so its match with the two rush hours is a property of that choice. The arrangement, the swing and the mix are documented in the repository's README<sup class="cite"><a href="#r2">2</a></sup>.</p>
 </section>
 
 <section>
 <h2>The five days and their keys</h2>
-<p>Each day is played in D, in a mode chosen by its mean surface delay and running from bright to dark: under 40 s lydian, under 70 s ionian, under 100 s dorian, under 130 s aeolian, and phrygian above that. These cut-offs, too, were set by hand. Fig. 1 is recomputed for this page from the aggregates embedded in the player, and its daily means match the table<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p>Each day is played in D, in one of the seven-note modes chosen by its mean surface delay and running from the brightest to the darkest: under 40 s lydian, under 70 s ionian, under 100 s dorian, under 130 s aeolian, and phrygian above that. These cut-offs, too, were set by hand. Fig. 1 is recomputed for this page from the aggregates embedded in the player, and its daily means match the table<sup class="cite"><a href="#r2">2</a></sup>.</p>
 <table class="tbl"><caption>The five tracks</caption>
 <thead><tr><th>day</th><th class="n">stop events</th><th class="n">mean surface delay</th><th>key</th></tr></thead>
 <tbody>
@@ -121,9 +122,10 @@
 <tr><td>Typical Tuesday · 17 Jun 2025</td><td class="n">810 652</td><td class="n">85 s</td><td>D dorian</td></tr>
 <tr><td><b>The Meltdown</b> · 30 Apr 2025</td><td class="n">810 798</td><td class="n hi">164 s</td><td>D phrygian</td></tr>
 </tbody></table>
+<p>The Meltdown's mean comes from one afternoon. Between 15:00 and 19:00 its surface delay averaged 304 s; without those four hours the day averages 114 s, which would put it in D aeolian, not phrygian. Its only chorus is 15:20–18:25, and its morning rush plays as verse<sup class="cite"><a href="#r2">2</a></sup>.</p>
 <figure data-chart="../assets/delayed/charts.json#five-days">
-  <img src="../assets/delayed/01-five-days.svg" alt="Five stacked line charts of surface transit delay over 24 hours for the five days on the record, with chorus regions shaded where the smoothed delay exceeds 68 percent of the day's maximum." loading="lazy">
-  <figcaption><b>fig. 1</b> · Event-weighted mean delay of bus, tram and trolleybus per 5-minute window, in seconds, for each of the five days (288 windows a day); chorus shaded red where the five-window moving average exceeds 68 % of the day's maximum. No uncertainty band: the values are administrative means. Recomputed by <code>tools/charts/delayed.py</code> from the player's embedded aggregates (Golemio, 2025); the daily means are 36 · 43 · 82 · 85 · 164 s, as in the table.</figcaption>
+  <img src="../assets/delayed/01-five-days.svg" alt="Five stacked line charts of surface transit delay over 24 hours for the five days on the record, with the chorus the player plays shaded: where the smoothed delay exceeds 68 percent of the day's maximum, after short runs and night windows are dropped." loading="lazy">
+  <figcaption><b>fig. 1</b> · Event-weighted mean delay of bus, tram and trolleybus per 5-minute window, in seconds, for each of the five days (288 windows a day); chorus shaded red as the player plays it: where the five-window moving average exceeds 68 % of the day's maximum, with runs shorter than 20 minutes dropped, gaps shorter than 15 minutes joined and the night hours without metro left out. No uncertainty band: the values are administrative means. Recomputed by <code>tools/charts/delayed.py</code> from the player's embedded aggregates (Golemio, 2025); the daily means are 36 · 43 · 82 · 85 · 164 s, as in the table.</figcaption>
 </figure>
 </section>
 
@@ -138,6 +140,7 @@
 <section id="changelog" class="changelog">
 <h2>Change log</h2>
 <ul>
+<li>3 October 2026, after an audit: fig. 1 and its data now shade the chorus the player actually plays (short runs dropped, short gaps joined, night hours without metro excluded), so the chorus totals in the figure's table changed from 440 to 415 min (Easter Monday), 600 to 525 min (Summer Sunday) and 265 to 275 min (Back to School); the text describes those steps instead of "one rule". Withdrawn: "the same history of 121 197 794 vehicle-location records" (the thesis page and the player's README give different units; the note now says so) and that the same day always gives the same track (true only at default settings). Weakened: "rush-hour choruses" (a chorus is each day's own worst stretch) and "the later the network runs, the higher the line" (pitch and loudness are scaled to each day's peak). Added that the script's 158 s label for 30 April is the all-mode mean against the page's 164 s surface mean, that the Meltdown's mean comes from 15:00–19:00 (304 s; 114 s without it), that detune is capped at 180 s and scaled by a slider, that early running affects only the key, and that the 7 s, 557 000 and 111 s figures are for 17 June only. The 145 s peak is now named as smoothed. No other number changed.</li>
 <li>14 September 2026: first published as "Delayed All the Time. On Time, Occasionally."</li>
 <li>29 September 2026, version 2: moved to Notes and retitled. Removed the AR(2) equation and its reading ("a shock … is still three-quarters there in the next"), which misstated the one-step response and conflated the thesis's route-level dynamics with the city-wide averages the record plays; with it went the 0.727 / 0.715 / 0.73 figures, which remain on the thesis page. Removed the claim that the ear hears the pattern before the table does. The facts no longer lead with "121 M stop events": the source is given in the thesis's unit, 121 197 794 vehicle-location records, and the record's own size as 3 267 980 stop events, the sum of the five days in the track table. Added the day-selection criteria from the extraction script, a statement that the cause of the 30 April delays was not investigated, that the 68 % chorus threshold and the key cut-offs were set by hand, and that mean delays include early running and leave out arrivals with delays outside [−600, 3 600] s (the extraction query filters them; it does not clip them). The Summer Sunday key is named D ionian, as in the rule, instead of D major. The trains row now says which chart shows them. Fixed the thesis link. Added what the tram and trolleybus instruments follow, the embedded player, and the data and licence lines. Cut the production-notes paragraph (58 % shuffle, side-chain, −4.5 dB shelf at 6 kHz, eight-beat blocks; now in the README only), the liner notes, the closing line of the homage disclaimer, the repeated statements that no raw records are redistributed, and the footer note that duplicated the figure caption. The short version no longer repeats the deck or the facts.</li>
 <li>Checked against editorial standard v1 on 29 September 2026.</li>

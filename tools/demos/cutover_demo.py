@@ -2,8 +2,8 @@
 
     .venv/bin/python tools/demos/cutover_demo.py
 
-Downloads one public parquet (~50 MB) into tools/data/, builds both aggregates, runs cutover,
-writes assets/cutover/report.{html,json} and prints the text report. Whatever it finds is reported as found.
+Downloads one public parquet (~59 MB) into tools/data/, builds both aggregates, runs cutover,
+writes assets/cutover/report-1.{html,json} and report-2.{html,json} and prints the text report. Whatever it finds is reported as found.
 """
 
 from __future__ import annotations

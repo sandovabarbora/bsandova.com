@@ -39,10 +39,10 @@ for r in cnt:
     k = int(r["number"])
     out = r["count"] < lo or r["count"] > hi
     bars.append({"x": str(k), "y0": exp, "y1": r["count"], "c": "ink" if out else "held",
-                 "tip": f"number {k}\ndrawn {n(r['count'])} times (expected {exp:.0f})\nz {r['z']:+.2f}".replace("+-", "−").replace("-", "−")
+                 "tip": f"number {k}\ndrawn {n(r['count'])} times (expected {n(exp, 1)})\nz {r['z']:+.2f}".replace("+-", "−").replace("-", "−")
                         + f"\np {r['p_raw']:.3f}, after Benjamini–Hochberg {r['p_fdr']:.2f}"})
 charts["counts"] = {
-    "alt": f"Bars for the 49 Sportka numbers showing how often each was drawn in {n(F['n_draws'])} draws, 1994–2026, against the expected {exp:.0f}. "
+    "alt": f"Bars for the 49 Sportka numbers showing how often each was drawn in {n(F['n_draws'])} draws, 1994–2026, against the expected {n(exp, 1)}. "
            f"All lie between {min(int(r['count']) for r in cnt)} and {max(int(r['count']) for r in cnt)}; four fall outside the 95 % range for a single number, as about 2.5 of 49 would by chance.",
     "legend": [{"label": "inside the 95 % range for one number", "c": "held", "shape": "box", "o": 0.85},
                {"label": "outside it", "c": "ink", "shape": "box", "o": 0.85},
@@ -71,9 +71,9 @@ charts["hottest"] = {
     "panels": [{"h": 300, "x": {"kind": "linear", "domain": [0, 50], "ticks": [1, 10, 20, 30, 40, 49], "label": "most frequent number"},
                 "y": {"kind": "cat", "domain": [h[0] for h in hot]},
                 "marks": [{"type": "dots", "pts": [{"x": h[1], "y": h[0], "c": h[4], "label": str(h[1]),
-                                                     "tip": f"{h[0]}\nmost frequent: {h[1]}, drawn {n(h[2])} times (expected {h[3]:.0f})"} for h in hot]}]}],
+                                                     "tip": f"{h[0]}\nmost frequent: {h[1]}, drawn {n(h[2])} times (expected {n(h[3], 1)})"} for h in hot]}]}],
     "table": {"cols": ["history", "most frequent number", "times drawn", "expected"],
-              "rows": [[h[0], str(h[1]), n(h[2]), f"{h[3]:.0f}"] for h in hot]},
+              "rows": [[h[0], str(h[1]), n(h[2]), n(h[3], 1)] for h in hot]},
     "data": ["../assets/lottery/results.json"],
 }
 

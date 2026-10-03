@@ -12,7 +12,8 @@ two-sided per-bin p-values and a global chi-square discrepancy. Expected value o
 (J times the chance of hitting it times the expected share, E[1/(1+K)], K ~ Poisson(N/C) co-winners) plus eleven
 lower tiers, each a_i x 1 EUR x (1 - exp(-N p_i)) with the published prize-fund shares a_i; the whole posterior of N
 is carried through. Dilution: the expected jackpot share of a combination chosen by pi times as many players as
-average, E[1/(1+K)] with K ~ Poisson(pi N/C).
+average, E[1/(1+K)] with K ~ Poisson(pi N/C); the gain over an average combination is also given for pi = 0.2, 0.4
+and 0.7, since pi is assumed, not measured.
 """
 from __future__ import annotations
 
@@ -34,6 +35,7 @@ G_BETA = np.linspace(-0.5, 3.0, 140)
 BINS = [10, 30, 50, 70, 90, 110, 121]
 LEVELS = [10e6, 25e6, 50e6, 75e6, 100e6, 120e6]
 PI = {"unpopular": 0.4, "average": 1.0, "popular": 2.5}
+PI_SENSITIVITY = [0.2, 0.4, 0.7]  # popularity of the unpopular combination, varied for the gain over an average one
 
 
 def log_post(log_j, y):
@@ -121,7 +123,9 @@ def main() -> None:
                "ev_jackpot": summary(jack), "ev_lower": summary(lower), "rtp": summary(tot / EJ_PRICE),
                "loss": summary(EJ_PRICE - tot),
                "share": {k: summary(share_if_won(v * lam)) for k, v in PI.items()},
-               "ratio_unpop_pop": summary(ratio), "ev_gain_unpopular": summary(gain)}
+               "ratio_unpop_pop": summary(ratio), "ev_gain_unpopular": summary(gain),
+               "ev_gain_by_pi": {str(pi): summary(J * p1 * (share_if_won(pi * lam) - share_if_won(lam)))
+                                 for pi in PI_SENSITIVITY}}
         (levels if len(levels) < len(LEVELS) else curve).append(row)
     res["levels"] = levels
     res["popularity"] = PI

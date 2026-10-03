@@ -106,7 +106,7 @@ def main() -> None:
     rob = json.loads(ROB.read_text())
     ranks = raw_ranks()
     main_res["H1"]["raw_rate_ranks"] = ranks
-    add = {"date": "2026-09-30", "H5_city_district_clusters": h5_city_districts(rng), "H6_warsaw": warsaw()}
+    add = {"date": "2026-09-29", "H5_city_district_clusters": h5_city_districts(rng), "H6_warsaw": warsaw()}
     rob["addenda"] = add
     MAIN.write_text(json.dumps(main_res, ensure_ascii=False, indent=1) + "\n")
     ROB.write_text(json.dumps(rob, ensure_ascii=False, indent=1) + "\n")

@@ -101,7 +101,7 @@ def main() -> None:
     rel["dx"] = rel.total - rel.groupby("call").total.transform("mean")
     q2 = R["Q2"]
     charts["audience"] = {
-        "alt": f"Scatter of {q2['n']} released projects: points relative to their call's mean against Czech admissions on a log scale; Spearman rho within call {q2['rho']:+.2f} (95 % CI {q2['lo']:+.2f} to {q2['hi']:+.2f}).",
+        "alt": f"Scatter of {q2['n']} applications whose films were released (a film that applied in several calls counted once per application): points relative to their call's mean against Czech admissions on a log scale; Spearman rho within call {q2['rho']:+.2f} (95 % CI {q2['lo']:+.2f} to {q2['hi']:+.2f}).",
         "legend": [{"label": "funded", "c": "held", "shape": "dot"}, {"label": "not funded", "c": "grey", "shape": "dot"}],
         "panels": [{"h": 300, "title": "Czech admissions (log scale)",
                     "x": {"kind": "linear", "domain": [-30, 25], "label": "points relative to the call's mean", "fmt": {"dp": 0, "sign": True}},

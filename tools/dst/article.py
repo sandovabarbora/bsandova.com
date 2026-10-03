@@ -1,7 +1,7 @@
 """Clock change and pedestrian crashes: figures, the region map and the article, every number from the results.
 
 Reads docs/research/dst-darkness-results.json and -data.json, tools/data/dst/cells.parquet and the Natural Earth
-regions; writes assets/dst/ (charts.json, 01-hours.svg, 02-checks.svg, 03-map.svg, cells.parquet, results.json)
+regions; writes assets/dst/ (charts.json, 01-hours.svg, 02-checks.svg, 03-map.svg, 04-event.svg, cells.parquet, results.json)
 and texts/dst-darkness.html from tools/dst/template.html.
 
     uv run --with matplotlib --with pandas --with pyarrow --with shapely python tools/dst/article.py
@@ -79,6 +79,16 @@ def rush_minutes() -> dict:
     return out
 
 
+def event_rows(res: dict, g: str = "ev") -> list[tuple[int, float, float, float]]:
+    """The registered event study (design §6): (day, ratio, lo, hi) for one hour group, the reference day −1 at 1."""
+    out = [(-1, 1.0, 1.0, 1.0)]
+    for k, v in res["event_study"].items():
+        if k.startswith(g + "_"):
+            t = int(k[len(g) + 2:]) * (-1 if k[len(g) + 1] == "m" else 1)
+            out.append((t, v["ratio"], v["lo"], v["hi"]))
+    return sorted(out)
+
+
 def figures(res: dict, cells: pd.DataFrame) -> dict:
     A.mkdir(parents=True, exist_ok=True)
     shutil.copy(D / "cells.parquet", A / "cells.parquet")
@@ -119,6 +129,24 @@ def figures(res: dict, cells: pd.DataFrame) -> dict:
         "table": {"cols": ["model", "ratio", "95 % interval"],
                   "rows": [[r["y"], round(r["mid"], 3), f"{r['lo']:.3f} to {r['hi']:.3f}"] for r in rows]},
         "data": ["results.json"]}
+    es = event_rows(res)
+    charts["event"] = {
+        "alt": "Evening-to-midday ratio of pedestrian crashes by day, two weeks before and two weeks after the autumn "
+               "clock change, each relative to the day before the change, with 95 % intervals: wide intervals, "
+               "mostly below 1 before the change and mostly above 1 after it.",
+        "panels": [{"h": 260, "x": {"kind": "linear", "domain": [-15, 15], "ticks": list(range(-14, 15, 2)),
+                                    "fmt": {"dp": 0}, "label": "days from the clock change"},
+                    "y": {"kind": "log", "domain": [0.1, 25], "ticks": [0.1, 0.25, 0.5, 1, 2, 5, 10, 20],
+                          "fmt": {"dp": 2}, "label": "ratio, evening relative to midday, against day −1"},
+                    "marks": [{"type": "rule", "axis": "y", "v": 1, "c": "grey"},
+                              {"type": "rule", "axis": "x", "v": 0, "c": "grey", "dash": "dot", "label": "change"},
+                              {"type": "vrange", "c": "held",
+                               "rows": [{"x": t, "mid": r, "lo": lo, "hi": hi,
+                                         "tip": f"day {t:+d}: ×{r:.2f} ({lo:.2f}–{hi:.2f})"}
+                                        for t, r, lo, hi in es]}]}],
+        "table": {"cols": ["day", "ratio", "95 % interval"],
+                  "rows": [[t, round(r, 3), f"{lo:.3f} to {hi:.3f}"] for t, r, lo, hi in es]},
+        "data": ["results.json"]}
     (A / "charts.json").write_text(json.dumps(charts, ensure_ascii=False))
 
     f, ax = plt.subplots(figsize=(7.2, 2.8))
@@ -138,6 +166,17 @@ def figures(res: dict, cells: pd.DataFrame) -> dict:
     ax.set_yticks(range(len(rows)))
     ax.set_yticklabels([r["y"] for r in reversed(rows)]); ax.set_xlabel("ratio, evening relative to midday, after / before")
     f.tight_layout(); f.savefig(A / "02-checks.svg"); plt.close(f)
+
+    f, ax = plt.subplots(figsize=(7.2, 2.8))
+    ax.axhline(1, color=GREY, lw=0.8); ax.axvline(0, color=GREY, lw=0.8, ls=":")
+    for t, r, lo, hi in es:
+        ax.plot([t, t], [lo, hi], color=HELD, lw=1.6, solid_capstyle="round")
+        ax.plot(t, r, "o", color=HELD, ms=4, mec="white")
+    ax.set_yscale("log"); ax.set_ylim(0.1, 25); ax.set_yticks([0.1, 0.25, 0.5, 1, 2, 5, 10, 20])
+    ax.set_yticklabels(["0.1", "0.25", "0.5", "1", "2", "5", "10", "20"]); ax.yaxis.set_minor_formatter(plt.NullFormatter())
+    ax.set_xticks(range(-14, 15, 2)); ax.set_xlabel("days from the clock change")
+    ax.set_ylabel("ratio against day −1")
+    f.tight_layout(); f.savefig(A / "04-event.svg"); plt.close(f)
 
     rm = rush_minutes()
     f, axs = plt.subplots(1, 2, figsize=(7.2, 2.6))
@@ -198,6 +237,41 @@ def values(res: dict, data: dict, cells: pd.DataFrame, fig: dict) -> dict:
                    ("group_trends", "gt"), ("other_crash_kinds", "oth")):
         v[key] = f"{c[k]['pe']['ratio']:.2f}"
         v[key + "_lo"], v[key + "_hi"] = f"{c[k]['pe']['lo']:.2f}", f"{c[k]['pe']['hi']:.2f}"
+    v["gt_pct_lo"] = n(100 * (1 - c["group_trends"]["pe"]["lo"]))
+    v["gt_pct_hi"] = n(100 * (c["group_trends"]["pe"]["hi"] - 1))
+    v["pl_hi_pct"] = n(100 * (c["placebo_day_-14"]["pe"]["hi"] - 1))
+    v["n_primary"] = n(p["pe"]["n"])
+    mh = res["missing_hour"]["ped"]
+    v["ped_records"], v["ped_unknown"] = n(mh["records"]), n(mh["unknown_hour"])
+    sd = res["sun_dark_share"]
+    v["ev_dark_min"] = n(180 * (sd["evening_post"] - sd["evening_pre"]))
+    v["mo_light_min"] = n(120 * (sd["morning_pre"] - sd["morning_post"]))
+    v["h17_pre"], v["h17_post"] = n(hp.pre.loc[17], 2), n(hp.post.loc[17], 2)
+    by_hour = w[w.t != 0].groupby(["hour", w.t > 0]).ped.sum()
+    for h in (16, 17, 18):
+        v[f"c{h}_pre"], v[f"c{h}_post"] = n(by_hour[(h, False)]), n(by_hour[(h, True)])
+    grp = w[w.t != 0].groupby(["group", w.t > 0]).ped.sum()
+    v["ctl_pre"], v["ctl_post"] = n(grp[("control", False)]), n(grp[("control", True)])
+    v["ev_x"] = n(grp[("evening", True)] / grp[("evening", False)], 2)
+    v["ctl_x"] = n(grp[("control", True)] / grp[("control", False)], 2)
+    v["raw_did"] = n(grp[("evening", True)] / grp[("evening", False)] / (grp[("control", True)] / grp[("control", False)]), 2)
+    yr = ev[ev.t != 0].groupby(["year", ev.t > 0]).ped.sum().unstack()
+    rise = (yr[True] - yr[False]).sort_values(ascending=False)
+    v["yr_a"], v["yr_b"] = str(min(rise.index[:2])), str(max(rise.index[:2]))
+    v["yr_ab"], v["yr_total"] = n(rise.iloc[:2].sum()), n(rise.sum())
+    flat = sorted(int(y) for y in rise.index if rise[y] <= 5)
+    v["yr_flat_n"] = {3: "three", 4: "four", 5: "five"}.get(len(flat), str(len(flat)))
+    v["yr_flat"] = ", ".join(str(y) for y in flat[:-1]) + " and " + str(flat[-1])
+    es = [r for r in event_rows(res) if r[0] != -1]
+    pre, post = [r for r in es if r[0] < 0], [r for r in es if r[0] > 0]
+    v["es_pre_below"], v["es_pre_n"] = str(sum(r[1] < 1 for r in pre)), str(len(pre))
+    v["es_post_above"], v["es_post_n"] = str(sum(r[1] > 1 for r in post)), str(len(post))
+    sig = [r for r in es if r[2] > 1 or r[3] < 1]
+    assert len(sig) == 1, sig
+    v["es_sig_day"], v["es_sig"] = f"{sig[0][0]:+d}".replace("+", ""), f"{sig[0][1]:.2f}"
+    v["es_sig_lo"], v["es_sig_hi"] = f"{sig[0][2]:.2f}", f"{sig[0][3]:.2f}"
+    mo = w[(w.group == "morning")].groupby("t").ped.sum()
+    v["mo_ref"] = n(mo.loc[-1])
     v["gt_m"] = f"{c['group_trends']['pm']['ratio']:.2f}"
     v["oth_m"] = f"{c['other_crash_kinds']['pm']['ratio']:.2f}"
     v["extra"] = n(int(v["n_ev_post"].replace(NB, "")) * (1 - 1 / p["pe"]["ratio"]))

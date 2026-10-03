@@ -11,6 +11,7 @@ from __future__ import annotations
 import csv
 import json
 import re
+import statistics
 import sys
 from pathlib import Path
 
@@ -24,6 +25,16 @@ def n(v: float, dp: int = 0) -> str:
     """A number in the site's style: thin space between thousands, a real minus."""
     s = f"{abs(v):,.{dp}f}".replace(",", NB)
     return ("−" if v < 0 else "") + s
+
+
+def med(v: float) -> str:
+    """A median of days: one decimal when it falls on a half day, so 678.5 and 359.5 are not rounded in opposite directions."""
+    return n(v, 1) if v % 1 else n(v)
+
+
+def ordinal(k: int) -> str:
+    """1st, 2nd, 3rd, 4th, 11th, 21st, …"""
+    return f"{k}{'th' if 10 <= k % 100 <= 20 else {1: 'st', 2: 'nd', 3: 'rd'}.get(k % 10, 'th')}"
 
 
 def pct(v: float, dp: int = 0) -> str:
@@ -45,17 +56,19 @@ def values(slug: str) -> dict:
           "focal_longer": pct(focal["share_longer"], 1), "focal_lo": pct(focal["ci95"][0], 1), "focal_hi": pct(focal["ci95"][1], 1),
           "focal_one_in": n(round(1 / focal["share_longer"])), "focal_beat": pct(1 - focal["share_longer"]),
           "focal_still": "still in the chart" if focal["still_charting"] else "no longer in the chart"}
-    surv = lambda t: next((v_ for d_, v_ in q1["curve"] if d_ >= t), q1["curve"][-1][1])
+    # the Kaplan–Meier curve is a step function: S(t) is the value of the last step at or before t
+    surv = lambda t: next((v_ for d_, v_ in reversed(q1["curve"]) if d_ <= t), 1.0)
     v |= {"s730": pct(surv(730)), "s1000": pct(surv(1000))}
     others = [p for p in q1["own"] if not p["focal"]]
     v["other_ones"] = "; ".join(f"<i>{p['label'].split(' - ', 1)[1]}</i>, {n(p['days'])} days ({pct(p['share_longer'])} of number ones lasted longer)"
                                 for p in others) or "none"
     cs = q2["countries"]
     cz = q2["czechia"]
-    v |= {"q2_countries": n(len(cs)), "q2_ranked": n(q2["n_ranked"]), "q2_above": n(sum(c["ratio"] > 1 for c in cs)),
-          "q2_median_ratio": n(sorted(c["ratio"] for c in cs)[len(cs) // 2], 1),
-          "cz_days": n(cz["days"]), "cz_median": n(cz["median_ones_days"]), "cz_ratio": n(cz["ratio"], 1),
+    v |= {"q2_countries": n(len(cs)), "q2_ranked": n(q2["n_ranked"]), "q2_above": n(sum(c["ratio"] > 1 for c in cs)), "q2_below": n(sum(c["ratio"] < 1 for c in cs)),
+          "q2_median_ratio": n(statistics.median(c["ratio"] for c in cs), 1),
+          "cz_days": n(cz["days"]), "cz_median": med(cz["median_ones_days"]), "cz_ratio": n(cz["ratio"], 1),
           "cz_lo": n(cz["ci95"][0], 1), "cz_hi": n(cz["ci95"][1], 1), "cz_rank": n(cz["rank"]), "cz_rank_days": n(cz["rank_by_days_post_hoc"]),
+          "cz_rank_ord": ordinal(cz["rank"]), "cz_rank_days_ord": ordinal(cz["rank_by_days_post_hoc"]),
           "q2_still": n(sum(c["still_charting"] for c in cs))}
     by_days = sorted(cs, key=lambda c: c["rank_by_days_post_hoc"])
     name = {"ae": "the United Arab Emirates", "au": "Australia", "sg": "Singapore", "be": "Belgium", "gb": "the United Kingdom",
@@ -68,10 +81,12 @@ def values(slug: str) -> dict:
     for c in cs:   # every country's values, so a template can name any of them: <cc>_ratio, <cc>_days, …
         k = c["country"]
         v |= {f"{k}_ratio": n(c["ratio"], 1 if c["ratio"] < 10 else 0), f"{k}_ratio2": n(c["ratio"], 2), f"{k}_days": n(c["days"]),
-              f"{k}_median": n(c["median_ones_days"]), f"{k}_ones": n(c["ones"]), f"{k}_rank": n(c.get("rank", 0)),
-              f"{k}_rank_days": n(c["rank_by_days_post_hoc"])}
+              f"{k}_median": med(c["median_ones_days"]), f"{k}_ones": n(c["ones"]), f"{k}_rank": n(c.get("rank", 0)),
+              f"{k}_rank_days": n(c["rank_by_days_post_hoc"]), f"{k}_rank_ord": ordinal(c.get("rank", 0)),
+              f"{k}_rank_days_ord": ordinal(c["rank_by_days_post_hoc"]),
+              f"c_{k}_days": n(c["days"])}   # c_<cc>_days: chart days, which the Q5 us_days below does not overwrite
     low = sorted(cs, key=lambda c: c["ratio"])[:2]
-    v["q2_low"] = " and ".join(f"{name.get(c['country'], c['country'].upper())} ({n(c['ratio'], 2)}×, {n(c['days'])} days against a median of {n(c['median_ones_days'])})" for c in low)
+    v["q2_low"] = " and ".join(f"{name.get(c['country'], c['country'].upper())} ({n(c['ratio'], 2)}×, {n(c['days'])} days against a median of {med(c['median_ones_days'])})" for c in low)
 
     tour = [t for t in rows(f"{slug}-tour.csv") if t.get("multi_venue") != "True" and t.get("hybrid") != "True"]
     if q3.get("answerable"):
@@ -82,7 +97,9 @@ def values(slug: str) -> dict:
               "q3_rho": n(q3["spearman_rho"], 2) if q3["spearman_rho"] is not None else "undefined",
               "q3_lo": n(q3["ci95"][0], 2) if q3["ci95"] else "", "q3_hi": n(q3["ci95"][1], 2) if q3["ci95"] else "",
               "q3_min": pct(q3["sell_through_min"]), "q3_rev_night": n(q3["revenue_per_night_median_usd"] / 1e6, 2),
-              "long_venue": longest["venue"], "long_city": longest["city"], "long_nights": n(int(longest["nights"])),
+              "long_venue": longest["venue"], "long_city": longest["city"].strip(), "long_nights": n(int(longest["nights"])),
+              "long_runs": " and ".join(f'{t["venue"]} in {t["city"].strip()}' for t in tour if t["nights"] == longest["nights"]),
+              "q3_rev_entries": n(sum(1 for t in tour if t["revenue_usd"])),
               "long_sold": n(int(longest["sold"])), "least_city": least["city"], "least_tour": least["tour"],
               "least_sold": n(int(least["sold"])), "least_avail": n(int(least["available"])), "least_year": least["year"],
               "q3_multi": n(q3.get("multi_venue_excluded", 0)), "q3_hybrid": n(q3.get("hybrid_excluded", 0)),
@@ -130,7 +147,7 @@ def values(slug: str) -> dict:
                   f'--bg:url(../assets/photo/pop-{slug}.jpg);--bg-s:url(../assets/photo/pop-{slug}-1200.jpg)"></div>'
                   f'<p class="credit">Photo: <a href="{photo["page"]}">{photo["author"]}</a> · {photo["licence"]}, toned</p></section>')
     meta = json.loads((RAW / "collected.json").read_text())
-    v |= {"kworb_date": "1 October 2026" if meta["date"] == "2026-10-01" else meta["date"], "kworb_charts": n(len(meta["countries"]))}
+    v |= {"kworb_date": "1 October 2026" if meta["date"] == "2026-10-01" else meta["date"], "kworb_charts": n(len([c for c in meta["countries"] if c != "global"]))}   # national charts only
     for other in ("harry-styles", "taylor-swift", "bts", "bad-bunny", "billie-eilish"):   # Czechia across the series
         path = R / f"{other}-results.json"
         if path.exists():
@@ -154,6 +171,12 @@ def values(slug: str) -> dict:
               "e_loo_min": n(min(e["leave_one_out"].values()), 2), "e_loo_max": n(max(e["leave_one_out"].values()), 2),
               "e_at": n(e["austria_aug2024"]["yoy"], 1), "e_at_pct": n(100 * e["austria_aug2024"]["percentile_among_controls"]),
               "e_m1": n(next(r["att"] for r in e["accommodation"]["event"] if r["e"] == 1), 2)}
+        after = [r for r in e["accommodation"]["event"] if r["e"] > 0]
+        for r in after:   # e_acc_m<e>, _lo, _hi: accommodation, months +1 to +6 after the show
+            v |= {f"e_acc_m{r['e']}": n(r["att"], 2), f"e_acc_m{r['e']}_lo": n(r["lo"], 2), f"e_acc_m{r['e']}_hi": n(r["hi"], 2)}
+        v |= {"e_acc_after_neg": n(sum(r["att"] < 0 for r in after)), "e_acc_after_n": n(len(after)),
+              "e_acc_after_zero": n(sum(r["lo"] <= 0 <= r["hi"] for r in after)),
+              "e_hicp_geos": n(len({r["geo"] for r in rows("eras-inflation-hicp.csv")}))}
     artist = json.loads((Path(__file__).with_name("artists.json")).read_text(encoding="utf-8"))[slug]
     for name in artist["tours"]:   # rev_<tour slug>: the Wikipedia revision of each tour article
         key = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")

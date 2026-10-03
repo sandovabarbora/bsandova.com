@@ -181,7 +181,7 @@ for term, title in (("2018", "2018–22"), ("2022", "2022–26 (from Feb 2023)")
                     "y": {"kind": "cat", "domain": [r["y"] for r in hb]}, "marks": [{"type": "hbar", "rows": hb}]})
 charts["who-says-no"] = {
     "alt": "Two bar charts of contested votes by which clubs had a majority not voting yes. 2018–22: no club as a whole 49 %, ODS alone 23 %, ANO and ODS 15 %, ANO alone 12 %. 2022–26: no club as a whole 42 %, SPD alone 20 %, ANO and SPD 17 %, ANO alone 11 %, Praha sobě 2.5 %.",
-    "legend": [{"label": "one or more clubs voted no as a whole", "c": HELD, "shape": "box", "o": 0.85}, {"label": "no club as a whole; the minority was scattered", "c": "light", "shape": "box", "o": 0.85}],
+    "legend": [{"label": "one or more clubs had a majority not voting yes", "c": HELD, "shape": "box", "o": 0.85}, {"label": "no club as a whole; the minority was scattered", "c": "light", "shape": "box", "o": 0.85}],
     "panels": panels6,
     "table": {"cols": ["term", "clubs with a majority not voting yes", "votes", "% of contested"], "rows": rows6},
     "data": [DO],
@@ -204,7 +204,7 @@ def dlab(s: str) -> str:
 
 ser = O["H2"]["series"]  # one sitting (24 Mar 2011) has no abstentions and no pressed-nothing: 0/0, left out of the plot as matplotlib does
 charts["abstain-sittings"] = {
-    "alt": "Scatter of sittings from 2010 to 2026: abstentions as a share of abstentions plus pressing nothing. Around 20 to 60 % in 2010–2018 with a downward drift in each term, falling to under 10 % from late 2018, and near zero by 2026. Dashed lines mark the term boundaries; a solid line marks October 2020.",
+    "alt": "Scatter of sittings from 2010 to 2026: abstentions as a share of abstentions plus pressing nothing. Around 20 to 60 % in 2010–2018 with a downward drift in each term, falling to mostly under 10 % from late 2018, with a few sittings higher, and near zero by 2026. Dashed lines mark the term boundaries; a solid line marks October 2020.",
     "legend": [{"label": "sitting", "c": HELD, "shape": "o"}, {"label": "new term", "c": "grey", "dash": "dash"}, {"label": "file changes how it counts 'present'", "c": "ink"}],
     "panels": [{"h": 280, "x": {"kind": "linear", "domain": [2010.5, 2026.9], "ticks": [2012, 2014, 2016, 2018, 2020, 2022, 2024, 2026], "fmt": {"dp": 0, "nogroup": True}},
                 "y": {"kind": "linear", "domain": [0, 100], "ticks": [0, 20, 40, 60, 80, 100], "label": "abstentions, % of abstain + pressed nothing", "tickfmt": {"dp": 0}},

@@ -116,12 +116,14 @@ charts["lag-profile"] = {
 assert floor > -13 and prof["prague"]["mu"] == prof["rest"]["mu"]
 
 # fig. 4 · who built in 2024 (figures_cities.builders)
-v, w = C["builders_2024"]["vienna"], C["builders_2024"]["warsaw"]
+v, w = C["builders_2024"]["vienna"], dict(C["builders_2024"]["warsaw"])
+# the share from the counts, not from the 4-decimal share in cities.json: 96 / 14 873 = 0.645 %, which prints 0.6 %, not 0.7 %
+w["municipal_and_tbs_share"] = (C["warsaw"]["2024"]["municipal"] + C["warsaw"]["2024"]["tbs"]) / C["warsaw"]["2024"]["completed"]
 brows = [("Vienna", [(v["non_profit_share"], "limited-profit housing associations", HELD), (v["public_share"], "public sector", "ink"),
                      (v["companies_share"], "companies", "light"), (v["private_persons_share"], "private persons", "grey")]),
          ("Warsaw", [(w["municipal_and_tbs_share"], "the city and public building societies (TBS)", HELD),
                      (1 - w["municipal_and_tbs_share"], "everyone else", "light")])]
-# the article rounds Warsaw's split as 0.7 % and 100 − 0.7 = 99.3 %; 99.35 rounded on its own would print 99.4
+# the article rounds Warsaw's split as 0.6 % and 100 − 0.6 = 99.4 %, so the two printed shares add to 100
 def pct(city: str, lab: str, share: float) -> str:
     if lab == "everyone else":
         return n(100 - float(n(100 * w["municipal_and_tbs_share"], 1)), 1, " %")
@@ -136,7 +138,7 @@ for city, parts in brows:
                     "tip": f"{city}, 2024\n{lab}\n{pct(city, lab, share)} of completions"})
         left += 100 * share
 charts["builders-2024"] = {
-    "alt": "Two stacked bars for 2024. Vienna: limited-profit housing associations 25 %, public sector 2 %, companies 66 %, private persons 7 %. Warsaw: the city and public building societies 0.7 %, everyone else 99 %.",
+    "alt": "Two stacked bars for 2024. Vienna: limited-profit housing associations 25 %, public sector 2 %, companies 66 %, private persons 7 %. Warsaw: the city and public building societies 0.6 %, everyone else 99 %.",
     "legend": [{"label": "non-profit (Vienna) · municipal and TBS (Warsaw)", "c": HELD, "shape": "box", "o": 0.85},
                {"label": "public sector", "c": "ink", "shape": "box", "o": 0.85},
                {"label": "companies (Vienna) · everyone else (Warsaw)", "c": "light", "shape": "box", "o": 0.85},

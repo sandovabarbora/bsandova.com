@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>cutover: a table migration check · Barbora Šandová</title>
-<meta name="description" content="cutover compares an old and a new version of a table in six ordered checks and passes only when nothing differs. Method, tests, limits and a worked example on a month of NYC taxi data.">
+<meta name="description" content="cutover compares an old and a new version of a table in five ordered checks and a verdict, and passes only when nothing differs. Method, tests, limits and a worked example on a month of NYC taxi data.">
 <meta property="og:title" content="cutover: a table migration check">
-<meta property="og:description" content="cutover compares an old and a new version of a table in six ordered checks and passes only when nothing differs. Method, tests, limits and a worked example on a month of NYC taxi data.">
+<meta property="og:description" content="cutover compares an old and a new version of a table in five ordered checks and a verdict, and passes only when nothing differs. Method, tests, limits and a worked example on a month of NYC taxi data.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://bsandova.com/assets/og/cutover.jpg">
 <meta property="og:image:width" content="1200">
@@ -44,7 +44,7 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 </style>
 
 <!-- ld --><link rel="alternate" type="application/atom+xml" title="Barbora Šandová" href="/feed.xml">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "cutover: a table migration check", "description": "cutover compares an old and a new version of a table in six ordered checks and passes only when nothing differs. Method, tests, limits and a worked example on a month of NYC taxi data.", "url": "https://bsandova.com/texts/cutover", "image": "https://bsandova.com/assets/og/cutover.jpg", "dateModified": "2026-09-29T11:33:59+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "cutover: a table migration check", "description": "cutover compares an old and a new version of a table in five ordered checks and a verdict, and passes only when nothing differs. Method, tests, limits and a worked example on a month of NYC taxi data.", "url": "https://bsandova.com/texts/cutover", "image": "https://bsandova.com/assets/og/cutover.jpg", "dateModified": "2026-10-03T12:00:00+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
 </head>
 <body>
 <div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">tool · cutover · 2026 · en</span></div>
@@ -53,25 +53,25 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 <header class="text-head">
   <p class="kicker">Tool · cutover 0.1.0 · comparing two versions of a table</p>
   <h1>cutover: checking that <em>a table migration</em> changed nothing</h1>
-  <p class="deck">A Python package that compares two versions of a table in six ordered checks; on a month of NYC taxi aggregates it failed a first run on two differences and passed once both were addressed.</p>
+  <p class="deck">A Python package that compares two versions of a table in five ordered checks and a verdict; on a month of NYC taxi aggregates it failed a first run on two differences and passed once both were addressed.</p>
   <dl class="facts">
-    <div><dt>checks</dt><dd>6 <small>schema · key · row set · columns · fingerprints · verdict · administrative count</small></dd></div>
+    <div><dt>checks</dt><dd>5 <small>schema · key · row set · columns · fingerprints, then a verdict · administrative count</small></dd></div>
     <div><dt>tests</dt><dd>41 <small>passing on 29 September 2026 · administrative count</small></dd></div>
     <div><dt>demo, run 1</dt><dd>343 <small>fare mismatches of 7 280 keyed rows · administrative count</small></dd></div>
-    <div><dt>demo, run 2</dt><dd>33 / 33 <small>daily partitions with identical fingerprints · administrative count</small></dd></div>
+    <div><dt>demo, run 2</dt><dd>33 / 33 <small>daily partitions with identical fingerprints over day, zone and trips; fare and km, compared within tolerance, are not hashed · administrative count</small></dd></div>
   </dl>
 </header>
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>It compares two tables by schema, key, rows, values and per-partition hashes, and fails with reasons.</li>
+    <li>It compares two tables by schema, key, rows, values and per-day hashes (one checksum of all rows for each day), and fails with reasons.</li>
     <li>The demo found a day column turned into a timestamp, and fares rounded differently on each side.</li>
-    <li>Its evidence is its own test suite and one public demo.</li>
+    <li>Its evidence is its own test suite and one public demo. Its largest run so far is 7 280 rows, so behaviour on large tables is untested, and the demo passed only after a half-cent fare tolerance was declared following the first run.</li>
     <li>It shows that two tables are equal, not that either is right.</li>
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>14 September 2026 · updated 29 September 2026 · <a href="#changelog">version 2</a></dd></div>
+  <div><dt>published</dt><dd>14 September 2026 · updated 3 October 2026 · <a href="#changelog">version 3</a></dd></div>
 </dl>
 <details class="meta-more">
   <summary>About this tool</summary>
@@ -79,7 +79,7 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
   <div><dt>status</dt><dd>tool v0.1.0</dd></div>
   <div><dt>data</dt><dd>NYC TLC yellow taxi trip records, January 2025, <code>yellow_tripdata_2025-01.parquet</code>, downloaded 14 September 2026; reports <a href="../assets/cutover/report-1.json">report-1.json</a> and <a href="../assets/cutover/report-2.json">report-2.json</a>, written by cutover 0.1.0 on 14 September 2026</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/cutover">sandovabarbora/cutover</a>, tag v0.1.0 (commit 3bf9b72); demo <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/demos/cutover_demo.py">tools/demos/cutover_demo.py</a>, rebuilt with <code>uv run --with cutover --with pandas python tools/demos/cutover_demo.py</code></dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>cutover: checking that a table migration changed nothing</i>. bsandova.com/texts/cutover, version 2.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>cutover: checking that a table migration changed nothing</i>. bsandova.com/texts/cutover, version 3.</dd></div>
   <div><dt>licence</dt><dd>package code Apache-2.0; demo script MIT; text, figures and data CC BY 4.0</dd></div>
 </dl>
 </details>
@@ -93,18 +93,18 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 </section>
 
 <section>
-<h2>Method: six checks in a fixed order</h2>
-<p>The first check lists columns present on only one side and shared columns whose type changed; comparison continues on the shared columns with equal types, and by default any schema difference fails the run. The second check looks for NULL and duplicate keys on each side. A non-unique key fails with <code>key_not_unique</code> and the column step is skipped, because a per-column diff on such a key would compare arbitrary pairs of rows. The third compares the row sets, with counts and samples of keys found only in the old table, only in the new one, and in both.</p>
+<h2>Method: five checks and a verdict, in a fixed order</h2>
+<p>In the taxi example below, the key is (day, zone) and the partition column is day. The first check lists columns present on only one side and shared columns whose type changed; comparison continues on the shared columns with equal types, and by default any schema difference fails the run. The second check looks for NULL and duplicate keys on each side. A non-unique key fails with <code>key_not_unique</code> and the column step is skipped, because a per-column diff on such a key would compare arbitrary pairs of rows. The third compares the row sets, with counts and samples of keys found only in the old table, only in the new one, and in both.</p>
 <p>The fourth check compares values on the keys present on both sides, counting per column the rows where the values differ, with two NULLs counted as equal. Equality is exact unless a tolerance is declared for a float or decimal column. A tolerance is either absolute or relative, one per column, and two values \(a\) (old) and \(b\) (new) count as equal when</p>
 <div class="eq">$$\begin{aligned} |a - b| &\le \tau &&\text{(absolute), or}\\ |a - b| &\le \tau\,|b| &&\text{(relative)} \end{aligned}$$</div>
 <p>On the command line, <code>--tol fare=0.005</code> sets an absolute tolerance and <code style="white-space:nowrap">--tol fare=rel:1e-6</code> a relative one. Every tolerance is printed in the report, and none is applied unless it was declared.</p>
-<p>The fifth check computes fingerprints. For each value of the partition column, on each side, it takes the key columns and every value column without a tolerance, casts each to text in DuckDB, joins them with the unit separator U+001F (with U+0000 standing for NULL), joins the rows in key order with newlines, and takes the MD5 of the result. Columns with a tolerance are left out of the hash and named in the report. If the partition column changed type, no fingerprints are computed and the reason given is <code>partition_type_differs</code>. The sixth step is the verdict: PASS only when the schema is clean, the key is unique, neither side has keys the other lacks, every column has zero mismatches within its tolerance, and every partition fingerprint matches.</p>
-<p>Edge cases were checked against version 0.1.0. A NaN equals a NaN in an exact column, but a NaN in a column with a tolerance is a mismatch, because the difference is not a number. The values −0.0 and 0.0 are equal in the column step but have different text forms, so they change the fingerprint. Two timestamp columns in different time zones are a type change and fail the schema step, even when they hold the same instants; with <code>--allow-schema-drift</code> such a column is listed under type changes and left out of the comparison, so its values are not checked at all.</p>
+<p>The fifth check computes fingerprints. For each value of the partition column, on each side, it takes the key columns and every value column without a tolerance, casts each to text in DuckDB, joins them with the unit separator U+001F (with U+0000 standing for NULL), joins the rows in key order with newlines, and takes the MD5 of the result. Columns with a tolerance are left out of the hash and named in the report. If the partition column changed type, no fingerprints are computed and the reason given is <code>partition_type_differs</code>. The verdict comes last: PASS only when the schema is clean (or drift is explicitly allowed), the key has no NULLs and is unique on both sides, neither side has keys the other lacks, every column has zero mismatches within its tolerance, and every partition fingerprint matches.</p>
+<p>Edge cases were checked against version 0.1.0. A NaN equals a NaN in an exact column, but a NaN in a column with a tolerance is a mismatch, because the difference is not a number. The values −0.0 and 0.0 are equal in the column step but have different text forms, so they change the fingerprint. Two timestamp columns in different time zones are a type change and fail the schema step, even when they hold the same instants (the design spec planned to compare them as UTC instants; version 0.1.0 does not); with <code>--allow-schema-drift</code> such a column is listed under type changes and left out of the comparison, so its values are not checked at all.</p>
 </section>
 
 <section>
 <h2>Worked example: a month of NYC taxi trips</h2>
-<p>The demo reads the January 2025 yellow-taxi file from the NYC Taxi &amp; Limousine Commission, about 3.3 million trips in one parquet file<sup class="cite"><a href="#r7">7</a></sup>, and turns it into (day, pickup zone) → trips, fare and kilometres twice. The legacy version is written in pandas, drops non-positive fares, sums fares as floats without rounding and converts miles to kilometres at the end. The new version is written in SQL in DuckDB with the same intent and rounds the fare sum to cents. The comparison uses the key (day, zone), is partitioned by day, and declares an absolute tolerance of 10<sup>−6</sup> on kilometres for the different order of multiplication<sup class="cite"><a href="#r8">8</a></sup>.</p>
+<p>The demo reads the January 2025 yellow-taxi file from the NYC Taxi &amp; Limousine Commission, about 3.5 million trips in one parquet file, 3.3 million of them with a positive fare<sup class="cite"><a href="#r7">7</a></sup>, and turns it into (day, pickup zone) → trips, fare and kilometres twice. The legacy version is written in pandas, drops non-positive fares, and sums fares as floats without rounding. The new version is written in SQL in DuckDB with the same intent and rounds the fare sum to cents. Both sum the miles and then convert the sum to kilometres. The comparison uses the key (day, zone), is partitioned by day, and declares, before the first run, an absolute tolerance of 10<sup>−6</sup> on kilometres, because pandas and DuckDB add floats in a different order: without it, over 3 000 rows differ in km, by at most 4.2 × 10<sup>−10</sup> (the exact count varies slightly between runs, because DuckDB's parallel sum is not deterministic)<sup class="cite"><a href="#r8">8</a></sup>.</p>
 <pre><i>--- run 1</i>
 cutover: <b>FAIL</b>
 rows: old 7,280 · new 7,280 · matched on key 7,280 · only in old 0 · only in new 0
@@ -113,13 +113,13 @@ columns: 1 / 3 columns with mismatches
 fingerprints: 0 / 0 partitions identical by day
 schema: type changes [('day', 'date32[day]', 'timestamp[us]')]
 reasons: schema_drift, column_mismatch:fare, partition_type_differs</pre>
-<p>The first run gave two findings and one observation, none of them planted. The first is the type change: DuckDB returned <code>day</code> as a DATE, the conversion to pandas turned it into a timestamp, and the pandas side had a calendar date. A row-count check would have passed, and the type change is why no fingerprints were computed. The second finding is 343 fare mismatches, all of them floating-point differences between an unrounded float sum and a sum rounded to cents; the pandas sum for zone 9 on 1 January is 12.059999999999999 against SQL's 12.06. Across all 343 rows the largest absolute difference is 3.6 × 10<sup>−12</sup>. The observation concerns the row set, which matched with 7 280 groups on each side, spread over 33 days because the January file contains trips dated 31 December and 1 February, a property of the source.</p>
+<p>The first run gave two findings and one observation, none of them planted. The first is the type change: DuckDB returned <code>day</code> as a DATE, the conversion to pandas turned it into a timestamp, and the pandas side had a calendar date. A row-count check would have passed, and the type change is why no fingerprints were computed. The second finding is 343 fare mismatches, all of them floating-point differences between an unrounded float sum and a sum rounded to cents; the pandas sum for zone 9 on 1 January is 12.059999999999999 against SQL's 12.06. Across all 343 rows the largest absolute difference is 3.6 × 10<sup>−12</sup>, a figure from re-running the comparison on 3 October 2026; the published report keeps only a sample of 20 mismatches. The observation concerns the row set, which matched with 7 280 groups on each side, spread over 33 days because the January file contains trips dated 31 December and 1 February, a property of the source.</p>
 <pre><i>--- run 2 · day cast to date on the new side, --tol fare=0.005</i>
 cutover: <b>PASS</b>
 rows: old 7,280 · new 7,280 · matched on key 7,280 · only in old 0 · only in new 0
 columns: 0 / 3 columns with mismatches
 fingerprints: 33 / 33 partitions identical by day</pre>
-<p>The half-cent tolerance in the second run states the intended contract: the new side rounds to cents and the legacy side does not, so any difference below half a cent is rounding and any larger one is a real change. Re-running the second comparison on 29 September 2026 with an absolute fare tolerance of 10<sup>−9</sup> gave PASS, and with 10<sup>−12</sup> it gave FAIL on fare. Both reports are published as written, <a href="../assets/cutover/report-1">run 1</a> and <a href="../assets/cutover/report-2">run 2</a>, with JSON next to each<sup class="cite"><a href="#r8">8</a></sup>.</p>
+<p>The 33 identical fingerprints cover day, zone and trips only: fare and km carry tolerances, so they are left out of the hash and are checked only by the column step. The half-cent fare tolerance was declared after run 1 had shown the 343 mismatches. Its rationale is that the new side rounds to cents and the legacy side does not, so a difference below half a cent can be rounding. It is about 10<sup>9</sup> times the largest difference observed, so a genuine fare change smaller than half a cent per zone and day would also pass, and neither the column step nor the fingerprints would show it. Re-running the second comparison on 29 September 2026 with an absolute fare tolerance of 10<sup>−9</sup> gave PASS, which leaves far less room, and with 10<sup>−12</sup> it gave FAIL on fare; these re-runs were not saved as reports. Both reports are published as written, <a href="../assets/cutover/report-1">run 1</a> and <a href="../assets/cutover/report-2">run 2</a>, with JSON next to each<sup class="cite"><a href="#r8">8</a></sup>.</p>
 </section>
 
 <section>
@@ -148,13 +148,14 @@ fingerprints: 33 / 33 partitions identical by day</pre>
 <li id="r5">dbt Labs (2026). dbt-audit-helper. GitHub. <a href="https://github.com/dbt-labs/dbt-audit-helper">github.com/dbt-labs/dbt-audit-helper</a>. Accessed 29 September 2026.</li>
 <li id="r6">Tobiko Data (2026). Table diff guide. SQLMesh documentation. <a href="https://sqlmesh.readthedocs.io/en/stable/guides/tablediff/">sqlmesh.readthedocs.io/en/stable/guides/tablediff</a>. Accessed 29 September 2026.</li>
 <li id="r7">NYC Taxi &amp; Limousine Commission (2025). TLC Trip Record Data, yellow taxi, January 2025, file <code>yellow_tripdata_2025-01.parquet</code>. <a href="https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page">nyc.gov/site/tlc/about/tlc-trip-record-data.page</a>. Downloaded 14 September 2026. Rows dated outside the month are a known property of the monthly files.</li>
-<li id="r8">Šandová, B. (2026). cutover demo: <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/demos/cutover_demo.py">tools/demos/cutover_demo.py</a>, design in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/superpowers/specs/2026-09-14-cutover-design.md">the spec</a>, reports <a href="../assets/cutover/report-1.json">report-1.json</a> and <a href="../assets/cutover/report-2.json">report-2.json</a>. bsandova.com repository. Accessed 29 September 2026.</li>
+<li id="r8">Šandová, B. (2026). cutover demo: <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/demos/cutover_demo.py">tools/demos/cutover_demo.py</a>, design in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/superpowers/specs/2026-09-14-cutover-design.md">the spec</a> (pre-release design; its tolerance formula and time-zone handling differ from version 0.1.0 as described above), reports <a href="../assets/cutover/report-1.json">report-1.json</a> and <a href="../assets/cutover/report-2.json">report-2.json</a>. bsandova.com repository. Accessed 29 September 2026.</li>
 </ol>
 </section>
 
 <section id="changelog" class="changelog">
 <h2>Change log</h2>
 <ul>
+<li>3 October 2026: after an audit, the trip count of the source file changed from about 3.3 million to about 3.5 million (3.3 million is the count with a positive fare). Withdrawn: the claim that the kilometre tolerance covers a different order of multiplication; both versions convert after summing, and the tolerance covers pandas and DuckDB adding floats in a different order (over 3 000 km differences, at most 4.2 × 10<sup>−10</sup>, now stated). Weakened: the half-cent fare tolerance is no longer called the intended contract; the page now says it was declared after run 1 and would hide a genuine fare change below half a cent, and that the 33 / 33 fingerprints cover day, zone and trips but not fare or km. The 3.6 × 10<sup>−12</sup> maximum and the 10<sup>−9</sup> / 10<sup>−12</sup> re-runs are now marked as not in the published reports. The verdict now lists NULL keys and allowed schema drift; the count is stated as five checks and a verdict instead of six checks; the time-zone handling and reference 8 note where version 0.1.0 departs from the design spec; the short version adds the untested scale and the post-hoc tolerance, and glosses per-day hashes. No other number changed.</li>
 <li>14 September 2026: the tool's first version fingerprinted the demo's day column in its two spellings (<code>2025-01-01</code> and <code>2025-01-01 00:00:00</code>) and reported 66 partitions for 33 days; commit 939d9cd names the type change instead, before release 0.1.0.</li>
 <li>14 September 2026: first published as "How to prove a cutover".</li>
 <li>29 September 2026: retitled and restructured as a tool page (prior art, method, worked example, tests, limits, reproduction). Corrected the tolerance formula, which showed the absolute and relative tolerances added together; the code applies one or the other per column. Documented the <code>--tol</code> syntax, the fingerprint hash and the handling of NaN, −0.0 and time zones. Stated the reason for the half-cent fare tolerance and added a re-run showing that 10<sup>−9</sup> passes and 10<sup>−12</sup> fails. Separated the 12.06 example from the maximum difference. Run 1 is now described as two findings and one observation. Replaced the unmeasured "tens of millions of rows" claim with the size actually run. Stated that the two work cutovers predate the package; their reference now points to the CV, since the engineering page is retired. Added related tools, access dates, the data file name and the package version. Removed the stack line's test count, which duplicated the facts, and the "exit codes" and "install" facts cards.</li>

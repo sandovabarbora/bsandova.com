@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Patterns in a university's logs (master's thesis, VŠE 2025) · Barbora Šandová</title>
-<meta name="description" content="A note on a 2025 master's thesis at the Prague University of Economics and Business: a pipeline that groups log lines into patterns with the Extended Nagappan–Vouk algorithm, F1 0.960 on a hand-labelled test set, and cut a month's processing from 12 hours to 15 minutes.">
+<meta name="description" content="A note on a 2025 master's thesis at the Prague University of Economics and Business: a pipeline that groups log lines into patterns with the Extended Nagappan–Vouk algorithm, F1 96.0 % on a hand-labelled test set, and a month's logs in about 15 minutes against an estimated 12 hours before.">
 <meta property="og:title" content="Patterns in a university's logs (master's thesis, VŠE 2025)">
-<meta property="og:description" content="A 2025 master's thesis: log lines grouped into patterns across more than 2 200 sources, F1 0.960 against 0.791 for regular expressions, a month's logs in 15 minutes instead of 12 hours.">
+<meta property="og:description" content="A 2025 master's thesis: a pipeline meant to group the lines of more than 2 200 log sources into patterns, F1 96.0 % against 79.1 % for regular expressions on one hand-labelled test set, a month's logs in about 15 minutes against an estimated 12 hours before.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://bsandova.com/assets/og/thesis-logs.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -41,24 +41,24 @@
 <header class="text-head">
   <p class="kicker">Note · thesis · Prague University of Economics and Business, May 2025</p>
   <h1>Patterns in a university's logs <em>(master's thesis, 2025)</em></h1>
-  <p class="deck">A note on a master's thesis that built a pipeline to read the logs of more than 2 200 university systems, of which about 30 were being analysed, by turning log lines into patterns.</p>
+  <p class="deck">A note on a master's thesis that built a pipeline meant to read all of a university's more than 2 200 log sources, of which its security tools analysed about 30 before the thesis, by turning log lines into patterns.</p>
   <dl class="facts">
     <div><dt>log sources the university keeps</dt><dd>2 200+ <small>about 30 analysed before · as reported in the thesis</small></dd></div>
-    <div><dt>pattern detection, F1 on a hand-labelled test set</dt><dd>0.960 <small>against 0.791 for regular expressions · as reported</small></dd></div>
-    <div><dt>a month of logs, processing time</dt><dd>15 min <small>from 12 hours · as reported</small></dd></div>
+    <div><dt>pattern detection, F1 on a hand-labelled test set</dt><dd>96.0 % <small>against 79.1 % for regular expressions · in-sample, as reported</small></dd></div>
+    <div><dt>a month of logs, time to analyse</dt><dd>15 min <small>against an estimated 12 h before · three changes combined · as reported</small></dd></div>
   </dl>
 </header>
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>Universities keep far more logs than anyone reads; this thesis built a way to read them all.</li>
-    <li>Each log line is split into the fixed text and the parts that change, so millions of lines become a few thousand patterns.</li>
-    <li>On lines labelled by hand, the method found the changing parts far better than regular expressions did.</li>
-    <li>The numbers come from the thesis itself and were not re-run for this note; what I would do differently is at the end.</li>
+    <li>Universities keep far more logs than anyone reads; this thesis built a pipeline meant to read all of a university's 2 200+ log sources, and tested its accuracy on a sample from several of them.</li>
+    <li>Each log line is split into the fixed text and the parts that change, so many lines collapse into far fewer patterns.</li>
+    <li>On one hand-labelled test set, the method scored F1 96.0 % against 79.1 % for hand-written regular expressions. The thesis does not report the set's size or an interval, the threshold was tuned on the same set, and regular expressions are a weak comparison: the result would need re-testing against standard log parsers such as Drain on public benchmark data.</li>
+    <li>The figures are as reported in the thesis and were not re-run for this note.</li>
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>2 October 2026 · updated 2 October 2026 · <a href="#changelog">version 1</a></dd></div>
+  <div><dt>published</dt><dd>2 October 2026 · updated 3 October 2026 · <a href="#changelog">version 2</a></dd></div>
 </dl>
 <details class="meta-more">
   <summary>About this note</summary>
@@ -66,7 +66,7 @@
   <div><dt>status</dt><dd>note; a summary of a thesis written in 2025 and defended at the Faculty of Informatics and Statistics, published here on 2 October 2026</dd></div>
   <div><dt>thesis</dt><dd>Šandová, B. (2025). <i>Patternizace logů Vysoké školy ekonomické</i> [Patterns in the logs of the Prague University of Economics and Business]. Master's thesis, supervisor Ing. Karel Maršálek, consultant Ing. Karel Šimeček, Ph.D. Nominated for the IT SPY 2025 national thesis award<sup class="cite"><a href="#r1">1</a></sup>.</dd></div>
   <div><dt>data</dt><dd>the university's own logs; not public. Figures are as reported in the thesis and cannot be reproduced from this page.</dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Patterns in a university's logs (master's thesis, VŠE 2025)</i>. bsandova.com/texts/thesis-logs, version 1.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Patterns in a university's logs (master's thesis, VŠE 2025)</i>. bsandova.com/texts/thesis-logs, version 2.</dd></div>
   <div><dt>licence</dt><dd>text CC BY 4.0; the thesis and the logs are not redistributed here</dd></div>
 </dl>
 </details>
@@ -75,23 +75,24 @@
 
 <section>
 <h2>The problem</h2>
-<p>Every server, network device and application at a university writes a log, and Czech cybersecurity law expects a public institution to look at them. When this thesis began, the Prague University of Economics and Business kept logs from more than 2 200 sources on a central server, and its security tooling analysed about 30 of them. The rest were stored and not read. The thesis set out to build a tool that could read all of them, tell the university's IT centre which kinds of events occur and how often, and make unusual ones easy to find<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>Every server, network device and application at a university writes a log, and Czech cybersecurity law expects a public institution to look at them. When this thesis began, the Prague University of Economics and Business kept logs from more than 2 200 sources on a central server, and its security tooling analysed about 30 of them. The rest were stored and not read. The thesis set out to build a tool that could read all of them, tell the university's IT centre which kinds of events occur and how often, and make unusual ones easy to find<sup class="cite"><a href="#r1">1</a></sup>. The thesis shows the design can connect to the sources; it does not report how many were in the end processed.</p>
 </section>
 
 <section>
 <h2>What was built</h2>
-<p>The key idea is old and simple. A log line such as a login record has a fixed part, the words the software always writes, and variable parts: a user name, an address, a time. Replace the variable parts with placeholders and millions of lines collapse into a few thousand patterns, each one a kind of event. The thesis used the Extended Nagappan–Vouk algorithm for this, a frequency-based method descended from Nagappan and Vouk's abstraction of log lines into event types<sup class="cite"><a href="#r2">2</a></sup>: a word that appears in the same position across many lines is likely fixed, and a word that varies is likely a parameter.</p>
-<p>Around it sits a pipeline: a connector that pulls logs from the server over SSH in chunks, parallel processing across cores, and storage in Apache Parquet, a columnar format that the thesis reports made the files 70 to 85 % smaller and loading up to 90 % faster than CSV. A Streamlit dashboard shows the patterns, their frequencies and their variable parts, and lets the IT staff filter and export them. The thesis reports that a month's logs went from about 12 hours of processing to about 15 minutes.</p>
+<p>The key idea is old and simple. A log line such as a login record has a fixed part, the words the software always writes, and variable parts: a user name, an address, a time. Replace the variable parts with placeholders and many lines collapse into far fewer patterns, each one a kind of event. The thesis used the Extended Nagappan–Vouk algorithm for this, a frequency-based method descended from Nagappan and Vouk's abstraction of log lines into event types<sup class="cite"><a href="#r2">2</a></sup>: a word that appears in the same position across many lines is likely fixed, and a word that varies is likely a parameter. The extension is not the thesis's own; it comes from Daniel Tovarňák's doctoral work at Masaryk University<sup class="cite"><a href="#r4">4</a></sup>. It treats a position as variable when the share of different words seen there is above a threshold, set by hand.</p>
+<p>Around it sits a pipeline: a connector that pulls logs from the server in chunks over SSH (a secure remote connection), processing split across several processor cores at once, and storage in Apache Parquet, a columnar file format. The thesis reports Parquet files 70 to 85 % smaller than CSV and loading up to 90 % faster, the latter when only some columns are read. A Streamlit dashboard shows the patterns, their frequencies and their variable parts, and lets the IT staff filter and export them. The thesis reports that a month's logs took about 15 minutes to analyse, against an estimated 12 hours before. That baseline is loosely defined: the requirements call it an estimate, and the award leaflet describes it as the time to download a month of data from the 30 analysed sources. It is not a like-for-like measurement, and the gain combines parallel processing, Parquet and the algorithm.</p>
 </section>
 
 <section>
 <h2>How well it found patterns</h2>
-<p>To test the pattern detection, a sample of log lines from several systems was labelled by hand, marking which parts are fixed and which vary, and the algorithm's output was compared with the labels. It reached a precision of 97.3 %, a recall of 94.8 % and an F1 score of 96.0 %, against 82.1 %, 76.4 % and 79.1 % for a baseline built from regular expressions. Of 22 requirements set with the IT centre, the thesis counts 18 as met, 3 as partly met and one, availability over a long period, as not yet verifiable.</p>
+<p>To test the pattern detection, a sample of log lines from several sources was labelled by hand, marking which parts of each line are fixed and which vary, and the algorithm's output was compared with the labels part by part. Precision is the share of parts the method marked as variable that really vary; recall is the share of truly variable parts it caught; F1 combines the two into one score. The method reached a precision of 97.3 %, a recall of 94.8 % and an F1 score of 96.0 %, against 82.1 %, 76.4 % and 79.1 % for a baseline of regular expressions (hand-written text-matching rules) that I wrote to catch common values such as IP addresses and timestamps. The threshold was tried at several values on the labelled set itself, so these are in-sample figures.</p>
+<p>The thesis counts detection of unusual events as met, using simple statistical methods, but did not measure how well the tool finds them. Of 22 requirements set with the IT centre, the thesis counts 18 as met, 3 as partly met and one as not verifiable. Its two requirement tables disagree on which one: the main text names scalability to very large data volumes, the appendix names long-term availability.</p>
 </section>
 
 <section>
 <h2>What I would do differently now</h2>
-<p>The accuracy figures rest on one hand-labelled test set, and the thesis does not report its size or an interval around the F1 score; I would report both, and how many labellers agreed. The comparison was with regular expressions, which is a low bar: the standard benchmark for log parsing compares methods such as Drain and Spell across sixteen public log datasets<sup class="cite"><a href="#r3">3</a></sup>, and that is where a new parser should be measured. And the speed-up mixes three changes, parallelism, Parquet and the algorithm, so it cannot say which mattered. The engineering stands; the evaluation is where the thesis was a first draft of what this site now tries to do by default.</p>
+<p>The accuracy figures rest on one hand-labelled test set, and the thesis does not report its size or an interval around the F1 score; I would report both, and how far the labellers agreed. The threshold was tuned on that same set, so 96.0 % is an optimistic, in-sample figure; I would tune on one part of the labelled data and report on another. The comparison was with my own regular expressions, which is a low bar: the standard benchmark for log parsing compares automatic log parsers such as Drain and Spell across sixteen public log datasets<sup class="cite"><a href="#r3">3</a></sup>, and that is where a new parser should be measured. And the speed-up mixes three changes against a loosely defined baseline, so it cannot say which mattered. The engineering stands; the evaluation is where the thesis was a first draft of what this site now tries to do by default.</p>
 </section>
 
 <section class="refs" id="refs">
@@ -100,12 +101,14 @@
 <li id="r1">Šandová, B. (2025). <i>Patternizace logů Vysoké školy ekonomické</i>. Master's thesis, Faculty of Informatics and Statistics, Prague University of Economics and Business. Published with the IT SPY 2025 competition: <a href="https://www.itspy.cz/thesis/patternizace-logu-vysoke-skoly-ekonomicke/">itspy.cz</a>. Accessed 2 October 2026.</li>
 <li id="r2">Nagappan, M., Vouk, M. A. (2010). Abstracting log lines to log event types for mining software system logs. In <i>2010 7th IEEE Working Conference on Mining Software Repositories</i>, 114–117. <a href="https://doi.org/10.1109/MSR.2010.5463281">doi:10.1109/MSR.2010.5463281</a>. Accessed 2 October 2026.</li>
 <li id="r3">Zhu, J., He, S., Liu, J., He, P., Xie, Q., Zheng, Z., Lyu, M. R. (2019). Tools and benchmarks for automated log parsing. In <i>2019 IEEE/ACM 41st International Conference on Software Engineering: Software Engineering in Practice</i>, 121–130. <a href="https://doi.org/10.1109/ICSE-SEIP.2019.00021">doi:10.1109/ICSE-SEIP.2019.00021</a>. Accessed 2 October 2026.</li>
+<li id="r4">Tovarňák, D. (2017). <i>Normalization of Unstructured Log Data into Streams of Structured Event Objects</i>. Doctoral thesis, Faculty of Informatics, Masaryk University. <a href="https://is.muni.cz/th/rjfzq/thesis-twoside-final-bw.pdf">is.muni.cz</a>. Cited as in the thesis.</li>
 </ol>
 </section>
 
 <section id="changelog" class="changelog">
 <h2>Change log</h2>
 <ul>
+<li>3 October 2026, version 2: revised after an audit. No number changed; F1 is now shown as 96.0 % and 79.1 % everywhere instead of 0.960 and 0.791. Weakened: "read them all" (now a pipeline meant to read all sources, with no reported coverage), the 12 hours to 15 minutes speed-up (the 12 hours is an estimate the thesis defines inconsistently, partly as download time, so not like for like), "loading up to 90 % faster" (best case, when reading only some columns), "millions of lines become a few thousand patterns" (no pattern count in the thesis), and the 96.0 % F1 (in-sample: the threshold was tuned on the test set; the regular-expression baseline was my own). Corrected: the unverifiable requirement, on which the thesis's two tables disagree. Added: what precision, recall and F1 count, that the algorithm's extension is Tovarňák's (new reference 4), and that finding unusual events was not evaluated.</li>
 <li>2 October 2026, version 1: first published, a summary of the 2025 thesis.</li>
 <li>Checked against editorial standard v1 on 2 October 2026.</li>
 </ul>

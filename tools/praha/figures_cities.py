@@ -44,7 +44,9 @@ def per_1000(c: dict) -> None:
 
 
 def builders(c: dict) -> None:
-    v, w = c["builders_2024"]["vienna"], c["builders_2024"]["warsaw"]
+    v, w = c["builders_2024"]["vienna"], dict(c["builders_2024"]["warsaw"])
+    wa = c["warsaw"]["2024"]  # the share from the counts (0.645 %), not the 4-decimal share that rounds to 0.7 %
+    w["municipal_and_tbs_share"] = (wa["municipal"] + wa["tbs"]) / wa["completed"]
     rows = [("Vienna", [(v["non_profit_share"], "non-profit", HELD), (v["public_share"], "public sector", INK),
                         (v["companies_share"], "companies", LIGHT), (v["private_persons_share"], "private persons", GRID)]),
             ("Warsaw", [(w["municipal_and_tbs_share"], "municipal and TBS", HELD),
