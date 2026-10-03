@@ -333,3 +333,5 @@ Built by `tools/praha/rings_data.py`, report in `tools/data/praha2x/design_repor
   lies outside the null's 95 % range. This is reported, and the claim is not re-framed.
 - **H3 matching.** 1 103 precincts exist in all three elections; 819 pass the ±10 % register rule. The ČÚZK VFR
   historical geometry was not checked (deviation from §4), so the registered rule is used alone.
+
+**3 October 2026 (audit).** The H1 note above that says 'G = 57 districts' is a typo: the estimate clusters over 56 districts (rings_extended.json, H1_ANO.delta.G = 56; one district holds no cluster).

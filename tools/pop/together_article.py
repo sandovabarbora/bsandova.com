@@ -178,7 +178,8 @@ def values(res: dict) -> dict:
         v[f"ck_{k}_hi"] = n(1 + c["pct_hi"], 1)
     for a, c in res["m2c"].items():
         k = a.replace("-", "_")
-        v |= {f"e_{k}": n(c["coef"], 2), f"e_{k}_lo": n(c["lo"], 2), f"e_{k}_hi": n(c["hi"], 2)}
+        v |= {f"e_{k}": n(c["coef"], 2), f"e_{k}_lo": n(c["lo"], 2), f"e_{k}_hi": n(c["hi"], 2),
+              f"e_{k}_n": n(c["n"]), f"e_{k}_c": n(c["countries"])}
     for a, r in res["czechia_residuals"].items():
         v[f"cz_{a.replace('-', '_')}"] = pct(r)
     d = res["m2_drop_artist"]
@@ -188,10 +189,23 @@ def values(res: dict) -> dict:
     pan = pd.read_csv(R / "pop-measured-part6-panel.csv")
     for r in pan.itertuples():   # d_<country>_<artist>: every pair's days, for the worked examples
         v[f"d_{r.country}_{r.artist.replace('-', '_')}"] = n(r.days)
+    v |= {"es_still": n(int((pan.same.eq(1) & pan.song_lang.eq("es") & pan.still).sum())),
+          "en_countries": n(pan[pan.country_lang == "en"].country.nunique())}
+    # post-hoc, added after the audit of 3 October 2026: M1's residuals (OLS with artist and country dummies, as in
+    # together.py) in the countries that speak none of the five languages, English songs against the others
+    X = pd.get_dummies(pan[["artist", "country"]], drop_first=True).astype(float)
+    X.insert(0, "same", pan.same.astype(float)); X.insert(0, "const", 1.0)
+    beta = np.linalg.lstsq(X.values, pan.log_days.values, rcond=None)[0]
+    oth = pan.assign(r=pan.log_days.values - X.values @ beta, en=pan.song_lang.eq("en"))
+    oth = oth[oth.country_lang == "other"].groupby(["country", "en"]).r.mean().unstack().dropna()
+    v |= {"oth_n": n(len(oth)), "oth_en_wins": n(int((oth[True] > oth[False]).sum()))}
     tk = pd.read_csv(R / "pop-measured-part6-tickets.csv").groupby("country").gdppc.mean()
     lo_c, hi_c = tk.idxmin(), tk.idxmax()
     span = tk.max() / tk.min()
-    names = {"HND": "Honduras", "PHL": "the Philippines", "IRL": "Ireland", "NOR": "Norway", "CHE": "Switzerland"}
+    names = {"HND": "Honduras", "PHL": "the Philippines", "IRL": "Ireland", "NOR": "Norway", "CHE": "Switzerland",
+             "NLD": "the Netherlands"}
+    bb = pd.read_csv(R / "pop-measured-part6-tickets.csv").query("artist == 'bad-bunny'").groupby("country").gdppc.mean()
+    v |= {"bb_lo_c": names.get(bb.idxmin(), bb.idxmin()), "bb_hi_c": names.get(bb.idxmax(), bb.idxmax())}
     v |= {"inc_lo_c": names.get(lo_c, lo_c), "inc_hi_c": names.get(hi_c, hi_c), "inc_lo": n(tk.min()), "inc_hi": n(tk.max()),
           "inc_span": n(span), "span_price": n(span ** m2["coef"], 1), "span_burden": n(span ** (1 - m2["coef"])),
           "example_price": n(100 * (tk.min() / tk.max()) ** m2["coef"])}

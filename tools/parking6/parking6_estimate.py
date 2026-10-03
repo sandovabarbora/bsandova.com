@@ -299,7 +299,7 @@ def h2(t: pd.DataFrame) -> dict:
                       "eea_slope_mm_per_year": EEA_SLOPE_MM},
         "annual_means_mm": {int(y): float(v) for y, v in zip(years, Y)},
         "tests": T, "holm": holm, "h2a_reading": h2a_read, "h2b_reading": "supported" if holm["H2b"]["rejected"] else "not supported",
-        "forecast_contest": contest, "te_rounding_note_cm": 0.7,
+        "forecast_contest": contest, "te_rounding_note_cm": 0.6,  # 0.6 x (L2025 - L2020), each rounded to +-0.5 cm (audit, 3 Oct 2026)
         "kish_effective_clusters": kish, "lines": nL, "wild_fallback_used": kish < 30,
         "imputed_weight_by_year": imputed, "lomo_top": lomo[:10], "size_check": size, "r12": sens,
     }

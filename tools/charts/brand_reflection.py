@@ -63,12 +63,12 @@ charts = {}
 by_gap = sorted(D, key=lambda r: r["color_gap_deg"])
 ccol = lambda g: "held" if g < 20 else ("ink" if g > 100 else "light")  # noqa: E731
 charts["hue-distance"] = {
-    "alt": "47 bars sorted by hue distance from the brand anchor: brand-led spots under 20 degrees, world-led spots over 100 and the rest in between, with a 90-degree threshold line.",
+    "alt": "47 bars sorted by hue distance from the brand anchor: brand-led spots under 20 degrees, world-led spots over 100 and the rest in between, with a 90-degree reference line.",
     "legend": [{"label": "brand-led, under 20°", "c": "held", "shape": "box", "o": 0.85}, {"label": "in between", "c": "light", "shape": "box", "o": 0.85},
                {"label": "world-led, over 100°", "c": "ink", "shape": "box", "o": 0.85}],
     "panels": [{"h": 260, "x": {"kind": "cat", "domain": [r["spot_id"] for r in by_gap], "labels": False, "label": "47 spots, sorted"},
                 "y": {"kind": "linear", "domain": [0, 180], "ticks": [0, 45, 90, 135, 180], "label": "hue distance (°)", "tickfmt": {"dp": 0}},
-                "marks": [{"type": "rule", "axis": "y", "v": 90, "c": "ink", "dash": "dot", "label": "90°: reads as a different colour"},
+                "marks": [{"type": "rule", "axis": "y", "v": 90, "c": "ink", "dash": "dot", "label": "90° (no stated rationale)"},
                           {"type": "vbar", "rows": [{"x": r["spot_id"], "y1": r["color_gap_deg"], "c": ccol(r["color_gap_deg"]),
                                                      "tip": f"{name(r)} · {r['sector']}\nhue distance {deg(r['color_gap_deg'])}\n{camp(r['color_gap_deg'])}"}
                                                     for r in by_gap]}]}],
@@ -82,18 +82,18 @@ by_music = sorted(D, key=lambda r: -r["music_fraction"])
 rows = []
 for r in by_music:
     v, m = r["voice_fraction"] * 100, r["music_fraction"] * 100
-    tip = f"{name(r)} · {r['sector']}\nvoice {pct(r['voice_fraction'])} · music {pct(r['music_fraction'])}\n{'music-led' if r['music_fraction'] > .5 else 'voice-led'}"
+    tip = f"{name(r)} · {r['sector']}\nvoice {pct(r['voice_fraction'])} · non-speech {pct(r['music_fraction'])}\n{'music-led' if r['music_fraction'] > .5 else 'voice-led'}"
     rows.append({"x": r["spot_id"], "y0": 0, "y1": round(v, 2), "c": "light", "tip": tip})
     rows.append({"x": r["spot_id"], "y0": round(v, 2), "y1": round(v + m, 2), "c": "held" if r["music_fraction"] > .5 else "grey", "tip": tip})
 charts["voice-music"] = {
-    "alt": "47 stacked bars of voice share and music share sorted by music share; three bars cross the 50 percent line.",
-    "legend": [{"label": "voice", "c": "light", "shape": "box", "o": 0.85}, {"label": "music", "c": "grey", "shape": "box", "o": 0.85},
-               {"label": "music, music-led spot (over 50 %)", "c": "held", "shape": "box", "o": 0.85}],
-    "panels": [{"h": 240, "x": {"kind": "cat", "domain": [r["spot_id"] for r in by_music], "labels": False, "label": "47 spots, sorted by music share"},
+    "alt": "47 stacked bars of voice share and non-speech (music and effects) share sorted by non-speech share; three bars cross the 50 percent line.",
+    "legend": [{"label": "voice", "c": "light", "shape": "box", "o": 0.85}, {"label": "non-speech (music, effects)", "c": "grey", "shape": "box", "o": 0.85},
+               {"label": "non-speech, music-led spot (over 50 %)", "c": "held", "shape": "box", "o": 0.85}],
+    "panels": [{"h": 240, "x": {"kind": "cat", "domain": [r["spot_id"] for r in by_music], "labels": False, "label": "47 spots, sorted by non-speech share"},
                 "y": {"kind": "linear", "domain": [0, 100], "ticks": [0, 25, 50, 75, 100], "label": "share of runtime (%)", "tickfmt": {"dp": 0}},
                 "marks": [{"type": "vbar", "rows": rows},
                           {"type": "rule", "axis": "y", "v": 50, "c": "ink", "dash": "dot"}]}],
-    "table": {"cols": ["spot", "sector", "voice (%)", "music (%)"],
+    "table": {"cols": ["spot", "sector", "voice (%)", "non-speech (%)"],
               "rows": [[name(r), r["sector"], f"{r['voice_fraction'] * 100:.0f}", f"{r['music_fraction'] * 100:.0f}"] for r in by_music]},
     "data": DATA,
 }
@@ -105,7 +105,7 @@ pts = []
 for r in D:
     hl = {"Pilsner Urquell": "held", "Albert": "ink"}.get(r["brand"])
     p = {"x": round(r["color_gap_deg"], 2), "y": round(r["music_fraction"] * 100, 2), "c": hl or "light", "r": 5.5 if hl else 4.5,
-         "tip": f"{name(r)} · {r['sector']}\nhue distance {deg(r['color_gap_deg'])} · music {pct(r['music_fraction'])}"}
+         "tip": f"{name(r)} · {r['sector']}\nhue distance {deg(r['color_gap_deg'])} · non-speech {pct(r['music_fraction'])}"}
     if r["brand"] == "Pilsner Urquell":
         p["label"] = "Pilsner Urquell"
     elif r["spot_id"] == alb_first:
@@ -113,18 +113,18 @@ for r in D:
     pts.append(p)
 pts.sort(key=lambda p: p["c"] != "light")  # highlighted spots on top
 charts["two-commitments"] = {
-    "alt": "Scatter of 47 spots: hue distance on the x axis, music share on the y axis; Pilsner Urquell alone in the top right, Albert's five spots at the far right and bottom.",
+    "alt": "Scatter of 47 spots: hue distance on the x axis, non-speech share on the y axis; Pilsner Urquell alone in the top right, Albert's five spots at the far right and bottom.",
     "legend": [{"label": "Pilsner Urquell", "c": "held", "shape": "o"}, {"label": "Albert, five spots", "c": "ink", "shape": "o"},
                {"label": "other spots", "c": "light", "shape": "o"}],
     "panels": [{"h": 340, "x": {"kind": "linear", "domain": [0, 180], "ticks": [0, 30, 60, 90, 120, 150, 180], "label": "hue distance to the brand anchor (°)", "tickfmt": {"dp": 0}},
-                "y": {"kind": "linear", "domain": [0, 100], "ticks": [0, 25, 50, 75, 100], "label": "music share of the soundtrack (%)", "tickfmt": {"dp": 0}},
+                "y": {"kind": "linear", "domain": [0, 100], "ticks": [0, 25, 50, 75, 100], "label": "non-speech share of the soundtrack (%)", "tickfmt": {"dp": 0}},
                 "marks": [{"type": "span", "v0": 0, "v1": 20, "c": "held", "o": 0.07, "label": "brand-colour camp"},
                           {"type": "span", "v0": 100, "v1": 180, "c": "ink", "o": 0.05, "label": "world-colour camp"},
                           {"type": "area", "name": "music-led", "c": "grey", "o": 0.07, "notip": True, "pts": [[0, 50, 100], [180, 50, 100]]},
                           {"type": "rule", "axis": "x", "v": 90, "c": "grey", "dash": "dot"},
                           {"type": "rule", "axis": "y", "v": 50, "c": "grey", "dash": "dot", "label": "music-led"},
                           {"type": "dots", "pts": pts}]}],
-    "table": {"cols": ["spot", "sector", "hue distance (°)", "music (%)"],
+    "table": {"cols": ["spot", "sector", "hue distance (°)", "non-speech (%)"],
               "rows": [[name(r), r["sector"], f"{r['color_gap_deg']:.0f}", f"{r['music_fraction'] * 100:.0f}"] for r in sorted(D, key=lambda r: r["color_gap_deg"])]},
     "data": DATA,
 }

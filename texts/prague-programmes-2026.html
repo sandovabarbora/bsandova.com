@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>What Prague's 2026 programmes can do in one term · Barbora Šandová</title>
-<meta name="description" content="A note reading six Prague city-election programmes of 2026 against the city's legal powers and the time building takes: of 80 promises, 29 are within the city's powers in one term, 33 only in part, and 14 are decided by the state or another body.">
+<meta name="description" content="A note reading six Prague city-election programmes of 2026 against the city's legal powers and the time building takes: of 80 promises, chosen by the author, 28 are within the city's powers in one term, 34 only in part, and 14 are decided by the state or another body.">
 <meta property="og:title" content="What Prague's 2026 programmes can do in one term">
 <meta property="og:description" content="Six programmes, 80 promises, one rule: what the City of Prague can do within four years under its own powers. Feasibility only, not whether the goals are right.">
 <meta property="og:type" content="article">
@@ -80,31 +80,33 @@ details.prog[open]>summary::after{content:"−"}
   <h1>What Prague's 2026 programmes can do <em>in one term</em></h1>
   <p class="deck">Six programmes for the October 2026 Prague city election, read against one rule: what the City of Prague can do within four years under its own powers.</p>
   <dl class="facts">
-    <div><dt>promises read</dt><dd>80 <small>six programmes · rows chosen per programme · descriptive count</small></dd></div>
-    <div><dt>within the city's powers in one term</dt><dd>29 <small>rated yes or likely · descriptive count</small></dd></div>
-    <div><dt>only in part within one term</dt><dd>33 <small>usually: preparation yes, completion no · descriptive count</small></dd></div>
+    <div><dt>promises read</dt><dd>80 <small>six programmes · rows chosen by the author · descriptive count</small></dd></div>
+    <div><dt>within the city's powers in one term</dt><dd>28 <small>rated yes or likely · descriptive count</small></dd></div>
+    <div><dt>only in part within one term</dt><dd>34 <small>usually: preparation yes, completion no · descriptive count</small></dd></div>
     <div><dt>decided by the state or another body</dt><dd>14 <small>laws, the state road and rail agencies, ministries, districts · descriptive count</small></dd></div>
   </dl>
 </header>
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>Every programme promises far more housing than Prague can build in four years; the ones that promise starts are closer to what is possible.</li>
+    <li>Three programmes put numbers on housing, 8 000 or 10 000 flats, that Prague cannot complete in four years; those that promise starts, 2 000 or 1 000 a year, are closer to what a term allows, and SPD gives no number.</li>
     <li>No large transport project in any programme can be finished in one term; most programmes say they will prepare them.</li>
     <li>Almost every programme promises rules for Airbnb or a higher tourist fee, which the state decides.</li>
+    <li>Most clearly in the city's own hands: its building regulations, parking and fares, the rules for allocating city flats and its budget rules.</li>
+    <li>The ratings are the author's reading of 80 selected promises against the statutes cited; a new state law, or a project further along than its programme shows, would change them.</li>
     <li>This rates feasibility only, not whether the goals are good, and it is not a voting recommendation.</li>
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>1 October 2026 · updated 1 October 2026 · <a href="#changelog">version 3</a></dd></div>
+  <div><dt>published</dt><dd>1 October 2026 · updated 3 October 2026 · <a href="#changelog">version 4</a></dd></div>
 </dl>
 <details class="meta-more">
   <summary>About this note</summary>
 <dl class="meta">
   <div><dt>status</dt><dd>note</dd></div>
-  <div><dt>data</dt><dd>the programme texts of six lists, captured 24–29 September 2026 (sources in each section); the statutes named in the text, accessed 1 October 2026<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup><sup class="cite"><a href="#r3">3</a></sup><sup class="cite"><a href="#r4">4</a></sup>; every rating in <a href="../assets/programmes-2026/ratings.json">ratings.json</a></dd></div>
+  <div><dt>data</dt><dd>the programme texts of six lists, captured 29 September 2026, the Praha Sobě PDF being dated 24 September (sources in each section); the statutes named in the text, accessed 1 October 2026<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup><sup class="cite"><a href="#r3">3</a></sup><sup class="cite"><a href="#r4">4</a></sup>; every rating in <a href="../assets/programmes-2026/ratings.json">ratings.json</a></dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/notes/programmes_2026.py">tools/notes/programmes_2026.py</a> builds this page from the ratings file: <code>python3 tools/notes/programmes_2026.py</code></dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>What Prague's 2026 programmes can do in one term</i>. bsandova.com/texts/prague-programmes-2026, version 3.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>What Prague's 2026 programmes can do in one term</i>. bsandova.com/texts/prague-programmes-2026, version 4.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text and data CC BY 4.0</dd></div>
 </dl>
 </details>
@@ -113,15 +115,15 @@ details.prog[open]>summary::after{content:"−"}
 
 <section>
 <h2>How the programmes were read</h2>
-<p>The City of Prague is a municipality and a region in one<sup class="cite"><a href="#r1">1</a></sup>. It decides its own budget and property, including city flats and land; it issues its own building regulations, including parking minimums; it orders public transport and sets fares<sup class="cite"><a href="#r2">2</a></sup>; it runs secondary schools<sup class="cite"><a href="#r3">3</a></sup> and the municipal police<sup class="cite"><a href="#r4">4</a></sup>. The state decides by law on rent and short-term rentals<sup class="cite"><a href="#r5">5</a></sup>, sets the ceiling of the tourist fee, which is 50 Kč a person a night<sup class="cite"><a href="#r6">6</a></sup>, builds the motorway ring<sup class="cite"><a href="#r7">7</a></sup> and the railways<sup class="cite"><a href="#r8">8</a></sup>, and runs the university hospitals<sup class="cite"><a href="#r9">9</a></sup>. A municipality may set a low-emission zone, effective at least twelve months after it is announced<sup class="cite"><a href="#r10">10</a></sup>, and a local coefficient on property tax by area or type of property, but not on empty flats<sup class="cite"><a href="#r11">11</a></sup>. The city districts run kindergartens and primary schools and manage many city flats.</p>
-<p>Each programme was read in full, and its most concrete and consequential promises were rated against those powers, against the scale of the city budget and against the time building takes: yes, likely, partly (with the part that can be done), not in one term, or decided by the state or another body. One fixed reference sets the housing scale: Prague completes about 6 000 homes a year, 4.5 per 1 000 residents on the 2015–2024 mean, and the time from permit to completion there is about 11 months longer than in the rest of Czechia<sup class="cite"><a href="#r12">12</a></sup>. Factual claims in the programmes, such as the money in the city's accounts or counts of flats, were not checked; each section lists them. The ratings were drafted with the help of a language model under one fixed brief for all six programmes, and the legal points they rest on were checked against the statutes cited. Rows were chosen per programme, so the counts in the header describe this reading and do not rank the lists.</p>
+<p>The City of Prague is a municipality and a region in one<sup class="cite"><a href="#r1">1</a></sup>. It decides its own budget and property, including city flats and land; it issues its own building regulations, including parking minimums; it orders public transport and may set the maximum fares<sup class="cite"><a href="#r2">2</a></sup>; it runs secondary schools<sup class="cite"><a href="#r3">3</a></sup> and the municipal police<sup class="cite"><a href="#r4">4</a></sup>. The state decides by law on rent and short-term rentals<sup class="cite"><a href="#r5">5</a></sup>, sets the ceiling of the tourist fee, which is 50 Kč a person a night<sup class="cite"><a href="#r6">6</a></sup>, builds the motorway ring (Pražský okruh, an outer motorway)<sup class="cite"><a href="#r7">7</a></sup> and the railways<sup class="cite"><a href="#r8">8</a></sup>, and runs the university hospitals<sup class="cite"><a href="#r9">9</a></sup>. A municipality may set a low-emission zone, effective at least twelve months after it is announced<sup class="cite"><a href="#r10">10</a></sup>, and a local coefficient, a multiplier of property tax, by area, by group of property or for specified, named properties, but the law has no category for empty flats<sup class="cite"><a href="#r11">11</a></sup>. The city districts run kindergartens and primary schools and manage many city flats. The city ring road (Městský okruh, an inner road built by the city) is not the motorway ring.</p>
+<p>Each programme was read in full, and its most concrete and consequential promises were rated against those powers, against the scale of the city budget and against the time building takes. <em>Yes</em> means the city decides it alone and can do it within the term. <em>Likely</em> means it is within the city's powers and the term but depends on something the city does not fully control, such as a permit, a tender, hiring or the districts. <em>Partly</em> means the city can do a stated part within the term, such as preparation, a start or one of the promises grouped in the row, but not the whole promise as worded. <em>Not in one term</em> means the promise as worded is a finished result that cannot be reached within four years, and the row holds no smaller step of its own. <em>Decided by the state or another body</em> means the decisive step for every part is a law or another body's decision. The wording decides between the last three: 'finish metro D' is not in one term, while 'continue building metro D' is partly. One fixed reference sets the housing scale: Prague completes about 6 000 homes a year, 4.5 per 1 000 residents on the 2015–2024 mean, and the time from permit to completion there is about 11 months longer than in the rest of Czechia, a difference in the recorded pipeline which may partly be reporting timing<sup class="cite"><a href="#r12">12</a></sup>. Factual claims in the programmes, such as the money in the city's accounts or counts of flats, were not checked; each section lists them. The ratings were drafted with the help of a language model and checked by the author; the prompt is not published. The legal points they rest on were checked against the statutes cited, except where a row says a point was not confirmed. Rows were chosen by the author as the most concrete and consequential promises, without a fixed rule, 10 to 15 per programme; the programmes contain more promises than were rated, related promises are grouped in one row, and the rating is for the row as a whole. The counts depend on this choice: they describe this reading and do not rank the lists.</p>
 </section>
 
 <section>
 <h2>What the programmes share</h2>
-<div class="bar" role="img" aria-label="80 promises by rating"><span class="seg rt-yes" style="flex:11" title="yes: 11"></span><span class="seg rt-likely" style="flex:18" title="likely: 18"></span><span class="seg rt-partly" style="flex:33" title="partly: 33"></span><span class="seg rt-no" style="flex:4" title="not in one term: 4"></span><span class="seg rt-other" style="flex:14" title="state or another body: 14"></span></div><ul class="bar-leg"><li><span class="sw rt-yes"></span>yes <b>11</b></li><li><span class="sw rt-likely"></span>likely <b>18</b></li><li><span class="sw rt-partly"></span>partly <b>33</b></li><li><span class="sw rt-no"></span>not in one term <b>4</b></li><li><span class="sw rt-other"></span>state or another body <b>14</b></li></ul>
-<p>Of the 80 promises read, 29 are within the city's powers and can be done in one term, 33 can be done only in part, 4 cannot be done in one term, and 14 are decided by the state or another body.</p>
-<p>Housing is the main topic of every programme and its weakest point. Promises of 10 000 flats a year cannot be met when about 6 000 are completed now, most of them by private builders, and even 8 000 city flats would be more than the whole market completes in a year. Promises worded as starts, 2 000 city flats or 1 000 a year, are closer to what a term allows. Large transport projects, metro D (its first section is planned for 2032<sup class="cite"><a href="#r13">13</a></sup>), a ring metro line, the city ring road, tunnels and new bridges, cannot be finished in four years in any programme, and most programmes say they will prepare them. Rules for Airbnb and a higher tourist fee appear in almost every programme, but the city has no legal power to restrict short-term rentals, and the fee's ceiling is set by law. The steps most clearly in the city's own hands are its building regulations, its parking and fares, the rules for allocating city flats and its own budget rules.</p>
+<div class="bar" role="img" aria-label="80 promises by rating"><span class="seg rt-yes" style="flex:11" title="yes: 11"></span><span class="seg rt-likely" style="flex:17" title="likely: 17"></span><span class="seg rt-partly" style="flex:34" title="partly: 34"></span><span class="seg rt-no" style="flex:4" title="not in one term: 4"></span><span class="seg rt-other" style="flex:14" title="state or another body: 14"></span></div><ul class="bar-leg"><li><span class="sw rt-yes"></span>yes <b>11</b></li><li><span class="sw rt-likely"></span>likely <b>17</b></li><li><span class="sw rt-partly"></span>partly <b>34</b></li><li><span class="sw rt-no"></span>not in one term <b>4</b></li><li><span class="sw rt-other"></span>state or another body <b>14</b></li></ul>
+<p>Of the 80 promises read, 28 are within the city's powers and can be done in one term, 34 can be done only in part, 4 cannot be done in one term, and 14 are decided by the state or another body.</p>
+<p>Housing is the main topic of every programme and its weakest point. Promises of 10 000 flats a year cannot be met when about 6 000 are completed now, and 8 000 city flats, for which no timeframe is given, would be about a third of what the whole market completes in four years. Promises worded as starts, 2 000 city flats or 1 000 a year, are closer to what a term allows. Large transport projects, metro D (its builder plans the opening for 2032<sup class="cite"><a href="#r13">13</a></sup>), a ring metro line, the city ring road, tunnels and new bridges, cannot be finished in four years in any programme, and most programmes say they will prepare them. Rules for Airbnb and a higher tourist fee appear in almost every programme, but state law gives the city no power to restrict short-term rentals as such, only to enforce existing rules, and Prague already charges the fee's legal ceiling<sup class="cite"><a href="#r14">14</a></sup>. The steps most clearly in the city's own hands are its building regulations, its parking and fares, the rules for allocating city flats and its own budget rules.</p>
 </section>
 
 <section>
@@ -135,14 +137,14 @@ details.prog[open]>summary::after{content:"−"}
     <article class="pr pr-yes">
       <div class="pr-head"><span class="rt rt-yes">yes</span><h3>Stop selling city flats and land</h3></div>
       <div class="pr-why">
-        <div class="pr-can"><p class="pr-lab">Why it can</p><p>The City Assembly decides on selling city property, so one resolution is enough.<sup class="cite"><a href="#r1">1</a></sup></p></div>
-        <div class="pr-not"><p class="pr-lab">Why not</p><p>Nothing in law blocks it; a later assembly can reverse it.</p></div>
+        <div class="pr-can"><p class="pr-lab">Why it can</p><p>The City Assembly decides on selling the property it manages itself, and it sets in the Statute which property the districts manage.<sup class="cite"><a href="#r1">1</a></sup></p></div>
+        <div class="pr-not"><p class="pr-lab">Why not</p><p>Flats and land entrusted to the districts are sold by the districts, so stopping all sales also needs a change to the Statute, which the City Assembly can make; a later assembly can reverse either.</p></div>
       </div>
     </article>
     <article class="pr pr-yes">
       <div class="pr-head"><span class="rt rt-yes">yes</span><h3>Relax parking minimums for new buildings</h3></div>
       <div class="pr-why">
-        <div class="pr-can"><p class="pr-lab">Why it can</p><p>Parking minimums are set in the Prague building regulations, which the city issues itself.<sup class="cite"><a href="#r14">14</a></sup></p></div>
+        <div class="pr-can"><p class="pr-lab">Why it can</p><p>Parking minimums are set in the Prague building regulations, which the city issues itself.<sup class="cite"><a href="#r15">15</a></sup></p></div>
         <div class="pr-not"><p class="pr-lab">Why not</p><p>A change has to go through the regulation&#x27;s adoption process, which takes months, not years.</p></div>
       </div>
     </article>
@@ -164,13 +166,13 @@ details.prog[open]>summary::after{content:"−"}
       <div class="pr-head"><span class="rt rt-partly">partly</span><h3>&#x27;Start preparing&#x27; 8 000 city flats</h3></div>
       <div class="pr-why">
         <div class="pr-can"><p class="pr-lab">Why it can</p><p>Preparing projects on city land is the city&#x27;s own work.<sup class="cite"><a href="#r1">1</a></sup></p></div>
-        <div class="pr-not"><p class="pr-lab">Why not</p><p>Building 8 000 flats takes far longer: the whole market completes about 6 000 a year, and permits in Prague take longer than elsewhere.<sup class="cite"><a href="#r12">12</a></sup></p></div>
+        <div class="pr-not"><p class="pr-lab">Why not</p><p>Building 8 000 flats takes far longer: the whole market completes about 6 000 a year, and in Prague a permitted flat takes about 11 months longer to be recorded as completed than elsewhere in Czechia.<sup class="cite"><a href="#r12">12</a></sup></p></div>
       </div>
     </article>
     <article class="pr pr-partly">
       <div class="pr-head"><span class="rt rt-partly">partly</span><h3>Take developer contributions as flats instead of money</h3></div>
       <div class="pr-why">
-        <div class="pr-can"><p class="pr-lab">Why it can</p><p>A developer can agree to hand over flats in a planning contract with the city.</p></div>
+        <div class="pr-can"><p class="pr-lab">Why it can</p><p>A developer can agree to hand over flats in a planning contract (an agreement in which a developer provides something to the city in connection with a building project).</p></div>
         <div class="pr-not"><p class="pr-lab">Why not</p><p>The city cannot order it across the board; each contract is negotiated.</p></div>
       </div>
     </article>
@@ -196,7 +198,7 @@ details.prog[open]>summary::after{content:"−"}
       </div>
     </article>
     <article class="pr pr-no">
-      <div class="pr-head"><span class="rt rt-no">not in one term</span><h3>Ring metro line O, Hloubětín tunnel, Industrial half-ring, new Holešovice bridge</h3></div>
+      <div class="pr-head"><span class="rt rt-no">not in one term</span><h3>Ring metro line O, Hloubětín tunnel, Industrial half-ring (a planned road in the east of the city), new Holešovice bridge</h3></div>
       <div class="pr-why">
         <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city can commission studies and design.</p></div>
         <div class="pr-not"><p class="pr-lab">Why not</p><p>Each is a decade-long project from preparation to opening, so none can be finished in one term.</p></div>
@@ -206,7 +208,7 @@ details.prog[open]>summary::after{content:"−"}
       <div class="pr-head"><span class="rt rt-no">not in one term</span><h3>&#x27;Finish building metro D&#x27;</h3></div>
       <div class="pr-why">
         <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city can keep building.</p></div>
-        <div class="pr-not"><p class="pr-lab">Why not</p><p>No section is due to open within the term: the first is planned for 2032, after the term.<sup class="cite"><a href="#r13">13</a></sup></p></div>
+        <div class="pr-not"><p class="pr-lab">Why not</p><p>No section is due to open within the term: the builder&#x27;s plan gives 2032, after the term.<sup class="cite"><a href="#r13">13</a></sup></p></div>
       </div>
     </article>
     <article class="pr pr-no">
@@ -226,8 +228,8 @@ details.prog[open]>summary::after{content:"−"}
     <article class="pr pr-other">
       <div class="pr-head"><span class="rt rt-other">state or another body</span><h3>Regulate Airbnb; raise the tourist fee</h3></div>
       <div class="pr-why">
-        <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city can enforce existing rules and charge the fee up to the ceiling.<sup class="cite"><a href="#r6">6</a></sup></p></div>
-        <div class="pr-not"><p class="pr-lab">Why not</p><p>Short-term rental rules are set by state law, and the fee cannot exceed the legal ceiling of 50 Kč a night.<sup class="cite"><a href="#r15">15</a></sup><sup class="cite"><a href="#r5">5</a></sup><sup class="cite"><a href="#r6">6</a></sup></p></div>
+        <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city can enforce existing rules; it already charges the fee at the ceiling.<sup class="cite"><a href="#r14">14</a></sup></p></div>
+        <div class="pr-not"><p class="pr-lab">Why not</p><p>Short-term rental rules are set by state law, and the fee cannot exceed the legal ceiling of 50 Kč a night.<sup class="cite"><a href="#r16">16</a></sup><sup class="cite"><a href="#r5">5</a></sup><sup class="cite"><a href="#r6">6</a></sup></p></div>
       </div>
     </article>
   </div>
@@ -259,7 +261,7 @@ details.prog[open]>summary::after{content:"−"}
       <div class="pr-head"><span class="rt rt-no">not in one term</span><h3>Long-term goal of at least 10 000 new flats a year</h3></div>
       <div class="pr-why">
         <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city can plan and permit faster and build some flats itself.</p></div>
-        <div class="pr-not"><p class="pr-lab">Why not</p><p>About 6 000 flats are completed a year now, mostly by private builders; 10 000 is a long-term goal, as the programme says.<sup class="cite"><a href="#r12">12</a></sup> <a class="prog-src" href="https://program2026.praha.pirati.cz/program/">programme</a></p></div>
+        <div class="pr-not"><p class="pr-lab">Why not</p><p>About 6 000 flats are completed a year now; 10 000 is a long-term goal, as the programme says.<sup class="cite"><a href="#r12">12</a></sup> <a class="prog-src" href="https://program2026.praha.pirati.cz/program/">programme</a></p></div>
       </div>
     </article>
     <article class="pr pr-partly">
@@ -269,32 +271,32 @@ details.prog[open]>summary::after{content:"−"}
         <div class="pr-not"><p class="pr-lab">Why not</p><p>Requiring 30 % from every developer is legally uncertain; each contract is negotiated.</p></div>
       </div>
     </article>
-    <article class="pr pr-other">
-      <div class="pr-head"><span class="rt rt-other">state or another body</span><h3>Multiple property tax on long-empty and wholly tourist buildings; short-term rental rules</h3></div>
+    <article class="pr pr-partly">
+      <div class="pr-head"><span class="rt rt-partly">partly</span><h3>Multiple property tax on long-empty and wholly tourist buildings; short-term rental rules</h3></div>
       <div class="pr-why">
-        <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city may raise the local coefficient on property tax, from 0.5 to 5, by area or type of property.<sup class="cite"><a href="#r11">11</a></sup></p></div>
-        <div class="pr-not"><p class="pr-lab">Why not</p><p>The law has no category for empty flats, so a tax aimed at them needs Parliament; short-term rental rules are also set by law.<sup class="cite"><a href="#r11">11</a></sup><sup class="cite"><a href="#r15">15</a></sup></p></div>
+        <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city may raise the local coefficient on property tax, from 0.5 to 5, by area or group of property, or for specified, named properties by a general measure of the assembly, so it could raise the tax on buildings it names.<sup class="cite"><a href="#r11">11</a></sup></p></div>
+        <div class="pr-not"><p class="pr-lab">Why not</p><p>The law has no category for empty flats, so a tax defined by emptiness itself needs Parliament; short-term rental rules are set by state law.<sup class="cite"><a href="#r11">11</a></sup><sup class="cite"><a href="#r16">16</a></sup></p></div>
       </div>
     </article>
-    <article class="pr pr-likely">
-      <div class="pr-head"><span class="rt rt-likely">likely</span><h3>Minimum flat size 16 → 30 m²; lower parking minimums</h3></div>
+    <article class="pr pr-partly">
+      <div class="pr-head"><span class="rt rt-partly">partly</span><h3>Minimum flat size 16 → 30 m²; lower parking minimums</h3></div>
       <div class="pr-why">
-        <div class="pr-can"><p class="pr-lab">Why it can</p><p>Parking requirements are in the Prague building regulations, which the city issues itself.<sup class="cite"><a href="#r14">14</a></sup></p></div>
-        <div class="pr-not"><p class="pr-lab">Why not</p><p>Where the 16 m² minimum is set was not confirmed here: the Prague regulations set 8 m² for a habitable room, and a change goes through the regulation&#x27;s adoption process. <a class="prog-src" href="https://program2026.praha.pirati.cz/program/">programme</a><sup class="cite"><a href="#r14">14</a></sup></p></div>
+        <div class="pr-can"><p class="pr-lab">Why it can</p><p>Parking requirements are in the Prague building regulations, which the city issues itself, so lower parking minimums can be done.<sup class="cite"><a href="#r15">15</a></sup></p></div>
+        <div class="pr-not"><p class="pr-lab">Why not</p><p>Where the 16 m² minimum is set was not confirmed here: the Prague regulations set 8 m² for a habitable room. Until that is known, the flat-size part cannot be rated as within the city&#x27;s powers. <a class="prog-src" href="https://program2026.praha.pirati.cz/program/">programme</a><sup class="cite"><a href="#r15">15</a></sup></p></div>
       </div>
     </article>
     <article class="pr pr-partly">
       <div class="pr-head"><span class="rt rt-partly">partly</span><h3>New districts (West City, New Kolovraty, East City) and an acceleration-zone act</h3></div>
       <div class="pr-why">
         <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city can run design competitions and plan the districts.</p></div>
-        <div class="pr-not"><p class="pr-lab">Why not</p><p>The acceleration-zone act is for Parliament, and building whole districts takes decades. <a class="prog-src" href="https://program2026.praha.pirati.cz/program/">programme</a></p></div>
+        <div class="pr-not"><p class="pr-lab">Why not</p><p>The acceleration-zone act is a state law the programme asks Parliament for, and building whole districts takes decades. <a class="prog-src" href="https://program2026.praha.pirati.cz/program/">programme</a></p></div>
       </div>
     </article>
     <article class="pr pr-partly">
       <div class="pr-head"><span class="rt rt-partly">partly</span><h3>Finish tunnelling metro D, open the first section in 2032; prepare A, B, C extensions</h3></div>
       <div class="pr-why">
         <div class="pr-can"><p class="pr-lab">Why it can</p><p>Tunnelling and preparing extensions are in the city&#x27;s hands.</p></div>
-        <div class="pr-not"><p class="pr-lab">Why not</p><p>The first section opens in 2032 by the programme&#x27;s own date, after the term; extensions take a decade or more.<sup class="cite"><a href="#r13">13</a></sup></p></div>
+        <div class="pr-not"><p class="pr-lab">Why not</p><p>The first section opens in 2032 by the programme&#x27;s own date and the builder&#x27;s plan, after the term; extensions take a decade or more.<sup class="cite"><a href="#r17">17</a></sup><sup class="cite"><a href="#r13">13</a></sup></p></div>
       </div>
     </article>
     <article class="pr pr-partly">
@@ -315,13 +317,13 @@ details.prog[open]>summary::after{content:"−"}
       <div class="pr-head"><span class="rt rt-partly">partly</span><h3>City ring road, Industrial half-ring with Hloubětín tunnel, Radlice radial</h3></div>
       <div class="pr-why">
         <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city can prepare the projects, as the programme says. <a class="prog-src" href="https://program2026.praha.pirati.cz/program/">programme</a></p></div>
-        <div class="pr-not"><p class="pr-lab">Why not</p><p>Tunnels and ring roads take a decade or more to build.</p></div>
+        <div class="pr-not"><p class="pr-lab">Why not</p><p>Tunnels and ring roads take a decade or more to build. A radial is a main road from the centre outwards to the ring roads.</p></div>
       </div>
     </article>
     <article class="pr pr-likely">
       <div class="pr-head"><span class="rt rt-likely">likely</span><h3>Low-emission zone inside the city ring road</h3></div>
       <div class="pr-why">
-        <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city council may set a low-emission zone by a general measure.<sup class="cite"><a href="#r10">10</a></sup></p></div>
+        <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city council may set a low-emission zone by a general measure (a binding decision on a defined matter, neither an ordinance nor a decision on one person&#x27;s case).<sup class="cite"><a href="#r10">10</a></sup></p></div>
         <div class="pr-not"><p class="pr-lab">Why not</p><p>It takes effect at least 12 months after it is announced, and a charge to enter would need a law.<sup class="cite"><a href="#r10">10</a></sup></p></div>
       </div>
     </article>
@@ -342,8 +344,8 @@ details.prog[open]>summary::after{content:"−"}
     <article class="pr pr-other">
       <div class="pr-head"><span class="rt rt-other">state or another body</span><h3>Take over the Na Františku hospital; raise the tourist fee</h3></div>
       <div class="pr-why">
-        <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city can negotiate with the hospital&#x27;s founder and ask for a higher fee.</p></div>
-        <div class="pr-not"><p class="pr-lab">Why not</p><p>The hospital&#x27;s founder is the Prague 1 district, which must agree; the fee&#x27;s ceiling of 50 Kč a night is set by law.<sup class="cite"><a href="#r16">16</a></sup><sup class="cite"><a href="#r6">6</a></sup></p></div>
+        <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city can negotiate with the hospital&#x27;s founder and ask the state for a higher fee ceiling.</p></div>
+        <div class="pr-not"><p class="pr-lab">Why not</p><p>The hospital&#x27;s founder is the Prague 1 district, which must agree; the fee&#x27;s ceiling of 50 Kč a night is set by law.<sup class="cite"><a href="#r18">18</a></sup><sup class="cite"><a href="#r6">6</a></sup></p></div>
       </div>
     </article>
   </div>
@@ -381,8 +383,8 @@ details.prog[open]>summary::after{content:"−"}
     <article class="pr pr-partly">
       <div class="pr-head"><span class="rt rt-partly">partly</span><h3>Complete metro D; a concept for line E</h3></div>
       <div class="pr-why">
-        <div class="pr-can"><p class="pr-lab">Why it can</p><p>Building on and drawing up line E are within the city&#x27;s reach.</p></div>
-        <div class="pr-not"><p class="pr-lab">Why not</p><p>The first section is planned for 2032, after the term, and the whole line takes many more years.<sup class="cite"><a href="#r13">13</a></sup></p></div>
+        <div class="pr-can"><p class="pr-lab">Why it can</p><p>Drawing up a concept for line E is within the city&#x27;s reach, and that part is why the row is rated partly.</p></div>
+        <div class="pr-not"><p class="pr-lab">Why not</p><p>Completing metro D is not possible in the term: the builder&#x27;s plan gives 2032 for opening, and the whole line takes many more years.<sup class="cite"><a href="#r13">13</a></sup></p></div>
       </div>
     </article>
     <article class="pr pr-partly">
@@ -438,7 +440,7 @@ details.prog[open]>summary::after{content:"−"}
       <div class="pr-head"><span class="rt rt-other">state or another body</span><h3>Short-term rental rules &#x27;using new legal options&#x27;</h3></div>
       <div class="pr-why">
         <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city can enforce what the law allows.<sup class="cite"><a href="#r5">5</a></sup></p></div>
-        <div class="pr-not"><p class="pr-lab">Why not</p><p>Without a new state law the city has little power over short-term rentals.<sup class="cite"><a href="#r15">15</a></sup><sup class="cite"><a href="#r5">5</a></sup></p></div>
+        <div class="pr-not"><p class="pr-lab">Why not</p><p>Without a new state law the city has little power over short-term rentals; the EU rules on registering them, which apply from May 2026, and any Czech law implementing them were not checked here.<sup class="cite"><a href="#r16">16</a></sup><sup class="cite"><a href="#r5">5</a></sup><sup class="cite"><a href="#r19">19</a></sup></p></div>
       </div>
     </article>
     <article class="pr pr-likely">
@@ -476,7 +478,7 @@ details.prog[open]>summary::after{content:"−"}
     <article class="pr pr-yes">
       <div class="pr-head"><span class="rt rt-yes">yes</span><h3>An annual public-transport pass for 1 000 Kč for residents</h3></div>
       <div class="pr-why">
-        <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city sets public-transport fares through its transport authority.<sup class="cite"><a href="#r2">2</a></sup><sup class="cite"><a href="#r1">1</a></sup></p></div>
+        <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city orders public transport and may set the maximum fares in its transport plan.<sup class="cite"><a href="#r2">2</a></sup><sup class="cite"><a href="#r1">1</a></sup></p></div>
         <div class="pr-not"><p class="pr-lab">Why not</p><p>The revenue lost has to be paid from the budget, and the programme does not say how much.</p></div>
       </div>
     </article>
@@ -497,7 +499,7 @@ details.prog[open]>summary::after{content:"−"}
     <article class="pr pr-yes">
       <div class="pr-head"><span class="rt rt-yes">yes</span><h3>Cheaper residents&#x27; parking, no further price rises</h3></div>
       <div class="pr-why">
-        <div class="pr-can"><p class="pr-lab">Why it can</p><p>Parking-zone prices are set by the city&#x27;s own regulation.<sup class="cite"><a href="#r14">14</a></sup></p></div>
+        <div class="pr-can"><p class="pr-lab">Why it can</p><p>Parking-zone prices are set in the city&#x27;s own regulation on paid parking.<sup class="cite"><a href="#r7">7</a></sup></p></div>
         <div class="pr-not"><p class="pr-lab">Why not</p><p>Nothing blocks it.</p></div>
       </div>
     </article>
@@ -523,7 +525,7 @@ details.prog[open]>summary::after{content:"−"}
       </div>
     </article>
     <article class="pr pr-yes">
-      <div class="pr-head"><span class="rt rt-yes">yes</span><h3>A new points system for city flats, priority for locals and some professions, end &#x27;Housing First&#x27; in its current form</h3></div>
+      <div class="pr-head"><span class="rt rt-yes">yes</span><h3>A new points system for city flats, priority for locals and some professions, end &#x27;Housing First&#x27; (a flat first, with support, for homeless people) in its current form</h3></div>
       <div class="pr-why">
         <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city approves the rules for allocating its flats.<sup class="cite"><a href="#r1">1</a></sup></p></div>
         <div class="pr-not"><p class="pr-lab">Why not</p><p>How far priority for locals can go before it is unlawful discrimination is uncertain.</p></div>
@@ -539,7 +541,7 @@ details.prog[open]>summary::after{content:"−"}
     <article class="pr pr-partly">
       <div class="pr-head"><span class="rt rt-partly">partly</span><h3>Faster permits, high-rise building near the metro</h3></div>
       <div class="pr-why">
-        <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city can change its building regulations and add staff.<sup class="cite"><a href="#r14">14</a></sup></p></div>
+        <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city can change its building regulations and add staff.<sup class="cite"><a href="#r15">15</a></sup></p></div>
         <div class="pr-not"><p class="pr-lab">Why not</p><p>The building act is the state&#x27;s, and changing the zoning plan takes years.</p></div>
       </div>
     </article>
@@ -547,7 +549,7 @@ details.prog[open]>summary::after{content:"−"}
       <div class="pr-head"><span class="rt rt-other">state or another body</span><h3>Reasonable regulation of short-term rentals</h3></div>
       <div class="pr-why">
         <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city can enforce existing rules.<sup class="cite"><a href="#r5">5</a></sup></p></div>
-        <div class="pr-not"><p class="pr-lab">Why not</p><p>Short-term rental rules are set by state law.<sup class="cite"><a href="#r15">15</a></sup><sup class="cite"><a href="#r5">5</a></sup></p></div>
+        <div class="pr-not"><p class="pr-lab">Why not</p><p>Short-term rental rules are set by state law.<sup class="cite"><a href="#r16">16</a></sup><sup class="cite"><a href="#r5">5</a></sup></p></div>
       </div>
     </article>
     <article class="pr pr-likely">
@@ -571,7 +573,7 @@ details.prog[open]>summary::after{content:"−"}
     <article class="pr pr-partly">
       <div class="pr-head"><span class="rt rt-partly">partly</span><h3>Set conditions so that 10 000 new flats can be built every year</h3></div>
       <div class="pr-why">
-        <div class="pr-can"><p class="pr-lab">Why it can</p><p>The zoning plan, building regulations and city land are in the city&#x27;s hands.<sup class="cite"><a href="#r14">14</a></sup><sup class="cite"><a href="#r1">1</a></sup></p></div>
+        <div class="pr-can"><p class="pr-lab">Why it can</p><p>The zoning plan, building regulations and city land are in the city&#x27;s hands.<sup class="cite"><a href="#r15">15</a></sup><sup class="cite"><a href="#r1">1</a></sup></p></div>
         <div class="pr-not"><p class="pr-lab">Why not</p><p>Completions follow years later; about 6 000 flats are completed a year now, and the building act is the state&#x27;s.<sup class="cite"><a href="#r12">12</a></sup></p></div>
       </div>
     </article>
@@ -631,24 +633,24 @@ details.prog[open]>summary::after{content:"−"}
         <div class="pr-not"><p class="pr-lab">Why not</p><p>Procurement and joining systems are the risk.</p></div>
       </div>
     </article>
-    <article class="pr pr-partly">
-      <div class="pr-head"><span class="rt rt-partly">partly</span><h3>Raise the tourist fee to the European average</h3></div>
+    <article class="pr pr-other">
+      <div class="pr-head"><span class="rt rt-other">state or another body</span><h3>Raise the tourist fee to the European average</h3></div>
       <div class="pr-why">
-        <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city may raise the fee up to the legal ceiling.<sup class="cite"><a href="#r6">6</a></sup></p></div>
-        <div class="pr-not"><p class="pr-lab">Why not</p><p>The ceiling of 50 Kč a night is set by law, so above it needs Parliament.<sup class="cite"><a href="#r6">6</a></sup></p></div>
+        <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city sets its own rate within the legal ceiling.<sup class="cite"><a href="#r6">6</a></sup><sup class="cite"><a href="#r14">14</a></sup></p></div>
+        <div class="pr-not"><p class="pr-lab">Why not</p><p>Prague already charges the ceiling of 50 Kč a night, so any rise needs Parliament to raise it.<sup class="cite"><a href="#r6">6</a></sup><sup class="cite"><a href="#r14">14</a></sup></p></div>
       </div>
     </article>
     <article class="pr pr-other">
       <div class="pr-head"><span class="rt rt-other">state or another body</span><h3>Reasonable regulation of Airbnb</h3></div>
       <div class="pr-why">
         <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city can enforce what the law allows.<sup class="cite"><a href="#r5">5</a></sup></p></div>
-        <div class="pr-not"><p class="pr-lab">Why not</p><p>Short-term rental rules are set by state law.<sup class="cite"><a href="#r15">15</a></sup><sup class="cite"><a href="#r5">5</a></sup></p></div>
+        <div class="pr-not"><p class="pr-lab">Why not</p><p>Short-term rental rules are set by state law.<sup class="cite"><a href="#r16">16</a></sup><sup class="cite"><a href="#r5">5</a></sup></p></div>
       </div>
     </article>
     <article class="pr pr-partly">
       <div class="pr-head"><span class="rt rt-partly">partly</span><h3>800 care-home places, 1 000 care workers, at least 150 respite places</h3></div>
       <div class="pr-why">
-        <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city funds social services as the region and can expand home care.<sup class="cite"><a href="#r17">17</a></sup></p></div>
+        <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city funds social services as the region and can expand home care.<sup class="cite"><a href="#r20">20</a></sup></p></div>
         <div class="pr-not"><p class="pr-lab">Why not</p><p>New care homes take years to build, and staff are short.</p></div>
       </div>
     </article>
@@ -663,7 +665,7 @@ details.prog[open]>summary::after{content:"−"}
       <div class="pr-head"><span class="rt rt-other">state or another body</span><h3>Change the tax-sharing law, state co-funding, a pre-emption right, state land in Letňany</h3></div>
       <div class="pr-why">
         <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city can negotiate.</p></div>
-        <div class="pr-not"><p class="pr-lab">Why not</p><p>Tax sharing and a pre-emption right need Parliament; co-funding and state land are the government&#x27;s decision.<sup class="cite"><a href="#r18">18</a></sup><sup class="cite"><a href="#r5">5</a></sup></p></div>
+        <div class="pr-not"><p class="pr-lab">Why not</p><p>Tax sharing and a pre-emption right (a right of first refusal when land is sold) need Parliament; co-funding and state land are the government&#x27;s decision.<sup class="cite"><a href="#r21">21</a></sup><sup class="cite"><a href="#r5">5</a></sup></p></div>
       </div>
     </article>
   </div>
@@ -716,7 +718,7 @@ details.prog[open]>summary::after{content:"−"}
       <div class="pr-head"><span class="rt rt-partly">partly</span><h3>Continue building metro D</h3></div>
       <div class="pr-why">
         <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city builds metro D and can continue.</p></div>
-        <div class="pr-not"><p class="pr-lab">Why not</p><p>The first section is planned for 2032, after the term.<sup class="cite"><a href="#r13">13</a></sup></p></div>
+        <div class="pr-not"><p class="pr-lab">Why not</p><p>The builder&#x27;s plan gives 2032 for opening, after the term.<sup class="cite"><a href="#r13">13</a></sup></p></div>
       </div>
     </article>
     <article class="pr pr-partly">
@@ -744,7 +746,7 @@ details.prog[open]>summary::after{content:"−"}
       <div class="pr-head"><span class="rt rt-other">state or another body</span><h3>Develop the IKEM, Thomayer, Motol and Bulovka hospitals</h3></div>
       <div class="pr-why">
         <div class="pr-can"><p class="pr-lab">Why it can</p><p>The city can offer land and transport links.</p></div>
-        <div class="pr-not"><p class="pr-lab">Why not</p><p>All four are run by the Ministry of Health: Motol, Thomayer and Bulovka as university hospitals, IKEM as an institute it manages directly.<sup class="cite"><a href="#r9">9</a></sup><sup class="cite"><a href="#r19">19</a></sup></p></div>
+        <div class="pr-not"><p class="pr-lab">Why not</p><p>All four are run by the Ministry of Health: Motol, Thomayer and Bulovka as university hospitals, IKEM as an institute it manages directly.<sup class="cite"><a href="#r9">9</a></sup><sup class="cite"><a href="#r22">22</a></sup></p></div>
       </div>
     </article>
   </div>
@@ -760,33 +762,37 @@ details.prog[open]>summary::after{content:"−"}
 <h2>References</h2>
 <ol>
 <li id="r1">Zákon č. 131/2000 Sb., o hlavním městě Praze: §1 odst. 1 (Prague is a region and a municipality), §17 odst. 3 (the Statute is a generally binding ordinance), §59 odst. 2 písm. e, i, l and odst. 3 písm. c, i (budget, legal persons, funds, loans, transfers of real estate). <a href="https://www.zakonyprolidi.cz/cs/2000-131">www.zakonyprolidi.cz/cs/2000-131</a> Accessed 1 October 2026.</li>
-<li id="r2">Zákon č. 194/2010 Sb., o veřejných službách v přepravě cestujících, §3 odst. 1–2 (regions set and ensure public passenger transport). <a href="https://www.zakonyprolidi.cz/cs/2010-194">www.zakonyprolidi.cz/cs/2010-194</a> Accessed 1 October 2026.</li>
-<li id="r3">Zákon č. 561/2004 Sb., školský zákon, §177 odst. 1 (regions establish secondary schools; municipalities kindergartens and primary schools). <a href="https://www.zakonyprolidi.cz/cs/2004-561">www.zakonyprolidi.cz/cs/2004-561</a> Accessed 1 October 2026.</li>
+<li id="r2">Zákon č. 194/2010 Sb., o veřejných službách v přepravě cestujících, §3 odst. 1–2 (regions set and ensure public passenger transport) and §5 odst. 2 písm. e (the transport plan sets maximum fares for passengers where the ordering authority sets them). <a href="https://www.zakonyprolidi.cz/cs/2010-194">www.zakonyprolidi.cz/cs/2010-194</a> Accessed 1 October 2026.</li>
+<li id="r3">Zákon č. 561/2004 Sb., školský zákon, §178 odst. 1–2 (municipalities establish primary schools and kindergartens) and §181 odst. 1 písm. a (regions establish secondary schools). <a href="https://www.zakonyprolidi.cz/cs/2004-561">www.zakonyprolidi.cz/cs/2004-561</a> Accessed 1 October 2026.</li>
 <li id="r4">Zákon č. 553/1991 Sb., o obecní policii, §1 odst. 1 (the municipal assembly establishes the municipal police). <a href="https://www.zakonyprolidi.cz/cs/1991-553">www.zakonyprolidi.cz/cs/1991-553</a> Accessed 1 October 2026.</li>
 <li id="r5">Ústava České republiky, čl. 104 (an assembly&#x27;s powers are set only by law; ordinances within those powers). <a href="https://www.zakonyprolidi.cz/cs/1993-1">www.zakonyprolidi.cz/cs/1993-1</a> Accessed 1 October 2026.</li>
 <li id="r6">Zákon č. 565/1990 Sb., o místních poplatcích, §3d (the tourist fee is at most 50 Kč), version effective 1 January 2025. <a href="https://www.zakonyprolidi.cz/cs/1990-565">www.zakonyprolidi.cz/cs/1990-565</a> Accessed 1 October 2026.</li>
-<li id="r7">Zákon č. 13/1997 Sb., o pozemních komunikacích, §9 odst. 1 and §9a (the state owns motorways; Ředitelství silnic a dálnic builds and manages them). <a href="https://www.zakonyprolidi.cz/cs/1997-13">www.zakonyprolidi.cz/cs/1997-13</a> Accessed 1 October 2026.</li>
+<li id="r7">Zákon č. 13/1997 Sb., o pozemních komunikacích, §9 odst. 1 and §9a (the state owns motorways; Ředitelství silnic a dálnic builds and manages them), §23 odst. 1 (a municipality may set paid parking on local roads, at a price set in its regulation). <a href="https://www.zakonyprolidi.cz/cs/1997-13">www.zakonyprolidi.cz/cs/1997-13</a> Accessed 1 October 2026.</li>
 <li id="r8">Zákon č. 77/2002 Sb., §19–21 (Správa železnic is a state organisation managing the state&#x27;s rail infrastructure). <a href="https://www.zakonyprolidi.cz/cs/2002-77">www.zakonyprolidi.cz/cs/2002-77</a> Accessed 1 October 2026.</li>
 <li id="r9">Zákon č. 372/2011 Sb., o zdravotních službách, §111 odst. 1 (university hospitals are state organisations founded by the Ministry of Health). <a href="https://www.zakonyprolidi.cz/cs/2011-372">www.zakonyprolidi.cz/cs/2011-372</a> Accessed 1 October 2026.</li>
 <li id="r10">Zákon č. 201/2012 Sb., o ochraně ovzduší, §14 odst. 1 and 6 (the municipal council sets a low-emission zone by a general measure, effective at least 12 months after it is announced). <a href="https://www.zakonyprolidi.cz/cs/2012-201">www.zakonyprolidi.cz/cs/2012-201</a> Accessed 1 October 2026.</li>
-<li id="r11">Zákon č. 338/1992 Sb., o dani z nemovitých věcí, §12 (a local coefficient of 0.5–5 by area or group of property; no category for empty flats). <a href="https://www.zakonyprolidi.cz/cs/1992-338">www.zakonyprolidi.cz/cs/1992-338</a> Accessed 1 October 2026.</li>
-<li id="r12">Šandová, B. (2026). New housing in Prague: permits, completions and the metro (Prague, measured, Part 4): 4.5 completions per 1 000 residents a year, 2015–2024; permit to completion about 11 months longer than elsewhere in Czechia. <a href="https://bsandova.com/texts/prague-housing">bsandova.com/texts/prague-housing</a> Accessed 1 October 2026.</li>
-<li id="r13">Piráti Praha (2026). Program 2026: the first section of metro D in operation in 2032. <a href="https://program2026.praha.pirati.cz/program/doprava/">program2026.praha.pirati.cz/program/doprava/</a> Accessed 1 October 2026.</li>
-<li id="r14">Nařízení hlavního města Prahy č. 12/2024 Sb. hl. m. Prahy, o požadavcích na výstavbu v hlavním městě Praze (pražské stavební předpisy), issued 24 June 2024, in force 1 July 2024; parking capacities in §25–27 (IPR Praha, Souhrnné znění požadavků na výstavbu v Praze 2025). <a href="https://praha.eu/w/narizeni-hlavniho-mesta-prahy-c-12/2024">praha.eu/w/narizeni-hlavniho-mesta-prahy-c-12/2024</a> Accessed 1 October 2026.</li>
-<li id="r15">Zákon č. 159/1999 Sb. (tourism business act), version effective 1 March 2021: contains no rules on short-term rentals and no municipal power to restrict them. <a href="https://www.zakonyprolidi.cz/cs/1999-159">www.zakonyprolidi.cz/cs/1999-159</a> Accessed 1 October 2026.</li>
-<li id="r16">Nemocnice Na Františku, O nemocnici: &#x27;Naším zřizovatelem je městská část Praha 1.&#x27; <a href="https://www.nnfp.cz/nemocnice">www.nnfp.cz/nemocnice</a> Accessed 1 October 2026.</li>
-<li id="r17">Zákon č. 108/2006 Sb., o sociálních službách, §95 (the region ensures the availability of social services). <a href="https://www.zakonyprolidi.cz/cs/2006-108">www.zakonyprolidi.cz/cs/2006-108</a> Accessed 1 October 2026.</li>
-<li id="r18">Zákon č. 243/2000 Sb., o rozpočtovém určení daní, §1 (tax sharing between the state, regions and municipalities is set by law). <a href="https://www.zakonyprolidi.cz/cs/2000-243">www.zakonyprolidi.cz/cs/2000-243</a> Accessed 1 October 2026.</li>
-<li id="r19">IKEM, Základní informace: &#x27;IKEM je příspěvkovou organizací přímo řízenou Ministerstvem zdravotnictví ČR.&#x27; <a href="https://www.ikem.cz/cs/o-nas/zakladni-informace/a-11/">www.ikem.cz/cs/o-nas/zakladni-informace/a-11/</a> Accessed 1 October 2026.</li>
+<li id="r11">Zákon č. 338/1992 Sb., o dani z nemovitých věcí, version effective 1 October 2025, §12 odst. 1 (a local coefficient of 0.5–5, set by ordinance for the whole municipality, a part of it or a group of property, or by a general measure of the assembly for specified, named properties; the law has no category for empty flats). <a href="https://www.zakonyprolidi.cz/cs/1992-338">www.zakonyprolidi.cz/cs/1992-338</a> Accessed 1 October 2026.</li>
+<li id="r12">Šandová, B. (2026). New housing in Prague: permits, completions and the metro (Prague, measured, Part 4): 4.5 completions per 1 000 residents a year, 2015–2024; permit to completion about 11 months longer than elsewhere in Czechia, a difference in the recorded pipeline that may partly be reporting timing and says nothing about how long the permit itself takes. <a href="https://bsandova.com/texts/prague-housing">bsandova.com/texts/prague-housing</a> Accessed 1 October 2026.</li>
+<li id="r13">Dopravní podnik hl. m. Prahy, Metro D: &#x27;Plán zprovoznění: 2032&#x27; (planned opening 2032); schedule (harmonogram) as of 8 April 2026. <a href="https://www.dpp.cz/metro-d">www.dpp.cz/metro-d</a> Accessed 3 October 2026.</li>
+<li id="r14">Obecně závazná vyhláška hl. m. Prahy č. 18/2019 Sb. hl. m. Prahy, o místním poplatku z pobytu, §3 (the rate is 50 Kč a person for each day begun). Accessed 3 October 2026.</li>
+<li id="r15">Nařízení hlavního města Prahy č. 12/2024 Sb. hl. m. Prahy, o požadavcích na výstavbu v hlavním městě Praze (pražské stavební předpisy), issued 24 June 2024, in force 1 July 2024; parking capacities in §25–27 (IPR Praha, Souhrnné znění požadavků na výstavbu v Praze 2025). <a href="https://praha.eu/w/narizeni-hlavniho-mesta-prahy-c-12/2024">praha.eu/w/narizeni-hlavniho-mesta-prahy-c-12/2024</a> Accessed 1 October 2026.</li>
+<li id="r16">Zákon č. 159/1999 Sb. (tourism business act), version effective 1 March 2021, the version checked here: contains no rules on short-term rentals and no municipal power to restrict them. <a href="https://www.zakonyprolidi.cz/cs/1999-159">www.zakonyprolidi.cz/cs/1999-159</a> Accessed 1 October 2026.</li>
+<li id="r17">Piráti Praha (2026). Program 2026, Doprava: the party will watch the timetable for opening the first section of metro D in 2032. <a href="https://program2026.praha.pirati.cz/program/doprava/">program2026.praha.pirati.cz/program/doprava/</a> Accessed 1 October 2026.</li>
+<li id="r18">Nemocnice Na Františku, O nemocnici: &#x27;Naším zřizovatelem je městská část Praha 1.&#x27; <a href="https://www.nnfp.cz/nemocnice">www.nnfp.cz/nemocnice</a> Accessed 1 October 2026.</li>
+<li id="r19">Nařízení (EU) 2024/1028 o shromažďování a sdílení údajů týkajících se služeb krátkodobého pronájmu ubytování (registration and data sharing for short-term rentals; applies from 20 May 2026). <a href="https://eur-lex.europa.eu/eli/reg/2024/1028/oj">eur-lex.europa.eu/eli/reg/2024/1028/oj</a> Accessed 3 October 2026.</li>
+<li id="r20">Zákon č. 108/2006 Sb., o sociálních službách, §95 (the region ensures the availability of social services). <a href="https://www.zakonyprolidi.cz/cs/2006-108">www.zakonyprolidi.cz/cs/2006-108</a> Accessed 1 October 2026.</li>
+<li id="r21">Zákon č. 243/2000 Sb., o rozpočtovém určení daní, §1 (tax sharing between the state, regions and municipalities is set by law). <a href="https://www.zakonyprolidi.cz/cs/2000-243">www.zakonyprolidi.cz/cs/2000-243</a> Accessed 1 October 2026.</li>
+<li id="r22">IKEM, Základní informace: &#x27;IKEM je příspěvkovou organizací přímo řízenou Ministerstvem zdravotnictví ČR.&#x27; <a href="https://www.ikem.cz/cs/o-nas/zakladni-informace/a-11/">www.ikem.cz/cs/o-nas/zakladni-informace/a-11/</a> Accessed 1 October 2026.</li>
 </ol>
 </section>
 
 <section id="changelog" class="changelog">
 <h2>Change log</h2>
 <ul>
-<li>1 October 2026, version 1: first published.</li>
+<li>3 October 2026, version 4, after an audit: three ratings changed, so the counts changed (likely, and with it 'within the city's powers', down by one; partly up by one; 'state or another body' unchanged): the Piráti row on property tax for empty buildings went from 'state or another body' to partly, because the law also lets the city set a coefficient for named properties; the Piráti row on the 16 m² flat minimum went from likely to partly, because where that minimum is set was not confirmed; the SPOLU row on the tourist fee went from partly to 'state or another body', because Prague already charges the 50 Kč ceiling. Withdrawn or weakened: that permits take longer in Prague (the housing study measures permit to completion, which may partly be reporting timing); that most completions are by private builders (no source); that every programme promises more housing than Prague can build (three put numbers on it, SPD gives none); that the city has no legal power over short-term rentals (it has none to restrict them as such, but can enforce rules); that one resolution can stop all sales of city flats (flats entrusted to districts need a change to the Statute); that the ratings used one fixed brief (the prompt is not published). The five ratings are now defined and the rule for choosing rows stated; metro D's 2032 date is cited to its builder, parking prices to the roads act, fares and schools to the right sections, and the city is now said to be able to set the maximum fares rather than to set the fares; the motorway ring and the city ring road are told apart; capture date corrected to 29 September. No other number changed.</li>
 <li>1 October 2026, version 3: a new layout (one card per promise, the reasons side by side, a bar of all ratings); the Prague building regulations are cited as regulation 12/2024, in force since 1 July 2024, which replaces an earlier wrong number; IKEM's founder is now checked; for the 16 m² flat minimum the page says where it is set was not confirmed.</li>
 <li>1 October 2026, version 2: every promise now gives why it can be done and why not, each with its legal or published source; the references are numbered by first citation. Metro D: the first section is planned for 2032, so no section opens within the term; the earlier wording "at most a first section" was corrected.</li>
+<li>1 October 2026, version 1: first published.</li>
 <li>Checked against editorial standard v1 on 1 October 2026.</li>
 </ul>
 </section>

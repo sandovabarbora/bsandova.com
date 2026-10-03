@@ -25,6 +25,10 @@ R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "concerts"
 HELD, INK, GREY, LIGHT = "#34507c", "#111111", "#666666", "#b5b5b0"
 NB = " "
+WORDS = {0: "none", 1: "one", 2: "two", 3: "three", 4: "four", 5: "five"}
+# single-night first shows in a country with Boxscore figures in the tour article (docs/research/harry-styles-tour.csv):
+# the smallest, Sydney's Enmore Theatre on 26 November 2017, and the largest, Dublin's 3Arena on 16 April 2018
+HALL_MIN, HALL_MAX = 2446, 12612
 plt.rcParams.update({"font.family": "Helvetica", "font.size": 9, "axes.spines.top": False, "axes.spines.right": False,
                      "axes.edgecolor": GREY, "xtick.color": GREY, "ytick.color": GREY, "svg.fonttype": "none"})
 
@@ -51,7 +55,8 @@ def raw_path(res: dict) -> dict:
     pre = t[(t.e >= -4) & (t.e <= -1)].groupby("country").y1_share.mean()
     jump = (t[t.e == 0].set_index("country").y1_share - pre).sort_values()
     return {"raw": {int(k): float(v) for k, v in raw.items()}, "cohorts": int(t.g.nunique()), "jump": jump.to_dict(),
-            "w0_total_mean": float(w0.total_streams.mean())}
+            "pre": pre.to_dict(), "w0_total_mean": float(w0.total_streams.mean()),
+            "w0_total_median": float(w0.total_streams.median())}
 
 
 def figures(res: dict) -> None:
@@ -145,7 +150,7 @@ def values(res: dict) -> dict:
          "w2": pp(ev[2]["att"]), "w3": pp(ev[3]["att"]), "wm1": pp(ev[-1]["att"]),
          "late": pp(sum(ev[k]["att"] for k in range(5, 13)) / 8),
          "sum": pp(s["att"]), "sum_lo": pp(s["lo"]), "sum_hi": pp(s["hi"]), "sum_rel": n(100 * s["att"] / base),
-         "label": y1["label"], "why": y1["why"],
+         "label": y1["label"],
          "y2_w0": n(ev2[0]["att"], 2), "y2_w0_lo": n(ev2[0]["lo"], 2), "y2_w0_hi": n(ev2[0]["hi"], 2),
          "y2_base": n(res["pre_mean"]["y2_songs"], 2), "y2_label": y2["label"], "y3_label": y3["label"],
          "y3_sum": pp(y3["summary"]["att"]),
@@ -154,17 +159,28 @@ def values(res: dict) -> dict:
          "placebo": pp(res["placebo_26w"]["att"]), "placebo_lo": pp(res["placebo_26w"]["lo"]), "placebo_hi": pp(res["placebo_26w"]["hi"]),
          "loo_min": pp(min(loo.values())), "loo_min_c": min(loo, key=loo.get), "loo_max": pp(max(loo.values())),
          "loo_max_c": max(loo, key=loo.get), "loo_us": pp(loo["United States"]), "loo_uk": pp(loo["United Kingdom"]),
-         "n_bad_pre": n(len(bad_pre)), "bad_pre": ", ".join(f"week {r['e']}" for r in bad_pre) or "none",
+         "n_bad_pre": WORDS.get(len(bad_pre), n(len(bad_pre))),
+         "bad_pre": ", ".join(f"week {n(r['e'])}" for r in bad_pre) or "none",
+         "pre_up": pp(sum(ev[k]["att"] for k in range(-12, -7))), "pre_down": pp(sum(ev[k]["att"] for k in range(-7, -1))),
+         "pre_down_min": pp(max(ev[k]["att"] for k in range(-7, -1))), "pre_down_max": pp(min(ev[k]["att"] for k in range(-7, -1))),
+         "loo_min_drop": n(100 * (1 - min(loo.values()) / s["att"])),
+         "y3_pre_frac": n(100 * res["pre_mean"]["y3_share_top3"] / base, 1),
          "bad_pre_band": "; ".join(f"{pp(r['lo'])} to {pp(r['hi'])}" for r in bad_pre),
          "csdid": res["csdid_version"]}
     rp = raw_path(res)
+    top4 = list(reversed(list(rp["jump"].items())))[:4]
     v |= {"cohorts": n(rp["cohorts"]), "raw_m12": pp(rp["raw"][-12]), "raw_m2": pp(rp["raw"][-2]), "raw_0": pp(rp["raw"][0]),
           "raw_p4": pp(rp["raw"][4]), "raw_p12": pp(rp["raw"][12]),
-          "w0_total": n(rp["w0_total_mean"] / 1e6), "extra": n(round(ev[0]["att"] * rp["w0_total_mean"], -3)),
-          "jump_top": ", ".join(f"{c} (+{pp(v)})" for c, v in list(reversed(list(rp["jump"].items())))[:4]),
+          "w0_total": n(rp["w0_total_median"] / 1e6), "extra": n(round(ev[0]["att"] * rp["w0_total_median"], -3)),
+          "per_head_lo": n(ev[0]["att"] * rp["w0_total_median"] / HALL_MAX),
+          "per_head_hi": n(ev[0]["att"] * rp["w0_total_median"] / HALL_MIN),
+          "hall_min": n(HALL_MIN), "hall_max": n(HALL_MAX),
+          "jump_top": ", ".join(f"{c} (+{pp(v)})" for c, v in top4),
+          "jump_top_held": " and ".join(c for c, _ in top4 if rp["pre"][c] > 0),
+          "jump_top_back": " and ".join(c for c, _ in top4 if rp["pre"][c] == 0),
           "jump_neg": ", ".join(f"{c} ({pp(v)})" for c, v in rp["jump"].items() if v < 0),
           "jump_zero": ", ".join(c for c, v in rp["jump"].items() if v == 0), "n_zero": n(sum(v == 0 for v in rp["jump"].values())),
-          "mde": n(100 * 1.96 * y1["summary"]["se"] / base), "extra_all": n(ev[0]["att"] * rp["w0_total_mean"] * len(res["treated"]) / 1e6, 1)}
+          "mde": n(100 * 1.96 * y1["summary"]["se"] / base)}
     photo = next(p for p in json.loads((ROOT / "assets" / "photo" / "sources.json").read_text()) if p["slug"] == "concert-effect")
     v["photo"] = ('<section class="film film-page"><div class="shot" style="view-transition-name:ph-concert-effect;'
                   '--bg:url(../assets/photo/concert-effect.jpg);--bg-s:url(../assets/photo/concert-effect-1200.jpg)"></div>'

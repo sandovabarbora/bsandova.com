@@ -705,3 +705,5 @@ Holm 1979; Schuirmann 1987; Cameron, Gelbach & Miller 2008; Webb 2023; Saltelli 
   - A correction note is prepared on a separate branch (`docs/PARK-2_m1g-correction`).
   - Part III's 174 stalls a year is derived from Part II; it is left untouched, and the conflict is flagged for the
     author.
+
+**3 October 2026 (audit).** §0 says Part I was published on 8 September 2026; git puts its first publication on 14 September 2026. The bound on T&E's rounding stated as ±0.7 cm is ±0.6 cm (0.6 × (L2025 − L2020), each value rounded to ±0.5 cm); `parking6_estimate.py` and `h2.json` now say 0.6.

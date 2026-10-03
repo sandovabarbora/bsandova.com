@@ -99,3 +99,16 @@ These apply to part 1 as well; its design points here.
   that reports more tickets sold than available, mixes online viewers with the hall. Its sell-through and its price
   per ticket are not a hall's, so it is flagged (`hybrid`) and left out of Q3 and Q5. This affects BTS's
   *Permission to Dance on Stage* (2021–2022).
+
+**3 October 2026 (audit).** A third BTS leg total was found: the Taoyuan entry of 8 December 2018 reports 250 000
+tickets for the whole Asian leg (8 December 2018 to 7 April 2019, footnoted in Wikipedia oldid 1375294102) against
+the gross of two nights. The parser names one venue for it, so the multi-venue rule did not catch it; it is now
+listed in `parse.py` (`LEG_TOTALS`) and left out of Q3 like Los Angeles and Tokyo. BTS Q3 was recomputed: 26
+entries and 58 shows (were 27 and 60), 24 of 26 sold out, rho −0.21 (was −0.22).
+
+**3 October 2026 (audit).** Two Bad Bunny tours in `artists.json` named the wrong Wikipedia pages ("El Último Tour
+del Mundo" is his 2020 album; "Most Wanted Tour" a 2011 tour by another artist). They now name "El Último Tour del
+Mundo 2022" and "Most Wanted Tour (Bad Bunny)", collected on 3 October 2026 at their current revisions. Bad Bunny's
+Q3 and Q5 and part 6's M2 were recomputed: Q3 143 entries, 222 shows (were 87, 138); Q5 28 countries (were 27); M2
+484 entries, 13 tours, elasticity 0.224 (95 % CI 0.102 to 0.347; was 0.218, 0.095 to 0.341).
+

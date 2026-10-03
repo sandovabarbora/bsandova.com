@@ -1588,23 +1588,27 @@
  },
  "q3": {
   "answerable": true,
-  "entries": 87,
+  "entries": 143,
+  "multi_venue_excluded": 0,
+  "hybrid_excluded": 0,
   "tours": [
    "Debí Tirar Más Fotos World Tour",
+   "El Último Tour del Mundo 2022",
+   "Most Wanted Tour (Bad Bunny)",
    "World's Hottest Tour",
    "X 100pre Tour"
   ],
-  "shows": 138,
-  "share_sold_out": 0.9310344827586207,
+  "shows": 222,
+  "share_sold_out": 0.958041958041958,
   "demand_at_capacity": true,
-  "spearman_rho": 0.12250550717378925,
+  "spearman_rho": 0.09512807277871103,
   "ci95": [
-   -0.06521640806822405,
-   0.2564638240456296
+   -0.0454411270739343,
+   0.19458482558999235
   ],
   "sell_through_min": 0.8100021372088053,
   "nights_max": 10,
-  "revenue_per_night_median_usd": 2997726.0
+  "revenue_per_night_median_usd": 3552044.0
  },
  "q4": {
   "songs": 271,
@@ -2021,7 +2025,7 @@
  },
  "q5": {
   "answerable": true,
-  "entries_used": 87,
+  "entries_used": 143,
   "countries": [
    {
     "iso3": "HND",
@@ -2159,9 +2163,16 @@
    {
     "iso3": "USA",
     "country": "United States",
-    "price_usd": 203.74976355876098,
-    "days_of_income": 0.9991655789271459,
-    "sold": 1311108
+    "price_usd": 229.7307588266098,
+    "days_of_income": 1.0699555671866066,
+    "sold": 2535968
+   },
+   {
+    "iso3": "CAN",
+    "country": "Canada",
+    "price_usd": 159.35149443649806,
+    "days_of_income": 1.0380573636606643,
+    "sold": 53833
    },
    {
     "iso3": "ITA",
@@ -2169,13 +2180,6 @@
     "price_usd": 109.21845744612166,
     "days_of_income": 0.9204800004764502,
     "sold": 77443
-   },
-   {
-    "iso3": "PRI",
-    "country": "Puerto Rico",
-    "price_usd": 77.56121048252912,
-    "days_of_income": 0.8893927253527707,
-    "sold": 48080
    },
    {
     "iso3": "AUS",
@@ -2197,6 +2201,13 @@
     "price_usd": 168.861964076592,
     "days_of_income": 0.8364730987161931,
     "sold": 65751
+   },
+   {
+    "iso3": "PRI",
+    "country": "Puerto Rico",
+    "price_usd": 75.41374081562208,
+    "days_of_income": 0.7888402082197506,
+    "sold": 81116
    },
    {
     "iso3": "BEL",
