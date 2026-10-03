@@ -99,3 +99,10 @@ These apply to part 1 as well; its design points here.
   that reports more tickets sold than available, mixes online viewers with the hall. Its sell-through and its price
   per ticket are not a hall's, so it is flagged (`hybrid`) and left out of Q3 and Q5. This affects BTS's
   *Permission to Dance on Stage* (2021–2022).
+
+**3 October 2026 (audit).** A third BTS leg total was found: the Taoyuan entry of 8 December 2018 reports 250 000
+tickets for the whole Asian leg (8 December 2018 to 7 April 2019, footnoted in Wikipedia oldid 1375294102) against
+the gross of two nights. The parser names one venue for it, so the multi-venue rule did not catch it; it is now
+listed in `parse.py` (`LEG_TOTALS`) and left out of Q3 like Los Angeles and Tokyo. BTS Q3 was recomputed: 26
+entries and 58 shows (were 27 and 60), 24 of 26 sold out, rho −0.21 (was −0.22).
+

@@ -183,13 +183,17 @@ def tour_tables(page: dict) -> list[dict]:
                 venues.setdefault(aid, set()).add(row[ix["Venue"]][0])
         for aid, e in entries.items():
             # an attendance cell spanning several venues is a leg's total, not a run in one venue (Q3)
-            e["multi_venue"] = len(venues.get(aid, ())) > 1
+            e["multi_venue"] = len(venues.get(aid, ())) > 1 or (e["first_date"], e["city"]) in LEG_TOTALS
             # a hybrid entry counts online viewers with the hall, so neither its sell-through nor its price is a hall's
             e["hybrid"] = bool(re.search(r"weverse|online|youtube|livestream|virtual|streaming", e["venue"], re.I)) \
                 or e["sold"] > e["available"]
         out.extend(entries.values())
     return out
 
+
+# entries whose attendance is a leg's total although the table names one venue (found by the audit of 3 Oct 2026):
+# BTS, Taoyuan 2018: 250 000 tickets footnoted as the Asian leg, 8 Dec 2018 to 7 Apr 2019 (Wikipedia oldid 1375294102)
+LEG_TOTALS = {("December 8, 2018", "Taoyuan")}
 
 ALIAS = {"England": "GBR", "Scotland": "GBR", "Wales": "GBR", "Northern Ireland": "GBR", "United Kingdom": "GBR",
          "United States": "USA", "South Korea": "KOR", "Czech Republic": "CZE", "Czechia": "CZE", "Turkey": "TUR",
