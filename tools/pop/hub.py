@@ -199,7 +199,7 @@ def main() -> None:
 
 <section id="related">
 <h2>Related</h2>
-<p><a href="concert-effect">Does a concert move the charts?</a>: a registered difference-in-differences that uses Spotify's daily charts to ask whether Harry Styles's first tour raised his share of each country's chart after he played there. The show week lifted it by about three quarters, and within three weeks the lift was gone. It is a separate study, not a part of the series.</p>
+<p><a href="concert-effect">Does a concert move the charts?</a>: a registered difference-in-differences that uses Spotify's daily charts to ask whether Harry Styles's first tour raised his share of each country's chart after he played there. In the show week his chart share rose by about three quarters against countries not yet visited, and within three weeks the rise was gone; the registered five-week effect is inconclusive. It is a separate study, not a part of the series.</p>
 </section>
 
 <section>

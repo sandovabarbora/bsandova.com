@@ -854,3 +854,5 @@ third to a half more", with Germany's sign depending on the bloc.
 - the alignment check against every constituent-session resolution (about 40 spells were checked against official
   sources by the audit);
 - E1–E4.
+
+**3 October 2026 (audit).** Several notes in this file are dated 30 September 2026; the commits that carry them are of 29 September 2026, which is the correct date. The corrected-parser Lin concordance (0.795, reported above as disclosure only) is not in `prague-districts-bridge.json`, which keeps the registered 0.7246.
