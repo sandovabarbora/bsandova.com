@@ -106,3 +106,9 @@ the gross of two nights. The parser names one venue for it, so the multi-venue r
 listed in `parse.py` (`LEG_TOTALS`) and left out of Q3 like Los Angeles and Tokyo. BTS Q3 was recomputed: 26
 entries and 58 shows (were 27 and 60), 24 of 26 sold out, rho −0.21 (was −0.22).
 
+**3 October 2026 (audit).** Two Bad Bunny tours in `artists.json` named the wrong Wikipedia pages ("El Último Tour
+del Mundo" is his 2020 album; "Most Wanted Tour" a 2011 tour by another artist). They now name "El Último Tour del
+Mundo 2022" and "Most Wanted Tour (Bad Bunny)", collected on 3 October 2026 at their current revisions. Bad Bunny's
+Q3 and Q5 and part 6's M2 were recomputed: Q3 143 entries, 222 shows (were 87, 138); Q5 28 countries (were 27); M2
+484 entries, 13 tours, elasticity 0.224 (95 % CI 0.102 to 0.347; was 0.218, 0.095 to 0.341).
+
