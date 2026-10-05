@@ -75,6 +75,7 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 </details>
 <dl class="meta">
   <div><dt>published</dt><dd>22 September 2026 · updated 29 September 2026 · <a href="#changelog">version 2</a></dd></div>
+  <div><dt>work since</dt><dd>June 2026</dd></div>
 </dl>
 <details class="meta-more">
   <summary>About this tool</summary>
@@ -154,6 +155,7 @@ sitewitness page ask/ --api https://api.example.com --example "How many …?"</p
 <section id="changelog" class="changelog">
 <h2>Change log</h2>
 <ul>
+<li>5 October 2026: work dates added. No number changed.</li>
 <li>3 October 2026: corrected after an audit. The fifth tool is <code>list_sources</code>, not a page reader; the model client has one method, not two; the code rule also refuses lines starting with <code>from</code>; the quotation rule's exemption applies to the whole answer once any quotation is verified; the tool cap is a cap on model turns and saved answers used up to 17 tool calls; search now returns up to 1,500 characters, not a whole paragraph; the Worker is thirty lines, not twenty. The golden set is linked as of the saved run, since question 28 has changed. Weakened the 29 of 30: it is an upper bound from a substring test, two passes are weak (27 of 30 without them), and this is stated in the short version, the evaluation section and the limits. Glossed golden questions, trace, Wilson interval and BM25.</li>
 <li>22 September 2026: first published as "An agent that shows its work".</li>
 <li>29 September 2026: retitled and reframed as an engineering log and as the documentation page for the Ask assistant. Added comparable tools (Guardrails AI, NeMo Guardrails, RAGAS faithfulness), a worked example from the saved run, the golden set's composition, a 95 % interval for the final score and the comparison with the Worker's 29 of 30 on 17 September 2026. Corrected the account of the one rule firing in the final run: the saved record shows a false refusal caused by the quotation pattern spanning two short quoted words, not a verbatim quotation of a data file. Reconciled the run count (five scored runs and a sixth stopped by the budget), stated that the golden set changed during the series and that earlier scores were not saved, named the model, and added a limits section. Folded the security findings into the reproduction section, dropped the numbered headings, the slogans and the closing sentence, and removed the "security findings" and "evaluation runs" facts cards and the stack line's test count.</li>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>When the clocks go back: evening darkness and pedestrian crashes in Czechia, 2016–2025</title>
-<meta name="description" content="A registered study of ten autumns of Czech police records: in the two weeks after the clocks go back, pedestrian crashes between 16:00 and 19:00 rise by about {{ratio_pct}} % relative to midday.">
+<meta name="description" content="A pre-specified analysis of ten autumns of Czech police records: in the two weeks after the clocks go back, pedestrian crashes between 16:00 and 19:00 rise by about {{ratio_pct}} % relative to midday.">
 <meta property="og:title" content="When the clocks go back: evening darkness and pedestrian crashes in Czechia">
 <meta property="og:description" content="In the two weeks after the autumn clock change, pedestrian crashes in the evening rush rise by about {{ratio_pct}} % relative to midday; ten autumns of police records, 2016–2025.">
 <meta property="og:type" content="article">
@@ -34,7 +34,7 @@
 <header class="text-head">
   <p class="kicker">Research · roads · the autumn clock change, 2016–2025</p>
   <h1>When the clocks go back: <em>evening darkness and pedestrian crashes in Czechia</em></h1>
-  <p class="deck">A registered study of ten autumns of police records: in the two weeks after the clocks go back, crashes with a pedestrian between 16:00 and 19:00 rise by about {{ratio_pct}} % relative to midday. The registered hypothesis is {{label}} under the plan as amended before the data were opened; the originally registered model, with separate evening and morning trends, gives {{gt}} ({{gt_lo}} to {{gt_hi}}) and is inconclusive.</p>
+  <p class="deck">A pre-specified analysis of ten autumns of police records: in the two weeks after the clocks go back, crashes with a pedestrian between 16:00 and 19:00 rise by about {{ratio_pct}} % relative to midday. The registered hypothesis is {{label}} under the plan as amended before the data were opened; the originally registered model, with separate evening and morning trends, gives {{gt}} ({{gt_lo}} to {{gt_hi}}) and is inconclusive.</p>
   <dl class="facts">
     <div><dt>evening pedestrian crashes after the change</dt><dd>×{{ratio}} <small>relative to midday, 16:00–18:59 · 95 % confidence interval (CI) {{ratio_lo}} to {{ratio_hi}} · {{label}}; original model ×{{gt}}, inconclusive</small></dd></div>
     <div><dt>morning, 06:00–07:59</dt><dd>×{{m_ratio}} <small>95 % CI {{m_lo}} to {{m_hi}} · {{m_label}}</small></dd></div>
@@ -55,11 +55,12 @@
 </details>
 <dl class="meta">
   <div><dt>published</dt><dd>3 October 2026 · updated 3 October 2026 · <a href="#changelog">version 1</a></dd></div>
+  <div><dt>work since</dt><dd>October 2026</dd></div>
 </dl>
 <details class="meta-more">
   <summary>About this study</summary>
 <dl class="meta">
-  <div><dt>status</dt><dd>research, registered analysis plan (self-timestamped)</dd></div>
+  <div><dt>status</dt><dd>research, pre-specified analysis (self-timestamped)</dd></div>
   <div><dt>registration</dt><dd>registered analysis plan: design committed at <code>b5f527a</code> on 2 October 2026, before any accident record was downloaded; years and power changed at <code>6bc5450</code> and the unit of analysis at <code>b545aa2</code>, both before any record was read; code at <code>b545aa2</code>; data step at <code>bce31e4</code>; results commit <code>a31ecdb</code>. Commit times are self-reported. Four changes after registration, listed under <a href="#changes">Changes</a>.</dd></div>
   <div><dt>data</dt><dd>Police of the Czech Republic, accident statistics, yearly record files 2016–2025, accessed 2 October 2026<sup class="cite"><a href="#r3">3</a></sup>; Natural Earth admin-1 regions, v5.1.2<sup class="cite"><a href="#r7">7</a></sup>. Archive hashes in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/dst-darkness-data.json">dst-darkness-data.json</a>; the region × date × hour cells in <a href="../assets/dst/cells.parquet">cells.parquet</a>.</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/dst">tools/dst/</a> at the commit that publishes this page; rebuild: <code>uv run --with pandas --with pyarrow --with pyfixest python tools/dst/estimate.py</code> (pyfixest {{pyfixest}})</dd></div>
@@ -172,6 +173,7 @@
 <section id="changelog" class="changelog">
 <h2>Change log</h2>
 <ul>
+<li>5 October 2026: work dates added. No number changed.</li>
 <li>3 October 2026, after a second review: withdrawn the reading that the event study fits a level shift at the change more than a steady drift; the series cannot tell the two apart. The single significant day is now said to be in the evening series. No number changed.</li>
 <li>3 October 2026, after an audit: the registered event study is now reported (fig. 3; the map becomes fig. 4) and the region map is listed as a fourth change; the sample size in fig. 2 is now the {{n_primary}} cells of the registered model, not the {{n_cells}} of the published file; pedestrian crashes in the windows are given as {{ped_records}} recorded, {{n_ped}} with a known hour; Prague sunset changed from 17:45 → 16:45 to 17:50 → 16:50; the group-trend interval is described as a {{gt_pct_lo}} % fall to an {{gt_pct_hi}} % rise, not "a doubling"; the 17:00 hour is quoted as {{h17_pre}} to {{h17_post}} a day; new figures: {{ev_dark_min}} and {{mo_light_min}} minutes of light lost and gained, the raw difference in differences of {{raw_did}}, the hour and year breakdown of the rise. Withdrawn: that the morning gains about as much light as the evening loses, and the busier-rush and tired-driver readings built on it; that mornings have fewer crashes to begin with; that the placebo shows "no effect"; that the clock change moves darkness and nothing else; that the darkness model is independent support; that crashes without a pedestrian show darkness is hardest on those drivers cannot see; that the excess crashes "would not have happened in the light"; that the risk window is the first two weeks of November. Weakened: the hour-of-darkness doubling is now a secondary model's extrapolation, and the headline now carries the original model's inconclusive {{gt}}.</li>
 <li>3 October 2026, version 1: first published.</li>

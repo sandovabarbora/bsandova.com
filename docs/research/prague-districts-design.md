@@ -1,11 +1,11 @@
 # One city, 57 budgets: research design (Part 3, extended)
 
-**Status: registered, version 2 (29 September 2026).** Revised after three referee reports on draft v1: public
+**Status: pre-specified analysis, version 2 (29 September 2026).** Revised after three referee reports on draft v1: public
 finance and political economy, statistics, and data audit (`docs/research/prague-districts-referees.md`). The
 response is item by item in §10.
 
-Registered **before any grant amount has been aggregated** by district, year or alignment, and before any model below
-has been estimated. At registration:
+Analysis plan committed at `683b0c8` on 29 September 2026, before this analysis was run; the author had worked with
+these data since May 2024; commit times are self-reported. At that commit:
 
 - every raw file listed in Appendix A had been downloaded and hashed (`docs/research/prague-districts-files.sha256`);
 - the grant lists had been parsed for **structure only** (`docs/research/prague-districts-grants-structure.json`);
@@ -15,6 +15,9 @@ has been estimated. At registration:
 Deviations will be listed, dated, under "Changes after registration".
 
 ## 0. What has already been seen
+
+The author has worked with these data since May 2024; the plan sets the analysis in advance; the author already knew the data. The
+items below are those recorded while preparing this design.
 
 ### 0.1 Part 3 as published (before the correction)
 
@@ -57,7 +60,7 @@ changed only the three-year means that had already been published.
 **What this reveals.** The referees found that district reports carry no 411x/42xx state items: all state money
 arrives through 4137/4251. So the new "transfers" column is, per district, the 2022–2024 three-year mean of actual
 4137 + 4251 (+ 4121/4122, if present) per resident. This is part of the *reality* half of the MONITOR secondary
-outcome. The `approved` half, and the individual years, remain unseen.
+outcome.
 
 ### 0.3 Seen by the referees (reported in their file, §0)
 
@@ -69,7 +72,7 @@ outcome. The `approved` half, and the individual years, remain unseen.
   up-switchers, 3 down, 32 never aligned, 5 always aligned. 15 of the 17 switched because the coalition changed.
 - **Public-finance referee:** the published income shares sum to 0.91–1.00 of total income.
 
-### 0.4 Seen by the author while preparing v1 and v2 (no outcome statistic computed)
+### 0.4 Seen by the author while preparing v1 and v2
 
 - **v1** (see the v1 file in git history):
   - MONITOR JSON structure;
@@ -94,7 +97,7 @@ outcome. The `approved` half, and the individual years, remain unseen.
     No district-level amount for 2025 was printed.
   - **Allocation tables** (annexes of each approved budget): sheet names, shapes, the number of cells naming a
     district, and the header "Kritéria: 30 % dle počtu obyvatel MČ, 10 % dle rozlohy MČ, 30 % dle počtu dětí MŠ a
-    žáků ZŠ…" for 2019–2023. No amount was read.
+    žáků ZŠ…" for 2019–2023. No amount was read in preparing this design.
   - **Grant-list structure:** row counts by section, layout, resolution type, ÚZ class and column header, and the
     coverage of resolution dating (§4.2). These are counts of rows, not of money.
 - **Coders.** Six coding agents (two blind coders × three groups of districts) reported that they saw, and did not
@@ -547,7 +550,7 @@ Items refer to `docs/research/prague-districts-referees.md`.
 - **§2.12 power.** Adopted and run (§6.2). The benchmark is registered (§2), and was corrected after the audit.
 - **§2.13 equivalence.** Adopted: TOST at ±20 % (§3).
 - **§2.14 literature.** Added. Volumes and pages checked against Crossref on 30 Sep 2026.
-- **§3, the Part 3 correction.** Done first, on its own branch, before any grant amount was touched. The figures it
+- **§3, the Part 3 correction.** Done first, on its own branch, before this analysis touched any grant amount. The figures it
   changed are recorded in §0.2.
 - **§4 framing.** Adopted (§9).
 
@@ -856,3 +859,5 @@ third to a half more", with Germany's sign depending on the bloc.
 - E1–E4.
 
 **3 October 2026 (audit).** Several notes in this file are dated 30 September 2026; the commits that carry them are of 29 September 2026, which is the correct date. The corrected-parser Lin concordance (0.795, reported above as disclosure only) is not in `prague-districts-bridge.json`, which keeps the registered 0.7246.
+
+**5 October 2026.** Wording only: statements that no amount was read or touched are scoped to this analysis and this design. The author had worked with these data for a long time before the plan was committed. The plan sets the analysis in advance; the author already knew the data. No number, estimate or result changed.

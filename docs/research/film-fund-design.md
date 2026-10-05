@@ -1,26 +1,30 @@
 # Czech film fund: what production support changes, and whether the Council's points foresee audiences — research design
 
-**Status: design committed 1 October 2026, before any application is linked to a release or to admissions.**
-Registration is self-timestamped. No OSF entry is made, by the author's decision of 1 October 2026. In the article this is a
-"registered analysis plan: design committed at `<hash>` on 1 October 2026, before the results commit; commit times
-are self-reported". Deviations are listed, dated, under "Changes after registration".
+**Status: analysis plan committed 1 October 2026, before this analysis was run. The author had worked with these
+data since July 2024; commit times are self-reported.** No OSF entry is made, by the author's decision of 1 October
+2026. In the article this is a "pre-specified analysis: analysis plan committed at `<hash>` on 1 October 2026, before
+this analysis was run and before the results commit; the author had worked with these data since July 2024; commit
+times are self-reported". Deviations are listed, dated, under "Changes after registration".
 
 ## 0. What has already been seen
 
+- The author has worked with these data since July 2024. The plan sets the analysis in advance; the author already
+  knew the data.
 - **Fund data (all of it seen).** 514 decision tables from the State Cinematography Fund (2014–2024) and the State
   Audiovisual Fund (2025–2026) have been downloaded. Their hashes are in `tools/data/film/manifest.csv`; the
   published hash list will be `docs/research/film-fund-files.sha256`. They were parsed into 6 026 applications in
-  261 calls (`tools/film/parse_tables.py`). For production calls these have been seen:
+  261 calls (`tools/film/parse_tables.py`). For production calls these were checked for this plan:
   - the distribution of points around each call's cut-off;
   - the funded share by year;
   - that the cut-off is sharp in all 77 production calls;
   - the counts near the cut-off (§5);
   - one full table: call 2026-A-2-1-3, feature fiction 2026, with titles, points and awards.
-- **Outcome sources (structure only).** I have checked which columns the UFD premiere lists (2000–2025) and the
-  UFD annual and monthly market tables contain. LUMIERE (European Audiovisual Observatory) was queried once, for
-  Czech-produced films of production year 2019, to see its format. That query showed the titles and admissions of
-  its first three rows (*Ženy v běhu*, *Poslední aristokratka*, *Přes prsty*). No application has been matched to
-  any outcome. No admissions figure has been compared with any score.
+- **Outcome sources (structure).** For this plan, the author checked which columns the UFD premiere lists
+  (2000–2025) and the UFD annual and monthly market tables contain. For this plan, LUMIERE (European Audiovisual
+  Observatory) was queried for Czech-produced films of production year 2019, to see its format. That query showed
+  the titles and admissions of its first three rows (*Ženy v běhu*, *Poslední aristokratka*, *Přes prsty*). When the
+  plan was committed, this analysis had not matched any application to an outcome or compared any admissions
+  figure with any score.
 - **Prior expectation.** The author expects funded projects to reach cinemas more often. She has no stated
   expectation about whether points foresee audiences.
 
@@ -52,7 +56,7 @@ Council knows about cast, producer and genre.
 - **Repeated applications.** A project that applied in several calls appears once per call. The primary analysis
   keeps its first application only; the sensitivity check keeps all of them, with errors clustered by project.
 
-## 3. Linking applications to films (fixed before any outcome is looked at)
+## 3. Linking applications to films (fixed before this analysis joined any outcome)
 
 Working titles change, and this is the main measurement risk. If funded projects were easier to trace, the
 estimate would be biased towards an effect.
@@ -141,7 +145,7 @@ estimate would be biased towards an effect.
   31 % of unfunded feature-length applications from 2016–2021 to a Czech release. A funded feature is expected to
   be released far more often than 51 %, so title changes are probably leaving many released films unmatched.
   Funded projects may be easier to trace, which would bias O1 towards an effect. No points-based estimate has been
-  computed; only this match rate by funding status has been seen.
+  computed in this analysis; in this analysis, only this match rate by funding status has been computed.
 - **Audit.**
   - Draw, with seed 20261002, 30 funded and 30 unfunded unmatched applications from the primary sample.
   - Shuffle them into one sheet that does not show funding or points.
@@ -169,3 +173,7 @@ decided blind before the funding key was opened.
   The gap is small and goes the way that would inflate an effect, so Q1 O1 is reported with the §6 bounds.
 - **Rule 4 (producer) runs as planned**, but Wikidata gives a production company for only 52 of the 999 LUMIERE
   films, so it can add little. This limitation is stated in the article.
+
+**5 October 2026 — wording only.** The status line and §0 now state that the author had worked with these data
+since July 2024, and statements about what had been looked at are scoped to this analysis. No rule, number or
+label changed.

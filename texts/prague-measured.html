@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Prague, measured · Barbora Šandová</title>
-<meta name="description" content="Prague, measured: five studies of Prague's City Assembly votes, the 2025 precinct vote, city grants to districts, new housing and the paid kerb, from public data, with the registration record, data and code of each part.">
+<meta name="description" content="Prague, measured: five studies of Prague's City Assembly votes, the 2025 precinct vote, city grants to districts, new housing and the paid kerb, from public data, with the analysis plan, data and code of each part.">
 <meta property="og:title" content="Prague, measured">
 <meta property="og:description" content="Five studies of one city: its assembly, its precinct vote, its district grants, its housing and its paid kerb, each with a written design, data and code.">
 <meta property="og:type" content="website">
@@ -80,6 +80,7 @@
 
 <dl class="meta">
   <div><dt>published</dt><dd>29 September 2026 · updated 3 October 2026 · <a href="#changelog">version 4</a></dd></div>
+  <div><dt>work since</dt><dd>May 2024</dd></div>
 </dl>
 <details class="meta-more">
   <summary>About this series</summary>
@@ -144,10 +145,10 @@
 </section>
 
 <section>
-<h2>How each part was registered</h2>
+<h2>How each part was pre-specified</h2>
 <p>Each part extends a short descriptive article from a written design that fixes the hypotheses, the test and decision rule for each, and the sentence reporting each result, and opens with what the author had already seen. Each design was revised once; the table gives that second version (v2). The series has one author, and there was no external peer review.</p>
-<p>Parts 1, 3, 4 and 5 have a registered analysis plan: the design was committed on the author's branch before the results, but commit times are self-reported and the branch was pushed after the analysis. In Part 2 design and results first appear in one commit, so its design is "not independently timestamped." Future studies will be registered on OSF before any outcome is observed.</p>
-<p>Within each part the confirmatory tests share a 5 % family-wise error rate, the chance of any false positive, through Holm's procedure, which tightens each test's threshold. Labels are registered: supported or not, by that threshold; inconclusive, a negligible effect could not be confirmed or ruled out; indeterminate, neither direction passed; uninformative, a check that the model sees an expected relationship failed; underpowered, only large effects were detectable. Everything decided after registration, including parser corrections made after the outcome was seen, is dated in each article.</p>
+<p>Parts 1, 3, 4 and 5 have a pre-specified analysis: the design was committed on the author's branch before the results, but commit times are self-reported and the branch was pushed after the analysis. The author had worked with these data since May 2024; the designs set the analysis in advance; the author already knew the data. In Part 2 design and results first appear in one commit, so its design is "not independently timestamped." Future studies will be registered on OSF before any outcome is observed.</p>
+<p>Within each part the confirmatory tests share a 5 % family-wise error rate, the chance of any false positive, through Holm's procedure, which tightens each test's threshold. Labels are fixed in each design: supported or not, by that threshold; inconclusive, a negligible effect could not be confirmed or ruled out; indeterminate, neither direction passed; uninformative, a check that the model sees an expected relationship failed; underpowered, only large effects were detectable. Everything decided after the design was committed, including parser corrections made after the outcome was seen, is dated in each article.</p>
 <div class="tw">
 <table class="ht">
 <thead><tr><th>Part</th><th>Design</th><th>Design v2 commit</th><th>Results commit</th><th>Branch, pushed</th></tr></thead>
@@ -183,6 +184,7 @@
 <section id="changelog" class="changelog">
 <h2>Change log</h2>
 <ul>
+<li>5 October 2026: work dates added; the wording on the analysis plan corrected to match them. No number changed.</li>
 <li>3 October 2026: version 4, after an audit. Part 4: the bootstrap 90 % interval of 8.7 to 12.6 months for the pipeline gap is withdrawn as understating the uncertainty; the blurb now says the sign is firm and the size could be from about 6 to over 30 months (housing_extended.json and Part 4), and the upper-quarter European rank is qualified: the census count includes reconstructions, and on new completions the region is mid-table. Part 5: the 1.6 % is now an upper bound only with respect to bay marking, with 1.0 % if half the parallel bays are painted (e1.json) and about 1.9 % with a gap proportional to length (Part 5), and the figures of 2 800 and 168 400 stalls are dropped, since 1.6 % of 168 400 is not 2 800. Part 3: the −37 % (95 % CI −115 to +21 %), on a scale that can pass −100 %, is replaced by the per-resident estimate, −2 800 crowns a year (95 % CI −8 800 to +1 800, districts_extended_robust.json), and the blurb says the negative sign rests on the 2023 change and turns positive without one party's districts. Part 2: the 43 % is the share of the 2025 gradient, with the direction of its error unknown, and about half with age added; the steepening is in matched precincts and may partly reflect who moved in; the 26 % and 16 % precincts are described by their actual cut-offs. Part 1: the roll calls are qualified as final votes, 55–67 % of those taken, and the descriptive figures for ANO (95 % and 59 %) are left to Part 1. In the registration table the Part 3 design commit time changed from 01:19 to 01:07 so that every row gives author time. The cite-as line said version 2. The short version now gives each part's result; the labels, Holm's procedure and design v2 are explained, rings_extended.json is listed for Part 2 and more sources are named. No result changed.</li>
 <li>3 October 2026: after a reader's review, the Part 5 summary now says that H2b is a test against 6 cm and its interval does not exclude no growth. No number changed.</li>
 <li>29 September 2026: version 1 published as the series hub.</li>

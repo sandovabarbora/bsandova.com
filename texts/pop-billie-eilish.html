@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Billie Eilish, measured: two long hits, five years apart</title>
-<meta name="description" content="Pop, measured, part 5. A registered descriptive study of Billie Eilish on Spotify's charts and on tour: BIRDS OF A FEATHER against every global number one since 2017, 71 national charts, 118 Boxscore entries and ticket prices in days of local income.">
+<meta name="description" content="Pop, measured, part 5. A pre-specified descriptive study of Billie Eilish on Spotify's charts and on tour: BIRDS OF A FEATHER against every global number one since 2017, 71 national charts, 118 Boxscore entries and ticket prices in days of local income.">
 <meta property="og:title" content="Billie Eilish, measured: two long hits, five years apart">
 <meta property="og:description" content="BIRDS OF A FEATHER and bad guy each outlasted about five in six number ones; at her one show in the Philippines a ticket cost 15.3 days of GDP per capita, in Prague 1.2.">
 <meta property="og:type" content="article">
@@ -36,7 +36,7 @@
 <header class="text-head">
   <p class="kicker">Research · Pop, measured, part 5 · Billie Eilish, 2017–2026</p>
   <h1>Billie Eilish, measured: <em>two long hits, five years apart</em></h1>
-  <p class="deck">Descriptive and registered: <i>BIRDS OF A FEATHER</i> and <i>bad guy</i> each outlasted about five in six global number ones since 2017; her shows sold out, and at her one show in the Philippines a ticket cost 15.3 days of GDP per capita.</p>
+  <p class="deck">Descriptive and pre-specified: <i>BIRDS OF A FEATHER</i> and <i>bad guy</i> each outlasted about five in six global number ones since 2017; her shows sold out, and at her one show in the Philippines a ticket cost 15.3 days of GDP per capita.</p>
   <dl class="facts">
     <div><dt>global number ones that lasted longer than <i>BIRDS OF A FEATHER</i></dt><dd>16.4 % <small>95 % CI 10.6 % to 22.9 % · still charting, so at most</small></dd></div>
     <div><dt><i>BIRDS OF A FEATHER</i> in Czechia, against the Czech median number one</dt><dd>1.7× <small>95 % CI 1.4–2.0 · 38th of 71</small></dd></div>
@@ -56,12 +56,13 @@
 </details>
 <dl class="meta">
   <div><dt>published</dt><dd>2 October 2026 · updated 3 October 2026 · <a href="#changelog">version 2</a></dd></div>
+  <div><dt>work since</dt><dd>March 2026</dd></div>
 </dl>
 <details class="meta-more">
   <summary>About this study</summary>
 <dl class="meta">
-  <div><dt>status</dt><dd>research, registered analysis plan (self-timestamped); every result descriptive</dd></div>
-  <div><dt>registration</dt><dd>registered analysis plan: the series design was committed at <code>e890c27</code> and <code>12417ae</code> on 1 October 2026, before any data of this part were parsed. Commit times are self-reported. The data definitions added after the results of parts 2–5 were first computed do not affect this part (see <a href="#changes">What changed after registration</a>).</dd></div>
+  <div><dt>status</dt><dd>research, pre-specified analysis (self-timestamped); every result descriptive</dd></div>
+  <div><dt>registration</dt><dd>pre-specified analysis: the series analysis plan was committed at <code>e890c27</code> and <code>12417ae</code> on 1 October 2026, before this analysis was run; the author had worked with these data since March 2026. Commit times are self-reported. The data definitions added after the results of parts 2–5 were first computed do not affect this part (see <a href="#changes">What changed after registration</a>).</dd></div>
   <div><dt>data</dt><dd>kworb.net Spotify chart totals for the global chart and 75 national charts, accessed 1 October 2026<sup class="cite"><a href="#r5">5</a></sup>; Wikipedia tour articles at revisions 1354139106, 1368347831 and 1376116789, Boxscore figures as cited there<sup class="cite"><a href="#r6">6</a></sup>; World Bank GDP per capita<sup class="cite"><a href="#r7">7</a></sup>. Hashes in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/pop-measured-files.sha256">pop-measured-files.sha256</a>; the study's rows in <a href="../assets/pop/billie-eilish/ones.csv">ones.csv</a>, <a href="../assets/pop/billie-eilish/countries.csv">countries.csv</a>, <a href="../assets/pop/billie-eilish/songs.csv">songs.csv</a> and <a href="../assets/pop/billie-eilish/tour.csv">tour.csv</a>.</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/pop">tools/pop/</a> at the commit that publishes this page; rebuild: <code>uv run --with numpy python tools/pop/analyse.py billie-eilish</code> (full order under <a href="#reproduction">Reproduction</a>)</dd></div>
   <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Billie Eilish, measured: two long hits, five years apart</i>. bsandova.com/texts/pop-billie-eilish, version 2.</dd></div>
@@ -83,7 +84,7 @@
 
 <section>
 <h2>How this was done</h2>
-<p>The methods are those of the series, fixed before any data of this part were parsed. How long a song lasted is its total days in the global Top 200; songs still in the chart are treated as unfinished by the Kaplan–Meier estimator<sup class="cite"><a href="#r8">8</a></sup>, and a song's place is the share of number ones estimated to last longer, with a 95 % interval from 2 000 bootstrap resamples: the calculation repeated on 2 000 random redraws of the songs, to see how much it moves. For countries, the focal song's days in each national chart are divided by the median days of that country's own number ones; where the song is still in the chart the ratio is a lower bound. Runs are compared with the share of tickets sold by Spearman's correlation, which says whether entries with more nights tend to sell a higher or lower share, from −1 to 1, under the rule set in advance that if nine entries in ten sold out, the data show demand at or above capacity and the correlation is not read. Ticket prices are gross divided by tickets sold, then divided by a day of the host country's GDP per capita. All results are descriptive.</p>
+<p>The methods are those of the series, fixed on 1 October 2026, before this analysis was run; the author had worked with these data since March 2026. How long a song lasted is its total days in the global Top 200; songs still in the chart are treated as unfinished by the Kaplan–Meier estimator<sup class="cite"><a href="#r8">8</a></sup>, and a song's place is the share of number ones estimated to last longer, with a 95 % interval from 2 000 bootstrap resamples: the calculation repeated on 2 000 random redraws of the songs, to see how much it moves. For countries, the focal song's days in each national chart are divided by the median days of that country's own number ones; where the song is still in the chart the ratio is a lower bound. Runs are compared with the share of tickets sold by Spearman's correlation, which says whether entries with more nights tend to sell a higher or lower share, from −1 to 1, under the rule set in advance that if nine entries in ten sold out, the data show demand at or above capacity and the correlation is not read. Ticket prices are gross divided by tickets sold, then divided by a day of the host country's GDP per capita. All results are descriptive.</p>
 </section>
 
 <section>
@@ -179,6 +180,7 @@
 <section id="changelog" class="changelog">
 <h2>Change log</h2>
 <ul>
+<li>5 October 2026: work dates added; the wording on the analysis plan corrected to match them. No number changed.</li>
 <li>3 October 2026, version 2, after an audit: the share of number ones still in the chart at two years corrected from 25 % to 26 % (the curve was read at the wrong step); the national charts from 76 to 75 (the global chart had been counted among them); the countries one day behind Australia by days alone corrected from two to seven; the price range in dollars relabelled as a range of country averages (Thailand's 160 dollars is a country average, not the dearest ticket). Withdrawn or weakened: the reading of the correlation between run length and share sold (0.21), which the registered rule says is reported and not read; that Czech listening keeps English-language hits and lets other languages pass quickly (five songs cannot show it); that she is the artist whose staying power is least tied to one release; that her shorter number ones behaved like typical ones; that a handful of songs, from every album, carry most of her listening (half comes from 14 songs); that she moved from halls to arenas; that the ticket in the Philippines was the same arena ticket or a share of the average income (it is one show, measured against GDP per capita); that she lasted less than the local median in Mexico (its interval reaches 1); that her music lingers where local charts turn over fast. Added: the days-alone ranking labelled as added after the results; that the Philippines and Thailand figures each rest on one show; that the gross mixes seat prices and fees at the reported exchange rate; why two entries are missing from the ticket figures; plain explanations of the bootstrap, Spearman's correlation, Gini coefficient, Boxscore and the 2017 cut-off. Japan's median number one given as 678.5 days rather than 678 (medians of an even count are no longer rounded), and the count of countries where she lasted less than the local median given (15 of 71), with Nigeria named among them. References renumbered in order of first citation, and each tour revision linked.</li>
 <li>2 October 2026, version 1: first published.</li>
 <li>Checked against editorial standard v1 on 2 October 2026.</li>

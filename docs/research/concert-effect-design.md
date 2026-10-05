@@ -1,18 +1,19 @@
 # Does a concert move the charts? Harry Styles: Live on Tour, 2017–2018 — research design
 
-**Status: design committed 2 October 2026, before the chart data were downloaded or opened.** Registration is
-self-timestamped, as for the film fund study and Pop, measured. In the article this is a "registered analysis
-plan: design committed at `<hash>` on 2 October 2026, before the results commit; commit times are self-reported".
+**Status: analysis plan committed 2 October 2026, before this analysis was run; the author had worked with these data
+since March 2026.** Registration is
+self-timestamped, as for the film fund study and Pop, measured. In the article this is a "pre-specified
+analysis: analysis plan committed at `<hash>` on 2 October 2026, before this analysis was run; commit times are
+self-reported".
 Deviations are listed, dated, under "Changes after registration".
 
 ## 0. What has already been seen
 
 - **Tour schedule.** The Wikipedia article *Harry Styles: Live on Tour* (revision 1342196247) was parsed for Pop,
   measured, part 1: 74 Boxscore entries in 24 countries (England and Scotland counted as the United Kingdom), their
-  dates, venues, tickets sold and gross. Their sell-through and ticket prices were seen. No streaming figure for any
-  date before 2026 was seen.
-- **Chart data.** Only the dataset's metadata was read (title, size 3.48 GB, licence ODbL for the database, last
-  updated 9 February 2022, description: Spotify's daily Top 200 and Viral 50 for every region, 2017–2021).
+  dates, venues, tickets sold and gross. Their sell-through and ticket prices were seen.
+- **Chart data.** The author has worked with these data since March 2026; the plan fixes the analysis, not
+  ignorance of the data.
 - **Pop, measured, part 1.** Its kworb.net totals (days in the chart up to 2026) were seen; they contain no daily
   series and no date-level figure.
 - **Prior expectation.** The author expects a concert to raise an artist's streams in the host country for a few

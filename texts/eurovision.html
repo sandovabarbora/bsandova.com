@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Eurovision, not Brussels? Diaspora, juries and the EU in Eurovision votes, 1975–2025</title>
-<meta name="description" content="A registered study of Eurovision votes: where a performer's diaspora is large, the public favours it over the jury about 1.98 times as much as where there is none; joining the EU earns a country no extra points.">
+<meta name="description" content="A pre-specified analysis of Eurovision votes: where a performer's diaspora is large, the public favours it over the jury about 1.98 times as much as where there is none; joining the EU earns a country no extra points.">
 <meta property="og:title" content="Eurovision, not Brussels? Diaspora, juries and the EU in Eurovision votes">
 <meta property="og:description" content="Where a performer's diaspora is large, the televote favours it over the jury about 1.98 times as much as where there is none; neighbours and a shared language show no clear difference between the two, and joining the EU earns no extra points.">
 <meta property="og:type" content="article">
@@ -37,7 +37,7 @@
 <header class="text-head">
   <p class="kicker">Research · pop music · Eurovision, 1975–2025</p>
   <h1>Eurovision, not Brussels? <em>Diaspora, juries and the EU in Eurovision votes</em></h1>
-  <p class="deck">A registered study of how Europe votes for its songs. Where a performer's diaspora is large, the public's points relative to the jury's are about 1.98 times what they are where there is none. Neighbours and a shared language show no clear difference between public and jury. Joining the European Union earns a country no extra points; the registered estimate is a small fall, and inconclusive.</p>
+  <p class="deck">A pre-specified analysis of how Europe votes for its songs. Where a performer's diaspora is large, the public's points relative to the jury's are about 1.98 times what they are where there is none. Neighbours and a shared language show no clear difference between public and jury. Joining the European Union earns a country no extra points; the registered estimate is a small fall, and inconclusive.</p>
   <dl class="facts">
     <div><dt>televote over jury, large diaspora against none</dt><dd>×1.98 <small>at 5.4 migrants per 1 000 inhabitants · 95 % confidence interval 1.70 to 2.30 · supported</small></dd></div>
     <div><dt>neighbours, televote over jury</dt><dd>×0.98 <small>95 % CI 0.81 to 1.18 · no clear difference · check, not registered</small></dd></div>
@@ -52,17 +52,18 @@
     <li>Where many people from the performing country live, the public favours that song over the jury about twice as much as where none do. Where almost nobody does, the public gives less than the jury.</li>
     <li>Neighbours and countries sharing a language favour each other too, and we found no clear difference between how the public and the jury do so, though that check is imprecise. Of the things tested, diaspora is the one the public clearly brings and the jury does not.</li>
     <li>Two countries both being in the EU does not make them give each other more points. The registered estimate is a small fall, inconclusive under the registered rule, and most of it comes from the 2004 enlargement.</li>
-    <li>Based on a registered analysis of 9 contests (2016–2025) and 45 countries, comparing each country's jury and public on the same song. It is an association: migrant numbers may partly stand for how familiar the wider public is with a country, not only for migrants voting.</li>
+    <li>Based on a pre-specified analysis of 9 contests (2016–2025) and 45 countries, comparing each country's jury and public on the same song. It is an association: migrant numbers may partly stand for how familiar the wider public is with a country, not only for migrants voting.</li>
   </ul>
 </details>
 <dl class="meta">
   <div><dt>published</dt><dd>3 October 2026 · updated 3 October 2026 · <a href="#changelog">version 2</a></dd></div>
+  <div><dt>work since</dt><dd>April 2025</dd></div>
 </dl>
 <details class="meta-more">
   <summary>About this study</summary>
 <dl class="meta">
-  <div><dt>status</dt><dd>research, registered analysis plan (self-timestamped)</dd></div>
-  <div><dt>registration</dt><dd>registered analysis plan: design committed at <code>f304d8c</code> on 3 October 2026, before any vote was downloaded; power at <code>ba65ce5</code>; code at <code>00e8e38</code>; data step at <code>c5ff4c8</code>; a change of fixed effects at <code>d9abe43</code>, before any estimate was seen; results commit <code>70f75a9</code>. Commit times are self-reported. Several changes after registration, listed under <a href="#changes">Changes</a>.</dd></div>
+  <div><dt>status</dt><dd>research, pre-specified analysis (self-timestamped)</dd></div>
+  <div><dt>registration</dt><dd>pre-specified analysis: design committed at <code>f304d8c</code> on 3 October 2026, before this analysis was run; the author had worked with these data since April 2025; power at <code>ba65ce5</code>; code at <code>00e8e38</code>; data step at <code>c5ff4c8</code>; a change of fixed effects at <code>d9abe43</code>, before any estimate was seen; results commit <code>70f75a9</code>. Commit times are self-reported. Several changes after registration, listed under <a href="#changes">Changes</a>.</dd></div>
   <div><dt>data</dt><dd>Eurovision votes 1975–2023 (Spijkervet)<sup class="cite"><a href="#r3">3</a></sup>, 2016–2022 cross-checked against Mirovision<sup class="cite"><a href="#r4">4</a></sup>; 2024–2025 from Wikipedia<sup class="cite"><a href="#r5">5</a></sup>; UN DESA migrant stock<sup class="cite"><a href="#r6">6</a></sup>; World Bank population<sup class="cite"><a href="#r7">7</a></sup>; UNHCR<sup class="cite"><a href="#r8">8</a></sup>; CEPII<sup class="cite"><a href="#r9">9</a></sup>. Hashes in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/eurovision-data.json">eurovision-data.json</a>; per-pair averages in <a href="../assets/eurovision/pairs.csv">pairs.csv</a>.</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/eurovision">tools/eurovision/</a> at the commit that publishes this page; rebuild: <code>uv run --with pandas --with pyarrow --with pyfixest python tools/eurovision/estimate.py</code> (pyfixest 0.60.0)</dd></div>
   <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Eurovision, not Brussels? Diaspora, juries and the EU in Eurovision votes, 1975–2025</i>. bsandova.com/texts/eurovision, version 2.</dd></div>
@@ -97,7 +98,7 @@
 
 <section>
 <h2>How this was done</h2>
-<p>The design, the hypotheses and the rule for reading each result were committed before any vote was downloaded, and the power was simulated from the contest's structure alone. The registration is self-timestamped: commits are recorded by the author's machine and pushed to a public repository, so they show the order of steps, not an independent seal. This study needed more changes after registration than the earlier ones; each is dated and listed at the end, and none was made after its result was seen.</p>
+<p>The design, the hypotheses and the rule for reading each result were committed at <code>f304d8c</code> on 3 October 2026, before this analysis was run; the author had worked with these data since April 2025. The power was simulated from the contest's structure alone. The registration is self-timestamped: commits are recorded by the author's machine and pushed to a public repository, so they show the order of steps, not an independent seal. This study needed more changes after registration than the earlier ones; each is dated and listed at the end, and none was made after its result was seen.</p>
 <p>The model for diaspora compares the two audiences of the same voting country for the same song. Each row is a voting country, a performer, a contest round and an audience, with the points given (zero for most). A Poisson regression, estimated by pseudo-maximum likelihood, which handles counts with many zeros<sup class="cite"><a href="#r10">10</a></sup>, includes three sets of fixed effects: separate baselines, so that only differences within each one count. One for every voting country, round and audience absorbs how generous each audience is. One for every performer, round and audience absorbs how much each audience liked each song. One for every pair of countries in every round absorbs everything about the pair in that contest that both audiences share: neighbours, language, history, a song sung in the voter's language. What remains is how the televote's points to a performer differ from the jury's, and the estimate is how that difference grows with the diaspora. Standard errors are clustered by pair of countries, which allows the votes within a pair to be correlated.</p>
 <p>The rule was set in advance. Let the ratio be the televote's points relative to the jury's for a pair at the 90th percentile of diaspora, 5.4 per 1 000, against the same ratio for a pair with none: a ratio of two ratios, saying how much more the public favours a performer over the jury where its diaspora is large. The hypothesis is "supported" if the ratio's 95 % confidence interval (the range the true value plausibly lies in) lies wholly above 1, "not supported" if the ratio's interval lies within 0.90 to 1.10, and "inconclusive" otherwise.</p>
 </section>
@@ -147,7 +148,7 @@
 
 <section id="changes">
 <h2>Changes after registration</h2>
-<p>All are dated in the design file. Before any vote was read: the Mirovision files end in 2022, so split votes for 2016–2023 come from Spijkervet, with Mirovision as a check, and the juror check covers 2016–2022. During the data step: the Wikipedia parser's header detection was made robust; country names in one source were mapped to codes; the rest-of-the-world vote was dropped from the EU test; pairs without a UN figure were dropped as registered, and a check counting them as zero was added. Before any estimate was seen: the registered pair fixed effects did not converge, so pair × contest effects, which contain them, were used. After the first estimates: a software problem in the two-stage estimator was worked around by dropping rows it cannot use, and the registered EU checks and the Brexit comparison, missing from the first code, were added, the EU checks with a stricter filter for usable rows than the main estimate; the check by audience for the EU test cannot be run, because no country joined between 2016 and 2025.</p>
+<p>All are dated in the design file. Before the data step: the Mirovision files end in 2022, so split votes for 2016–2023 come from Spijkervet, with Mirovision as a check, and the juror check covers 2016–2022. During the data step: the Wikipedia parser's header detection was made robust; country names in one source were mapped to codes; the rest-of-the-world vote was dropped from the EU test; pairs without a UN figure were dropped as registered, and a check counting them as zero was added. Before any estimate was seen: the registered pair fixed effects did not converge, so pair × contest effects, which contain them, were used. After the first estimates: a software problem in the two-stage estimator was worked around by dropping rows it cannot use, and the registered EU checks and the Brexit comparison, missing from the first code, were added, the EU checks with a stricter filter for usable rows than the main estimate; the check by audience for the EU test cannot be run, because no country joined between 2016 and 2025.</p>
 </section>
 
 <section id="reproduction">
@@ -185,6 +186,7 @@
 <section id="changelog" class="changelog">
 <h2>Change log</h2>
 <ul>
+<li>5 October 2026: work dates added; the wording on the analysis plan corrected to match them. No number changed.</li>
 <li>3 October 2026, version 2: corrected after an audit. The diaspora ratio is now described as what it is, the public's favour over the jury where diaspora is large against where there is none, not "1.98 times the jury's points"; the EU result no longer reads as "no change at all" or "nothing" without the 2004 cohort, and its pre-accession estimates (+1.14 and −0.87 percentage points) are reported; "almost all of the fall" is now about 65 %; neighbours and language now read "no clear difference" rather than "no difference", and their intervals are said to allow differences of up to about 20 %; the claims that free movement reaches the scoreboard, that diaspora is the largest thing a public adds, that the 2022 ceiling explains the Ukraine result and that leaving the EU cost no points were withdrawn or weakened; 11 316 rows are now said to come from 5 658 pair-rounds, not 11 316; the descriptive figures are given to two decimals (6.0, 3.1, +2.8, 1.4, 2.2, −0.8 now 5.98, 3.13, +2.85, 1.45, 2.20, −0.75); the dataset DOI, the juror-check window, the CEPII coding and the directed pair count were corrected or disclosed. No estimate changed.</li>
 <li>3 October 2026, version 1: first published.</li>
 <li>Checked against editorial standard v1 on 3 October 2026.</li>

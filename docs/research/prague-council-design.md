@@ -1,11 +1,12 @@
 # Prague's council: research design (Part 1, extended)
 
-**Status: registered (v2, after review)** by three referees (legislative studies, statistics, data audit). Written before any
-vote-outcome statistic beyond §0 was computed. The roll-call files of the four terms have been inspected for
-structure only: columns, identifiers, dates, seat coverage, value vocabularies and official totals. Term-level value
-counts were also inspected, as far as Part 1 had already published them.
+**Status: pre-specified analysis (v2, after review)** by three referees (legislative studies, statistics, data audit).
+Committed at 3830f59 on 28 September 2026, before this analysis was run; the author had worked with these data since
+May 2024; commit times are self-reported.
 
 ## 0. What has already been seen
+
+The author has worked with these data since May 2024. The plan sets the analysis in advance; the author already knew the data.
 
 **Published in Part 1 for 2022–26:**
 
@@ -41,15 +42,6 @@ The official totals (`pocetzdrzel`) show the same fall. No evidence was found th
 - no empty cell falls inside a seat period;
 - official and cell totals differ only by the seats that have no column.
 
-**Not yet seen:**
-
-- anything within councillors across terms;
-- the fall below term level in time;
-- any scaling of votes;
-- anything by item subject;
-- club positions before 2022;
-- anything by coalition status.
-
 **Structure:**
 
 - **Councillors.** 199 people; 62 in two or more terms. Consecutive-term transitions: 22 (2010→2014), 20 (2014→2018) and 34 (2018→2022). Only 3 people sat in both 2010–14 and 2022–26.
@@ -69,7 +61,7 @@ The official totals (`pocetzdrzel`) show the same fall. No evidence was found th
   right?
 - **RQ4 (what the opposition opposes).** Is opposition non-support higher on land-use planning and property than on
   grants?
-- **RQ5 (exploratory, pre-registered).** Does a list that moves between coalition and opposition change how it votes?
+- **RQ5 (exploratory, pre-specified).** Does a list that moves between coalition and opposition change how it votes?
 
 **Terms.**
 
@@ -161,7 +153,7 @@ of the votes held (§6).
   - **Data rule.** If planning, property or grants appears in fewer than 8 sittings, H4 gets p = 1.
   - **Outside the family:** every category's coefficient; the same model for coalition councillors; the
     difference-in-differences across categories.
-- **RQ5 (exploratory, pre-registered).**
+- **RQ5 (exploratory, pre-specified).**
   - **Unit.** List × coalition period.
   - **Measures.** Yes share and against rate for lists that change status (Praha sobě 2018→2022; ANO, ODS and
     TOP 09 across terms, and within terms where Appendix A dates it), against lists that do not.
@@ -346,3 +338,5 @@ All three H4 categories exceed the 8-sitting rule. The weights for θ are n_plan
   - H1 on passed votes only;
   - H1 without the 2010→2014 transition;
   - H1 on stayers only.
+
+5 October 2026: status and §0 reworded; the author had worked with these data since May 2024.

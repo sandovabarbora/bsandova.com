@@ -1,17 +1,16 @@
 # Did the Eras Tour show up in Europe's prices? Accommodation and restaurant inflation, 2023–2025 — research design
 
-**Status: design committed 2 October 2026, before any price index value was downloaded or read.** Registration is
+**Status: analysis plan committed 2 October 2026, before this analysis was run; the author had worked with these
+data since March 2026.** Registration is
 self-timestamped, as for the other studies on bsandova.com. Deviations are listed, dated, under "Changes after
 registration".
 
 ## 0. What has already been seen
 
 - **Tour schedule.** The Wikipedia article *The Eras Tour* (revision 1376835990), collected for Pop, measured, was
-  parsed for its 2024 show dates by country. Its Boxscore figures were seen only as structure (50 attendance
-  cells); no Taylor Swift result of Pop, measured has been computed.
-- **Eurostat.** One request to the HICP monthly index (`prc_hicp_midx`, COICOP CP112, unit I15) for Sweden and
-  Austria, January–February 2023, was made to check the format; it returned four values, which were not printed or
-  read. A second request read only the dataset's latest month (December 2025) for Czechia, not its value.
+  parsed for its 2024 show dates by country. Its Boxscore figures (50 attendance cells) were seen; no Taylor Swift result of Pop, measured has been computed.
+- **Eurostat.** The author has worked with these data since March 2026; the plan fixes the analysis, not ignorance
+  of the data.
 - **Prior knowledge.** In June 2023 Swedish economists attributed part of May 2023's rise in Swedish hotel prices to
   Beyoncé's concerts in Stockholm; that episode is outside this design's window and not tested here.
 - **Prior expectation.** The author expects accommodation prices to rise in a show month; no expectation for

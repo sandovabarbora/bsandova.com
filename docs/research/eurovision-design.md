@@ -1,17 +1,17 @@
 # Eurovision, not Brussels? Diaspora, juries and the EU in Eurovision votes — research design
 
-**Status: design committed 3 October 2026, before any vote, migrant-stock or refugee figure was downloaded or
-opened.** Registration is self-timestamped, as for the other studies: design → power → code → data → results, each in
-a dated commit. In the article: "registered analysis plan: design committed at `<hash>` on 3 October 2026, before the
-data commit; commit times are self-reported". Deviations are listed, dated, under "Changes after registration".
+**Status: design committed 3 October 2026, before this analysis was run; the author has worked with these data since
+April 2025.** Registration is self-timestamped, as for the other studies: design → power → code → data → results, each in
+a dated commit. In the article: "pre-specified analysis: design committed at `<hash>` on 3 October 2026, before this
+analysis was run; the author had worked with these data since April 2025; commit times are self-reported". Deviations are listed, dated, under "Changes after registration".
 
 ## 0. What has already been seen
 
-- **Votes.** The Eurovision Song Contest dataset by Spijkervet (GitHub, releases to 2023) [D1]: its README, the
-  release list and the description of `votes.csv` (year, round, from, to, points). The Mirovision repository by
-  Burgoyne, Spijkervet and Baker (MIT) [D2]: its file list and the header lines of `data/CSV/votes.csv` (year, round,
-  from_country, to_country, total_points, televoting_points, jury_points) and `jurors.csv` (year, round,
-  from_country, jurors A–E, to_country). No row was read.
+- **Votes.** The author has worked with these data since April 2025. The plan sets the analysis in advance; the author
+  already knew the data. Sources: the Eurovision Song Contest dataset by Spijkervet (GitHub, releases to 2023) [D1], with
+  `votes.csv` (year, round, from, to, points), and the Mirovision repository by Burgoyne, Spijkervet and Baker (MIT)
+  [D2], with `data/CSV/votes.csv` (year, round, from_country, to_country, total_points, televoting_points,
+  jury_points) and `jurors.csv` (year, round, from_country, jurors A–E, to_country).
 - **Rules, as general knowledge.** Since 2016 each country gives two sets of points, one from a five-member jury and
   one from its televote; since 2023 the semi-finals are decided by televote only, and a "rest of the world" online
   vote exists. These are checked against the data at the data step.
@@ -135,13 +135,13 @@ table of the largest diaspora dyads. Data, code and the per-cell tables publishe
 
 ## Changes after registration
 
-**3 October 2026 (power; before any vote was read).** Power was simulated as §7 promised.
+**3 October 2026 (power; before this analysis read any vote).** Power was simulated as §7 promised.
 
 - **H1** (`tools/eurovision/power.py`; structure from the rules, diaspora distribution assumed): with nine contests
   the registered model detects a televote premium of R = 1.18 at the 90th percentile of x with power about 1.00, and
   R = 1.09 with power 0.63; with no effect it rejects in 7 % of draws (nominal 5 %).
 - **H3** (`tools/eurovision/power_h3.py`): participation by country and year was taken from Spijkervet's
-  `contestants.csv`, reading only its `year` and `to_country` columns (its points columns were not read). With a
+  `contestants.csv`, reading only its `year` and `to_country` columns (its points columns were not used for the power calculation). With a
   simplified final-only structure, the standard error of the 0 … +5 average is about 0.0016 in share of points,
   about 4 % of the pre-accession mean (≈ 0.04); the minimum detectable effect at 80 % power is about 12 % of that
   mean. With no effect the simulated test rejects in 10 % of draws and the mean estimate is −3 % of the mean, because
@@ -150,8 +150,9 @@ table of the largest diaspora dyads. Data, code and the per-cell tables publishe
 
 Nothing in §1–§6 changes.
 
-**3 October 2026 (sources; files downloaded, only headers, round labels and country codes read).** All inputs were
-downloaded and hashed (`tools/eurovision/collect.py`, `tools/data/eurovision/manifest.json`). Read so far: the
+**3 October 2026 (sources; files downloaded for this analysis, which so far read only headers, round labels and country
+codes).** All inputs were downloaded and hashed (`tools/eurovision/collect.py`, `tools/data/eurovision/manifest.json`).
+Read so far by this analysis: the
 header lines, the distinct round labels and voter codes of the vote files, the Mirovision country list, the header
 rows of the UN DESA workbook (and its world-total row, which appears above the headers), the CEPII column names, the
 UNHCR and World Bank JSON keys, and the captions and header layout of the Wikipedia tables with digits masked.
@@ -202,3 +203,7 @@ registered code; they were added after the first H1–H3 estimates had been prin
 stricter filter (pairs and years with at least two untreated rows) needed for `did2s` on the subsets. (3) The
 registered check "H3 with juries only and televotes only, 2016–2025" cannot be estimated: no country joined the EU
 between 2016 and 2025 (the last accession was Croatia's in 2013), so there is no treated change in that window.
+
+**5 October 2026 (wording).** Work dates added: the author has worked with these data since April 2025. Notes that
+read as if the votes had not been seen before the design are scoped to this analysis. No number, estimate, label or
+reference changed.

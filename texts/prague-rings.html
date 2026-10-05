@@ -76,12 +76,13 @@
 </details>
 <dl class="meta">
   <div><dt>published</dt><dd>28 September 2026 · updated 3 October 2026 · <a href="#changelog">version 2</a></dd></div>
+  <div><dt>work since</dt><dd>May 2024</dd></div>
 </dl>
 <details class="meta-more">
   <summary>About this study</summary>
 <dl class="meta">
-  <div><dt>status</dt><dd>research, design written before modelling (not independently timestamped)</dd></div>
-  <div><dt>registration</dt><dd>design written before modelling; not independently timestamped (<a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-rings-design.md">design file</a>)</dd></div>
+  <div><dt>status</dt><dd>research, pre-specified analysis</dd></div>
+  <div><dt>registration</dt><dd>design written before modelling; not independently timestamped; the author had worked with Prague's precinct and housing data since May 2024 (<a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-rings-design.md">design file</a>)</dd></div>
   <div><dt>data</dt><dd>ČSÚ election open data 2017, 2021, 2025 and Census 2021 1 km grid, accessed 28 September 2026; ČÚZK RÚIAN, accessed 28 September 2026; PID GTFS, snapshot of 28 September 2026; <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-rings-files.sha256">SHA-256 list</a></dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/praha">tools/praha/</a>, results commit 1283162; rebuild: the scripts under <a href="#reproduction">Reproduction</a>, in order; the tests are <code>python tools/praha/rings_extended.py</code>, run with the <code>uv</code> command in its header</dd></div>
   <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Housing estates and the 2025 vote in Prague's precincts</i>. bsandova.com/texts/prague-rings, version 2. · archive: <a href="https://doi.org/10.5281/zenodo.23040133">doi:10.5281/zenodo.23040133</a> · <a href="../assets/pdf/prague-rings.pdf">PDF</a></dd></div>
@@ -116,7 +117,7 @@
 
 <section>
 <h2>How this was done</h2>
-<p>The design fixes the questions, the hypotheses, the one test for each, the decision rules and fourteen robustness checks<sup class="cite"><a href="#r12">12</a></sup>. It was written and reviewed before modelling, but it first appears in the repository in the same commit as the results, so its timing is not independently timestamped. When it was written, the 2025 estimates above were known, and so were the column headers and marginal totals of the census grid; no census count or earlier election had been joined to a precinct. Because the 2025 estimates were known, the metro hypothesis is framed as a test of whether the absence of a measurable effect in 2025 holds up as a negligible effect. Everything that changed afterwards is listed <a href="#changes">below</a>.</p>
+<p>The design fixes the questions, the hypotheses, the one test for each, the decision rules and fourteen robustness checks<sup class="cite"><a href="#r12">12</a></sup>. It was written and reviewed before modelling, but it first appears in the repository in the same commit as the results, so its timing is not independently timestamped. When it was written, the 2025 estimates above were known, and the author had worked with Prague's precinct and housing data since May 2024. The plan sets the analysis in advance; the author already knew the data. Because the 2025 estimates were known, the metro hypothesis is framed as a test of whether the absence of a measurable effect in 2025 holds up as a negligible effect. Everything that changed afterwards is listed <a href="#changes">below</a>.</p>
 <p>A precinct gets only the composition of the square it sits in, while its housing is measured building by building. Comparing the two at different resolutions would flatter housing, so the main models add precincts up into the square that holds most of their flats, which gives 282 clusters, each measured at one resolution. The regressions weight by valid votes. Uncertainty comes from a wild cluster bootstrap by city district, which resamples whole districts so that neighbouring precincts are not treated as independent<sup class="cite"><a href="#r13">13</a></sup><sup class="cite"><a href="#r14">14</a></sup>, with conventional, small-sample-corrected<sup class="cite"><a href="#r15">15</a></sup> and spatial<sup class="cite"><a href="#r16">16</a></sup> standard errors computed alongside. Each cluster belongs to the district that holds most of its flats, and the 282 clusters fall in 56 of Prague's 57 districts, so the effective sample for the composition and metro tests is 56 groups rather than 282 observations; the steepening test uses 819 precincts in 49 districts and the turnout tests 250 clusters in 44. The six confirmatory tests share a 5 % error rate through Holm's procedure<sup class="cite"><a href="#r17">17</a></sup>, which tests the smallest p-value against the strictest threshold and loosens it step by step.</p>
 </section>
 
@@ -276,6 +277,7 @@
 <li>29 September 2026: added the section What this means.</li>
 <li>Checked against editorial standard v1 on 29 September 2026.</li>
 <li>3 October 2026: after an audit, a minor revision within version 2 (the version-2 archive and PDF predate it); no number changed. Weakened: "43 % is likely understated" now says the direction of the error is unknown; the reason given for the inconclusive metro test is corrected (the realised standard error, 0.14, is below the margin; the test fails because the estimate, −0.17, lies near −0.25), and "a negligible effect cannot be told from a small one with 282 clusters" is withdrawn; the reverse composition test (p = 0.03) is now shown to be 0.06 with conventional and spatial errors. Added: the registered H1b outcome labels ("place beyond composition" for ANO, "indeterminate", reported as underpowered, for SPOLU), H4b with the flagged precincts kept (0.74, p = 0.01), matched precincts' ANO 2025 share (20.5 % against 18.2 %), the CR2 reference change, the use of today's housing stock in all three elections, unrounded 2017 and 2025 gradients (0.545, 0.801), numbers in the short version, glosses for technical terms, and separate references for the institution registers, the Webb pages and the 2017 and 2021 election data. Education's share of the fall now reads "all" (0.44 of 0.42) and citizenship −0.02 rather than "nothing".</li>
+<li>5 October 2026: work dates added; the wording on the analysis plan corrected to match them. No number changed.</li>
 </ul>
 </section>
 
