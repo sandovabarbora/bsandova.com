@@ -1,9 +1,9 @@
 # Prague builds two homes for Vienna's three: research design (Part 4, extended)
 
-**Status: registered.** Version 2, 29 September 2026, after review by three referees (housing economics,
-statistics, data audit; `docs/research/prague-housing-referees.md`). Committed before any model below is estimated
-and before any outcome in a confirmatory window is summarised. §0 lists everything outcome-related that had been seen
-at registration. The design-stage scripts (`housing_data.py`, `housing_power.py`) were committed, sealed, in
+**Status: pre-specified analysis.** Version 2, 29 September 2026, after review by three referees (housing economics,
+statistics, data audit; `docs/research/prague-housing-referees.md`). Analysis plan committed at `503ef06` on
+29 September 2026, before this analysis was run; the author had worked with these data since May 2024; commit times
+are self-reported. §0 lists the outcome-related results that had been published, recorded or seen privately at the commit. The design-stage scripts (`housing_data.py`, `housing_power.py`) were committed, sealed, in
 `d264536` before they were first run. Their outputs are in §5a. Deviations are listed, dated, in "Changes after
 registration".
 
@@ -13,6 +13,9 @@ are dwellings given a house number, or new dwellings created in existing buildin
 budowę rozpoczęto" are notified starts of works, a different concept, and are called *starts*.
 
 ## 0. What has already been seen
+
+The author has worked with these data since May 2024. The plan sets the analysis in advance; the author already knew
+the data. The items below are those published, recorded or seen privately before the commit.
 
 **Part 4 (published).** `texts/prague-housing.html` and `assets/praha/cities.json` show dwellings completed per 1 000
 residents, 2012–2024, each city counted by its own office:
@@ -35,14 +38,14 @@ residents, 2012–2024, each city counted by its own office:
   - The direction of H1 was chosen after Part 4, and so was its smallest effect of interest (SESOI).
   - H1 is therefore **not confirmatory** (§2).
 - **The SESOIs of every question were set after Part 4 had been published.** They were chosen on substantive
-  grounds (§5), not from outcome data of the confirmatory windows. No outcome in those windows has been summarised.
+  grounds (§5).
 - **H5's post-2021 part was seen in Part 2.** Part 2 reported:
   - 33 300 flats (4.5 % of Prague's) completed after 26 March 2021;
   - 3.74 % of flats standing at the October 2025 election;
   - 88 of 1 120 precincts with more than 10 % of their flats post-census.
 
-  The confirmatory H5 window is therefore **1 January 2012 – 25 March 2021**. Part 2 used flats completed before the
-  census only as allocation weights and never summarised them by period or location. 2012–2024 is secondary.
+  The confirmatory H5 window is therefore **1 January 2012 – 25 March 2021**. Part 2 published flats completed before the
+  census only as allocation weights, not by period or location. 2012–2024 is secondary.
 - **Rows of the Part 4 Prague file** (`byt_vystavba.xlsx`, 1994–2025) beyond completions 2012–2024 were read into
   memory by `cities.py`. They are treated as possibly seen: permitted dwellings, dwellings under construction, other
   years.
@@ -154,7 +157,7 @@ The referees proposed this family, and it is adopted for three reasons:
   and with T = 35 quarters it over-rejects. A permutation over kraje has a smallest p of 1/13. No valid test at the
   family's thresholds exists for this design, so H3 is reported as an estimate with an honest interval.
 - **H2, H4 and H5 each have:**
-  - an outcome window that has not been summarised;
+  - an outcome window not summarised in anything published before the commit;
   - an inference procedure valid for their design (a time-series bootstrap; 380 clusters; spatial and 22-cluster
     procedures with the more conservative p);
   - enough units to reach the Holm thresholds.
@@ -205,7 +208,7 @@ p-value:
   - **"Prague builds less than peers with its demand"** only if p ≤ 0.05 for the metro region **and** for the core
     region (H6).
   - **"Prague builds little in the city but normally across its metropolitan region"** if the core p ≤ 0.05 and the
-    metro p > 0.05. This is the pre-registered "displacement to the suburbs" reading.
+    metro p > 0.05. This is the pre-specified "displacement to the suburbs" reading.
   - **"Within the range of European peers"** otherwise. The rank is always shown.
   - The same statements are applied to Prague's rank under the numerator rebuilt from ČSÚ municipal completions of
     new construction (§3), and the article reports both.
@@ -701,7 +704,7 @@ Item numbers follow `prague-housing-referees.md`.
    scores, a country-level rank, the decomposition, and the citations corrected. The simulated power is confirmed
    (§5a).
 2. H1 model: the 2011 dwelling density and the kink are added. Households are not available at NUTS 3 (recorded).
-   The core-versus-metro reading is pre-registered. Bartik is robustness. The absorption of constraints is stated.
+   The core-versus-metro reading is pre-specified. Bartik is robustness. The absorption of constraints is stated.
 3. H3 is out of the family. The estimand is the cumulative response over 12 lags (Almon-constrained) with its
    profile. The interval is EWC with fixed-b as sensitivity, and Prague's rank is reported. The relative SESOI
    is 0.5.
@@ -925,3 +928,8 @@ run:
   cites Doing Business only with its caveats.
 - **Robustness 1c** dropped Spain and the three other Czech metro regions, and kept Prague on the rebuilt numerator.
   Croatia had no region left in the sample. The article now says so.
+
+### 2026-10-05, wording only
+
+- "Pre-registered" replaced by "pre-specified" (§2 and §10), and §0 now covers items seen privately before the commit as
+  well as those published or recorded. No number, rule, estimate or label changed.

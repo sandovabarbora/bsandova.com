@@ -1,19 +1,19 @@
 # Pop, measured: a series design for parts 2–5 (Taylor Swift, BTS, Bad Bunny, Billie Eilish)
 
-**Status: design committed 1 October 2026, before any result of part 1 (Harry Styles) has been computed or seen,
-and before any data of parts 2–5 are collected.** Registration is self-timestamped, as for part 1
+**Status: analysis plan committed 1 October 2026, before this analysis was run; the author had worked with these
+data since March 2026.** Registration is self-timestamped, as for part 1
 (`docs/research/harry-styles-design.md`). Deviations are listed, dated, under "Changes after registration".
 
 ## 0. Series and what has already been seen
 
+- **Data.** The author has worked with these data since March 2026; the plan fixes the analysis, not ignorance of
+  the data.
 - **Series.** Five parts, one artist each, the same three questions, so parts can be compared: 1 Harry Styles
   (registered separately), 2 Taylor Swift, 3 BTS, 4 Bad Bunny, 5 Billie Eilish. BTS is chosen for the K-pop part
-  over BLACKPINK because its tours are better documented on Wikipedia; this choice was made before any chart figure
-  of either group was seen.
+  over BLACKPINK because its tours are better documented on Wikipedia.
 - **Shared data.** All parts use the same kworb.net collection made for part 1 (global and country daily totals,
   current daily charts, track pages of the global number ones). Its structure is described in the part 1 design.
-  No figure from it has been read beyond what that design lists.
-- **Wikipedia tour pages (structure only).** Counted on 1 October 2026, without reading any figure: The Eras Tour,
+- **Wikipedia tour pages.** Counted on 1 October 2026: The Eras Tour,
   5 tables, 152 show rows, 56 attendance cells; Hit Me Hard and Soft: The Tour, 2 tables, 106 show rows, 48 cells;
   Happier Than Ever, The World Tour, 3 tables, 56 cells; Love Yourself World Tour, 4 tables, 32 cells; Born Pink
   World Tour, 27 cells; Most Wanted Tour, no attendance cells; No Me Quiero Ir de Aquí (the 2025 San Juan
@@ -57,7 +57,7 @@ All three are descriptive.
 - After all five parts are published, a short note compares them: the focal songs' places in Q1 (with intervals),
   the top five countries in Q2 for each artist, and Q3's share sold out per artist. No test across artists is made.
 
-## 4. Two more questions, for all five parts (added before any data of the series were read)
+## 4. Two more questions, for all five parts (added before this analysis was run)
 
 These apply to part 1 as well; its design points here.
 

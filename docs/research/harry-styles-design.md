@@ -1,23 +1,24 @@
 # Harry Styles in numbers: how long a hit lasts, where, and how many nights a city can fill — research design
 
-**Status: design committed 1 October 2026, before any chart days or ticket counts are collected.**
-Registration is self-timestamped, as for the film fund study. In the article this is a "registered analysis plan:
-design committed at `<hash>` on 1 October 2026, before the results commit; commit times are self-reported".
+**Status: analysis plan committed 1 October 2026, before this analysis was run; the author had worked with these
+data since March 2026.** Registration is self-timestamped, as for the film fund study. In the article this is a
+"pre-specified analysis: analysis plan committed at `<hash>` on 1 October 2026, before this analysis was run; the
+author had worked with these data since March 2026; commit times are self-reported".
 Deviations are listed, dated, under "Changes after registration".
 
 ## 0. What has already been seen
 
-- **kworb.net, Spotify chart totals (structure only).** The global, Czech and US "daily totals" pages were opened
-  to read their columns: artist and title, Days (days in the Top 200), T10, Pk (peak), (x?) (days at peak),
-  PkStreams, Total. The first row of the global page was seen (The Weeknd, *Blinding Lights*, 2 494 days, peak 1).
-  The number of global rows with peak 1 was counted: 194. No other row was read.
-- **kworb.net, track page of *As It Was*.** Its column headers and dates were read, to learn that the page shows
-  only selected dates (first weeks, then recent weeks and days), not the full daily history. Its first listed date is
-  7 April 2022, and on 30 September 2026 it was at position 80 in the global chart, so it is still charting. No
-  country value was read.
-- **Wikipedia, *Love On Tour* (structure only).** The page has four concert tables. In the largest (2022), 78 show
+- **Data.** The author has worked with these data since March 2026; the plan fixes the analysis, not ignorance of
+  the data.
+- **kworb.net, Spotify chart totals.** The global, Czech and US "daily totals" pages have these columns: artist and title, Days (days in the Top 200), T10, Pk (peak), (x?) (days at peak),
+  PkStreams, Total. The first row of the global page is The Weeknd, *Blinding Lights*, 2 494 days, peak 1. The
+  number of global rows with peak 1 is 194.
+- **kworb.net, track page of *As It Was*.** The page shows only selected dates (first weeks, then recent weeks and
+  days), not the full daily history. Its first listed date is 7 April 2022, and on 30 September 2026 it was at
+  position 80 in the global chart, so it is still charting.
+- **Wikipedia, *Love On Tour*.** The page has four concert tables. In the largest (2022), 78 show
   rows share 36 attendance and revenue cells; runs of several nights are reported as one Boxscore entry (row spans
-  of 2, 6, 12 and 15 nights). One entry was seen: Glasgow, Ibrox Stadium, 11 June 2022, 43 637 / 43 637,
+  of 2, 6, 12 and 15 nights). One entry: Glasgow, Ibrox Stadium, 11 June 2022, 43 637 / 43 637,
   $4 229 885.
 - **Prior expectation.** The author expects *As It Was* to last longer than most global number ones. She has no
   stated expectation about countries or about residencies.
@@ -96,12 +97,12 @@ All three are descriptive. None says why a song lasted or why a run sold.
 
 ## Changes after registration
 
-- **1 October 2026, before any data of part 1 were parsed or any figure computed.** Q3 now uses every tour since
+- **1 October 2026, before this analysis was run.** Q3 now uses every tour since
   2017 with attendance cells on English Wikipedia, as the series design (`pop-measured-design.md`, §2) fixes for
   parts 2–5: *Love On Tour* and *Harry Styles: Live on Tour* (2018), pooled, each entry keeping its tour name. The
   reason is comparability across the series. *As It Was* stays the focal song; it is also the song the series rule
   would be checked against, and if the rule picks another song, both are reported.
-- **1 October 2026, before any data of part 1 were parsed or any figure computed.** Q4 (one song or a catalogue)
+- **1 October 2026, before this analysis was run.** Q4 (one song or a catalogue)
   and Q5 (what a ticket costs, in days of the host country's income) are added for this part as for the whole
   series; their definitions are in `pop-measured-design.md`, §4.
 - **1 October 2026, after the results were seen.** Q2 also reports the countries ranked by the focal song's days

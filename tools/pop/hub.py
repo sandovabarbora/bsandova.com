@@ -90,7 +90,7 @@ def main() -> None:
     head = head.replace("</style>", ".minis{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px 24px;margin:1rem 0 0}"
                         ".minis figure{margin:0}.minis img{display:block;width:100%;height:auto}"
                         ".minis figcaption{font:400 12px var(--mono);color:#666;margin-top:4px}\n</style>")
-    head = re.sub(r'<meta name="description" content="[^"]*">', '<meta name="description" content="Five registered studies of five artists on Spotify\'s charts and on tour, asking the same five questions, with a comparison across them.">', head)
+    head = re.sub(r'<meta name="description" content="[^"]*">', '<meta name="description" content="Five pre-specified studies of five artists on Spotify\'s charts and on tour, asking the same five questions, with a comparison across them.">', head)
     head = re.sub(r'<meta property="og:title" content="[^"]*">', '<meta property="og:title" content="Pop, measured">', head)
     head = re.sub(r'<meta property="og:description" content="[^"]*">', '<meta property="og:description" content="Harry Styles, Taylor Swift, BTS, Bad Bunny and Billie Eilish, measured the same way: how long a hit lasts, where, whether it is one song or many, how many nights a city fills and what a ticket costs.">', head)
     head = head.replace("prague-measured", "pop-measured").replace("assets/og/prague-council.jpg", "assets/og/pop-harry-styles.jpg")
@@ -146,7 +146,7 @@ def main() -> None:
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>Every part answers the same questions from one data collection, under designs written before the data were parsed; two data definitions and one extra collection were added after the first results.</li>
+    <li>Every part answers the same questions from one data collection, under analysis plans written before the analysis was run (the author had worked with the data since March 2026); two data definitions and one extra collection were added after the first results.</li>
     <li>Harry Styles's top song carries {pct(ps[0]['top_share'])} of his Spotify streams, the most of the five (the others {n(100 * min(p['top_share'] for p in ps[1:]))}–{pct(max(p['top_share'] for p in ps[1:]))}); by the Gini, Taylor Swift's and BTS's listening is the most unequal across their longer song lists.</li>
     <li>In Czechia, the focal songs of Harry Styles, Taylor Swift and Billie Eilish sit near the middle of the world ranking and those of BTS (<i>Dynamite</i>, sung in English) and Bad Bunny well below it; with five songs this is a pattern, not a test.</li>
     <li>For every artist, {n(100 * so_lo)}–{pct(so_hi)} of Boxscore entries sold at least 99.5 % of their tickets, so the data cannot say where demand ends. In the exploratory part 6, ticket prices rose only a little with income, so a ticket cost more days of income in poorer countries.</li>
@@ -156,6 +156,7 @@ def main() -> None:
 
 <dl class="meta">
   <div><dt>published</dt><dd>2 October 2026 · updated 3 October 2026 · <a href="#changelog">version 2</a></dd></div>
+  <div><dt>work since</dt><dd>March 2026</dd></div>
 </dl>
 <details class="meta-more">
   <summary>About this series</summary>
@@ -199,12 +200,12 @@ def main() -> None:
 
 <section id="related">
 <h2>Related</h2>
-<p><a href="concert-effect">Does a concert move the charts?</a>: a registered difference-in-differences that uses Spotify's daily charts to ask whether Harry Styles's first tour raised his share of each country's chart after he played there. In the show week his chart share rose by about three quarters against countries not yet visited, and within three weeks the rise was gone; the registered five-week effect is inconclusive. It is a separate study, not a part of the series.</p>
+<p><a href="concert-effect">Does a concert move the charts?</a>: a pre-specified difference-in-differences that uses Spotify's daily charts to ask whether Harry Styles's first tour raised his share of each country's chart after he played there. In the show week his chart share rose by about three quarters against countries not yet visited, and within three weeks the rise was gone; the registered five-week effect is inconclusive. It is a separate study, not a part of the series.</p>
 </section>
 
 <section>
 <h2>How the series was registered</h2>
-<p>Part 1 was designed first, on 1 October 2026, before any chart day or ticket count was collected (<code>cecad1c</code>). The design for parts 2–5 and two questions added to all five followed the same evening, before any data were parsed (<code>e890c27</code>, <code>12417ae</code>). The data were collected once, for all parts (with one later addition, below), and each part's results were computed from the same files with the same code. Part 2's study of prices during the Eras Tour has its own design, committed before any price index was downloaded (<code>f5d702c</code>). Three changes were made after the first results of parts 2–5 had been seen, and are dated in the series design and in each part: two data definitions (attendance cells that span several venues, and entries that mix online viewers with the hall, both left out of the sell-out share) and one extra collection (the track pages of songs that peaked at two, Taylor Swift's reference set). Part 6 has its own design, committed before either model was estimated but after its inputs had been seen, so it is exploratory (<code>4fe0484</code>). Commit times are self-reported; there was no external review.</p>
+<p>Part 1's analysis plan was committed first, on 1 October 2026, before this analysis was run (<code>cecad1c</code>). The plan for parts 2–5 and two questions added to all five followed the same evening, also before the analysis was run (<code>e890c27</code>, <code>12417ae</code>). The author had worked with these data since March 2026; the plans set the analysis in advance; the author already knew the data. The data were collected once, for all parts (with one later addition, below), and each part's results were computed from the same files with the same code. Part 2's study of prices during the Eras Tour has its own analysis plan, committed before that analysis was run (<code>f5d702c</code>). Three changes were made after the first results of parts 2–5 had been seen, and are dated in the series design and in each part: two data definitions (attendance cells that span several venues, and entries that mix online viewers with the hall, both left out of the sell-out share) and one extra collection (the track pages of songs that peaked at two, Taylor Swift's reference set). Part 6 has its own design, committed before either model was estimated but after its inputs had been seen, so it is exploratory (<code>4fe0484</code>). Commit times are self-reported; there was no external review.</p>
 </section>
 
 <section id="data">
@@ -223,6 +224,7 @@ def main() -> None:
 <section id="changelog" class="changelog">
 <h2>Change log</h2>
 <ul>
+<li>5 October 2026: work dates added; the wording on the analysis plan corrected to match them. No number changed.</li>
 <li>3 October 2026: version 2, after an audit. Claims withdrawn: that the artists differ most in how spread their listening is, and that some fan bases play catalogues rather than singles (both rested on an unregistered count of songs making half the streams, which grows with the length of the list); that Czech listeners let hits in other languages pass quickly (BTS's <i>Dynamite</i> is sung in English); and "the same dollar price" (prices rose a little with income). Weakened: "several times more days of income" to "more days of income"; part 6's title on this page to "charted longer where the language matched", now with its split by language (1.8 times for English, 4.9 for Spanish), its check without songs still charting (1.9 times), its selection, 0.14 without Bad Bunny and the per-artist intervals that include zero; "one design" to the designs and the three changes made after first results. Replaced: the songs-for-half-the-streams counts (6, 57, 41, 46, 14) with the registered top-song share and Gini. Added: the intervals for the focal songs' places and each artist's top five countries, which the design fixed for this comparison; the 99.5 % sold-out rule and the other definitions; the sold-out range (92–100 %); the limits of the sources; links and access dates for the data. No other number changed.</li>
 <li>2 October 2026: version 1 published as the series hub.</li>
 <li>Checked against editorial standard v1 on 2 October 2026.</li>

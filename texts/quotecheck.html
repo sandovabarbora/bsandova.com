@@ -72,6 +72,7 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 </details>
 <dl class="meta">
   <div><dt>published</dt><dd>15 September 2026 · updated 3 October 2026 · <a href="#changelog">version 3</a></dd></div>
+  <div><dt>work since</dt><dd>January 2026</dd></div>
 </dl>
 <details class="meta-more">
   <summary>About this tool</summary>
@@ -149,6 +150,7 @@ $ quotecheck Mans-Search-for-Meaning/source.txt "Between stimulus and response t
 <section id="changelog" class="changelog">
 <h2>Change log</h2>
 <ul>
+<li>5 October 2026: work dates added. No number changed.</li>
 <li>3 October 2026, version 3: corrected after an audit. No number changed. Weakened the claim that the tool is not tolerant of rewording: Method and Limits now say that FOUND* accepts any short gap, so a dropped <i>not</i> or <i>never</i> passes, and that it tries only one split, so a genuine interrupted quotation can be missed. The deck no longer calls the Frankl sentence misattributed, only absent from the edition checked. Withdrew "reproduced as printed" for the worked example: its context lines are shortened, and the label spacing now matches the tool. Described batch extraction exactly (blockquote lines of six or more words, line by line; double quotation marks only). Fixed reference 1 to cover classes four to six, defined "splice" at first use and glossed pdftotext, Levenshtein and running head.</li>
 <li>15 September 2026: first published as "How to catch a fabricated quote".</li>
 <li>29 September 2026: retitled and restructured as a tool page. The deck is one sentence and the short version no longer repeats it, the facts or the limits. Added comparable tools (difflib, RapidFuzz, citation evaluation such as ALCE), the drift measure (<code>difflib.SequenceMatcher.ratio()</code> on folded text, window aligned on the longest common run) and the size limit of FOUND* halves. Stated that no error rate has been measured, that the 292-passage re-check predates the tool and rests on a private log, and that the four runs cannot be reproduced from the repository; the test fixtures are named as the substitute. Narrowed the Frankl claim to the edition checked and cited Quote Investigator. Removed an example from a book that was not among the sources, restated a general claim about fabrications as an observation about this case, moved the account of the false alarms into the method, and removed two closing sentences. Removed the "install" facts card, the "fabrications it still rejects" card and the stack line's test count.</li>

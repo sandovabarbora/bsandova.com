@@ -1,12 +1,13 @@
 # Prague votes in rings: research design (Part 2, extended)
 
-**Status: registered.** Version 2, after review by three independent referees (statistics, electoral geography,
-census data). Committed before any census or earlier-election data are joined to precincts, and before any model
-below is estimated. At registration the raw files listed in Appendix A had been downloaded; only their column headers
-and, for the data referee, marginal totals of the census grid had been inspected (§0). Deviations are listed, dated,
-in "Changes after registration".
+**Status: pre-specified analysis.** Version 2, after review by three independent referees (statistics, electoral
+geography, census data). Written before any model below is estimated; first committed at 1283162 on 28 September
+2026, in the same commit as the results, so its timing is self-reported. The author has worked with Prague's precinct and housing
+data since May 2024 (§0). Deviations are listed, dated, in "Changes after registration".
 
 ## 0. What has already been seen
+
+The author has worked with Prague's precinct and housing data since May 2024. The plan sets the analysis in advance; the author already knew the data.
 
 **Part 2 (published).** 2025 Chamber election, Prague precincts, with three precinct measures: distance to the
 nearest metro station, distance from Můstek, and the share of flats in panel buildings (RÚIAN). Stated here per
@@ -19,7 +20,7 @@ doubling of distance (natural-log coefficient × ln 2):
   - The Pirates follow the centre; SPOLU follows family houses.
 - Turnout is lowest within 2 km of the centre (66.8 %) and about 73 % beyond 4 km.
 
-**Seen during review (census grid marginals, no votes).** 580 cells intersect Prague (529 populated). The median
+**Census grid.** 580 cells intersect Prague (529 populated). The median
 precinct is 0.12 km², about an eighth of a cell. Precincts draw composition from about 285 distinct dominant cells.
 Education "not stated" (field 025) is 6.3 % of the education total and correlates 0.57 with the foreign share.
 Suppression (026) affects 17 cells with 68 residents. Field 081 ("registered in the same obec") treats Prague as a

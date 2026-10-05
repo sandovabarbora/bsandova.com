@@ -1,19 +1,22 @@
 # Prague's kerb, measured: research design (Part 6, parking)
 
-**Status: registered 29 Sep 2026.** This is version 2, revised against three referee reports (transport economics, statistics,
-data audit; consolidated in `docs/research/prague-parking-referees.md`). It is committed before any vehicle length
-from the register is read, and before any outcome below is estimated.
+**Status: committed 29 Sep 2026.** This is version 2, revised against three referee reports (transport economics, statistics,
+data audit; consolidated in `docs/research/prague-parking-referees.md`). It is committed before this analysis is run,
+and before any outcome below is estimated. The author has worked with these data since May 2024; commit times are
+self-reported.
 
 At registration, the design-stage checks in §5 have been run. They use constants, stall-type geometry, counts and
 missingness only. Their results are in §5 and in `docs/research/prague-parking-ds.json`. The raw files and their
 hashes are in `docs/research/prague-parking-files.sha256` (Appendix A). Deviations are listed, dated, in "Changes
 after registration".
 
-In the article this is a **registered analysis plan**, not a "pre-registered study". The direction of H1, H3 and H4,
+In the article this is a **pre-specified analysis**, not a "pre-registered study". The direction of H1, H3 and H4,
 and the size of H1 and H4, are known from Parts I–III (§0). Unverified claims are marked **[verify]**. None of them
 enters a confirmatory test.
 
 ## 0. What has already been seen
+
+The author has worked with these data since May 2024; the plan sets the analysis in advance; the author already knew the data.
 
 The three published texts share one model (repo `~/Downloads/parking/`, `METODIKA.md`, 30 tests):
 
@@ -100,7 +103,7 @@ The three published texts share one model (repo `~/Downloads/parking/`, `METODIK
   - 2012 → 2022 endpoints +80.2 mm; trend 7.07 mm a year (2012–2022).
   - Part II had +68 mm and 6.0 mm a year, M1 only.
   - This moves Part II's comparator. A correction to Part II follows once it is converted (C.2).
-- RSV coverage by manufacture year and missingness (§5, DS1). No length value was read.
+- RSV coverage by manufacture year and missingness (§5, DS1).
 - DS10 fit of the stock model to published counts and ages.
 
 ## 1. Research questions and estimands
@@ -268,7 +271,7 @@ office or address as DS3 determines. It is never presented as permits.
   - Missing lengths: multiple imputation (M = 20) within make × model × year, then make × model. It is nested in the
     bootstrap and in the Monte Carlo.
 - **Normalisation dictionary** (EEA `Cn` ↔ RSV `Obchodní označení` / `Typ`): built from names and counts only, frozen
-  and hashed before any length is read (DS12).
+  and hashed before the real run (DS12).
 - **Owner/operator data are never downloaded or processed.** Location comes only from aggregate cube counts (DS3).
 
 **EEA.** `eea_cz_by_model_m1_m1g.csv` (hashed): M1 + M1G, final rows 2010–2022, and registration counts 2023–2025
@@ -366,7 +369,7 @@ Scripts: `tools/parking6/parking6_design.py`, `tools/parking6/rsv_coverage.py` a
 - ∂θ/∂(fleet length), with g = 5.20 − 4.195 = 1.005 m: 0.0962 (s = 0.5), 0.1299 (0.68), 0.1613 (0.85), 0.1887 (1.0)
   per metre.
 - **δ (registered) = 4.4 cm**, for s = 1 because the primary estimand θ₁ᵘ is per parallel space. The first run at
-  k = 2 gave 4.6 cm; it was re-set after DS10b, before any register length was read. It would be 6.4 cm for
+  k = 2 gave 4.6 cm; it was re-set after DS10b, before this analysis was run. It would be 6.4 cm for
   θ₁ at s = 0.68.
 - **B.2 check.** θ₁ = 3.7 % needs 27.8–28.8 cm of fleet-mean growth at s = 0.68, 22.2–23.1 cm at s = 0.85, and
   18.9–19.6 cm at s = 1. The referees' 17.5–22 cm corresponds to s near 1.
@@ -480,7 +483,7 @@ by year. If it is below 80 % in any year, that year falls back to make × year c
   - k = 1.5: −0.1 / +0.9 / +2.4 / +2.6 %;
   - k = 2: +8.7 to +11.2 %.
   - The error drifts up by about 1 pp a year, which is noted.
-- **Consequences, recorded before any length was read:**
+- **Consequences, recorded before this analysis was run:**
   - the k prior becomes uniform(1.4, 1.6);
   - κ and δ are recomputed at k = 1.5 (δ from 4.6 to 4.4 cm);
   - DS8 is rerun (H2a power 0.16).
@@ -587,7 +590,7 @@ permit figures) and PAQ Research (the 6 000 Kč threshold).
 | A.2 Family = H2a, H2b | Done (§2.1), Holm thresholds 0.025 and 0.05. |
 | A.3 H1/H3/H4 as estimates | Done: E1, E3 and E4 with interval wording, quantile MC SE and tipping-point lines (§2.2). |
 | A.4 Predictability rule | Done. It is applied to H2a/H2b through DS8 (0.13 and 0.27, so both are kept). E1 is descriptive by DS-κ arithmetic. |
-| A.5 Wording, §0 | Done. "Registered analysis plan"; the known directions and sizes are stated in the status block and §0. |
+| A.5 Wording, §0 | Done. "Pre-specified analysis"; the known directions and sizes are stated in the status block and §0. |
 | B.1 Unit mismatch, τ₁ | Done. τ₁ is dropped. θ₁ᵘ is per parallel space and is compared with T&E's rate and with Part I's 2.9–3.4 % reproduction. |
 | B.2 Arithmetic | Done (DS-κ): 19–29 cm by s and g. The referees' 17.5–22 holds for s near 1. |
 | B.3 Banded rule | Done, with the sentences written (§2.2). |
@@ -605,7 +608,7 @@ permit figures) and PAQ Research (the 6 000 Kč threshold).
 | D.3 2012 age prior | Done. Uniform(13.3, 14.1) plus a common shift e; the STK-active check in R5. |
 | D.4 Entry × survival, manufacture year | Done (§4). |
 | D.5 Symmetric bracket with formula | Done (§4). |
-| D.6 DS10 | Done. The time-invariant version fails the pre-committed tolerances. The registered per-year λ_t passes only for k ∈ [1.4, 1.6], so the k prior was narrowed, and κ, δ and DS8 were recomputed before any length was read (§5). |
+| D.6 DS10 | Done. The time-invariant version fails the pre-committed tolerances. The registered per-year λ_t passes only for k ∈ [1.4, 1.6], so the k prior was narrowed, and κ, δ and DS8 were recomputed before this analysis was run (§5). |
 | D.7 DS11 | Pre-committed (§5). It runs before the unpermuted estimation. |
 | E.1 Gap from pitch | Done. p is triangular(4.9, 5.2, 5.5); the structural switch is reported. |
 | E.2 Grouped Sobol / Shapley | Done (§4, R11). |
@@ -638,7 +641,7 @@ Holm 1979; Schuirmann 1987; Cameron, Gelbach & Miller 2008; Webb 2023; Saltelli 
 
 ## Changes after registration
 
-### 2026-09-29, before any unpermuted length was read (freeze commit `e589225`)
+### 2026-09-29, before the run on unpermuted lengths (freeze commit `e589225`)
 
 - **DS12 (dictionary).** Built from names and counts only, then frozen: `dict_model_lines.csv`, sha256 `ccfd595f…`.
   - EEA weight matched to a register model line in the same year: 97.3 % (2018) to 100 %. No year falls back.
