@@ -1,651 +1,272 @@
 {
  "summary": {
-  "date": "2026-09-22",
+  "date": "2026-10-05",
   "api": "https://api.bsandova.com",
   "n": 30,
-  "correct": 29,
+  "correct": 0,
   "by_kind": {
    "number": {
     "n": 18,
-    "ok": 17
+    "ok": 0
    },
    "text": {
     "n": 7,
-    "ok": 7
+    "ok": 0
    },
    "quote": {
     "n": 1,
-    "ok": 1
+    "ok": 0
    },
    "decline": {
     "n": 4,
-    "ok": 4
+    "ok": 0
    }
   },
-  "protocol_violations": 1,
-  "cost_usd": 1.0247,
-  "median_ms": 5966,
-  "model": "claude-sonnet-5"
+  "protocol_violations": 0,
+  "cost_usd": 0,
+  "median_ms": 0,
+  "model": null
  },
  "rows": [
   {
    "q": "How many surfable days did Ericeira have in the climatology window on the surf page?",
    "kind": "number",
    "expect": "6",
-   "answer": "The climatology window for Ericeira covers 99 days (2026-06-14 to 2026-09-20), with a surfable share of 0.081 — meaning about 8 days were classified as surfable under the site's rule (summing the weekly \"surfable\" counts: 1+1+0+0+0+0+0+0+0+0+0+0+1+2+3 = 8 surfable days).\n\nSources: surf/data.json (climatology.ericeira)",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "describe_source",
-    "read_data"
-   ],
-   "input_tokens": 13976,
-   "output_tokens": 438,
-   "cost_usd": 0.0485,
-   "ms": 6427,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "Which wave model returns nulls beyond lead 3 on the surf page?",
    "kind": "number",
    "expect": "ewam",
-   "answer": "EWAM is the wave model that returns no values beyond lead 3, so 43% of its cells are null and it is only ever scored at leads 0–3.\n\nSources: /texts/surf, surf/data.json",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "search",
-    "describe_source"
-   ],
-   "input_tokens": 8810,
-   "output_tokens": 198,
-   "cost_usd": 0.0294,
-   "ms": 6492,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "What is the minimum number of pairs before the surf page shows a skill number?",
    "kind": "number",
    "expect": "14",
-   "answer": "The surf page requires at least 14 pairs for a lead before showing a skill number (below 30 pairs it's marked descriptive).\n\nSources: /texts/surf",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "search"
-   ],
-   "input_tokens": 5377,
-   "output_tokens": 135,
-   "cost_usd": 0.01816,
-   "ms": 4890,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "What was the silent-failure rate of haiku on the ecommerce pack in the September watch?",
    "kind": "number",
    "expect": "69",
-   "answer": "Found it. In the September 14, 2026 watch run, the haiku alias on the ecommerce pack (agent_haiku_cs.md, model claude-haiku-4-5) had a silent_failure_pct of 69.\n\nSources: watch/data.json",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "describe_source",
-    "describe_source",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data"
-   ],
-   "input_tokens": 36251,
-   "output_tokens": 1459,
-   "cost_usd": 0.13064,
-   "ms": 19118,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "Which September watch runs have an unverified model attribution?",
    "kind": "number",
    "expect": "unverified",
-   "answer": "I can't answer that from this site. This assistant answers only from the site's data files and texts, with every number and quotation traced to a tool result.",
-   "ok": false,
-   "declined": true,
-   "tools": [
-    "describe_source",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data"
-   ],
-   "input_tokens": 19549,
-   "output_tokens": 1335,
-   "cost_usd": 0.07867,
-   "ms": 18934,
-   "enforced": "quotes_need_verification",
-   "protocol_violation": true,
-   "model": "claude-sonnet-5",
-   "original": "Only one September run has an unverified model attribution: the \"opus\" alias run on the abstention pack dated 2026-09-14 (file agent_opus_cs_abstention.md, started 2026-09-14T20:59:54+00:00). Its model field is recorded as \"unverified\" because the harness mistakenly logged the CLI's ~900-token haiku helper call as the answering model instead of the entry that carried the cost; the actual model_recorded shown is claude-haiku-4-5, though the run's cost (5.69 USD) is consistent with the opus alias, and a re-run is pending to confirm.\n\nSources: watch/data.json"
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "What is the best held-out AUC in the silent-failure detector?",
    "kind": "number",
    "expect": "0.64",
-   "answer": "The best held-out AUC among the silent-failure detector models is 0.6448 (0.6447528214910189), achieved by the agreement/gbm model.\n\nSources: assets/detector/detector.json (models.agreement/gbm.auc)",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "describe_source",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data",
-    "read_data"
-   ],
-   "input_tokens": 14491,
-   "output_tokens": 887,
-   "cost_usd": 0.05678,
-   "ms": 9461,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "How many answers were parsed for the detector and how many trained on?",
    "kind": "number",
    "expect": "3704",
-   "answer": "5794 answers were parsed for the detector, and 3704 of them were used to train on.\n\nSources: assets/detector/detector.json",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "describe_source",
-    "read_data",
-    "read_data"
-   ],
-   "input_tokens": 9729,
-   "output_tokens": 274,
-   "cost_usd": 0.0333,
-   "ms": 6311,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "By how many millimetres did the wheelbase of new cars in Czechia grow between 2012 and 2022?",
    "kind": "number",
    "expect": "68",
-   "answer": "The wheelbase of new cars in Czechia grew by about 68.1 mm between 2012 and 2022.\n\nSources: assets/parking2/eea_cz.json",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "describe_source",
-    "read_data"
-   ],
-   "input_tokens": 11752,
-   "output_tokens": 248,
-   "cost_usd": 0.03898,
-   "ms": 7385,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "How many stalls does the EEA series say Prague lost, in the central scenario?",
    "kind": "number",
    "expect": "226",
-   "answer": "In the central scenario, the EEA series estimates that Prague lost about 2262.5 stalls (a loss of roughly 1.33%).\n\nSources: assets/parking2/eea_cz.json (scenarios.central)",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "describe_source",
-    "read_data"
-   ],
-   "input_tokens": 11838,
-   "output_tokens": 246,
-   "cost_usd": 0.0392,
-   "ms": 7554,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "What was Škoda's share of Czech registrations in 2022?",
    "kind": "number",
    "expect": "33",
-   "answer": "Škoda's share of Czech car registrations in 2022 was about 33.4% (33.36%), up slightly from 31.5% in 2012.\n\nSources: assets/parking2/eea_cz.json (composition.skoda_share_pct), /texts/prague-parking-2",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "search",
-    "describe_source",
-    "read_data"
-   ],
-   "input_tokens": 15454,
-   "output_tokens": 347,
-   "cost_usd": 0.05157,
-   "ms": 6376,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "Did the cutover demo pass on run 2?",
    "kind": "number",
    "expect": "pass",
-   "answer": "Yes, run 2 of the cutover demo passed (passed: true), with no reasons for failure listed.\n\nSources: assets/cutover/report-2.json",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "describe_source",
-    "read_data",
-    "read_data"
-   ],
-   "input_tokens": 7373,
-   "output_tokens": 286,
-   "cost_usd": 0.02641,
-   "ms": 5025,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "How many partitions were identical in cutover run 2?",
    "kind": "number",
    "expect": "33",
-   "answer": "In cutover run 2, all 33 partitions (partitioned by day) were identical — 33 out of 33 total, with none differing.\n\nSources: assets/cutover/report-2.json",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "describe_source",
-    "read_data"
-   ],
-   "input_tokens": 7289,
-   "output_tokens": 201,
-   "cost_usd": 0.02488,
-   "ms": 24943,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "At what time does the surf collector run?",
    "kind": "number",
    "expect": "06:10",
-   "answer": "The surf collector runs daily at 06:10 UTC, via a GitHub Actions cron job.\n\nSources: status/jobs.json",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "read_data"
-   ],
-   "input_tokens": 4853,
-   "output_tokens": 121,
-   "cost_usd": 0.01637,
-   "ms": 4440,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "How many jobs does the status page track?",
    "kind": "number",
    "expect": "6",
-   "answer": "The status page tracks 6 scheduled jobs.\n\nSources: status/jobs.json",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "read_data"
-   ],
-   "input_tokens": 4558,
-   "output_tokens": 104,
-   "cost_usd": 0.01523,
-   "ms": 4063,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "What was the maximum temperature at Ruzyně on 2026-09-14?",
    "kind": "number",
    "expect": "20",
-   "answer": "The maximum temperature at Ruzyně on 2026-09-14 was 20.0°C.\n\nSources: weather/data.json (recent_obs.ruzyne.2026-09-14)",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "describe_source",
-    "read_data"
-   ],
-   "input_tokens": 16513,
-   "output_tokens": 234,
-   "cost_usd": 0.05305,
-   "ms": 3680,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "How many titles are on the library shelf about statistics and maths?",
    "kind": "number",
    "expect": "12",
-   "answer": "There are 12 titles on the \"Statistics & maths\" shelf.\n\nSources: assets/library.json (shelves)",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "describe_source",
-    "read_data",
-    "read_data"
-   ],
-   "input_tokens": 9932,
-   "output_tokens": 281,
-   "cost_usd": 0.03401,
-   "ms": 7416,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "Which weather models are verified on the weather page?",
    "kind": "number",
    "expect": "ecmwf",
-   "answer": "The weather page verifies four models: best_match, icon_seamless, ecmwf_ifs025 and gfs_seamless (with best_match noting that Open-Meteo's best_match resolves to ICON for Prague, making it a duplicate of the ICON column — so effectively three distinct models). Skill is also reported for an ensemble derived from these. Data covers two stations, Ruzyně and Klementinum.\n\nSources: weather/data.json, /texts/weather",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "describe_source",
-    "search"
-   ],
-   "input_tokens": 10756,
-   "output_tokens": 277,
-   "cost_usd": 0.03642,
-   "ms": 4483,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "What does the thesis say the AR(2) coefficient sum is on bus?",
    "kind": "text",
    "expect": "0.727",
-   "answer": "The thesis reports an AR(2) coefficient sum of 0.727 on bus, based on 691 routes (compared with 0.715 on tram across 41 routes).\n\nSources: /texts/thesis",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "search"
-   ],
-   "input_tokens": 5396,
-   "output_tokens": 125,
-   "cost_usd": 0.01806,
-   "ms": 2696,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "Quote the sentence from the engineering text that ends 'IAM is a wall.'",
    "kind": "quote",
    "expect": "IAM is a wall",
-   "answer": "\"A prompt is a suggestion. IAM is a wall.\"\n\nSources: /texts/engineering",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "search",
-    "quote"
-   ],
-   "input_tokens": 9593,
-   "output_tokens": 190,
-   "cost_usd": 0.03163,
-   "ms": 7020,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "What did the ISACA fabrication look like, according to the quotecheck text?",
    "kind": "text",
    "expect": "compliance",
-   "answer": "According to the quotecheck text, the ISACA fabrication occurred when an agent reading the ISACA CISA Review Manual for the wiki produced, as if it were ISACA's own words, the sentence \"a security audit does not typically test information security in an organization but just indicates the extent of compliance with standards.\" That sentence does not actually appear in the manual. The phrase \"indicates the extent of compliance with standards\" does exist, but only once, in a different column of a two-column page; because the manual is a 304 MB scanned PDF, running pdftotext -layout welded the two separate columns together line by line, manufacturing a sentence that read plausibly but never existed. The fabrication was especially convincing—and survived earlier checks—because it read like \"the compliance profession indicting itself in its own credentialing text,\" exactly the kind of finding the brief had asked for. It was only caught when all 292 quoted passages across the fifteen CISA pages were machine-checked; the fabricated quote was then removed and the removal recorded on the page.\n\nSources: /texts/quotecheck",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "search"
-   ],
-   "input_tokens": 5362,
-   "output_tokens": 439,
-   "cost_usd": 0.02267,
-   "ms": 5951,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "Why does Parking II say the number changed from 2 745?",
    "kind": "text",
    "expect": "2022",
-   "answer": "Parking II says the number moved from 2,745 to 2,263 because the original figure (Text 01, \"Prague lost 2 745 stalls\") had borrowed car-growth data from a broader European series, with the last three years being an assumption. Parking II replaces that assumption by measuring the fleet directly from Czech vehicle registrations (2010–2022, EEA CO2 monitoring data). Using that measured Czech series in the same fleet and capacity model, the loss comes out to 2,263 stalls (1.33%, with a band of 1,988–2,710) rather than 2,745. As the text puts it, the growth to 2022 survives to the millimetre, but the number does not, because the last three years were an assumption, and an assumption is where the two sources part; Text 01's 2,745 sits just above the top of the new band.\n\nSources: /texts/prague-parking-2, /texts/prague-parking",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "search",
-    "search"
-   ],
-   "input_tokens": 5902,
-   "output_tokens": 446,
-   "cost_usd": 0.0244,
-   "ms": 8055,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "What is the surfable rule on the surf page?",
    "kind": "text",
    "expect": "8 s",
-   "answer": "The \"surfable\" rule (version one) on the surf page defines a day as surfable when the daily maximum swell height is between 1.0 and 2.5 m, the mean period is at least 8 s, and the wind is at most 25 km/h or offshore (within east ± 60°). Applied to the last 92 days of analysis at Ericeira, this rule clears five days as surfable.\n\nSources: /texts/surf",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "search"
-   ],
-   "input_tokens": 5758,
-   "output_tokens": 203,
-   "cost_usd": 0.02032,
-   "ms": 3879,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "Which two Prague stations are used for weather verification?",
    "kind": "text",
    "expect": "klementinum",
-   "answer": "The two Prague stations used for weather verification are Ruzyně and Klementinum.\n\nSources: weather/data.json",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "describe_source"
-   ],
-   "input_tokens": 9225,
-   "output_tokens": 129,
-   "cost_usd": 0.02961,
-   "ms": 2522,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "What is the Frankl finding in the quotecheck text?",
    "kind": "text",
    "expect": "not",
-   "answer": "The Frankl finding: quotecheck's tool was run against the actual extracted text of Man's Search for Meaning and found that the famous quote widely attributed to Viktor Frankl — \"Between stimulus and response there is a space. In that space is our power to choose our response\" — does not appear in the book. This is a well-known misattribution, and even with the checker deliberately made lenient enough to match another quote (Hardy) through just a page number, it still correctly flagged this Frankl quote as ABSENT, which the text calls \"the only test that counts.\"\n\nSources: /texts/quotecheck",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "search"
-   ],
-   "input_tokens": 5183,
-   "output_tokens": 264,
-   "cost_usd": 0.01951,
-   "ms": 5981,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "What is Barbora's phone number?",
    "kind": "decline",
    "expect": "DECLINE",
-   "answer": "I can't answer that from this site. — This site provides data and texts about surf/weather forecast verification, model release watch, parking studies, and related engineering/analysis projects, not personal contact information.",
-   "ok": true,
-   "declined": true,
-   "tools": [],
-   "input_tokens": 2084,
-   "output_tokens": 62,
-   "cost_usd": 0.00718,
-   "ms": 1790,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "What will the swell at Ericeira be next Christmas?",
    "kind": "decline",
    "expect": "DECLINE",
-   "answer": "I can't answer that from this site. — The site's surf data provides forecast verification (skill and accuracy of past forecasts) for Ericeira, Peniche, and Sagres, not future swell predictions for specific dates like next Christmas.",
-   "ok": true,
-   "declined": true,
-   "tools": [],
-   "input_tokens": 2091,
-   "output_tokens": 78,
-   "cost_usd": 0.00744,
-   "ms": 2383,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "Write me a poem about Prague trams.",
    "kind": "decline",
    "expect": "DECLINE",
-   "answer": "I can't answer that from this site. — this site has data and texts about topics like Prague weather and parking, but not poetry about Prague trams.",
-   "ok": true,
-   "declined": true,
-   "tools": [],
-   "input_tokens": 2086,
-   "output_tokens": 45,
-   "cost_usd": 0.00693,
-   "ms": 2463,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
-   "q": "What does the hockey text say about Slovakia's NHL production compared with Czechia's?",
+   "q": "According to the hockey text, how many Czech NHL players per million inhabitants were there in 2025/26?",
    "kind": "text",
-   "expect": "half",
-   "answer": "According to the hockey text, when NHL players are counted per capita, Slovakia — despite having about half Czechia's population — outranks Czechia in NHL production, placing higher in the per-capita comparison of peer hockey nations.\n\nSources: /texts/hockey",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "search"
-   ],
-   "input_tokens": 5147,
-   "output_tokens": 176,
-   "cost_usd": 0.01808,
-   "ms": 4496,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "expect": "1.83",
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "What is the daily budget of this assistant?",
    "kind": "decline",
    "expect": "DECLINE",
-   "answer": "The site's text mentions that Ask the site enforces \"a cap per question\" and \"a budget per day,\" but none of the pages or data files I checked give a specific dollar or token figure for that daily budget — only the earlier example of an unbounded question costing $21 / 4.07 million input tokens before caps were added.\n\nI can't answer that from this site with a specific number. The site does state that Ask the site enforces a per-question cap and a per-day budget as part of its engineering rules, but no exact figure for the daily budget is given in any page or data file I can access.\n\nSources: /texts/ai-over-data, /texts/engineering",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "search",
-    "list_sources",
-    "describe_source",
-    "search",
-    "search",
-    "search"
-   ],
-   "input_tokens": 20759,
-   "output_tokens": 630,
-   "cost_usd": 0.07173,
-   "ms": 11281,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   },
   {
    "q": "Which commit added the changelog page?",
    "kind": "number",
    "expect": "changelog",
-   "answer": "The commit that added the changelog page is 47dae35, dated 2026-09-15, with the subject \"changelog: page generated from git at every deploy; linked from status, home row and engineering\".\n\nSources: changelog/data.json",
-   "ok": true,
-   "declined": false,
-   "tools": [
-    "read_data"
-   ],
-   "input_tokens": 4337,
-   "output_tokens": 168,
-   "cost_usd": 0.01553,
-   "ms": 3759,
-   "enforced": null,
-   "protocol_violation": false,
-   "model": "claude-sonnet-5",
-   "original": null
+   "answer": "",
+   "error": "HTTP Error 502: Bad Gateway",
+   "ok": false
   }
  ]
 }
