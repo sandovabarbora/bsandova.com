@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What "registered" means on this site · Barbora Šandová</title>
+<meta name="description" content="A short note on what a registered study on this site is: the plan committed to a public repository before the data, in dated steps, timestamped by the author, not by an independent registry.">
+<meta property="og:title" content="What &quot;registered&quot; means on this site">
+<meta property="og:description" content="The plan is committed before the data, in dated steps, and timestamped by the author, not by an independent registry such as OSF.">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://bsandova.com/texts/registered">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../text.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../a24.css">
+<style>
+.text>.meta{display:block;letter-spacing:0;text-transform:none;font-size:12px}
+.text>.meta div{border-right:0;padding:6px 0}
+.text>.meta div+div{padding-left:0}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../" aria-label="Barbora Šandová, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">method · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Note · 5 October 2026 · how the studies here are registered</p>
+  <h1>What "registered" means <em>on this site</em></h1>
+  <p class="deck">The plan is written and committed to a public repository before the data are opened, then the code, then the data, then the results, each in its own dated commit. The timestamps are the author's own, not an independent registry's.</p>
+</header>
+<details class="tldr" open>
+  <summary>Overwhelmed? Here's the short version</summary>
+  <ul>
+    <li>"Registered study" here means: the questions, the method and the rule for reading the result were written down and committed before the data were looked at.</li>
+    <li>The commits are public on GitHub, but their times are recorded by the author's machine, so they show the order of the steps, not an independent seal.</li>
+    <li>No study on this site is registered with OSF or AsPredicted, and the gap between the plan and the results is often hours, not months.</li>
+    <li>Every change after the plan is listed with its date in the study's design file and in the article.</li>
+  </ul>
+</details>
+<dl class="meta">
+  <div><dt>published</dt><dd>5 October 2026 · <a href="#changelog">version 1</a></dd></div>
+</dl>
+
+<section>
+<h2>What is registered</h2>
+<p>Each study marked "registered study" starts with a design file in the repository, under <code>docs/research/</code>. It states the questions, the hypotheses where there are any, the data and how they will be cleaned, the model, the checks, and a rule for reading each result that is fixed in advance: a result is <i>supported</i> if its interval lies wholly on the expected side, <i>not supported</i> if it lies within a stated margin of no effect, and <i>inconclusive</i> otherwise. It also lists what had already been seen before it was written, because a plan written after a look at the data is worth less, and the reader should know how much less.</p>
+<p>The steps then follow in separate commits: the design; a power calculation where there is one; the code, tested on invented data; the data step; the results. Each article's "About this study" box names those commits, and each one can be opened on GitHub. Anything changed after the design, a source that turned out different, a model that did not converge, a check that was forgotten, is added to the design file as a dated note and repeated in the article's list of changes.</p>
+</section>
+
+<section>
+<h2>What it is not</h2>
+<p>It is not a preregistration in the sense economists and psychologists usually mean. Those are filed with an independent registry, OSF or AsPredicted, which timestamps the plan and keeps it unchanged, often months before any data exist. Here the timestamps come from the author's own commits, pushed to a public repository, usually the same day. So the record shows in which order the steps were taken, and it makes later changes visible, but it cannot prove that nobody looked at the data before writing the plan. The design files try to make up for that by saying what had been seen, and by listing every deviation, but trust in the order is still trust in the author.</p>
+<p>Studies marked <i>exploratory</i> have no such plan. They describe and compare, and their findings are suggestions for a registered study, not results.</p>
+</section>
+
+<section>
+<h2>Why not a registry</h2>
+<p>Most studies here are small, quick and personal: a question, a public dataset, a few days. A registry entry for each would add little that a public commit history does not already show, and it would slow the work down. For a study where the stakes are higher, such as one that compares named parties before an election, the plan is held to stricter rules: a frozen protocol, an embargo until the polls close, and a right of reply for every party before anything is published.</p>
+</section>
+
+<section id="changelog" class="changelog">
+<h2>Change log</h2>
+<ul>
+<li>5 October 2026, version 1: first published.</li>
+<li>Checked against editorial standard v1 on 5 October 2026.</li>
+</ul>
+</section>
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a></p>
+</footer>
+</article>
+</body>
+</html>
