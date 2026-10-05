@@ -194,11 +194,14 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
   .menu-btn span{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}.rv{opacity:1;transform:none}.film:hover .shot,.film.in .shot{transform:scale(1.03)}}
-.what{position:absolute;z-index:2;top:clamp(96px,14vh,150px);left:var(--pad);margin:0;font:400 clamp(11px,.9vw,13px)/2 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.6);transition:opacity .2s linear}.what span{display:block;opacity:0;animation:card .9s ease forwards}.what .nm{font-size:1.35em;letter-spacing:.2em;line-height:1.5}.what .pre{color:#b9c1c6;font-size:.85em;animation-delay:.35s}.what .rule{width:4.5em;height:1px;margin:.9em 0 .7em;background:currentColor;opacity:0;animation:rule .8s ease .7s forwards;transform-origin:left}.what .l1{animation-delay:1s}.what .l2{animation-delay:1.35s;color:#cfd6da}@keyframes card{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}@keyframes rule{from{opacity:.0;transform:scaleX(0)}to{opacity:.7;transform:scaleX(1)}}@media (prefers-reduced-motion:reduce){.what span{animation:none;opacity:1}.what .rule{opacity:.7}}@media (max-width:640px){.what{font-size:10.5px;letter-spacing:.16em}}
+.slate{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:#070707;color:#fff;transition:opacity .9s ease,visibility 0s linear .9s;cursor:pointer}.slate.gone{opacity:0;visibility:hidden;pointer-events:none}.slate .card{margin:0;text-align:center;font:400 clamp(11px,1vw,14px)/2 var(--mono);letter-spacing:.24em;text-transform:uppercase}.slate span{display:block;opacity:0;animation:card .9s ease forwards}.slate .nm{font-size:1.6em;letter-spacing:.2em;line-height:1.4}.slate .pre{color:#9aa3a8;font-size:.85em;animation-delay:.35s}.slate .rule{width:4.5em;height:1px;margin:1em auto .8em;background:currentColor;opacity:0;animation:rule .8s ease .7s forwards}.slate .l1{animation-delay:1s}.slate .l2{animation-delay:1.3s;color:#b9c1c6}@keyframes card{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}@keyframes rule{from{opacity:0;transform:scaleX(0)}to{opacity:.7;transform:scaleX(1)}}@media (prefers-reduced-motion:reduce){.slate span{animation:none;opacity:1}.slate .rule{opacity:.7}.slate{transition:none}}@media (max-width:640px){.slate .card{font-size:10.5px;letter-spacing:.16em}}
 </style>
 </head>
 <body>
 
+<noscript><style>.slate{display:none}</style></noscript>
+<div class="slate" id="slate" role="presentation"><p class="card"><span class="nm">Barbora Šandová</span><span class="pre">presents</span><span class="rule" aria-hidden="true"></span><span class="l1">studies from open data</span><span class="l2">design · data · code, all public</span></p></div>
+<script>(()=>{const s=document.getElementById("slate");if(!s)return;let seen=false;try{seen=sessionStorage.getItem("slate")==="1"}catch(e){}if(seen||location.hash){s.classList.add("gone");return}const go=()=>{s.classList.add("gone");setTimeout(()=>dispatchEvent(new Event("scroll")),950);try{sessionStorage.setItem("slate","1")}catch(e){}removeEventListener("wheel",go);removeEventListener("touchstart",go);removeEventListener("keydown",go)};setTimeout(go,2600);s.addEventListener("click",go);addEventListener("wheel",go,{passive:true,once:true});addEventListener("touchstart",go,{passive:true,once:true});addEventListener("keydown",go,{once:true})})();</script>
 <a class="skip" href="#work">Skip to the work</a>
 <header class="hd">
   <button class="menu-btn" id="open" aria-expanded="false" aria-controls="nav" aria-label="Menu"><i></i><span>Menu</span></button>
@@ -227,7 +230,6 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
 <nav class="where" id="where" aria-label="Sections"><ol><li><a href="#f-prague-measured" data-t="f-prague-measured"><span>01</span>Prague, measured</a></li><li><a href="#f-pop-measured" data-t="f-pop-measured"><span>02</span>Pop, measured</a></li><li><a href="#f-persistence" data-t="f-persistence"><span>03</span>Persistence</a></li><li><a href="#f-player-pool-atlas" data-t="f-player-pool-atlas"><span>04</span>Player Pool Atlas</a></li></ol></nav>
 <main id="work">
   <section class="film" style="--tint:#0d0c05;--move:translate3d(0,2.5%,0) scale(1.08)" id="f-prague-measured" aria-label="Prague, measured">
-    <p class="what" id="what"><span class="nm">Barbora Šandová</span><span class="pre">presents</span><span class="rule" aria-hidden="true"></span><span class="l1">studies from open data</span><span class="l2">design · data · code, all public</span></p>
     <div class="shot" style="view-transition-name:ph-prague-rings;--bg:url(assets/photo/prague-rings.jpg);--bg-s:url(assets/photo/prague-rings-1200.jpg)"></div>
     <div class="film-in">
       <div class="film-txt"><p class="lbl">Data · Prague · a series in five parts</p><h1 class="huge">Prague,<br>measured</h1><p class="dek">Studies of one city from the data it publishes about itself: how its City Assembly votes, how its precincts vote in national elections, how it funds its districts, how housing moves from permit to completion, and how it prices kerb space.</p><div class="ctas"><a class="cta" href="texts/prague-measured"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Read the series</a><a class="cta" href="texts/prague-council"><svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 7h54M48 1l6 6-6 6"/></svg>Start with Part 1</a></div></div>
@@ -355,7 +357,7 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
 
   // header: blends over the photographs, turns solid over the page
   const hd = document.querySelector('.hd');
-  const dark = '.film, .seaband, .band, .ft';
+  const dark = '.film, .seaband, .band, .ft, .slate';
   const solid = () => {
     const under = document.elementsFromPoint(innerWidth / 2, 40).find(el => !hd.contains(el));
     const d = under && under.closest(dark);
@@ -410,6 +412,5 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
 
 })();
 </script>
-<script>(()=>{const w=document.getElementById("what");if(!w)return;let t=0;const f=()=>{t=0;w.style.opacity=Math.max(0,1-scrollY/(innerHeight*.35)).toFixed(3)};addEventListener("scroll",()=>{if(!t)t=requestAnimationFrame(f)},{passive:true});f()})();</script>
 </body>
 </html>
