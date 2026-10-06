@@ -147,3 +147,9 @@ therefore turns that spread into the identification, at the author's decision:
 - **Secondary (descriptive, no label).** The ATT against the size of the price cut (dose), one point per city.
 - **Not estimable** if fewer than three treated and three control cities pass the unit rules.
 - Synthetic control (§4) stays in the code as a per-city check where a city has at least four clean donors.
+
+**6 October 2026 (panel units).** The unit screen for the staggered design is committed in `annual-pass-panel-units.md`.
+Three cities pass: Vienna (treated from 2013), Prague (treated from 2016) and Brno (never treated in the window). That
+is below the minimum of three treated and three control cities, so the staggered design is **not estimable** either.
+Disclosures recorded in that file: a script printed the 1995 row of Vienna's file (outside the window; not used), and
+masked keyword searches of Prague's reports printed lines without digits.
