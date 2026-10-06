@@ -138,4 +138,8 @@ a map of routes by estimated δ (descriptive), and the hour-by-hour precipitatio
 
 ## Changes after registration
 
-None yet.
+**6 October 2026 (author's decisions, before any delay or precipitation value was read).** The thesis's raw vehicle
+positions are on the author's other computer and will be copied to `tools/data/rain/` (not committed); §2 rule 1–3
+applies to them as written. The ±10 s equivalence margin of §5 is confirmed. δ_tram is the only primary estimand;
+δ_bus is secondary, reported with its own label and no multiple-testing correction, because it carries no primary
+claim.
