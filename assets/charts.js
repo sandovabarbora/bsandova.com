@@ -217,7 +217,10 @@
         const t = el('text', {x: tx, y: ty, 'text-anchor': k.anchor || 'middle', class: 'ch-callout'}, gm);
         rows.forEach((row, i) => { el('tspan', {x: tx, dy: i ? 13 : 0}, t).textContent = row; });
       } else if (m.type === 'text') {
-        el('text', {x: X(m.x), y: Y(m.y), 'text-anchor': m.anchor || 'start', class: 'ch-note', fill: col(m.c)}, gm).textContent = m.s;
+        // a plain note; narrow screens may give their own x, offsets, anchor or text
+        const k = {...m, ...(narrow && m.narrow || {})};
+        el('text', {x: X(k.x) + (k.dx ?? 0), y: Y(k.y) + (k.dy ?? 0), 'text-anchor': k.anchor || 'start', class: 'ch-note',
+                    fill: col(k.c)}, gm).textContent = k.s;
       }
     }
     // direct labels at line ends, in ink beside a dot of the series colour, pushed apart so they never overlap

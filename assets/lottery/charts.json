@@ -465,6 +465,18 @@
       "v": 981.0,
       "c": "grey",
       "dash": "dash"
+     },
+     {
+      "type": "callout",
+      "x": "1",
+      "y": 858.0,
+      "dx": 16,
+      "dy": 16,
+      "anchor": "start",
+      "s": "4 numbers outside the band; about 2.5 would be by chance",
+      "narrow": {
+       "s": "4 outside the band;\n~2.5 by chance"
+      }
      }
     ]
    }
@@ -1282,6 +1294,19 @@
         "tip": "€110–120 M\nobserved 4 wins in 8 draws\nposterior predictive p = 0.30"
        }
       ]
+     },
+     {
+      "type": "callout",
+      "x": "110–120",
+      "y": 4,
+      "dx": -14,
+      "dy": -30,
+      "anchor": "end",
+      "s": "top range: 4 of 8 draws, 2.1 predicted",
+      "narrow": {
+       "s": "4 of 8,\n2.1 predicted",
+       "dy": -36
+      }
      }
     ]
    }
@@ -2045,6 +2070,19 @@
       "c": "ink",
       "label": "price of a column, €2",
       "anchor": "end"
+     },
+     {
+      "type": "callout",
+      "x": 120.0,
+      "y": 1.28707,
+      "dx": -14,
+      "dy": -30,
+      "anchor": "end",
+      "s": "at the €120 M cap: €1.29, below the €2 price",
+      "narrow": {
+       "s": "cap: €1.29,\nbelow €2",
+       "dy": -36
+      }
      }
     ]
    }
@@ -2217,6 +2255,19 @@
         "tip": "importance sampling, ×1 000 000\nestimate €0.0677, 95 % CI 0.0639 to 0.0716\njackpots in the sample: 7 084"
        }
       ]
+     },
+     {
+      "type": "callout",
+      "x": 0.0,
+      "y": "naive, paired · 0 jackpots",
+      "dx": -16,
+      "dy": -14,
+      "anchor": "end",
+      "s": "0 ± 0: no jackpot sampled",
+      "narrow": {
+       "s": "0 ± 0: no jackpot\nin the sample",
+       "dy": 4
+      }
      }
     ]
    }

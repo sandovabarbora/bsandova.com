@@ -28,10 +28,13 @@ def callout(panel: dict, co: dict) -> None:
     marks.append({"type": "callout", **co})
 
 
-def note(panel: dict, x: float, y: str, s: str, left: bool = False) -> None:
+def note(panel: dict, x: float, y: str, s: str, left: bool = False, narrow: dict | None = None) -> None:
     """A label beside a row's interval, without a leader: a callout's ring would read as a data point there."""
-    panel["marks"].append({"type": "text", "x": x / 1.12 if left else x * 1.12, "y": y, "anchor": "end" if left else "start",
-                           "c": "ink", "s": s, "story": True})
+    m = {"type": "text", "x": x / 1.12 if left else x * 1.12, "y": y, "anchor": "end" if left else "start",
+         "c": "ink", "s": s, "story": True}
+    if narrow:
+        m["narrow"] = narrow
+    panel["marks"].append(m)
 
 
 def clear(panel: dict) -> None:
@@ -92,7 +95,8 @@ def artist(slug: str) -> None:
         r = next(r for r in next(m for m in p["marks"] if m["type"] == "vrange")["rows"] if r["x"] < 0 and r["x"] > -0.5)
         callout(p, {"x": r["x"], "y": r["mid"], "dx": 30, "dy": 112, "anchor": "start",
                     "s": f"hotels, show month: {r['mid']:+.2f}, band {r['lo']:.1f} to {r['hi']:+.1f}".replace("-", "−"),
-                    "narrow": {"s": f"hotels, show month\n{r['mid']:+.2f} ({r['lo']:.1f} to {r['hi']:+.1f})".replace("-", "−"), "dx": 18, "dy": 96}})
+                    "narrow": {"s": f"hotels, show month\n{r['mid']:+.2f} ({r['lo']:.1f} to {r['hi']:+.1f})".replace("-", "−"),
+                               "dx": -12, "dy": 112, "anchor": "end"}})
 
     f.write_text(json.dumps(charts, ensure_ascii=False))
 
@@ -104,7 +108,9 @@ def together() -> None:
     clear(p)
     rows = next(m for m in p["marks"] if m["type"] == "range")["rows"]
     es = next(r for r in rows if r["y"].startswith("Spanish"))
-    note(p, es["lo"], es["y"], f"one song: {es['mid']:.1f}×", left=True)
+    # on a phone the row's name sits above its interval, so the note goes below the interval, centred on its estimate
+    note(p, es["lo"], es["y"], f"one song: {es['mid']:.1f}×", left=True,
+         narrow={"x": es["mid"], "dy": 17, "anchor": "middle"})
     clear(charts["elasticity"]["panels"][0])  # the headline names Taylor Swift's interval; no room beside it
     f.write_text(json.dumps(charts, ensure_ascii=False))
 
