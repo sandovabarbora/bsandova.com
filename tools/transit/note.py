@@ -71,14 +71,14 @@ def figures(p: pd.DataFrame) -> dict:
     idx = {c: (p[c] / p.loc[BASE, c].mean() * 100).dropna().loc[2005:] for c in ("Vienna", "Prague", "Brno")}
     marks = [{"type": "span", "v0": 2019.5, "v1": 2025.5, "c": "light", "o": 0.25, "label": "COVID"},
              {"type": "rule", "axis": "y", "v": 100, "c": "grey"},
-             {"type": "rule", "axis": "x", "v": CUTS["Vienna"], "c": "held", "dash": "dot", "label": "Vienna cut",
-              "anchor": "end", "dy": 24},
-             {"type": "rule", "axis": "x", "v": CUTS["Prague"], "c": "ink", "dash": "dot", "label": "Prague cut",
-              "dy": 24},
-             {"type": "rule", "axis": "x", "v": 2013.5, "c": "grey", "dash": "dash", "w": 0.8, "label": "Prague: surveys",
-              "anchor": "end", "dy": 200},
+             {"type": "rule", "axis": "x", "v": CUTS["Vienna"], "c": "held", "dash": "dot", "label": "Vienna cut →",
+              "anchor": "end", "dy": 190},
+             {"type": "rule", "axis": "x", "v": CUTS["Prague"], "c": "ink", "dash": "dot", "label": "← Prague cut",
+              "dy": 190},
+             {"type": "rule", "axis": "x", "v": 2013.5, "c": "grey", "dash": "dash", "w": 0.8, "label": "surveys →",
+              "anchor": "end", "dy": 214},
              {"type": "rule", "axis": "x", "v": 2019.5, "c": "grey", "dash": "dash", "w": 0.8,
-              "label": "Prague: auto counts", "anchor": "end", "dy": 184}]
+              "label": "← auto counts", "dy": 214}]
     for c, s in idx.items():
         key, _, dash = STYLE[c]
         marks.append({"type": "line", "name": c, "pts": [[int(y), round(float(v), 1)] for y, v in s.items()],
