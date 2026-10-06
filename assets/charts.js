@@ -61,6 +61,16 @@
   };
 
   // one panel into an <svg>; returns hover targets in svg coordinates
+  // how category names fit a slot of the given width: {parts per name, lines, every k-th shown}
+  function catLayout(names, slot) {
+    const w = n => 6.6 * n + 6;
+    if (slot >= w(Math.max(...names.map(n => n.length)))) return {parts: names.map(n => [n]), lines: 1, every: 1};
+    const split = names.map(splitMid);
+    if (slot >= w(Math.max(...split.flat().map(n => n.length)))) return {parts: split, lines: 2, every: 1};
+    const every = Math.ceil(w(Math.max(...names.map(n => n.length))) / slot);
+    return {parts: names.map(n => [n]), lines: 1, every};
+  }
+
   function splitMid(s) {
     const mid = s.length / 2;
     let k = -1;
@@ -82,16 +92,23 @@
     const top = box.y + (P.title ? 24 : 8) + (P.y.label && !catY ? 16 : 0);
     // an x-axis title wider than the panel breaks at the space nearest its middle, and the panel keeps room for both lines
     const xLab = P.x.label ? (6.6 * P.x.label.length > box.w - 8 ? splitMid(P.x.label) : [P.x.label]) : [];
-    const bottom = box.y + box.h - (xLab.length ? 28 + 12 * xLab.length : 24);
     const right = box.x + box.w - (P.padRight ?? 12);
+    // category names under the x axis: one line if they fit, else two lines at a space, else every k-th name
+    const xCats = P.x.kind === 'cat' && P.x.labels !== false ? catLayout(P.x.domain.map(String), (right - left) / P.x.domain.length) : null;
+    const catExtra = xCats && xCats.lines > 1 ? 12 : 0;
+    const bottom = box.y + box.h - (xLab.length ? 28 + 12 * xLab.length : 24) - catExtra;
     const X = scale(P.x, left, right), Y = catY ? scale(P.y, top, bottom) : scale(P.y, bottom, top);
 
     if (P.title) el('text', {x: box.x, y: box.y + 12, class: 'ch-title'}, g).textContent = P.title;
     // grid and ticks
     const gx = el('g', {class: 'ch-axis'}, g);
-    if (P.x.kind === 'cat' && P.x.labels !== false) {
-      const Xc = scale(P.x, left, right), fits = Xc.step >= 6.6 * maxLen(P.x.domain.map(String)) + 6;
-      if (fits) for (const c of P.x.domain) el('text', {x: Xc(c), y: bottom + 15, 'text-anchor': 'middle', class: 'ch-cat'}, gx).textContent = c;
+    if (xCats) {
+      const Xc = scale(P.x, left, right);
+      P.x.domain.forEach((c, i) => {
+        if (i % xCats.every) return;
+        const t = el('text', {x: Xc(c), y: bottom + 15, 'text-anchor': 'middle', class: 'ch-cat'}, gx);
+        xCats.parts[i].forEach((line, j) => el('tspan', {x: Xc(c), dy: j ? 12 : 0}, t).textContent = line);
+      });
     }
     if (P.x.kind !== 'cat') for (const t of niceTicks(P.x)) {
       const x = X(t);
@@ -110,7 +127,7 @@
     el('line', {x1: left, x2: right, y1: bottom, y2: bottom, stroke: COL.grey, 'stroke-width': 1}, gx);
     xLab.forEach((t, i) => {
       const cx = xLab.length > 1 ? box.x + box.w / 2 : (left + right) / 2;
-      el('text', {x: cx, y: bottom + 33 + 13 * i, 'text-anchor': 'middle', class: 'ch-lab'}, gx).textContent = t;
+      el('text', {x: cx, y: bottom + 33 + catExtra + 13 * i, 'text-anchor': 'middle', class: 'ch-lab'}, gx).textContent = t;
     });
     if (P.y.label && !catY) el('text', {x: left, y: top - 8, class: 'ch-lab'}, gx).textContent = P.y.label;
     const barY = c => stackCats ? Y(c) + Y.step * 0.12 : Y(c);
