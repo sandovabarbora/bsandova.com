@@ -232,6 +232,14 @@
       el('line', {x1: ex, x2: ex + 8, y1: y - 4, y2: y - 4, stroke: c, 'stroke-width': 3, 'stroke-linecap': 'round', 'data-key': m.name}, gm);
       el('text', {x: ex + 12, y, class: 'ch-end', 'data-key': m.name}, gm).textContent = m.end === true ? m.name : m.end;
     }
+    // white halo as its own layer under each label: Safari ignores paint-order on some text and paints the stroke over the glyphs
+    for (const t of g.querySelectorAll('text.ch-callout,text.ch-end,text.ch-note,text.ch-cat,text.ch-val')) {
+      if ((t.getAttribute('style') || '').includes('stroke:none')) continue;
+      const h = t.cloneNode(true);
+      h.classList.add('ch-halo'); h.setAttribute('aria-hidden', 'true');
+      t.parentNode.insertBefore(h, t);
+      t.classList.add('ch-ink');
+    }
     targets.clip = {rect: clip, x0: left - box.x + 4, w: box.w + 8};
     // lines and bands: one crosshair target per x of the first line, listing every series at that x
     if (lines.length) {
