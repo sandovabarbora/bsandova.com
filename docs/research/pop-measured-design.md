@@ -112,3 +112,11 @@ Mundo 2022" and "Most Wanted Tour (Bad Bunny)", collected on 3 October 2026 at t
 Q3 and Q5 and part 6's M2 were recomputed: Q3 143 entries, 222 shows (were 87, 138); Q5 28 countries (were 27); M2
 484 entries, 13 tours, elasticity 0.224 (95 % CI 0.102 to 0.347; was 0.218, 0.095 to 0.341).
 
+
+**6 October 2026 (Q1 reference set, a correction).** kworb's track page for The Chainsmokers' *Closer* (2016) lists
+dates only from 5 March 2026, fewer than the song's 1 952 days in the chart, so its first listed date was read as 2026
+and the song was kept, against the rule that songs whose start is not seen are left out (part 1 design §3). It is now
+listed in `parse.py` (`UNSEEN_START`) and left out; of the other 22 kept songs whose track pages are also truncated,
+none was released before 2017. Q1 was recomputed for the four parts that use the peak-1 set (Taylor Swift's uses
+peak 2 and does not contain it). Because one random stream serves every bootstrap in `analyse.py`, the intervals of
+Q2 and Q3 are redrawn too, with unchanged data and point estimates.

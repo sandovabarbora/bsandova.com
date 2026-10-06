@@ -47,6 +47,14 @@ def charting(cc: str) -> set[str]:
     return set(re.findall(r"track/([A-Za-z0-9]+)\.html", text))
 
 
+# Track pages that kworb truncates so that a song charting from the chart's first day shows a later first date; their
+# start is not seen, so the registered rule (part 1 design §3) leaves them out. Each is dated by its own release.
+UNSEEN_START = {
+    "7BKLCZ1jbUBVqRi2FVlTVw": "The Chainsmokers - Closer, released 29 July 2016; its track page lists dates only from "
+                              "5 March 2026, fewer than its 1 952 days in the chart",
+}
+
+
 def first_date(track: str) -> str | None:
     path = RAW / "tracks" / f"{track}.html"
     if not path.exists():
@@ -74,7 +82,8 @@ def ones(artist: dict, song: dict) -> list[dict]:
             missing.append(r["track"])
         out.append({"track": r["track"], "label": r["label"], "peak": r["peak"], "own": artist["spotify"] in r["artists"],
                     "focal": r["track"] == song["track"], "days": r["days"], "first_listed": first or "",
-                    "still_charting": r["track"] in now, "kept": bool(first) and first >= "2017-01-08"})
+                    "still_charting": r["track"] in now,
+                    "kept": bool(first) and first >= "2017-01-08" and r["track"] not in UNSEEN_START})
     if missing:
         sys.exit(f"{len(missing)} track pages missing; collect them first: {missing[:5]}")
     return out
