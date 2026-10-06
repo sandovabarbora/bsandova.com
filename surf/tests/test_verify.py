@@ -61,3 +61,35 @@ def test_skill_beats_baselines(tmp_path):
 def test_quality_counts_missing_days(tmp_path):
     d = build(tmp_path)
     assert d["quality"]["issues"] == 45 and d["quality"]["null_share_by_model"]["gwam"] == 0.0
+
+
+def test_nothing_is_readable_before_eight_weeks(tmp_path):
+    d = build(tmp_path)  # 45 issues: 30+ pairs per lead, but in 7 ISO weeks
+    e = d["pooled"]["gwam"]["1"]
+    assert e["n"] >= 30 and e["weeks"] < 8 and e["readable"] is False
+    assert d["skill"]["x"]["gwam"]["1"]["readable"] is False and d["spread"]["1"]["readable"] is False
+
+
+def test_reading_rule_quantities_after_eight_weeks(tmp_path):
+    d = build(tmp_path, issues=70)
+    p1, p6 = d["pooled"]["gwam"]["1"], d["pooled"]["gwam"]["6"]
+    assert p1["readable"] and p6["readable"]
+    for e in (p1, p6):
+        for k in ("mae_swell", "bias_swell", "spearman_swell", "positive_error_share"):
+            lo, hi = e[f"{k}_ci95"]
+            assert lo <= e[k] <= hi, (k, e[k], lo, hi)
+    assert p6["positive_error_share_ci95"][0] > 0.5                   # over-forecast planted at long leads
+    assert p1["spearman_swell"] > p6["spearman_swell"]
+    s1, s6 = d["spread"]["1"], d["spread"]["6"]
+    assert s1["members"] == 3 and s1["readable"]
+    assert s1["share_spread_le_0_3"] > s6["share_spread_le_0_3"] and s6["share_spread_gt_0_5"] > s1["share_spread_gt_0_5"]
+    lo, hi = s6["share_spread_gt_0_5_ci95"]
+    assert lo <= s6["share_spread_gt_0_5"] <= hi
+    b = d["skill"]["x"]["gwam"]["6"]
+    assert b["bias_swell_ci95"][0] <= b["bias_swell"] <= b["bias_swell_ci95"][1]
+
+
+def test_spread_leaves_out_days_with_a_missing_member(tmp_path):
+    d = build(tmp_path, issues=70)
+    rows_total = d["pooled"]["gwam"]["2"]["n"]
+    assert d["spread"]["2"]["n"] == rows_total                        # all three models present every day here

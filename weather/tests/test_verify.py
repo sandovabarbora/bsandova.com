@@ -12,11 +12,12 @@ import weather.verify as V
 from weather.collect import windows
 
 
-def build_world(tmp: Path, n_issues=45, seed=3):
+def build_world(tmp: Path, n_issues=45, seed=3, models=("best_match", "icon_seamless"), scale=None, extra=None):
+    """scale: model -> multiplier of the temperature error; extra: station -> added error s.d. (planted effects)."""
     rng = random.Random(seed)
     start = date(2026, 6, 1)
     stations = ["ruzyne", "klementinum"]
-    models = ["best_match", "icon_seamless"]
+    models = list(models); scale = scale or {}; extra = extra or {}
     # truth: a smooth seasonal tmax + noise, rain on ~30 % of days
     truth = {}
     for i in range(n_issues + 8):
@@ -35,7 +36,7 @@ def build_world(tmp: Path, n_issues=45, seed=3):
                 for lead in range(7):
                     t = (issue + timedelta(days=lead)).isoformat()
                     o = truth[t]
-                    err = rng.gauss(0, 0.6 + 0.5 * lead)          # error grows with lead
+                    err = rng.gauss(0, (0.6 + 0.5 * lead) * scale.get(m, 1.0)) + rng.gauss(0, extra.get(s, 0) or 1e-9)  # grows with lead
                     days[t] = {"tmax": round(o["tmax"] + 1.0 + err, 1),  # planted +1.0 °C warm bias
                                "tmin": round(o["tmin"] + err / 2, 1),
                                "precip": round(o["precip"] if rng.random() < 0.85 - 0.06 * lead else rng.choice([0.0, 4.0]), 1)}
@@ -105,3 +106,45 @@ def test_string_values_from_the_source_are_missing_not_crashes(tmp_path, monkeyp
     (tmp_path / "observations.json").write_text(json.dumps(obs))
     monkeypatch.setattr(V, "DATA", tmp_path); monkeypatch.setattr(V, "OUT", tmp_path / "data.json")
     V.main()                                                  # must not raise
+
+
+def run(tmp_path, monkeypatch, **kw):
+    build_world(tmp_path, **kw)
+    monkeypatch.setattr(V, "DATA", tmp_path); monkeypatch.setattr(V, "OUT", tmp_path / "data.json")
+    V.main()
+    return json.loads((tmp_path / "data.json").read_text())
+
+
+def test_nothing_is_readable_before_eight_weeks(world):
+    e = world["skill"]["ruzyne"]["best_match"]["1"]
+    assert e["n"] >= V.DESCRIPTIVE and e["weeks"] < V.READ_WEEKS and e["readable"] is False   # 45 days: 30+ pairs, 7 weeks
+
+
+def test_readable_after_eight_weeks_with_intervals_that_bracket(tmp_path, monkeypatch):
+    d = run(tmp_path, monkeypatch, n_issues=70)
+    e = d["skill"]["ruzyne"]["best_match"]["1"]
+    assert e["readable"] is True and e["weeks"] >= V.READ_WEEKS
+    lo, hi = e["bias_tmax_ci"]
+    assert lo <= e["bias_tmax"] <= hi and lo > 0                     # the planted +1.0 °C warm bias
+    r = d["skill"]["ruzyne"]["ensemble"]["1"]
+    lo, hi = r["bss_vs_climatology_ci95"]
+    assert lo <= r["bss_vs_climatology"] <= hi and hi > 0             # the interval brackets the point
+    lo, hi = r["brier_persistence_minus_climatology_ci95"]
+    assert lo <= r["brier_persistence_minus_climatology"] <= hi
+
+
+def test_paired_differences_recover_planted_effects(tmp_path, monkeypatch):
+    d = run(tmp_path, monkeypatch, n_issues=70, models=("icon_seamless", "ecmwf_ifs025", "gfs_seamless"),
+            scale={"ecmwf_ifs025": 0.4}, extra={"klementinum": 2.0})
+    c = d["comparisons"]["models"]["ruzyne"]["ecmwf_ifs025 - icon_seamless"]["5"]
+    assert c["readable"] and c["mae_difference_ci95"][1] < 0          # ECMWF planted with the smaller error
+    c = d["comparisons"]["models"]["ruzyne"]["icon_seamless - ecmwf_ifs025"]["5"]
+    assert c["mae_difference_ci95"][0] > 0
+    k = d["comparisons"]["stations"]["klementinum - ruzyne"]["icon_seamless"]["1"]
+    assert k["readable"] and k["mae_difference_ci95"][0] > 0          # Klementinum planted with extra error
+
+
+def test_comparisons_respect_the_gate(tmp_path, monkeypatch):
+    d = run(tmp_path, monkeypatch, n_issues=10, models=("icon_seamless", "ecmwf_ifs025"))
+    c = d["comparisons"]["models"]["ruzyne"]["ecmwf_ifs025 - icon_seamless"]["1"]
+    assert c["n"] < V.MIN_PAIRS and "mae_difference" not in c and c["readable"] is False

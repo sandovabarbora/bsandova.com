@@ -7,7 +7,12 @@ model and lead: MAE, bias and RMSE of daily max and min temperature; MAE of prec
 contingency table (≥ 1.0 mm), probability of detection and false-alarm ratio; the Brier score of the
 rain share of the distinct models against day-of-year climatology (1991–2020) and against
 persistence (rain on the day before the issue); MAE of temperature against the same two baselines. Intervals by block bootstrap over ISO
-weeks. Gates as on the surf page: nothing shown under MIN_PAIRS, "descriptive" under DESCRIPTIVE.
+weeks: on the daily-maximum MAE and bias, and on the quantities the protocol's reading rules need
+(texts/forecast-verification): the Brier skill score against climatology and the Brier score of
+persistence minus that of climatology (Prague 2), the paired MAE differences between models (Prague 3)
+and between the two stations (Prague 1). Gates as on the surf page: nothing shown under MIN_PAIRS,
+"descriptive" under DESCRIPTIVE, and an interval is read only with at least DESCRIPTIVE pairs in at
+least READ_WEEKS distinct ISO weeks ("readable").
 Protocol corrections of 29 September 2026: persistence is the last observation available at issue
 time (issue - 1 day), not the day before the target; precipitation is not scored at lead 0, whose
 06:00 UTC window has already closed when the collector runs at 06:40 UTC; the ensemble rain
@@ -28,7 +33,8 @@ ROOT = Path(__file__).resolve().parent
 DATA = ROOT / "data"
 OUT = ROOT / "data.json"
 RAIN_MM = 1.0
-MIN_PAIRS, DESCRIPTIVE, BOOT = 14, 30, 500
+MIN_PAIRS, DESCRIPTIVE, BOOT, READ_WEEKS = 14, 30, 500, 8
+PAIRED_MODELS = [("ecmwf_ifs025", "icon_seamless"), ("ecmwf_ifs025", "gfs_seamless"), ("icon_seamless", "ecmwf_ifs025")]
 LEADS = range(0, 7)
 NOT_IN_ENSEMBLE = {"best_match"}  # resolves to ICON for Prague; a duplicate member, kept as its own column
 
@@ -66,6 +72,24 @@ def mean(xs):
     return sum(xs) / len(xs) if xs else None
 
 
+def read_gate(dates) -> dict:
+    """Pairs, the distinct ISO weeks they fall in, and whether an interval may be read."""
+    n, weeks = len(dates), len({week_of(d) for d in dates})
+    return {"n": n, "weeks": weeks, "descriptive": n < DESCRIPTIVE, "readable": n >= DESCRIPTIVE and weeks >= READ_WEEKS}
+
+
+def paired_mae_difference(a: list, b: list) -> dict:
+    """a, b: (target, obs, fc) of two series; MAE of a minus MAE of b over the target dates both have."""
+    fb = {t: (o, f) for t, o, f in b}
+    rows = [(t, abs(f["tmax"] - o["tmax"]), abs(fb[t][1]["tmax"] - fb[t][0]["tmax"])) for t, o, f in a if t in fb]
+    entry = read_gate([t for t, _, _ in rows])
+    if entry["n"] >= MIN_PAIRS:
+        d = lambda xs: mean([x - y for _, x, y in xs])
+        entry["mae_difference"] = round(d(rows), 3)
+        entry["mae_difference_ci95"] = block_bootstrap(rows, d, lambda it: week_of(it[0]))
+    return entry
+
+
 def contingency(pairs):
     """pairs: (obs_precip, fc_precip). Returns counts and rates for rain ≥ RAIN_MM."""
     h = m = f = c = 0
@@ -77,6 +101,15 @@ def contingency(pairs):
             "p_rain_given_yes": round(h / (h + f), 3) if h + f else None,
             "p_rain_given_no": round(m / (m + c), 3) if m + c else None,
             "obs_rain_share": round((h + m) / len(pairs), 3) if pairs else None}
+
+
+def bss_clim(rows):
+    bc = mean([(r["pc"] - r["o"]) ** 2 for r in rows])
+    return 1 - mean([(r["p"] - r["o"]) ** 2 for r in rows]) / bc if bc else None
+
+
+def pers_minus_clim(rows):
+    return mean([(r["pp"] - r["o"]) ** 2 for r in rows]) - mean([(r["pc"] - r["o"]) ** 2 for r in rows])
 
 
 def main() -> None:
@@ -125,13 +158,14 @@ def main() -> None:
             for lead in LEADS:
                 ps = pairs.get((s, m, lead), [])
                 n = len(ps)
-                entry = {"n": n, "descriptive": n < DESCRIPTIVE}
+                entry = read_gate([t for t, _, _ in ps])
                 if n >= MIN_PAIRS:
                     et = [f["tmax"] - o["tmax"] for _, o, f in ps]; en = [f["tmin"] - o["tmin"] for _, o, f in ps]
                     entry.update({
                         "mae_tmax": round(mean([abs(e) for e in et]), 2), "bias_tmax": round(mean(et), 2), "rmse_tmax": round((mean([e * e for e in et])) ** 0.5, 2),
                         "mae_tmin": round(mean([abs(e) for e in en]), 2), "bias_tmin": round(mean(en), 2),
                         "mae_tmax_ci": block_bootstrap(ps, lambda xs: mean([abs(f["tmax"] - o["tmax"]) for _, o, f in xs]), lambda it: week_of(it[0])),
+                        "bias_tmax_ci": block_bootstrap(ps, lambda xs: mean([f["tmax"] - o["tmax"] for _, o, f in xs]), lambda it: week_of(it[0])),
                     })
                     if lead == 0:
                         # the rain window (D-1 06:00, D 06:00] has closed before the 06:40 UTC run: a hindcast, not scored;
@@ -164,7 +198,7 @@ def main() -> None:
                 rows.append({"target": target, "p": sum(votes) / len(votes), "o": int(o["precip"] >= RAIN_MM),
                              "pc": clim.get(s, {}).get(doy(target), {}).get("rain1_freq"),
                              "pp": int(obs[s][y]["precip"] >= RAIN_MM) if y in obs[s] and "precip" in obs[s][y] else None})
-            e = {"n": len(rows), "descriptive": len(rows) < DESCRIPTIVE}
+            e = read_gate([r["target"] for r in rows])
             if len(rows) >= MIN_PAIRS:
                 bs = mean([(r["p"] - r["o"]) ** 2 for r in rows])
                 bc = mean([(r["pc"] - r["o"]) ** 2 for r in rows if r["pc"] is not None])
@@ -173,9 +207,22 @@ def main() -> None:
                           "bss_vs_climatology": round(1 - bs / bc, 3) if bc else None,
                           "brier_persistence": round(bp, 4) if bp is not None else None,
                           "bss_vs_persistence": round(1 - bs / bp, 3) if bp else None,
+                          "bss_vs_climatology_ci95": block_bootstrap([r for r in rows if r["pc"] is not None], bss_clim, lambda r: week_of(r["target"])),
+                          "brier_persistence_minus_climatology": round(bp - bc, 4) if bp is not None and bc is not None else None,
+                          "brier_persistence_minus_climatology_ci95": block_bootstrap([r for r in rows if r["pc"] is not None and r["pp"] is not None], pers_minus_clim, lambda r: week_of(r["target"])),
                           "reliability": {str(k): {"n": len(g), "obs": round(mean([r["o"] for r in g]), 3)}
                                           for k, g in sorted({round(r["p"], 2): [x for x in rows if round(x["p"], 2) == round(r["p"], 2)] for r in rows}.items())}})
             skill[s]["ensemble"][str(lead)] = e
+
+    # the reading rules' paired comparisons: models against each other at one station (Prague 3), and the
+    # same model at the two stations (Prague 1), each over the target dates both series have
+    comparisons: dict = {"models": {}, "stations": {}}
+    for s in stations:
+        comparisons["models"][s] = {f"{a} - {b}": {str(lead): paired_mae_difference(pairs.get((s, a, lead), []), pairs.get((s, b, lead), []))
+                                                    for lead in LEADS} for a, b in PAIRED_MODELS if a in models and b in models}
+    if {"klementinum", "ruzyne"} <= set(stations):
+        comparisons["stations"]["klementinum - ruzyne"] = {m: {str(lead): paired_mae_difference(pairs.get(("klementinum", m, lead), []), pairs.get(("ruzyne", m, lead), []))
+                                                               for lead in LEADS} for m in models}
 
     # quality
     expected = ((date.fromisoformat(issues[-1]) - date.fromisoformat(issues[0])).days + 1) if issues else 0
@@ -203,9 +250,9 @@ def main() -> None:
     latest = {s: {m: fcs[issues[-1]]["stations"][s][m] for m in models} for s in stations} if issues else {}
     out = {"generated": date.today().isoformat(), "truth": "ČHMÚ station observations (TMA/TMI 20:00 UTC windows, SRA 06:00 UTC window)",
            "stations": stations, "models": models, "issues": issues, "rain_mm": RAIN_MM,
-           "gates": {"min_pairs": MIN_PAIRS, "descriptive_below": DESCRIPTIVE, "bootstrap_reps": BOOT, "bootstrap_block": "ISO week"},
+           "gates": {"min_pairs": MIN_PAIRS, "descriptive_below": DESCRIPTIVE, "read_weeks": READ_WEEKS, "bootstrap_reps": BOOT, "bootstrap_block": "ISO week"},
            "climatology_reference": "1991–2020 ±15 days by day of year", "latest": latest, "recent_obs": {s: dict(sorted(obs[s].items())[-14:]) for s in stations},
-           "skill": skill, "quality": quality}
+           "skill": skill, "comparisons": comparisons, "quality": quality}
     OUT.write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n")
     print(f"weather: {len(issues)} issues, pairs per (station, model, lead): {sum(len(v) for v in pairs.values())} total; quality {quality['null_share_by_model']}")
 
