@@ -159,3 +159,9 @@ author's decision: the indexed passenger series of Vienna, Prague and Brno, 2005
 of Berlin and Germany around the 9-euro ticket and the Deutschlandticket; no effect is estimated and no label is
 given. The note explains why the comparison cannot be made causal from the published data. Passenger values are read
 from here on.
+
+**6 October 2026 (data).** The year-by-year collection (`annual-pass-passengers.csv`, `annual-pass-prices.csv`) found
+documented method changes in Prague's DPP series that the panel screen missed: ticket-sales estimates replaced by
+transport surveys from 2014 and automatic counting from 2020, plus a 2005 method change and a 2011 ticket buy-back.
+Under rule 1 Prague would have failed the screen; the conclusion (not estimable) is unchanged. All breaks are listed
+in the note.
