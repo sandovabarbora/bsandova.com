@@ -193,6 +193,14 @@ figure.ch-live>img[hidden]{display:none}
 .ch-table table{width:100%;border-collapse:collapse;font:400 12px/1.4 var(--mono);font-variant-numeric:tabular-nums}
 .ch-table th{text-align:left;color:#666;font-weight:400;padding:6px 12px 6px 0;border-bottom:1px solid #000;position:sticky;top:0;background:#fff}
 .ch-table td{padding:5px 12px 5px 0;border-bottom:1px solid #eee;white-space:nowrap}
+/* story layer: a takeaway line above the chart, notes tied to data points, labels at line ends, focus while reading */
+.text figure .ch-head,.ch-head{font:500 clamp(19px,1.7vw,24px)/1.25 var(--sans);text-align:left;hyphens:none;letter-spacing:-.015em;color:#000;margin:0 0 14px;max-width:34em}
+.ch-svg .ch-callout{fill:#111;font:400 11.5px var(--sans);paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round}
+.ch-svg .ch-end{fill:#111;font:500 12px var(--sans);paint-order:stroke;stroke:#fff;stroke-width:3px;stroke-linejoin:round}
+.ch-svg [data-key]{transition:opacity .35s,stroke-width .35s}
+.ch-has-focus .ch-svg [data-key]:not(.ch-on){opacity:.2}
+.ch-has-focus .ch-svg .ch-line.ch-on{stroke-width:3px}
+@media (prefers-reduced-motion:reduce){.ch-svg [data-key]{transition:none}}
 /* interactive maps (assets/map.js), after the precinct map of Part 2 */
 figure.mp-live>img[hidden]{display:none}
 .mp-bar{display:flex;flex-wrap:wrap;gap:6px 18px;margin:0 0 .8rem;font:400 13px var(--sans);text-transform:uppercase;letter-spacing:.02em}

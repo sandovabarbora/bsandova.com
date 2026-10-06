@@ -5,13 +5,19 @@
    A chart spec: {alt, panels:[{title, h, w, x:axis, y:axis, marks:[...]}], legend:[{label, c, dash, shape}],
    table:{cols, rows}, data:[paths]}. An axis: {kind:'linear'|'log'|'cat', domain, ticks, fmt, label}. A fmt:
    {dp, unit, pre, sign}. Marks: line, area, dots, hbar, vbar, range, vrange, arrow, cell, rule, span, text (see drawPanel).
-   spec.layout: 'rows' stacks the panels vertically at every width. An axis with labels:false draws no category names. */
+   spec.layout: 'rows' stacks the panels vertically at every width. An axis with labels:false draws no category names.
+   A line may carry o (opacity) and end (a label at its last point, in ink; give the panel padRight for it); a callout
+   {x, y, s, dx, dy, anchor, narrow:{...}} ties a short note to one data point. Data marks wipe in from the left the
+   first time a figure is half in view (not under prefers-reduced-motion), and a paragraph with
+   data-focus="<chart id>:<series>[,<series>]" keeps those lines strong, the others receding, while it is read. */
 (() => {
   const NS = 'http://www.w3.org/2000/svg';
   const COL = {held: '#34507c', ink: '#111111', grey: '#666666', light: '#b5b5b0', grid: '#e6e6e3'};
   const DASH = {dash: '5 3', dot: '1.5 2.5', long: '8 4'};
   const col = c => COL[c] || c || COL.held;
   const nbsp = ' ';
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+  let uid = 0;
 
   const fmt = (v, f = {}) => {
     if (v == null || Number.isNaN(v)) return '–';
@@ -97,67 +103,71 @@
     if (P.y.label && !catY) el('text', {x: left, y: top - 8, class: 'ch-lab'}, gx).textContent = P.y.label;
     const barY = c => stackCats ? Y(c) + Y.step * 0.12 : Y(c);
 
-    const lines = [], placed = [];
+    const clip = el('rect', {x: box.x - 4, y: box.y - 4, width: box.w + 8, height: box.h + 8}, el('clipPath', {id: `chc${++uid}`}, el('defs', {}, g)));
+    const gm = el('g', {'clip-path': `url(#chc${uid})`}, g);
+    const lines = [], placed = [], ends = [];
     // a direct label is drawn only where it does not collide with one already placed; the tooltip still names it
     const free = (x, y, w) => { const b = [x, y - 10, w, 12]; if (b[0] + w > box.x + box.w || placed.some(q => b[0] < q[0] + q[2] && q[0] < b[0] + b[2] && b[1] < q[1] + q[3] && q[1] < b[1] + b[3])) return false; placed.push(b); return true; };
     for (const m of P.marks) {
       const c = col(m.c);
       if (m.type === 'span') {
         const a = X(m.v0), b = X(m.v1);
-        el('rect', {x: Math.min(a, b), y: top, width: Math.abs(b - a), height: bottom - top, fill: c, 'fill-opacity': m.o ?? 0.1}, g);
-        if (m.label) el('text', {x: Math.min(a, b) + 4, y: top + 12, class: 'ch-note', fill: c}, g).textContent = m.label;
+        el('rect', {x: Math.min(a, b), y: top, width: Math.abs(b - a), height: bottom - top, fill: c, 'fill-opacity': m.o ?? 0.1}, gm);
+        if (m.label) el('text', {x: Math.min(a, b) + 4, y: top + 12, class: 'ch-note', fill: c}, gm).textContent = m.label;
       } else if (m.type === 'area') {
         const up = m.pts.map(p => `${X(p[0])},${Y(p[2])}`), dn = m.pts.slice().reverse().map(p => `${X(p[0])},${Y(p[1])}`);
-        el('polygon', {points: up.concat(dn).join(' '), fill: c, 'fill-opacity': m.o ?? 0.14}, g);
+        el('polygon', {points: up.concat(dn).join(' '), fill: c, 'fill-opacity': m.o ?? 0.14}, gm);
         lines.push({m, band: true});
       } else if (m.type === 'line') {
         el('polyline', {points: m.pts.map(p => `${X(p[0])},${Y(p[1])}`).join(' '), fill: 'none', stroke: c, 'stroke-width': m.w ?? 2,
-          'stroke-dasharray': DASH[m.dash], 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, g);
-        if (m.dots) for (const p of m.pts) el('circle', {cx: X(p[0]), cy: Y(p[1]), r: 3, fill: c}, g);
+          'stroke-dasharray': DASH[m.dash], 'stroke-linejoin': 'round', 'stroke-linecap': 'round', 'stroke-opacity': m.o,
+          class: 'ch-line', 'data-key': m.name}, gm);
+        if (m.end) ends.push({m, c, p: m.pts[m.pts.length - 1]});
+        if (m.dots) for (const p of m.pts) el('circle', {cx: X(p[0]), cy: Y(p[1]), r: 3, fill: c}, gm);
         lines.push({m});
       } else if (m.type === 'rule') {
         const d = {stroke: c, 'stroke-width': m.w ?? 1, 'stroke-dasharray': DASH[m.dash]};
         if (m.axis === 'x') {
-          const x = X(m.v); el('line', {...d, x1: x, x2: x, y1: top, y2: bottom}, g);
-          if (m.label) el('text', {x: x + (m.anchor === 'end' ? -4 : 4), y: top + (m.dy ?? 10), 'text-anchor': m.anchor || 'start', class: 'ch-note', fill: c}, g).textContent = m.label;
+          const x = X(m.v); el('line', {...d, x1: x, x2: x, y1: top, y2: bottom}, gm);
+          if (m.label) el('text', {x: x + (m.anchor === 'end' ? -4 : 4), y: top + (m.dy ?? 10), 'text-anchor': m.anchor || 'start', class: 'ch-note', fill: c}, gm).textContent = m.label;
           if (m.tip) targets.push({px: x, py: top + 10, tip: m.tip});
         } else {
-          const y = Y(m.v); el('line', {...d, x1: left, x2: right, y1: y, y2: y}, g);
-          if (m.label) el('text', {x: m.anchor === 'end' ? right - 4 : left + 4, y: y - 5, 'text-anchor': m.anchor || 'start', class: 'ch-note', fill: c}, g).textContent = m.label;
+          const y = Y(m.v); el('line', {...d, x1: left, x2: right, y1: y, y2: y}, gm);
+          if (m.label) el('text', {x: m.anchor === 'end' ? right - 4 : left + 4, y: y - 5, 'text-anchor': m.anchor || 'start', class: 'ch-note', fill: c}, gm).textContent = m.label;
         }
       } else if (m.type === 'hbar') {
         for (const r of m.rows) {
           const y = barY(r.y), bh = Math.min(22, Y.step * (stackCats ? 0.38 : 0.5)), c2 = col(r.c || m.c);
           const a = X(r.x0 ?? (P.x.kind === 'log' ? P.x.domain[0] : 0)), b = X(r.x1);
-          el('rect', {x: Math.min(a, b), y: y - bh / 2, width: Math.max(1, Math.abs(b - a)), height: bh, fill: c2, 'fill-opacity': m.o ?? 0.85, rx: 1}, g);
+          el('rect', {x: Math.min(a, b), y: y - bh / 2, width: Math.max(1, Math.abs(b - a)), height: bh, fill: c2, 'fill-opacity': m.o ?? 0.85, rx: 1}, gm);
           if (r.lo != null) {
-            el('line', {x1: X(r.lo), x2: X(r.hi), y1: y, y2: y, stroke: COL.ink, 'stroke-width': 1.2}, g);
-            for (const v of [r.lo, r.hi]) el('line', {x1: X(v), x2: X(v), y1: y - 5, y2: y + 5, stroke: COL.ink, 'stroke-width': 1.2}, g);
+            el('line', {x1: X(r.lo), x2: X(r.hi), y1: y, y2: y, stroke: COL.ink, 'stroke-width': 1.2}, gm);
+            for (const v of [r.lo, r.hi]) el('line', {x1: X(v), x2: X(v), y1: y - 5, y2: y + 5, stroke: COL.ink, 'stroke-width': 1.2}, gm);
           }
           if (r.label) { const lx = Math.max(a, b, r.hi != null ? X(r.hi) : 0) + 6, over = lx + 6.6 * r.label.length > box.x + box.w;
-            el('text', over ? {x: Math.min(a, b), y: y - bh / 2 - 5, class: 'ch-val'} : {x: lx, y: y + 4, class: 'ch-val'}, g).textContent = r.label; }
+            el('text', over ? {x: Math.min(a, b), y: y - bh / 2 - 5, class: 'ch-val'} : {x: lx, y: y + 4, class: 'ch-val'}, gm).textContent = r.label; }
           targets.push({px: b, py: y, tip: r.tip, box: [Math.min(a, b), y - bh / 2, Math.abs(b - a), bh]});
         }
       } else if (m.type === 'range') {
         for (const r of m.rows) {
           const y = catY ? barY(r.y) : Y(r.y), c2 = col(r.c || m.c);
-          if (r.lo != null) el('line', {x1: X(r.lo), x2: X(r.hi), y1: y, y2: y, stroke: c2, 'stroke-width': m.w ?? 3, 'stroke-linecap': 'round'}, g);
+          if (r.lo != null) el('line', {x1: X(r.lo), x2: X(r.hi), y1: y, y2: y, stroke: c2, 'stroke-width': m.w ?? 3, 'stroke-linecap': 'round'}, gm);
           const x = X(r.mid);
-          if (r.shape === 'd') el('rect', {x: x - 4.5, y: y - 4.5, width: 9, height: 9, transform: `rotate(45 ${x} ${y})`, fill: col(r.fill || 'light'), stroke: COL.grey}, g);
-          else el('circle', {cx: x, cy: y, r: 5, fill: c2, stroke: '#fff', 'stroke-width': 2}, g);
+          if (r.shape === 'd') el('rect', {x: x - 4.5, y: y - 4.5, width: 9, height: 9, transform: `rotate(45 ${x} ${y})`, fill: col(r.fill || 'light'), stroke: COL.grey}, gm);
+          else el('circle', {cx: x, cy: y, r: 5, fill: c2, stroke: '#fff', 'stroke-width': 2}, gm);
           if (r.label) { const lx = X(r.hi ?? r.mid) + 9, over = lx + 6.6 * r.label.length > box.x + box.w;
-            el('text', over ? {x: X(r.lo ?? r.mid), y: y - 9, class: 'ch-val'} : {x: lx, y: y + 4, class: 'ch-val'}, g).textContent = r.label; }
+            el('text', over ? {x: X(r.lo ?? r.mid), y: y - 9, class: 'ch-val'} : {x: lx, y: y + 4, class: 'ch-val'}, gm).textContent = r.label; }
           targets.push({px: x, py: y, tip: r.tip, box: r.lo != null ? [X(r.lo), y - 8, X(r.hi) - X(r.lo), 16] : null});
         }
       } else if (m.type === 'dots') {
         for (const p of m.pts) {
           const x = X(p.x), y = Y(p.y), c2 = col(p.c || m.c);
-          if ((p.shape || m.shape) === 'd') el('rect', {x: x - 4.5, y: y - 4.5, width: 9, height: 9, transform: `rotate(45 ${x} ${y})`, fill: c2}, g);
-          else el('circle', {cx: x, cy: y, r: p.r || m.r || 4.5, fill: c2, 'fill-opacity': p.o ?? m.o ?? 1, stroke: '#fff', 'stroke-width': 1.5}, g);
-          if (p.ring) el('circle', {cx: x, cy: y, r: (p.r || m.r || 4.5) + 3, fill: 'none', stroke: COL.ink, 'stroke-width': 1.2}, g);
+          if ((p.shape || m.shape) === 'd') el('rect', {x: x - 4.5, y: y - 4.5, width: 9, height: 9, transform: `rotate(45 ${x} ${y})`, fill: c2}, gm);
+          else el('circle', {cx: x, cy: y, r: p.r || m.r || 4.5, fill: c2, 'fill-opacity': p.o ?? m.o ?? 1, stroke: '#fff', 'stroke-width': 1.5}, gm);
+          if (p.ring) el('circle', {cx: x, cy: y, r: (p.r || m.r || 4.5) + 3, fill: 'none', stroke: COL.ink, 'stroke-width': 1.2}, gm);
           if (p.label && !narrow) { const w = 6.4 * p.label.length;
             const spot = [[x + 7, y + (p.dy ?? 4)], [x + 7, y - 9], [x + 7, y + 15], [x - 7 - w, y + 4]].find(([lx, ly]) => free(lx, ly, w));
-            if (spot) el('text', {x: spot[0], y: spot[1], class: 'ch-note', fill: c2}, g).textContent = p.label; }
+            if (spot) el('text', {x: spot[0], y: spot[1], class: 'ch-note', fill: c2}, gm).textContent = p.label; }
           targets.push({px: x, py: y, tip: p.tip});
         }
       } else if (m.type === 'vbar') {
@@ -165,28 +175,28 @@
         for (const r of m.rows) {
           const x = X(r.x), bw = Math.max(2, Math.min(40, X.step * 0.7)), c2 = col(r.c || m.c);
           const a = Y(r.y0 ?? (P.y.kind === 'log' ? P.y.domain[0] : 0)), b = Y(r.y1);
-          el('rect', {x: x - bw / 2, y: Math.min(a, b), width: bw, height: Math.max(1, Math.abs(b - a)), fill: c2, 'fill-opacity': r.o ?? m.o ?? 0.85, rx: 1}, g);
-          if (r.lo != null) el('line', {x1: x, x2: x, y1: Y(r.lo), y2: Y(r.hi), stroke: COL.ink, 'stroke-width': 1.2}, g);
-          if (r.label && bw >= 14) el('text', {x, y: Math.min(a, b) - 5, 'text-anchor': 'middle', class: 'ch-val'}, g).textContent = r.label;
+          el('rect', {x: x - bw / 2, y: Math.min(a, b), width: bw, height: Math.max(1, Math.abs(b - a)), fill: c2, 'fill-opacity': r.o ?? m.o ?? 0.85, rx: 1}, gm);
+          if (r.lo != null) el('line', {x1: x, x2: x, y1: Y(r.lo), y2: Y(r.hi), stroke: COL.ink, 'stroke-width': 1.2}, gm);
+          if (r.label && bw >= 14) el('text', {x, y: Math.min(a, b) - 5, 'text-anchor': 'middle', class: 'ch-val'}, gm).textContent = r.label;
           targets.push({px: x, py: Math.min(a, b), tip: r.tip, box: [x - bw / 2, Math.min(a, b), bw, Math.abs(b - a)]});
         }
       } else if (m.type === 'vrange') {
         // vertical intervals: rows {x, lo, hi, mid}
         for (const r of m.rows) {
           const x = X(r.x), c2 = col(r.c || m.c);
-          if (r.lo != null) el('line', {x1: x, x2: x, y1: Y(r.lo), y2: Y(r.hi), stroke: c2, 'stroke-width': m.w ?? 2, 'stroke-linecap': 'round', 'stroke-opacity': r.o ?? 1}, g);
+          if (r.lo != null) el('line', {x1: x, x2: x, y1: Y(r.lo), y2: Y(r.hi), stroke: c2, 'stroke-width': m.w ?? 2, 'stroke-linecap': 'round', 'stroke-opacity': r.o ?? 1}, gm);
           const y = Y(r.mid);
-          el('circle', {cx: x, cy: y, r: m.r ?? 4, fill: c2, stroke: '#fff', 'stroke-width': 1.5}, g);
+          el('circle', {cx: x, cy: y, r: m.r ?? 4, fill: c2, stroke: '#fff', 'stroke-width': 1.5}, gm);
           targets.push({px: x, py: y, tip: r.tip, box: r.lo != null ? [x - 6, Math.min(Y(r.lo), Y(r.hi)), 12, Math.abs(Y(r.hi) - Y(r.lo))] : null});
         }
       } else if (m.type === 'arrow') {
         // rows {y, from, to}: a change drawn as an arrow along x
         for (const r of m.rows) {
           const y = catY ? barY(r.y) : Y(r.y), a = X(r.from), b = X(r.to), c2 = col(r.c || m.c), d = b >= a ? 1 : -1;
-          el('line', {x1: a, x2: b - d * 6, y1: y, y2: y, stroke: c2, 'stroke-width': 2}, g);
-          el('path', {d: `M${b},${y} l${-d * 8},-4.5 l0,9 z`, fill: c2}, g);
-          el('circle', {cx: a, cy: y, r: 4, fill: col(r.fromC || 'light'), stroke: COL.grey}, g);
-          if (r.label) el('text', {x: Math.max(a, b) + 8, y: y + 4, class: 'ch-val'}, g).textContent = r.label;
+          el('line', {x1: a, x2: b - d * 6, y1: y, y2: y, stroke: c2, 'stroke-width': 2}, gm);
+          el('path', {d: `M${b},${y} l${-d * 8},-4.5 l0,9 z`, fill: c2}, gm);
+          el('circle', {cx: a, cy: y, r: 4, fill: col(r.fromC || 'light'), stroke: COL.grey}, gm);
+          if (r.label) el('text', {x: Math.max(a, b) + 8, y: y + 4, class: 'ch-val'}, gm).textContent = r.label;
           targets.push({px: b, py: y, tip: r.tip, box: [Math.min(a, b), y - 7, Math.abs(b - a), 14]});
         }
       } else if (m.type === 'cell') {
@@ -194,14 +204,35 @@
         const [v0, v1] = m.domain;
         for (const r of m.rows) {
           const cx = X(r.x), cy = Y(r.y), w = X.step - 4, h = Y.step - 4, t = Math.max(0, Math.min(1, (r.v - v0) / (v1 - v0)));
-          el('rect', {x: cx - w / 2, y: cy - h / 2, width: w, height: h, fill: col(m.c), 'fill-opacity': 0.08 + 0.72 * t, rx: 2}, g);
-          el('text', {x: cx, y: cy + 4, 'text-anchor': 'middle', class: 'ch-val', style: t > 0.55 ? 'fill:#fff;stroke:none' : null}, g).textContent = r.s;
+          el('rect', {x: cx - w / 2, y: cy - h / 2, width: w, height: h, fill: col(m.c), 'fill-opacity': 0.08 + 0.72 * t, rx: 2}, gm);
+          el('text', {x: cx, y: cy + 4, 'text-anchor': 'middle', class: 'ch-val', style: t > 0.55 ? 'fill:#fff;stroke:none' : null}, gm).textContent = r.s;
           targets.push({px: cx, py: cy, tip: r.tip, box: [cx - w / 2, cy - h / 2, w, h]});
         }
+      } else if (m.type === 'callout') {
+        // a note tied to one data point by a short leader; narrow screens may give their own offsets or text
+        const k = {...m, ...(narrow && m.narrow || {})}, x = X(k.x), y = Y(k.y), tx = x + (k.dx ?? 0), ty = y + (k.dy ?? -30);
+        const rows = String(k.s).split('\n');
+        el('line', {x1: x, y1: y, x2: tx, y2: ty < y ? ty + 4 + 13 * (rows.length - 1) : ty - 12, stroke: COL.ink, 'stroke-width': 0.8}, gm);
+        el('circle', {cx: x, cy: y, r: 3, fill: '#fff', stroke: COL.ink, 'stroke-width': 1.2}, gm);
+        const t = el('text', {x: tx, y: ty, 'text-anchor': k.anchor || 'middle', class: 'ch-callout'}, gm);
+        rows.forEach((row, i) => { el('tspan', {x: tx, dy: i ? 13 : 0}, t).textContent = row; });
       } else if (m.type === 'text') {
-        el('text', {x: X(m.x), y: Y(m.y), 'text-anchor': m.anchor || 'start', class: 'ch-note', fill: col(m.c)}, g).textContent = m.s;
+        el('text', {x: X(m.x), y: Y(m.y), 'text-anchor': m.anchor || 'start', class: 'ch-note', fill: col(m.c)}, gm).textContent = m.s;
       }
     }
+    // direct labels at line ends, in ink beside a dot of the series colour, pushed apart so they never overlap
+    // all in one column right of the last x, so a series that ends early never lands on another's last point
+    ends.sort((a, b) => Y(a.p[1]) - Y(b.p[1]));
+    const ex = Math.max(...ends.map(e => X(e.p[0])), 0) + 8;
+    let lastY = -1e9;
+    for (const {m, c, p} of ends) {
+      const y = Math.max(Y(p[1]) + 4, lastY + 14);
+      lastY = y;
+      el('circle', {cx: X(p[0]), cy: Y(p[1]), r: 3.5, fill: c, stroke: '#fff', 'stroke-width': 1.5, 'data-key': m.name}, gm);
+      el('line', {x1: ex, x2: ex + 8, y1: y - 4, y2: y - 4, stroke: c, 'stroke-width': 3, 'stroke-linecap': 'round', 'data-key': m.name}, gm);
+      el('text', {x: ex + 12, y, class: 'ch-end', 'data-key': m.name}, gm).textContent = m.end === true ? m.name : m.end;
+    }
+    targets.clip = {rect: clip, x0: left - box.x + 4, w: box.w + 8};
     // lines and bands: one crosshair target per x of the first line, listing every series at that x
     if (lines.length) {
       const xs = [...new Set(lines.flatMap(l => l.m.pts.map(p => p[0])))].sort((a, b) => a - b);
@@ -235,11 +266,16 @@
     const svg = el('svg', {viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: 'img', 'aria-label': spec.alt || '', tabindex: 0, class: 'ch-svg'});
     holder.prepend(svg);
     let targets = [], x = 0, y = 0;
+    const clips = [];
     spec.panels.forEach((P, i) => {
       const w = stack ? W : W * (P.w || 1) / totalW - (i < spec.panels.length - 1 ? 16 : 0);
-      targets = targets.concat(drawPanel(svg, P, {x, y, w, h: stack ? heights[i] : H}, narrow));
+      const t = drawPanel(svg, P, {x, y, w, h: stack ? heights[i] : H}, narrow);
+      clips.push(t.clip);
+      targets = targets.concat(t);
       if (stack) y += heights[i] + 18; else x += w + 16;
     });
+    reveal(fig, clips);
+    focus(fig);
     const hover = el('g', {class: 'ch-hover'}, svg);
     const tip = holder.querySelector('.ch-tip');
     let cur = -1;
@@ -287,6 +323,48 @@
       else if (e.key === 'Escape') show(-1);
     });
     svg.addEventListener('blur', () => show(-1));
+  }
+
+  // data marks wipe in from the left the first time the figure is half in view; after that, on every re-render and
+  // under reduced motion, they are simply there
+  function reveal(fig, clips) {
+    const set = k => clips.forEach(c => c.rect.setAttribute('width', c.x0 + (c.w - c.x0) * k));
+    if (fig.dataset.shown || still.matches || !('IntersectionObserver' in window)) { set(1); fig.dataset.shown = '1'; return; }
+    set(0);
+    fig._clips = clips;
+    if (fig._io) return;
+    fig._io = new IntersectionObserver(es => {
+      if (!es.some(e => e.isIntersecting)) return;
+      fig._io.disconnect(); fig.dataset.shown = '1';
+      const t0 = performance.now();
+      const step = now => {
+        const k = Math.min(1, (now - t0) / 1400);
+        fig._clips.forEach(c => c.rect.setAttribute('width', c.x0 + (c.w - c.x0) * (1 - (1 - k) ** 3)));
+        if (k < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }, {threshold: 0.5});
+    fig._io.observe(fig);
+  }
+
+  // the series named by the paragraph being read stay strong; the others recede
+  function focus(fig) {
+    const keys = (fig.dataset.focus || '').split(',').filter(Boolean);
+    fig.classList.toggle('ch-has-focus', keys.length > 0);
+    fig.querySelectorAll('.ch-svg [data-key]').forEach(n => n.classList.toggle('ch-on', keys.includes(n.dataset.key)));
+  }
+
+  function watchFocus(fig, id) {
+    const ps = [...document.querySelectorAll(`[data-focus^="${id}:"]`)];
+    if (!ps.length || !('IntersectionObserver' in window)) return;
+    const live = new Set();
+    const io = new IntersectionObserver(es => {
+      for (const e of es) e.isIntersecting ? live.add(e.target) : live.delete(e.target);
+      const p = ps.filter(q => live.has(q)).pop();
+      fig.dataset.focus = p ? p.dataset.focus.slice(id.length + 1) : '';
+      focus(fig);
+    }, {rootMargin: '-35% 0px -35% 0px'});
+    ps.forEach(q => io.observe(q));
   }
 
   function mount(fig, spec, dataUrl) {
@@ -350,7 +428,7 @@
   document.querySelectorAll('figure[data-chart]').forEach(fig => {
     const [url, id] = fig.dataset.chart.split('#');
     (cache[url] ||= fetch(url).then(r => r.ok ? r.json() : Promise.reject(r.status)))
-      .then(all => { if (all[id]) mount(fig, all[id], url); })
+      .then(all => { if (all[id]) { mount(fig, all[id], url); watchFocus(fig, id); } })
       .catch(() => {});  // the static figure stays
   });
 })();

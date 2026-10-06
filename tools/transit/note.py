@@ -21,10 +21,10 @@ import pandas as pd  # noqa: E402
 ROOT = Path(__file__).resolve().parents[2]
 R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "transit"
-HELD, INK, GREY, LIGHT = "#34507c", "#111111", "#666666", "#b5b5b0"
-# fixed identity per city; Brno also dashed, so the three never rest on colour alone
-STYLE = {"Vienna": ("held", HELD, None), "Prague": ("ink", INK, None), "Brno": ("grey", GREY, "dash"),
-         "Berlin": ("held", HELD, None), "Germany": ("ink", INK, None)}
+PAL = json.loads((ROOT / "assets" / "palette.json").read_text())
+INK, GREY, LIGHT = PAL["ink"], PAL["grey"], PAL["light"]
+# one colour per city, the same in every chart on the site (assets/palette.json); every line is also labelled at its end
+STYLE = {c: (h, h, None) for c, h in PAL["entity"].items()}
 CUTS = {"Vienna": 2012 + 4 / 12, "Prague": 2015.5}   # 1 May 2012, 1 July 2015, as decimal years
 BASE = range(2005, 2012)                              # each city's own 2005–2011 mean = 100
 plt.rcParams.update({"font.family": "Helvetica", "font.size": 9, "axes.spines.top": False, "axes.spines.right": False,
@@ -71,25 +71,31 @@ def figures(p: pd.DataFrame) -> dict:
     idx = {c: (p[c] / p.loc[BASE, c].mean() * 100).dropna().loc[2005:] for c in ("Vienna", "Prague", "Brno")}
     marks = [{"type": "span", "v0": 2019.5, "v1": 2025.5, "c": "light", "o": 0.25, "label": "COVID"},
              {"type": "rule", "axis": "y", "v": 100, "c": "grey"},
-             {"type": "rule", "axis": "x", "v": CUTS["Vienna"], "c": "held", "dash": "dot", "label": "Vienna cut →",
-              "anchor": "end", "dy": 190},
-             {"type": "rule", "axis": "x", "v": CUTS["Prague"], "c": "ink", "dash": "dot", "label": "← Prague cut",
-              "dy": 190},
-             {"type": "rule", "axis": "x", "v": 2013.5, "c": "grey", "dash": "dash", "w": 0.8, "label": "surveys →",
-              "anchor": "end", "dy": 214},
-             {"type": "rule", "axis": "x", "v": 2019.5, "c": "grey", "dash": "dash", "w": 0.8,
-              "label": "← auto counts", "dy": 214}]
+             {"type": "rule", "axis": "x", "v": CUTS["Vienna"], "c": "light", "dash": "dot"},
+             {"type": "rule", "axis": "x", "v": CUTS["Prague"], "c": "light", "dash": "dot"},
+             {"type": "rule", "axis": "x", "v": 2013.5, "c": "light", "dash": "dash", "w": 0.8},
+             {"type": "rule", "axis": "x", "v": 2019.5, "c": "light", "dash": "dash", "w": 0.8}]
     for c, s in idx.items():
         key, _, dash = STYLE[c]
         marks.append({"type": "line", "name": c, "pts": [[int(y), round(float(v), 1)] for y, v in s.items()],
-                      "c": key, "dash": dash, "fmt": {"dp": 1}})
+                      "c": key, "dash": dash, "fmt": {"dp": 1}, "end": True})
+    at = lambda c, x: round(float(idx[c].loc[int(x)]), 1)
+    marks += [
+        {"type": "callout", "x": 2012, "y": at("Vienna", 2012), "dx": -40, "dy": -34, "anchor": "end",
+         "s": "Vienna's pass −19 %, May 2012", "narrow": {"s": "Vienna's pass\n−19 %, 2012", "dy": -40, "dx": -18}},
+        {"type": "callout", "x": 2015, "y": at("Prague", 2015), "dx": 16, "dy": 44, "anchor": "start",
+         "s": "Prague's pass −23 %\nJuly 2015", "narrow": {"s": "Prague's pass\n−23 %", "dx": 6, "dy": 40}},
+        {"type": "callout", "x": 2014, "y": at("Prague", 2014), "dx": -16, "dy": 52, "anchor": "end",
+         "s": "Prague counts by survey from 2014", "narrow": {"s": "counted by\nsurvey from 2014", "dx": -10, "dy": 44}},
+        {"type": "callout", "x": 2020, "y": at("Prague", 2020), "dx": -14, "dy": 14, "anchor": "end",
+         "s": "automatic counts from 2020", "narrow": {"s": "automatic\ncounts, 2020", "dy": 4}}]
     charts = {"cities": {
         "alt": "Annual passengers of the city operator in Vienna, Prague and Brno, 2005–2025, each indexed to its own "
                "2005–2011 mean: Vienna rises from 93 to 119 by 2019, Prague stays near 100 with a drop in 2011 and 2014, "
                "Brno rises slowly; all three fall in 2020.",
-        "panels": [{"h": 280, "x": {"kind": "linear", "domain": [2004.5, 2025.5], "ticks": list(range(2005, 2026, 5)),
+        "panels": [{"h": 300, "padRight": 74, "x": {"kind": "linear", "domain": [2004.5, 2025.5], "ticks": list(range(2005, 2026, 5)),
                                     "fmt": {"dp": 0, "nogroup": True}, "label": "year"},
-                    "y": {"kind": "linear", "domain": [40, 130], "ticks": [40, 60, 80, 100, 120],
+                    "y": {"kind": "linear", "domain": [40, 136], "ticks": [40, 60, 80, 100, 120],
                           "fmt": {"dp": 0}, "label": "passengers, own 2005–2011 mean = 100"},
                     "marks": marks}],
         "legend": [{"label": c, "c": STYLE[c][0], "dash": STYLE[c][2]} for c in idx],
@@ -99,19 +105,23 @@ def figures(p: pd.DataFrame) -> dict:
                            for y in p.loc[2005:].index]},
         "data": ["passengers.csv"]}}
     de = {c: (p[c] / p.loc[2019, c] * 100).dropna() for c in ("Berlin", "Germany")}
-    dm = [{"type": "span", "v0": 2022 + 5 / 12, "v1": 2022 + 8 / 12, "c": "held", "o": 0.18, "label": "9-euro"},
+    dm = [{"type": "span", "v0": 2022 + 5 / 12, "v1": 2022 + 8 / 12, "c": PAL["entity"]["Berlin"], "o": 0.14,
+           "label": "9-euro"},
           {"type": "rule", "axis": "x", "v": 2023 + 4 / 12, "c": "grey", "dash": "dot", "label": "Deutschlandticket",
-           "anchor": "end", "dy": 24},
+           "anchor": "end", "dy": 36},
           {"type": "rule", "axis": "y", "v": 100, "c": "grey"},
-          {"type": "rule", "axis": "x", "v": 2018.5, "c": "light", "dash": "dot", "label": "Destatis basis →", "dy": 38}]
+          {"type": "rule", "axis": "x", "v": 2018.5, "c": "light", "dash": "dot", "label": "← earlier basis", "anchor": "end", "dy": 196}]
     for c, s in de.items():
         key, _, dash = STYLE[c]
         dm.append({"type": "line", "name": c, "pts": [[int(y), round(float(v), 1)] for y, v in s.items()], "c": key,
-                   "dash": dash, "fmt": {"dp": 1}})
+                   "dash": dash, "fmt": {"dp": 1}, "end": True})
+    dm.append({"type": "callout", "x": 2021, "y": round(float(de["Berlin"][2021]), 1), "dx": 48, "dy": 4,
+               "anchor": "start", "s": "Berlin 2021: a third below 2019",
+               "narrow": {"s": "a third\nbelow 2019", "dx": 22, "dy": -6}})
     charts["germany"] = {
         "alt": "Annual passengers of local scheduled public transport in Berlin and in Germany, 2012–2025, indexed to "
                "2019: both rise to 2019, fall by about 30 % in 2020–2021 and return to near the 2019 level by 2024–2025.",
-        "panels": [{"h": 260, "x": {"kind": "linear", "domain": [2011.5, 2025.5], "ticks": list(range(2012, 2026, 2)),
+        "panels": [{"h": 270, "padRight": 80, "x": {"kind": "linear", "domain": [2011.5, 2025.5], "ticks": list(range(2012, 2026, 2)),
                                     "fmt": {"dp": 0, "nogroup": True}, "label": "year"},
                     "y": {"kind": "linear", "domain": [60, 115], "ticks": [60, 70, 80, 90, 100, 110],
                           "fmt": {"dp": 0}, "label": "passengers, 2019 = 100"},
@@ -128,13 +138,20 @@ def figures(p: pd.DataFrame) -> dict:
     pm = [{"type": "rule", "axis": "y", "v": 100, "c": "grey"}]
     for c, pts in st.items():
         key, _, dash = STYLE[c]
-        pm.append({"type": "line", "name": c, "pts": stepline(pts, 2026.75), "c": key, "dash": dash, "notip": True})
+        pm.append({"type": "line", "name": c, "pts": stepline(pts, 2026.75), "c": key, "dash": dash, "notip": True,
+                   "end": True})
         pm.append({"type": "dots", "c": key, "r": 3.5,
                    "pts": [{"x": round(x, 3), "y": y, "tip": f"{c}: {y:.0f} from {month(x)}"} for x, y in pts]})
+    pm += [{"type": "callout", "x": round(st["Vienna"][2][0], 3), "y": st["Vienna"][2][1], "dx": -14, "dy": 30,
+            "anchor": "end", "s": "Vienna −19 %", "narrow": {"dx": -8}},
+           {"type": "callout", "x": round(st["Prague"][3][0], 3), "y": st["Prague"][3][1], "dx": 0, "dy": 30,
+            "s": "Prague −23 %"},
+           {"type": "callout", "x": 2012, "y": st["Brno"][4][1], "dx": -14, "dy": -24, "anchor": "end",
+            "s": "Brno +7 %", "narrow": {"dx": -8}}]
     charts["prices"] = {
         "alt": "Price of the adult annual pass in Vienna, Prague and Brno, 2004–2026, indexed to each city's 2011 "
                "price: Vienna drops to 81 in May 2012, Prague to 77 in July 2015, Brno rises to 107 in 2012.",
-        "panels": [{"h": 240, "x": {"kind": "linear", "domain": [2004, 2027], "ticks": list(range(2005, 2027, 5)),
+        "panels": [{"h": 260, "padRight": 74, "x": {"kind": "linear", "domain": [2004, 2027], "ticks": list(range(2005, 2027, 5)),
                                     "fmt": {"dp": 0, "nogroup": True}, "label": "year"},
                     "y": {"kind": "linear", "domain": [60, 120], "ticks": [60, 80, 100, 120], "fmt": {"dp": 0},
                           "label": "annual-pass price, nominal, 2011 = 100"},
@@ -160,7 +177,7 @@ def static(idx: dict, de: dict, st: dict) -> None:
     ax.set_ylim(40, 130); ax.set_ylabel("passengers, own 2005–2011 mean = 100")
     ax.legend(frameon=False, ncol=3, loc="lower left"); f.tight_layout(); f.savefig(A / "01-cities.svg"); plt.close(f)
     f, ax = plt.subplots(figsize=(7.2, 3.2))
-    ax.axvspan(2022 + 5 / 12, 2022 + 8 / 12, color=HELD, alpha=0.18, lw=0)
+    ax.axvspan(2022 + 5 / 12, 2022 + 8 / 12, color=PAL["entity"]["Berlin"], alpha=0.18, lw=0)
     ax.axvline(2023 + 4 / 12, color=GREY, lw=1, ls=":"); ax.axhline(100, color=GREY, lw=0.8)
     for c, s in de.items():
         ax.plot(s.index, s.values, color=STYLE[c][1], lw=2, label=c)
