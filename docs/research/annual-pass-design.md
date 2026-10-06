@@ -121,3 +121,9 @@ distribution, the price and first-stage facts, the Berlin descriptive panel, and
 ## Changes after registration
 
 None yet.
+
+**6 October 2026 (donor screening).** The screen of §3 is committed in `annual-pass-donors.md`, with sources for every
+exclusion. Vienna keeps two donors (Prague, 2004–2014, and Brno) and Prague one (Brno), so under §3 both events are
+**not estimable**. Disclosure: during the Brno check an unmasked text search of DPMB's 2012 annual report printed one
+sentence giving the direction of that year's passenger change; it was not recorded or used in any decision. No other
+passenger value was read.
