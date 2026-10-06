@@ -30,11 +30,11 @@ Five studies of one city from the data it publishes about itself. Each part fixe
 reporting sentences in a design committed before the analysis. Commit times are self-reported, and each article
 says exactly what was registered when.
 
-1. [Votes against in Prague's City Assembly, 2010–2026](https://bsandova.com/texts/prague-council)
-2. [Housing estates and the 2025 vote in Prague's precincts](https://bsandova.com/texts/prague-rings)
-3. [City grants to Prague's 57 districts and party alignment](https://bsandova.com/texts/prague-districts)
-4. [New housing in Prague: permits, completions and the metro](https://bsandova.com/texts/prague-housing)
-5. [Longer cars and Prague's paid kerb](https://bsandova.com/texts/prague-parking)
+1. [Do Prague's councillors vote against less, term after term?](https://bsandova.com/texts/prague-council)
+2. [Why do Prague's housing estates vote ANO?](https://bsandova.com/texts/prague-rings)
+3. [Does a district get more city money when its mayor's party joins City Hall?](https://bsandova.com/texts/prague-districts)
+4. [How long does a Prague flat take, from permit to completion?](https://bsandova.com/texts/prague-housing)
+5. [How many kerb spaces have longer cars cost Prague?](https://bsandova.com/texts/prague-parking)
 
 Every article ends with a **Reproduction** section that gives the script order and the command that rebuilds its
 data. The raw inputs are public sources, listed with access dates and SHA-256 hashes in `docs/research/*-files.sha256`.

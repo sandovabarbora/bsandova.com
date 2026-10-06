@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Housing estates and the 2025 vote in Prague's precincts · Barbora Šandová</title>
+<title>Why do Prague's housing estates vote ANO? · Barbora Šandová</title>
 <meta name="description" content="Part 2 of Prague, measured. Prague's 1 119 precincts in the 2025 Chamber election, set against the housing stock, the distance from the centre and the metro, with a registered follow-up on the 2021 census and the elections of 2017 and 2021. Education and citizenship explain 43 % of ANO's estate gradient, short of the registered half (not supported); the gradient steepened between 2017 and 2025 (supported); whether the metro's effect is negligible is inconclusive, and the turnout tests are uninformative.">
-<meta property="og:title" content="Housing estates and the 2025 vote in Prague's precincts">
+<meta property="og:title" content="Why do Prague's housing estates vote ANO?">
 <meta property="og:description" content="Part 2 of Prague, measured: 1 119 precincts, three elections, one census and seven registered hypotheses on the panel estates, the metro and turnout in the centre.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://bsandova.com/texts/prague-rings">
@@ -55,7 +55,7 @@
 <article class="text">
 <header class="text-head">
   <p class="kicker">Research · Prague, measured, Part 2 · Chamber elections 2017–2025, 1 119 precincts</p>
-  <h1>Housing estates and the 2025 vote in Prague's precincts</h1>
+  <h1>Why do Prague's housing estates <em>vote ANO?</em></h1>
   <p class="deck">Education and citizenship explain 43 % of the rise in ANO's 2025 vote with the share of panel flats, short of the registered half (not supported); the gradient steepened after 2017 (supported).</p>
   <dl class="facts">
     <div><dt>ANO, precincts where more than seven in ten flats are in panel buildings</dt><dd>26 % <small>16 % where fewer than one in ten are · flats counted from the cadastre</small></dd></div>
@@ -85,7 +85,7 @@
   <div><dt>registration</dt><dd>design written before modelling; not independently timestamped; the author had worked with Prague's precinct and housing data since May 2024 (<a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-rings-design.md">design file</a>)</dd></div>
   <div><dt>data</dt><dd>ČSÚ election open data 2017, 2021, 2025 and Census 2021 1 km grid, accessed 28 September 2026; ČÚZK RÚIAN, accessed 28 September 2026; PID GTFS, snapshot of 28 September 2026; <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-rings-files.sha256">SHA-256 list</a></dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/praha">tools/praha/</a>, results commit 1283162; rebuild: the scripts under <a href="#reproduction">Reproduction</a>, in order; the tests are <code>python tools/praha/rings_extended.py</code>, run with the <code>uv</code> command in its header</dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Housing estates and the 2025 vote in Prague's precincts</i>. bsandova.com/texts/prague-rings, version 2. · archive: <a href="https://doi.org/10.5281/zenodo.23040133">doi:10.5281/zenodo.23040133</a> · <a href="../assets/pdf/prague-rings.pdf">PDF</a></dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Why do Prague's housing estates vote ANO?</i> bsandova.com/texts/prague-rings, version 2. · archive: <a href="https://doi.org/10.5281/zenodo.23040133">doi:10.5281/zenodo.23040133</a> · <a href="../assets/pdf/prague-rings.pdf">PDF</a></dd></div>
   <div><dt>licence</dt><dd>code MIT; text, figures and data CC BY 4.0</dd></div>
 </dl>
 </details>
@@ -269,6 +269,7 @@
 <section id="changelog" class="changelog">
 <h2>Change log</h2>
 <ul>
+<li>6 October 2026: retitled from "Housing estates and the 2025 vote in Prague's precincts" to a question; text and numbers unchanged.</li>
 <li>28 September 2026: first published.</li>
 <li>29 September 2026: version 2. Retitled from "Prague votes in rings, not along lines", which asserted a metro null the registered test could not establish; the kicker no longer says "pre-registered", the registration is described as "design written before modelling; not independently timestamped", and the earlier description of who reviewed the design is removed.</li>
 <li>29 September 2026: corrected "never half", which holds only for the registered block without age; with age added composition explains 52 %. H4a and H4b relabelled from "not supported" to "uninformative". "43 % is a lower bound" changed to "likely understated". Bootstrap groups corrected from 57 to 56 districts (rings_extended.json, G = 56); the effective sample is now stated beside the headline, with 49 districts for H3 and 44 for H4, from the same file.</li>
