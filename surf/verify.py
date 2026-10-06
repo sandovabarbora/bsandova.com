@@ -16,13 +16,19 @@ date (lead 0 of the default model; a proxy, labelled as one):
                d + 1 days before the target; corrected on 29 September 2026 from the analysis
                of the issue day itself, which the 06:10 UTC run does not yet have).
   uncertainty  block bootstrap by ISO week (consecutive days are not independent),
-               95 % intervals on MAE and on P(surfable | forecast yes).
+               95 % intervals on MAE, bias and P(surfable | forecast yes) per spot, and on the
+               quantities the reading rules of the protocol need (texts/forecast-verification):
+               pooled over spots per model and lead, MAE, bias, Spearman's rho and the share of
+               positive swell errors; per lead, the shares of target days with a model spread of
+               at most 0.3 m and above 0.5 m.
   robustness   the binary results recomputed under alternative rules: period 7/8/9 s,
                wind 20/25/30 km/h, height band 0.8–3.0 m; and self-verification (MFWAM
                against its own analysis) flagged separately from cross-model verification.
 
 Gates: no number below MIN_PAIRS pairs per lead; below DESCRIPTIVE pairs the entry is
-marked descriptive. Nothing here is typed; everything comes from the stored files.
+marked descriptive. An interval is read only when the entry has at least DESCRIPTIVE pairs and they
+fall in at least READ_WEEKS distinct ISO weeks ("readable"); a block bootstrap over two or three
+weeks is degenerate. Nothing here is typed; everything comes from the stored files.
 """
 
 from __future__ import annotations
@@ -36,7 +42,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 DATA = ROOT / "data"
 OUT = ROOT / "data.json"
-MIN_PAIRS, DESCRIPTIVE, BOOT = 14, 30, 500
+MIN_PAIRS, DESCRIPTIVE, BOOT, READ_WEEKS = 14, 30, 500, 8
 TRUTH_MODEL = "meteofrance_wave"
 
 RULE = {"h": (1.0, 2.5), "p": 8.0, "w": 25.0, "off": (90.0, 60.0)}
@@ -123,6 +129,50 @@ def week_of(d: str) -> str:
     y, w, _ = date.fromisoformat(d).isocalendar(); return f"{y}-W{w:02d}"
 
 
+def read_gate(dates) -> dict:
+    """Pairs, the distinct ISO weeks they fall in, and whether an interval may be read."""
+    n, weeks = len(dates), len({week_of(d) for d in dates})
+    return {"n": n, "weeks": weeks, "descriptive": n < DESCRIPTIVE, "readable": n >= DESCRIPTIVE and weeks >= READ_WEEKS}
+
+
+def mean(xs):
+    xs = [x for x in xs if x is not None]
+    return sum(xs) / len(xs) if xs else None
+
+
+def pooled(ps) -> dict:
+    """ps: (forecast, truth, target) pooled over spots for one model and lead: the reading rules' quantities."""
+    entry = read_gate([t for _, _, t in ps])
+    if entry["n"] < MIN_PAIRS:
+        return entry
+    week = lambda it: week_of(it[2])
+    err = lambda s: [a["swell_max"] - b["swell_max"] for a, b, _ in s]
+    stats = {
+        "mae_swell": lambda s: mean([abs(e) for e in err(s)]),
+        "bias_swell": lambda s: mean(err(s)),
+        "spearman_swell": lambda s: spearman([a["swell_max"] for a, _, _ in s], [b["swell_max"] for _, b, _ in s]),
+        "positive_error_share": lambda s: mean([1.0 if e > 0 else 0.0 for e in err(s)]),
+    }
+    for name, f in stats.items():
+        v = f(ps)
+        entry[name] = round(v, 3) if v is not None else None
+        entry[f"{name}_ci95"] = block_bootstrap(ps, f, week)
+    return entry
+
+
+def spread_shares(rows) -> dict:
+    """rows: (target, spread) pooled over spots for one lead: shares of days with spread <= 0.3 m and > 0.5 m."""
+    entry = read_gate([t for t, _ in rows])
+    if entry["n"] < MIN_PAIRS:
+        return entry
+    week = lambda it: week_of(it[0])
+    for name, f in {"share_spread_le_0_3": lambda s: mean([1.0 if x <= 0.3 else 0.0 for _, x in s]),
+                    "share_spread_gt_0_5": lambda s: mean([1.0 if x > 0.5 else 0.0 for _, x in s])}.items():
+        entry[name] = round(f(rows), 3)
+        entry[f"{name}_ci95"] = block_bootstrap(rows, f, week)
+    return entry
+
+
 def main() -> None:
     analysis = json.loads((DATA / "analysis.json").read_text())
     issues = sorted((DATA / "forecasts").glob("*.json"))
@@ -132,7 +182,7 @@ def main() -> None:
     out = {"generated": date.today().isoformat(), "truth": f"{TRUTH_MODEL} analysis (lead 0) — a proxy, not a buoy",
            "spots": spots, "models": models, "issues": [f["issued"] for f in forecasts],
            "surfable_rule": {"swell_max_m": list(RULE["h"]), "period_min_s": RULE["p"], "wind_max_kmh": RULE["w"], "offshore_deg": list(RULE["off"])},
-           "gates": {"min_pairs": MIN_PAIRS, "descriptive_below": DESCRIPTIVE, "bootstrap_reps": BOOT, "bootstrap_block": "ISO week"},
+           "gates": {"min_pairs": MIN_PAIRS, "descriptive_below": DESCRIPTIVE, "read_weeks": READ_WEEKS, "bootstrap_reps": BOOT, "bootstrap_block": "ISO week"},
            "climatology": {}, "latest": {}, "skill": {}, "baselines": {}, "robustness": {}}
 
     for spot in spots:
@@ -184,7 +234,7 @@ def main() -> None:
                         votes.setdefault((spot, lead), {}).setdefault(t, []).append(rec)
 
     for (spot, m, lead), ps in sorted(pairs.items()):
-        n = len(ps); entry = {"n": n, "descriptive": n < DESCRIPTIVE, "self_verification": m == TRUTH_MODEL}
+        n = len(ps); entry = {**read_gate([t for _, _, t in ps]), "self_verification": m == TRUTH_MODEL}
         if n >= MIN_PAIRS:
             eh = [a["swell_max"] - b["swell_max"] for a, b, _ in ps]
             ep = [a["period_mean"] - b["period_mean"] for a, b, _ in ps if a.get("period_mean") is not None and b.get("period_mean") is not None]
@@ -192,11 +242,30 @@ def main() -> None:
                           "rmse_swell": round(math.sqrt(sum(e * e for e in eh) / n), 3),
                           "mae_period": round(sum(abs(e) for e in ep) / len(ep), 2) if ep else None,
                           "spearman_swell": spearman([a["swell_max"] for a, _, _ in ps], [b["swell_max"] for _, b, _ in ps]),
-                          "mae_swell_ci95": block_bootstrap(ps, lambda s: sum(abs(a["swell_max"] - b["swell_max"]) for a, b, _ in s) / len(s), lambda it: week_of(it[2]))})
+                          "mae_swell_ci95": block_bootstrap(ps, lambda s: sum(abs(a["swell_max"] - b["swell_max"]) for a, b, _ in s) / len(s), lambda it: week_of(it[2])),
+                          "bias_swell_ci95": block_bootstrap(ps, lambda s: sum(a["swell_max"] - b["swell_max"] for a, b, _ in s) / len(s), lambda it: week_of(it[2]))})
             ct = contingency([(a, b) for a, b, _ in ps]); entry["binary"] = ct
             entry["binary"]["p_surfable_given_yes_ci95"] = block_bootstrap(ps, lambda s: (lambda c: c["p_surfable_given_yes"])(contingency([(a, b) for a, b, _ in s])), lambda it: week_of(it[2]))
             entry["robustness"] = {name: {k: v for k, v in contingency([(a, b) for a, b, _ in ps], rule).items() if k in ("n", "hits", "false_alarms", "pod", "far", "p_surfable_given_yes")} for name, rule in ALT_RULES.items()}
         out["skill"].setdefault(spot, {}).setdefault(m, {})[str(lead)] = entry
+
+    # ---- the reading rules' quantities, pooled over spots (Surf 1–3)
+    by_model_lead: dict[tuple, list] = {}
+    for (spot, m, lead), ps in pairs.items():
+        by_model_lead.setdefault((m, lead), []).extend(ps)
+    out["pooled"] = {m: {str(lead): pooled(by_model_lead.get((m, lead), [])) for lead in range(7)} for m in models}
+    # the spread is over every model that returns the lead: three at leads 0–3, MFWAM and GWAM where EWAM returns
+    # nothing; a day on which one of them is missing is left out rather than scored on fewer members
+    members: dict[int, list] = {}
+    for (spot, lead), by_target in votes.items():
+        for t, recs in by_target.items():
+            members.setdefault(lead, []).append((t, [r["swell_max"] for r in recs]))
+    out["spread"] = {}
+    for lead in range(7):
+        rows = members.get(lead, [])
+        k = max((len(hs) for _, hs in rows), default=0)
+        entry = spread_shares([(t, max(hs) - min(hs)) for t, hs in rows if len(hs) == k and k >= 2])
+        out["spread"][str(lead)] = {"members": k, **entry}
 
     # ---- probabilistic (model vote share) and baselines, per spot × lead
     for (spot, lead), by_target in sorted(votes.items()):
