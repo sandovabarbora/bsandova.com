@@ -61,6 +61,23 @@
   };
 
   // one panel into an <svg>; returns hover targets in svg coordinates
+  // how category names fit a slot of the given width: {parts per name, lines, every k-th shown}
+  function catLayout(names, slot) {
+    const w = n => 6.6 * n + 6;
+    if (slot >= w(Math.max(...names.map(n => n.length)))) return {parts: names.map(n => [n]), lines: 1, every: 1};
+    const split = names.map(splitMid);
+    if (slot >= w(Math.max(...split.flat().map(n => n.length)))) return {parts: split, lines: 2, every: 1};
+    const every = Math.ceil(w(Math.max(...names.map(n => n.length))) / slot);
+    return {parts: names.map(n => [n]), lines: 1, every};
+  }
+
+  function splitMid(s) {
+    const mid = s.length / 2;
+    let k = -1;
+    for (let i = s.indexOf(' '); i >= 0; i = s.indexOf(' ', i + 1)) if (k < 0 || Math.abs(i - mid) < Math.abs(k - mid)) k = i;
+    return k < 0 ? [s] : [s.slice(0, k), s.slice(k + 1)];
+  }
+
   function drawPanel(svg, P, box, narrow) {
     const targets = [];
     const g = el('g', {}, svg);
@@ -73,16 +90,25 @@
     const stackCats = catY && narrow;              // phone: category names sit above their row, not beside it
     const left = box.x + (catY ? (stackCats ? 4 : Math.min(box.w * 0.46, 12 + 6.4 * maxLen(yLabels))) : 10 + 6.6 * maxLen(yLabels));
     const top = box.y + (P.title ? 24 : 8) + (P.y.label && !catY ? 16 : 0);
-    const bottom = box.y + box.h - (P.x.label ? 40 : 24);
+    // an x-axis title wider than the panel breaks at the space nearest its middle, and the panel keeps room for both lines
+    const xLab = P.x.label ? (6.6 * P.x.label.length > box.w - 8 ? splitMid(P.x.label) : [P.x.label]) : [];
     const right = box.x + box.w - (P.padRight ?? 12);
+    // category names under the x axis: one line if they fit, else two lines at a space, else every k-th name
+    const xCats = P.x.kind === 'cat' && P.x.labels !== false ? catLayout(P.x.domain.map(String), (right - left) / P.x.domain.length) : null;
+    const catExtra = xCats && xCats.lines > 1 ? 12 : 0;
+    const bottom = box.y + box.h - (xLab.length ? 28 + 12 * xLab.length : 24) - catExtra;
     const X = scale(P.x, left, right), Y = catY ? scale(P.y, top, bottom) : scale(P.y, bottom, top);
 
     if (P.title) el('text', {x: box.x, y: box.y + 12, class: 'ch-title'}, g).textContent = P.title;
     // grid and ticks
     const gx = el('g', {class: 'ch-axis'}, g);
-    if (P.x.kind === 'cat' && P.x.labels !== false) {
-      const Xc = scale(P.x, left, right), fits = Xc.step >= 6.6 * maxLen(P.x.domain.map(String)) + 6;
-      if (fits) for (const c of P.x.domain) el('text', {x: Xc(c), y: bottom + 15, 'text-anchor': 'middle', class: 'ch-cat'}, gx).textContent = c;
+    if (xCats) {
+      const Xc = scale(P.x, left, right);
+      P.x.domain.forEach((c, i) => {
+        if (i % xCats.every) return;
+        const t = el('text', {x: Xc(c), y: bottom + 15, 'text-anchor': 'middle', class: 'ch-cat'}, gx);
+        xCats.parts[i].forEach((line, j) => el('tspan', {x: Xc(c), dy: j ? 12 : 0}, t).textContent = line);
+      });
     }
     if (P.x.kind !== 'cat') for (const t of niceTicks(P.x)) {
       const x = X(t);
@@ -99,7 +125,10 @@
       else el('text', {x: left - 8, y: y + 4, 'text-anchor': 'end', class: 'ch-cat'}, gx).textContent = c;
     }
     el('line', {x1: left, x2: right, y1: bottom, y2: bottom, stroke: COL.grey, 'stroke-width': 1}, gx);
-    if (P.x.label) el('text', {x: (left + right) / 2, y: bottom + 33, 'text-anchor': 'middle', class: 'ch-lab'}, gx).textContent = P.x.label;
+    xLab.forEach((t, i) => {
+      const cx = xLab.length > 1 ? box.x + box.w / 2 : (left + right) / 2;
+      el('text', {x: cx, y: bottom + 33 + catExtra + 13 * i, 'text-anchor': 'middle', class: 'ch-lab'}, gx).textContent = t;
+    });
     if (P.y.label && !catY) el('text', {x: left, y: top - 8, class: 'ch-lab'}, gx).textContent = P.y.label;
     const barY = c => stackCats ? Y(c) + Y.step * 0.12 : Y(c);
 
@@ -217,7 +246,10 @@
         const t = el('text', {x: tx, y: ty, 'text-anchor': k.anchor || 'middle', class: 'ch-callout'}, gm);
         rows.forEach((row, i) => { el('tspan', {x: tx, dy: i ? 13 : 0}, t).textContent = row; });
       } else if (m.type === 'text') {
-        el('text', {x: X(m.x), y: Y(m.y), 'text-anchor': m.anchor || 'start', class: 'ch-note', fill: col(m.c)}, gm).textContent = m.s;
+        // a plain note; narrow screens may give their own x, offsets, anchor or text
+        const k = {...m, ...(narrow && m.narrow || {})};
+        el('text', {x: X(k.x) + (k.dx ?? 0), y: Y(k.y) + (k.dy ?? 0), 'text-anchor': k.anchor || 'start', class: 'ch-note',
+                    fill: col(k.c)}, gm).textContent = k.s;
       }
     }
     // direct labels at line ends, in ink beside a dot of the series colour, pushed apart so they never overlap

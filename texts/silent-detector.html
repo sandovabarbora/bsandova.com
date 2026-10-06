@@ -129,6 +129,7 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 <section>
 <h2>Agreement across repeats</h2>
 <figure data-chart="../assets/detector/charts.json#auc">
+  <p class="ch-head">Exploratory: run-time signals barely separate silently wrong numbers from correct ones; the best of eight, chosen after the fact, reaches 0.64 (0.51–0.77).</p>
   <img src="../assets/detector/01-auc.svg" alt="Horizontal bars of held-out AUC for four feature sets and two model families, each with a question-level bootstrap 95 % interval; AUCs between 0.43 and 0.64, and only the best, 0.64 (0.51 to 0.77), has an interval that excludes 0.5." loading="lazy">
   <figcaption><b>fig. 1</b> · Held-out AUC (five-fold cross-validation grouped by question) for logistic regression (grey) and gradient boosting on each feature set, 3 704 numeric answers from 87 questions. Whiskers: 95&nbsp;% CI, bootstrap over the 87 questions (2 000 resamples). The dashed line is 0.5, the dotted line the plain rule "forward only when all repeats agree". Source: detector.json, 15 September 2026; intervals auc.json, 29 September 2026.</figcaption>
 </figure>
@@ -140,6 +141,7 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 <section>
 <h2>SQL shape across warehouses</h2>
 <figure data-chart="../assets/detector/charts.json#transfer">
+  <p class="ch-head">Across warehouses all six transfer intervals include 0.5, and with 9 and 10 questions the SaaS and taxi ones span most of the scale.</p>
   <img src="../assets/detector/02-transfer.svg" alt="Nine AUCs with question-level bootstrap 95 % intervals for the SQL-shape model, trained on one pack and scored on another or on held-out questions of the same pack; all lie between 0.12 and 0.67, and every interval includes 0.5 except taxi within pack, 0.12 (0.00 to 0.36)." loading="lazy">
   <figcaption><b>fig. 2</b> · Held-out AUC of gradient boosting on SQL-shape features, trained on one warehouse's pack and scored on another (blue) or on held-out questions of the same pack (grey); the three packs with at least 150 numeric answers (e-commerce 26 questions, SaaS 9, taxi 10). Lines: 95&nbsp;% CI, bootstrap over the questions of the scored pack (2 000 resamples); for taxi about one resample in ten holds only one class and is dropped. Values below 0.5 mean the learned pattern ranks the answers backwards. Source: detector.json, 15 September 2026; intervals auc.json, 29 September 2026.</figcaption>
 </figure>
@@ -204,6 +206,7 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 <section id="changelog" class="changelog">
 <h2>Change log</h2>
 <ul>
+<li>6 October 2026: charts restyled with a headline and notes at key points; numbers unchanged.</li>
 <li>5 October 2026: work dates added. No number changed.</li>
 <li>3 October 2026, version 4, after an audit: no AUC, interval or filter figure changed. The 0.81 for the abstention pack is marked as from the private run log and not verifiable, and 0.58 is named as the SQL-shape gradient-boosting model. The range "56&nbsp;% to 92&nbsp;% across packs and model configurations", which mixed a pack and a configuration and did not match the 5 794 answers it followed, is replaced by 66&nbsp;% silently wrong over all answers and, among the training answers, 56–88&nbsp;% across packs and 76–92&nbsp;% across configurations, from detector.json. Added from answers.csv: questions come in one to fifteen languages, not fifteen, and 15 answers have a single repeat. Added the two SaaS-trained transfers, 0.54 (0.42–0.69) and 0.51 (0.13–0.87), and the bootstrap interval of the highest of the eight AUCs, 0.56–0.84, from auc.json. Weakened: the short version no longer says that agreement does not help (only the plain rule does not) or that SQL shape "does not carry over"; withdrawn: that the model learns what the traps of a warehouse look like, that the transfer result suggests an embedding would learn the warehouse, and that the taxi value of 0.12 is a known artefact (now a possible, untested explanation, and the robustness table reads "below chance" instead of "anti-predictive"). The "6&nbsp;% miss and 2 000&nbsp;% miss", which had no source, became "a small miss and a twentyfold miss". The exclusion of packs under 100 answers is disclosed as undocumented in effect. Added a plain reading of the AUC and glosses of technical terms, and the ICLR 2025 venue for reference 7. Checked against editorial standard v1 on 3 October 2026.</li>
 <li>15 September 2026: first published.</li>
