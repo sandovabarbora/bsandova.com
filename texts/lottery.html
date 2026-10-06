@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>What a lottery player can choose: Sportka 1994–2026 and Eurojackpot 2025–2026 · Barbora Šandová</title>
+<title>Can a lottery player choose better? · Barbora Šandová</title>
 <meta name="description" content="An exploratory study of what a player can and cannot choose in a pari-mutuel lottery: 7 550 Sportka draws show no large favoured number, and at Eurojackpot's cap a combination assumed to be 0.4 times as popular as average would add about €0.07 to a €2 column whose expected payout is €1.29.">
-<meta property="og:title" content="What a lottery player can choose: Sportka 1994–2026 and Eurojackpot 2025–2026">
+<meta property="og:title" content="Can a lottery player choose better?">
 <meta property="og:description" content="7 550 Sportka draws show no large favoured number; at Eurojackpot's cap a combination assumed to be 0.4 times as popular as average would add about €0.07 to a €2 column whose expected payout is €1.29. Exploratory, with data and code.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://bsandova.com/texts/lottery">
@@ -36,7 +36,7 @@
 </style>
 
 <!-- ld --><link rel="alternate" type="application/atom+xml" title="Barbora Šandová" href="/feed.xml">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "What a lottery player can choose: Sportka 1994–2026 and Eurojackpot 2025–2026", "description": "An exploratory study of what a player can and cannot choose in a pari-mutuel lottery: 7 550 Sportka draws show no large favoured number, and at Eurojackpot's cap a combination assumed to be 0.4 times as popular as average would add about €0.07 to a €2 column whose expected payout is €1.29.", "url": "https://bsandova.com/texts/lottery", "image": "https://bsandova.com/assets/og.png", "dateModified": "2026-10-03T12:00:00+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Can a lottery player choose better?", "description": "An exploratory study of what a player can and cannot choose in a pari-mutuel lottery: 7 550 Sportka draws show no large favoured number, and at Eurojackpot's cap a combination assumed to be 0.4 times as popular as average would add about €0.07 to a €2 column whose expected payout is €1.29.", "url": "https://bsandova.com/texts/lottery", "image": "https://bsandova.com/assets/og/lottery.jpg", "dateModified": "2026-10-05T22:00:43+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
 </head>
 <body>
 <div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">research · lotteries · en</span></div>
@@ -44,7 +44,7 @@
 <article class="text">
 <header class="text-head">
   <p class="kicker">Research · lotteries · Sportka 1994–2026, Eurojackpot 2025–2026</p>
-  <h1>What a lottery player can choose: <em>Sportka 1994–2026 and Eurojackpot 2025–2026</em></h1>
+  <h1>Can a lottery player <em>choose better?</em></h1>
   <p class="deck">This exploratory study asks what a lottery player can choose: 7 550 Sportka draws show no large favoured number, and at Eurojackpot's cap a combination assumed to be 0.4 times as popular as average would add about €0.07 to a €2 column worth €1.29.</p>
   <dl class="facts">
     <div><dt>Sportka numbers against uniform</dt><dd>p = 0.55 <small>χ² 41.2 · 7 550 draws · Monte Carlo null</small></dd></div>
@@ -75,7 +75,7 @@
   <div><dt>registration</dt><dd>not pre-registered; exploratory. The analyses were first run in May and June 2026 for an earlier, unpublished draft; everything seen then is listed under "What changed during the analysis".</dd></div>
   <div><dt>data</dt><dd>Sportka history, Sazka a.s. (Allwyn), 3 775 drawing days 9 January 1994 – 5 July 2026, exported July 2026 (exact date not recorded)<sup class="cite"><a href="#r1">1</a></sup>; Eurojackpot draws with jackpot and win flag, 28 February 2025 – 5 May 2026, transcribed from lotto.net in May 2026<sup class="cite"><a href="#r2">2</a></sup>; prize-fund shares from euro-jackpot.net, accessed 29 September 2026<sup class="cite"><a href="#r3">3</a></sup>; Sportka results May 2025 – August 2026 from sportkasazka.cz as a cross-check<sup class="cite"><a href="#r4">4</a></sup>. The draw results are public facts published by the operators; the files here are released under CC BY 4.0 as far as the author's rights extend, with their sources named. Hashes in <a href="../assets/lottery/SHA256SUMS">SHA256SUMS</a>.</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/lottery">tools/lottery/</a> at the commit that publishes this page; rebuild: <code>uv run --with numpy --with pandas --with scipy --with statsmodels python tools/lottery/sportka_fairness.py</code> (full order under <a href="#reproduction">Reproduction</a>)</dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>What a lottery player can choose: Sportka 1994–2026 and Eurojackpot 2025–2026</i>. bsandova.com/texts/lottery, version 2.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Can a lottery player choose better?</i> bsandova.com/texts/lottery, version 2.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text, figures and data CC BY 4.0</dd></div>
 </dl>
 </details>
@@ -250,6 +250,7 @@
 <section id="changelog" class="changelog">
 <h2>Change log</h2>
 <ul>
+<li>6 October 2026: retitled from "What a lottery player can choose: Sportka 1994–2026 and Eurojackpot 2025–2026" to a question; text and numbers unchanged.</li>
 <li>5 October 2026: work dates added. No number changed.</li>
 <li>3 October 2026, version 2: corrected after an audit. No published number changed; added the gain at the cap for popularity 0.2 and 0.7 (€0.094 and €0.033), the two transcribed jackpots above the cap (€120.15 and €120.19 million), and the 924.5 expected count in the interactive chart, which had said 924. Weakened: "no favoured number" to "no large favoured number"; the €0.07 gain is now stated as resting on an assumed popularity, with its interval covering sales uncertainty only; the intro no longer says popularity was measured; sales are now called effective (random-pick) sales, with the direction of the resulting bias stated; the rise in win chance with the jackpot is now conditional on the fitted elasticity; Cook and Clotfelter are no longer credited with prize sharing among players who choose alike; "Czech players" became Eurojackpot players across all countries. Added: the prediction test uses only the first draw of each day; why €0.069 and €0.070 differ; the unmodelled transfer of money above the cap; glosses for AUC, log loss, credible interval and other terms; regenerated SHA256SUMS, which had been taken before line endings were normalised; references renumbered by first citation, with the DOI for Forrest, Gulley and Simmons.</li>
 <li>29 September 2026, version 1: first published. Built from an unpublished 2026 draft; the thirty-year savings comparison, the Kelly-criterion section, the chi-square test of Eurojackpot numbers and personal material were left out, and every retained number was recomputed (see "What changed during the analysis").</li>
