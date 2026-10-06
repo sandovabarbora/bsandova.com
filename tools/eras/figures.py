@@ -18,7 +18,9 @@ import matplotlib.pyplot as plt  # noqa: E402
 ROOT = Path(__file__).resolve().parents[2]
 R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "pop" / "taylor-swift"
-HELD, INK, GREY = "#34507c", "#111111", "#666666"
+INK, GREY = "#111111", "#666666"
+# accommodation, the registered outcome, wears Taylor Swift's colour from assets/palette.json, as in the rest of her part
+HELD = json.loads((ROOT / "assets" / "palette.json").read_text())["artist"]["Taylor Swift"]
 
 
 def main() -> None:
@@ -27,7 +29,7 @@ def main() -> None:
         shutil.copy(R / name, A / name.replace("eras-inflation-", "eras-"))
     charts = json.loads((A / "charts.json").read_text())
     rows, lo, hi = [], 0.0, 0.0
-    for key, label, c in (("accommodation", "accommodation", "held"), ("restaurants", "restaurants and cafés", "ink")):
+    for key, label, c in (("accommodation", "accommodation", HELD), ("restaurants", "restaurants and cafés", "ink")):
         for r in res[key]["event"]:
             x = r["e"] + (-0.15 if key == "accommodation" else 0.15)
             rows.append({"x": x, "lo": r["lo"], "hi": r["hi"], "mid": r["att"], "c": c,
@@ -43,7 +45,7 @@ def main() -> None:
                     "marks": [{"type": "rule", "axis": "y", "v": 0, "c": "grey"},
                               {"type": "rule", "axis": "x", "v": -0.5, "c": "grey", "dash": "dash", "label": "show month", "dy": 12},
                               {"type": "vrange", "rows": rows, "w": 2, "r": 3.5}]}],
-        "legend": [{"label": "accommodation services", "c": "held"}, {"label": "restaurants, cafés", "c": "ink"}],
+        "legend": [{"label": "accommodation services", "c": HELD}, {"label": "restaurants, cafés", "c": "ink"}],
         "table": {"cols": ["series", "month", "effect, points", "95 % band"],
                   "rows": [[k, r["e"], round(r["att"], 2), f"{r['lo']:.2f} to {r['hi']:.2f}"]
                            for k in ("accommodation", "restaurants", "all_items") for r in res[k]["event"]]},

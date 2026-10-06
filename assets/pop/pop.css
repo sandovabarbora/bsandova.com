@@ -11,7 +11,7 @@
 .pop-n{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .pop-sq{display:flex;flex-wrap:wrap;gap:2px}
 .pop-sq i{display:block;width:12px;height:12px;background:#b5b5b0}
-.pop-t.cz .pop-sq i{background:#34507c}
+.pop-t.cz .pop-sq i{background:var(--pop-c,#34507c)}
 .pop-v{color:#666;white-space:nowrap}
 .pop-t.cz .pop-v{color:#000}
 @media (max-width:520px){.pop-t{grid-template-columns:86px 1fr;row-gap:2px}.pop-v{grid-column:2}}

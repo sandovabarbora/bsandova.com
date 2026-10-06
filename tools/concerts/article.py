@@ -23,7 +23,9 @@ import matplotlib.pyplot as plt  # noqa: E402
 ROOT = Path(__file__).resolve().parents[2]
 R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "concerts"
-HELD, INK, GREY, LIGHT = "#34507c", "#111111", "#666666", "#b5b5b0"
+INK, GREY, LIGHT = "#111111", "#666666", "#b5b5b0"
+# Harry Styles keeps his colour from assets/palette.json, the same as in Pop, measured
+HELD = json.loads((ROOT / "assets" / "palette.json").read_text())["artist"]["Harry Styles"]
 NB = " "
 WORDS = {0: "none", 1: "one", 2: "two", 3: "three", 4: "four", 5: "five"}
 # single-night first shows in a country with Boxscore figures in the tour article (docs/research/harry-styles-tour.csv):
@@ -67,7 +69,7 @@ def figures(res: dict) -> None:
     ev = res["y1_share"]["event"]
     base = res["pre_mean"]["y1_share"]
     pts = [{"x": r["e"], "lo": 100 * r["lo"], "hi": 100 * r["hi"], "mid": 100 * r["att"],
-            "c": "held" if r["e"] >= 0 else "ink",
+            "c": HELD if r["e"] >= 0 else "ink",
             "tip": f"week {r['e']:+d}: {pp(r['att'])} points (band {pp(r['lo'])} to {pp(r['hi'])})"} for r in ev]
     ymin, ymax = min(p["lo"] for p in pts), max(p["hi"] for p in pts)
     charts = {"event": {
@@ -80,7 +82,7 @@ def figures(res: dict) -> None:
                     "marks": [{"type": "rule", "axis": "y", "v": 0, "c": "grey"},
                               {"type": "rule", "axis": "x", "v": -0.5, "c": "grey", "dash": "dash", "label": "first show", "dy": 12},
                               {"type": "vrange", "rows": pts, "w": 2}]}],
-        "legend": [{"label": "before the show", "c": "ink"}, {"label": "from the show week", "c": "held"}],
+        "legend": [{"label": "before the show", "c": "ink"}, {"label": "from the show week", "c": HELD}],
         "table": {"cols": ["week", "effect, points", "95 % band"],
                   "rows": [[r["e"], round(100 * r["att"], 4), f"{100 * r['lo']:.4f} to {100 * r['hi']:.4f}"] for r in ev]},
         "data": ["results.json"]}}
@@ -90,7 +92,7 @@ def figures(res: dict) -> None:
         "panels": [{"h": 14 * len(loo), "x": {"kind": "linear", "domain": [0, max(v for _, v in loo) * 100 * 1.25], "fmt": {"dp": 3},
                                               "label": "five-week summary effect without the country, percentage points"},
                     "y": {"kind": "cat", "domain": [c for c, _ in loo]},
-                    "marks": [{"type": "rule", "axis": "x", "v": 100 * res["y1_share"]["summary"]["att"], "c": "held", "dash": "dash",
+                    "marks": [{"type": "rule", "axis": "x", "v": 100 * res["y1_share"]["summary"]["att"], "c": HELD, "dash": "dash",
                                "label": "all countries"},
                               {"type": "hbar", "rows": [{"y": c, "x1": 100 * v, "c": "light", "tip": f"without {c}: {pp(v)} points"} for c, v in loo]}]}],
         "table": {"cols": ["country left out", "summary effect, points"], "rows": [[c, round(100 * v, 4)] for c, v in loo]},
@@ -104,7 +106,7 @@ def figures(res: dict) -> None:
                     "y": {"kind": "linear", "domain": [0, max(rp.values()) * 100 * 1.15], "fmt": {"dp": 2},
                           "label": "his share of Top-200 streams, %"},
                     "marks": [{"type": "rule", "axis": "x", "v": -0.5, "c": "grey", "dash": "dash", "label": "first show", "dy": 12},
-                              {"type": "line", "pts": [[k, 100 * v] for k, v in sorted(rp.items())], "c": "held", "dots": True}]}],
+                              {"type": "line", "pts": [[k, 100 * v] for k, v in sorted(rp.items())], "c": HELD, "dots": True}]}],
         "table": {"cols": ["week", "average share, %"], "rows": [[k, round(100 * v, 4)] for k, v in sorted(rp.items())]},
         "data": ["panel.csv"]}
     (A / "charts.json").write_text(json.dumps(charts, ensure_ascii=False))

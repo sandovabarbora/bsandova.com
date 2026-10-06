@@ -24,7 +24,11 @@ import matplotlib.pyplot as plt  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 R = ROOT / "docs" / "research"
-HELD, INK, GREY, LIGHT = "#34507c", "#111111", "#666666", "#b5b5b0"
+INK, GREY, LIGHT = "#111111", "#666666", "#b5b5b0"
+# each artist keeps one colour in every chart of the series (assets/palette.json); a part's own songs and its Czech row wear it
+NAME = {"harry-styles": "Harry Styles", "taylor-swift": "Taylor Swift", "bts": "BTS", "bad-bunny": "Bad Bunny",
+        "billie-eilish": "Billie Eilish"}
+ARTIST = json.loads((ROOT / "assets" / "palette.json").read_text())["artist"]
 plt.rcParams.update({"font.family": "Helvetica", "font.size": 9, "axes.spines.top": False, "axes.spines.right": False,
                      "axes.edgecolor": GREY, "xtick.color": GREY, "ytick.color": GREY, "svg.fonttype": "none"})
 
@@ -49,6 +53,7 @@ def rows(name: str) -> list[dict]:
 
 
 def main(slug: str) -> None:
+    HELD = ARTIST[NAME[slug]]
     out = ROOT / "assets" / "pop" / slug
     out.mkdir(parents=True, exist_ok=True)
     res = json.loads((R / f"{slug}-results.json").read_text())
@@ -88,11 +93,11 @@ def main(slug: str) -> None:
                     "y": {"kind": "cat", "domain": names},
                     "marks": [{"type": "rule", "axis": "x", "v": 1, "c": "grey", "dash": "dash", "label": "as long as the median", "dy": -2},
                               {"type": "range", "rows": [{"y": n, "lo": c["ci95"][0], "hi": c["ci95"][1], "mid": c["ratio"],
-                                                          "c": "held" if c["country"] == "cz" else "ink",
+                                                          "c": HELD if c["country"] == "cz" else "grey",
                                                           "tip": f"{n}: {c['days']} days; the median number one {c['median_ones_days']:g} days; "
                                                                  f"{c['ratio']:.2f}× ({c['ci95'][0]:.2f}–{c['ci95'][1]:.2f})"}
                                                          for n, c in zip(names, cs)], "w": 2}]}],
-        "legend": [{"label": "Czechia", "c": "held"}, {"label": "other countries", "c": "ink"}, {"label": "95 % interval", "c": "light"}],
+        "legend": [{"label": "Czechia", "c": HELD}, {"label": "other countries", "c": "grey"}, {"label": "95 % interval", "c": "light"}],
         "table": {"cols": ["country", "days", "median number one, days", "ratio", "95 % interval", "rank by days (added after results)"],
                   "rows": [[n, c["days"], c["median_ones_days"], round(c["ratio"], 2),
                             f"{c['ci95'][0]:.2f}–{c['ci95'][1]:.2f}", c["rank_by_days_post_hoc"]] for n, c in zip(names, cs)]},
@@ -101,7 +106,7 @@ def main(slug: str) -> None:
     ys = range(len(cs))[::-1]
     for y, c in zip(ys, cs):
         ax.plot(c["ci95"], [y, y], color=LIGHT, lw=1)
-        ax.scatter(c["ratio"], y, s=12 if c["country"] != "cz" else 30, color=HELD if c["country"] == "cz" else INK, zorder=3)
+        ax.scatter(c["ratio"], y, s=12 if c["country"] != "cz" else 30, color=HELD if c["country"] == "cz" else GREY, zorder=3)
     ax.set_xscale("log"); ax.axvline(1, color=GREY, ls="--", lw=0.8)
     ax.set_yticks(list(ys)); ax.set_yticklabels(names, fontsize=6.5)
     ax.set_xlabel("times as long as the country's median number one (log scale)")
@@ -135,7 +140,7 @@ def main(slug: str) -> None:
         "panels": [{"h": 60, "x": {"kind": "linear", "domain": [0, 100], "ticks": [0, 25, 50, 75, 100], "fmt": {"dp": 0, "unit": " %"},
                                    "label": "share of the artist's streams"},
                     "y": {"kind": "cat", "domain": [" "]},
-                    "marks": [{"type": "hbar", "rows": [dict(sg, c="held" if i == 0 else ("ink" if i < 3 else "light")) for i, sg in enumerate(segs)]}]}],
+                    "marks": [{"type": "hbar", "rows": [dict(sg, c=HELD if i == 0 else ("ink" if i < 3 else "light")) for i, sg in enumerate(segs)]}]}],
         "table": {"cols": ["song", "streams", "share"],
                   "rows": [[s["title"], int(s["streams"]), f"{100 * int(s['streams']) / total:.1f} %"] for s in songs]},
         "data": ["songs.csv"]}
@@ -148,7 +153,8 @@ def main(slug: str) -> None:
     # 5 residencies: sell-through by nights
     charts = {"countries": spec_countries, "catalogue": spec_catalogue}
     if res["q3"].get("answerable"):
-        tour = rows(f"{slug}-tour.csv")
+        # the entries the analysis counts: multi-venue leg totals and hybrid online entries are left out, as in q3
+        tour = [t for t in rows(f"{slug}-tour.csv") if t.get("multi_venue") != "True" and t.get("hybrid") != "True"]
         pts = [{"x": int(t["nights"]), "y": round(100 * int(t["sold"]) / int(t["available"]), 2),
                 "tip": f"{t['venue']}, {t['city']} ({t['tour']}): {t['nights']} night(s), "
                          f"{100 * int(t['sold']) / int(t['available']):.1f} % sold"} for t in tour]
@@ -159,7 +165,7 @@ def main(slug: str) -> None:
                                         "label": "nights in the run"},
                         "y": {"kind": "linear", "domain": [min(p["y"] for p in pts) - 2, 101],
                               "fmt": {"dp": 0, "unit": " %"}, "label": "tickets sold"},
-                        "marks": [{"type": "dots", "pts": pts, "c": "held", "r": 3, "o": 0.7}]}],
+                        "marks": [{"type": "dots", "pts": pts, "c": HELD, "r": 3, "o": 0.7}]}],
             "table": {"cols": ["tour", "venue", "city", "nights", "sold", "available"],
                       "rows": [[t["tour"], t["venue"], t["city"], int(t["nights"]), int(t["sold"]), int(t["available"])] for t in tour]},
             "data": ["tour.csv"]}
@@ -169,7 +175,7 @@ def main(slug: str) -> None:
         f.tight_layout(); f.savefig(out / "05-tour.svg"); plt.close(f)
 
     (out / "charts.json").write_text(json.dumps(charts, ensure_ascii=False))
-    (out / "widgets.json").write_text(json.dumps({"ones": dots, "median": q1["median_days"], "tickets": tickets,
+    (out / "widgets.json").write_text(json.dumps({"c": HELD, "ones": dots, "median": q1["median_days"], "tickets": tickets,
                                                   "peak": int(rows(f"{slug}-ones.csv")[0]["peak"])},
                                                  ensure_ascii=False))
     print("written", out.relative_to(ROOT))
