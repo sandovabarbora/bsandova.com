@@ -16,7 +16,9 @@ import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[2]
 DIR = ROOT / "assets" / "praha"
-INK, GREY, LIGHT, GRID, HELD = "#111111", "#666666", "#b5b5b0", "#e6e6e3", "#9a7b0a"
+INK, GREY, LIGHT, GRID = "#111111", "#666666", "#b5b5b0", "#e6e6e3"
+PAL = json.loads((Path(__file__).resolve().parents[2] / "assets" / "palette.json").read_text())  # entity colours, as the live charts
+HELD = PAL["party"]["ANO"]
 plt.rcParams.update({
     "font.family": "monospace", "font.size": 9, "svg.fonttype": "none", "axes.edgecolor": GREY,
     "axes.labelcolor": GREY, "xtick.color": GREY, "ytick.color": GREY, "axes.spines.top": False,
@@ -39,9 +41,10 @@ def attenuation(e: dict, r: dict) -> None:
     for i, (lab, b0, b1, th) in enumerate(rows[::-1]):
         half = b0 / 2
         ax.plot([half, half], [i - 0.28, i + 0.28], color=INK, lw=1, ls=(0, (2, 2)))
-        ax.annotate("", xy=(b1, i), xytext=(b0, i), arrowprops=dict(arrowstyle="-|>", color=HELD, lw=1.8))
+        c = HELD if lab.startswith("ANO") else GREY
+        ax.annotate("", xy=(b1, i), xytext=(b0, i), arrowprops=dict(arrowstyle="-|>", color=c, lw=1.8))
         ax.plot(b0, i, "o", color=LIGHT, ms=7, zorder=3)
-        ax.plot(b1, i, "o", color=HELD, ms=7, zorder=3)
+        ax.plot(b1, i, "o", color=c, ms=7, zorder=3)
         ax.text(1.28, i, f"{100 * th:.0f} %", va="center", ha="right", color=INK)
     ax.set_yticks(range(len(rows)), [r[0] for r in rows[::-1]], color=INK)
     ax.axvline(0, color=GREY, lw=0.8)

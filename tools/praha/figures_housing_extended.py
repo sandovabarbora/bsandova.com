@@ -16,7 +16,10 @@ import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[2]
 DIR = ROOT / "assets" / "praha"
-INK, GREY, LIGHT, GRID, HELD = "#111111", "#666666", "#b5b5b0", "#e6e6e3", "#1f5fa8"
+INK, GREY, LIGHT, GRID = "#111111", "#666666", "#b5b5b0", "#e6e6e3"
+PAL = json.loads((Path(__file__).resolve().parents[2] / "assets" / "palette.json").read_text())  # entity colours, as the live charts
+HELD = PAL["entity"]["Prague"]
+CITY = {"CZ001MC": HELD, "AT001MC": PAL["entity"]["Vienna"], "PL001MC": PAL["entity"]["Warsaw"]}
 plt.rcParams.update({
     "font.family": "monospace", "font.size": 9, "svg.fonttype": "none", "axes.edgecolor": GREY,
     "axes.labelcolor": GREY, "xtick.color": GREY, "ytick.color": GREY, "axes.spines.top": False,
@@ -34,7 +37,7 @@ def benchmark(e: dict) -> None:
     ax.scatter(xs, [p["score"] for p in pts], s=7, color=LIGHT, lw=0)
     for x, p in zip(xs, pts):
         if p["id"] in LABEL:
-            col = HELD if p["id"] == "CZ001MC" else INK
+            col = CITY[p["id"]]
             ax.scatter([x], [p["score"]], s=26, color=col, zorder=3)
             off, ha, va = {"CZ001MC": ((0, 12), "center", "bottom"), "AT001MC": ((0, -12), "center", "top"),
                            "PL001MC": ((-10, 0), "right", "center")}[p["id"]]

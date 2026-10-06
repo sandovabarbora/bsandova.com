@@ -66,6 +66,7 @@ STORY = {
                         "callouts": [(0, {"x": 16, "y": 0, "dx": 10, "dy": -12, "anchor": "start",
                                           "s": "Prague's best fit: 16 months", "narrow": {"s": "Prague:\n16 months"}})]},
         "metro": {"recolor": {"#1f5fa8": PRG}},
+        "builders-2024": {"recolor": {"#1f5fa8": "ink", "ink": "grey", "grey": "#e6e6e3"}},
     }),
     "parking6/charts.json": ("compact-nonl", {
         "new-cars": {"end": {0: {"register": "register", "T&E pace": "T&E pace"}}, "padRight": {0: 78},
