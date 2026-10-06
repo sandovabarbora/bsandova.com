@@ -143,3 +143,16 @@ positions are on the author's other computer and will be copied to `tools/data/r
 applies to them as written. The ±10 s equivalence margin of §5 is confirmed. δ_tram is the only primary estimand;
 δ_bus is secondary, reported with its own label and no multiple-testing correction, because it carries no primary
 claim.
+
+**6 October 2026 (power, §7; precipitation read, no delay value).** `tools/rain/power.py`, output
+`rain-delays-power.json`. In 15 March – 8 September 2025 (178 dates, 3 382 service hours 05:00–23:59) the four
+stations give 123 rain hours on 48 dates, 2 753 dry hours and 506 hours in neither class; no station-hour is missing.
+With 48 rain dates the analytic date-clustered interval applies (§4). ČHMÚ stamps each hourly total at the end of its
+hour in UTC, and the script reads it that way. Deviation: the thesis page reports no delay dispersion in seconds, so
+the simulation uses a grid of structure-only assumptions (unit noise σ_e 60–180 s over 50 tram route-directions; a
+city-wide date × hour shock σ_c 10–30 s with within-date autocorrelation ρ 0–0.8). The minimum detectable δ_tram
+(80 % power, two-sided 5 %) is 4–15 s across the grid, so the 30 s rule passes in every scenario. The same grid puts
+the standard error at 1.5–5.5 s, so the "not supported" label (90 % interval within ±10 s) is reachable only in the
+lower-noise scenarios; this is stated now, before any delay value is read. The grid is re-run with the dispersion the
+thesis data imply (route-hour spread of delay gained, read without the rain indicator) once the files arrive, as a
+dated note before the estimation.
