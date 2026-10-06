@@ -127,3 +127,23 @@ exclusion. Vienna keeps two donors (Prague, 2004–2014, and Brno) and Prague on
 **not estimable**. Disclosure: during the Brno check an unmasked text search of DPMB's 2012 annual report printed one
 sentence giving the direction of that year's passenger change; it was not recorded or used in any decision. No other
 passenger value was read.
+
+**6 October 2026 (change of design, before any passenger value was read).** Synthetic control is not estimable
+(above). The screening showed why: most cities in the region cut their annual pass between 2012 and 2020. The design
+therefore turns that spread into the identification, at the author's decision:
+
+- **Units.** Central European cities whose city operator publishes an official annual passenger series for every year
+  2005–2019 from one source without a documented counting change (rule 1 of §3), whose operator's own network did not
+  change in that window (rule 3), checked before any value is read and committed as `annual-pass-panel-units.md`.
+- **Treatment.** A city is treated from the first full calendar year after its annual pass was cut by 10 % or more,
+  or after a flat-rate pass covering it was introduced; dates and sizes from the screening's tariff sources. Never-
+  treated cities and cities treated after 2019 serve as controls up to their own treatment.
+- **Outcome.** Log annual passengers of the city operator, 2005–2019 (COVID excluded).
+- **Estimator.** Callaway and Sant'Anna's group-time ATT with not-yet-treated and never-treated controls, city and year
+  effects implicit; event time −5 … +4. **Primary estimand:** the average ATT over event years 0 … +3, in log points.
+  Inference: a city-level wild cluster bootstrap (few clusters), with the number of cities stated.
+- **Labels.** Supported if the 95 % interval lies wholly above 0; not supported if it lies within ±0.05 log points;
+  otherwise inconclusive. Pre-trend coefficients (−5 … −2) reported with intervals.
+- **Secondary (descriptive, no label).** The ATT against the size of the price cut (dose), one point per city.
+- **Not estimable** if fewer than three treated and three control cities pass the unit rules.
+- Synthetic control (§4) stays in the code as a per-city check where a city has at least four clean donors.
