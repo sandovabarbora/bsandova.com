@@ -16,7 +16,9 @@ import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[2]
 DIR = ROOT / "assets" / "praha"
-INK, GREY, LIGHT, GRID, HELD = "#111111", "#666666", "#b5b5b0", "#e6e6e3", "#1f5fa8"
+INK, GREY, LIGHT, GRID = "#111111", "#666666", "#b5b5b0", "#e6e6e3"
+PAL = json.loads((Path(__file__).resolve().parents[2] / "assets" / "palette.json").read_text())  # entity colours, as the live charts
+PRG, VIE, WAW = (PAL["entity"][c] for c in ("Prague", "Vienna", "Warsaw"))
 plt.rcParams.update({
     "font.family": "monospace", "font.size": 9, "svg.fonttype": "none", "axes.edgecolor": GREY,
     "axes.labelcolor": GREY, "xtick.color": GREY, "ytick.color": GREY, "axes.spines.top": False,
@@ -28,8 +30,8 @@ plt.rcParams.update({
 def per_1000(c: dict) -> None:
     ys = c["years"]
     fig, ax = plt.subplots(figsize=(8, 3.6))
-    for key, label, col, lw in [("warsaw", "Warsaw", LIGHT, 2), ("vienna", "Vienna (new buildings)", INK, 1.8),
-                                ("prague", "Prague", HELD, 2.4)]:
+    for key, label, col, lw in [("warsaw", "Warsaw", WAW, 2), ("vienna", "Vienna (new buildings)", VIE, 1.8),
+                                ("prague", "Prague", PRG, 2.4)]:
         vals = [c[key][str(y)]["per_1000"] for y in ys]
         ax.plot(ys, vals, color=col, lw=lw, marker="o", ms=3)
         ax.text(ys[-1] + 0.25, vals[-1], label, va="center", color=col if col != LIGHT else GREY)
@@ -47,20 +49,20 @@ def builders(c: dict) -> None:
     v, w = c["builders_2024"]["vienna"], dict(c["builders_2024"]["warsaw"])
     wa = c["warsaw"]["2024"]  # the share from the counts (0.645 %), not the 4-decimal share that rounds to 0.7 %
     w["municipal_and_tbs_share"] = (wa["municipal"] + wa["tbs"]) / wa["completed"]
-    rows = [("Vienna", [(v["non_profit_share"], "non-profit", HELD), (v["public_share"], "public sector", INK),
+    rows = [("Vienna", [(v["non_profit_share"], "non-profit", INK), (v["public_share"], "public sector", GREY),
                         (v["companies_share"], "companies", LIGHT), (v["private_persons_share"], "private persons", GRID)]),
-            ("Warsaw", [(w["municipal_and_tbs_share"], "municipal and TBS", HELD),
+            ("Warsaw", [(w["municipal_and_tbs_share"], "municipal and TBS", INK),
                         (1 - w["municipal_and_tbs_share"], "everyone else", LIGHT)])]
     fig, ax = plt.subplots(figsize=(8, 2.2))
     for i, (city, parts) in enumerate(rows[::-1]):
         left = 0
         for share, label, col in parts:
             ax.barh(i, 100 * share, left=left, color=col, height=0.55, edgecolor="white", linewidth=1)
-            if share > 0.08 or col == HELD:
+            if share > 0.08 or label in ("non-profit", "municipal and TBS"):
                 ax.text(left + 100 * share / 2 if share > 0.08 else left + 100 * share + 1, i,
                         f"{100 * share:.1f} %" if share < 0.08 else f"{label}\n{100 * share:.0f} %",
                         va="center", ha="center" if share > 0.08 else "left", fontsize=8,
-                        color="white" if col in (HELD, INK) and share > 0.08 else INK)
+                        color="white" if col in (INK, GREY) and share > 0.08 else INK)
             left += 100 * share
     ax.set_yticks([0, 1], [r[0] for r in rows[::-1]], color=INK)
     ax.set_xlim(0, 100)

@@ -17,6 +17,8 @@ import matplotlib.pyplot as plt
 ROOT = Path(__file__).resolve().parents[2]
 DIR = ROOT / "assets" / "zhmp"
 INK, GREY, LIGHT, GRID, HELD = "#111111", "#666666", "#b5b5b0", "#e6e6e3", "#a8201a"
+PAL = json.loads((Path(__file__).resolve().parents[2] / "assets" / "palette.json").read_text())  # entity colours, as the live charts
+PSOBE = PAL["party"]["Praha sobě"]
 COALITION = {"SPOLU", "Piráti", "STAN"}
 plt.rcParams.update(
     {
@@ -44,7 +46,7 @@ def agreement_bars(v: dict) -> None:
     rows = sorted(((c, a) for c, a in v["agreement"]["SPOLU"].items() if c != "SPOLU"), key=lambda r: r[1])
     fig, ax = plt.subplots(figsize=(8, 3.2))
     for i, (c, a) in enumerate(rows):
-        col = INK if c in COALITION else (HELD if c == "Praha sobě" else LIGHT)
+        col = INK if c in COALITION else (PSOBE if c == "Praha sobě" else LIGHT)
         ax.barh(i, 100 * a, color=col, height=0.62)
         ax.text(100 * a + 1, i, f"{100 * a:.0f} %", va="center", color=INK)
     ax.set_yticks(range(len(rows)), [f"{c}{' (coalition)' if c in COALITION else ''}" for c, _ in rows])

@@ -4,11 +4,11 @@
   "legend": [
    {
     "label": "ANO",
-    "c": "#9a7b0a"
+    "c": "#a87a00"
    },
    {
     "label": "Pirates",
-    "c": "ink",
+    "c": "#6a4fc0",
     "dash": "dash"
    }
   ],
@@ -48,7 +48,7 @@
      {
       "type": "line",
       "name": "ANO",
-      "c": "#9a7b0a",
+      "c": "#a87a00",
       "dash": null,
       "notip": true,
       "pts": [
@@ -77,7 +77,7 @@
      {
       "type": "line",
       "name": "Pirates",
-      "c": "ink",
+      "c": "#6a4fc0",
       "dash": "dash",
       "notip": true,
       "pts": [
@@ -105,7 +105,7 @@
      },
      {
       "type": "dots",
-      "c": "#9a7b0a",
+      "c": "#a87a00",
       "shape": null,
       "r": 3.5,
       "pts": [
@@ -138,7 +138,7 @@
      },
      {
       "type": "dots",
-      "c": "ink",
+      "c": "#6a4fc0",
       "shape": "d",
       "r": 3.5,
       "pts": [
@@ -207,7 +207,7 @@
      {
       "type": "line",
       "name": "ANO",
-      "c": "#9a7b0a",
+      "c": "#a87a00",
       "dash": null,
       "notip": true,
       "pts": [
@@ -240,7 +240,7 @@
      {
       "type": "line",
       "name": "Pirates",
-      "c": "ink",
+      "c": "#6a4fc0",
       "dash": "dash",
       "notip": true,
       "pts": [
@@ -272,7 +272,7 @@
      },
      {
       "type": "dots",
-      "c": "#9a7b0a",
+      "c": "#a87a00",
       "shape": null,
       "r": 3.5,
       "pts": [
@@ -310,7 +310,7 @@
      },
      {
       "type": "dots",
-      "c": "ink",
+      "c": "#6a4fc0",
       "shape": "d",
       "r": 3.5,
       "pts": [
@@ -382,7 +382,7 @@
      {
       "type": "line",
       "name": "ANO",
-      "c": "#9a7b0a",
+      "c": "#a87a00",
       "dash": null,
       "notip": true,
       "pts": [
@@ -402,12 +402,13 @@
         ">70",
         26.01
        ]
-      ]
+      ],
+      "end": true
      },
      {
       "type": "line",
       "name": "Pirates",
-      "c": "ink",
+      "c": "#6a4fc0",
       "dash": "dash",
       "notip": true,
       "pts": [
@@ -427,11 +428,12 @@
         ">70",
         14.49
        ]
-      ]
+      ],
+      "end": true
      },
      {
       "type": "dots",
-      "c": "#9a7b0a",
+      "c": "#a87a00",
       "shape": null,
       "r": 3.5,
       "pts": [
@@ -459,7 +461,7 @@
      },
      {
       "type": "dots",
-      "c": "ink",
+      "c": "#6a4fc0",
       "shape": "d",
       "r": 3.5,
       "pts": [
@@ -484,8 +486,27 @@
         "tip": "flats in panel buildings: >70 %\nPirates 14.5 %\n328 precincts"
        }
       ]
+     },
+     {
+      "type": "callout",
+      "x": "<10",
+      "y": 16.04,
+      "dx": 0,
+      "dy": 26,
+      "anchor": "middle",
+      "s": "16 %"
+     },
+     {
+      "type": "callout",
+      "x": ">70",
+      "y": 26.01,
+      "dx": -6,
+      "dy": -16,
+      "anchor": "end",
+      "s": "26 %"
      }
-    ]
+    ],
+    "padRight": 64
    }
   ],
   "table": {
@@ -618,7 +639,11 @@
    },
    {
     "label": "education and citizenship held equal",
-    "c": "#9a7b0a"
+    "c": "#a87a00"
+   },
+   {
+    "label": "the same for SPOLU",
+    "c": "grey"
    },
    {
     "label": "half the original gradient",
@@ -672,35 +697,40 @@
         "mid": 0.4925,
         "shape": "d",
         "fill": "grey",
-        "tip": "ANO 2025\nwithout composition 0.985\nwith education and citizenship 0.565\nhalf the original 0.49\nexplained 43 %"
+        "tip": "ANO 2025\nwithout composition 0.985\nwith education and citizenship 0.565\nhalf the original 0.49\nexplained 43 %",
+        "c": "#a87a00"
        },
        {
         "y": "ANO 2025, + age",
         "mid": 0.4925,
         "shape": "d",
         "fill": "grey",
-        "tip": "ANO 2025, + age\nwithout composition 0.985\nwith education and citizenship 0.468\nhalf the original 0.49\nexplained 52 %"
+        "tip": "ANO 2025, + age\nwithout composition 0.985\nwith education and citizenship 0.468\nhalf the original 0.49\nexplained 52 %",
+        "c": "#a87a00"
        },
        {
         "y": "ANO 2021",
         "mid": 0.429,
         "shape": "d",
         "fill": "grey",
-        "tip": "ANO 2021\nwithout composition 0.858\nwith education and citizenship 0.479\nhalf the original 0.43\nexplained 44 %"
+        "tip": "ANO 2021\nwithout composition 0.858\nwith education and citizenship 0.479\nhalf the original 0.43\nexplained 44 %",
+        "c": "#a87a00"
        },
        {
         "y": "SPOLU 2025",
         "mid": -0.2985,
         "shape": "d",
         "fill": "grey",
-        "tip": "SPOLU 2025\nwithout composition −0.597\nwith education and citizenship −0.346\nhalf the original −0.30\nexplained 42 %"
+        "tip": "SPOLU 2025\nwithout composition −0.597\nwith education and citizenship −0.346\nhalf the original −0.30\nexplained 42 %",
+        "c": "grey"
        },
        {
         "y": "SPOLU 2021",
         "mid": -0.3855,
         "shape": "d",
         "fill": "grey",
-        "tip": "SPOLU 2021\nwithout composition −0.771\nwith education and citizenship −0.531\nhalf the original −0.39\nexplained 31 %"
+        "tip": "SPOLU 2021\nwithout composition −0.771\nwith education and citizenship −0.531\nhalf the original −0.39\nexplained 31 %",
+        "c": "grey"
        }
       ]
      },
@@ -712,31 +742,36 @@
         "y": "ANO 2025",
         "from": 0.985,
         "to": 0.565,
-        "tip": "ANO 2025\nwithout composition 0.985\nwith education and citizenship 0.565\nhalf the original 0.49\nexplained 43 %"
+        "tip": "ANO 2025\nwithout composition 0.985\nwith education and citizenship 0.565\nhalf the original 0.49\nexplained 43 %",
+        "c": "#a87a00"
        },
        {
         "y": "ANO 2025, + age",
         "from": 0.985,
         "to": 0.468,
-        "tip": "ANO 2025, + age\nwithout composition 0.985\nwith education and citizenship 0.468\nhalf the original 0.49\nexplained 52 %"
+        "tip": "ANO 2025, + age\nwithout composition 0.985\nwith education and citizenship 0.468\nhalf the original 0.49\nexplained 52 %",
+        "c": "#a87a00"
        },
        {
         "y": "ANO 2021",
         "from": 0.858,
         "to": 0.479,
-        "tip": "ANO 2021\nwithout composition 0.858\nwith education and citizenship 0.479\nhalf the original 0.43\nexplained 44 %"
+        "tip": "ANO 2021\nwithout composition 0.858\nwith education and citizenship 0.479\nhalf the original 0.43\nexplained 44 %",
+        "c": "#a87a00"
        },
        {
         "y": "SPOLU 2025",
         "from": -0.597,
         "to": -0.346,
-        "tip": "SPOLU 2025\nwithout composition −0.597\nwith education and citizenship −0.346\nhalf the original −0.30\nexplained 42 %"
+        "tip": "SPOLU 2025\nwithout composition −0.597\nwith education and citizenship −0.346\nhalf the original −0.30\nexplained 42 %",
+        "c": "grey"
        },
        {
         "y": "SPOLU 2021",
         "from": -0.771,
         "to": -0.531,
-        "tip": "SPOLU 2021\nwithout composition −0.771\nwith education and citizenship −0.531\nhalf the original −0.39\nexplained 31 %"
+        "tip": "SPOLU 2021\nwithout composition −0.771\nwith education and citizenship −0.531\nhalf the original −0.39\nexplained 31 %",
+        "c": "grey"
        }
       ]
      },
@@ -839,7 +874,7 @@
   "legend": [
    {
     "label": "estimate and 90 % interval",
-    "c": "#9a7b0a",
+    "c": "#a87a00",
     "shape": "o"
    },
    {
@@ -896,7 +931,7 @@
      },
      {
       "type": "range",
-      "c": "#9a7b0a",
+      "c": "#a87a00",
       "w": 2,
       "rows": [
        {
@@ -976,11 +1011,11 @@
   "legend": [
    {
     "label": "819 matched precincts",
-    "c": "#9a7b0a"
+    "c": "#a87a00"
    },
    {
     "label": "5 % (410) and 20 % (982) matching rules",
-    "c": "#9a7b0a",
+    "c": "#a87a00",
     "shape": "box",
     "o": 0.25
    }
@@ -1027,7 +1062,7 @@
      {
       "type": "area",
       "name": "5 %–20 % rules",
-      "c": "#9a7b0a",
+      "c": "#a87a00",
       "o": 0.15,
       "fmt": {
        "dp": 2
@@ -1053,7 +1088,7 @@
      {
       "type": "line",
       "name": "matched",
-      "c": "#9a7b0a",
+      "c": "#a87a00",
       "w": 2.4,
       "dots": true,
       "fmt": {
@@ -1138,7 +1173,7 @@
   "legend": [
    {
     "label": "significantly less than half explained",
-    "c": "#9a7b0a",
+    "c": "#a87a00",
     "shape": "o"
    },
    {
@@ -1199,193 +1234,193 @@
        {
         "x": 1,
         "y": 30.8,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by area, panel broad,\nall clusters, bootstrap errors\n282 clusters\nexplained 31 %\nless than half explained"
        },
        {
         "x": 2,
         "y": 30.8,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by area, panel broad,\nall clusters, spatial errors\n282 clusters\nexplained 31 %\nless than half explained"
        },
        {
         "x": 3,
         "y": 32.2,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by area, panel narrow,\nall clusters, bootstrap errors\n282 clusters\nexplained 32 %\nless than half explained"
        },
        {
         "x": 4,
         "y": 32.2,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by area, panel narrow,\nall clusters, spatial errors\n282 clusters\nexplained 32 %\nless than half explained"
        },
        {
         "x": 5,
         "y": 32.5,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by flats, panel narrow,\nhomogeneous squares only, bootstrap errors\n205 clusters\nexplained 32 %\nless than half explained"
        },
        {
         "x": 6,
         "y": 32.5,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by flats, panel narrow,\nhomogeneous squares only, spatial errors\n205 clusters\nexplained 32 %\nless than half explained"
        },
        {
         "x": 7,
         "y": 32.7,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by flats, panel broad,\nhomogeneous squares only, bootstrap errors\n200 clusters\nexplained 33 %\nless than half explained"
        },
        {
         "x": 8,
         "y": 32.7,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by flats, panel broad,\nhomogeneous squares only, spatial errors\n200 clusters\nexplained 33 %\nless than half explained"
        },
        {
         "x": 9,
         "y": 32.9,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by area, panel narrow,\nhomogeneous squares only, bootstrap errors\n205 clusters\nexplained 33 %\nless than half explained"
        },
        {
         "x": 10,
         "y": 32.9,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by area, panel narrow,\nhomogeneous squares only, spatial errors\n205 clusters\nexplained 33 %\nless than half explained"
        },
        {
         "x": 11,
         "y": 33.0,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by area, panel broad,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\nexplained 33 %\nless than half explained"
        },
        {
         "x": 12,
         "y": 33.0,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by area, panel broad,\nprecincts with 300+ registered voters, spatial errors\n278 clusters\nexplained 33 %\nless than half explained"
        },
        {
         "x": 13,
         "y": 33.4,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by area, panel broad,\nhomogeneous squares only, bootstrap errors\n200 clusters\nexplained 33 %\nless than half explained"
        },
        {
         "x": 14,
         "y": 33.4,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by area, panel broad,\nhomogeneous squares only, spatial errors\n200 clusters\nexplained 33 %\nless than half explained"
        },
        {
         "x": 15,
         "y": 33.7,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by flats, panel broad,\nall clusters, bootstrap errors\n282 clusters\nexplained 34 %\nless than half explained"
        },
        {
         "x": 16,
         "y": 33.7,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by flats, panel broad,\nall clusters, spatial errors\n282 clusters\nexplained 34 %\nless than half explained"
        },
        {
         "x": 17,
         "y": 34.4,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by area, panel narrow,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\nexplained 34 %\nless than half explained"
        },
        {
         "x": 18,
         "y": 34.4,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by area, panel narrow,\nprecincts with 300+ registered voters, spatial errors\n278 clusters\nexplained 34 %\nless than half explained"
        },
        {
         "x": 19,
         "y": 34.8,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by flats, panel narrow,\nall clusters, bootstrap errors\n282 clusters\nexplained 35 %\nless than half explained"
        },
        {
         "x": 20,
         "y": 34.8,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by flats, panel narrow,\nall clusters, spatial errors\n282 clusters\nexplained 35 %\nless than half explained"
        },
        {
         "x": 21,
         "y": 35.5,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by flats, panel broad,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\nexplained 36 %\nless than half explained"
        },
        {
         "x": 22,
         "y": 35.5,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by flats, panel broad,\nprecincts with 300+ registered voters, spatial errors\n278 clusters\nexplained 36 %\nless than half explained"
        },
        {
         "x": 23,
         "y": 36.8,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by flats, panel narrow,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\nexplained 37 %\nless than half explained"
        },
        {
         "x": 24,
         "y": 36.8,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "unweighted, by flats, panel narrow,\nprecincts with 300+ registered voters, spatial errors\n278 clusters\nexplained 37 %\nless than half explained"
        },
        {
         "x": 25,
         "y": 40.4,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "weighted, by area, panel broad,\nall clusters, bootstrap errors\n282 clusters\nexplained 40 %\nless than half explained"
        },
        {
         "x": 26,
         "y": 40.4,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "weighted, by area, panel broad,\nall clusters, spatial errors\n282 clusters\nexplained 40 %\nless than half explained"
        },
        {
         "x": 27,
         "y": 40.6,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "weighted, by area, panel broad,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\nexplained 41 %\nless than half explained"
        },
        {
         "x": 28,
         "y": 40.6,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "weighted, by area, panel broad,\nprecincts with 300+ registered voters, spatial errors\n278 clusters\nexplained 41 %\nless than half explained"
        },
        {
         "x": 29,
         "y": 41.2,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "weighted, by area, panel narrow,\nall clusters, bootstrap errors\n282 clusters\nexplained 41 %\nless than half explained"
        },
        {
         "x": 30,
         "y": 41.2,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "weighted, by area, panel narrow,\nall clusters, spatial errors\n282 clusters\nexplained 41 %\nless than half explained"
        },
        {
         "x": 31,
         "y": 41.4,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "weighted, by area, panel narrow,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\nexplained 41 %\nless than half explained"
        },
        {
         "x": 32,
         "y": 41.4,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "weighted, by area, panel narrow,\nprecincts with 300+ registered voters, spatial errors\n278 clusters\nexplained 41 %\nless than half explained"
        },
        {
@@ -1403,7 +1438,7 @@
        {
         "x": 35,
         "y": 42.6,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "weighted, by flats, panel broad,\nall clusters, bootstrap errors\n282 clusters\nexplained 43 %\nless than half explained"
        },
        {
@@ -1415,7 +1450,7 @@
        {
         "x": 37,
         "y": 42.8,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "weighted, by flats, panel broad,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\nexplained 43 %\nless than half explained"
        },
        {
@@ -1439,7 +1474,7 @@
        {
         "x": 41,
         "y": 42.9,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "weighted, by flats, panel narrow,\nall clusters, bootstrap errors\n282 clusters\nexplained 43 %\nless than half explained"
        },
        {
@@ -1451,7 +1486,7 @@
        {
         "x": 43,
         "y": 43.0,
-        "c": "#9a7b0a",
+        "c": "#a87a00",
         "tip": "weighted, by flats, panel narrow,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\nexplained 43 %\nless than half explained"
        },
        {
