@@ -61,6 +61,13 @@
   };
 
   // one panel into an <svg>; returns hover targets in svg coordinates
+  function splitMid(s) {
+    const mid = s.length / 2;
+    let k = -1;
+    for (let i = s.indexOf(' '); i >= 0; i = s.indexOf(' ', i + 1)) if (k < 0 || Math.abs(i - mid) < Math.abs(k - mid)) k = i;
+    return k < 0 ? [s] : [s.slice(0, k), s.slice(k + 1)];
+  }
+
   function drawPanel(svg, P, box, narrow) {
     const targets = [];
     const g = el('g', {}, svg);
@@ -73,7 +80,9 @@
     const stackCats = catY && narrow;              // phone: category names sit above their row, not beside it
     const left = box.x + (catY ? (stackCats ? 4 : Math.min(box.w * 0.46, 12 + 6.4 * maxLen(yLabels))) : 10 + 6.6 * maxLen(yLabels));
     const top = box.y + (P.title ? 24 : 8) + (P.y.label && !catY ? 16 : 0);
-    const bottom = box.y + box.h - (P.x.label ? 40 : 24);
+    // an x-axis title wider than the panel breaks at the space nearest its middle, and the panel keeps room for both lines
+    const xLab = P.x.label ? (6.6 * P.x.label.length > box.w - 8 ? splitMid(P.x.label) : [P.x.label]) : [];
+    const bottom = box.y + box.h - (xLab.length ? 28 + 12 * xLab.length : 24);
     const right = box.x + box.w - (P.padRight ?? 12);
     const X = scale(P.x, left, right), Y = catY ? scale(P.y, top, bottom) : scale(P.y, bottom, top);
 
@@ -99,7 +108,10 @@
       else el('text', {x: left - 8, y: y + 4, 'text-anchor': 'end', class: 'ch-cat'}, gx).textContent = c;
     }
     el('line', {x1: left, x2: right, y1: bottom, y2: bottom, stroke: COL.grey, 'stroke-width': 1}, gx);
-    if (P.x.label) el('text', {x: (left + right) / 2, y: bottom + 33, 'text-anchor': 'middle', class: 'ch-lab'}, gx).textContent = P.x.label;
+    xLab.forEach((t, i) => {
+      const cx = xLab.length > 1 ? box.x + box.w / 2 : (left + right) / 2;
+      el('text', {x: cx, y: bottom + 33 + 13 * i, 'text-anchor': 'middle', class: 'ch-lab'}, gx).textContent = t;
+    });
     if (P.y.label && !catY) el('text', {x: left, y: top - 8, class: 'ch-lab'}, gx).textContent = P.y.label;
     const barY = c => stackCats ? Y(c) + Y.step * 0.12 : Y(c);
 
