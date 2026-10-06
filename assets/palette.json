@@ -1,5 +1,19 @@
 {
- "_note": "One colour per entity, the same in every chart on the site. Validated with the dataviz validator on #ffffff: the four chromatic entities pass lightness, chroma, all-pairs CVD (worst ΔE 9.2) and the normal-vision floor (worst 16.3); Brno's aqua is 2.82:1 against white, so it always carries a direct label and a table view. Germany is a context grey (the national aggregate behind Berlin), deliberately unsaturated and never drawn next to Brno.",
- "entity": {"Vienna": "#eb6834", "Prague": "#2a78d6", "Brno": "#1baf7a", "Berlin": "#4a3aa7", "Germany": "#8a8984"},
- "ink": "#111111", "grey": "#666666", "light": "#b5b5b0"
+ "_note": "One colour per entity, the same in every chart on the site. Validated with the dataviz validator on #ffffff: the four chromatic entities pass lightness, chroma, all-pairs CVD (worst ΔE 9.2) and the normal-vision floor (worst 16.3); Brno's aqua is 2.82:1 against white, so it always carries a direct label and a table view. Germany is a context grey (the national aggregate behind Berlin), deliberately unsaturated and never drawn next to Brno. Warsaw's olive passes all-pairs with the four cities (worst CVD ΔE 8.7, normal 16.3). Parties: three neutral colours chosen away from each party's own brand colour (ANO ochre, Pirates violet, Praha sobě rose), validated on #ffffff: all checks pass, worst all-pairs CVD ΔE 9.7, normal 19.3; every other party is a context grey with a direct label.",
+ "entity": {
+  "Vienna": "#eb6834",
+  "Prague": "#2a78d6",
+  "Brno": "#1baf7a",
+  "Berlin": "#4a3aa7",
+  "Germany": "#8a8984",
+  "Warsaw": "#5c6b00"
+ },
+ "ink": "#111111",
+ "grey": "#666666",
+ "light": "#b5b5b0",
+ "party": {
+  "ANO": "#a87a00",
+  "Pirates": "#6a4fc0",
+  "Praha sobě": "#c4385f"
+ }
 }
