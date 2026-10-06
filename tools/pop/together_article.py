@@ -25,10 +25,12 @@ import pandas as pd  # noqa: E402
 ROOT = Path(__file__).resolve().parents[2]
 R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "pop" / "together"
-HELD, INK, GREY, LIGHT = "#34507c", "#111111", "#666666", "#b5b5b0"
+INK, GREY, LIGHT = "#111111", "#666666", "#b5b5b0"
 NAME = {"harry-styles": "Harry Styles", "taylor-swift": "Taylor Swift", "bts": "BTS", "bad-bunny": "Bad Bunny",
         "billie-eilish": "Billie Eilish"}
-COL = {"harry-styles": "#34507c", "taylor-swift": "#b5651d", "bts": "#7b5ea7", "bad-bunny": "#2f7d4f", "billie-eilish": "#111111"}
+# each artist keeps the colour of their own part (assets/palette.json); estimates that pool artists are in ink
+_ART = json.loads((ROOT / "assets" / "palette.json").read_text())["artist"]
+COL = {a: _ART[n] for a, n in NAME.items()}
 NB = " "
 plt.rcParams.update({"font.family": "Helvetica", "font.size": 9, "axes.spines.top": False, "axes.spines.right": False,
                      "axes.edgecolor": GREY, "xtick.color": GREY, "ytick.color": GREY, "svg.fonttype": "none"})
@@ -49,9 +51,9 @@ def figures(res: dict) -> None:
         src = R / f"pop-measured-part6-{f}.{'json' if f == 'results' else 'csv'}"
         shutil.copy(src, A / src.name.replace("pop-measured-part6-", ""))
     m1, m1b = res["m1"], res["m1b"]
-    lang = [("all three languages", m1["coef"], m1["lo"], m1["hi"], "held"),
-            ("English songs", m1b["en"]["coef"], m1b["en"]["lo"], m1b["en"]["hi"], "ink"),
-            ("Spanish songs", m1b["es"]["coef"], m1b["es"]["lo"], m1b["es"]["hi"], "ink"),
+    lang = [("all three languages", m1["coef"], m1["lo"], m1["hi"], "ink"),
+            ("English songs", m1b["en"]["coef"], m1b["en"]["lo"], m1b["en"]["hi"], "grey"),
+            ("Spanish songs", m1b["es"]["coef"], m1b["es"]["lo"], m1b["es"]["hi"], "grey"),
             ("Korean song (one country)", m1b["ko"]["coef"], m1b["ko"]["lo"], m1b["ko"]["hi"], "light")]
     charts = {"language": {
         "alt": "How many times as long a song lasted in a country speaking its language, with 95 % intervals: all languages, English, Spanish, Korean.",
@@ -73,7 +75,7 @@ def figures(res: dict) -> None:
                     "y": {"kind": "cat", "domain": [c for c, _ in checks]},
                     "marks": [{"type": "rule", "axis": "x", "v": 1, "c": "grey", "dash": "dash"},
                               {"type": "range", "rows": [{"y": c, "lo": 1 + v["pct_lo"], "mid": 1 + v["pct"], "hi": 1 + v["pct_hi"],
-                                                          "c": "held" if i == 0 else "ink",
+                                                          "c": "ink" if i == 0 else "grey",
                                                           "tip": f"{c}: {1 + v['pct']:.2f}× ({1 + v['pct_lo']:.2f}–{1 + v['pct_hi']:.2f}), n = {v['n']}"}
                                                          for i, (c, v) in enumerate(checks)], "w": 3}]}],
         "table": {"cols": ["check", "multiple", "95 % interval", "pairs"],
@@ -86,7 +88,7 @@ def figures(res: dict) -> None:
                                     "label": "days in the Czech chart against the model's prediction"},
                     "y": {"kind": "cat", "domain": [NAME[a] for a, _ in cz]},
                     "marks": [{"type": "rule", "axis": "x", "v": 0, "c": "grey"},
-                              {"type": "hbar", "rows": [{"y": NAME[a], "x0": 0, "x1": 100 * v, "c": "held" if v > 0 else "light",
+                              {"type": "hbar", "rows": [{"y": NAME[a], "x0": 0, "x1": 100 * v, "c": COL[a],
                                                          "tip": f"{NAME[a]}: {100 * v:+.0f} %"} for a, v in cz]}]}],
         "table": {"cols": ["artist", "against prediction"], "rows": [[NAME[a], f"{100 * v:+.0f} %"] for a, v in cz]},
         "data": ["results.json"]}
@@ -123,9 +125,9 @@ def figures(res: dict) -> None:
                     "y": {"kind": "cat", "domain": ["all five"] + [NAME[a] for a in m2c]},
                     "marks": [{"type": "rule", "axis": "x", "v": 0, "c": "grey", "dash": "dash", "label": "one price everywhere"},
                               {"type": "rule", "axis": "x", "v": 1, "c": "grey", "dash": "dash", "label": "in proportion to income"},
-                              {"type": "range", "rows": [{"y": "all five", "lo": res["m2"]["lo"], "mid": res["m2"]["coef"], "hi": res["m2"]["hi"], "c": "held",
+                              {"type": "range", "rows": [{"y": "all five", "lo": res["m2"]["lo"], "mid": res["m2"]["coef"], "hi": res["m2"]["hi"], "c": "ink",
                                                           "tip": f"all five: {res['m2']['coef']:.2f} ({res['m2']['lo']:.2f} to {res['m2']['hi']:.2f})"}] +
-                                                        [{"y": NAME[a], "lo": v["lo"], "mid": v["coef"], "hi": v["hi"], "c": "ink",
+                                                        [{"y": NAME[a], "lo": v["lo"], "mid": v["coef"], "hi": v["hi"], "c": COL[a],
                                                           "tip": f"{NAME[a]}: {v['coef']:.2f} ({v['lo']:.2f} to {v['hi']:.2f}), {v['n']} entries in {v['countries']} countries"}
                                                           for a, v in m2c.items()], "w": 3}]}],
         "table": {"cols": ["artist", "elasticity", "95 % interval", "entries", "countries"],
@@ -134,19 +136,22 @@ def figures(res: dict) -> None:
         "data": ["results.json", "tickets.csv"]}
     (A / "charts.json").write_text(json.dumps(charts, ensure_ascii=False))
 
-    def ranges(name, rows, xlabel, log=True, ref=1):
+    def ranges(name, rows, xlabel, log=True, ref=1, cols=None):
+        # cols: one colour per row, as in the live chart; by default the first row ink and the rest grey
+        cols = cols or [INK] + [GREY] * (len(rows) - 1)
         f, ax = plt.subplots(figsize=(6.4, 0.38 * len(rows) + 0.9))
-        for i, (lab, mid, lo, hi) in enumerate(reversed(rows)):
-            ax.plot([lo, hi], [i, i], color=INK, lw=2); ax.scatter(mid, i, color=HELD, s=24, zorder=3)
+        for i, ((lab, mid, lo, hi), c) in enumerate(zip(reversed(rows), reversed(cols))):
+            ax.plot([lo, hi], [i, i], color=c, lw=2); ax.scatter(mid, i, color=c, s=24, zorder=3)
         ax.set_yticks(range(len(rows))); ax.set_yticklabels([r[0] for r in reversed(rows)])
         if log:
             ax.set_xscale("log")
         ax.axvline(ref, color=GREY, ls="--", lw=.8); ax.set_xlabel(xlabel)
         f.tight_layout(); f.savefig(A / name); plt.close(f)
-    ranges("01-language.svg", [(l[0], math.exp(l[1]), math.exp(l[2]), math.exp(l[3])) for l in lang], "same-language multiple (log scale)")
+    ranges("01-language.svg", [(l[0], math.exp(l[1]), math.exp(l[2]), math.exp(l[3])) for l in lang], "same-language multiple (log scale)",
+           cols=[{"ink": INK, "grey": GREY, "light": LIGHT}[l[4]] for l in lang])
     ranges("02-checks.svg", [(c, 1 + v["pct"], 1 + v["pct_lo"], 1 + v["pct_hi"]) for c, v in checks], "same-language multiple (log scale)")
     f, ax = plt.subplots(figsize=(6.4, 2.2))
-    ax.barh([NAME[a] for a, _ in cz], [100 * v for _, v in cz], color=[HELD if v > 0 else LIGHT for _, v in cz])
+    ax.barh([NAME[a] for a, _ in cz], [100 * v for _, v in cz], color=[COL[a] for a, _ in cz])
     ax.axvline(0, color=GREY, lw=.8); ax.set_xlabel("days in the Czech chart against the model's prediction, %")
     f.tight_layout(); f.savefig(A / "03-czechia.svg"); plt.close(f)
     f, ax = plt.subplots(figsize=(6.4, 3.4))
@@ -157,7 +162,8 @@ def figures(res: dict) -> None:
     ax.set_xscale("log"); ax.set_yscale("log"); ax.set_xlabel("GDP per capita, $ (log)"); ax.set_ylabel("average ticket, $ (log)")
     ax.legend(fontsize=7, frameon=False); f.tight_layout(); f.savefig(A / "04-prices.svg"); plt.close(f)
     ranges("05-elasticity.svg", [("all five", res["m2"]["coef"], res["m2"]["lo"], res["m2"]["hi"])] +
-           [(NAME[a], v["coef"], v["lo"], v["hi"]) for a, v in m2c.items()], "income elasticity of the average ticket", log=False, ref=0)
+           [(NAME[a], v["coef"], v["lo"], v["hi"]) for a, v in m2c.items()], "income elasticity of the average ticket", log=False, ref=0,
+           cols=[INK] + [COL[a] for a in m2c])
 
 
 def values(res: dict) -> dict:

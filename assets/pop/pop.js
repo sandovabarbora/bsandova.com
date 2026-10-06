@@ -1,14 +1,15 @@
 /* Pop, measured: the two charts that assets/charts.js does not draw. No dependencies.
 
    <figure data-pop="ones" data-src="…/widgets.json">  every global number one as a dot, stacked by days in the
-       global Top 200, with a search: type a song and it is marked and counted. The article's own songs are held.
+       global Top 200, with a search: type a song and it is marked and counted. The article's own songs wear the artist's colour.
    <figure data-pop="tickets" data-src="…/widgets.json">  per country, the average ticket as squares, one square a
        day of income; a part square is the rest of a day.
 
    Each figure keeps its static <img> as the fallback and a table in the page; this script only adds to it. */
 (() => {
   const NS = 'http://www.w3.org/2000/svg';
-  const HELD = '#34507c', INK = '#111111', LIGHT = '#c9c9c4', GREY = '#666666';
+  const INK = '#111111', LIGHT = '#c9c9c4', GREY = '#666666';
+  let HELD = '#34507c';   // the artist's colour from widgets.json (assets/palette.json), the same in every chart
   const el = (tag, attrs = {}, parent) => {
     const e = document.createElementNS(NS, tag);
     for (const [k, v] of Object.entries(attrs)) if (v != null) e.setAttribute(k, v);
@@ -144,6 +145,7 @@
     try {
       if (fig.dataset.pop === 'map') return await map(fig);
       const data = await (await fetch(fig.dataset.src)).json();
+      if (data.c) { HELD = data.c; fig.style.setProperty('--pop-c', data.c); }
       ({ones, tickets})[fig.dataset.pop]?.(fig, data);
     } catch (e) { /* the static figure stays */ }
   });
