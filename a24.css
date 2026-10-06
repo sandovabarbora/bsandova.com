@@ -211,6 +211,8 @@ figure.mp-live>img[hidden]{display:none}
 .mp svg:focus-visible{outline:1px solid #000;outline-offset:4px;box-shadow:none}
 .mp path.a{stroke:#fff;stroke-width:.5;vector-effect:non-scaling-stroke;cursor:pointer}
 .mp path.a:hover,.mp path.a.sel{stroke:#000;stroke-width:1.4}
+.ch-svg text.ch-halo{fill:#fff;stroke:#fff;paint-order:normal}
+.ch-svg text.ch-ink{stroke:none}
 .mp .mp-lab{font:400 10px var(--mono);fill:#111;paint-order:stroke;stroke:#fff;stroke-width:3px}
 .mp-tip{position:absolute;pointer-events:none;background:#fff;border:1px solid #000;padding:8px 10px;font:400 12px/1.45 var(--mono);min-width:210px;z-index:2}
 .mp-tip b{font:500 13px var(--sans);display:block;margin-bottom:4px}
