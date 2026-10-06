@@ -55,6 +55,7 @@ def artist(slug: str) -> None:
     # catalogue: the biggest song's share, and the top three together
     p = charts["catalogue"]["panels"][0]
     clear(p)
+    p["h"] = max(p["h"], 100)  # room above the bar for the notes, as published
     segs = p["marks"][0]["rows"]
     top = segs[0]["tip"].rsplit(":", 1)[0]
     # both notes sit above the bar (below it is the axis); when the two points are close they share one note
