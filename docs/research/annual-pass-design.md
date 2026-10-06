@@ -153,3 +153,9 @@ Three cities pass: Vienna (treated from 2013), Prague (treated from 2016) and Br
 is below the minimum of three treated and three control cities, so the staggered design is **not estimable** either.
 Disclosures recorded in that file: a script printed the 1995 row of Vienna's file (outside the window; not used), and
 masked keyword searches of Prague's reports printed lines without digits.
+
+**6 October 2026 (output).** Neither causal design is estimable, so the study becomes a descriptive note, at the
+author's decision: the indexed passenger series of Vienna, Prague and Brno, 2005–2019, with the price cuts marked, and
+of Berlin and Germany around the 9-euro ticket and the Deutschlandticket; no effect is estimated and no label is
+given. The note explains why the comparison cannot be made causal from the published data. Passenger values are read
+from here on.
