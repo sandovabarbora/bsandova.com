@@ -115,7 +115,7 @@ def build() -> dict:
                       "r": rings(g, to_wgs),
                       "v": {"per1k": round(float(y[i]) / pop * 1000, 1) if pop > 0 else None,
                             "flats": int(y[i]), "metro": round(float(metro_km[i]), 2)}})
-    return {"held": HELD, "features": feats, "views": VIEWS, "overlay": metro_2012(),
+    return {"held": HELD, "base": "../assets/praha-base.json", "features": feats, "views": VIEWS, "overlay": metro_2012(),
             "note": "Flats completed 1 Jan 2012 to 25 Mar 2021 in Prague's 1 km squares; RÚIAN, GEOSTAT 2011.",
             "data": ["../assets/praha/map-housing.json"],
             "totals": {"cells": len(cells), "flats": int(y.sum()), "pop2011": int(cells.pop2011.sum())}}

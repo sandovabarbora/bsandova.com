@@ -142,6 +142,7 @@ def build() -> dict:
     top = max(f["v"]["stalls"] for f in features)
     spec = {
         "held": HELD,
+        "base": "../assets/praha-base.json",
         "features": features,
         "views": [
             {"key": "stalls", "label": "stalls", "fmt": {"dp": 0}, "scale": "seq", "domain": [0, 1000],

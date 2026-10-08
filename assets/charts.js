@@ -451,7 +451,8 @@
     ctl.append(b1, b2);
     if (!spec.table) b2.remove();
     for (const d of spec.data || [dataUrl]) {
-      const a = Object.assign(document.createElement('a'), {href: d, textContent: 'data · ' + d.split('/').pop()});
+      // '../…' is written from the page; a bare name is next to the spec it came from
+      const a = Object.assign(document.createElement('a'), {href: d.startsWith('../') ? d : new URL(d, new URL(dataUrl, location.href)).href, textContent: 'data · ' + d.split('/').pop()});
       ctl.append(a);
     }
     const hint = ctl.appendChild(document.createElement('span'));
