@@ -1,0 +1,179 @@
+{
+ "window": [
+  "2025-03-15",
+  "2025-09-08"
+ ],
+ "definition_check": {
+  "sampled": 42407,
+  "share_delay_gain_not_delay_difference": 0.9992,
+  "share_delay_gain_not_travel_time_difference": 0.0,
+  "by_month": [
+   {
+    "month": 3,
+    "n": 4316,
+    "off_delay": 4315,
+    "off_travel": 0
+   },
+   {
+    "month": 4,
+    "n": 7400,
+    "off_delay": 7395,
+    "off_travel": 0
+   },
+   {
+    "month": 5,
+    "n": 7226,
+    "off_delay": 7219,
+    "off_travel": 0
+   },
+   {
+    "month": 6,
+    "n": 7927,
+    "off_delay": 7921,
+    "off_travel": 0
+   },
+   {
+    "month": 7,
+    "n": 6735,
+    "off_delay": 6729,
+    "off_travel": 0
+   },
+   {
+    "month": 8,
+    "n": 6907,
+    "off_delay": 6903,
+    "off_travel": 0
+   },
+   {
+    "month": 9,
+    "n": 1896,
+    "off_delay": 1892,
+    "off_travel": 0
+   }
+  ]
+ },
+ "removed_share_by_month": {
+  "tram 3": {
+   "passes": 2744454,
+   "closure": 0.022,
+   "feed_gap": 0.0005,
+   "no_gain": 0.0209,
+   "implausible": 0.0002
+  },
+  "bus 3": {
+   "passes": 2965696,
+   "closure": 0.0748,
+   "feed_gap": 0.0004,
+   "no_gain": 0.0228,
+   "implausible": 0.0003
+  },
+  "bus 4": {
+   "passes": 5136883,
+   "closure": 0.1238,
+   "feed_gap": 0.0006,
+   "no_gain": 0.0239,
+   "implausible": 0.0004
+  },
+  "tram 4": {
+   "passes": 4755958,
+   "closure": 0.1425,
+   "feed_gap": 0.002,
+   "no_gain": 0.0223,
+   "implausible": 0.0003
+  },
+  "tram 5": {
+   "passes": 4639468,
+   "closure": 0.2396,
+   "feed_gap": 0.0004,
+   "no_gain": 0.028,
+   "implausible": 0.0002
+  },
+  "bus 5": {
+   "passes": 5082814,
+   "closure": 0.0225,
+   "feed_gap": 0.0003,
+   "no_gain": 0.0335,
+   "implausible": 0.0004
+  },
+  "tram 6": {
+   "passes": 5085282,
+   "closure": 0.2067,
+   "feed_gap": 0.0,
+   "no_gain": 0.0271,
+   "implausible": 0.0002
+  },
+  "bus 6": {
+   "passes": 5500010,
+   "closure": 0.0447,
+   "feed_gap": 0.0,
+   "no_gain": 0.0253,
+   "implausible": 0.0003
+  },
+  "tram 7": {
+   "passes": 4450851,
+   "closure": 0.3133,
+   "feed_gap": 0.0011,
+   "no_gain": 0.0315,
+   "implausible": 0.0003
+  },
+  "bus 7": {
+   "passes": 4648827,
+   "closure": 0.2368,
+   "feed_gap": 0.0004,
+   "no_gain": 0.0254,
+   "implausible": 0.0002
+  },
+  "tram 8": {
+   "passes": 4638351,
+   "closure": 0.239,
+   "feed_gap": 0.0,
+   "no_gain": 0.0316,
+   "implausible": 0.0002
+  },
+  "bus 8": {
+   "passes": 4748054,
+   "closure": 0.2939,
+   "feed_gap": 0.0,
+   "no_gain": 0.0262,
+   "implausible": 0.0003
+  },
+  "bus 9": {
+   "passes": 1291687,
+   "closure": 0.2333,
+   "feed_gap": 0.0012,
+   "no_gain": 0.027,
+   "implausible": 0.0004
+  },
+  "tram 9": {
+   "passes": 1207599,
+   "closure": 0.0758,
+   "feed_gap": 0.0018,
+   "no_gain": 0.0323,
+   "implausible": 0.0001
+  }
+ },
+ "rare_segments": {
+  "bus": {
+   "segments": 101,
+   "passes": 24537
+  },
+  "tram": {
+   "segments": 48,
+   "passes": 9116
+  }
+ },
+ "kept": {
+  "bus": {
+   "segments": 1286,
+   "passes": 24633453,
+   "dates": 170,
+   "segments_with_coordinates": 127
+  },
+  "tram": {
+   "segments": 618,
+   "passes": 21380600,
+   "dates": 170,
+   "segments_with_coordinates": 279
+  }
+ }
+}
