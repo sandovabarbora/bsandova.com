@@ -215,3 +215,12 @@ anything. The estimate now loads only the rows an analysis uses (all kept connec
 2–4 min for the §7 check) with text columns as categories; no rule changed. A second run still reached 16 GB and was stopped, again before it
 printed anything, so the estimate now runs month by month (same-day donors, checks and bounds need only their own
 day) and keeps only the columns the week bootstrap and the other-day donors need; no rule changed.
+
+**8 October 2026 (output-neutral code fixes after the freeze; tag `late-transfers-v1` stays at 85516cc).** Three
+commits changed `tools/transfer/` after the freeze, all for memory and input/output only, with the same rules:
+e425c61 (load only the rows an analysis reads: the flagged returns and same-trunk pairs only at slack 2–4 min, for the
+§7 check), 84b3bb4 (run month by month, keeping only the columns the week bootstrap and other-day donors need) and
+75d27e1 (read the text keys as dictionaries). The reason: the frozen code ran out of memory twice (21 GB, then 16 GB)
+before printing any estimate. The test suite passes on the fixed code (7 tests), and on March 2025 the frozen code and
+the fixed code give the same Q1 rows, connection by connection (771 749 rows: made, same-day donor counts), and the
+same Δp_within for that month; that one month's point estimate was seen in this comparison before the full run.
