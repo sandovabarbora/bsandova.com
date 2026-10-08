@@ -2,8 +2,9 @@
 deploy; soft rules (word caps) are reported as warnings.
 
 Hard rules, for every article in texts/*.html:
-  - one short-version box (details.tldr), one metadata block (dl.meta) and a change log (#changelog) that records
-    the standard check;
+  - one short-version box (details.tldr), one metadata block (dl.meta) whose version links to the article's change log
+    on the changelog page (changelog/#<slug>), and that change log (docs/changelogs/<slug>.html) records the standard
+    check;
   - no claim of review ("referee"), and "pre-registered" only in its negated form ("not pre-registered");
   - references: numbered r1..rN without gaps, every entry cited, every citation resolves;
   - figures numbered 1..n in order, and every "(fig. n)" in the text points at an existing figure;
@@ -33,7 +34,7 @@ def body_words(s: str) -> int:
     """Words of the sections between the metadata block and the references, without tables, figures and captions."""
     a = s.find("</dl>", s.find('class="meta"'))
     b = s.find('id="refs"')
-    b = b if b > 0 else s.find('id="changelog"')
+    b = b if b > 0 else s.find('<footer')
     part = s[a:b] if a > 0 and b > a else s
     part = re.sub(r"<(table|figure|figcaption|pre)[^>]*>.*?</\1>", " ", part, flags=re.S)
     return len(visible(part).split())
@@ -52,10 +53,17 @@ def check(path: Path) -> tuple[list[str], list[str]]:
         hard.append(f"{s.count('class=\"tldr\"')} short-version boxes (need 1)")
     if 'class="meta"' not in s:
         hard.append("no metadata block (dl.meta)")
-    if 'id="changelog"' not in s:
-        hard.append("no change log (#changelog)")
-    elif "Checked against editorial standard" not in s:
+    rel = path.resolve().relative_to(ROOT / "texts").with_suffix("")
+    slug = "-".join(x for x in rel.parts if x != "index") or "index"
+    log = ROOT / "docs" / "changelogs" / f"{slug}.html"
+    if f"changelog/#{slug}" not in s:
+        hard.append(f"version does not link to its change log (changelog/#{slug})")
+    if not log.exists():
+        hard.append(f"no change log (docs/changelogs/{slug}.html)")
+    elif "Checked against editorial standard" not in log.read_text(encoding="utf-8"):
         hard.append("change log does not record the standard check")
+    if 'id="changelog"' in s:
+        hard.append("change log inside the article; it belongs on the changelog page")
     text = visible(s)
     if re.search(r"\breferees?\b", text, re.I):
         hard.append('mentions "referee"')

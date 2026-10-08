@@ -65,7 +65,7 @@
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>14 September 2026 (surf) and 15 September 2026 (Prague), merged here 29 September 2026 · updated 6 October 2026 · <a href="#changelog">version 3</a></dd></div>
+  <div><dt>published</dt><dd>14 September 2026 (surf) and 15 September 2026 (Prague), merged here 29 September 2026 · updated 6 October 2026 · <a href="../changelog/#forecast-verification">version 3</a></dd></div>
   <div><dt>work since</dt><dd>September 2024</dd></div>
 </dl>
 <details class="meta-more">
@@ -132,19 +132,6 @@
 </ol>
 </section>
 
-<section id="changelog" class="changelog">
-<h2>Change log</h2>
-<ul>
-<li>6 October 2026, version 3: the intervals the reading rules need, and the eight-week rule, coded in <code>surf/verify.py</code> and <code>weather/verify.py</code> with seven new tests; the text says so where it said they were not yet coded. No number changed, and no claim can yet be read.</li>
-<li>6 October 2026: charts restyled with a headline and notes at key points; numbers unchanged.</li>
-<li>5 October 2026: work dates added. No number changed.</li>
-<li>3 October 2026: corrected after an audit. No number changed. The reading rule made symmetric: a claim is now supported only when its 95 % interval lies wholly on the predicted side, no longer when its point estimate does; the lead-6 half of Prague 2 can no longer be supported, only found not supported or left inconclusive; Prague 1 now needs the Ruzyně interval, not the point estimate, within 1.0–1.6 °C; Surf 1–3 are read on GWAM (and EWAM) with MFWAM, scored against its own analysis, reported separately. Disclosed that most intervals, spread shares and paired differences the rules need are not yet coded, so only the MAE part of Surf 2 and the Ruzyně MAE part of Prague 1 can be read; that the jobs scheduled at 06:10 and 06:40 UTC have run from about 08:00 to 14:30 UTC; that the surf climatology is an in-sample, summer-weighted share; that the vote share and spread come from two models at leads 4–6; that the design note said a period of 9 s where the code used 8 s; and that no test covers the three corrections of 29 September. Weakened "every score reads better than against a buoy" to an expectation, and "no number shown before changed" removed from the short version; the short version now says the corrections came before any lead a claim is read on had passed the gate, not before any skill number had. The reading-rule column is dated 29 September, revised 3 October 2026. Wind attributed to the Forecast API, not the wave models; the Richardson citation moved off the equal-probability simplification and given its issue and pages; Spearman's correlation attributed to the surf verifier only; terms glossed at first use; the structured-data image corrected.</li>
-<li>14 September 2026: the surf protocol published as "Not worth the flight" at /texts/surf (commit <code>f815c6b</code>).</li>
-<li>15 September 2026: the Prague protocol published as "Weather, checked." at /texts/weather (commit <code>a51ec90</code>).</li>
-<li>29 September 2026: version 2. The two pages merged into this one. Counts moved from the 92-day snapshot (5 of 92 surfable days, 5 %; alternative rules 2 %, 19 %, 4 %, 5 %, 11 %) to the data of 28 September 2026 (15 of 106, 14.2 %; alternative rules from 8.5 % to 25.5 %); the snapshot stays as fig. 1. The Prague test count corrected from five to six. The fig. 1 caption corrected: it said the non-surfable days fail on period and otherwise on wind, but 81 of the 87 fail on period (one of them also on wind) and 6 on height alone. Persistence baseline, lead-0 precipitation and the Prague ensemble corrected in the verifiers, and the eight-week interval minimum stated. The 16–20 September gap disclosed, reading rules added to the dated predictions, and the booking arithmetic, the data-engineering section and the decision table cut; the live pages keep them. Added the short version, the metadata block and this change log.</li>
-<li>Checked against editorial standard v1 on 29 September 2026.</li>
-</ul>
-</section>
 
 <footer class="text-foot">
   <p class="back"><a href="../#works">← projects</a> · <a href="../surf/">the live surf page</a> · <a href="../weather/">the live Prague page</a></p>

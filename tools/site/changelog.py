@@ -5,6 +5,9 @@
 Each commit becomes one line: date, an area derived from the files it touched, the subject.
 Data commits made by the jobs (surf, watch) are kept but marked, so the page shows the site
 changing and the pipelines running as two different kinds of event.
+
+Above the commits, each article's own change log (corrections, version notes, the editorial-standard check), kept by
+hand in docs/changelogs/<slug>.html and linked from the article's version number as changelog/#<slug>.
 """
 
 from __future__ import annotations
@@ -18,6 +21,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "changelog"
+LOGS = ROOT / "docs" / "changelogs"
+MONTHS = "January February March April May June July August September October November December".split()
 AREAS = [  # first match wins; order matters
     (r"^(surf|watch)/data", "data"),
     (r"^texts/", "texts"),
@@ -71,6 +76,30 @@ def commits() -> list[dict]:
     return out
 
 
+def slug_of(page: Path) -> str:
+    rel = page.relative_to(ROOT / "texts").with_suffix("")
+    return "-".join(p for p in rel.parts if p != "index") or "index"
+
+
+def articles() -> list[dict]:
+    """Each article with a change log: its title, URL, version and the hand-kept list, newest-changed first."""
+    out = []
+    for page in sorted((ROOT / "texts").rglob("*.html")):
+        slug = slug_of(page)
+        log = LOGS / f"{slug}.html"
+        if not log.exists():
+            continue
+        s = page.read_text(encoding="utf-8")
+        title = re.search(r"<title>(.*?)</title>", s, re.S).group(1).split(" · Barbora")[0].strip()
+        version = re.search(r'changelog/#' + re.escape(slug) + r'">(version \d+)<', s)
+        body = log.read_text(encoding="utf-8")
+        dates = [(int(y), MONTHS.index(m) + 1, int(d)) for d, m, y in re.findall(r"(\d{1,2}) (" + "|".join(MONTHS) + r") (\d{4})", body)]
+        href = "../" + str(page.relative_to(ROOT).with_suffix("")).replace("/index", "/")
+        out.append({"slug": slug, "title": title, "href": href, "version": version.group(1) if version else "",
+                    "latest": max(dates) if dates else (0, 0, 0), "body": body})
+    return sorted(out, key=lambda a: (a["latest"], a["title"]), reverse=True)
+
+
 def render(items: list[dict]) -> str:
     by_day = defaultdict(list)
     for c in items:
@@ -92,6 +121,10 @@ def render(items: list[dict]) -> str:
             )
         rows.append("</ol>")
     first = items[-1]["date"] if items else ""
+    arts = articles()
+    art_rows = ['<h2 id="articles">Article change logs</h2>'] + [
+        f'<section class="art" id="{a["slug"]}"><h3><a href="{a["href"]}">{html.escape(a["title"])}</a>'
+        f'<small>{a["version"]}</small></h3>{a["body"]}</section>' for a in arts] + ['<h2 id="commits">Commits</h2>']
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -116,6 +149,10 @@ def render(items: list[dict]) -> str:
 .c.job .a{{color:var(--fg-2)}}.c.job .s{{color:var(--fg-2)}}
 .c .s{{color:var(--fg)}}.c .h{{color:var(--fg-2)}}.c .h:hover{{color:var(--hot)}}
 .c .body{{grid-column:3/-1;margin:0;font-size:.85rem;color:var(--fg-2);white-space:pre-wrap}}
+.art{{max-width:46rem;padding:.6rem 0 .8rem;border-bottom:1px solid var(--line);scroll-margin-top:4rem}}
+.art h3{{font-size:1rem;font-weight:500;margin:0 0 .3rem}}.art h3 small{{font-family:var(--mono);font-size:11px;color:var(--fg-2);margin-left:.6rem}}
+.art ul{{margin:0;padding-left:1.1rem;font-size:.9rem;color:var(--fg-2)}}.art li{{margin:.2rem 0}}
+.art:target{{background:linear-gradient(90deg,var(--line),transparent)}}
 @media (max-width:48rem){{.c{{grid-template-columns:3.2rem 1fr;}}.c .a{{grid-column:2}}.c .s{{grid-column:1/-1}}.c .h,.c .f{{grid-column:auto}}.c .body{{grid-column:1/-1}}}}
 </style>
 </head>
@@ -125,16 +162,17 @@ def render(items: list[dict]) -> str:
 <header class="text-head">
   <p class="kicker">Changelog · every commit since {first} · generated from git at build time</p>
   <h1>What changed, <em>and when.</em></h1>
-  <p class="deck">The <a href="../status/">status page</a> says whether the jobs ran. This page says what the site itself did: every commit, its area, the files it touched, and the commit to read if you want the diff. Job commits, the surf collector and the model watch writing their data, are kept and greyed, so the two kinds of change stay distinguishable. Nothing here is typed; the page is rebuilt from <code>git log</code> on every deploy.</p>
+  <p class="deck">The <a href="../status/">status page</a> says whether the jobs ran. This page says what the site itself did: every commit, its area, the files it touched, and the commit to read if you want the diff. Job commits, the surf collector and the model watch writing their data, are kept and greyed, so the two kinds of change stay distinguishable. The commit list is not typed; it is rebuilt from <code>git log</code> on every deploy. Above it are the articles' own change logs, written by hand: corrections, version notes and the editorial-standard check, each under its article, which links here from its version number.</p>
   <dl class="facts">
     <div><dt>commits</dt><dd>{n_site} <small>by hand</small></dd></div>
     <div><dt>job commits</dt><dd>{n_job} <small>surf · watch, data only</small></dd></div>
     <div><dt>days</dt><dd>{len(days)} <small>{first} → {days[0] if days else ""}</small></dd></div>
+    <div><dt>articles</dt><dd><a href="#articles">{len(arts)}</a> <small>with a change log</small></dd></div>
     <div><dt>data</dt><dd><a href="data.json">data.json</a> <small>one record per commit</small></dd></div>
   </dl>
 </header>
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-page-changelog;--bg:url(../assets/photo/page-changelog.jpg);--bg-s:url(../assets/photo/page-changelog-1200.jpg)"></div><p class="credit">Photo: <a href="https://stocksnap.io/photo/dark-room-KR8L2PXHCS">Alexa Mazzarello</a> · CC0, toned</p></section>
-{"".join(rows)}
+{"".join(art_rows)}{"".join(rows)}
 <footer class="text-foot"><p class="back"><a href="../#works">← projects</a> · <a href="../status/">status</a></p></footer>
 </article>
 </body>
