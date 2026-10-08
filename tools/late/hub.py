@@ -41,9 +41,9 @@ TEMPLATE = '''<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Running late · Barbora Šandová</title>
-<meta name="description" content="Pre-specified studies of where and why Prague's trams fall behind, from the stop passes of 2025: a tenth of the segments record {{S}} % of the delay, narrowly, the same ones in odd and even weeks; and the spacing between two trams of a line drifts without feeding on itself.">
+<meta name="description" content="Pre-specified studies of where and why Prague's trams fall behind, from the stop passes of 2025: a tenth of the segments record {{S}} % of the delay, narrowly, the same ones in odd and even weeks; and the spacing between two trams of a line shows practically no amplification from stop to stop.">
 <meta property="og:title" content="Running late">
-<meta property="og:description" content="Where and why Prague's trams fall behind, one pre-specified question at a time: where delay is recorded, and why trams of a line come in twos and threes.">
+<meta property="og:description" content="Where and why Prague's trams fall behind, one pre-specified question at a time: where delay is recorded, and why two trams of a line come at once.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://bsandova.com/texts/running-late">
 <meta property="og:image" content="https://bsandova.com/assets/og/running-late.jpg">
@@ -77,11 +77,11 @@ TEMPLATE = '''<!doctype html>
     <li>Each part fixes its question, its measure and its reading rule before the data that answers it is read.</li>
     <li>Part 1: over {{passes_m}} million tram passes on {{segments}} segments, a tenth of the segments record {{S}} % of all delay gained, just over the half set in advance, so concentration is {{S_label}}, narrowly; they are the same segments in odd and even weeks.</li>
     <li>Many of the largest totals are segments leaving large stops, and part of what they record is early trams waiting for their time; both were described afterwards, not registered.</li>
-    <li>Part 2: over {{pairs}} pairs of trams of the same line, the spacing between them drifts stop by stop without feeding on itself ({{g}} per stop, so amplification is {{g_label}}); bunches, {{bunched}} % of pair passes, build slowly towards the end of a line. City buses differ: their spacing amplifies slightly ({{bg}}, {{bg_label}}).</li>
+    <li>Part 2: over {{pairs}} pairs of trams of the same line, the spacing between them shows practically no amplification from stop to stop ({{g}} per stop, {{g_label}} by the registered rule); bunches, {{bunched}} % of pair passes and a floor, build gradually towards the end of a line, and the rare sudden closings concentrate partly by line. City buses show a small positive value ({{bg}}, {{bg_label}}), about the size of the spread among the tram estimates.</li>
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>8 October 2026 · <a href="../changelog/#running-late">version 2</a></dd></div>
+  <div><dt>published</dt><dd>8 October 2026 · <a href="../changelog/#running-late">version 3</a></dd></div>
   <div><dt>work since</dt><dd>October 2026</dd></div>
 </dl>
 
@@ -99,11 +99,11 @@ TEMPLATE = '''<!doctype html>
     </div>
   </li>
   <li>
-    <a class="still" href="bunching" aria-label="Part 2, Why do three 22s come at once?"><span class="shot" style="view-transition-name:ph-bunching;--bg:url(../assets/photo/bunching.jpg);--bg-s:url(../assets/photo/bunching-1200.jpg)"></span></a>
+    <a class="still" href="bunching" aria-label="Part 2, Why do two 22s come at once?"><span class="shot" style="view-transition-name:ph-bunching;--bg:url(../assets/photo/bunching.jpg);--bg-s:url(../assets/photo/bunching-1200.jpg)"></span></a>
     <div>
       <p class="n">Part 2 · bunching · {{pairs}} pairs of trams, 15 March – 8 September 2025</p>
-      <h2><a href="bunching">Why do three 22s come at once?</a></h2>
-      <p>The spacing between two trams of a line drifts stop by stop without feeding on itself ({{g}} per stop, {{g_label}}), so bunches build slowly towards the end of a line, about as fast as independent drift would build them; the few sudden closings cluster where spacing is volatile. City buses amplify slightly ({{bg}}, {{bg_label}}).</p>
+      <h2><a href="bunching">Why do two 22s come at once? Tram bunching in Prague, 2025</a></h2>
+      <p>The spacing between two trams of a line shows practically no amplification from stop to stop ({{g}} per stop, {{g_label}} by the registered rule, corrected in its version 2), and bunches build gradually towards the end of a line. The rare sudden closings concentrate on some platforms, as other rare one-stop events do, and partly by line. City buses show a small positive value ({{bg}}, {{bg_label}}), about the size of the spread among the tram estimates.</p>
     </div>
   </li>
 </ol>
