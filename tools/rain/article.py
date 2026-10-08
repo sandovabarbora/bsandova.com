@@ -164,7 +164,7 @@ def map_json(desc: dict) -> None:
                       "v": {"est": e["est_s"] if e else None, "lo": e["lo"] if e else None,
                             "hi": e["hi"] if e else None, "units": e["rain_units"] if e else None}})
     top = max(r["est_s"] for r in desc["by_route"])
-    spec = {"held": HELD, "features": feats,
+    spec = {"held": HELD, "base": "../assets/praha-base.json", "features": feats,
             "views": [{"key": "est", "label": "rain estimate", "fmt": {"dp": 1, "unit": " s", "sign": True},
                        "scale": "seq", "domain": [0, round(top + 0.5)], "note": "delay gained per trip-hour, descriptive"},
                       {"key": "lo", "label": "95 % interval, low", "fmt": {"dp": 1, "unit": " s", "sign": True},

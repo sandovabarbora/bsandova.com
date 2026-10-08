@@ -8,7 +8,8 @@
           views:[{key, label, fmt:{dp, unit, pct, sign}, scale:'seq'|'div', domain:[lo,hi], note,
                   cats:[{v, label}] for a yes/no or categorical view, mark:{id, label} to draw one feature in ink}],
           overlay:{lines:[[[lon,lat],...]], points:[[lon,lat]], labels:[{at:[lon,lat], s}]},
-          note, hint, lat0 (projection latitude, default Prague's), data:[paths]} */
+          note, hint, lat0 (projection latitude, default Prague's), base (a basemap JSON {outline, districts, water}
+          drawn under the features, path as for data), data:[paths]} */
 (() => {
   const NS = 'http://www.w3.org/2000/svg';
   const nb = ' ';
@@ -34,13 +35,13 @@
   };
   const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); if (parent) parent.appendChild(e); return e; };
 
-  function mount(fig, S, url) {
+  function mount(fig, S, url, B) {
     const img = fig.querySelector('img');
     const held = S.held || '#34507c';
     // equirectangular at Prague's latitude, fitted to 900 units wide
     const lat0 = S.lat0 ?? 50.08, k = 1 / Math.cos(lat0 * Math.PI / 180), W = 900;
     let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
-    S.features.forEach(f => (f.r || f.l).forEach(ring => ring.forEach(([x, y]) => { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); })));
+    [...S.features.map(f => f.r || f.l), ...(B ? [B.outline] : [])].forEach(rs => rs.forEach(ring => ring.forEach(([x, y]) => { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); })));
     const s = W / (x1 - x0), H = Math.round((y1 - y0) * k * s);
     const X = x => +((x - x0) * s).toFixed(1), Y = y => +((y1 - y) * k * s).toFixed(1);
 
@@ -53,6 +54,13 @@
     const defs = el('defs', {}, svg), pat = el('pattern', {id: 'mp-nd-' + Math.random().toString(36).slice(2), width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, defs);
     el('rect', {width: 6, height: 6, fill: '#f4f4f1'}, pat); el('line', {x1: 0, y1: 0, x2: 0, y2: 6, stroke: '#c4c4bf', 'stroke-width': 1.6}, pat);
     const ND = `url(#${pat.id})`;
+    if (B) {  // the basemap: districts, the city outline and the river, under everything and never hit-tested
+      const gB = el('g', {'pointer-events': 'none', class: 'mp-base'}, svg);
+      const line = (pts, closed) => 'M' + pts.map(([x, y]) => X(x) + ',' + Y(y)).join('L') + (closed ? 'Z' : '');
+      el('path', {d: B.districts.map(r => line(r, true)).join(''), fill: '#f2f2ef', stroke: '#fff', 'stroke-width': 1, 'vector-effect': 'non-scaling-stroke'}, gB);
+      el('path', {d: B.outline.map(r => line(r, true)).join(''), fill: 'none', stroke: '#c9c9c4', 'stroke-width': 1, 'vector-effect': 'non-scaling-stroke'}, gB);
+      el('path', {d: (B.water || []).map(l => line(l, false)).join(''), fill: 'none', stroke: '#c5d2de', 'stroke-width': 4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'vector-effect': 'non-scaling-stroke'}, gB);
+    }
     const gA = el('g', {}, svg), gO = el('g', {'pointer-events': 'none'}, svg);
     // a line's colour goes in its style, since the stylesheet's white outline for areas would win over an attribute
     const paint = (p, c) => { if (p.classList.contains('ln')) p.style.stroke = c; else p.setAttribute('fill', c); };
@@ -86,6 +94,7 @@
         const t = document.createElement('span'); t.textContent = '· ' + V.label + (V.note ? ' · ' + V.note : ''); leg.append(t);
         if (vals.length < S.features.length) { const n = document.createElement('span'); n.className = 'mp-nd'; n.textContent = 'no data'; leg.append(n); }
         if (S.note) { const n = document.createElement('span'); n.className = 'mp-note'; n.textContent = S.note; leg.append(n); }
+        if (B?.credit) { const n = document.createElement('span'); n.className = 'mp-note'; n.textContent = B.credit; leg.append(n); }
         bar.querySelectorAll('button[data-v]').forEach(bt => bt.setAttribute('aria-pressed', String(+bt.dataset.v === v)));
         buildTable(); if (sel >= 0) detail(sel);
         return;
@@ -103,6 +112,7 @@
       leg.append(a, i, b);
       if (mk >= 0) { const sw = document.createElement('span'); sw.className = 'mp-sw'; sw.style.setProperty('--c', '#222'); sw.textContent = V.mark.label; leg.append(sw); }
       if (S.note) { const n = document.createElement('span'); n.className = 'mp-note'; n.textContent = S.note; leg.append(n); }
+      if (B?.credit) { const n = document.createElement('span'); n.className = 'mp-note'; n.textContent = B.credit; leg.append(n); }
       if (vals.length < S.features.length) { const n = document.createElement('span'); n.className = 'mp-nd'; n.textContent = 'no data'; leg.append(n); }
       bar.querySelectorAll('button[data-v]').forEach(bt => bt.setAttribute('aria-pressed', String(+bt.dataset.v === v)));
       buildTable();
@@ -141,7 +151,8 @@
     const view = tbl => { box.hidden = tbl; leg.hidden = tbl; table.hidden = !tbl; b1.setAttribute('aria-pressed', String(!tbl)); b2.setAttribute('aria-pressed', String(tbl)); };
     b1.onclick = () => view(false); b2.onclick = () => view(true); view(false);
     ctl.append(b1, b2);
-    for (const d of S.data || [url]) ctl.append(Object.assign(document.createElement('a'), {href: d, textContent: 'data · ' + d.split('/').pop()}));
+    // '../…' is written from the page; a bare name is next to the spec it came from
+    for (const d of S.data || [url]) ctl.append(Object.assign(document.createElement('a'), {href: d.startsWith('../') ? d : new URL(d, new URL(url, location.href)).href, textContent: 'data · ' + d.split('/').pop()}));
     const hint = document.createElement('span'); hint.className = 'ch-hint'; hint.textContent = S.hint || 'hover, tap or use the arrow keys for an area';
     ctl.append(hint);
     fig.insertBefore(ctl, img);
@@ -164,6 +175,10 @@
 
   document.querySelectorAll('figure[data-map]').forEach(fig => {
     const url = fig.dataset.map;
-    fetch(url).then(r => r.ok ? r.json() : Promise.reject(r.status)).then(S => mount(fig, S, url)).catch(() => {});
+    const rel = (d, from) => d.startsWith('../') ? d : new URL(d, new URL(from, location.href)).href;
+    fetch(url).then(r => r.ok ? r.json() : Promise.reject(r.status))
+      .then(S => S.base ? fetch(rel(S.base, url)).then(r => r.ok ? r.json() : null).catch(() => null).then(B => mount(fig, S, url, B))
+                        : mount(fig, S, url))
+      .catch(e => console.warn('map.js:', url, e));
   });
 })();
