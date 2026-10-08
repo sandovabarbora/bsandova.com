@@ -21,6 +21,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../a24.css">
 <style>
+.defs{margin:.4rem 0 1rem;display:grid;gap:.45rem}.defs div{display:grid;grid-template-columns:11.5rem 1fr;gap:.8rem;align-items:baseline}.defs dd{margin:0}
+@media (max-width:560px){.defs div{grid-template-columns:1fr;gap:.2rem}}
+.more{margin:.6rem 0 0}.more summary{font:400 12px var(--mono);color:#666;cursor:pointer}
+.flt{display:flex;flex-wrap:wrap;gap:6px;margin:.4rem 0 1rem}.flt button{font:400 10.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:6px 9px;border:1px solid #ccc;border-radius:2px;background:#fff;cursor:pointer}.flt button[aria-pressed=true]{border-color:#111;box-shadow:inset 0 -2px 0 #111}.flt-n{font:400 12px var(--mono);color:#666;margin:0 0 .6rem}
+.pr[hidden]{display:none}
 .note{font:400 12px/1.6 var(--mono);color:#666}
 .rt{display:inline-block;font:400 10.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:5px 8px;border-radius:2px;white-space:nowrap}
 .rt-yes,.rt-likely{background:#dcefe3;color:#17603c}
@@ -89,7 +94,7 @@ details.prog[open]>summary::after{content:"−"}
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>Three programmes put numbers on housing, 8 000 or 10 000 flats, that Prague cannot complete in four years; those that promise starts, 2 000 or 1 000 a year, are closer to what a term allows, and SPD gives no number.</li>
+    <li>Three programmes name housing numbers, 8 000 or 10 000 flats, that cannot be completed in four years, and word them as preparation, conditions or a long-term goal; those that promise starts, 2 000 or 1 000 a year, are closer to what a term allows, and SPD gives no number.</li>
     <li>No large transport project in any programme can be finished in one term; most programmes say they will prepare them.</li>
     <li>Almost every programme promises rules for Airbnb or a higher tourist fee, which the state decides.</li>
     <li>Most clearly in the city's own hands: its building regulations, parking and fares, the rules for allocating city flats and its budget rules.</li>
@@ -98,7 +103,7 @@ details.prog[open]>summary::after{content:"−"}
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>1 October 2026 · updated 3 October 2026 · <a href="../changelog/#prague-programmes-2026">version 4</a></dd></div>
+  <div><dt>published</dt><dd>1 October 2026 · updated 8 October 2026 · <a href="../changelog/#prague-programmes-2026">version 5</a></dd></div>
   <div><dt>work since</dt><dd>September 2026</dd></div>
 </dl>
 <details class="meta-more">
@@ -107,7 +112,7 @@ details.prog[open]>summary::after{content:"−"}
   <div><dt>status</dt><dd>note</dd></div>
   <div><dt>data</dt><dd>the programme texts of six lists, captured 29 September 2026, the Praha Sobě PDF being dated 24 September (sources in each section); the statutes named in the text, accessed 1 October 2026<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup><sup class="cite"><a href="#r3">3</a></sup><sup class="cite"><a href="#r4">4</a></sup>; every rating in <a href="../assets/programmes-2026/ratings.json">ratings.json</a></dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/notes/programmes_2026.py">tools/notes/programmes_2026.py</a> builds this page from the ratings file: <code>python3 tools/notes/programmes_2026.py</code></dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>What can Prague's 2026 programmes deliver in one term?</i> bsandova.com/texts/prague-programmes-2026, version 4.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>What can Prague's 2026 programmes deliver in one term?</i> bsandova.com/texts/prague-programmes-2026, version 5.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text and data CC BY 4.0</dd></div>
 </dl>
 </details>
@@ -116,21 +121,39 @@ details.prog[open]>summary::after{content:"−"}
 
 <section>
 <h2>How the programmes were read</h2>
-<p>The City of Prague is a municipality and a region in one{{ref:L131}}. It decides its own budget and property, including city flats and land; it issues its own building regulations, including parking minimums; it orders public transport and may set the maximum fares{{ref:L194}}; it runs secondary schools{{ref:L561}} and the municipal police{{ref:L553}}. The state decides by law on rent and short-term rentals{{ref:U104}}, sets the ceiling of the tourist fee, which is 50 Kč a person a night{{ref:L565}}, builds the motorway ring (Pražský okruh, an outer motorway){{ref:L13}} and the railways{{ref:L77}}, and runs the university hospitals{{ref:L372}}. A municipality may set a low-emission zone, effective at least twelve months after it is announced{{ref:L201}}, and a local coefficient, a multiplier of property tax, by area, by group of property or for specified, named properties, but the law has no category for empty flats{{ref:L338}}. The city districts run kindergartens and primary schools and manage many city flats. The city ring road (Městský okruh, an inner road built by the city) is not the motorway ring.</p>
-<p>Each programme was read in full, and its most concrete and consequential promises were rated against those powers, against the scale of the city budget and against the time building takes. <em>Yes</em> means the city decides it alone and can do it within the term. <em>Likely</em> means it is within the city's powers and the term but depends on something the city does not fully control, such as a permit, a tender, hiring or the districts. <em>Partly</em> means the city can do a stated part within the term, such as preparation, a start or one of the promises grouped in the row, but not the whole promise as worded. <em>Not in one term</em> means the promise as worded is a finished result that cannot be reached within four years, and the row holds no smaller step of its own. <em>Decided by the state or another body</em> means the decisive step for every part is a law or another body's decision. The wording decides between the last three: 'finish metro D' is not in one term, while 'continue building metro D' is partly. One fixed reference sets the housing scale: Prague completes about 6 000 homes a year, 4.5 per 1 000 residents on the 2015–2024 mean, and the time from permit to completion there is about 11 months longer than in the rest of Czechia, a difference in the recorded pipeline which may partly be reporting timing{{ref:P4}}. Factual claims in the programmes, such as the money in the city's accounts or counts of flats, were not checked; each section lists them. The ratings were drafted with the help of a language model and checked by the author; the prompt is not published. The legal points they rest on were checked against the statutes cited, except where a row says a point was not confirmed. Rows were chosen by the author as the most concrete and consequential promises, without a fixed rule, 10 to 15 per programme; the programmes contain more promises than were rated, related promises are grouped in one row, and the rating is for the row as a whole. The counts depend on this choice: they describe this reading and do not rank the lists.</p>
+<p>The City of Prague is a municipality and a region in one{{ref:L131}}. It decides its own budget and property, including city flats and land; it issues its own building regulations, including parking minimums; it orders public transport and may set the maximum fares{{ref:L194}}; it runs secondary schools{{ref:L561}} and the municipal police{{ref:L553}}. Its powers are set only by law{{ref:U104}}: the state decides on rent, current law gives the city no power to restrict short-term rentals{{ref:L159}}, and the state sets the ceiling of the tourist fee, which is 50 Kč a person a night{{ref:L565}}, builds the motorway ring (Pražský okruh, an outer motorway){{ref:L13}} and the railways{{ref:L77}}, and runs the university hospitals{{ref:L372}}. A municipality may set a low-emission zone, effective at least twelve months after it is announced, and add an entry fee to it by ordinance{{ref:L201}}, and a local coefficient, a multiplier of property tax, by area, by group of property or for specified, named properties, but the law has no category for empty flats{{ref:L338}}. The city districts run kindergartens and primary schools and manage many city flats. The city ring road (Městský okruh, an inner road built by the city) is not the motorway ring.</p>
+<p>Each programme was read in full, and its most concrete and consequential promises were rated against those powers, against the scale of the city budget and against the time building takes. Each row gets one of five ratings:</p>
+<dl class="defs">
+  <div><dt><span class="rt rt-yes">yes</span></dt><dd>The city decides it alone and can do it within the term.</dd></div>
+  <div><dt><span class="rt rt-likely">likely</span></dt><dd>It is within the city's powers and the term but depends on something the city does not fully control, such as a permit, a tender, hiring or the districts.</dd></div>
+  <div><dt><span class="rt rt-partly">partly</span></dt><dd>The city can do a stated part within the term, such as preparation, a start or one of the promises grouped in the row, but not the whole promise as worded.</dd></div>
+  <div><dt><span class="rt rt-no">not in one term</span></dt><dd>The promise as worded is a finished result that cannot be reached within four years, and the row holds no smaller step of its own.</dd></div>
+  <div><dt><span class="rt rt-other">state or another body</span></dt><dd>The decisive step for every part is a law or another body's decision.</dd></div>
+</dl>
+<p>The wording decides between the last three: 'finish metro D' is not in one term, while 'continue building metro D' is partly. One fixed reference sets the housing scale: Prague completes about 6 000 homes a year, 4.5 per 1 000 residents on the 2015–2024 mean, and the time from permit to completion there is about 11 months longer than in the rest of Czechia, a difference in the recorded pipeline which may partly be reporting timing{{ref:P4}}.</p>
+<details class="more"><summary>More on the method: what was checked, how rows were chosen</summary>
+<p>Factual claims in the programmes, such as the money in the city's accounts or counts of flats, were not checked; each section lists them. The ratings were drafted with the help of a language model and checked by the author; the prompt is not published. The legal points with a reference were checked against the statute cited; a point without one rests on the author's reading, and a row says so where a point was not confirmed. ANO had no full programme online when the texts were captured (its programme PDF returned an error), so its rows come from the lead candidate's page: 6 of the 10 priorities it announces. Rows were chosen by the author as the most concrete and consequential promises, without a fixed rule, 10 to 15 per programme; the programmes contain more promises than were rated, related promises are grouped in one row, and the rating is for the row as a whole. The counts depend on this choice: they describe this reading and do not rank the lists.</p>
+</details>
 </section>
 
 <section>
 <h2>What the programmes share</h2>
 {{BAR}}
-<p>Of the {{N}} promises read, {{DOABLE}} are within the city's powers and can be done in one term, {{PARTLY}} can be done only in part, {{NO}} cannot be done in one term, and {{OTHER}} are decided by the state or another body.</p>
-<p>Housing is the main topic of every programme and its weakest point. Promises of 10 000 flats a year cannot be met when about 6 000 are completed now, and 8 000 city flats, for which no timeframe is given, would be about a third of what the whole market completes in four years. Promises worded as starts, 2 000 city flats or 1 000 a year, are closer to what a term allows. Large transport projects, metro D (its builder plans the opening for 2032{{ref:DPPD}}), a ring metro line, the city ring road, tunnels and new bridges, cannot be finished in four years in any programme, and most programmes say they will prepare them. Rules for Airbnb and a higher tourist fee appear in almost every programme, but state law gives the city no power to restrict short-term rentals as such, only to enforce existing rules, and Prague already charges the fee's legal ceiling{{ref:OZV18}}. The steps most clearly in the city's own hands are its building regulations, its parking and fares, the rules for allocating city flats and its own budget rules.</p>
+<p>Of the {{N}} promises read, {{DOABLE}} are within the city's powers and the term, {{LIKELY}} of them depending on a permit, a tender, hiring or the districts, {{PARTLY}} can be done only in part, {{NO}} cannot be done in one term, and {{OTHER}} are decided by the state or another body.</p>
+<figure data-chart="../assets/programmes-2026/charts.json#parties">
+  <p class="ch-head">{{PHEAD}}</p>
+  <img src="../assets/programmes-2026/01-parties.svg" alt="{{PALT}}" loading="lazy">
+  <figcaption><b>fig. 1</b> · Promises read in each programme by rating, in the order the lists appear on the ballot; rows chosen by the author, 10 to 15 per programme, so the counts describe this reading and do not rank the lists. Data: the six programmes, rated in <a href="../assets/programmes-2026/ratings.json">ratings.json</a>.</figcaption>
+</figure>
+<p>Housing is the main topic of every programme and its weakest point. Ten thousand flats a year, a long-term goal for Piráti and what SPOLU's conditions aim at, is two thirds more than the about 6 000 completed now, and the 8 000 city flats Praha Sobě promises to start preparing, with no timeframe given, would be about a third of what the whole market completes in four years. Promises worded as starts, 2 000 city flats or 1 000 a year, are closer to what a term allows. Large transport projects, metro D (its builder plans the opening for 2032{{ref:DPPD}}), a ring metro line, the city ring road, tunnels and new bridges, cannot be finished in four years in any programme, and most programmes say they will prepare them. Rules for Airbnb and a higher tourist fee appear in almost every programme, but current law gives the city no power to restrict short-term rentals, only to enforce existing rules, the EU registration rules apply from May 2026{{ref:EU1028}}, and Prague already charges the fee's legal ceiling{{ref:OZV18}}. The steps most clearly in the city's own hands are its building regulations, its parking and fares, the rules for allocating city flats and its own budget rules.</p>
 </section>
 
 <section>
 <h2>The six programmes</h2>
 <p class="note">This note sits beside the series <a href="prague-measured">Prague, measured</a> and is not one of its parts. Lists in ballot order. Each section gives the verdict, the rated promises, what was not checked and the source with its capture date. The text of list 22 is the lead candidate's page, because the party's programme document returned an error when it was captured.</p>
 <nav class="jump" aria-label="Programmes">{{JUMP}}</nav>
+<div class="flt" role="group" aria-label="Show promises by rating">{{FILTERS}}</div>
+<p class="flt-n" aria-live="polite"></p>
 {{SECTIONS}}
 </section>
 
@@ -146,5 +169,23 @@ details.prog[open]>summary::after{content:"−"}
   <p class="back"><a href="../#works">← projects</a></p>
 </footer>
 </article>
+<script>
+(() => {
+  const btns = [...document.querySelectorAll('.flt button')], out = document.querySelector('.flt-n');
+  const show = k => {
+    btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.k === k)));
+    let n = 0;
+    document.querySelectorAll('details.prog').forEach(d => {
+      let m = 0;
+      d.querySelectorAll('article.pr').forEach(a => { const on = k === 'all' || a.classList.contains('pr-' + k); a.hidden = !on; m += on; });
+      if (k !== 'all') d.open = m > 0;
+      n += m;
+    });
+    out.textContent = k === 'all' ? '' : n + ' promises shown, in ' + document.querySelectorAll('details.prog[open]').length + ' programmes';
+  };
+  btns.forEach(b => b.addEventListener('click', () => show(b.dataset.k)));
+})();
+</script>
+<script src="../assets/charts.js" defer></script>
 </body>
 </html>
