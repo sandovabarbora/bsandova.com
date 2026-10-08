@@ -256,3 +256,31 @@ shuffled.
 stops by the rule first written into `screen.py` (432 tram and 1 664 bus stops), which the code-freeze entry above
 replaced; the stops used are those of `tools/bunch/timing.py` (65 of 624 tram stops, 10 of 2 183 bus stops), counted in
 `describe.json` and `describe-bus.json`.
+
+**8 October 2026 (correction after publication, following an independent review).** The registered label rule of §6
+for Q1 was applied in the wrong order in the code: `label_gamma` checked the ±0.01 margin before the clause that lists
+an interval wholly below 0 as inconclusive. The specific clause governs, so Q1 is **inconclusive** (95 % interval
+−0.0018 to −0.0006), not "not supported" as published in version 1. The function now checks that case first, with a
+test on an interval of −0.002 to −0.0005; the label in `bunching-results.json` was recomputed from the stored
+intervals by `tools/bunch/review.py` (the version 1 label is kept there as `label_v1`), and no estimate changed. The
+note in the entry above, "the margin rule was applied as coded", is superseded. Added after publication as post-hoc
+checks, not registered (`bunching-review.json`): Q2 against an exposure null in which births are reassigned at random
+within the same service pattern, with the same cross-fit and a bootstrap over dates of 199 draws with 49 null
+draws each, gives 1.87 (95 % interval 1.45 to 2.44); within the same line 1.91 (1.38 to 2.61). γ_IV by
+line ranges from −0.0175 (line 31) to +0.0029 (line 8) over the 24 lines with at least 50 000 instrumented
+transitions, and from −0.0421 (line 21) to +0.0299 (line 30) with all lines. The article was retitled "Why do two 22s
+come at once? Tram bunching in Prague, 2025", since the analysis covers pairs only; this design keeps its registered
+title. The registration commits are tagged `late-bunching-design` (2b78211), `late-bunching-screen` (65789a6),
+`late-bunching-v1` (83f91ec) and `late-bunching-results` (8dc4eea); the tags were added after publication.
+
+**8 October 2026, clarification after publication:** the 'independent methods reviewer' in the status paragraph was a
+model-based reviewer (a separate Claude Sonnet instance), not a person. The "independent review of the article" in the
+entry of that title above, and in the change log, was a review before publication by the agent that wrote the article,
+a self-review rather than an independent one.
+
+**8 October 2026, clarification after publication (second).** The independent review after publication that led to
+version 2 of the article was model-based, not by a person. Two deviations were not logged before: platforms in Q2 and
+Q2b are keyed on `gtfs_stop_id` directly, not grouped to the physical stop and direction through `stops.txt` as §2 and
+§3 say; and Q3 keeps segments with at least 500 eligible pair-stops (`E.sum(1) >= 500` in `estimate.py`), not 500
+observed pairs. `tools/bunch/review.py` rewrote `bunching-results.json` in place with the corrected Q1 label (the
+version 1 label kept as `label_v1`), so the file is no longer byte-identical to the output of the registered run.

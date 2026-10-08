@@ -57,7 +57,7 @@ def main() -> None:
         "pairs_bunched_at_last_stop_share": round(float(
             o.sort_values("k").groupby("pair").tail(1)["r"].pipe(lambda r: ((r >= 0) & (r < be.BUNCH)).mean())), 4),
     }
-    # IV with deeper lags, and intervals for the variants the review asked about
+    # IV with deeper lags, and intervals for the variants the pre-publication self-review asked about
     t = be.transitions(ps)
     t3 = ps[["pair", "k", "r"]].assign(k=ps["k"] + 3).rename(columns={"r": "v3"})
     t4 = ps[["pair", "k", "r"]].assign(k=ps["k"] + 4).rename(columns={"r": "v4"})
@@ -97,7 +97,7 @@ def main() -> None:
     seg = ev[ev["birth"]].groupby(["prev_name", "stop_name"], observed=True).size().sort_values(ascending=False)
     out["segments_most_births"] = [{"segment": f"{a} → {b}", "births": int(v)} for (a, b), v in seg.head(5).items()]
     out["platforms_with_zero_births_share"] = round(float((g["births"] == 0).mean()), 4)
-    # added after the article review: line concentration, Q2 without line 9, noise autocorrelation, power of Q2b
+    # added after the pre-publication self-review of the article: line concentration, Q2 without line 9, noise autocorrelation, power of Q2b
     ev["line"] = ev["pattern"].astype(str).str.split("|").str[0]
     sh_line = ev.groupby("line").agg(births=("birth", "sum"), eligible=("eligible", "sum"))
     out["line_9"] = {"share_of_births": round(float(sh_line.loc["9", "births"] / sh_line["births"].sum()), 4),
