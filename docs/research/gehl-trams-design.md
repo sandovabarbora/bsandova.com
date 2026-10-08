@@ -143,3 +143,33 @@ dwell by stop, dry hours only, no weather), every figure interactive.
 Gehl, J. (2010) *Cities for People*. Washington, DC: Island Press. Gehl, J. (2011) *Life Between Buildings: Using
 Public Space*. Washington, DC: Island Press. Further references (dwell-time models, ridership and weather) are verified
 before publication, in a dated commit.
+
+## Changes after registration
+
+**8 October 2026 (screening, §3; dwell read alone, no dwell read against weather).** `tools/gehl/screen.py`, output
+`gehl-trams-screen.json`. `real_dwell_time` equals observed departure minus arrival in every sampled pass, so it is used
+as is. A departure is detected for about half of the non-terminal tram passes (from about 4 % missing at Anděl to all
+at Nákladové nádraží Žižkov), steady across months and hours; dwell is therefore measured at the stops that detect a
+departure, and the article says so. Whether weather changes that coverage was checked from counts alone, before any
+dwell is joined to weather (`tools/gehl/coverage.py`, `gehl-trams-coverage.json`, a check the design did not name):
+the share with a departure is 50.8 % in rain hours and 50.6 % in dry hours, 0.2 points apart within dates (hot against
+mild: 0.1 points). No zero dwell occurs, since a detected stop always takes time, so the "stopped passes only" check
+of §6 coincides with the primary outcome and is dropped. Units: 160 696 on 170 dates; σ_e 2.57 s, σ_c 0.47 s, ρ 0.34,
+a median 46 units per date × hour; mean dwell in dry necessary hours 39.9 s, so m = 2.0 s.
+
+**8 October 2026 (power, §7; weather only, no dwell read against weather).** `tools/gehl/power.py`. As registered,
+the optional window holds 15 rain hours on 8 dates, below the 10 dates §7 requires, and only 3 optional and 1 necessary
+date hold both a rain and a dry hour in the window, which is all that date effects leave to identify θ. The primary
+question was therefore not estimable as registered.
+
+**8 October 2026 (deviation, decided before any dwell is read against weather).** To keep Gehl's question and the
+series' definition of rain:
+
+- **Optional hours** become Saturdays, Sundays and Czech public holidays, 08:00–20:59 (was 10:00–17:59): a weekend
+  outing spans the day. Necessary hours are unchanged.
+- **Week instead of date effects** in §4, as in the heat study: Y = β · Rain + θ · Rain × Optional +
+  α_{route × direction × hour × weekday} + ω_{ISO week} + ε. Date effects are reported as a check, with the interval
+  expected to be wide.
+- The rain and dry definitions, the labels (§5), m and the other checks are unchanged. Power is recomputed for this
+  model with a date-level shock measured from dwell alone (residuals on cell and week effects, averaged by date), as
+  the heat study did.
