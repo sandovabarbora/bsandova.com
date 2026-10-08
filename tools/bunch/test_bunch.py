@@ -60,6 +60,8 @@ def test_gamma_labels():
     assert be.label_gamma([0.01, 0.03], [0.012, 0.028]) == "supported"
     assert be.label_gamma([-0.009, 0.008], [-0.008, 0.007]) == "not supported"
     assert be.label_gamma([-0.05, -0.02], [-0.045, -0.025]) == "inconclusive"  # correction, reported as such
+    # wholly below 0 and wholly within ±0.01: the specific clause (inconclusive) governs, checked before the margin
+    assert be.label_gamma([-0.002, -0.0005], [-0.0018, -0.0006]) == "inconclusive"
 
 
 def odd_mask(ps: pd.DataFrame) -> tuple[int, np.ndarray]:

@@ -114,8 +114,13 @@ def q(draws, level: float) -> list:
 
 
 def label_gamma(ci95: list, ci90: list, margin: float = 0.01) -> str:
+    """§6: supported if the 95 % interval is wholly above 0; inconclusive, by the design's specific clause, if it is
+    wholly below 0 (correction outweighs amplification); not supported if the 90 % interval is wholly within ±margin.
+    The wholly-below-0 case is checked before the margin (corrected after publication, 8 October 2026)."""
     if ci95[0] > 0:
         return "supported"
+    if ci95[1] < 0:
+        return "inconclusive"
     if -margin < ci90[0] and ci90[1] < margin:
         return "not supported"
     return "inconclusive"
