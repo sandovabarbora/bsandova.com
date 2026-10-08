@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Weather on the rails · Barbora Šandová</title>
-<meta name="description" content="Two pre-specified studies of one summer of Prague's trams and buses: rain adds about 9.7 seconds of delay per trip-hour, heat takes about 14.9 seconds away, and the metro barely moves under either.">
+<meta name="description" content="Three pre-specified studies of one season of Prague's trams and buses: rain adds about 9.7 seconds of delay per trip-hour, heat takes about 14.9 seconds away, and neither changes who boards on weekends more than on weekday mornings.">
 <meta property="og:title" content="Weather on the rails">
-<meta property="og:description" content="Rain slows Prague's trams by about 9.7 seconds an hour; heat, unexpectedly, does the opposite. Two pre-specified studies of the same 121 million stop passes.">
+<meta property="og:description" content="Rain slows Prague's trams by about 9.7 seconds an hour; heat, unexpectedly, does the opposite; and stops shorten in the rain alike on weekdays and weekends. Three pre-specified studies of the same 121 million stop passes.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://bsandova.com/texts/weather-rails">
 <meta property="og:image" content="https://bsandova.com/assets/og/weather-rails.jpg">
@@ -20,6 +20,9 @@
 <link rel="stylesheet" href="../text.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../a24.css">
+
+<!-- ld --><link rel="alternate" type="application/atom+xml" title="Barbora Šandová" href="/feed.xml">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Weather on the rails", "description": "Three pre-specified studies of one season of Prague's trams and buses: rain adds about 9.7 seconds of delay per trip-hour, heat takes about 14.9 seconds away, and neither changes who boards on weekends more than on weekday mornings.", "url": "https://bsandova.com/texts/weather-rails", "image": "https://bsandova.com/assets/og/weather-rails.jpg", "dateModified": "2026-10-08T15:38:21+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
 </head>
 <body>
 <div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">hub · transit · en</span></div>
@@ -28,9 +31,9 @@
 <header class="text-head">
   <p class="kicker">Hub · Weather on the rails · Prague trams, buses and the metro, summer 2025</p>
   <h1>Weather <em>on the rails</em></h1>
-  <p class="deck">Two studies of what the weather does to Prague's public transport, asked the same way of the same 121 million stop passes: one about rain, one about heat.</p>
+  <p class="deck">Three studies of what the weather does to Prague's public transport, asked the same way of the same 121 million stop passes: one about rain, one about heat, and one about who still boards.</p>
   <dl class="facts">
-    <div><dt>parts published</dt><dd>2 <small>numbered by publication order</small></dd></div>
+    <div><dt>parts published</dt><dd>3 <small>numbered by publication order</small></dd></div>
     <div><dt>designs committed</dt><dd>6 and 8 Oct 2026 <small>CEST, commit times self-reported</small></dd></div>
   </dl>
 </header>
@@ -41,7 +44,8 @@
     <li>Part 1: in an hour with rain, a tram gains about 9.7 seconds more delay than in a dry hour (5.8 to 13.6, supported).</li>
     <li>Part 2: in a dry hour at 30 °C or more, a tram gains about 14.9 seconds less delay than in a mild one (−20.9 to −8.2), the opposite of the registered expectation, so inconclusive.</li>
     <li>The metro, underground, barely moves in either: −2.8 s in rain, −1.4 s in heat.</li>
-    <li>Neither part says why; both measure the sum of passengers, traffic and the vehicles themselves.</li>
+    <li>Part 3: rain shortens a tram's stop by about 0.25 seconds, alike on weekday mornings and weekend days (difference +0.04 s, −0.29 to 0.37, not supported), so Jan Gehl's split between necessary and optional trips does not show in boarding; heat does not shorten stops (−0.12 s).</li>
+    <li>Parts 1 and 2 measure the sum of passengers, traffic and the vehicles themselves; part 3 rules out shorter stops as the reason heat helps.</li>
   </ul>
 </details>
 <dl class="meta">
@@ -70,6 +74,14 @@
       <p>In a dry hour at 30 °C or more, a tram gains 14.9 seconds less delay than in a mild hour of the same route and week (−20.9 to −8.2); registered as more delay, so inconclusive, with the hotter hours showing the larger difference.</p>
     </div>
   </li>
+  <li>
+    <a class="still" href="rain-dwell" aria-label="Part 3, Does rain empty Prague's trams?"><span class="shot" style="view-transition-name:ph-rain-dwell;--bg:url(../assets/photo/rain-dwell.jpg);--bg-s:url(../assets/photo/rain-dwell-1200.jpg)"></span></a>
+    <div>
+      <p class="n">Part 3 · rain, heat and who boards · 14 wet weekend days</p>
+      <h2><a href="rain-dwell">Does rain empty Prague's trams?</a></h2>
+      <p>Rain shortens a tram's stop by about 0.25 seconds on a weekday morning and by the same on a weekend day (difference +0.04 s, −0.29 to 0.37, not supported), so the trips that bad weather cancels are not mainly the optional ones; heat leaves stops unchanged (−0.12 s).</p>
+    </div>
+  </li>
 </ol>
 </section>
 
@@ -85,11 +97,11 @@
 
 <section>
 <h2>How each part was pre-specified</h2>
-<p>Each part has its own design file, committed before the weather it studies was joined to the delays, and its own dated changes after registration in its change log. The heat part reused the delays the rain part had already read, against rain only, and says so. The commit times are the author's own, not an independent registry's.</p>
+<p>Each part has its own design file, committed before the weather it studies was joined to its outcome, and its own dated changes after registration in its change log. The heat part reused the delays the rain part had already read, against rain only, and says so; the third part measures dwell, which neither earlier part had read, and changed its weekend window once, before the comparison, for a stated reason. The commit times are the author's own, not an independent registry's.</p>
 </section>
 
 <footer class="text-foot">
-  <p class="back"><a href="../#works">← projects</a> · <a href="rain-delays">Part 1</a> · <a href="heat-delays">Part 2</a></p>
+  <p class="back"><a href="../#works">← projects</a> · <a href="rain-delays">Part 1</a> · <a href="heat-delays">Part 2</a> · <a href="rain-dwell">Part 3</a></p>
 </footer>
 </article>
 

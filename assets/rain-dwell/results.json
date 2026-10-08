@@ -1,0 +1,241 @@
+{
+ "margin_m_s": 2.0,
+ "windows": {
+  "necessary": [
+   6,
+   8
+  ],
+  "optional": [
+   8,
+   20
+  ]
+ },
+ "primary_theta": {
+  "est_s": 0.04,
+  "se_s": 0.16,
+  "ci95": [
+   -0.29,
+   0.37
+  ],
+  "ci90": [
+   -0.25,
+   0.32
+  ],
+  "label": "not supported",
+  "inference": "wild cluster bootstrap by date",
+  "treated_dates": 14,
+  "n_units": 38609,
+  "dates": 160
+ },
+ "heat_secondary": {
+  "est_s": -0.12,
+  "se_s": 0.1,
+  "ci95": [
+   -0.33,
+   0.1
+  ],
+  "ci90": [
+   -0.3,
+   0.06
+  ],
+  "label": "not supported",
+  "inference": "wild cluster bootstrap by date",
+  "treated_dates": 11,
+  "n_units": 68036,
+  "dates": 134
+ },
+ "checks": {
+  "date_effects": {
+   "rain_opt": {
+    "est_s": 0.93,
+    "ci95": [
+     0.59,
+     1.27
+    ]
+   },
+   "rain": {
+    "est_s": -1.04,
+    "ci95": [
+     -1.23,
+     -0.85
+    ]
+   }
+  },
+  "by_window": {
+   "rain": {
+    "est_s": -0.25,
+    "ci95": [
+     -0.42,
+     -0.08
+    ]
+   },
+   "rain_opt": {
+    "est_s": 0.04,
+    "ci95": [
+     -0.27,
+     0.36
+    ]
+   }
+  },
+  "dose": {
+   "r0_2": {
+    "est_s": -0.27,
+    "ci95": [
+     -0.51,
+     -0.04
+    ]
+   },
+   "r2_5": {
+    "est_s": -0.21,
+    "ci95": [
+     -0.39,
+     -0.03
+    ]
+   },
+   "r5_up": {
+    "est_s": -0.48,
+    "ci95": [
+     -0.83,
+     -0.12
+    ]
+   },
+   "r0_2_opt": {
+    "est_s": 0.02,
+    "ci95": [
+     -0.36,
+     0.41
+    ]
+   },
+   "r2_5_opt": {
+    "est_s": 0.16,
+    "ci95": [
+     -0.48,
+     0.8
+    ]
+   },
+   "r5_up_opt": {
+    "est_s": null,
+    "note": "not estimable: dropped as collinear"
+   }
+  },
+  "evening": {
+   "rain_opt": {
+    "est_s": -0.23,
+    "ci95": [
+     -0.57,
+     0.12
+    ]
+   },
+   "rain": {
+    "est_s": -0.02,
+    "ci95": [
+     -0.25,
+     0.2
+    ]
+   }
+  },
+  "school_holidays_out": {
+   "rain_opt": {
+    "est_s": -0.12,
+    "ci95": [
+     -0.49,
+     0.26
+    ]
+   },
+   "rain": {
+    "est_s": -0.14,
+    "ci95": [
+     -0.34,
+     0.06
+    ]
+   }
+  },
+  "weekday_midday": {
+   "rain": {
+    "est_s": -0.22,
+    "ci95": [
+     -0.4,
+     -0.04
+    ]
+   },
+   "rain_mid": {
+    "est_s": -0.18,
+    "ci95": [
+     -0.55,
+     0.18
+    ]
+   },
+   "rain_opt": {
+    "est_s": -0.08,
+    "ci95": [
+     -0.41,
+     0.24
+    ]
+   }
+  },
+  "centre": {
+   "rain_opt": {
+    "est_s": -0.23,
+    "ci95": [
+     -0.87,
+     0.42
+    ]
+   },
+   "rain": {
+    "est_s": -0.07,
+    "ci95": [
+     -0.52,
+     0.38
+    ]
+   }
+  },
+  "outer": {
+   "rain_opt": {
+    "est_s": 0.11,
+    "ci95": [
+     -0.16,
+     0.38
+    ]
+   },
+   "rain": {
+    "est_s": -0.29,
+    "ci95": [
+     -0.43,
+     -0.14
+    ]
+   }
+  },
+  "placebo_rain_two_days_later": {
+   "rain_opt": {
+    "est_s": 0.01,
+    "ci95": [
+     -0.33,
+     0.35
+    ]
+   },
+   "rain": {
+    "est_s": -0.11,
+    "ci95": [
+     -0.35,
+     0.13
+    ]
+   }
+  },
+  "heat_gehl_contrast": {
+   "hot": {
+    "est_s": -0.06,
+    "ci95": [
+     -0.4,
+     0.27
+    ]
+   },
+   "hot_opt": {
+    "est_s": -0.18,
+    "ci95": [
+     -0.84,
+     0.48
+    ]
+   }
+  }
+ }
+}

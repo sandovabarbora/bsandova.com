@@ -23,6 +23,7 @@ HEAT = "#b4532a"
 def main() -> None:
     rain = json.loads((R / "rain-delays-results.json").read_text())
     heat = json.loads((R / "heat-delays-results.json").read_text())
+    dwell = json.loads((R / "gehl-trams-results.json").read_text())
     n = ra.n
     rt, rb, rm = rain["tram"], rain["bus_secondary"], rain["checks_tram"]["metro"]["rain"]
     ht, hb, hm = heat["tram"], heat["bus_secondary"], heat["checks_tram"]["metro"]["hot"]
@@ -45,7 +46,11 @@ def main() -> None:
     v = {"r": n(rt["delta_s"], 1), "r_lo": n(rt["ci95"][0], 1), "r_hi": n(rt["ci95"][1], 1), "rl": rt["label"],
          "h": n(abs(ht["delta_s"]), 1), "h_lo": n(ht["ci95"][0], 1), "h_hi": n(ht["ci95"][1], 1), "hl": ht["label"],
          "rm": n(rm["est_s"], 1), "hm": n(hm["est_s"], 1), "hot_dates": n(ht["hot_dates"]),
-         "rain_dates": n(rt["rain_dates"])}
+         "rain_dates": n(rt["rain_dates"]), "th": n(dwell["primary_theta"]["est_s"], 2, True),
+         "th_lo": n(dwell["primary_theta"]["ci95"][0], 2), "th_hi": n(dwell["primary_theta"]["ci95"][1], 2),
+         "tl": dwell["primary_theta"]["label"], "dh": n(dwell["heat_secondary"]["est_s"], 2, True),
+         "dr": n(abs(dwell["checks"]["by_window"]["rain"]["est_s"]), 2),
+         "wet_weekends": n(dwell["primary_theta"]["treated_dates"])}
     page = TEMPLATE
     for k, val in v.items():
         page = page.replace("{{" + k + "}}", str(val))
@@ -70,9 +75,9 @@ TEMPLATE = '''<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Weather on the rails · Barbora Šandová</title>
-<meta name="description" content="Two pre-specified studies of one summer of Prague's trams and buses: rain adds about {{r}} seconds of delay per trip-hour, heat takes about {{h}} seconds away, and the metro barely moves under either.">
+<meta name="description" content="Three pre-specified studies of one season of Prague's trams and buses: rain adds about {{r}} seconds of delay per trip-hour, heat takes about {{h}} seconds away, and neither changes who boards on weekends more than on weekday mornings.">
 <meta property="og:title" content="Weather on the rails">
-<meta property="og:description" content="Rain slows Prague's trams by about {{r}} seconds an hour; heat, unexpectedly, does the opposite. Two pre-specified studies of the same 121 million stop passes.">
+<meta property="og:description" content="Rain slows Prague's trams by about {{r}} seconds an hour; heat, unexpectedly, does the opposite; and stops shorten in the rain alike on weekdays and weekends. Three pre-specified studies of the same 121 million stop passes.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://bsandova.com/texts/weather-rails">
 <meta property="og:image" content="https://bsandova.com/assets/og/weather-rails.jpg">
@@ -94,9 +99,9 @@ TEMPLATE = '''<!doctype html>
 <header class="text-head">
   <p class="kicker">Hub · Weather on the rails · Prague trams, buses and the metro, summer 2025</p>
   <h1>Weather <em>on the rails</em></h1>
-  <p class="deck">Two studies of what the weather does to Prague's public transport, asked the same way of the same 121 million stop passes: one about rain, one about heat.</p>
+  <p class="deck">Three studies of what the weather does to Prague's public transport, asked the same way of the same 121 million stop passes: one about rain, one about heat, and one about who still boards.</p>
   <dl class="facts">
-    <div><dt>parts published</dt><dd>2 <small>numbered by publication order</small></dd></div>
+    <div><dt>parts published</dt><dd>3 <small>numbered by publication order</small></dd></div>
     <div><dt>designs committed</dt><dd>6 and 8 Oct 2026 <small>CEST, commit times self-reported</small></dd></div>
   </dl>
 </header>
@@ -107,7 +112,8 @@ TEMPLATE = '''<!doctype html>
     <li>Part 1: in an hour with rain, a tram gains about {{r}} seconds more delay than in a dry hour ({{r_lo}} to {{r_hi}}, {{rl}}).</li>
     <li>Part 2: in a dry hour at 30 °C or more, a tram gains about {{h}} seconds less delay than in a mild one ({{h_lo}} to {{h_hi}}), the opposite of the registered expectation, so {{hl}}.</li>
     <li>The metro, underground, barely moves in either: {{rm}} s in rain, {{hm}} s in heat.</li>
-    <li>Neither part says why; both measure the sum of passengers, traffic and the vehicles themselves.</li>
+    <li>Part 3: rain shortens a tram's stop by about {{dr}} seconds, alike on weekday mornings and weekend days (difference {{th}} s, {{th_lo}} to {{th_hi}}, {{tl}}), so Jan Gehl's split between necessary and optional trips does not show in boarding; heat does not shorten stops ({{dh}} s).</li>
+    <li>Parts 1 and 2 measure the sum of passengers, traffic and the vehicles themselves; part 3 rules out shorter stops as the reason heat helps.</li>
   </ul>
 </details>
 <dl class="meta">
@@ -125,7 +131,10 @@ TEMPLATE = '''<!doctype html>
                   text="In an hour with at least 0.5 mm of rain, a tram gains {{r}} seconds more delay than in a dry hour of the same route, hour and weekday on the same date ({{r_lo}} to {{r_hi}}, {{rl}}); the effect grows with the amount of rain and stops when it does.") + PART.format(
     k=2, slug="heat-delays", title="Does heat delay Prague's trams?",
     n="Part 2 · heat · summer 2025, {{hot_dates}} days at 30 °C or more",
-    text="In a dry hour at 30 °C or more, a tram gains {{h}} seconds less delay than in a mild hour of the same route and week ({{h_lo}} to {{h_hi}}); registered as more delay, so {{hl}}, with the hotter hours showing the larger difference.") + '''</ol>
+    text="In a dry hour at 30 °C or more, a tram gains {{h}} seconds less delay than in a mild hour of the same route and week ({{h_lo}} to {{h_hi}}); registered as more delay, so {{hl}}, with the hotter hours showing the larger difference.") + PART.format(
+    k=3, slug="rain-dwell", title="Does rain empty Prague's trams?",
+    n="Part 3 · rain, heat and who boards · {{wet_weekends}} wet weekend days",
+    text="Rain shortens a tram's stop by about {{dr}} seconds on a weekday morning and by the same on a weekend day (difference {{th}} s, {{th_lo}} to {{th_hi}}, {{tl}}), so the trips that bad weather cancels are not mainly the optional ones; heat leaves stops unchanged ({{dh}} s).") + '''</ol>
 </section>
 
 <section>
@@ -140,11 +149,11 @@ TEMPLATE = '''<!doctype html>
 
 <section>
 <h2>How each part was pre-specified</h2>
-<p>Each part has its own design file, committed before the weather it studies was joined to the delays, and its own dated changes after registration in its change log. The heat part reused the delays the rain part had already read, against rain only, and says so. The commit times are the author's own, not an independent registry's.</p>
+<p>Each part has its own design file, committed before the weather it studies was joined to its outcome, and its own dated changes after registration in its change log. The heat part reused the delays the rain part had already read, against rain only, and says so; the third part measures dwell, which neither earlier part had read, and changed its weekend window once, before the comparison, for a stated reason. The commit times are the author's own, not an independent registry's.</p>
 </section>
 
 <footer class="text-foot">
-  <p class="back"><a href="../#works">← projects</a> · <a href="rain-delays">Part 1</a> · <a href="heat-delays">Part 2</a></p>
+  <p class="back"><a href="../#works">← projects</a> · <a href="rain-delays">Part 1</a> · <a href="heat-delays">Part 2</a> · <a href="rain-dwell">Part 3</a></p>
 </footer>
 </article>
 

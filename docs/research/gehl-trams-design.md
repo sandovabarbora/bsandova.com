@@ -1,7 +1,7 @@
 # Does rain empty Prague's trams? — research design
 
-**Status: pre-specified analysis, design committed 8 October 2026, before any dwell time was read.** Part 1 of the
-series *Gehl, measured*. The steps follow in dated commits: design → screening (dwell alone) → power (weather only) →
+**Status: pre-specified analysis, design committed 8 October 2026, before any dwell time was read.** Part 3 of the
+series *Weather on the rails* (registered as part 1 of a planned series, *Gehl, measured*; see the change log). The steps follow in dated commits: design → screening (dwell alone) → power (weather only) →
 code → results. Commit times are self-reported. Deviations are listed, dated, in the change log.
 
 ## 0. What has already been seen
@@ -125,7 +125,7 @@ window, the study is reported as not estimable.
 
 ## 8. Outputs
 
-An article on bsandova.com, part 1 of *Gehl, measured*: the rain response of dwell in necessary and optional hours,
+An article on bsandova.com, part 3 of *Weather on the rails* (registered as part 1 of *Gehl, measured*): the rain response of dwell in necessary and optional hours,
 the heat answer to *Weather on the rails* part 2, the dose and the checks, and a map of where Prague boards (mean
 dwell by stop, dry hours only, no weather), every figure interactive.
 
@@ -192,3 +192,7 @@ outlines (listed in `gehl-trams-screen.json`), the outskirts check the rest of e
 check drops 17 April and 28 June – 31 August 2025 (Prague's spring breaks fell in February, outside the window); the
 heat contrast uses weekday 15:00–18:59 against weekend and holiday 12:00–18:59. The "stopped passes only" check is
 dropped, as stated under screening.
+
+**8 October 2026 (series name; no result-dependent change).** The study was registered as part 1 of a planned series,
+*Gehl, measured*. It is published as part 3 of *Weather on the rails*, which uses the same trams, weather and code, so
+that the site does not open a series of one part. The design, the code and the results are unchanged by the name.
