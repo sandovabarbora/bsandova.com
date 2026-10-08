@@ -113,9 +113,9 @@
   <figcaption><b>fig. 2</b> · Televote points relative to jury points for a pair at the 90th percentile of diaspora, against none, with 95 % intervals clustered by pair, log scale; blue, the registered estimate. Grey: the ratio for neighbours and for a shared official language, from the same model. Poisson pseudo-maximum likelihood<sup class="cite"><a href="#r10">10</a></sup>. Data: as fig. 1.</figcaption>
 </figure>
 <p>Seen from two countries (fig. 3), the pattern is concrete. Czechia's public gave more than its jury above all to {{cz_top}} (average points, televote minus jury): countries with communities in Czechia, by far the largest of them Ukrainian. Germany's public did so for {{de_top}}. Where a diaspora is small, the public often gives less than the jury, which is the other half of the same fact: the jury spreads its points by craft, while the public concentrates them on the songs it has a reason to call for.</p>
-<figure>
-  <img src="../assets/eurovision/03-map.svg" alt="Two maps of Europe coloured by the average televote minus jury points from Czechia and from Germany to each performer: red where the public gave more, mostly to countries with large diasporas." loading="lazy">
-  <figcaption><b>fig. 3</b> · Average televote minus jury points from Czechia (left) and Germany (right) to each performer, 2016–2025, performers met in at least three rounds; red, the public gave more; descriptive. Data: as fig. 1; borders: Natural Earth<sup class="cite"><a href="#r11">11</a></sup>.</figcaption>
+<figure class="mp-fig" data-map="../assets/eurovision/map.json">
+  <img class="mp-static" src="../assets/eurovision/03-map.svg" alt="Two maps of Europe coloured by the average televote minus jury points from Czechia and from Germany to each performer: red where the public gave more, mostly to countries with large diasporas." loading="lazy">
+  <figcaption><b>fig. 3</b> · Average televote minus jury points from Czechia or Germany (picked above the map) to each performer, 2016–2025, performers met in at least three rounds; blue, the public gave more, coral, the juries; the voter in black, hatched where the pair met fewer than three times; descriptive. Data: as fig. 1; borders: Natural Earth<sup class="cite"><a href="#r11">11</a></sup>.</figcaption>
 </figure>
 </section>
 
@@ -186,6 +186,7 @@
 <section id="changelog" class="changelog">
 <h2>Change log</h2>
 <ul>
+<li>8 October 2026: the Europe map is interactive; numbers unchanged.</li>
 <li>5 October 2026: work dates added; the wording on the analysis plan corrected to match them. No number changed.</li>
 <li>3 October 2026, version 2: corrected after an audit. The diaspora ratio is now described as what it is, the public's favour over the jury where diaspora is large against where there is none, not "1.98 times the jury's points"; the EU result no longer reads as "no change at all" or "nothing" without the 2004 cohort, and its pre-accession estimates ({{ev_m2}} and {{ev_m5}} percentage points) are reported; "almost all of the fall" is now about {{h3_no04_share}} %; neighbours and language now read "no clear difference" rather than "no difference", and their intervals are said to allow differences of up to about 20 %; the claims that free movement reaches the scoreboard, that diaspora is the largest thing a public adds, that the 2022 ceiling explains the Ukraine result and that leaving the EU cost no points were withdrawn or weakened; 11 316 rows are now said to come from {{n_pr}} pair-rounds, not 11 316; the descriptive figures are given to two decimals (6.0, 3.1, +2.8, 1.4, 2.2, −0.8 now {{bin_hi_tele}}, {{bin_hi_jury}}, {{bin_hi_gap2}}, {{bin_lo_tele}}, {{bin_lo_jury}}, {{bin_lo_gap2}}); the dataset DOI, the juror-check window, the CEPII coding and the directed pair count were corrected or disclosed. No estimate changed.</li>
 <li>3 October 2026, version 1: first published.</li>
@@ -199,5 +200,6 @@
 </article>
 
 <script src="../assets/charts.js" defer></script>
+<script src="../assets/map.js" defer></script>
 </body>
 </html>

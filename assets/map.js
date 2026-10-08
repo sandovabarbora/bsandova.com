@@ -6,9 +6,9 @@
    Spec: {held, features:[{id, name, sub, r:[[[lon,lat],...]] for an area or l:[[[lon,lat],...]] for a line (a route),
                            v:{key:number|null}}],
           views:[{key, label, fmt:{dp, unit, pct, sign}, scale:'seq'|'div', domain:[lo,hi], note,
-                  cats:[{v, label}] for a yes/no or categorical view}],
+                  cats:[{v, label}] for a yes/no or categorical view, mark:{id, label} to draw one feature in ink}],
           overlay:{lines:[[[lon,lat],...]], points:[[lon,lat]], labels:[{at:[lon,lat], s}]},
-          note, hint, data:[paths]} */
+          note, hint, lat0 (projection latitude, default Prague's), data:[paths]} */
 (() => {
   const NS = 'http://www.w3.org/2000/svg';
   const nb = ' ';
@@ -38,7 +38,7 @@
     const img = fig.querySelector('img');
     const held = S.held || '#34507c';
     // equirectangular at Prague's latitude, fitted to 900 units wide
-    const lat0 = 50.08, k = 1 / Math.cos(lat0 * Math.PI / 180), W = 900;
+    const lat0 = S.lat0 ?? 50.08, k = 1 / Math.cos(lat0 * Math.PI / 180), W = 900;
     let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
     S.features.forEach(f => (f.r || f.l).forEach(ring => ring.forEach(([x, y]) => { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); })));
     const s = W / (x1 - x0), H = Math.round((y1 - y0) * k * s);
@@ -94,11 +94,14 @@
       if (V.scale === 'div' && !V.domain) { const m = Math.max(Math.abs(lo), Math.abs(hi)); lo = -m; hi = m; }
       const ramp = rampOf(held, V.scale, S.neg);
       paths.forEach((p, i) => { const x = S.features[i].v[V.key]; paint(p, x == null ? ND : ramp(hi > lo ? (x - lo) / (hi - lo) : 0.5)); p.classList.toggle('nodata', x == null); });
+      const mk = V.mark && S.features.findIndex(f => f.id === V.mark.id);
+      if (mk >= 0) { paint(paths[mk], '#222'); paths[mk].classList.remove('nodata'); }
       leg.textContent = '';
       const a = document.createElement('span'); a.textContent = (vals[0] < lo ? '≤ ' : '') + fmt(lo, V.fmt);
       const i = document.createElement('i'); i.style.background = `linear-gradient(90deg,${[0, 0.25, 0.5, 0.75, 1].map(ramp).join(',')})`;
       const b = document.createElement('span'); b.textContent = fmt(hi, V.fmt) + (vals[vals.length - 1] > hi ? '+' : '') + ' · ' + V.label + (V.note ? ' · ' + V.note : '');
       leg.append(a, i, b);
+      if (mk >= 0) { const sw = document.createElement('span'); sw.className = 'mp-sw'; sw.style.setProperty('--c', '#222'); sw.textContent = V.mark.label; leg.append(sw); }
       if (S.note) { const n = document.createElement('span'); n.className = 'mp-note'; n.textContent = S.note; leg.append(n); }
       if (vals.length < S.features.length) { const n = document.createElement('span'); n.className = 'mp-nd'; n.textContent = 'no data'; leg.append(n); }
       bar.querySelectorAll('button[data-v]').forEach(bt => bt.setAttribute('aria-pressed', String(+bt.dataset.v === v)));
