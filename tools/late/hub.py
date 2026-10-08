@@ -22,6 +22,10 @@ def main() -> None:
     b = json.loads((ROOT / "docs/research/bunching-results.json").read_text())
     bb = json.loads((ROOT / "docs/research/bunching-results-bus.json").read_text())
     tr = json.loads((ROOT / "docs/research/transfers-results.json").read_text())
+    ph = json.loads((ROOT / "docs/research/transfers-posthoc.json").read_text())
+    specs = [tr["checks"][k]["est"] for k in ("margin_m_fixed_2min", "margin_m_minus_30s", "margin_m_plus_30s",
+                                              "timing_a_plus_30s", "timing_a_minus_30s", "observed_departures",
+                                              "peaks_only", "without_exclusions", "school_holidays", "term_time")]
     g4 = lambda x: f"{x:+.4f}".replace("-", "−")  # noqa: E731
     v = {"S": n(100 * t["S"]["est"], 1), "S_label": t["S"]["label"], "rho": f"{t['rho']['est']:.3f}",
          "segments": n(t["segments"]), "passes_m": n(t["passes"] / 1e6, 1),
@@ -30,9 +34,10 @@ def main() -> None:
          "bunched": n(100 * b["Q4"]["overall"]["bunched"], 2),
          "m3": n(100 * tr["q2_cost"]["3"]["made"]), "c3": n(100 * tr["q2_cost"]["3"]["costly_miss"]),
          "dp": f"{100 * tr['q1_within']['est']:+.2f}".replace("-", "−"), "dp_label": tr["q1_within"]["label"],
-         "b_lo": f"{100 * tr['bounds']['all_missed']['est']:+.1f}".replace("-", "−"),
-         "b_hi": f"{100 * tr['bounds']['all_made']['est']:+.1f}".replace("-", "−"),
-         "b_share": n(100 * tr["bounds"]["uncertain_share"], 1)}
+         "dp1": f"{100 * tr['q1_within']['est']:+.1f}".replace("-", "−"),
+         "spec_lo": f"{100 * min(specs):+.1f}".replace("-", "−"),
+         "spec_hi": f"{100 * max(specs):+.1f}".replace("-", "−"),
+         "cells_shown": n(ph["roulette"]["cells_shown"])}
     page = TEMPLATE
     for k, val in v.items():
         page = page.replace("{{" + k + "}}", val)
@@ -84,11 +89,11 @@ TEMPLATE = '''<!doctype html>
     <li>Part 1: over {{passes_m}} million tram passes on {{segments}} segments, a tenth of the segments record {{S}} % of all delay gained, just over the half set in advance, so concentration is {{S_label}}, narrowly; they are the same segments in odd and even weeks.</li>
     <li>Many of the largest totals are segments leaving large stops, and part of what they record is early trams waiting for their time; both were described afterwards, not registered.</li>
     <li>Part 2: over {{pairs}} pairs of trams of the same line, the spacing between them drifts stop by stop without feeding on itself ({{g}} per stop, so amplification is {{g_label}}); bunches, {{bunched}} % of pair passes, build slowly towards the end of a line. City buses differ: their spacing amplifies slightly ({{bg}}, {{bg_label}}).</li>
-    <li>Part 3: a tram connection planned three minutes apart was made {{m3}} times in a hundred, and {{c3}} % cost over five minutes more wait; the two lines are late together by only {{dp}} points, {{dp_label}}, within bounds of {{b_lo}} to {{b_hi}} for the {{b_share}} % of connections whose planned tram is uncertain.</li>
+    <li>Part 3: a tram connection planned three minutes apart was made {{m3}} times in a hundred, and {{c3}} % cost over five minutes more wait; the two lines' delays move together slightly, about {{dp1}} percentage points ({{spec_lo}} to {{spec_hi}} across specifications, {{dp_label}}), and pairs of lines differ widely.</li>
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>8 October 2026 · <a href="../changelog/#running-late">version 3</a></dd></div>
+  <div><dt>published</dt><dd>8 October 2026 · updated 9 October 2026 · <a href="../changelog/#running-late">version 4</a></dd></div>
   <div><dt>work since</dt><dd>October 2026</dd></div>
 </dl>
 
@@ -118,7 +123,7 @@ TEMPLATE = '''<!doctype html>
     <div>
       <p class="n">Part 3 · transfers · tram-to-tram connections, 15 March – 8 September 2025</p>
       <h2><a href="transfers">Will you make your connection?</a></h2>
-      <p>Planned three minutes apart, a connection was made {{m3}} times in a hundred and cost over five minutes more {{c3}} % of the time. The two trams of a connection are late together only slightly ({{dp}} points, {{dp_label}}), within bounds of {{b_lo}} to {{b_hi}} for connections whose planned tram is uncertain. A roulette gives the answer for each stop and pair of lines.</p>
+      <p>Planned three minutes apart, a connection was made {{m3}} times in a hundred and cost over five minutes more {{c3}} % of the time. The data show a small association between the two lines' delays, about {{dp1}} percentage points ({{dp}} registered, {{dp_label}}; {{spec_lo}} to {{spec_hi}} across specifications), with real differences between pairs of lines and no mechanism identified. A roulette gives the share made for {{cells_shown}} combinations of stop, lines and time of day.</p>
     </div>
   </li>
 </ol>

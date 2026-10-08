@@ -24,8 +24,9 @@
       cells = d.rows.map((r) => ({
         hub: r[0], a: r[1], a_to: r[2], b: r[3], b_to: r[4], band: d.bands[r[5]], connections: r[6], dates: r[7],
         m_s: r[8], own_slack_median_min: r[9], made_at_own_slacks: r[10], costly_miss: r[11],
-        median_extra_wait_s: r[12], curve: r[13].map(([s, p, lo, hi]) => ({ s, p, lo, hi })),
+        median_extra_wait_s: r[12], curve: r[13].map(([s, p, lo, hi]) => ({ s, p, lo, hi })), range: r[14] || null,
       }));
+      cells.default = Number.isInteger(d.default) ? d.default : null;
     } catch (e) {
       console.warn("roulette: data not loaded", e);
       return;
@@ -39,14 +40,15 @@
     const slackOut = el("output", { text: "3 min" });
     const big = el("p", { class: "rl-big" });
     const sub = el("p", { class: "rl-sub" });
-    const note = el("p", { class: "rl-note", text: "Each answer is one cell of many; the best and worst cells look extreme partly by chance, so read the interval, not just the number." });
+    const warn = el("p", { class: "rl-warn" });
+    const note = el("p", { class: "rl-note", text: `${cells.length.toLocaleString("en").replace(/,/g, "\u00a0")} cells are shown, each with its own rough interval (99 bootstrap draws by week). Searching them for the best or worst stop or pair will find extremes that are partly chance; the one you pick is likely to be less extreme in another year.` });
     ui.append(
       el("label", {}, [el("span", { text: "hub" }), hubSel]),
       el("label", {}, [el("span", { text: "from line → to line" }), pairSel]),
       el("label", {}, [el("span", { text: "time of day" }), bandSel]),
       el("label", {}, [el("span", { text: "planned slack" }), slack, slackOut]),
     );
-    const out = el("div", { class: "rl-out", "aria-live": "polite" }, [big, sub, note]);
+    const out = el("div", { class: "rl-out", "aria-live": "polite" }, [big, sub, warn, note]);
     const fallback = fig.querySelector(".rl-static");
     if (fallback) fallback.style.display = "none";
     fig.prepend(ui, out);
@@ -67,6 +69,7 @@
       const s = Number(slack.value);
       slackOut.textContent = `${s} min`;
       const c = cells.find((x) => x.hub === hubSel.value && x.a === a && x.a_to === ato && x.b === b && x.b_to === bto && x.band === bandSel.value);
+      warn.textContent = "";
       if (!c) {
         big.textContent = "too few connections";
         sub.textContent = "Fewer than 500 connections on 30 days for this pair at this time of day, or the two lines do not meet here then.";
@@ -74,8 +77,11 @@
       }
       const k = c.curve.find((x) => x.s === s);
       big.textContent = pct(k.p);
-      sub.textContent = `of connections made with ${s} min planned (95 % interval ${pct(k.lo)} to ${pct(k.hi)}), with a ${Math.round(c.m_s)} s walk allowed. ` +
+      sub.textContent = `of connections made with ${s} min planned (rough 95 % interval ${pct(k.lo)} to ${pct(k.hi)}), with a ${Math.round(c.m_s)} s walk allowed. ` +
         `As timetabled here (median ${c.own_slack_median_min} min), ${pct(c.made_at_own_slacks)} were made, ${pct(c.costly_miss)} of connections cost over 5 min more wait, median extra wait ${min(c.median_extra_wait_s)}; ${c.connections.toLocaleString("en").replace(/,/g, "\u00a0")} connections on ${c.dates} days.`;
+      if (c.range && (s < c.range[0] || s > c.range[1])) {
+        warn.textContent = `Extrapolated: here the timetable plans this connection ${c.range[0]}–${c.range[1]} min apart, so the share at ${s} min assumes the two trams' relative lateness does not depend on the slack.`;
+      }
     };
     const tightPair = () => {  // open on a pair the timetable really plans a few minutes apart
       const c = cells.find((x) => x.hub === hubSel.value && x.band === bandSel.value &&
@@ -85,9 +91,15 @@
     hubSel.addEventListener("change", () => { fillPairs(); tightPair(); render(); });
     for (const x of [pairSel, bandSel]) x.addEventListener("change", render);
     slack.addEventListener("input", render);
-    hubSel.value = hubs.includes("Anděl") ? "Anděl" : hubs[0];
+    // opens on the cell set by a stated rule (tools/transfer/posthoc.py): the median share made at 3 min among the
+    // cells whose connections are timetabled 2–4 min apart, so the first answer is a typical one, not a chosen one
+    const d0 = cells.default !== null ? cells[cells.default] : null;
+    hubSel.value = d0 ? d0.hub : hubs[0];
     fillPairs();
-    tightPair();
+    if (d0) {
+      pairSel.value = `${d0.a}|${d0.a_to}|${d0.b}|${d0.b_to}`;
+      bandSel.value = d0.band;
+    } else tightPair();
     render();
   }
 
@@ -100,6 +112,8 @@
 .text .rl-out{border-top:1px solid #000;padding-top:.8rem}
 .text p.rl-big{font:500 clamp(40px,6vw,72px)/1 var(--sans,sans-serif);letter-spacing:-.04em;margin:0 0 .4rem;color:#c0503f}
 .text p.rl-sub{max-width:64ch;margin:0 0 .5rem}
+.text p.rl-warn{font:400 12px/1.5 var(--mono,monospace);color:#c0503f;max-width:64ch;margin:0 0 .5rem}
+.text p.rl-warn:empty{display:none}
 .text p.rl-note{font:400 12px/1.5 var(--mono,monospace);color:#666;max-width:64ch;margin:0}` });
   document.head.append(style);
   document.querySelectorAll("figure[data-roulette]").forEach(mount);

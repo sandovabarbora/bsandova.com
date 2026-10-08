@@ -140,19 +140,26 @@ def month_stage(fc: Path, fb: Path) -> None:
     log.info("%s read", fc.name)
 
 
-def write_roulette(roulette: list[dict]) -> None:
+def write_roulette(roulette: list[dict], ranges: dict | None = None, default: tuple | None = None) -> None:
     """Every cell to the data folder (never committed); only the cells the roulette shows to the page, since a thin
-    cell is shown as "too few connections" whether or not its counts are known."""
+    cell is shown as "too few connections" whether or not its counts are known. posthoc.py adds each cell's own range
+    of planned slack (so the page can flag extrapolation) and the default cell."""
     (DATA / "roulette-all.json").write_text(json.dumps(roulette, ensure_ascii=False))
     ASSETS.mkdir(parents=True, exist_ok=True)
     bands = ["peak", "daytime", "weekend", "evening"]
+    key = lambda r: (r["hub"], r["a"], r["a_to"], r["b"], r["b_to"], r["band"])  # noqa: E731
+    rows = [r for r in roulette if not r["thin"]]
     shown = {"keys": ["hub", "a", "a_to", "b", "b_to", "band", "connections", "dates", "walk_s", "own_slack_min",
-                      "made_own", "costly", "median_wait_s", "curve: [slack min, share, lo, hi]"],
+                      "made_own", "costly", "median_wait_s", "curve: [slack min, share, lo, hi]",
+                      "own slack range [min, max] min"],
              "bands": bands,
              "rows": [[r["hub"], r["a"], r["a_to"], r["b"], r["b_to"], bands.index(r["band"]), r["connections"],
                        r["dates"], r["m_s"], r["own_slack_median_min"], r["made_at_own_slacks"], r["costly_miss"],
-                       r["median_extra_wait_s"], [[k["s"], k["p"], k["lo"], k["hi"]] for k in r["curve"]]]
-                      for r in roulette if not r["thin"]]}
+                       r["median_extra_wait_s"], [[k["s"], k["p"], k["lo"], k["hi"]] for k in r["curve"]],
+                       list(ranges[key(r)]) if ranges and key(r) in ranges else None]
+                      for r in rows]}
+    if default is not None:
+        shown["default"] = next(i for i, r in enumerate(rows) if key(r) == default)
     (ASSETS / "roulette.json").write_text(json.dumps(shown, ensure_ascii=False, separators=(",", ":")))
 
 

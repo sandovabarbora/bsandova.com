@@ -36,7 +36,7 @@ HUB_HALF_M = 120  # half the side of the square drawn for a hub on the map
 
 def load() -> dict:
     j = lambda name: json.loads((R / f"transfers-{name}.json").read_text())  # noqa: E731
-    return {"res": j("results"), "scr": j("screen"), "desc": j("describe"),
+    return {"res": j("results"), "scr": j("screen"), "desc": j("describe"), "ph": j("posthoc"),
             "cells": json.loads((A / "roulette.json").read_text())}
 
 
@@ -118,7 +118,7 @@ def static_map(spec: dict, path: Path) -> None:
 
 def figures(x: dict) -> dict:
     A.mkdir(parents=True, exist_ok=True)
-    for k in ("results", "describe"):
+    for k in ("results", "describe", "posthoc"):
         shutil.copy(R / f"transfers-{k}.json", A / f"{k}.json")
     res, d = x["res"], x["desc"]
     charts = {}
@@ -129,22 +129,32 @@ def figures(x: dict) -> dict:
             "pts": [[int(s), round(100 * cost[s]["made"], 1)] for s in ("2", "3", "4")]},
            {"name": "cost over 5 min extra wait", "c": GREY, "dash": "dash",
             "pts": [[int(s), round(100 * cost[s]["costly_miss"], 1)] for s in ("2", "3", "4")]}]
+    first95 = next(s for s, p in curve if p >= 0.95)
+    cm = dict(curve)
     charts["slack"] = ba.line_chart(
-        ser, "Share of tram-to-tram connections made by the minutes planned between them, Prague 2025: about 71 % "
-             "with 2 minutes, 80 % with 3 and 87 % with 4, and over 95 % from about 6 minutes; one connection in "
-             "five planned 3 minutes apart costs more than 5 minutes of extra wait.",
+        ser, "Share of tram-to-tram connections made by the minutes planned between them, Prague 2025. Among "
+             f"connections planned that way: {100 * cost['2']['made']:.0f} % at 2 minutes, "
+             f"{100 * cost['3']['made']:.0f} % at 3 and {100 * cost['4']['made']:.0f} % at 4. Read off the pooled "
+             f"model over all shown cells: {100 * cm[2]:.1f} % at 2, {100 * cm[3]:.1f} % at 3 and over 95 % from "
+             f"{first95} minutes. {100 * cost['3']['costly_miss']:.0f} % of connections planned 3 minutes apart cost "
+             "more than 5 minutes of extra wait.",
         "minutes planned between arrival and departure", "% of connections", [1, 10], [0, 100],
         {"cols": ["minutes planned", "made, all cells %", "made, as planned %", "cost over 5 min %"],
          "rows": [[s, round(100 * p, 1), round(100 * cost[str(s)]["made"], 1) if str(s) in cost else "",
                    round(100 * cost[str(s)]["costly_miss"], 1) if str(s) in cost else ""] for s, p in curve]},
         ["results.json", "roulette.json"], {"dp": 0})
+    charts["slack"]["panels"][0]["marks"][0]["name"] = "made, pooled model over all shown cells"
+    charts["slack"]["legend"][0]["label"] = "made, pooled model over all shown cells"
     ba.static_lines(ser, A / "02-slack.svg", "minutes planned", "% of connections")
 
-    q1, q1b, bd, c = res["q1_within"], res["q1b_day"], res["bounds"], res["checks"]
+    q1, q1b, c = res["q1_within"], res["q1b_day"], res["checks"]
+    pb = x["ph"]["q1_bounds"]
     rows = ba.range_rows([
         ("registered: same day, slack 2–4", q1["est"], q1["ci95"], "held"),
-        ("bound: uncertain B all made", bd["all_made"]["est"], bd["all_made"]["ci95"], "grey"),
-        ("bound: uncertain B all missed", bd["all_missed"]["est"], bd["all_missed"]["ci95"], "grey"),
+        ("post-hoc bound: unobserved B all made", pb["unobserved_all_made"]["est"], pb["unobserved_all_made"]["ci95"],
+         "grey"),
+        ("post-hoc bound: unobserved B all missed", pb["unobserved_all_missed"]["est"],
+         pb["unobserved_all_missed"]["ci95"], "grey"),
         ("other days (Q1b)", q1b["est"], q1b["ci95"], "ink"),
         ("hubs and weeks resampled", c["hub_and_week_resampling"]["est"], c["hub_and_week_resampling"]["ci95"], "ink"),
         ("observed departures", c["observed_departures"]["est"], c["observed_departures"]["ci95"], "ink"),
@@ -160,14 +170,18 @@ def figures(x: dict) -> dict:
     for r in rows:  # percentage points on the page
         r["lo"], r["hi"], r["mid"] = round(100 * r["lo"], 2), round(100 * r["hi"], 2), round(100 * r["mid"], 2)
         r["tip"] = f"{r['y']}: {r['mid']:+.2f} pp ({r['lo']:+.2f} to {r['hi']:+.2f})"
+    specs = [r for r in rows[3:] if not r["y"].startswith("other days") and not r["y"].startswith("hubs")]
     chart = ba.range_chart(rows, "How much more often connections were made than with the two lines' delays set "
                                  "against other trips of the same day, in percentage points with 95 % intervals: "
-                                 "the registered estimate is +0.6, inside the ±1 band, and the bounds for connections "
-                                 "whose planned tram may have been missing run from −20 to +6.",
-                           "percentage points", [-22, 8], 1.0, 0.0, {"dp": 1}, ["results.json"])
+                                 f"the registered estimate is {q1['est'] * 100:+.2f}; the checks run from "
+                                 f"{min(r['mid'] for r in specs):+.2f} to {max(r['mid'] for r in specs):+.2f}; the "
+                                 "post-hoc bounds for connections whose planned tram was not observed run from "
+                                 f"{100 * pb['unobserved_all_missed']['est']:+.2f} to "
+                                 f"{100 * pb['unobserved_all_made']['est']:+.2f}.",
+                           "percentage points", [-1.2, 1.6], 1.0, 0.0, {"dp": 1}, ["results.json", "posthoc.json"])
     chart["panels"][0]["marks"][0]["label"] = "the registered ±1 point"
     charts["checks"] = chart
-    ba.static_range(rows, A / "03-checks.svg", "percentage points", (-22, 8), 0.0)
+    ba.static_range(rows, A / "03-checks.svg", "percentage points", (-1.2, 1.6), 0.0)
 
     spec, drawn = map_spec(x)
     (A / "map.json").write_text(json.dumps(spec, ensure_ascii=False, separators=(",", ":")))
@@ -176,7 +190,7 @@ def figures(x: dict) -> dict:
     f, ax = plt.subplots(figsize=(7.2, 2.6))
     ax.plot([s for s, _ in curve], [100 * p for _, p in curve], color=HELD, marker="o", ms=3)
     ax.set_xlabel("minutes planned")
-    ax.set_ylabel("% made, all hubs")
+    ax.set_ylabel("% made, pooled model")
     f.tight_layout()
     f.savefig(roul)
     plt.close(f)
@@ -215,11 +229,9 @@ def values(x: dict, fig: dict) -> dict:
          "peak3": pct(cost["3"]["by_band"]["peak"]["made"]), "eve3": pct(cost["3"]["by_band"]["evening"]["made"]),
          "wkd3": pct(cost["3"]["by_band"]["weekend"]["made"]), "day3": pct(cost["3"]["by_band"]["daytime"]["made"]),
          "first95": n(first95), "cells": n(d["cells"]), "cells_shown": n(d["cells_shown"]),
-         "calib": n(100 * d["max_abs_gap"], 1),
          "costly_m": n(q4["costly_misses"] / 1e6, 1),
          "lost_last": pct(q4["origin_share"]["lost_on_last_segment"]),
          "already": pct(q4["origin_share"]["already_late"]),
-         "after_top": pct(q4["lost_on_last_segment_after_a_top_producer"]),
          "peaks": pp(c["peaks_only"]["est"], 2), "peaks_lo": pp(c["peaks_only"]["ci95"][0], 2),
          "peaks_hi": pp(c["peaks_only"]["ci95"][1], 2),
          "od": pp(c["observed_departures"]["est"], 2), "od_lo": pp(c["observed_departures"]["ci95"][0], 2),
@@ -231,11 +243,82 @@ def values(x: dict, fig: dict) -> dict:
          "drawn": n(fig["drawn"])}
     lp = [x_["est"] for x_ in c["by_line_pair"].values() if x_.get("est") is not None]
     v["lp_lo"], v["lp_hi"] = pp(min(lp)), pp(max(lp))
+    excl = lambda d: 100 * np.mean([x_["ci95"][0] > 0 or x_["ci95"][1] < 0 for x_ in d.values()])  # noqa: E731
+    v["lp_excl"], v["hub_excl"] = n(excl(c["by_line_pair"]), 1), n(excl(c["by_hub"]), 1)
+    v.update(posthoc_values(x, fig, pp, pct))
     photo = next(q for q in json.loads((ROOT / "assets/photo/sources.json").read_text()) if q["slug"] == "transfers")
     v["photo"] = ('<section class="film film-page"><div class="shot" style="view-transition-name:ph-transfers;'
                   '--bg:url(../assets/photo/transfers.jpg);--bg-s:url(../assets/photo/transfers-1200.jpg)"></div>'
                   f'<p class="credit">Photo: <a href="{photo["page"]}">{photo["author"]}</a> · '
                   f'{photo["licence"]}, toned</p></section>')
+    return v
+
+
+SPEC_KEYS = ("margin_m_fixed_2min", "margin_m_minus_30s", "margin_m_plus_30s", "timing_a_plus_30s", "timing_a_minus_30s",
+             "observed_departures", "peaks_only", "without_exclusions", "school_holidays", "term_time")
+ROBUST = [("registered: same day, slack 2–4 min (999 draws)", "q1_within"),
+          ("stops resampled as well as weeks", "hub_and_week_resampling"),
+          ("other days instead of the same day (Q1b, 999 draws)", "q1b_day"),
+          ("B on its observed departure", "observed_departures"),
+          ("walk margin −30 s", "margin_m_minus_30s"), ("walk margin +30 s", "margin_m_plus_30s"),
+          ("walk margin fixed at 2 min", "margin_m_fixed_2min"),
+          ("A's arrival +30 s (= B −30 s)", "timing_a_plus_30s"), ("A's arrival −30 s (= B +30 s)", "timing_a_minus_30s"),
+          ("returns and same-street pairs kept", "without_exclusions"), ("weekday peaks only", "peaks_only"),
+          ("school holidays", "school_holidays"), ("term time", "term_time")]
+
+
+def posthoc_values(x: dict, fig: dict, pp, pct) -> dict:
+    """Numbers of the analyses added after the results (tools/transfer/posthoc.py)."""
+    res, ph, d = x["res"], x["ph"], x["desc"]
+    c, cost = res["checks"], res["q2_cost"]
+    qb, q1bb, q2, ex, rl = ph["q1_bounds"], ph["q1b_bounds"], ph["q2"]["3"], ph["extrapolation"]["all_months"], ph["roulette"]
+    ci = lambda r: f"95 % CI {pp(r['ci95'][0], 2)} to {pp(r['ci95'][1], 2)}"  # noqa: E731
+    specs = [c[k]["est"] for k in SPEC_KEYS]
+    curve, first95 = fig["curve"], next(s for s in range(1, 11) if fig["curve"][s] >= 0.95)
+    df = rl["default"]
+    t = q2["timing"]
+    v = {"q1_short": pp(res["q1_within"]["est"], 1), "spec_lo": pp(min(specs), 1), "spec_hi": pp(max(specs), 1),
+         "mm30": pp(c["margin_m_minus_30s"]["est"], 2),
+         "q2u3": pct(q2["unobserved_share"], 1), "q2b3_lo": pct(q2["bound_unobserved_all_missed"], 1),
+         "q2b3_hi": pct(q2["bound_unobserved_all_made"], 1),
+         "q2r3_lo": pct(q2["registered_uncertain_all_missed"], 1), "q2r3_hi": pct(q2["registered_uncertain_all_made"], 1),
+         "q2t_lo": pct(t["a+30"]["made"], 1), "q2t_hi": pct(t["a-30"]["made"], 1),
+         "q2tc_lo": pct(t["a-30"]["costly_miss"], 1), "q2tc_hi": pct(t["a+30"]["costly_miss"], 1),
+         "ph_lo": pp(qb["unobserved_all_missed"]["est"], 2), "ph_hi": pp(qb["unobserved_all_made"]["est"], 2),
+         "ph_lo_ci": ci(qb["unobserved_all_missed"]), "ph_hi_ci": ci(qb["unobserved_all_made"]),
+         "unobs": pct(qb["unobserved_share"], 1), "bound_n": n(qb["rows_with_same_day_donors"]),
+         "ub_short": pct(qb["line_short_observed_share"], 1),
+         "obs_s": pp(qb["observed_line_short"]["est"], 2), "obs_ns": pp(qb["observed_line_not_short"]["est"], 2),
+         "q1br_lo": pp(q1bb["registered_all_missed"]["est"], 2), "q1br_hi": pp(q1bb["registered_all_made"]["est"], 2),
+         "zb_n": n(x["scr"]["early_departure_share_by_hub"]["Zborovská"]["observed_departures"]),
+         "cells_all": n(rl["cells"]), "hubs_shown": n(rl["hubs_shown"]), "hubs_all": n(rl["hubs"]),
+         "cov24": pct(rl["connections_share_slack_2_4"]), "tight_n": n(rl["tight_cells"]),
+         "def_desc": (f"{df['hub']}, from line {df['a']} towards {df['a_to']} to line {df['b']} towards {df['b_to']}, "
+                      f"{ {'peak': 'in the weekday peaks', 'daytime': 'in the weekday daytime', 'weekend': 'on weekend days', 'evening': 'in the evening'}[df['band']] }, "
+                      f"where {pct(df['p3']['p'])} % were made at 3 minutes (rough 95 % interval {pct(df['p3']['lo'])}–"
+                      f"{pct(df['p3']['hi'])} %)"),
+         "pm2": n(100 * curve[2], 1), "pm3": n(100 * curve[3], 1), "pm95": n(100 * curve[first95], 1),
+         "ex_cov": pct(ex["predicted"] / ex["connections_2_4"], 0),
+         "ext_gap": n(max(abs(ex[s]["predicted"] - ex[s]["observed"]) for s in ("2", "3", "4")) * 100, 1),
+         "calib": n(100 * d["max_abs_gap"], 2),
+         "all_top": pct(d["q4"]["all_costly_after_a_top_producer"], 1),
+         "after_top": pct(d["q4"]["lost_on_last_segment_after_a_top_producer"], 1),
+         "base_top": pct(ph["q4_baseline"]["after_a_top_producer"], 1),
+         "dw_gap": n(ph["dwell"]["median_od_minus_dep_hat_s"]), "dw_od": pct(ph["dwell"]["made_observed_departure"], 1),
+         "dw_hat": pct(ph["dwell"]["made_dep_hat"], 1), "dw_after": pct(ph["dwell"]["share_od_after_dep_hat"], 1)}
+    for s in ("2", "3", "4"):
+        v[f"ex{s}p"], v[f"ex{s}o"] = pct(ex[s]["predicted"], 1), pct(ex[s]["observed"], 1)
+    rows = []
+    for lab, k in ROBUST:
+        r = res[k] if k in res else c[k]
+        rows.append((lab, r))
+    rows += [("post-hoc: unobserved planned B all made", qb["unobserved_all_made"]),
+             ("post-hoc: unobserved planned B all missed", qb["unobserved_all_missed"]),
+             ("post-hoc: observed, line ran a trip short that hour", qb["observed_line_short"]),
+             ("post-hoc: observed, line not short", qb["observed_line_not_short"])]
+    v["robust_rows"] = "\n".join(
+        f'  <tr><td>{lab}</td><td class="v">{pp(r["est"], 2)}</td><td class="v">{pp(r["ci95"][0], 2)} to '
+        f'{pp(r["ci95"][1], 2)}</td><td class="v">{r["label"]}</td></tr>' for lab, r in rows)
     return v
 
 
