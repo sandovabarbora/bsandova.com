@@ -172,3 +172,13 @@ id exist), and "position" in §1 is read as a stop pass. Route comes from `rt_tr
 terminal stop. Rule 2 excludes 8 dates (two window edges and five days with no records, plus 9 July), leaving 170;
 rule 3 drops 4.2 % of tram trip-hours. Details in `rain-delays-screen.md`. The power grid is re-run on the 170 dates
 before estimation.
+
+**8 October 2026 (estimation code frozen; no delay value read).** `tools/rain/units.py` builds the units (the only
+step that reads delay values), `tools/rain/estimate.py` runs §4–§6, `tools/rain/test_rain.py` checks both on made-up
+data: a hand-worked example of delay gained (two trips, 60 s and 30 s, unit mean 45 s), recovery of a known 20 s
+effect, a null effect labelled "not supported", the screening filters, the label rules, the wild bootstrap and every
+§6 check. Choices the design left open, fixed here: the bootstrap is unrestricted percentile-t; the placebo regresses
+delay gained on next-hour rain among hours whose next hour is a rain or dry hour; the nearest station is chosen by the
+route's centroid over its stop coordinates (ČHMÚ station positions from `meta1.json`); a dose band with no hours is
+listed as unidentified, not dropped. Order from here: power grid re-run with the dispersion of delay gained on the
+170 dates (read without the rain indicator), then `units.py`, then `estimate.py`.

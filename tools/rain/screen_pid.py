@@ -223,6 +223,7 @@ def main() -> None:
                                       if x["first"] <= START.isoformat() and x["last"] >= END.isoformat()}),
         "open_ended_spans_to_window_end": sum(1 for x in sp if x["open_ended"]),
         "exclusions": excl,
+        "exclusions_literal": literal,
         "spans": sorted(sp, key=lambda x: x["first"]),
         "changes": sorted(rows, key=lambda r: r["first"]),
     }, ensure_ascii=False, indent=1))
