@@ -23,27 +23,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../a24.css">
 <style>
-.parts{list-style:none;margin:0 0 clamp(40px,5vw,72px);padding:0;border-top:1px solid #000}
-.text section .parts>li{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(16px,2.4vw,40px);padding:clamp(20px,2.4vw,32px) 0;border-bottom:1px solid #e6e6e6;margin:0;max-width:none}
-.parts .still{position:relative;display:block;aspect-ratio:3/2;overflow:hidden;background:#080808}
-.parts .still .shot{transition:transform .6s cubic-bezier(.2,.7,.2,1)}
-.parts .still:hover .shot{transform:scale(1.025)}
-.parts .n{font:400 11px/1.5 var(--mono);letter-spacing:.06em;color:#666;margin:0 0 .5rem;text-align:left;hyphens:none}
-.parts h2{font:500 clamp(24px,2.4vw,34px)/1.08 var(--sans);letter-spacing:-.035em;margin:0 0 .9rem}
-.parts h2 a{color:#000;text-decoration:none}
-.parts h2 a:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.12em}
-.parts p{max-width:62ch}
-.parts .v{font:400 12px/1.5 var(--mono);color:#666;margin-top:.6rem;text-align:left}
 .ht{width:100%;border-collapse:collapse;font:400 13px/1.4 var(--sans);font-variant-numeric:tabular-nums;margin:.6rem 0 1rem}
 .ht th{font:400 11px var(--mono);color:#666;text-align:left;padding:6px 10px 6px 0;border-bottom:1px solid #000;vertical-align:bottom}
 .ht td{padding:6px 10px 6px 0;border-bottom:1px solid #e6e6e6;vertical-align:top}
 .ht td.v{white-space:nowrap}
 .ht code{font:400 12px var(--mono)}
 .tw{overflow-x:auto;max-width:100%}
-:root:has(link[rel="canonical"][href*="/texts/"]) .text>section.series{display:block}
-:root:has(link[rel="canonical"][href*="/texts/"]) .text>section.series ol.parts{max-width:none;padding-left:0;margin:0 0 clamp(40px,5vw,72px)}
-:root:has(link[rel="canonical"][href*="/texts/"]) .text>section.series>h2{position:static;max-width:none;margin-bottom:clamp(20px,2.4vw,32px)}
-@media (max-width:760px){.text section .parts>li{grid-template-columns:1fr}}
 .text dl.meta{display:block;text-transform:none;letter-spacing:0}
 .text dl.meta div,.text dl.meta div+div,.text dl.meta div:last-child{border-right:0;border-bottom:1px solid #ececea;padding:6px 0}
 .regnote{font:400 12px/1.5 var(--mono);color:#666}
