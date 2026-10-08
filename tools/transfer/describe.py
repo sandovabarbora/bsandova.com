@@ -10,6 +10,8 @@ from __future__ import annotations
 import importlib.util
 import json
 import logging
+import subprocess
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -35,11 +37,7 @@ def direction(key: str) -> str:
 
 
 def cells(c: pd.DataFrame, rng) -> tuple[list[dict], dict]:
-    """Q3: one roulette cell per hub × A line × B line × B direction × hour band."""
-    c = c[c["made"].notna() & ~c["excluded"]].copy()
-    c["dd"] = c["delta_b"] - c["d_a"]  # made ⇔ dd ≥ m − s
-    c["bdir"] = c["bkey"].map(direction)
-    c["adir"] = c["akey"].map(direction)
+    """Q3: one roulette cell per hub × A line × A direction × B line × B direction × hour band."""
     out, calib = [], []
     weeks = np.array(sorted(c["week"].unique()))
     wi = {w: i for i, w in enumerate(weeks)}
@@ -52,10 +50,9 @@ def cells(c: pd.DataFrame, rng) -> tuple[list[dict], dict]:
             dd, wk = g["dd"].to_numpy(), np.array([wi[w] for w in g["week"]])
             m = float(np.median(g["m"]))
             curve = []
+            den = W @ np.bincount(wk, minlength=len(weeks))
             for s in SLACKS:
-                hit = (dd >= m - 60 * s).astype(float)
-                wt = W[:, wk]
-                vals = (wt @ hit) / wt.sum(axis=1)
+                vals = (W @ np.bincount(wk, weights=(dd >= m - 60 * s), minlength=len(weeks))) / den
                 curve.append({"s": s, "p": round(float(vals[0]), 3),
                               "lo": round(float(np.quantile(vals[1:], 0.025)), 3),
                               "hi": round(float(np.quantile(vals[1:], 0.975)), 3)})
@@ -64,7 +61,8 @@ def cells(c: pd.DataFrame, rng) -> tuple[list[dict], dict]:
                         "median_extra_wait_s": round(float(np.median(g["w"]))),
                         "own_slack_median_min": round(float(np.median(g["slack"])) / 60, 1),
                         "made_at_own_slacks": round(float(g["made"].mean()), 3)})
-            pred = np.array([(dd >= mm - ss).mean() for mm, ss in zip(g["m"], g["slack"])])
+            srt = np.sort(dd)
+            pred = 1 - np.searchsorted(srt, (g["m"] - g["slack"]).to_numpy(), side="left") / len(srt)
             calib.append(pd.DataFrame({"pred": pred, "obs": g["made"].to_numpy()}))
         out.append(rec)
     cal = pd.concat(calib, ignore_index=True)
@@ -98,7 +96,7 @@ def top_segments(odd: bool) -> set[tuple[str, str]]:
 
 def misses(c: pd.DataFrame) -> dict:
     """Q4: among costly misses at slack 2–4 min, A already later than the slack at the stop before, or not."""
-    q = c[c["slack"].between(120, 240) & c["made"].notna() & ~c["excluded"] & (c["w"] > es.COSTLY_S)].copy()
+    q = c[c["slack"].between(120, 240) & (c["w"] > es.COSTLY_S)].copy()
     prev_delay = q["a_prev_oa"] - q["a_prev_sa"]
     q["origin"] = np.select([prev_delay.isna(), prev_delay > q["slack"]], ["no_prior_arrival", "already_late"],
                             "lost_on_last_segment")
@@ -115,20 +113,90 @@ def misses(c: pd.DataFrame) -> dict:
             "all_costly_after_a_top_producer": round(float(q["top_segment"].mean()), 4)}
 
 
-def main() -> None:
-    logging.basicConfig(level=logging.INFO, format="%(message)s")
+CELL = ["hub", "aroute", "adir", "broute", "bdir", "band", "dd", "m", "slack", "made", "w", "date", "week"]
+MISS = ["hub", "akey", "week", "slack", "w", "a_prev_oa", "a_prev_sa"]
+
+
+STAGE = DATA / "describe"
+
+
+def month_stage(fc: Path, fb: Path) -> None:
     sc = json.loads((R / "transfers-screen.json").read_text())
-    c, b = es.load()
-    b = es.b_table(b)
-    c = es.prepare(c, set(sc["hubs_removed_early_departures"]))
+    removed = set(sc["hubs_removed_early_departures"])
+    tag = fc.stem.split("_")[1]
+    b = es.b_table(pd.read_parquet(fb))
+    c = es.prepare(es.read_connections(fc, False), removed)
+    c = c[c["made"].notna()].copy()
     c["w"] = es.extra_wait(c, b)
-    rng = np.random.default_rng(SEED)
-    roulette, calib = cells(c, rng)
-    res = {"cells": len(roulette), "cells_shown": sum(not r["thin"] for r in roulette), **calib,
-           "q4": misses(c)}
-    OUT.write_text(json.dumps(res, ensure_ascii=False, indent=1, default=str) + "\n")
+    c["dd"] = c["delta_b"] - c["d_a"]  # made ⇔ dd ≥ m − s
+    c["adir"] = c["akey"].astype(str).map(direction)
+    c["bdir"] = c["bkey"].astype(str).map(direction)
+    part = c[CELL].copy()
+    for k in ("dd", "m", "slack", "w"):
+        part[k] = part[k].astype("float32")
+    part.to_parquet(STAGE / f"cells_{tag}.parquet", index=False)
+    c.loc[c["slack"].between(120, 240) & (c["w"] > es.COSTLY_S), MISS].to_parquet(STAGE / f"miss_{tag}.parquet",
+                                                                                   index=False)
+    log.info("%s read", fc.name)
+
+
+def write_roulette(roulette: list[dict]) -> None:
+    """Every cell to the data folder (never committed); only the cells the roulette shows to the page, since a thin
+    cell is shown as "too few connections" whether or not its counts are known."""
+    (DATA / "roulette-all.json").write_text(json.dumps(roulette, ensure_ascii=False))
     ASSETS.mkdir(parents=True, exist_ok=True)
-    (ASSETS / "roulette.json").write_text(json.dumps(roulette, ensure_ascii=False))
+    bands = ["peak", "daytime", "weekend", "evening"]
+    shown = {"keys": ["hub", "a", "a_to", "b", "b_to", "band", "connections", "dates", "walk_s", "own_slack_min",
+                      "made_own", "costly", "median_wait_s", "curve: [slack min, share, lo, hi]"],
+             "bands": bands,
+             "rows": [[r["hub"], r["a"], r["a_to"], r["b"], r["b_to"], bands.index(r["band"]), r["connections"],
+                       r["dates"], r["m_s"], r["own_slack_median_min"], r["made_at_own_slacks"], r["costly_miss"],
+                       r["median_extra_wait_s"], [[k["s"], k["p"], k["lo"], k["hi"]] for k in r["curve"]]]
+                      for r in roulette if not r["thin"]]}
+    (ASSETS / "roulette.json").write_text(json.dumps(shown, ensure_ascii=False, separators=(",", ":")))
+
+
+def uncertain_breakdown() -> dict:
+    """Described after the results, not registered: what the 'uncertain' class of the §4.4 bounds consists of."""
+    b = pd.concat([pd.read_parquet(f) for f in sorted((DATA / "estimate").glob("bound_*.parquet"))])
+    unobs = b["made"].isna()
+    obs = b[~unobs]
+    return {"connections": int(len(b)), "uncertain": round(float(b["uncertain"].mean()), 4),
+            "planned_b_unobserved": round(float(unobs.mean()), 4),
+            "line_short_that_hour_only": round(float((b["uncertain"] & ~unobs).mean()), 4),
+            "made_certain": round(float(obs.loc[~obs["uncertain"], "made"].mean()), 4),
+            "made_line_short_that_hour": round(float(obs.loc[obs["uncertain"], "made"].mean()), 4)}
+
+
+def main() -> None:
+    """Month by month, each in its own process, as in estimate.py; then the cells and the misses from the reduced
+    tables."""
+    logging.basicConfig(level=logging.INFO, format="%(message)s")
+    if "--month" in sys.argv:
+        fc = Path(sys.argv[sys.argv.index("--month") + 1])
+        month_stage(fc, fc.with_name(fc.name.replace("connections", "btrips")))
+        return
+    if "--post-hoc" in sys.argv:  # the additions described after the results, on files already written
+        res = json.loads(OUT.read_text())
+        res["post_hoc_uncertain_breakdown"] = uncertain_breakdown()
+        OUT.write_text(json.dumps(res, ensure_ascii=False, indent=1, default=str) + "\n")
+        write_roulette(json.loads((DATA / "roulette-all.json").read_text()))
+        print(json.dumps(res["post_hoc_uncertain_breakdown"], indent=1))
+        return
+    STAGE.mkdir(parents=True, exist_ok=True)
+    if "--aggregate" not in sys.argv:
+        for fc, _ in es.months():
+            subprocess.run([sys.executable, __file__, "--month", str(fc)], check=True)
+    cells_df = pd.concat([pd.read_parquet(f) for f in sorted(STAGE.glob("cells_*.parquet"))], ignore_index=True)
+    for k in ("hub", "aroute", "adir", "broute", "bdir", "band"):
+        cells_df[k] = cells_df[k].astype(str).astype("category")
+    rng = np.random.default_rng(SEED)
+    roulette, calib = cells(cells_df, rng)
+    misses_df = pd.concat([pd.read_parquet(f) for f in sorted(STAGE.glob("miss_*.parquet"))], ignore_index=True)
+    q4 = misses(misses_df.astype({"hub": str, "akey": str}))
+    res = {"cells": len(roulette), "cells_shown": sum(not r["thin"] for r in roulette), **calib, "q4": q4}
+    OUT.write_text(json.dumps(res, ensure_ascii=False, indent=1, default=str) + "\n")
+    write_roulette(roulette)
     print(json.dumps(res, indent=1, default=str)[:3000])
 
 
