@@ -1,0 +1,870 @@
+{
+ "mode": "tram",
+ "pairs": 243465,
+ "pair_stops_observed": 5974454,
+ "Q1": {
+  "gamma_iv": -0.0012,
+  "ci95": [
+   -0.0018,
+   -0.0006
+  ],
+  "ci90": [
+   -0.0017,
+   -0.0006
+  ],
+  "label": "not supported",
+  "transitions": 5281510,
+  "pairs": 238983,
+  "dates": 170,
+  "week_clustered_ci95": [
+   -0.002,
+   -0.0005
+  ],
+  "gamma_ols": -0.0041,
+  "gamma0_shuffle": -0.0017,
+  "gamma_minus_gamma0_registered": -0.0024
+ },
+ "Q1_variants": {
+  "cut_at_first_swap": -0.0011,
+  "balanced_80pct": -0.0012,
+  "without_timing_points": 0.0007,
+  "weighted_by_H": -0.0011,
+  "departures": 0.0008
+ },
+ "Q2": {
+  "platforms": 488,
+  "exposure_floor": 2000,
+  "S_b": 0.1855,
+  "S_b0": 0.0773,
+  "ratio": 2.3989,
+  "ratio_ci95": [
+   1.7596,
+   3.5484
+  ],
+  "ratio_ci90": [
+   1.8489,
+   3.3695
+  ],
+  "difference": 0.1082,
+  "difference_ci95": [
+   0.0588,
+   0.1958
+  ],
+  "rho_split_half": 0.1758,
+  "rho_ci95": [
+   0.0954,
+   0.229
+  ],
+  "rho_ci90": [
+   0.1044,
+   0.2208
+  ],
+  "births": 508,
+  "eligible": 5471119,
+  "ratio_label": "supported",
+  "rho_label": "not supported"
+ },
+ "Q2_difference": {
+  "difference": 0.1082,
+  "ci95": [
+   0.0588,
+   0.1958
+  ]
+ },
+ "transitions": {
+  "births": 510,
+  "deaths": 72,
+  "swap_transitions": 22,
+  "eligible": 5524329
+ },
+ "Q3": {
+  "segments": 560,
+  "rho_b": 0.1868,
+  "ci95": [
+   0.1366,
+   0.221
+  ],
+  "ci90": [
+   0.1435,
+   0.2145
+  ],
+  "label": "supported",
+  "ci95_width": 0.0844,
+  "rho_with_mean_gain": 0.0846
+ },
+ "Q4": {
+  "by_decile": {
+   "1": {
+    "bunched": 0.0008,
+    "gap": 0.001,
+    "swap": 0.0,
+    "var_r": 0.007,
+    "n": 695298
+   },
+   "2": {
+    "bunched": 0.0011,
+    "gap": 0.0015,
+    "swap": 0.0,
+    "var_r": 0.0144,
+    "n": 593969
+   },
+   "3": {
+    "bunched": 0.0014,
+    "gap": 0.002,
+    "swap": 0.0,
+    "var_r": 0.0189,
+    "n": 605449
+   },
+   "4": {
+    "bunched": 0.0022,
+    "gap": 0.0035,
+    "swap": 0.0,
+    "var_r": 0.0293,
+    "n": 582984
+   },
+   "5": {
+    "bunched": 0.0028,
+    "gap": 0.0047,
+    "swap": 0.0,
+    "var_r": 0.036,
+    "n": 573491
+   },
+   "6": {
+    "bunched": 0.0041,
+    "gap": 0.0067,
+    "swap": 0.0,
+    "var_r": 0.0472,
+    "n": 634456
+   },
+   "7": {
+    "bunched": 0.0058,
+    "gap": 0.0086,
+    "swap": 0.0,
+    "var_r": 0.0568,
+    "n": 610066
+   },
+   "8": {
+    "bunched": 0.0073,
+    "gap": 0.0099,
+    "swap": 0.0,
+    "var_r": 0.0624,
+    "n": 568630
+   },
+   "9": {
+    "bunched": 0.0085,
+    "gap": 0.0113,
+    "swap": 0.0001,
+    "var_r": 0.0686,
+    "n": 621425
+   },
+   "10": {
+    "bunched": 0.01,
+    "gap": 0.0125,
+    "swap": 0.0001,
+    "var_r": 0.0751,
+    "n": 488686
+   }
+  },
+  "by_decile_shuffled": {
+   "1": {
+    "bunched": 0.0007,
+    "gap": 0.001,
+    "swap": 0.0,
+    "var_r": 0.0071,
+    "n": 689406
+   },
+   "2": {
+    "bunched": 0.001,
+    "gap": 0.0015,
+    "swap": 0.0002,
+    "var_r": 0.0142,
+    "n": 584693
+   },
+   "3": {
+    "bunched": 0.0012,
+    "gap": 0.0019,
+    "swap": 0.0003,
+    "var_r": 0.0183,
+    "n": 593342
+   },
+   "4": {
+    "bunched": 0.0018,
+    "gap": 0.0031,
+    "swap": 0.0007,
+    "var_r": 0.0284,
+    "n": 569943
+   },
+   "5": {
+    "bunched": 0.0025,
+    "gap": 0.0041,
+    "swap": 0.001,
+    "var_r": 0.0359,
+    "n": 564159
+   },
+   "6": {
+    "bunched": 0.0035,
+    "gap": 0.0061,
+    "swap": 0.0016,
+    "var_r": 0.0481,
+    "n": 624947
+   },
+   "7": {
+    "bunched": 0.0046,
+    "gap": 0.0083,
+    "swap": 0.0024,
+    "var_r": 0.0596,
+    "n": 598395
+   },
+   "8": {
+    "bunched": 0.0053,
+    "gap": 0.0092,
+    "swap": 0.0027,
+    "var_r": 0.0662,
+    "n": 549281
+   },
+   "9": {
+    "bunched": 0.0063,
+    "gap": 0.0105,
+    "swap": 0.0034,
+    "var_r": 0.074,
+    "n": 609233
+   },
+   "10": {
+    "bunched": 0.0074,
+    "gap": 0.0119,
+    "swap": 0.0038,
+    "var_r": 0.0818,
+    "n": 480053
+   }
+  },
+  "by_hour_weekday": {
+   "0": {
+    "bunched": 0.0,
+    "gap": 0.0,
+    "swap": 0.0,
+    "var_r": 0.0041,
+    "n": 104
+   },
+   "4": {
+    "bunched": 0.0,
+    "gap": 0.0,
+    "swap": 0.0,
+    "var_r": 0.0006,
+    "n": 18
+   },
+   "5": {
+    "bunched": 0.0001,
+    "gap": 0.0001,
+    "swap": 0.0,
+    "var_r": 0.0103,
+    "n": 61365
+   },
+   "6": {
+    "bunched": 0.0019,
+    "gap": 0.0037,
+    "swap": 0.0,
+    "var_r": 0.0308,
+    "n": 293542
+   },
+   "7": {
+    "bunched": 0.0049,
+    "gap": 0.0083,
+    "swap": 0.0001,
+    "var_r": 0.052,
+    "n": 349236
+   },
+   "8": {
+    "bunched": 0.0065,
+    "gap": 0.0089,
+    "swap": 0.0,
+    "var_r": 0.0585,
+    "n": 359812
+   },
+   "9": {
+    "bunched": 0.0055,
+    "gap": 0.0059,
+    "swap": 0.0001,
+    "var_r": 0.0418,
+    "n": 351880
+   },
+   "10": {
+    "bunched": 0.0042,
+    "gap": 0.0047,
+    "swap": 0.0,
+    "var_r": 0.0363,
+    "n": 334689
+   },
+   "11": {
+    "bunched": 0.003,
+    "gap": 0.0043,
+    "swap": 0.0,
+    "var_r": 0.0337,
+    "n": 358288
+   },
+   "12": {
+    "bunched": 0.0037,
+    "gap": 0.005,
+    "swap": 0.0001,
+    "var_r": 0.0362,
+    "n": 354184
+   },
+   "13": {
+    "bunched": 0.005,
+    "gap": 0.0059,
+    "swap": 0.0,
+    "var_r": 0.0391,
+    "n": 346079
+   },
+   "14": {
+    "bunched": 0.0053,
+    "gap": 0.0077,
+    "swap": 0.0001,
+    "var_r": 0.0468,
+    "n": 328188
+   },
+   "15": {
+    "bunched": 0.0065,
+    "gap": 0.0118,
+    "swap": 0.0,
+    "var_r": 0.0636,
+    "n": 358025
+   },
+   "16": {
+    "bunched": 0.0084,
+    "gap": 0.0133,
+    "swap": 0.0,
+    "var_r": 0.073,
+    "n": 417226
+   },
+   "17": {
+    "bunched": 0.0071,
+    "gap": 0.0093,
+    "swap": 0.0001,
+    "var_r": 0.0612,
+    "n": 390617
+   },
+   "18": {
+    "bunched": 0.0045,
+    "gap": 0.0057,
+    "swap": 0.0,
+    "var_r": 0.0384,
+    "n": 293123
+   },
+   "19": {
+    "bunched": 0.0018,
+    "gap": 0.0021,
+    "swap": 0.0,
+    "var_r": 0.0205,
+    "n": 224662
+   },
+   "20": {
+    "bunched": 0.001,
+    "gap": 0.0012,
+    "swap": 0.0,
+    "var_r": 0.0162,
+    "n": 155735
+   },
+   "21": {
+    "bunched": 0.0036,
+    "gap": 0.0017,
+    "swap": 0.0,
+    "var_r": 0.0289,
+    "n": 32091
+   },
+   "22": {
+    "bunched": 0.0012,
+    "gap": 0.001,
+    "swap": 0.0,
+    "var_r": 0.0379,
+    "n": 4908
+   },
+   "23": {
+    "bunched": 0.0,
+    "gap": 0.0,
+    "swap": 0.0,
+    "var_r": 0.0057,
+    "n": 401
+   }
+  },
+  "by_hour_weekend": {
+   "0": {
+    "bunched": 0.0,
+    "gap": 0.0,
+    "swap": 0.0,
+    "var_r": 0.0012,
+    "n": 60
+   },
+   "4": {
+    "bunched": 0.0,
+    "gap": 0.0,
+    "swap": 0.0,
+    "var_r": 0.0012,
+    "n": 42
+   },
+   "5": {
+    "bunched": 0.0,
+    "gap": 0.0,
+    "swap": 0.0,
+    "var_r": 0.003,
+    "n": 199
+   },
+   "6": {
+    "bunched": 0.0002,
+    "gap": 0.0,
+    "swap": 0.0,
+    "var_r": 0.0161,
+    "n": 4300
+   },
+   "7": {
+    "bunched": 0.0,
+    "gap": 0.0,
+    "swap": 0.0,
+    "var_r": 0.0168,
+    "n": 9765
+   },
+   "8": {
+    "bunched": 0.0005,
+    "gap": 0.0006,
+    "swap": 0.0,
+    "var_r": 0.0154,
+    "n": 33879
+   },
+   "9": {
+    "bunched": 0.0005,
+    "gap": 0.0001,
+    "swap": 0.0,
+    "var_r": 0.0127,
+    "n": 46143
+   },
+   "10": {
+    "bunched": 0.0015,
+    "gap": 0.0014,
+    "swap": 0.0,
+    "var_r": 0.0162,
+    "n": 72570
+   },
+   "11": {
+    "bunched": 0.0016,
+    "gap": 0.0017,
+    "swap": 0.0,
+    "var_r": 0.0156,
+    "n": 82458
+   },
+   "12": {
+    "bunched": 0.0008,
+    "gap": 0.0011,
+    "swap": 0.0,
+    "var_r": 0.014,
+    "n": 80779
+   },
+   "13": {
+    "bunched": 0.0008,
+    "gap": 0.0016,
+    "swap": 0.0,
+    "var_r": 0.0154,
+    "n": 79780
+   },
+   "14": {
+    "bunched": 0.0005,
+    "gap": 0.0021,
+    "swap": 0.0,
+    "var_r": 0.0175,
+    "n": 82232
+   },
+   "15": {
+    "bunched": 0.0021,
+    "gap": 0.0027,
+    "swap": 0.0001,
+    "var_r": 0.0221,
+    "n": 82293
+   },
+   "16": {
+    "bunched": 0.0009,
+    "gap": 0.0005,
+    "swap": 0.0,
+    "var_r": 0.0147,
+    "n": 79360
+   },
+   "17": {
+    "bunched": 0.0015,
+    "gap": 0.0017,
+    "swap": 0.0,
+    "var_r": 0.0181,
+    "n": 80979
+   },
+   "18": {
+    "bunched": 0.0014,
+    "gap": 0.0009,
+    "swap": 0.0,
+    "var_r": 0.0161,
+    "n": 82436
+   },
+   "19": {
+    "bunched": 0.0007,
+    "gap": 0.0002,
+    "swap": 0.0,
+    "var_r": 0.0141,
+    "n": 75369
+   },
+   "20": {
+    "bunched": 0.0006,
+    "gap": 0.0011,
+    "swap": 0.0,
+    "var_r": 0.0133,
+    "n": 54199
+   },
+   "21": {
+    "bunched": 0.0027,
+    "gap": 0.0037,
+    "swap": 0.0,
+    "var_r": 0.0323,
+    "n": 11309
+   },
+   "22": {
+    "bunched": 0.0,
+    "gap": 0.0,
+    "swap": 0.0005,
+    "var_r": 0.1244,
+    "n": 1834
+   },
+   "23": {
+    "bunched": 0.0,
+    "gap": 0.0,
+    "swap": 0.0,
+    "var_r": 0.0067,
+    "n": 295
+   }
+  },
+  "overall": {
+   "bunched": 0.0043,
+   "gap": 0.006,
+   "swap": 0.0,
+   "var_r": 0.0405,
+   "n": 5974454
+  }
+ },
+ "checks": {
+  "bunched_below_0.20": {
+   "platforms": 488,
+   "exposure_floor": 2000,
+   "S_b": 0.1335,
+   "S_b0": 0.0781,
+   "ratio": 1.7088,
+   "ratio_ci95": [
+    1.3074,
+    3.172
+   ],
+   "ratio_ci90": [
+    1.3915,
+    3.0673
+   ],
+   "difference": 0.0554,
+   "difference_ci95": [
+    0.0244,
+    0.1768
+   ],
+   "rho_split_half": 0.1372,
+   "rho_ci95": [
+    0.0301,
+    0.1877
+   ],
+   "rho_ci90": [
+    0.0402,
+    0.1745
+   ],
+   "births": 290,
+   "eligible": 5471119,
+   "ratio_label": "supported",
+   "rho_label": "not supported"
+  },
+  "bunched_below_0.33": {
+   "platforms": 488,
+   "exposure_floor": 2000,
+   "S_b": 0.319,
+   "S_b0": 0.0739,
+   "ratio": 4.3196,
+   "ratio_ci95": [
+    3.2098,
+    4.7694
+   ],
+   "ratio_ci90": [
+    3.2959,
+    4.5738
+   ],
+   "difference": 0.2452,
+   "difference_ci95": [
+    0.1672,
+    0.2755
+   ],
+   "rho_split_half": 0.3166,
+   "rho_ci95": [
+    0.2448,
+    0.3505
+   ],
+   "rho_ci90": [
+    0.2537,
+    0.3454
+   ],
+   "births": 1187,
+   "eligible": 5471119,
+   "ratio_label": "supported",
+   "rho_label": "inconclusive"
+  },
+  "bunched_below_0.5_gap_above_1.5_shares": {
+   "bunched": 0.0175,
+   "gap": 0.0163,
+   "swap": 0.0,
+   "var_r": 0.0405,
+   "n": 5974454
+  },
+  "bunched_below_0.5_births_prev_0.75": {
+   "platforms": 487,
+   "exposure_floor": 2000,
+   "S_b": 0.3215,
+   "S_b0": 0.0754,
+   "ratio": 4.2651,
+   "ratio_ci95": [
+    3.2665,
+    4.4691
+   ],
+   "ratio_ci90": [
+    3.3329,
+    4.3656
+   ],
+   "difference": 0.2461,
+   "difference_ci95": [
+    0.17,
+    0.2594
+   ],
+   "rho_split_half": 0.3383,
+   "rho_ci95": [
+    0.2535,
+    0.3708
+   ],
+   "rho_ci90": [
+    0.2699,
+    0.3621
+   ],
+   "births": 1971,
+   "eligible": 5198144,
+   "ratio_label": "supported",
+   "rho_label": "inconclusive"
+  },
+  "alternative_birth_rule_prev_0.75": {
+   "platforms": 487,
+   "exposure_floor": 2000,
+   "S_b": 0.1458,
+   "S_b0": 0.0806,
+   "ratio": 1.8081,
+   "ratio_ci95": [
+    1.0426,
+    3.1101
+   ],
+   "ratio_ci90": [
+    1.1737,
+    2.8553
+   ],
+   "difference": 0.0652,
+   "difference_ci95": [
+    0.0035,
+    0.1763
+   ],
+   "rho_split_half": 0.0977,
+   "rho_ci95": [
+    0.0119,
+    0.1497
+   ],
+   "rho_ci90": [
+    0.0263,
+    0.1451
+   ],
+   "births": 344,
+   "eligible": 5198144,
+   "ratio_label": "inconclusive",
+   "rho_label": "not supported"
+  },
+  "deaths": {
+   "platforms": 488,
+   "exposure_floor": 2000,
+   "S_b": 0.4996,
+   "S_b0": 0.1154,
+   "ratio": 4.3275,
+   "ratio_ci95": [
+    1.6345,
+    5.3081
+   ],
+   "ratio_ci90": [
+    1.9118,
+    4.8845
+   ],
+   "difference": 0.3842,
+   "difference_ci95": [
+    0.0829,
+    0.4679
+   ],
+   "rho_split_half": 0.352,
+   "rho_ci95": [
+    0.0962,
+    0.4271
+   ],
+   "rho_ci90": [
+    0.1368,
+    0.4161
+   ],
+   "births": 72,
+   "eligible": 5471119,
+   "ratio_label": "supported",
+   "rho_label": "inconclusive"
+  },
+  "net_births_total": 438,
+  "reversed_order": {
+   "platforms": 486,
+   "exposure_floor": 2000,
+   "S_b": 0.4853,
+   "S_b0": 0.1202,
+   "ratio": 4.0374,
+   "ratio_ci95": [
+    1.3558,
+    4.7806
+   ],
+   "ratio_ci90": [
+    1.5813,
+    4.67
+   ],
+   "difference": 0.3651,
+   "difference_ci95": [
+    0.0443,
+    0.4648
+   ],
+   "rho_split_half": 0.3511,
+   "rho_ci95": [
+    0.0881,
+    0.4222
+   ],
+   "rho_ci90": [
+    0.1263,
+    0.4157
+   ],
+   "births": 72,
+   "eligible": 5462388,
+   "ratio_label": "supported",
+   "rho_label": "inconclusive"
+  },
+  "reversed_vs_forward_rank_correlation": 0.1503,
+  "without_timing_points": {
+   "platforms": 436,
+   "exposure_floor": 2000,
+   "S_b": 0.1937,
+   "S_b0": 0.0764,
+   "ratio": 2.5363,
+   "ratio_ci95": [
+    1.7632,
+    3.7614
+   ],
+   "ratio_ci90": [
+    1.9011,
+    3.5587
+   ],
+   "difference": 0.1174,
+   "difference_ci95": [
+    0.0588,
+    0.2102
+   ],
+   "rho_split_half": 0.1847,
+   "rho_ci95": [
+    0.0983,
+    0.2471
+   ],
+   "rho_ci90": [
+    0.1105,
+    0.229
+   ],
+   "births": 434,
+   "eligible": 4839149,
+   "ratio_label": "supported",
+   "rho_label": "not supported"
+  },
+  "without_top_1pct_dates": {
+   "platforms": 488,
+   "exposure_floor": 2000,
+   "S_b": 0.1997,
+   "S_b0": 0.0771,
+   "ratio": 2.5899,
+   "ratio_ci95": [
+    1.8177,
+    3.7029
+   ],
+   "ratio_ci90": [
+    1.9685,
+    3.5756
+   ],
+   "difference": 0.1226,
+   "difference_ci95": [
+    0.0622,
+    0.206
+   ],
+   "rho_split_half": 0.1831,
+   "rho_ci95": [
+    0.1045,
+    0.2415
+   ],
+   "rho_ci90": [
+    0.1102,
+    0.2303
+   ],
+   "births": 491,
+   "eligible": 5410892,
+   "ratio_label": "supported",
+   "rho_label": "not supported"
+  },
+  "births_capped_one_per_pair": {
+   "platforms": 488,
+   "exposure_floor": 2000,
+   "S_b": 0.1867,
+   "S_b0": 0.0765,
+   "ratio": 2.4408,
+   "ratio_ci95": [
+    1.7082,
+    3.5503
+   ],
+   "ratio_ci90": [
+    1.8117,
+    3.3355
+   ],
+   "difference": 0.1102,
+   "difference_ci95": [
+    0.0554,
+    0.1891
+   ],
+   "rho_split_half": 0.1769,
+   "rho_ci95": [
+    0.0984,
+    0.2268
+   ],
+   "rho_ci90": [
+    0.106,
+    0.221
+   ],
+   "births": 505,
+   "eligible": 5471119,
+   "ratio_label": "supported",
+   "rho_label": "not supported"
+  },
+  "H_3_4min_stratum": {
+   "pairs": 160,
+   "gamma_iv": null,
+   "shares": {
+    "bunched": 0.0,
+    "gap": 0.0063,
+    "swap": 0.0,
+    "var_r": 0.0309,
+    "n": 474
+   }
+  },
+  "timetable_order_pairs": {
+   "bunched_incl_swaps": 0.0046,
+   "gap": 0.0062,
+   "n": 6584920
+  }
+ }
+}
