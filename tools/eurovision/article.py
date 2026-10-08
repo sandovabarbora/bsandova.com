@@ -251,6 +251,7 @@ def values(res: dict, fig: dict) -> dict:
     v["photo"] = ('<section class="film film-page"><div class="shot" style="view-transition-name:ph-eurovision;'
                   '--bg:url(../assets/photo/eurovision.jpg);--bg-s:url(../assets/photo/eurovision-1200.jpg)"></div>'
                   f'<p class="credit">Photo: <a href="{photo["page"]}">{photo["author"]}</a> · {photo["licence"]}, toned</p></section>')
+    v["bin_hi_abs"], v["bin_lo_abs"] = v["bin_hi_gap"].lstrip("+"), v["bin_lo_gap"].lstrip("−")  # for the chart headline
     return v
 
 
