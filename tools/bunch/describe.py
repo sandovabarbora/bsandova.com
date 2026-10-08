@@ -140,6 +140,9 @@ def main() -> None:
     out["q2b_power_simulation"] = {"note": "Poisson counts on the real exposures; a stable hot tenth of platforms with the "
                                            "stated rate multiplier; mean of 100 draws", "by_multiplier": sims,
                                    "observed_split_half": res_rho(ROOT)}
+    timing = be.timing_stops("tram")
+    out["timing_points"] = {"stops": len(timing),
+                            "top8_platforms_among_them": int(sum(q["stop_id"] in timing for q in out["platforms_most_births"]))}
     (ROOT / "docs/research/bunching-describe.json").write_text(json.dumps(out, indent=1) + "\n")
     print(json.dumps(out, indent=1))
 

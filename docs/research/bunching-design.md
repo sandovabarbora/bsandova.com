@@ -251,3 +251,8 @@ For buses, the instrument two, three and four stops back gives +0.0021, +0.0027 
 applied as coded and the article says so. The comparison of the curve with the shuffle pools swaps with bunches, a
 choice made after the results; compared as registered, without swaps, the last tenth is 1.0 % observed against 0.74 %
 shuffled.
+
+**8 October 2026 (note on the screening files).** `bunching-screen.json` and `bunching-screen-bus.json` list timing-point
+stops by the rule first written into `screen.py` (432 tram and 1 664 bus stops), which the code-freeze entry above
+replaced; the stops used are those of `tools/bunch/timing.py` (65 of 624 tram stops, 10 of 2 183 bus stops), counted in
+`describe.json` and `describe-bus.json`.

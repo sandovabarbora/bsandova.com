@@ -21,7 +21,8 @@ def main() -> None:
     allp = be.load("bus")
     ps = allp[allp["H0"] >= be.H_MIN].reset_index(drop=True)
     d = be.transitions(ps)
-    out = {"note": "described after the results; not registered", "pairs": int(ps["pair"].nunique())}
+    out = {"note": "described after the results; not registered", "pairs": int(ps["pair"].nunique()),
+           "timing_point_stops": len(be.timing_stops("bus"))}
     gammas = {}
     for lag in (2, 3, 4):
         t = ps[["pair", "k", "r"]].assign(k=ps["k"] + lag).rename(columns={"r": "vl"})
