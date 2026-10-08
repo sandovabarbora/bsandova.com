@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Does rain delay Prague's trams? Delay gained in rain hours, March–September 2025</title>
+<meta name="description" content="A pre-specified analysis of 121 million stop passes and ČHMÚ hourly rain: in an hour with rain, a Prague tram gains about {{d}} seconds more delay than the same route in a dry hour.">
+<meta property="og:title" content="Does rain delay Prague's trams?">
+<meta property="og:description" content="In an hour with rain, a Prague tram gains about {{d}} seconds more delay than the same route at the same hour on a dry day; the metro, underground, does not; March–September 2025.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://bsandova.com/texts/rain-delays">
+<meta property="og:image" content="https://bsandova.com/assets/og/rain-delays.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bsandova.com/assets/og/rain-delays.jpg">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://bsandova.com/texts/rain-delays">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../text.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../a24.css">
+<style>
+.text dl.meta{display:block;letter-spacing:normal;text-transform:none;font-size:12px}
+.text dl.meta div{border-right:0;padding-left:0;grid-template-columns:13ch 1fr}
+.text dl.meta dd{overflow-wrap:anywhere}
+@media (max-width:560px){.text dl.meta div{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">research · transit · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Research · transit · Prague trams and buses, March–September 2025</p>
+  <h1>Does rain delay Prague's trams? <em>Rain hours and delay, 2025</em></h1>
+  <p class="deck">A pre-specified analysis of {{records}} stop passes and the hourly rain gauges of the Czech Hydrometeorological Institute: in an hour with rain, a tram gains about {{d}} seconds more delay than the same route at the same hour and weekday when it is dry. The registered hypothesis is {{label}}; buses, a secondary estimate, gain about as much, and the metro, underground, does not.</p>
+  <dl class="facts">
+    <div><dt>trams, rain against dry</dt><dd>+{{d}} s <small>delay gained per trip-hour · 95 % confidence interval (CI) {{d_lo}} to {{d_hi}} · {{label}}</small></dd></div>
+    <div><dt>city buses, secondary</dt><dd>+{{bd}} s <small>95 % CI {{bd_lo}} to {{bd_hi}} · {{blabel}}</small></dd></div>
+    <div><dt>metro, negative control</dt><dd>{{mt}} s <small>95 % CI {{mt_lo}} to {{mt_hi}} · underground, on its own track</small></dd></div>
+    <div><dt>trams in an hour with 5 mm of rain or more</dt><dd>+{{p5_up}} s <small>95 % CI {{p5_up_lo}} to {{p5_up_hi}} · a registered check by amount of rain</small></dd></div>
+  </dl>
+</header>
+<details class="tldr" open>
+  <summary>Overwhelmed? Here's the short version</summary>
+  <ul>
+    <li>The question was set down before any delay was read: does a Prague tram fall further behind schedule in an hour with rain than in a dry hour?</li>
+    <li>It does, by about {{d}} seconds per trip and hour ({{d_lo}} to {{d_hi}}), against a dry-hour average of about {{t_dry}} seconds. Buses gain about {{bd}} seconds.</li>
+    <li>The more it rains, the more delay: from about {{p0_1_0_5}} seconds in a drizzle to about {{p5_up}} seconds in an hour with 5 mm or more.</li>
+    <li>The metro, which the rain does not reach, shows no increase, and rain one or two hours earlier adds nothing once the current hour is counted.</li>
+    <li>One registered check did not come out as expected: rain in the next hour also goes with more delay now, about {{pl}} seconds, probably because rain rarely stops on the hour.</li>
+    <li>In practice: ten seconds an hour is small for one trip and adds up across a city's network on the same afternoon.</li>
+  </ul>
+</details>
+<dl class="meta">
+  <div><dt>published</dt><dd>8 October 2026 · updated 8 October 2026 · <a href="#changelog">version 1</a></dd></div>
+  <div><dt>work since</dt><dd>October 2026</dd></div>
+</dl>
+<details class="meta-more">
+  <summary>About this study</summary>
+<dl class="meta">
+  <div><dt>status</dt><dd>research, pre-specified analysis (self-timestamped)</dd></div>
+  <div><dt>registration</dt><dd>design committed at <code>be7b3e4</code> on 6 October 2026, before any delay or precipitation value was read; author's decisions at <code>324c528</code>; power from precipitation alone at <code>6584b94</code>; screening at <code>eb23cdf</code> and <code>947f637</code>; code frozen with tests at <code>f5b061d</code>; power with the data's dispersion at <code>11418fb</code>; results at <code>6de9c3f</code>; the chain is kept under the tag <code>rain-delays-v1</code>. Commit times are self-reported. Changes after registration are listed under <a href="#changes">Changes</a>.</dd></div>
+  <div><dt>data</dt><dd>Prague Integrated Transport stop-time history via Golemio, 15 March – 8 September 2025, as used in the author's master's thesis<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup>; ČHMÚ hourly precipitation, four Prague stations, CC BY 4.0<sup class="cite"><a href="#r3">3</a></sup>; PID change announcements from the Internet Archive<sup class="cite"><a href="#r4">4</a></sup>. The stop passes are not redistributed; the estimates are in <a href="../assets/rain/results.json">results.json</a>.</dd></div>
+  <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/rain">tools/rain/</a> at the commit that publishes this page; rebuild: <code>uv run --with pandas --with pyarrow --with pyfixest python tools/rain/estimate.py</code> (pyfixest {{pyfixest}})</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Does rain delay Prague's trams? Delay gained in rain hours, March–September 2025</i>. bsandova.com/texts/rain-delays, version 1.</dd></div>
+  <div><dt>licence</dt><dd>code MIT; text and figures CC BY 4.0; precipitation ČHMÚ, CC BY 4.0</dd></div>
+</dl>
+</details>
+
+{{photo}}
+
+<section>
+<p>Rain changes a tram ride in several small ways at once: stops fill up, umbrellas slow the boarding, cars that would have been bicycles crowd the junctions, and drivers brake earlier on wet rails. Studies of road traffic agree that rain slows it<sup class="cite"><a href="#r5">5</a></sup><sup class="cite"><a href="#r6">6</a></sup>, and studies of ridership find that bad weather changes how many people travel<sup class="cite"><a href="#r7">7</a></sup>. How much of that reaches a tram, which runs on its own rails for much of the city but shares junctions and stops with everything else, is a smaller and more measurable question, and the data to answer it exist: every Prague tram reports its position, and the national weather service publishes rain by the hour.</p>
+<p>The question here was written down before any delay was read. In a clock hour with rain in Prague, does a tram gain more delay than in a dry hour of the same route, at the same hour of the day and on the same weekday, in the same season? The answer is measured in seconds of delay gained during the hour, not in the delay a tram carries, because a tram that left its terminus late will stay late for the rest of its trip whatever the weather. Buses were measured alongside as a secondary estimate, and the metro, underground and on its own track, as a control that should not react to rain at all.</p>
+</section>
+
+<section>
+<h2>Data</h2>
+<p>The delays come from the history of Prague Integrated Transport that the author collected from Golemio, the city's open-data platform, for a master's thesis on how delays persist through the day<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup>. It covers 15 March to 8 September 2025 and holds {{records}} rows. Each row is one vehicle passing one stop on its way to the next, with the scheduled and observed times and the delay at that stop. The design had expected raw positions; the rows turned out to be stop passes, so "position" in the registered definition is read as a stop pass. For each trip and clock hour with at least two passes, the delay gained is the delay at its last pass in the hour minus the delay at its first. A unit of analysis is one route in one direction on one date in one hour, from 05:00 to 23:59 Prague time, and its outcome is the mean delay gained over its trips. The direction is the trip's terminal stop, so short turns and diversions form units of their own.</p>
+<p>The rain comes from the Czech Hydrometeorological Institute's open climate data<sup class="cite"><a href="#r3">3</a></sup>: the hourly precipitation total at Ruzyně, Libuš, Kbely and Klementinum. An hour is a rain hour if the four stations average at least 0.5 mm. It is a dry hour only if all four recorded nothing in that hour and in the two before it, so that wet rails and lingering crowds after a shower do not count as dry. Hours in between are left out of the main comparison and return only in the check by amount of rain. In the window, rain fell in {{rain_hours}} of the service hours on the dates analysed, spread over {{rain_dates}} dates, against {{dry_hours}} dry hours (fig. 1). The wettest day was {{max_rain_day}}, with {{max_rain_hours}} rain hours.</p>
+<figure>
+  <img src="../assets/rain/05-rain.svg" alt="Bar chart of rain hours per day between 05:00 and 23:59 in Prague, March to September 2025: most days have none, rain days are scattered, with clusters in late April, June and late July." loading="lazy">
+  <figcaption><b>fig. 1</b> · Rain hours (four-station mean at least 0.5 mm) per day, 05:00–23:59 Prague time, 15 March – 8 September 2025; grey, a date excluded for a gap in the delay feed. Data: ČHMÚ<sup class="cite"><a href="#r3">3</a></sup>.</figcaption>
+</figure>
+<p>Three screening rules were fixed in advance and applied before any delay value was read. The first removes route-days with a planned closure, diversion or replacement service. Prague Integrated Transport deletes its change pages once a change is over, so the announcements were recovered from the Internet Archive<sup class="cite"><a href="#r4">4</a></sup>: {{screen_spans}} planned changes touching a tram or city bus line in the window. The {{snapshots}} archived snapshots of the list of changes name {{cov_listed}} such closures, of which {{cov_pages}} also have their own archived page; the rest were taken from the snapshots. Closures that began and ended between two snapshots without an archived page are missed, and their number is unknown. Incidents such as accidents and breakdowns were not removed, because rain can cause them. Three tram closures lasted the whole window, among them the Libeň bridge, closed to trams since November 2024; a route that is diverted on every date is that route's normal pattern here, so they do not exclude. The rule removes {{excl_tram}} tram line-days. The second rule drops dates on which the feed went silent for more than an hour between 05:00 and 23:00: {{gap_dates}} dates, two of them the edges of the window. The third drops units with fewer than two trips, {{thin_pct}} % of tram trip-hours. What remains is {{n_units}} tram units in rain or dry hours on {{dates}} dates.</p>
+</section>
+
+<section>
+<h2>How the estimate works</h2>
+<p>The comparison is between rain and dry hours of the same route, direction, hour of the day and weekday, and within the same date. In a regression, that means a separate level for every route, direction, hour and weekday, which absorbs the fact that line 22 at 17:00 on a Friday is always slower than line 31 at 10:00 on a Sunday, and a separate level for every date, which absorbs anything that affects a whole day: the season, a football match, the start of the school holidays. The rain estimate is then identified from rain and dry hours within the same day and from the same route-hour on different days. It is estimated by ordinary least squares with pyfixest<sup class="cite"><a href="#r8">8</a></sup>, and the uncertainty is clustered by date, because rain falls on the whole city at once and a wet afternoon is one piece of evidence, not hundreds. A wild bootstrap was registered for the case of fewer than 30 rain dates<sup class="cite"><a href="#r9">9</a></sup>; with {{rain_dates}}, it was not needed.</p>
+<p>The rule for reading the result was set in advance. The hypothesis is "supported" if the 95 % interval lies wholly above zero and "not supported" if the 90 % interval lies wholly within ±10 seconds, a margin fixed as smaller than any delay a passenger would notice, tested in the manner of an equivalence test<sup class="cite"><a href="#r10">10</a></sup>; anything else is "inconclusive". Before the estimate, the power calculation was re-run with the spread the data imply, read without the rain indicator: units vary by about {{sig_e}} seconds around their usual level and the whole city by about {{sig_c}} seconds from hour to hour, which gives a standard error of about {{pse}} seconds and a smallest detectable effect of {{mde}} seconds.</p>
+</section>
+
+<section>
+<h2>Trams, buses and the metro</h2>
+<p>In an hour with rain, a Prague tram gains {{d}} seconds more delay than in a dry hour of the same route, hour and weekday (95 % CI {{d_lo}} to {{d_hi}}). The interval lies wholly above zero, so by the rule set in advance the hypothesis is {{label}}. The raw averages show the same order of size before any adjustment: a tram trip gained {{t_rain}} seconds in an average rain hour and {{t_dry}} seconds in an average dry hour. Against the dry-hour average, the estimate is about {{t_pct}} % more delay per hour. City buses, the secondary estimate, gain {{bd}} seconds ({{bd_lo}} to {{bd_hi}}), also {{blabel}}, from {{b_dry}} seconds in dry hours to {{b_rain}} in rain hours on average. The design expected buses, which share the road with cars, to lose more than trams; their estimate is a little larger, with intervals that overlap almost completely, so the data do not separate the two (fig. 2).</p>
+<p>The metro, the control, runs underground on its own track and should feel rain only through crowding at the stations. Its estimate is {{mt}} seconds ({{mt_lo}} to {{mt_hi}}), an interval that includes zero, as expected.</p>
+<figure data-chart="../assets/rain/charts.json#modes">
+  <p class="ch-head">In a rain hour, trams gain {{d}} s more delay than in a dry hour ({{d_lo}}–{{d_hi}}), supported; buses gain {{bd}} s, the metro does not react.</p>
+  <img src="../assets/rain/01-modes.svg" alt="Delay gained per trip-hour in a rain hour against a dry hour, with 95 % intervals: trams +{{d}} s and city buses +{{bd}} s, both above zero; the metro {{mt}} s, around zero." loading="lazy">
+  <figcaption><b>fig. 2</b> · Seconds of delay gained per trip in a clock hour with rain (four-station mean at least 0.5 mm) against a dry hour, with 95 % intervals clustered by date; levels for every route × direction × hour × weekday and for every date; n = {{n_units}} tram units, {{b_units}} bus units. Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>, ČHMÚ<sup class="cite"><a href="#r3">3</a></sup>.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>More rain, more delay</h2>
+<p>If rain is what slows the trams, heavier rain should slow them more. The registered check splits the hours by how much rain the four stations averaged and compares each band with dry hours. In a drizzle of 0.1 to 0.5 mm, trams gain {{p0_1_0_5}} seconds ({{p0_1_0_5_lo}} to {{p0_1_0_5_hi}}); in 0.5 to 2 mm, {{p0_5_2}} ({{p0_5_2_lo}} to {{p0_5_2_hi}}); in 2 to 5 mm, {{p2_5}} ({{p2_5_lo}} to {{p2_5_hi}}); and in an hour with 5 mm or more, {{p5_up}} seconds ({{p5_up_lo}} to {{p5_up_hi}}). Each step is larger than the last (fig. 3). The heaviest band has few hours, and its interval is wide, but even its lower end is above the estimate for a drizzle.</p>
+<figure data-chart="../assets/rain/charts.json#dose">
+  <p class="ch-head">The delay grows with the rain: {{p0_1_0_5}} s in a drizzle, {{p5_up}} s in an hour with 5 mm or more.</p>
+  <img src="../assets/rain/02-dose.svg" alt="Delay gained by trams by amount of rain against dry hours, with 95 % intervals: {{p0_1_0_5}} s for 0.1–0.5 mm, {{p0_5_2}} s for 0.5–2 mm, {{p2_5}} s for 2–5 mm and {{p5_up}} s for 5 mm or more." loading="lazy">
+  <figcaption><b>fig. 3</b> · Seconds of delay gained per tram trip-hour by the hour's four-station mean precipitation, each band against dry hours, with 95 % intervals clustered by date; same levels as fig. 2. Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>, ČHMÚ<sup class="cite"><a href="#r3">3</a></sup>.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>Checks</h2>
+<p>The other registered checks change the estimate little (fig. 4). Measuring rain at the station nearest each route instead of the four-station mean gives {{ns}} seconds ({{ns_lo}} to {{ns_hi}}). Measuring the mean delay a tram carries in the hour (its level), instead of the delay it gains, gives {{lv}} ({{lv_lo}} to {{lv_hi}}). Keeping the planned closures gives {{kept}} ({{kept_lo}} to {{kept_hi}}), and reading the closure rule literally, so that the three closures lasting the whole window also exclude, gives {{lit}} ({{lit_lo}} to {{lit_hi}}); the result does not rest on how the closures were screened. Adding rain one and two hours earlier to the model leaves the current hour at {{l0}} seconds ({{l0_lo}} to {{l0_hi}}) and gives {{l1}} and {{l2}} seconds to the earlier hours, with intervals around zero: the delay is gained in the hour it rains, not afterwards.</p>
+<p>The registered placebo replaces rain in the current hour with rain in the next one, which cannot cause anything now, and was expected near zero; it did not come out that way. It gives {{pl}} seconds ({{pl_lo}} to {{pl_hi}}). The likely reason is that rain persists: when the next hour is wet, the current one often is too, or has just stopped below the 0.5 mm line, so the placebo picks up part of the real effect. The check with earlier hours points the same way, since rain that has stopped leaves no trace. A cleaner placebo, added after this result and not registered, uses only hours that are dry now and asks whether rain in the next hour goes with more delay. It gives {{pp}} seconds ({{pp_lo}} to {{pp_hi}}), on only {{pp_n}} units with rain in the next hour. Its interval includes zero but is too wide to rule out a few seconds; it neither confirms the persistence reading nor contradicts it.</p>
+<figure data-chart="../assets/rain/charts.json#checks">
+  <p class="ch-head">Every check stays near the registered {{d}} s except the placebo, {{pl}} s; rain that outlasts the hour is the likely reason.</p>
+  <img src="../assets/rain/03-checks.svg" alt="The registered tram estimate {{d}} s and its checks with 95 % intervals: the placebo {{pl}} s above zero, the post-hoc placebo {{pp}} s around zero, the other checks between {{lv}} and {{ns}} s." loading="lazy">
+  <figcaption><b>fig. 4</b> · The registered tram estimate and the checks of the design, seconds of delay gained per trip-hour with 95 % intervals clustered by date; the post-hoc placebo, in grey, was added after the results and is not registered. Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>, ČHMÚ<sup class="cite"><a href="#r3">3</a></sup>.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>Routes</h2>
+<p>The design asked for a map of routes by their own estimate, as description rather than test. For the {{n_routes}} tram routes with at least {{min_rain_units}} rain units, every one has a positive estimate, from {{r_lo_est}} seconds on line {{r_lo}} to {{r_hi_est}} on line {{r_hi}}, and {{routes_sig}} of them have an interval wholly above zero (fig. 5). With one estimate per route, some of the spread is chance, and the routes were not ranked or tested against each other, so the map is not evidence that any line suffers more than another.</p>
+<figure>
+  <img src="../assets/rain/04-map.svg" alt="Map of Prague's tram network, each route coloured by its own rain estimate: all routes are shades of blue, none below zero, from {{r_lo_est}} to {{r_hi_est}} seconds per trip-hour." loading="lazy">
+  <figcaption><b>fig. 5</b> · Each tram route drawn from its stop coordinates and coloured by its own estimate of delay gained in a rain hour, from a model with one rain term per route and the levels of fig. 2; descriptive, routes with at least {{min_rain_units}} rain units; overlapping routes are drawn in order of their estimate. Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>, ČHMÚ<sup class="cite"><a href="#r3">3</a></sup>.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>What this means</h2>
+<p>Measured: in an hour with rain, a Prague tram falls about {{d}} seconds further behind schedule than in a dry hour of the same route at the same time, and the effect grows with the amount of rain and stops when the rain stops. Buses lose about as much. For one passenger on one trip, ten seconds an hour is hardly noticeable. A wet afternoon, though, slows every tram on the network in the same hours, and the thesis behind this data found that delays persist through the day<sup class="cite"><a href="#r1">1</a></sup>. A timetable that holds in dry weather has a little less slack on a rainy one, and the stops where passengers wait in the rain are where those seconds are spent. The study cannot say which part of the delay is boarding, traffic or braking; it measures the sum.</p>
+</section>
+
+<section>
+<h2>What this does not show</h2>
+<p>A rain hour brings more passengers boarding slowly, more cars on the road, lower speeds and wet rails, and the estimate is the total of all of them, not the effect of water on a tram. The window runs from March to September, so it says nothing about snow or frost. It is one season of one year, and the network, timetables and closures change from year to year. The delay is an average per trip and hour; it does not tell how late a given tram will be. The rain is measured at four stations, while showers in summer can be local, so some hours counted as dry may have been wet on part of the network, which would make the estimate smaller rather than larger. The list of closures comes from an archive in which about seven in ten of the listed closures have their own page, and the screening may have missed short closures; the checks that keep or widen the closures suggest this matters little. Finally, the placebo registered for this study is not clean, for the reason given above.</p>
+</section>
+
+<section id="changes">
+<h2>Changes after registration</h2>
+<p>Each change is dated in the design file and was made before the estimate was run. (1) The author decided that the tram estimate is the only primary one and buses secondary, and confirmed the ±10 second margin (6 October). (2) The screening read PID announcements from the Internet Archive and was clarified in two ways: incidents do not exclude, and a closure in force on every date of the window does not exclude; the literal reading is reported as a check (8 October). (3) The records are stop passes rather than raw positions, the route is read from the trip id and the direction is the trip's terminal (8 October). (4) Choices the design left open were fixed with the frozen code: the bootstrap form, the placebo sample, how the nearest station is chosen, and that an empty dose band is listed rather than dropped (8 October). (5) A fault in the frozen code was found when it first ran on the data, during the power re-run and before any rain estimate: units alone in their route-hour cell or date broke the calculation of residuals, and they are now removed before every fit (8 October). One addition was made after the results: the post-hoc placebo, reported above and marked as such. None changes the rule for reading the result.</p>
+</section>
+
+<section id="reproduction">
+<h2>Reproduction</h2>
+<p>Every number on this page is filled in from the result files by a script. From the repository root:</p>
+<ol>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/rain/power.py"><code>tools/rain/power.py</code></a>: rain and dry hours and the power calculation from precipitation alone.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/rain/screen_pid.py"><code>screen_pid.py</code></a> and <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/rain/screen_feed.py"><code>screen_feed.py</code></a>: the three screening rules.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/rain/units.py"><code>units.py</code></a>: the units, the only step that reads delays; <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/rain/test_rain.py"><code>test_rain.py</code></a> checks it on a hand-worked example.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/rain/power_rerun.py"><code>power_rerun.py</code></a>, <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/rain/estimate.py"><code>estimate.py</code></a> and <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/rain/describe.py"><code>describe.py</code></a>: the power with the data's spread, the registered estimates and the descriptive and post-hoc numbers.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/rain/article.py"><code>article.py</code></a>: the figures and this page.</li>
+</ol>
+<p>The design is <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/rain-delays-design.md"><code>docs/research/rain-delays-design.md</code></a>, the screening <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/rain-delays-screen.md"><code>rain-delays-screen.md</code></a>.</p>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Šandová, B. (2026). <i>Persistence Dynamics and Welfare Costs of Urban Public Transport Delays</i>. Master's thesis, Institute of Economic Studies, Faculty of Social Sciences, Charles University, Prague. Summary at <a href="thesis">bsandova.com/texts/thesis</a>. Not yet in a public repository.</li>
+<li id="r2">Operátor ICT. Golemio, Prague's open-data platform: Prague Integrated Transport vehicle positions and stop-time history, collected 15 March – 8 September 2025. <a href="https://golemio.cz">golemio.cz</a>. Accessed 8 October 2026.</li>
+<li id="r3">Czech Hydrometeorological Institute (ČHMÚ). Open climate data: hourly precipitation (SRA1H), stations Praha-Ruzyně, Praha-Libuš, Praha-Kbely and Praha-Klementinum, 2025, and station metadata; CC BY 4.0. <a href="https://opendata.chmi.cz/meteorology/climate/">opendata.chmi.cz</a>. Accessed 6 October 2026.</li>
+<li id="r4">Pražská integrovaná doprava. Změny dopravy (list of changes) and individual change pages, archived snapshots 2024–2025. <a href="https://web.archive.org/web/2025*/pid.cz/zmeny/">web.archive.org, pid.cz/zmeny</a>. Accessed 7–8 October 2026.</li>
+<li id="r5">Koetse, M. J., Rietveld, P. (2009). The impact of climate change and weather on transport: an overview of empirical findings. <i>Transportation Research Part D</i> 14(3), 205–221. <a href="https://doi.org/10.1016/j.trd.2008.12.004">doi:10.1016/j.trd.2008.12.004</a>. Accessed 8 October 2026.</li>
+<li id="r6">Tsapakis, I., Cheng, T., Bolbol, A. (2013). Impact of weather conditions on macroscopic urban travel times. <i>Journal of Transport Geography</i> 28, 204–211. <a href="https://doi.org/10.1016/j.jtrangeo.2012.11.003">doi:10.1016/j.jtrangeo.2012.11.003</a>. Accessed 8 October 2026.</li>
+<li id="r7">Arana, P., Cabezudo, S., Peñalba, M. (2014). Influence of weather conditions on transit ridership: a statistical study using data from smartcards. <i>Transportation Research Part A</i> 59, 1–12. <a href="https://doi.org/10.1016/j.tra.2013.10.019">doi:10.1016/j.tra.2013.10.019</a>. Accessed 8 October 2026.</li>
+<li id="r8">Fischer, A., and contributors. pyfixest: fast high-dimensional fixed-effects regression in Python, version {{pyfixest}}. <a href="https://github.com/py-econometrics/pyfixest">github.com/py-econometrics/pyfixest</a>. Accessed 8 October 2026.</li>
+<li id="r9">Cameron, A. C., Gelbach, J. B., Miller, D. L. (2008). Bootstrap-based improvements for inference with clustered errors. <i>The Review of Economics and Statistics</i> 90(3), 414–427. <a href="https://doi.org/10.1162/rest.90.3.414">doi:10.1162/rest.90.3.414</a>. Accessed 8 October 2026.</li>
+<li id="r10">Lakens, D. (2017). Equivalence tests: a practical primer for t tests, correlations, and meta-analyses. <i>Social Psychological and Personality Science</i> 8(4), 355–362. <a href="https://doi.org/10.1177/1948550617697177">doi:10.1177/1948550617697177</a>. Accessed 8 October 2026.</li>
+</ol>
+</section>
+
+<section id="changelog" class="changelog">
+<h2>Change log</h2>
+<ul>
+<li>8 October 2026, version 1: first published.</li>
+<li>Checked against editorial standard v1 on 8 October 2026.</li>
+</ul>
+</section>
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a></p>
+</footer>
+</article>
+
+<script src="../assets/charts.js" defer></script>
+</body>
+</html>
