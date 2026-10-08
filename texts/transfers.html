@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Will you make your connection? Tram transfers in Prague, 2025</title>
+<meta name="description" content="A pre-specified analysis of 5.0 million Prague tram connections planned two to four minutes apart in 2025: 80.7 % were made, and the two lines' delays moved together by about +0.6 percentage points (+0.1 to +1.2 across specifications), registered label not supported. A roulette covers 6 624 cells at 56 of 111 stops.">
+<meta property="og:title" content="Will you make your connection?">
+<meta property="og:description" content="Planned three minutes apart, a Prague tram connection was made 80 times in a hundred in 2025. A roulette for 6 624 combinations of stop, lines and time of day at 56 of 111 stops, about 77 % of connections. Part 3 of Running late.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://bsandova.com/texts/transfers">
+<meta property="og:image" content="https://bsandova.com/assets/og/transfers.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bsandova.com/assets/og/transfers.jpg">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://bsandova.com/texts/transfers">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../text.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../a24.css">
+<style>
+.text dl.meta{display:block;letter-spacing:normal;text-transform:none;font-size:12px}
+.text dl.meta div{border-right:0;padding-left:0;grid-template-columns:13ch 1fr}
+.text dl.meta dd{overflow-wrap:anywhere}
+@media (max-width:560px){.text dl.meta div{grid-template-columns:1fr}}
+.bounds{border:1px solid #000;padding:1rem 1.2rem;margin:1.2rem 0}
+.bounds p{margin:.3rem 0}
+.bounds .big{font:500 clamp(28px,4vw,44px)/1.05 var(--sans);letter-spacing:-.03em;margin:0 0 .4rem}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">research · transit · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Research · Running late, part 3 · Prague tram transfers, 2025</p>
+  <h1>Will you make your connection? <em>Tram transfers in Prague, 2025</em></h1>
+  <p class="deck">Across 5.0 million Prague tram connections planned 2–4 minutes apart in 2025, the two lines' delays moved together slightly, about +0.6 pp (+0.1 to +1.2 across specifications): not supported by the registered rule.</p>
+  <dl class="facts">
+    <div><dt>made, planned 3 min apart</dt><dd>80 % <small>78.4–80.3 % if the 1.9 % with an unobserved planned tram were all missed or all made</small></dd></div>
+    <div><dt>lines late together, same day</dt><dd>+0.64 pp <small>95 % CI +0.58 to +0.68, bootstrap by week (26 weeks) · not supported</small></dd></div>
+    <div><dt>bounds, unobserved planned tram</dt><dd>−0.64 to +0.98 pp <small>after the results: the 1.6 % of connections with no observed planned tram set to missed or made</small></dd></div>
+    <div><dt>connections read</dt><dd>5.0 million <small>count · planned 2–4 min apart at 110 stops, 170 days</small></dd></div>
+  </dl>
+</header>
+<details class="tldr" open>
+  <summary>Overwhelmed? Here's the short version</summary>
+  <ul>
+    <li>The share made rises steeply with the slack: 71 % of connections planned two minutes apart were made, 87 % at four minutes, and 22 % of those planned three minutes apart cost over five minutes of extra wait.</li>
+    <li>The registered effect is small but its size depends on how it is measured: from +0.1 pp with a fixed two-minute walk to +1.2 pp in the weekday peaks. By the same rule the peaks alone would read "supported" and observed departures "inconclusive".</li>
+    <li>Pairs of lines differ for real: 47.6 % of 970 line pairs have an interval that excludes zero, from −6.5 to +9.9 pp, so the pooled figure does not describe any single pair.</li>
+    <li>The design does not identify what produces the association; a tram blocking the next one on shared track, a dispatcher holding a tram, or timing errors shared by the feed would each produce it.</li>
+    <li>The roulette covers 6 624 of 238 683 cells at 56 of 111 stops; its curve fitted on long connections predicts the short ones within 1.0 pp, a test added after the results.</li>
+  </ul>
+</details>
+<dl class="meta">
+  <div><dt>published</dt><dd>8 October 2026 · <a href="../changelog/#transfers">version 1</a></dd></div>
+  <div><dt>work since</dt><dd>October 2026</dd></div>
+</dl>
+<details class="meta-more">
+  <summary>About this study</summary>
+<dl class="meta">
+  <div><dt>status</dt><dd>registered study (self-timestamped); post-hoc analyses marked as such</dd></div>
+  <div><dt>series</dt><dd><a href="running-late">Running late</a>, part 3</dd></div>
+  <div><dt>registration</dt><dd>registered analysis plan: design committed at <code>a0f7648</code> on 8 October 2026, before the results commit <code>e12a6c0</code>; commit times are self-reported, and the branch was pushed after the analysis. Clarifications dated before any connection was scored at <code>04eb423</code>; screening at <code>14d5158</code>; estimation code frozen with tests at <code>85516cc</code> (tag <code>late-transfers-v1</code>). Five later fixes for memory only were recorded at <code>a6458e7</code> and <code>abf4a05</code>: Q1 equivalence was checked on the March 2025 rows (the first three fixes together, and the bootstrap-by-week fix), the rest by reading the diffs. Arrival times had been read for <a href="weather-rails">Weather on the rails</a> and parts <a href="delay-origins">1</a> and <a href="bunching">2</a>, never as a connection between two lines. Added after the results, not registered: the make-up of the uncertain connections, the bounds on unobserved planned trams only, the §4.4 bounds for Q1b and Q2 and the §7 timing check for Q2 (which had been omitted), the out-of-sample slack test, and Q4's baseline. Changes after registration, each dated, are in <a href="../changelog/#transfers-changes">the change log</a>.</dd></div>
+  <div><dt>data</dt><dd>Prague Integrated Transport stop-time history via Golemio, 15 March – 8 September 2025, as used in the author's master's thesis<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup>; platform positions from the PID timetable data<sup class="cite"><a href="#r3">3</a></sup>. The passes are not redistributed; the estimates are in <a href="../assets/transfers/results.json">results.json</a>, the post-hoc analyses in <a href="../assets/transfers/posthoc.json">posthoc.json</a>, the descriptions in <a href="../assets/transfers/describe.json">describe.json</a>, the roulette's cells in <a href="../assets/transfers/roulette.json">roulette.json</a>.</dd></div>
+  <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/transfer">tools/transfer/</a>; rebuild: <code>uv run --with numpy --with pandas --with pyarrow --with duckdb python tools/transfer/estimate.py</code></dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Will you make your connection? Tram transfers in Prague, 2025</i>. bsandova.com/texts/transfers, version 1.</dd></div>
+  <div><dt>licence</dt><dd>code MIT; text, figures and data CC BY 4.0</dd></div>
+</dl>
+</details>
+
+<section class="film film-page"><div class="shot" style="view-transition-name:ph-transfers;--bg:url(../assets/photo/transfers.jpg);--bg-s:url(../assets/photo/transfers-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Lazarsk%C3%A1,_no%C4%8Dn%C3%AD_p%C5%99estup.jpg">ŠJů</a> · CC BY-SA 3.0, toned</p></section>
+
+<section>
+<h2>The question</h2>
+<p>At a stop where two tram lines meet, the timetable plans the second tram to leave a few minutes after the first arrives, and whether a traveller makes the connection depends on how late each of the two trams runs on the day. A transfer has a cost to travellers beyond the time it takes, which studies have priced in equivalent minutes of riding<sup class="cite"><a href="#r4">4</a></sup>, and transit manuals treat reliability as part of the quality of service that travellers experience<sup class="cite"><a href="#r5">5</a></sup>. This part of the series asks how often Prague's tram connections held in 2025, and, as its registered question, whether the delays of the two lines move together: if the same street or the same disruption delays both trams, a late arrival meets a late departure and the connection survives more often than two independent delays would allow.</p>
+</section>
+
+<section>
+<h2>Data</h2>
+<p>The trams are those of the author's thesis: Prague Integrated Transport's stop-time history from Golemio<sup class="cite"><a href="#r2">2</a></sup>, 15 March to 8 September 2025<sup class="cite"><a href="#r1">1</a></sup>, with the earlier studies' screening of planned closures and feed gaps, 170 days in all. Platforms and their positions come from the PID timetable data<sup class="cite"><a href="#r3">3</a></sup>. Only stops served by at least four tram lines count; there are 111 of them, from large interchanges such as Anděl and I. P. Pavlova to busy stops on shared routes. Over the season there were 19.1 million planned connections with up to ten minutes of slack, 5.6 million of them two to four minutes apart, and 46 million returns and same-street pairs left out, since a line that turns back the way the first came, or runs on along the same street, is not a transfer anyone needs. About 3.3 % of the trips the timetable usually runs in an hour were missing on a given day, cancelled or not tracked. One stop, Zborovská, was left out of the main estimate because one of its 11 observed departures left more than half a minute early, over the 5 % the rule set in advance allowed.</p>
+</section>
+
+<section>
+<h2>How this was done</h2>
+<p>A connection is an arrival of one line (A) at a stop and the first departure of another line (B) from the same stop name at least a walking margin later. The margin is a minute to get off and orient, an allowance chosen by the author, plus the straight-line distance between the two platforms at 1.2 metres a second, at the slow end of observed walking speeds: field studies put the 15th-percentile speed of pedestrians under 65 at 1.25 m/s and recommend 1.22 m/s for design, though many people over 65 walk slower (their 15th percentile was 0.97 m/s)<sup class="cite"><a href="#r6">6</a></sup>. The <i>slack</i> is the scheduled time between A's arrival and B's departure. B is taken to leave at a stand-in, the later of its observed arrival and its scheduled departure (dep_hat), because departures were observed for only part of the passes and trams at these stops almost never left early; the stand-in ignores the time a tram stands at the stop after arriving, so it puts B's departure too early. Where the planned tram's departure was observed, it left a median of 38 seconds after the stand-in, and 86.8 % of those connections were made on observed departures against 80.1 % on the stand-in, so the stand-in lowers the share made, for the planned tram and for the donors alike. A connection is made when dep_hat is at least the margin after A's observed arrival.</p>
+<p>The registered estimand is the <i>co-movement</i>, Δp_within: the share of connections planned 2–4 minutes apart that were made (p_obs), minus the share made when each A arrival is set against the other B trips of the same line on the same day within an hour of the planned one, moved to the planned time so the slack stays the same. That benchmark keeps the day's conditions and breaks the link between the two particular trams. The difference is in percentage points (pp); intervals are 95 % confidence intervals (CI) from a bootstrap that resamples whole ISO weeks (26 weeks, 999 draws), so the effective sample is 26 weeks, not millions of connections. p_obs counts only connections whose planned B was present and observed: the 4 983 629 connections of the estimate are fewer than the 5 065 634 with same-day donors, because cancelled or untracked planned trams fall out, which may make p_obs look more reliable than the timetable was. A secondary estimand, Δp_day, takes B's lateness from the same scheduled trip on other days, which breaks the link through the day's weather and disruptions as well. The screen, from counts alone, set the smallest detectable co-movement at 3.0 points, deliberately conservative: it used the worst-case variance of a share and ignored that p_within is an exact average over many donors, which made it about forty times too pessimistic.</p>
+</section>
+
+<section>
+<h2>The tests</h2>
+<div class="ht-wrap">
+<table class="ht">
+  <thead><tr><th>Question</th><th>Registered rule</th><th>Result</th><th>Label</th></tr></thead>
+  <tbody>
+  <tr><td>Q1 · co-movement within the day, slack 2–4 min</td><td>supported if the 95 % CI lies above +1 pp; not supported if the 90 % CI lies within ±1 pp</td><td class="v">+0.64 pp <small>95 % CI +0.58 to +0.68 · 90 % CI +0.59 to +0.68 · 4 983 629 connections, 26 weeks</small></td><td class="v"><b>not supported</b></td></tr>
+  <tr><td>Q1b · co-movement including the day</td><td>the same</td><td class="v">+0.74 pp <small>95 % CI +0.57 to +0.91 · 141 696 connections with donors on other days</small></td><td class="v"><b>not supported</b></td></tr>
+  <tr><td>Q2–Q4 · cost of a tight transfer, the roulette, where misses come from</td><td>descriptive, no label</td><td class="v">below</td><td class="v">descriptive</td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section>
+<h2>The roulette: share made by stop, lines and slack</h2>
+<p>For every combination of stop, arriving line and direction, departing line and direction, and time of day, the roulette gives the share of connections that would be made at a slack of 1 to 10 minutes. The share is read off the cell's own distribution of the two trams' relative lateness, B's lateness at departure minus A's at arrival, so the connections the timetable plans 6 minutes apart also say how often the same pair would hold at 3. A cell needs 500 connections on 30 days; 6 624 of 238 683 cells qualify, at 56 of the 111 stops, and they hold about 77 % of the connections planned 2–4 minutes apart. The figure opens on a typical cell, chosen by rule rather than by its result: the median share made at 3 minutes among the 1 857 cells whose connections are timetabled 2–4 minutes apart. That cell is I. P. Pavlova, from line 11 towards Spořilov to line 6 towards Výstaviště, where 85 % were made at 3 minutes (rough 95 % interval 82–87 %); it is in the weekday-peak band, so the figure first shows that time of day.</p>
+<figure class="rl" data-roulette="../assets/transfers/roulette.json">
+  <img class="rl-static" src="../assets/transfers/01-roulette.svg" alt="Share of tram connections made by the minutes planned, read off the pooled model across all shown cells: 57.9 % at 2 minutes, 76.0 % at 3, 96.3 % at 6." loading="lazy">
+  <figcaption><b>fig. 1</b> · Share of connections made at a planned slack of 1 to 10 minutes for one stop, pair of lines, direction and time of day, computed from the cell's distribution of relative lateness, with rough 95 % intervals from 99 bootstrap draws by week; a cell needs 500 connections on 30 days. The walk allowed is a minute plus the straight-line distance at 1.2 m/s. A slack outside the range the cell is timetabled at is marked as extrapolated. Without scripts, the pooled curve over all shown cells. Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>.</figcaption>
+</figure>
+<p>Whether the curve can be trusted away from the slack a cell is timetabled at was tested after the results. The two trams' relative lateness was fitted on the connections planned five minutes or more apart and used to predict the share made among those planned two, three and four minutes apart in the same cell, which assumes that relative lateness does not depend on the planned slack. Over all months the prediction was 71.2, 80.6 and 87.4 % against 71.2, 79.6 and 86.7 % observed, for the 83 % of short connections whose cell had at least 30 long ones. The model overpredicts by up to 1–2 pp, most in April–May alone (79.1 against 77.4 % at 3 minutes). Only the step from long to short slack was tested: in the roulette, a 1-minute slack and 8–10-minute slacks for cells timetabled tighter are untested extrapolations. The in-sample calibration, where the curve is fitted on the same connections it is compared with (largest gap 0.45 points by decile), is close to true by construction and is not evidence.</p>
+</section>
+
+<section>
+<h2>How often connections were made</h2>
+<p>With two minutes planned, 71 % of connections were made; with three, 80 %; with four, 87 % (fig. 2). On the pooled curve read off all shown cells, the share passes 95 % at about 6 minutes. The cost of a miss is the wait for the next tram of the line: a connection planned three minutes apart cost more than five minutes of extra wait 22 % of the time, with a median extra wait of 72 seconds, and at two minutes 31 % of the time. The extra wait counts any wait beyond the plan, so it includes a planned tram that was caught but ran very late. Planned three minutes apart, 78 % of connections were made in the weekday peaks, 81 % in the rest of the weekday, 82 % on weekend days and 81 % in the evening. These shares, by slack and by time of day, are point estimates without intervals: the week-bootstrap intervals the design asked for were not computed.</p>
+<p>The shares count connections whose planned tram was observed. The design asked for bounds that count the uncertain ones as all made or all missed, and for the shares with either tram's time shifted by half a minute; both were omitted from the first version and run after the results. Setting the 1.9 % of connections planned three minutes apart whose planned tram was not observed to missed or made puts the share between 78.4 and 80.3 %; the registered class, which also counts every connection in an hour when the line ran a trip short, gives 59.7 to 85.1 %. Shifting A's arrival by ±30 seconds moves the share made at three minutes between 71.5 and 86.0 %, and the share costing over five minutes between 16.4 and 30.6 %.</p>
+<figure data-chart="../assets/transfers/charts.json#slack">
+  <p class="ch-head">Share of connections made, by minutes planned.</p>
+  <img src="../assets/transfers/02-slack.svg" alt="Share of connections made by planned slack: among connections planned that way, 71 % at 2 minutes, 80 % at 3, 87 % at 4; on the pooled model, 57.9 % at 2, 76.0 % at 3 and above 95 % from 6 minutes; share costing over 5 minutes extra falling from 31 % to 15 %." loading="lazy">
+  <figcaption><b>fig. 2</b> · Share of connections made by the minutes planned between arrival and departure: read off every roulette cell's model, weighted by its connections (coral), and among connections actually planned 2, 3 and 4 minutes apart (black); grey, dashed, the share costing over five minutes of extra wait. The two differ because the model curve applies each cell's relative lateness at every slack, while the black points come from the cells where such slack is timetabled. Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>Co-movement of the two lines' delays</h2>
+<p>Of the 4 983 629 connections planned two to four minutes apart, 80.7 % were made. Set against other trips of the second line on the same day, the share would have been 80.0 %. The difference, +0.64 pp (95 % CI +0.58 to +0.68; 90 % CI +0.59 to +0.68), is above zero and inside the ±1 point set in advance, so by the registered rule the prediction is not supported. Resampling stops as well as weeks widens the interval to +0.48 to +0.80. Taking the second tram from the same scheduled trip on other days gives +0.74 pp (+0.57 to +0.91, not supported), on only 141 696 connections, 2.8 % of the total, because it needs days on which the two lines ran exactly the same timetable at the stop.</p>
+<p>The size of the co-movement depends on how it is measured (fig. 3 and the robustness table). Every specification is positive, and they range from +0.09 pp with the walk fixed at two minutes to +1.16 pp in the weekday peaks: shifting A's arrival 30 seconds later gives +0.26 pp and 30 seconds earlier +0.85, a walk 30 seconds shorter +0.84, and scoring B on its observed departures +1.04. Read by the same rule, the peaks would be "supported" (+1.02 to +1.27) and observed departures "inconclusive" (+0.98 to +1.09). These are checks and do not relabel the registered result, but they mean the effect is better described as about +0.6 pp with a specification range of +0.1 to +1.2 than as a single number. The gap between the registered estimate and the observed-departure check is probably the stand-in: dep_hat ignores the time B stands at the stop, which lowers the share made for the planned tram and for its donors, but not by the same amount.</p>
+<p>Pairs of lines differ more than the pooled figure suggests. Of the 970 line pairs at a stop with at least 500 connections, 47.6 % have a 95 % CI that excludes zero, and their estimates run from −6.5 to +9.9 pp; of the 86 stops, 62.8 % do. These differences are far larger than the week-to-week sampling noise in each interval, so the pooled figure, a network share weighted by connections, does not carry to any one pair of lines.</p>
+<div class="bounds" role="note">
+  <p class="big">Bounds: −0.64 to +0.98 pp</p>
+  <p>For 1.6 % of the 5 065 634 connections with same-day donors the planned tram was not observed. Setting all of them to missed or all to made, and keeping every observed outcome, puts the co-movement between −0.64 pp (95 % CI −0.80 to −0.49) and +0.98 pp (95 % CI +0.91 to +1.05), computed after the results. Among observed connections, those in an hour when the line ran a trip short show +0.71 pp and the rest +0.61 pp, so the flagged hours do not carry a different co-movement. The registered bounds, from −20.0 to +5.7 pp, also overwrite the 24.1 % of connections whose planned tram was observed but whose line ran a trip short in that hour; they discard known outcomes, are kept in the method, and are not the right measure of the uncertainty. For Q1b, no connection with an unobserved planned tram had donors on other days: because a missing tram changes the day's timetable signature, Q1b only sees days with fully tracked trams, so its post-hoc bounds equal the estimate by construction, a structural zero rather than a finding; the registered ones run from −9.99 to +3.54 pp.</p>
+</div>
+<figure data-chart="../assets/transfers/charts.json#checks">
+  <p class="ch-head">Co-movement under the registered estimate and each check, percentage points.</p>
+  <img src="../assets/transfers/03-checks.svg" alt="Co-movement in percentage points with 95 % intervals: the registered +0.64; the checks from +0.1 to +1.2; the post-hoc bounds from −0.64 to +0.98." loading="lazy">
+  <figcaption><b>fig. 3</b> · Percentage points by which connections planned 2–4 minutes apart were made more often than against other trips of the same day, with 95 % bootstrap intervals by week (199 draws for the checks and bounds, 999 for the registered estimate); the shaded band is the ±1 point set in advance; grey, the bounds for connections whose planned tram was not observed, computed after the results. Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>Where costly misses come from</h2>
+<p>Of the 1.2 million connections planned two to four minutes apart that cost more than five minutes of extra wait, in 40 % the arriving tram was already later than the slack at the stop before the hub. In the other 59 % it was not, and the time went on the last segment into the hub or with a second tram that ran late; the data do not separate the two. Of those, 20.8 % came in over one of the tenth of segments that part 1 found to produce the most delay, and 18.1 % of all costly misses did. Computed after the results as a baseline, 16.6 % of all connections planned two to four minutes apart arrive over such a segment, so costly misses come in over them only a little more often than connections in general (18.1 % against 16.6 %), which says where misses happen, not that those segments cause them.</p>
+<figure class="mp-fig" data-map="../assets/transfers/map.json">
+  <img class="mp-static" src="../assets/transfers/04-map.svg" alt="Map of Prague's tram stops with four or more lines, each shaded by the share of connections planned three minutes apart that were made." loading="lazy">
+  <figcaption><b>fig. 4</b> · Stops served by four or more tram lines, each drawn as a small square, shaded by the share of connections planned three minutes apart that were made; a second view gives the co-movement at each stop with at least 500 connections; 87 stops drawn. Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>; positions from the PID timetable<sup class="cite"><a href="#r3">3</a></sup>.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>Robustness</h2>
+<div class="ht-wrap">
+<table class="ht">
+  <thead><tr><th>Specification</th><th>Co-movement, pp</th><th>95 % CI</th><th>Same rule would read</th></tr></thead>
+  <tbody>
+  <tr><td>registered: same day, slack 2–4 min (999 draws)</td><td class="v">+0.64</td><td class="v">+0.58 to +0.68</td><td class="v">not supported</td></tr>
+  <tr><td>stops resampled as well as weeks</td><td class="v">+0.64</td><td class="v">+0.48 to +0.80</td><td class="v">not supported</td></tr>
+  <tr><td>other days instead of the same day (Q1b, 999 draws)</td><td class="v">+0.74</td><td class="v">+0.57 to +0.91</td><td class="v">not supported</td></tr>
+  <tr><td>B on its observed departure</td><td class="v">+1.04</td><td class="v">+0.98 to +1.09</td><td class="v">inconclusive</td></tr>
+  <tr><td>walk margin −30 s</td><td class="v">+0.84</td><td class="v">+0.77 to +0.89</td><td class="v">not supported</td></tr>
+  <tr><td>walk margin +30 s</td><td class="v">+0.31</td><td class="v">+0.26 to +0.35</td><td class="v">not supported</td></tr>
+  <tr><td>walk margin fixed at 2 min</td><td class="v">+0.09</td><td class="v">+0.04 to +0.12</td><td class="v">not supported</td></tr>
+  <tr><td>A's arrival +30 s (= B −30 s)</td><td class="v">+0.26</td><td class="v">+0.22 to +0.29</td><td class="v">not supported</td></tr>
+  <tr><td>A's arrival −30 s (= B +30 s)</td><td class="v">+0.85</td><td class="v">+0.78 to +0.91</td><td class="v">not supported</td></tr>
+  <tr><td>returns and same-street pairs kept</td><td class="v">+0.65</td><td class="v">+0.59 to +0.70</td><td class="v">not supported</td></tr>
+  <tr><td>weekday peaks only</td><td class="v">+1.16</td><td class="v">+1.02 to +1.27</td><td class="v">supported</td></tr>
+  <tr><td>school holidays</td><td class="v">+0.40</td><td class="v">+0.37 to +0.43</td><td class="v">not supported</td></tr>
+  <tr><td>term time</td><td class="v">+0.71</td><td class="v">+0.67 to +0.75</td><td class="v">not supported</td></tr>
+  <tr><td>post-hoc: unobserved planned B all made</td><td class="v">+0.98</td><td class="v">+0.91 to +1.05</td><td class="v">inconclusive</td></tr>
+  <tr><td>post-hoc: unobserved planned B all missed</td><td class="v">−0.64</td><td class="v">−0.80 to −0.49</td><td class="v">not supported</td></tr>
+  <tr><td>post-hoc: observed, line ran a trip short that hour</td><td class="v">+0.71</td><td class="v">+0.65 to +0.77</td><td class="v">not supported</td></tr>
+  <tr><td>post-hoc: observed, line not short</td><td class="v">+0.61</td><td class="v">+0.56 to +0.66</td><td class="v">not supported</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="note">Checks registered in §7 of the design use 199 bootstrap draws by week; the registered estimate uses 999. Rows marked post-hoc were added after the results. Shifting B's departure by +30 s gives the same numbers as shifting A's arrival by −30 s, and the reverse, because only the gap between the two enters. No check relabels the registered result.</p>
+</section>
+
+<section>
+<h2>What this means</h2>
+<p>A Prague tram connection planned three minutes apart was made 80 % of the time in 2025 and cost more than five minutes 22 % of the time, and the share made rose steeply with the slack, from 71 % at two minutes to 87 % at four. The data show a small association between the two lines' delays, about +0.6 pp across the network, with a specification range of +0.1 to +1.2, and much larger differences between pairs of lines. The design does not say what produces the association. A late tram physically blocking the next one at a shared platform or on shared track, a dispatcher holding a departing tram for an arriving one, and timing errors that the feed shares between vehicles would each produce it; shared streets and junctions, the explanation the author expected, were not tested. For any one connection the pooled figure says little; the roulette's cell describes it, within its interval and coverage.</p>
+</section>
+
+<section>
+<h2>What this does not show</h2>
+<p>Connections are possible, not observed: no traveller is followed from one tram to another, and the share made is the share of planned connections that a traveller with the allowed walk could have made. Walking is one speed over straight lines; stairs, crossings and crowds are not modelled, and at large interchanges the real walk is longer. Departures are a stand-in that ignores the time a tram stands at the stop. Connections whose planned tram was cancelled or untracked are not in the shares, which may make connections look more reliable than the timetable was. The roulette's curves outside the slack a cell is timetabled at rest on the assumption that relative lateness does not depend on the slack, tested only on this season. Only trams; buses, the metro and trains, transfers between stop names, winter and other years are not studied.</p>
+</section>
+
+<section id="reproduction">
+<h2>Reproduction</h2>
+<p>Every number on this page is filled in from the result files by a script, from the repository root:</p>
+<ol>
+<li>The rain study's screening of closures and feed gaps: <a href="rain-delays">Does rain delay Prague's trams?</a>, Reproduction.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/transfer/screen.py"><code>tools/transfer/screen.py</code></a>: hubs, platform pairs, connections and the screening counts.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/transfer/estimate.py"><code>estimate.py</code></a>, checked by <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/transfer/test_transfer.py"><code>test_transfer.py</code></a>: the registered estimates, bounds and checks.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/transfer/describe.py"><code>describe.py</code></a>: the roulette's cells, the in-sample calibration and the misses; with <code>--post-hoc</code>, the make-up of the uncertain connections.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/transfer/posthoc.py"><code>posthoc.py</code></a>: the analyses added after the results.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/transfer/article.py"><code>article.py</code></a>: the figures, the map and this page.</li>
+</ol>
+<p>The design is <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/transfers-design.md"><code>docs/research/transfers-design.md</code></a>.</p>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Šandová, B. (2026). <i>Persistence Dynamics and Welfare Costs of Urban Public Transport Delays</i>. Master's thesis, Institute of Economic Studies, Faculty of Social Sciences, Charles University, Prague. Summary at <a href="thesis">bsandova.com/texts/thesis</a>. (private; not verifiable)</li>
+<li id="r2">Operátor ICT. Golemio, Prague's open-data platform: Prague Integrated Transport stop-time history, collected 15 March – 8 September 2025. <a href="https://golemio.cz">golemio.cz</a>. Accessed 8 October 2026.</li>
+<li id="r3">ROPID. Prague Integrated Transport open data: timetable in GTFS (stops). <a href="https://pid.cz/o-systemu/opendata/">pid.cz/o-systemu/opendata</a>. Accessed 8 October 2026.</li>
+<li id="r4">Guo, Z., Wilson, N. H. M. (2011). Assessing the cost of transfer inconvenience in public transport systems: a case study of the London Underground. <i>Transportation Research Part A: Policy and Practice</i> 45(2), 91–104. <a href="https://doi.org/10.1016/j.tra.2010.11.002">doi:10.1016/j.tra.2010.11.002</a>. Accessed 8 October 2026.</li>
+<li id="r5">Kittelson &amp; Associates et al. (2013). <i>Transit Capacity and Quality of Service Manual</i>, 3rd edn. TCRP Report 165. Transportation Research Board. <a href="https://doi.org/10.17226/24766">doi:10.17226/24766</a>. Accessed 8 October 2026.</li>
+<li id="r6">Knoblauch, R. L., Pietrucha, M. T., Nitzburg, M. (1996). Field studies of pedestrian walking speed and start-up time. <i>Transportation Research Record</i> 1538, 27–38. <a href="https://doi.org/10.1177/0361198196153800104">doi:10.1177/0361198196153800104</a>. Accessed 8 October 2026.</li>
+</ol>
+</section>
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a> · <a href="running-late">The series</a> · <a href="delay-origins">Part 1</a> · <a href="bunching">Part 2</a></p>
+</footer>
+</article>
+
+<script src="../assets/charts.js" defer></script>
+<script src="../assets/map.js" defer></script>
+<script src="../assets/transfers/roulette.js" defer></script>
+</body>
+</html>

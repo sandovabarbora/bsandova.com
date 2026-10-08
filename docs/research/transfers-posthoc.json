@@ -1,0 +1,341 @@
+{
+ "note": "after the results, not registered (8 October 2026)",
+ "bootstrap_draws": 199,
+ "q1_bounds": {
+  "rows_with_same_day_donors": 5065634,
+  "observed_rows": 4983629,
+  "unobserved_share": 0.0162,
+  "line_short_observed_share": 0.2409,
+  "check_primary_reproduced": {
+   "est": 0.0064,
+   "ci95": [
+    0.0059,
+    0.0068
+   ],
+   "ci90": [
+    0.0059,
+    0.0067
+   ],
+   "label": "not supported"
+  },
+  "check_registered_all_made": {
+   "est": 0.0574,
+   "ci95": [
+    0.0535,
+    0.0616
+   ],
+   "ci90": [
+    0.0542,
+    0.0608
+   ],
+   "label": "supported"
+  },
+  "check_registered_all_missed": {
+   "est": -0.1997,
+   "ci95": [
+    -0.2128,
+    -0.1883
+   ],
+   "ci90": [
+    -0.2098,
+    -0.1899
+   ],
+   "label": "inconclusive"
+  },
+  "unobserved_all_made": {
+   "est": 0.0098,
+   "ci95": [
+    0.0091,
+    0.0105
+   ],
+   "ci90": [
+    0.0092,
+    0.0104
+   ],
+   "label": "inconclusive"
+  },
+  "unobserved_all_missed": {
+   "est": -0.0064,
+   "ci95": [
+    -0.008,
+    -0.0049
+   ],
+   "ci90": [
+    -0.0077,
+    -0.0051
+   ],
+   "label": "not supported"
+  },
+  "observed_line_not_short": {
+   "est": 0.0061,
+   "ci95": [
+    0.0056,
+    0.0066
+   ],
+   "ci90": [
+    0.0057,
+    0.0066
+   ],
+   "label": "not supported",
+   "connections": 3763328,
+   "made": 0.8083
+  },
+  "observed_line_short": {
+   "est": 0.0071,
+   "ci95": [
+    0.0065,
+    0.0077
+   ],
+   "ci90": [
+    0.0066,
+    0.0075
+   ],
+   "label": "not supported",
+   "connections": 1220301,
+   "made": 0.8027
+  }
+ },
+ "q1b_bounds": {
+  "rows_with_other_day_donors": 141696,
+  "unobserved_rows_with_other_day_donors": 0,
+  "check_primary_reproduced": {
+   "est": 0.0074,
+   "ci95": [
+    0.0058,
+    0.0092
+   ],
+   "ci90": [
+    0.0061,
+    0.0089
+   ],
+   "label": "not supported"
+  },
+  "registered_all_made": {
+   "est": 0.0354,
+   "ci95": [
+    0.0323,
+    0.0393
+   ],
+   "ci90": [
+    0.0327,
+    0.0386
+   ],
+   "label": "supported"
+  },
+  "registered_all_missed": {
+   "est": -0.0999,
+   "ci95": [
+    -0.1075,
+    -0.0928
+   ],
+   "ci90": [
+    -0.1064,
+    -0.0943
+   ],
+   "label": "inconclusive"
+  },
+  "unobserved_all_made": {
+   "est": 0.0074,
+   "ci95": [
+    0.0058,
+    0.0092
+   ],
+   "ci90": [
+    0.0061,
+    0.0089
+   ],
+   "label": "not supported"
+  },
+  "unobserved_all_missed": {
+   "est": 0.0074,
+   "ci95": [
+    0.0058,
+    0.0092
+   ],
+   "ci90": [
+    0.0061,
+    0.0089
+   ],
+   "label": "not supported"
+  }
+ },
+ "q2": {
+  "2": {
+   "connections_all": 1365255,
+   "unobserved_share": 0.0155,
+   "made_observed": 0.7137,
+   "bound_unobserved_all_made": 0.7181,
+   "bound_unobserved_all_missed": 0.7026,
+   "registered_uncertain_all_made": 0.7848,
+   "registered_uncertain_all_missed": 0.5341,
+   "costly_observed": 0.3106,
+   "timing": {
+    "a+30": {
+     "made": 0.5957,
+     "costly_miss": 0.4252,
+     "median_extra_wait_s": 182.0
+    },
+    "a-30": {
+     "made": 0.8018,
+     "costly_miss": 0.2249,
+     "median_extra_wait_s": 80.0
+    },
+    "b+30": {
+     "made": 0.8018,
+     "costly_miss": 0.2369,
+     "median_extra_wait_s": 110.0
+    },
+    "b-30": {
+     "made": 0.5957,
+     "costly_miss": 0.4149,
+     "median_extra_wait_s": 152.0
+    }
+   }
+  },
+  "3": {
+   "connections_all": 1906959,
+   "unobserved_share": 0.0195,
+   "made_observed": 0.7991,
+   "bound_unobserved_all_made": 0.803,
+   "bound_unobserved_all_missed": 0.7836,
+   "registered_uncertain_all_made": 0.8514,
+   "registered_uncertain_all_missed": 0.5969,
+   "costly_observed": 0.2234,
+   "timing": {
+    "a+30": {
+     "made": 0.7145,
+     "costly_miss": 0.306,
+     "median_extra_wait_s": 100.0
+    },
+    "a-30": {
+     "made": 0.8597,
+     "costly_miss": 0.1642,
+     "median_extra_wait_s": 59.0
+    },
+    "b+30": {
+     "made": 0.8597,
+     "costly_miss": 0.1741,
+     "median_extra_wait_s": 89.0
+    },
+    "b-30": {
+     "made": 0.7145,
+     "costly_miss": 0.2971,
+     "median_extra_wait_s": 70.0
+    }
+   }
+  },
+  "4": {
+   "connections_all": 2196104,
+   "unobserved_share": 0.02,
+   "made_observed": 0.871,
+   "bound_unobserved_all_made": 0.8736,
+   "bound_unobserved_all_missed": 0.8536,
+   "registered_uncertain_all_made": 0.9076,
+   "registered_uncertain_all_missed": 0.6442,
+   "costly_observed": 0.1546,
+   "timing": {
+    "a+30": {
+     "made": 0.8192,
+     "costly_miss": 0.2054,
+     "median_extra_wait_s": 68.0
+    },
+    "a-30": {
+     "made": 0.908,
+     "costly_miss": 0.1182,
+     "median_extra_wait_s": 49.0
+    },
+    "b+30": {
+     "made": 0.908,
+     "costly_miss": 0.1278,
+     "median_extra_wait_s": 79.0
+    },
+    "b-30": {
+     "made": 0.8192,
+     "costly_miss": 0.1976,
+     "median_extra_wait_s": 38.0
+    }
+   }
+  }
+ },
+ "q4_baseline": {
+  "connections": 5366099,
+  "after_a_top_producer": 0.1657,
+  "costly_after_a_top_producer": 0.1811,
+  "not_costly_after_a_top_producer": 0.1615
+ },
+ "extrapolation": {
+  "all_months": {
+   "connections_2_4": 5366099,
+   "predicted": 4434353,
+   "cells_with_fit": 27019,
+   "2": {
+    "predicted": 0.7118,
+    "observed": 0.7118,
+    "n": 1122604
+   },
+   "3": {
+    "predicted": 0.8058,
+    "observed": 0.7962,
+    "n": 1514677
+   },
+   "4": {
+    "predicted": 0.8735,
+    "observed": 0.8666,
+    "n": 1797072
+   }
+  },
+  "april_may": {
+   "connections_2_4": 1984168,
+   "predicted": 1462853,
+   "cells_with_fit": 15819,
+   "2": {
+    "predicted": 0.6965,
+    "observed": 0.7002,
+    "n": 369893
+   },
+   "3": {
+    "predicted": 0.7915,
+    "observed": 0.7736,
+    "n": 489821
+   },
+   "4": {
+    "predicted": 0.8602,
+    "observed": 0.8511,
+    "n": 603139
+   }
+  }
+ },
+ "roulette": {
+  "cells": 238683,
+  "cells_shown": 6624,
+  "hubs": 111,
+  "hubs_shown": 56,
+  "connections_share_all_slacks": 0.764,
+  "connections_share_slack_2_4": 0.7673,
+  "default_rule": "median share made at 3 min among shown cells whose own median planned slack is 2–4 min",
+  "tight_cells": 1857,
+  "default": {
+   "hub": "I. P. Pavlova",
+   "a": "11",
+   "a_to": "Spořilov",
+   "b": "6",
+   "b_to": "Výstaviště",
+   "band": "peak",
+   "p3": {
+    "s": 3,
+    "p": 0.85,
+    "lo": 0.824,
+    "hi": 0.874
+   },
+   "own_slack_median_min": 3.0,
+   "connections": 1742
+  }
+ },
+ "dwell": {
+  "connections": 3839733,
+  "median_od_minus_dep_hat_s": 38.0,
+  "share_od_after_dep_hat": 0.9971,
+  "made_dep_hat": 0.8013,
+  "made_observed_departure": 0.8679
+ }
+}
