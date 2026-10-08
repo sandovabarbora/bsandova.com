@@ -166,6 +166,71 @@ hour-of-day pattern, every figure interactive.
 
 ## References
 
-The headway-reliability conventions (bunching and gap thresholds) and the bunching mechanism are cited, with verified
-sources, before the code is frozen, in a dated commit; thresholds that differ from the conventions are kept because
-they were fixed here, and the conventional ones are run as checks.
+Anderson, T.W. and Hsiao, C. (1981) Estimation of dynamic models with error components. *Journal of the American
+Statistical Association*, 76(375), 598–606. doi:10.1080/01621459.1981.10477691
+
+Bartholdi, J.J. and Eisenstein, D.D. (2012) A self-coördinating bus route to resist bus bunching. *Transportation
+Research Part B*, 46(4), 481–491. doi:10.1016/j.trb.2011.11.001
+
+Brown, W. (1910) Some experimental results in the correlation of mental abilities. *British Journal of Psychology*,
+3(3), 296–322. doi:10.1111/j.2044-8295.1910.tb00207.x
+
+Daganzo, C.F. (2009) A headway-based approach to eliminate bus bunching: systematic analysis and comparisons.
+*Transportation Research Part B*, 43(10), 913–921. doi:10.1016/j.trb.2009.04.002
+
+Kittelson & Associates, Parsons Brinckerhoff, KFH Group, Texas A&M Transportation Institute and Arup (2013) *Transit
+Capacity and Quality of Service Manual*, 3rd edn. TCRP Report 165. Washington, DC: Transportation Research Board.
+doi:10.17226/24766
+
+Spearman, C. (1910) Correlation calculated from faulty data. *British Journal of Psychology*, 3(3), 271–295.
+doi:10.1111/j.2044-8295.1910.tb00206.x
+
+All checked in Crossref on 8 October 2026 (authors, year, title, journal, volume, pages).
+
+## Changes after registration
+
+**8 October 2026 (before screening; no headway computed).** Where the design left implementation open or contradicted
+itself, fixed here before any pair was built:
+
+- **Ties.** §1 says a pair-stop whose two trips have the same observed arrival is dropped; §4.4, written earlier,
+  says ties are resolved by feed order if they exceed 1 %. §1 is the later and more specific rule and is followed;
+  the share of ties is reported either way.
+- **Filling a missing arrival** (§4.5) from the previous row's `real_next_stop_arrival` is done only if, where both
+  exist, at least 95 % of the two agree within 5 s; the agreement is reported by month.
+- **Service date.** The first field of `rt_trip_id` is the trip's scheduled start (local time); its date is the
+  service date of §1.
+- **Pattern stop list.** The table holds one row per stop a trip leaves, so a trip's stop list is its rows plus the
+  last row's next stop (the terminal). Terminals are then removed as in §4.2.
+- **Unobserved pair-stops** (one of the two trips without an arrival at that stop) are kept in the pair table as
+  unobserved, for the coverage of §4.6; they never enter an estimate.
+
+**8 October 2026 (screening, §4; counts and shares only, no headway summarised).** `tools/bunch/screen.py`, output
+`bunching-screen.json`. No row is duplicated. An observed arrival exists for about 98 % of tram rows; where both exist,
+the previous row's next arrival equals a row's arrival in 98.2–98.8 % of rows and differs by more than 5 s in 1.2–1.8 %,
+so the filling rule applies (1 900–8 000 arrivals filled a month). No two trips of a pattern share an observed
+arrival second at a stop (ties 0.0 %); arrivals equal to the schedule to the second are 0.6 %; the seconds digit is
+flat (1.4–1.8 % each). 68–76 % of trips run their line's modal pattern; the others (short turns, diversions, trips
+with a missing row) are removed. Pairs: 272 017 with H of 3–15 min, 481 of them at 3–4 min (the §7 stratum); 505
+patterns have fewer than 1 000 pairs and are removed (28 392 pairs), leaving 64 patterns. An observed departure exists
+for both trips at about half of the observed pair-stops, so the departures check covers about half, not the quarter
+the design guessed.
+
+**8 October 2026 (code, before any headway is summarised).** Fixed while writing and testing the code on made-up data:
+
+- **Q1's primary estimand becomes γ_IV**, the Anderson–Hsiao estimate (Anderson and Hsiao, 1981): the same model with
+  r_{k−1} − 1 instrumented by r_{k−2} − 1, on transitions where the pair is observed at k − 2, k − 1 and k. Tests on
+  made-up data (`tools/bunch/test_bunch.py`) showed that the registered γ − γ₀ fails at its own purpose: shuffling a
+  follower's increments across pairs also separates each increment from the noise in the next one, so γ₀ ≈ 0 and
+  γ − γ₀ keeps the noise bias (−0.24 under pure diffusion with noise of 5 % of H, where the truth is 0). The IV estimate
+  is 0.00 there and recovers a planted 0.03 and −0.05. The labels of §6 are unchanged and apply to γ_IV; γ − γ₀ and the
+  plain γ are reported as checks.
+- **Bootstrap of Q1.** The fixed effects are removed once on the full sample and the bootstrap over dates re-weights
+  the per-date sums of the residualised products (the fixed effects are estimated on hundreds of thousands of rows per
+  cell, so their own sampling error is negligible); the shuffle check uses 5 shuffles, not one per draw.
+- **Timing points (§7).** The planned dwell is 0 s at nearly every stop (99.8 % of tram passes in the dwell study), so
+  "at least 1.5 times the planned dwell and 20 s longer" marks almost every stop (432 of 624). The rule becomes: median
+  observed dwell at least 1.5 times the network median (34 s) and at least 20 s longer than it, or median planned dwell
+  at least 60 s: 65 of 624 tram stops (`tools/bunch/timing.py`).
+- **Thresholds and references.** The 0.5 / 1.5 checks are kept as checks; the Transit Capacity and Quality of Service
+  Manual (Kittelson & Associates et al., 2013) measures headway adherence relative to the scheduled headway, but its
+  exact cut-offs were not checked, so they are not attributed to it.
