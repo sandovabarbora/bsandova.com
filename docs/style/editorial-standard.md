@@ -39,7 +39,8 @@ A page that cannot meet the standard for its kind moves down a kind or is retire
 
 ## 4. Metadata block, directly under the short version, in mono, one line each
 
-- **Published** date · **Updated** date · **Version** n, linked to the change log at the foot.
+- **Published** date · **Updated** date · **Version** n, linked to the article's change log on the changelog page
+  (`changelog/#<slug>`).
 - **Status**:
   - research: registered study / exploratory;
   - tools: tool vX.Y;
@@ -69,7 +70,9 @@ Research sections come in this order:
 9. What this does not show.
 10. Reproduction.
 11. References.
-12. Change log and corrections: dated, at the foot, never in the middle of the text.
+Change log and corrections are dated and kept outside the article, in `docs/changelogs/<slug>.html`, shown on the
+changelog page under the article's anchor; the article links to them from its version number and never carries
+them in its text (changed 8 October 2026: the logs made the articles longer and broke the reading).
 
 **Tools** follow this order:
 
@@ -80,7 +83,6 @@ Research sections come in this order:
 5. Limits.
 6. Install and reproduce.
 7. References.
-8. Change log.
 
 **Notes** have at most three sections and a dated kicker. They make no statistical claims beyond descriptive counts
 with their source.
@@ -146,4 +148,5 @@ with their source.
 ## 12. Gate
 
 - A page enters All work only after a pass against §3–§10.
-- The pass is recorded in its change log as "Checked against editorial standard v1 on `<date>`".
+- The pass is recorded in its change log (`docs/changelogs/<slug>.html`) as "Checked against editorial standard v1
+  on `<date>`".
