@@ -154,3 +154,28 @@ tight transfer by slack, and a map of the hubs, every figure interactive.
 
 Sources on transfer reliability, walking speed in transit planning and connection planning are cited, verified,
 before the code is frozen, in a dated commit.
+
+## Changes after registration
+
+**8 October 2026 (screening, §4; clarifications fixed before any connection is scored).** `tools/transfer/screen.py`,
+output `transfers-screen.json`.
+
+- **Hub key.** In the PID GTFS, surface tram platforms carry no parent station (only metro platforms do), so every
+  tram hub is keyed by its stop name, as §1 provides for stops without one; platform pairs still need to be within
+  250 m of each other.
+- **Arrivals at a terminal.** The table has no row for a trip's last stop: its arrival there is the last row's
+  observed next arrival, so an A that ends at a hub (kept by §4.5) takes its arrival from that field.
+- **Filling.** A missing observed arrival is filled from the previous row's observed next arrival when the two agree
+  within 5 s on at least 95 % of rows where both exist, month by month (the bunching study's rule).
+- **Planned connections** are kept only up to a planned slack of 10 min, the roulette's longest; Q1 uses 2–4 min.
+- **Period for missing trips (§4.3).** The trip id carries the date of each trip's version, not a timetable period,
+  so the period for the modal count is the day type (weekday, Saturday, Sunday or public holiday) in or out of the
+  summer timetable (28 June – 31 August).
+- **Hour bands (Q2, Q3).** Weekday peak 07:00–08:59 and 15:00–17:59; weekday daytime the other weekday hours from
+  05:00 to 19:59; weekend daytime Saturday, Sunday and holidays 05:00–19:59; evening 20:00–04:59 on any day. Hours are
+  the A arrival's scheduled hour, Europe/Prague time.
+- **Precision (§4.8).** Counts alone cannot give the variance of Δp_within, so the screen uses the worst case for a
+  share (variance 0.25 per connection) inflated for connections in the same ISO week by 1 + (n̄ − 1) · ICC, with an
+  assumed intraclass correlation of 0.01; the minimum detectable Δp_within is 2.8 standard errors.
+- **Excluded connections** (returns and same-trunk pairs, §1) are kept in the tables with a flag, so the check without
+  the exclusions (§7) can be run; every primary and descriptive figure leaves them out.
