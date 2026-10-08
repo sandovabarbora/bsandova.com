@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Persistence Dynamics and Welfare Costs of Urban Public Transport Delays · Barbora Šandová</title>
-<meta name="description" content="A summary of a master's thesis on 121 197 794 vehicle-location records from Prague, 2025: within-day bus and tram delays are persistent, and the thesis values real-time information at 5.6 % (bus) and 2.3 % (tram) of the reliability cost.">
+<meta name="description" content="A summary of a master's thesis on 121 197 794 stop-pass records from Prague, 2025: within-day bus and tram delays are persistent, and the thesis values real-time information at 5.6 % (bus) and 2.3 % (tram) of the reliability cost.">
 <meta property="og:title" content="Persistence Dynamics and Welfare Costs of Urban Public Transport Delays">
-<meta property="og:description" content="A summary of a master's thesis on 121 197 794 vehicle-location records from Prague, 2025: within-day bus and tram delays are persistent, and the thesis values real-time information at 5.6 % (bus) and 2.3 % (tram) of the reliability cost.">
+<meta property="og:description" content="A summary of a master's thesis on 121 197 794 stop-pass records from Prague, 2025: within-day bus and tram delays are persistent, and the thesis values real-time information at 5.6 % (bus) and 2.3 % (tram) of the reliability cost.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://bsandova.com/assets/og/thesis.jpg">
 <meta property="og:image:width" content="1200">
@@ -44,7 +44,7 @@
 </style>
 
 <!-- ld --><link rel="alternate" type="application/atom+xml" title="Barbora Šandová" href="/feed.xml">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Persistence Dynamics and Welfare Costs of Urban Public Transport Delays", "description": "A summary of a master's thesis on 121 197 794 vehicle-location records from Prague, 2025: within-day bus and tram delays are persistent, and the thesis values real-time information at 5.6 % (bus) and 2.3 % (tram) of the reliability cost.", "url": "https://bsandova.com/texts/thesis", "image": "https://bsandova.com/assets/og/thesis.jpg", "dateModified": "2026-09-29T11:33:59+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Persistence Dynamics and Welfare Costs of Urban Public Transport Delays", "description": "A summary of a master's thesis on 121 197 794 stop-pass records from Prague, 2025: within-day bus and tram delays are persistent, and the thesis values real-time information at 5.6 % (bus) and 2.3 % (tram) of the reliability cost.", "url": "https://bsandova.com/texts/thesis", "image": "https://bsandova.com/assets/og/thesis.jpg", "dateModified": "2026-09-29T11:33:59+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
 </head>
 <body>
 <div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">thesis · prague · en</span></div>
@@ -53,9 +53,9 @@
 <header class="text-head">
   <p class="kicker">Research · master's thesis summary · Prague buses and trams, 2025</p>
   <h1>Persistence Dynamics and Welfare Costs <em>of Urban Public Transport Delays</em></h1>
-  <p class="deck">On 121 197 794 vehicle-location records from Prague, a jump in a bus or tram delay is still half there about half an hour later. That makes a live feed worth something: about 5.6 % of the reliability cost of a bus commute, roughly 204 CZK a year in sample and 182 held out, as an index rather than a measured gain.</p>
+  <p class="deck">On 121 197 794 stop-pass records from Prague, a jump in a bus or tram delay is still half there about half an hour later. That makes a live feed worth something: about 5.6 % of the reliability cost of a bus commute, roughly 204 CZK a year in sample and 182 held out, as an index rather than a measured gain.</p>
   <dl class="facts">
-    <div><dt>records</dt><dd>121 197 794 <small>Prague vehicle locations, 15 March – 8 September 2025, Golemio · administrative count</small></dd></div>
+    <div><dt>records</dt><dd>121 197 794 <small>Prague stop passes, 15 March – 8 September 2025, Golemio · administrative count; the thesis calls them vehicle-location records</small></dd></div>
     <div><dt>persistence, AR(2) sum</dt><dd>0.727 · 0.715 <small>bus · tram · half-life ≈ 33 min, one figure for both modes · time step and intervals not on this page</small></dd></div>
     <div><dt>value of real-time information</dt><dd>5.6&nbsp;% · 2.3&nbsp;% <small>of the commuter-tier reliability cost, bus · tram · no interval on this page</small></dd></div>
   </dl>
@@ -70,7 +70,7 @@
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>16 September 2026 · updated 3 October 2026 · <a href="../changelog/#thesis">version 2</a></dd></div>
+  <div><dt>published</dt><dd>16 September 2026 · updated 8 October 2026 · <a href="../changelog/#thesis">version 2</a></dd></div>
 </dl>
 <details class="meta-more">
   <summary>About this study</summary>
@@ -93,7 +93,7 @@
 
 <section>
 <h2>Data</h2>
-<p>The thesis uses the vehicle positions of Prague Integrated Transport published by Golemio, Prague's open-data platform, from 15 March to 8 September 2025, 121 197 794 vehicle-location records in all<sup class="cite"><a href="#r1">1</a></sup>. Inference rests on buses, with 691 routes, and trams, with 41. The metro has three route clusters, too few for inference, and appears in the thesis only descriptively. The cleaning rules, the number of routes and trips dropped and the access dates of the feed are not reproduced on this page. Five days of the same records, aggregated into five-minute windows, underlie the sonification <a href="delayed">Delayed All the Time</a><sup class="cite"><a href="#r7">7</a></sup>.</p>
+<p>The thesis uses the vehicle positions of Prague Integrated Transport published by Golemio, Prague's open-data platform, from 15 March to 8 September 2025, 121 197 794 records in all, which the thesis calls vehicle-location records<sup class="cite"><a href="#r1">1</a></sup>. Checked in the data on 8 October 2026, each record is a stop pass: one vehicle's segment from one stop to the next, with its scheduled and observed times and its delay at the stop, not a raw position (see <a href="rain-delays">Does rain delay Prague's trams?</a>, which uses the same table). Inference rests on buses, with 691 routes, and trams, with 41. The metro has three route clusters, too few for inference, and appears in the thesis only descriptively. The cleaning rules, the number of routes and trips dropped and the access dates of the feed are not reproduced on this page. Five days of the same records, aggregated into five-minute windows, underlie the sonification <a href="delayed">Delayed All the Time</a><sup class="cite"><a href="#r7">7</a></sup>.</p>
 </section>
 
 <section>
