@@ -178,7 +178,7 @@ Brown, W. (1910) Some experimental results in the correlation of mental abilitie
 Daganzo, C.F. (2009) A headway-based approach to eliminate bus bunching: systematic analysis and comparisons.
 *Transportation Research Part B*, 43(10), 913–921. doi:10.1016/j.trb.2009.04.002
 
-Kittelson & Associates, Parsons Brinckerhoff, KFH Group, Texas A&M Transportation Institute and Arup (2013) *Transit
+Kittelson & Associates, Parsons Brinckerhoff, KFH Group et al. (2013) *Transit
 Capacity and Quality of Service Manual*, 3rd edn. TCRP Report 165. Washington, DC: Transportation Research Board.
 doi:10.17226/24766
 
