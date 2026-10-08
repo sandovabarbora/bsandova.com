@@ -88,19 +88,19 @@ def map_spec(t: pd.DataFrame, xy: dict) -> tuple[dict, int]:
             feats.append({"id": f"{r.seg_from} → {r.seg_to}", "name": f"{r.seg_from} → {r.seg_to}",
                           "sub": f"{n(r.passes)} passes", "l": [offset_line(xy[r.seg_from], xy[r.seg_to])],
                           "v": {"all": v(r.all), "peak": v(r.peak), "midday": v(r.midday), "hours": v(r.hours)}})
-    pp = {"dp": 1, "unit": " s", "sign": True}
+    pp = {"dp": 0, "unit": " s", "sign": True}
     top = t.sort_values("hours").iloc[-1]
-    spec = {"held": PROD, "neg": REC, "base": "../assets/praha-base.json", "features": feats,
+    spec = {"held": PROD, "neg": REC, "base": "../assets/praha-base.json", "fit": "features", "features": feats,
             "views": [{"key": "all", "label": "all hours", "fmt": pp, "scale": "div", "domain": [-60, 60],
-                       "note": "delay gained per pass, seconds; coral made, teal made up",
-                       "mark": {"id": f"{top.seg_from} → {top.seg_to}", "label": "the largest producer"}},
+                       "note": "per pass · coral lost, teal made up",
+                       "mark": {"id": f"{top.seg_from} → {top.seg_to}", "label": "largest total"}},
                       {"key": "peak", "label": "weekday peaks", "fmt": pp, "scale": "div", "domain": [-60, 60],
-                       "note": "07:00–08:59 and 15:00–17:59, per pass"},
+                       "note": "07–09 h and 15–18 h, per pass"},
                       {"key": "midday", "label": "weekday middays", "fmt": pp, "scale": "div", "domain": [-60, 60],
-                       "note": "10:00–13:59, per pass"},
+                       "note": "10–14 h, per pass"},
                       {"key": "hours", "label": "hours in all", "fmt": {"dp": 0, "unit": " h", "sign": True},
-                       "scale": "div", "domain": [-1500, 1500], "note": "total delay made (or made up), 15 March – 8 September"}],
-            "note": "no data in this view", "hint": "hover, tap or use the arrow keys for a segment; each direction is drawn on its right",
+                       "scale": "div", "domain": [-1500, 1500], "note": "season total"}],
+            "hint": "hover, tap or use the arrow keys for a segment; each direction is drawn on its right",
             "data": ["segments.json", "results.json"]}
     return spec, len(feats)
 
@@ -186,7 +186,61 @@ def figures(x: dict, t: pd.DataFrame, xy: dict) -> dict:
     charts["stops"]["table"]["cols"] = ["stop", "side", "seconds per pass", "segments", "passes"]
     charts["stops"]["data"] = ["describe.json"]
     shutil.copy(R / "delay-origins-describe.json", A / "describe.json")
-    static_hbar(rows, A / "03-stops.svg", "seconds of delay gained per pass")
+    static_hbar(rows, A / "05-stops.svg", "seconds of delay gained per pass")
+
+    d = x["desc"]["tram"]
+    cv = d["curve"]
+    charts["curve"] = {
+        "alt": "The share of all delay made against the share of segments, largest producers first: the curve rises "
+               "steeply, passing half of the delay at a tenth of the segments.",
+        "panels": [{"h": 260, "x": {"kind": "linear", "domain": [0, 1], "ticks": [0, 0.1, 0.25, 0.5, 0.75, 1],
+                                    "fmt": {"dp": 0, "pct": True}, "label": "share of segments, largest producers first"},
+                    "y": {"kind": "linear", "domain": [0, 1], "ticks": [0, 0.25, 0.5, 0.75, 1], "fmt": {"dp": 0, "pct": True},
+                          "label": "share of all delay made"},
+                    "marks": [{"type": "line", "pts": [[0, 0], [1, 1]], "c": "light", "w": 1, "dash": "dash",
+                               "name": "equal"},
+                              {"type": "line", "pts": cv, "c": PROD, "name": "trams"},
+                              {"type": "rule", "axis": "x", "v": 0.1, "c": "grey", "dash": "dot"}]}],
+        "table": {"cols": ["share of segments", "share of delay made"], "rows": cv}, "data": ["describe.json"]}
+    f, ax = plt.subplots(figsize=(7.2, 3.0))
+    ax.plot([0, 1], [0, 1], color="#b5b5b0", lw=0.8, ls="--")
+    ax.plot([q[0] for q in cv], [q[1] for q in cv], color=PROD, lw=1.8)
+    ax.axvline(0.1, color=GREY, lw=0.8, ls=":")
+    ax.set_xlabel("share of segments, largest producers first")
+    ax.set_ylabel("share of all delay made")
+    f.tight_layout()
+    f.savefig(A / "03-curve.svg")
+    plt.close(f)
+
+    eh = d["early_and_holding"]["top_producers_on_lateness"]
+    erows, etab = [], []
+    for q in eh:
+        hold = q["gain_h"] - q["lateness_h"]
+        erows += [{"y": q["segment"], "x0": 0, "x1": q["lateness_h"], "c": PROD,
+                   "tip": f"{q['segment']}: {n(q['lateness_h'])} h of lateness made"},
+                  {"y": q["segment"], "x0": q["lateness_h"], "x1": q["gain_h"], "c": "light",
+                   "tip": f"{q['segment']}: {n(hold)} h of early trams coming back to time"}]
+        etab.append([q["segment"], q["gain_h"], q["lateness_h"], hold])
+    charts["early"] = {
+        "alt": "The 15 largest producers, each split into lateness made and early trams coming back to time: on each, "
+               "most is lateness, but on some up to about two fifths is a tram that was early.",
+        "panels": [{"h": 22 * len(eh) + 30, "x": {"kind": "linear", "domain": [0, 2000], "fmt": {"dp": 0},
+                                                  "label": "hours over the season"},
+                    "y": {"kind": "cat", "domain": [q["segment"] for q in eh]},
+                    "marks": [{"type": "hbar", "rows": erows}]}],
+        "legend": [{"label": "lateness made", "c": PROD, "shape": "box", "o": 1},
+                   {"label": "early tram back to time", "c": "#b5b5b0", "shape": "box", "o": 1}],
+        "table": {"cols": ["segment", "delay gained, h", "lateness made, h", "early back to time, h"], "rows": etab},
+        "data": ["describe.json"]}
+    f, ax = plt.subplots(figsize=(7.2, 0.24 * len(eh) + 0.8))
+    for i, q in enumerate(reversed(eh)):
+        ax.barh(i, q["lateness_h"], color=PROD, height=0.6)
+        ax.barh(i, q["gain_h"] - q["lateness_h"], left=q["lateness_h"], color="#b5b5b0", height=0.6)
+    ax.set_yticks(range(len(eh)), [q["segment"] for q in reversed(eh)], fontsize=7)
+    ax.set_xlabel("hours over the season: lateness made (coral), early tram back to time (grey)")
+    f.tight_layout()
+    f.savefig(A / "04-early.svg")
+    plt.close(f)
 
     c = res["checks"]
     pt = lambda lab, v, col="ink": {"y": lab, "lo": v, "hi": v, "mid": v, "c": col, "tip": f"{lab}: {v:.2f}"}  # noqa: E731
@@ -197,7 +251,7 @@ def figures(x: dict, t: pd.DataFrame, xy: dict) -> dict:
            pt("without first and last segments", c["without_terminal_segments"]),
            pt("passes within ±300 s", c["gain_within_300s"]), pt("running time only", c["running_time_only"], "grey")]
     chk += [pt(f"month {m}", v, "grey") for m, v in c["by_month"].items()]
-    charts["checks"] = {"alt": "The share of all delay made by the top segments, registered and in every check.",
+    charts["checks"] = {"alt": "Whatever the check, delay is concentrated on a minority of segments.",
                         "panels": [{"h": 24 * len(chk) + 30,
                                     "x": {"kind": "linear", "domain": [0, 1], "ticks": [0, 0.25, 0.5, 0.75, 1],
                                           "fmt": {"dp": 2}, "label": "share of all delay made"},
@@ -217,7 +271,7 @@ def figures(x: dict, t: pd.DataFrame, xy: dict) -> dict:
     ax.set_xlim(0, 1)
     ax.set_xlabel("share of all delay made")
     f.tight_layout()
-    f.savefig(A / "04-checks.svg")
+    f.savefig(A / "06-checks.svg")
     plt.close(f)
     (A / "charts.json").write_text(json.dumps(charts, ensure_ascii=False))
     return {"drawn": drawn, "stops": table}
@@ -264,6 +318,24 @@ def values(x: dict, t: pd.DataFrame, fig: dict) -> dict:
     dt = x["desc"]["tram"]
     v["vol"], v["byd"] = n(100 * dt["top_tenth_pass_share"], 1), n(100 * dt["top_tenth_by_delay_pass_share"], 1)
     v["ovl"] = n(100 * dt["overlap_busiest_and_largest_producers"])
+    e = dt["early_and_holding"]
+    v.update({"gini": f"{dt['gini_made']:.2f}", "ov_tot": n(100 * dt["top_overlap_odd_even"]["by_total"]),
+              "ov_pp": n(100 * dt["top_overlap_odd_even"]["by_per_pass"]),
+              "pk": n(dt["top_producers_peak_vs_midday_per_pass"]["peak"], 0),
+              "md": n(dt["top_producers_peak_vs_midday_per_pass"]["midday"], 0),
+              "shared": n(100 * dt["peak_midday_top_tenth_shared"]), "six": n(dt["top_producers_leaving_the_six"]),
+              "run_total_h": n(abs(dt["running_time"]["total_h"])), "run_without": n(dt["running_time"]["segments_without"]),
+              "rec_share": n(100 * dt["recoverers"]["share"], 1), "sep_dates": n(dt["september_dates"]),
+              "mar": n(100 * c["by_month"]["3"], 1), "sep": n(100 * c["by_month"]["9"], 1),
+              "early_pass": n(100 * e["share_of_passes_starting_early"], 1),
+              "top_early": n(100 * e["top_producers_gain_from_early_passes"]),
+              "top_late": n(100 * e["top_producers_lateness_share_of_gain"]),
+              "top_hold": n(100 * (1 - e["top_producers_lateness_share_of_gain"])),
+              "S_late": n(100 * e["S_on_lateness_made"], 1), "net_late_h": n(e["net_lateness_made_h"]),
+              "rho4": f"{rho['est']:.4f}", "rho_hi4": f"{rho['ci95'][1]:.4f}", "brho4": f"{bus['rho']['est']:.4f}",
+              "brho_hi4": f"{bus['rho']['ci95'][1]:.4f}",
+              "ar_h": n(e["top_producers_on_lateness"][2]["gain_h"]), "ar_l": n(e["top_producers_on_lateness"][2]["lateness_h"]),
+              "ar_e": n(100 * (1 - e["top_producers_on_lateness"][2]["lateness_h"] / e["top_producers_on_lateness"][2]["gain_h"]))})
     photo = next(q for q in json.loads((ROOT / "assets/photo/sources.json").read_text()) if q["slug"] == "delay-origins")
     v["photo"] = ('<section class="film film-page"><div class="shot" style="view-transition-name:ph-delay-origins;'
                   '--bg:url(../assets/photo/delay-origins.jpg);--bg-s:url(../assets/photo/delay-origins-1200.jpg)"></div>'

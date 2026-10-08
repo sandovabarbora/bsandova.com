@@ -35,9 +35,9 @@ TEMPLATE = '''<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Running late · Barbora Šandová</title>
-<meta name="description" content="Pre-specified studies of where and why Prague's trams fall behind, from {{passes_m}} million tram passes of 2025: a tenth of the segments make {{S}} % of the delay, the same ones every week.">
+<meta name="description" content="Pre-specified studies of where and why Prague's trams fall behind, from {{passes_m}} million tram passes of 2025: a tenth of the segments record {{S}} % of the delay, just over half and so only narrowly, the same ones week after week.">
 <meta property="og:title" content="Running late">
-<meta property="og:description" content="Where and why Prague's trams fall behind, one pre-specified question at a time. Part 1: a tenth of the segments make half of the delay.">
+<meta property="og:description" content="Where and why Prague's trams fall behind, one pre-specified question at a time. Part 1: a tenth of the segments record just over half of the delay.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://bsandova.com/texts/running-late">
 <meta property="og:image" content="https://bsandova.com/assets/og/running-late.jpg">
@@ -69,8 +69,8 @@ TEMPLATE = '''<!doctype html>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
     <li>Each part fixes its question, its measure and its reading rule before the data that answers it is read.</li>
-    <li>Part 1: over {{passes_m}} million tram passes on {{segments}} segments, a tenth of the segments make {{S}} % of all delay, so concentration is {{S_label}}, by a narrow margin; they are the same segments every week ({{rho}}).</li>
-    <li>Many of the largest producers are the segments leaving the large stops, which points to the timetable and to boarding as much as to the street.</li>
+    <li>Part 1: over {{passes_m}} million tram passes on {{segments}} segments, a tenth of the segments record {{S}} % of all delay gained, just over the half set in advance, so concentration is {{S_label}}, narrowly; they are the same segments week after week.</li>
+    <li>Many of the largest totals are segments leaving large stops, and part of what they record is early trams waiting for their time; both were described afterwards, not registered.</li>
   </ul>
 </details>
 <dl class="meta">
@@ -88,7 +88,7 @@ TEMPLATE = '''<!doctype html>
     <div>
       <p class="n">Part 1 · where delay appears · {{segments}} tram segments, 15 March – 8 September 2025</p>
       <h2><a href="delay-origins">Where is delay born on Prague's trams?</a></h2>
-      <p>A tenth of the segments make {{S}} % of all delay, the same ones every week, and leaving a large stop costs time at every one of the six looked at.</p>
+      <p>A tenth of the segments record {{S}} % of all delay gained, just over half, the same ones week after week. Described afterwards, not registered: many of them leave large stops, and part of what they record is early trams waiting for their time.</p>
     </div>
   </li>
 </ol>
