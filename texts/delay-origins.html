@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where is delay born on Prague's trams? Segment by segment, 2025</title>
+<meta name="description" content="A pre-specified analysis of 21.4 million tram passes over 618 segments in Prague, 2025: half of all delay is recorded on a tenth of the segments, narrowly, and on the same ones week after week; many leave the large stops, and part of what they record is early trams waiting for their time.">
+<meta property="og:title" content="Where is delay born on Prague's trams?">
+<meta property="og:description" content="Half of the delay on Prague's trams is recorded on a tenth of the segments, narrowly, the same ones every week; part of it is early trams waiting for their time. Part 1 of Running late.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://bsandova.com/texts/delay-origins">
+<meta property="og:image" content="https://bsandova.com/assets/og/delay-origins.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bsandova.com/assets/og/delay-origins.jpg">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://bsandova.com/texts/delay-origins">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../text.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../a24.css">
+<style>
+.text dl.meta{display:block;letter-spacing:normal;text-transform:none;font-size:12px}
+.text dl.meta div{border-right:0;padding-left:0;grid-template-columns:13ch 1fr}
+.text dl.meta dd{overflow-wrap:anywhere}
+@media (max-width:560px){.text dl.meta div{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">research · transit · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Research · Running late, part 1 · Prague trams and buses, spring and summer 2025</p>
+  <h1>Where is delay born on Prague's trams? <em>Segment by segment, 2025</em></h1>
+  <p class="deck">A pre-specified analysis of every stop-to-stop segment of Prague's tram network finds that half of all delay is recorded on a tenth of the segments, narrowly, and on the same ones week after week; many of them leave the large stops, and part of what they record is early trams waiting for their time.</p>
+  <dl class="facts">
+    <div><dt>delay recorded on the top tenth of segments</dt><dd>50.6 % <small>95 % confidence interval (CI) 50.3 to 50.9 % · supported, narrowly</small></dd></div>
+    <div><dt>top tenth shared by odd and even weeks</dt><dd>95 % <small>by total; rank correlation 0.999 · supported</small></dd></div>
+    <div><dt>of which early trams waiting</dt><dd>24 % <small>of the delay recorded on the top tenth; on lateness alone the share is 52.0 %</small></dd></div>
+    <div><dt>tram passes</dt><dd>21.4 m <small>618 segments, 170 days, 15 March – 8 September 2025</small></dd></div>
+  </dl>
+</header>
+<details class="tldr" open>
+  <summary>Overwhelmed? Here's the short version</summary>
+  <ul>
+    <li>Every time a tram goes from one stop to the next, its delay changes. Over 21.4 million such passes in 2025, the 62 of Prague's 618 tram segments with the largest totals recorded 50.6 % of all delay gained (50.3 to 50.9 %). That is just over the half set in advance, so concentration is supported, narrowly.</li>
+    <li>They are the same segments from week to week: 95 % of the top tenth in odd weeks is also the top tenth in even weeks. With tens of thousands of passes per segment, that stability is close to guaranteed, so it says the pattern is structural, not why.</li>
+    <li>A measured gain is not always lateness. A tram that reaches a stop early and waits for its departure time gains delay without being late. On the top tenth, about 24 % of the recorded gain is early trams coming back to time; counting lateness alone, the top tenth still record 52.0 %.</li>
+    <li>The largest are Václavské náměstí → Jindřišská, Hlavní nádraží → Viktoria Žižkov and Anděl → Arbesovo náměstí. 16 of the 62 largest leave one of six large stops picked after seeing the list; dwell, boarding and holding to the timetable all fit, and none of them was measured. These descriptions came after the results and were not registered.</li>
+    <li>City buses show the same concentration: a tenth of 1 286 segments record 51.2 % of their delay.</li>
+  </ul>
+</details>
+<dl class="meta">
+  <div><dt>published</dt><dd>8 October 2026 · <a href="../changelog/#delay-origins">version 1</a></dd></div>
+  <div><dt>work since</dt><dd>October 2026</dd></div>
+</dl>
+<details class="meta-more">
+  <summary>About this study</summary>
+<dl class="meta">
+  <div><dt>status</dt><dd>research, pre-specified analysis (self-timestamped)</dd></div>
+  <div><dt>series</dt><dd><a href="running-late">Running late</a>, part 1</dd></div>
+  <div><dt>registration</dt><dd>design committed at <code>379e533</code> on 8 October 2026, before any segment-level delay was read; screening and the estimation code frozen with tests at <code>75f633d</code> (tag <code>late-origins-v1</code>); results at <code>52ef4b6</code>. Commit times are self-reported. Delays had been read before for the author's thesis and for <a href="weather-rails">Weather on the rails</a>, never by place. Described after the results, not registered: the comparison with tram volume, the concentration curve, the overlap of the top tenth between weeks, the split of the gain into lateness and early trams waiting, and the pattern at six large stops (<code>tools/late/describe.py</code>). Changes after registration, each dated, are in <a href="../changelog/#delay-origins-changes">the change log</a>.</dd></div>
+  <div><dt>data</dt><dd>Prague Integrated Transport stop-time history via Golemio, 15 March – 8 September 2025, as used in the author's master's thesis<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup>; stop positions from the PID timetable data<sup class="cite"><a href="#r3">3</a></sup>. The passes are not redistributed; the per-segment values are in <a href="../assets/late/segments.json">segments.json</a>, the descriptions in <a href="../assets/late/describe.json">describe.json</a> and the estimates in <a href="../assets/late/results.json">results.json</a>.</dd></div>
+  <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/late">tools/late/</a>; rebuild: <code>uv run --with numpy --with pandas --with pyarrow --with scipy python tools/late/estimate.py</code></dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Where is delay born on Prague's trams? Segment by segment, 2025</i>. bsandova.com/texts/delay-origins, version 1.</dd></div>
+  <div><dt>licence</dt><dd>code MIT; text and figures CC BY 4.0</dd></div>
+</dl>
+</details>
+
+<section class="film film-page"><div class="shot" style="view-transition-name:ph-delay-origins;--bg:url(../assets/photo/delay-origins.jpg);--bg-s:url(../assets/photo/delay-origins-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Prague_night_tram_Lazarska.jpg">che</a> · CC BY-SA 3.0, toned</p></section>
+
+<section>
+<p>A tram that reaches the end of its line five minutes late did not lose those five minutes in one place. It lost a few seconds here, made some up there, and the sum is what the passengers at the far end see. The author's thesis found that a sudden delay is still about half there some half an hour later<sup class="cite"><a href="#r1">1</a></sup>. This part asks where, along the line, the delay is recorded.</p>
+<p>Every pass of a tram from one stop to the next changes its delay by some number of seconds, positive if it falls further behind, negative if it catches up. Add those changes up for every pass over the season and each of Prague's tram segments has a total: the delay recorded there, or made up.</p>
+</section>
+
+<section>
+<h2>The question</h2>
+<p>Two questions were written down before any segment's delay was read. First, is the delay concentrated: do the tenth of segments with the largest totals record more than half of all the delay gained anywhere? Segments where trams catch up are left out of that sum, so the share is of the delay gained, not of the net. Second, are those places stable: if the segments are ranked by the delay per pass separately in odd and in even weeks, is the rank correlation at least 0.70? Both are read from a bootstrap that resamples whole days, which also redraws which segments count as the top tenth. A question is "supported" if its 95 % interval lies wholly above its line, "not supported" if wholly below, and "inconclusive" otherwise.</p>
+<p>A segment here is one direction between two named stops, so the trip from Anděl to Arbesovo náměstí and the one back are two segments. The delay change on a pass is the delay at the next stop minus the delay at this stop, so it includes the time the tram stands at this stop as well as the run to the next.</p>
+</section>
+
+<section>
+<h2>Data</h2>
+<p>The passes are those of the author's thesis: Prague Integrated Transport's stop-time history from Golemio<sup class="cite"><a href="#r2">2</a></sup>, 15 March to 8 September 2025<sup class="cite"><a href="#r1">1</a></sup>, with the screening of the earlier studies. Planned closures remove 2–31 % of tram passes a month, and passes without a delay change another 2–3 %. Passes whose delay changed by more than ten minutes on one segment are left out as diversions or faults, and 48 segments with fewer than 1 000 passes (9 116 passes in all) are treated as one-off routings and left out. That leaves 21.4 million tram passes over 618 segments on 170 days.</p>
+<p>One thing in the data was not as its name said. The thesis's column for the delay gained on a segment turned out, on a sample of 42 407 passes, to be the running time against the timetable, which leaves out the time at the stop; it differed from the change in delay in 99.9 % of them. The design had a rule for this, fixed in advance: the change in delay is recomputed as the delay at the next stop minus the delay at this one. Running time alone is reported as a check.</p>
+</section>
+
+<section>
+<h2>Half of the delay on a tenth of the network</h2>
+<p>Over the season, Prague's trams gained 71 201 hours of delay on 347 segments and made up 56 244 hours on 271 others, 43.9 % of the segments; the net is 14 957 hours. The split between gained and made up depends on booking the time at a stop to the segment leaving it, so the net is the firmer number. The 62 segments with the largest totals recorded 50.6 % of the delay gained (95 % CI 50.3 to 50.9 %). The whole interval lies above one half, so the concentration is supported, but narrowly: one half was a round number fixed in advance, and 50.6 % clears it by less than a percentage point. Over all segments, the concentration curve has a Gini coefficient of 0.73 (fig. 3). The largest single total is Václavské náměstí → Jindřišská, with 1 971 hours over the season, +74 seconds on an average pass, followed by Hlavní nádraží → Viktoria Žižkov (1 385 h), Anděl → Arbesovo náměstí (1 249 h) and Kobylisy → Ke Stírce (1 074 h) (figs. 1 and 2).</p>
+<p>Part of any concentration is tram volume: a segment with more trams has more passes to add up. A comparison computed after the results, and not registered, shows how much. The tenth of segments with the most passes carry 20.4 % of all tram passes, so if every segment added the same delay per pass, the top tenth would record about 20.4 % of the delay. They record 50.6 %. The largest totals are not simply the busiest segments either: they carry 15.3 % of the passes, and 40 % of them are also among the busiest tenth. Road traffic was not measured.</p>
+<figure class="mp-fig" data-map="../assets/late/map.json">
+  <img class="mp-static" src="../assets/late/01-map.svg" alt="Map of Prague's tram network, each segment coloured by the delay gained per pass: coral where trams lose time, teal where they make it up; coral segments cluster on the way out of several large stops in the centre." loading="lazy">
+  <figcaption><b>fig. 1</b> · Each tram segment drawn between the stops it joins, each direction on its right, coloured by the delay gained on an average pass (coral, lost; teal, made up); views for weekday peaks, weekday middays and the season's total in hours; 599 of 618 segments placed from the stop positions. Hovering over or tapping a segment gives its values. Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>, stop positions from the PID timetable<sup class="cite"><a href="#r3">3</a></sup>.</figcaption>
+</figure>
+<figure data-chart="../assets/late/charts.json#top">
+  <p class="ch-head">The segments leaving Václavské náměstí, Hlavní nádraží and Anděl recorded the most delay; segments arriving at them made up the most.</p>
+  <img src="../assets/late/02-top.svg" alt="The 15 tram segments that recorded the most delay over the season, led by Václavské náměstí → Jindřišská with 1 971 hours, and the 15 that made up the most, led by Vodičkova → Václavské náměstí." loading="lazy">
+  <figcaption><b>fig. 2</b> · Hours of delay gained (coral) or made up (teal) on each of the 15 segments at either end, 15 March to 8 September 2025, after screening. Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>.</figcaption>
+</figure>
+<figure data-chart="../assets/late/charts.json#curve">
+  <p class="ch-head">Half of the delay gained is recorded on a tenth of the segments.</p>
+  <img src="../assets/late/03-curve.svg" alt="Share of all delay gained against share of segments, largest totals first: the curve passes one half at a tenth of the segments; Gini 0.73." loading="lazy">
+  <figcaption><b>fig. 3</b> · Cumulative share of all delay gained against the share of the 618 tram segments, largest totals first; segments that make up time count as zero; dashed, an equal share for every segment; dotted, the registered tenth. Descriptive, computed after the results. Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>The same places, week after week</h2>
+<p>Ranked by the delay per pass in odd weeks and again in even weeks, the segments come out in nearly the same order: the rank correlation is 0.999, and its 95 % interval, 0.996 to 0.999, lies above 0.70, so stability is supported. That threshold was easy to pass. With tens of thousands of passes on each segment, a segment's mean barely moves from week to week, so a near-perfect rank correlation is close to guaranteed by construction; it says the recorded pattern is a stable feature of the network, not what causes it. The overlap of the top tenth itself is the more telling figure: 95 % of the 62 segments with the largest totals in odd weeks are also among them in even weeks, and 98 % when ranked per pass. The point estimate of the correlation sits just above its own bootstrap interval, for trams (0.9994 against an upper bound of 0.9990) and for buses (0.9984 against 0.9976): resampling whole days draws some days twice and spreads them unevenly between odd and even weeks, which pulls the correlation down a little, and the label does not depend on it.</p>
+<p>Weekday peaks and weekday middays share 92 % of their top tenth by delay per pass (a Jaccard index of 0.85), and on the top segments the delay per pass is about the same at both, 43 seconds at peaks and 42 at middays. The recorded delay is a stable feature of the network, not the accident of a given day or hour.</p>
+</section>
+
+<section>
+<h2>Early trams waiting for their time</h2>
+<p>A gain in delay is not always lateness. A tram that reaches a stop a minute early and waits there for its scheduled departure goes from −60 to 0 seconds of delay: it gains a minute without ever being late. This was not part of the design; it was computed after the results, once the large-stop pattern below made it the leading explanation. Of all tram passes, 26.6 % start a segment early. On the 62 segments with the largest totals, 43 % of the recorded gain comes from passes that started early, and 24 % of it is early trams coming back to time rather than lateness made, the lateness being the part of the delay above zero. On Anděl → Arbesovo náměstí, it is 31 % (fig. 4). Counting lateness alone, the network's net is 13 974 hours against 14 957 for the delay change, and the top tenth record 52.0 % of the lateness made, so the concentration does not depend on early trams.</p>
+<figure data-chart="../assets/late/charts.json#early">
+  <p class="ch-head">On the largest totals, most of the recorded gain is lateness, but on some up to about two fifths is early trams coming back to time.</p>
+  <img src="../assets/late/04-early.svg" alt="The 15 segments with the largest totals, each split into lateness made (coral) and early trams coming back to time (grey)." loading="lazy">
+  <figcaption><b>fig. 4</b> · Hours over the season on the 15 segments with the largest totals, split into lateness made, the change in delay above zero, and the rest, early trams coming back to their time; descriptive, computed after the results and not registered. Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>Arriving at and leaving six large stops</h2>
+<p>Many of the largest totals leave a few large stops: 16 of the 62 leave Václavské náměstí, Anděl, Hlavní nádraží, Kobylisy, Karlovo náměstí or Palmovka, six stops picked after seeing the list. Leaving each of them costs time, and at four of them, Anděl, Hlavní nádraží, Václavské náměstí and Palmovka, trams make time up on the way in; at Kobylisy and Karlovo náměstí they arrive about even. On an average pass, weighted over the segments, a tram's delay changes by −35 seconds arriving at Anděl and by +55 leaving it, and by −33 and +44 at Hlavní nádraží. On Václavské náměstí the segment from Vodičkova changes it by −56 seconds and the next one, on to Jindřišská, by +74 (fig. 5).</p>
+<figure data-chart="../assets/late/charts.json#stops">
+  <p class="ch-head">Leaving each of six large stops costs time; at four of them, trams make it up arriving.</p>
+  <img src="../assets/late/05-stops.svg" alt="Delay gained per pass on the segments arriving at and leaving six large stops: positive leaving at all six; negative arriving at Václavské náměstí, Anděl, Hlavní nádraží and Palmovka, about zero at Kobylisy and Karlovo náměstí." loading="lazy">
+  <figcaption><b>fig. 5</b> · Seconds of delay gained on an average pass over the segments arriving at (teal) and leaving (coral) six large stops, weighted by passes; the stops were picked after seeing the largest totals; descriptive, not registered. Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>.</figcaption>
+</figure>
+<p>Four explanations fit, and the data cannot separate them. The first is early trams holding: a tram that arrives at a timing stop ahead of its time waits there, and the wait is booked to the segment leaving the stop, as the previous section measured. The second is the timetable's slack: schedules give the run into a large stop some time in hand, so a late tram can arrive closer to time. The third is dwell and boarding: because the delay on a segment includes the time spent at its first stop, a tram that stands long while people board shows it on the segment leaving the stop; dwell was not measured here, and how long boarding takes is the subject of dwell-time models for buses<sup class="cite"><a href="#r7">7</a></sup>. The fourth is tram volume, which the comparison above shows explains only part of the concentration. How timetables spread slack, and how late vehicles pass delay on, is an old question for railways<sup class="cite"><a href="#r4">4</a></sup><sup class="cite"><a href="#r5">5</a></sup> and buses<sup class="cite"><a href="#r6">6</a></sup>.</p>
+</section>
+
+<section>
+<h2>Checks</h2>
+<p>The share recorded on the top segments holds across the checks registered in advance (fig. 6). It is 34 % for the top 5 % of segments and 73 % for the top 20 %. Ranked by delay per pass instead of by total, the top tenth record 42 %. Leaving out the first and last segment of each trip gives 51 %, and keeping only passes within five minutes gives 51 %. Month by month the share runs from 49 to 53 %; in March it is 49.0 %, below one half, and in September, with 7 days, 50.0 %.</p>
+<p>The running-time check is degenerate. Of the 521 segments with a running time, trams run faster than the timetable on 87 %, and over the season they ran 87 202 hours faster than it in all; only 67 segments lose time while moving, so the top tenth record practically all of that (100 %). The 97 segments without a running time are left out of it.</p>
+<figure data-chart="../assets/late/charts.json#checks">
+  <p class="ch-head">Whatever the check, delay is concentrated on a minority of segments.</p>
+  <img src="../assets/late/06-checks.svg" alt="The share of delay recorded on the top segments, registered 50.6 % with its interval, and in each check, between 34 % for the top 5 % and 73 % for the top 20 %, with running time alone at 100 %." loading="lazy">
+  <figcaption><b>fig. 6</b> · Share of all delay gained that the top segments record, as registered (with its 95 % bootstrap interval by day) and in each check; the grey line marks one half. Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>.</figcaption>
+</figure>
+<p>City buses, analysed alongside with their own labels, show the same concentration: on routes 100 to 299, the top tenth of 1 286 segments record 51.2 % of their delay (50.7 to 51.8 %, supported), and the ranking is as stable as for trams (0.998, supported). Their peaks and middays share less of their top tenth (a Jaccard index of 0.52).</p>
+</section>
+
+<section>
+<h2>What this means</h2>
+<p>On Prague's trams in 2025, delay was recorded in fixed places: half of it on a tenth of the segments, narrowly, and the same ones from week to week. Many of the largest totals are segments leaving large stops, which is consistent with dwell, boarding and trams holding to the timetable, and about a quarter of what the largest record is early trams coming back to time. Which of these causes the delay, and how much, is not measured here.</p>
+</section>
+
+<section>
+<h2>What this does not show</h2>
+<p>A segment where delay is recorded is not always where it is caused: a tram held at a junction or a stop shows the delay on the segment where it is booked, and the timetable decides where a late tram can catch up. The split into lateness and early trams, the comparison with volume and the pattern at the large stops are descriptions found after the registered questions were answered, not tests. The delay is per vehicle, not per passenger, so a minute lost on a full tram counts the same as on an empty one. Dwell and road traffic were not measured. The season is one spring and summer; winter, the metro and other years are not covered. The map places 599 of 618 segments, those whose stops could be found in the timetable data.</p>
+</section>
+
+<section id="reproduction">
+<h2>Reproduction</h2>
+<p>Every number on this page is filled in from the result files by a script, from the repository root:</p>
+<ol>
+<li>The rain study's screening of closures and feed gaps: <a href="rain-delays">Does rain delay Prague's trams?</a>, Reproduction.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/late/screen.py"><code>tools/late/screen.py</code></a>: the definition check, the screening and the segment sums.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/late/estimate.py"><code>estimate.py</code></a>, checked by <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/late/test_late.py"><code>test_late.py</code></a>: the registered estimates and checks.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/late/describe.py"><code>describe.py</code></a>: the descriptions computed after the results.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/late/article.py"><code>article.py</code></a>: the map, the figures and this page.</li>
+</ol>
+<p>The design is <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/delay-origins-design.md"><code>docs/research/delay-origins-design.md</code></a>.</p>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Šandová, B. (2026). <i>Persistence Dynamics and Welfare Costs of Urban Public Transport Delays</i>. Master's thesis, Institute of Economic Studies, Faculty of Social Sciences, Charles University, Prague. Summary at <a href="thesis">bsandova.com/texts/thesis</a>. Not yet in a public repository.</li>
+<li id="r2">Operátor ICT. Golemio, Prague's open-data platform: Prague Integrated Transport stop-time history, collected 15 March – 8 September 2025. <a href="https://golemio.cz">golemio.cz</a>. Accessed 8 October 2026.</li>
+<li id="r3">ROPID. Prague Integrated Transport open data: timetable in GTFS (stops, trips and routes). <a href="https://pid.cz/o-systemu/opendata/">pid.cz/o-systemu/opendata</a>. Accessed 8 October 2026.</li>
+<li id="r4">Carey, M. (1994). Reliability of interconnected scheduled services. <i>European Journal of Operational Research</i> 79(1), 51–72. <a href="https://doi.org/10.1016/0377-2217(94)90395-6">doi:10.1016/0377-2217(94)90395-6</a>. Accessed 8 October 2026.</li>
+<li id="r5">Kroon, L., Maróti, G., Helmrich, M. R., Vromans, M., Dekker, R. (2008). Stochastic improvement of cyclic railway timetables. <i>Transportation Research Part B: Methodological</i> 42(6), 553–570. <a href="https://doi.org/10.1016/j.trb.2007.11.002">doi:10.1016/j.trb.2007.11.002</a>. Accessed 8 October 2026.</li>
+<li id="r6">Furth, P. G., Muller, T. H. J. (2007). Service reliability and optimal running time schedules. <i>Transportation Research Record</i> 2034, 55–61. <a href="https://doi.org/10.3141/2034-07">doi:10.3141/2034-07</a>. Accessed 8 October 2026.</li>
+<li id="r7">Dueker, K. J., Kimpel, T. J., Strathman, J. G., Callas, S. (2004). Determinants of bus dwell time. <i>Journal of Public Transportation</i> 7(1), 21–40. <a href="https://doi.org/10.5038/2375-0901.7.1.2">doi:10.5038/2375-0901.7.1.2</a>. Accessed 8 October 2026.</li>
+</ol>
+</section>
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a> · <a href="running-late">The series</a> · <a href="weather-rails">Weather on the rails</a></p>
+</footer>
+</article>
+
+<script src="../assets/charts.js" defer></script>
+<script src="../assets/map.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+{
+ "top_share": 0.1,
+ "tram": {
+  "segments": 618,
+  "dates": 170,
+  "passes": 21380600,
+  "S": {
+   "est": 0.5059,
+   "ci95": [
+    0.5029,
+    0.5091
+   ],
+   "ci90": [
+    0.5033,
+    0.5086
+   ],
+   "label": "supported",
+   "imprecise": false
+  },
+  "rho": {
+   "est": 0.9994,
+   "ci95": [
+    0.9962,
+    0.999
+   ],
+   "ci90": [
+    0.9967,
+    0.999
+   ],
+   "label": "supported",
+   "imprecise": false
+  },
+  "producers": 347,
+  "recoverers": 271,
+  "produced_s": 256323512,
+  "recovered_s": -202477920,
+  "checks": {
+   "per_pass": 0.4206,
+   "top_5": 0.3376,
+   "top_20": 0.7282,
+   "without_terminal_segments": 0.5117,
+   "gain_within_300s": 0.5066,
+   "running_time_only": 1.0,
+   "by_month": {
+    "3": 0.4902,
+    "4": 0.5016,
+    "5": 0.5205,
+    "6": 0.5086,
+    "7": 0.5155,
+    "8": 0.5259,
+    "9": 0.5001
+   },
+   "peak_midday_jaccard": 0.8507
+  }
+ },
+ "bus_secondary": {
+  "segments": 1286,
+  "dates": 170,
+  "passes": 24633453,
+  "S": {
+   "est": 0.5119,
+   "ci95": [
+    0.5067,
+    0.5179
+   ],
+   "ci90": [
+    0.5074,
+    0.5171
+   ],
+   "label": "supported",
+   "imprecise": false
+  },
+  "rho": {
+   "est": 0.9984,
+   "ci95": [
+    0.9921,
+    0.9976
+   ],
+   "ci90": [
+    0.9935,
+    0.9975
+   ],
+   "label": "supported",
+   "imprecise": false
+  },
+  "producers": 753,
+  "recoverers": 533,
+  "produced_s": 269666718,
+  "recovered_s": -187519721,
+  "checks": {
+   "per_pass": 0.4167,
+   "top_5": 0.3361,
+   "top_20": 0.736,
+   "without_terminal_segments": 0.51,
+   "gain_within_300s": 0.5151,
+   "running_time_only": 0.9378,
+   "by_month": {
+    "3": 0.4915,
+    "4": 0.4997,
+    "5": 0.4985,
+    "6": 0.5109,
+    "7": 0.5424,
+    "8": 0.5313,
+    "9": 0.4997
+   },
+   "peak_midday_jaccard": 0.5207
+  }
+ }
+}
