@@ -1,6 +1,6 @@
-"""Why do three 22s come at once: figures, the map and the article, every number from the result files.
+"""Why do two 22s come at once: figures, the map and the article, every number from the result files.
 
-Reads docs/research/bunching-{results,results-bus,screen,describe}.json and the tram pair tables in tools/data/bunch/;
+Reads docs/research/bunching-{results,results-bus,screen,describe,describe-bus,review}.json and the tram pair tables in tools/data/bunch/;
 writes assets/bunch/ (charts.json, map.json, segments.json, results.json, describe.json, static SVGs) and
 texts/bunching.html from tools/bunch/template.html. Chart and map helpers are part 1's and the rain article's.
 
@@ -38,7 +38,7 @@ INK, HELD, GREY, LIGHT = "#111111", "#c0503f", "#666666", "#b5b5b0"
 def load() -> dict:
     j = lambda name: json.loads((R / f"bunching-{name}.json").read_text())  # noqa: E731
     return {"res": j("results"), "bus": j("results-bus"), "scr": j("screen"), "desc": j("describe"),
-            "bdesc": j("describe-bus")}
+            "bdesc": j("describe-bus"), "rev": j("review")}
 
 
 def segment_table() -> pd.DataFrame:
@@ -163,6 +163,7 @@ def figures(x: dict, t: pd.DataFrame, xy: dict) -> dict:
     shutil.copy(R / "bunching-describe.json", A / "describe.json")
     shutil.copy(R / "bunching-describe-bus.json", A / "describe-bus.json")
     shutil.copy(R / "bunching-results-bus.json", A / "results-bus.json")
+    shutil.copy(R / "bunching-review.json", A / "review.json")
     (A / "segments.json").write_text(json.dumps(
         [{"from": str(r.prev_name), "to": str(r.stop_name), "pair_passes": int(r.transitions),
           "sudden_changes_per_1000": round(float(r.steps_per_1000), 2), "bunched_per_1000": round(float(r.bunched_per_1000), 2),
@@ -179,12 +180,12 @@ def figures(x: dict, t: pd.DataFrame, xy: dict) -> dict:
     var = {k: v["var_r"] for k, v in res["Q4"]["by_decile"].items()}
     var_s = {k: v["var_r"] for k, v in res["Q4"]["by_decile_shuffled"].items()}
     ser = [{"name": "observed", "c": HELD, "pts": [[int(k), round(100 * v, 2)] for k, v in obs.items()]},
-           {"name": "independent changes (shuffled)", "c": GREY, "dash": "dash",
+           {"name": "shuffled benchmark (lets trams swap)", "c": GREY, "dash": "dash",
             "pts": [[int(k), round(100 * v, 2)] for k, v in sh.items()]}]
     charts["curve"] = line_chart(
         ser, "Share of pairs arriving bunched or swapped, by tenth of the way along the line: it rises from about 0.1 % "
-             "near the start to about 1 % near the end, and shuffled, independent changes give the same curve or a "
-             "little more.", "tenth of the way along the line", "bunched or swapped, % of pair passes", [1, 10],
+             "near the start to about 1 % near the end; the shuffled benchmark, which lets trams swap order as they "
+             "cannot on rails, gives a similar curve.", "tenth of the way along the line", "bunched or swapped, % of pair passes", [1, 10],
         [0, 1.2], {"cols": ["tenth", "observed %", "shuffled %", "variance of spacing", "variance, shuffled"],
                    "rows": [[int(k), round(100 * obs[k], 2), round(100 * sh[k], 2), var[k], var_s[k]] for k in obs]},
         ["describe.json", "results.json"], {"dp": 1})
@@ -202,8 +203,9 @@ def figures(x: dict, t: pd.DataFrame, xy: dict) -> dict:
         ("plain OLS (pulled down by noise)", q1["gamma_ols"], None, "grey"),
         ("registered shuffle, γ − γ₀", q1["gamma_minus_gamma0_registered"], None, "grey")])
     charts["gamma"] = range_chart(rows, "Amplification per stop with 95 % intervals: every estimate lies within a "
-                                        "few thousandths of zero, far inside the registered ±0.01; between timing "
-                                        "points it is slightly positive, at them slightly negative.",
+                                        "few thousandths of zero, far inside the registered ±0.01; over all stops it "
+                                        "is slightly negative, without the timing points and on departures slightly "
+                                        "positive.",
                                   "change in spacing per stop, per unit of spacing off schedule", [-0.012, 0.012],
                                   0.01, 0.0, {"dp": 3}, ["results.json", "describe.json"])
     static_range(rows, A / "03-gamma.svg", "amplification per stop (γ)", (-0.012, 0.012), 0.0)
@@ -222,6 +224,7 @@ def figures(x: dict, t: pd.DataFrame, xy: dict) -> dict:
     static_lines(ser, A / "04-hours.svg", "hour the pair set out", "bunched, %")
 
     q2, c = res["Q2"], res["checks"]
+    qp = x["rev"]["q2_null_within_pattern"]
     rows = range_rows([
         ("registered: fall to under 0.25 from 0.5", q2["ratio"], q2["ratio_ci95"], "held"),
         ("from 0.75 (registered check)", c["alternative_birth_rule_prev_0.75"]["ratio"],
@@ -231,12 +234,15 @@ def figures(x: dict, t: pd.DataFrame, xy: dict) -> dict:
         ("without timing points", c["without_timing_points"]["ratio"], c["without_timing_points"]["ratio_ci95"], "ink"),
         ("without the busiest 1 % of days", c["without_top_1pct_dates"]["ratio"],
          c["without_top_1pct_dates"]["ratio_ci95"], "ink"),
-        ("sudden re-openings (deaths)", c["deaths"]["ratio"], c["deaths"]["ratio_ci95"], "grey")])
+        ("null within route variant (post hoc)", qp["ratio"], qp["ratio_ci95"], "ink"),
+        ("sudden re-openings (deaths)", c["deaths"]["ratio"], c["deaths"]["ratio_ci95"], "grey"),
+        ("reversed order (registered placebo)", c["reversed_order"]["ratio"], c["reversed_order"]["ratio_ci95"], "grey")])
     charts["places"] = range_chart(rows, "How much more the hottest tenth of platforms holds than exposure alone "
-                                         "would give, with 95 % intervals: above 1 in every version, around the "
-                                         "registered 1.25 when the rule is strict, and as high for sudden re-openings.",
+                                         "would give, with 95 % intervals: above 1 in every version, lower when "
+                                         "closings are reassigned only within their route variant (post hoc), and "
+                                         "higher for sudden re-openings and for the closings counted backwards.",
                                    "concentration against exposure alone (ratio)", [0, 6], None, 1.25, {"dp": 2},
-                                   ["results.json"])
+                                   ["results.json", "review.json"])
     static_range(rows, A / "05-places.svg", "concentration against exposure alone", (0, 6), 1.25)
     (A / "charts.json").write_text(json.dumps(charts, ensure_ascii=False))
     return {"drawn": drawn}
@@ -309,14 +315,14 @@ def values(x: dict, t: pd.DataFrame, fig: dict) -> dict:
         d["autocorrelation_of_spacing_changes"]
     q4 = res["Q4"]
     v.update({"rbirths": n(q2["births"]), "l9_births": n(100 * l9["share_of_births"]),
-              "l9_exp": n(100 * l9["share_of_eligible"]), "no9": f"{no9['ratio']:.2f}",
+              "l9_exp": n(100 * l9["share_of_eligible"], 1), "no9": f"{no9['ratio']:.2f}",
               "no9_lo": f"{no9['ratio_ci95'][0]:.2f}", "no9_hi": f"{no9['ratio_ci95'][1]:.2f}",
               "sim1": f"{sim['1']['split_half_rho']:.2f}", "sim5": f"{sim['5']['split_half_rho']:.2f}",
               "rho_no9": f"{no9['rho_split_half']:.2f}", "b_no9": n(no9["births"]),
               "no9_label": "inconclusive" if no9["ratio_ci95"][0] <= 1.25 else "supported", "sim10": f"{sim['10']['split_half_rho']:.2f}",
               "ac2": f"{ac['2']:.3f}".replace("-0.000", "0.000").replace("-", "−"),
               "ac3": f"{ac['3']:.3f}".replace("-0.000", "0.000").replace("-", "−"),
-              "d10u": pct(q4["by_decile"]["10"]["bunched"], 1), "s10u": pct(q4["by_decile_shuffled"]["10"]["bunched"], 2),
+              "s10u": pct(q4["by_decile_shuffled"]["10"]["bunched"], 2),
               "s10swap": pct(q4["by_decile_shuffled"]["10"]["swap"], 2),
               "r_deaths_lo": f"{c['deaths']['ratio_ci95'][0]:.2f}", "r_deaths_hi": f"{c['deaths']['ratio_ci95'][1]:.2f}",
               "tp_top": n(tpi["top8_platforms_among_them"]),
@@ -325,6 +331,37 @@ def values(x: dict, t: pd.DataFrame, fig: dict) -> dict:
               "bac": f"{x['bdesc']['autocorrelation_lag_1']:+.3f}".replace("-", "−"),
               "bswap": pct(bus["Q4"]["overall"]["swap"], 2),
               "btp": n(x["bdesc"]["timing_point_stops"])})
+    # version 2 (correction after publication, 8 October 2026): values for the corrected readings
+    rv, qv = x["rev"], res["Q1_variants"]
+    iv_points = [q1["gamma_iv"], d["gamma_iv_instrument_3_stops_back"], d["gamma_iv_instrument_4_stops_back"],
+                 d["gamma_iv_without_timing_points"]["est"], d["gamma_iv_departures"]["est"],
+                 qv["cut_at_first_swap"], qv["balanced_80pct"], qv["weighted_by_H"]]
+    iv_ends = iv_points + q1["ci95"] + q1["week_clustered_ci95"] + d["gamma_iv_without_timing_points"]["ci95"] + \
+        d["gamma_iv_departures"]["ci95"]
+    near1 = lambda z: f"{z:.4f}" if f"{z:.2f}" == "1.00" and z != 1 else f"{z:.2f}"  # noqa: E731
+    qp, ql, gl = rv["q2_null_within_pattern"], rv["q2_null_within_line"], rv["gamma_iv_by_line"]
+    big = gl["at_least_50000_transitions"]
+    shares = [m["patterns"]["on_modal_pattern"] / m["patterns"]["trips"] for m in months]
+    v.update({"g_max": f"{max(abs(z) for z in iv_ends):.3f}",
+              "t_min": g4(min(iv_points)), "t_max": g4(max(iv_points)), "t_spread": f"{max(iv_points) - min(iv_points):.4f}",
+              "fs_t": n(d["iv_first_stage"]["t"]), "no9_lo": near1(no9["ratio_ci95"][0]),
+              "drop_lo": n(100 * (1 - max(shares))), "drop_hi": n(100 * (1 - min(shares))),
+              "first_pct": n(100 * d["first_bunched_at_first_observed_stop"] / d["pairs_ever_bunched"]),
+              "d10u": pct(q4["by_decile"]["10"]["bunched"], 2), "o10swap": pct(q4["by_decile"]["10"]["swap"], 2),
+              "var10s": f"{q4['by_decile_shuffled']['10']['var_r']:.3f}",
+              "rp": f"{qp['ratio']:.2f}", "rp_lo": f"{qp['ratio_ci95'][0]:.2f}", "rp_hi": f"{qp['ratio_ci95'][1]:.2f}",
+              "Sb0p": pct(qp["S_b0_stratified"]), "rp_strata": n(qp["strata"]),
+              "boot": n(qp["bootstrap_draws"]), "nulls": n(qp["null_draws_per_bootstrap_draw"]),
+              "rl": f"{ql['ratio']:.2f}", "rl_lo": f"{ql['ratio_ci95'][0]:.2f}", "rl_hi": f"{ql['ratio_ci95'][1]:.2f}",
+              "r_rev": f"{c['reversed_order']['ratio']:.2f}", "r_rev_lo": f"{c['reversed_order']['ratio_ci95'][0]:.2f}",
+              "r_rev_hi": f"{c['reversed_order']['ratio_ci95'][1]:.2f}",
+              "r033_lo": f"{c['bunched_below_0.33']['ratio_ci95'][0]:.2f}",
+              "r033_hi": f"{c['bunched_below_0.33']['ratio_ci95'][1]:.2f}",
+              "gl_min": g4(big["min"]["gamma_iv"]), "gl_min_line": big["min"]["line"],
+              "gl_max": g4(big["max"]["gamma_iv"]), "gl_max_line": big["max"]["line"], "gl_n": n(big["lines"]),
+              "gla_min": g4(gl["min"]["gamma_iv"]), "gla_min_line": gl["min"]["line"],
+              "gla_max": g4(gl["max"]["gamma_iv"]), "gla_max_line": gl["max"]["line"],
+              "g_label_v1": rv["q1_label"]["published"]})
     photo = next(q for q in json.loads((ROOT / "assets/photo/sources.json").read_text()) if q["slug"] == "bunching")
     v["photo"] = ('<section class="film film-page"><div class="shot" style="view-transition-name:ph-bunching;'
                   '--bg:url(../assets/photo/bunching.jpg);--bg-s:url(../assets/photo/bunching-1200.jpg)"></div>'
