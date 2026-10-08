@@ -37,7 +37,8 @@ INK, HELD, GREY, LIGHT = "#111111", "#c0503f", "#666666", "#b5b5b0"
 
 def load() -> dict:
     j = lambda name: json.loads((R / f"bunching-{name}.json").read_text())  # noqa: E731
-    return {"res": j("results"), "bus": j("results-bus"), "scr": j("screen"), "desc": j("describe")}
+    return {"res": j("results"), "bus": j("results-bus"), "scr": j("screen"), "desc": j("describe"),
+            "bdesc": j("describe-bus")}
 
 
 def segment_table() -> pd.DataFrame:
@@ -160,6 +161,7 @@ def figures(x: dict, t: pd.DataFrame, xy: dict) -> dict:
     A.mkdir(parents=True, exist_ok=True)
     shutil.copy(R / "bunching-results.json", A / "results.json")
     shutil.copy(R / "bunching-describe.json", A / "describe.json")
+    shutil.copy(R / "bunching-describe-bus.json", A / "describe-bus.json")
     shutil.copy(R / "bunching-results-bus.json", A / "results-bus.json")
     (A / "segments.json").write_text(json.dumps(
         [{"from": str(r.prev_name), "to": str(r.stop_name), "pair_passes": int(r.transitions),
@@ -302,6 +304,26 @@ def values(x: dict, t: pd.DataFrame, fig: dict) -> dict:
               "br_lo": f"{bq2['ratio_ci95'][0]:.2f}", "br_hi": f"{bq2['ratio_ci95'][1]:.2f}", "br_label": bq2["ratio_label"],
               "brho": f"{bq2['rho_split_half']:.2f}", "brho_label": bq2["rho_label"],
               "bbunched": pct(bus["Q4"]["overall"]["bunched"], 2), "bbirths": n(bus["transitions"]["births"])})
+    timing = set(pd.read_parquet(ROOT / "tools/data/bunch/timing_tram.parquet")["stop_id"])
+    top8 = [q["stop_id"] for q in d["platforms_most_births"]]
+    l9, no9, sim, ac = d["line_9"], d["q2_without_line_9"], d["q2b_power_simulation"]["by_multiplier"], \
+        d["autocorrelation_of_spacing_changes"]
+    q4 = res["Q4"]
+    v.update({"rbirths": n(q2["births"]), "l9_births": n(100 * l9["share_of_births"]),
+              "l9_exp": n(100 * l9["share_of_eligible"]), "no9": f"{no9['ratio']:.2f}",
+              "no9_lo": f"{no9['ratio_ci95'][0]:.2f}", "no9_hi": f"{no9['ratio_ci95'][1]:.2f}",
+              "sim5": f"{sim['5']['split_half_rho']:.2f}", "sim10": f"{sim['10']['split_half_rho']:.2f}",
+              "ac2": f"{ac['2']:.3f}".replace("-0.000", "0.000").replace("-", "−"),
+              "ac3": f"{ac['3']:.3f}".replace("-0.000", "0.000").replace("-", "−"),
+              "d10u": pct(q4["by_decile"]["10"]["bunched"], 1), "s10u": pct(q4["by_decile_shuffled"]["10"]["bunched"], 2),
+              "s10swap": pct(q4["by_decile_shuffled"]["10"]["swap"], 2),
+              "r_deaths_lo": f"{c['deaths']['ratio_ci95'][0]:.2f}", "r_deaths_hi": f"{c['deaths']['ratio_ci95'][1]:.2f}",
+              "tp_top": n(sum(s in timing for s in top8)),
+              "bg2": g4(x["bdesc"]["gamma_iv_by_instrument_lag"]["2"]), "bg3": g4(x["bdesc"]["gamma_iv_by_instrument_lag"]["3"]),
+              "bg4": g4(x["bdesc"]["gamma_iv_by_instrument_lag"]["4"]),
+              "bac": f"{x['bdesc']['autocorrelation_lag_1']:+.3f}".replace("-", "−"),
+              "bswap": pct(bus["Q4"]["overall"]["swap"], 2),
+              "btp": n(len(pd.read_parquet(ROOT / "tools/data/bunch/timing_bus.parquet")))})
     photo = next(q for q in json.loads((ROOT / "assets/photo/sources.json").read_text()) if q["slug"] == "bunching")
     v["photo"] = ('<section class="film film-page"><div class="shot" style="view-transition-name:ph-bunching;'
                   '--bg:url(../assets/photo/bunching.jpg);--bg-s:url(../assets/photo/bunching-1200.jpg)"></div>'

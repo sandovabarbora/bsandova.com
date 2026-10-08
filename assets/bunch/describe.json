@@ -129,5 +129,47 @@
    "births": 8
   }
  ],
- "platforms_with_zero_births_share": 0.5533
+ "platforms_with_zero_births_share": 0.5533,
+ "line_9": {
+  "share_of_births": 0.3039,
+  "share_of_eligible": 0.1468,
+  "births": 155
+ },
+ "q2_without_line_9": {
+  "platforms": 488,
+  "births": 353,
+  "ratio": 1.721,
+  "ratio_ci95": [
+   0.9989,
+   2.3817
+  ],
+  "rho_split_half": 0.1087
+ },
+ "autocorrelation_of_spacing_changes": {
+  "1": -0.0463,
+  "2": -0.0001,
+  "3": -0.0009
+ },
+ "q2b_power_simulation": {
+  "note": "Poisson counts on the real exposures; a stable hot tenth of platforms with the stated rate multiplier; mean of 100 draws",
+  "by_multiplier": {
+   "1": {
+    "split_half_rho": 0.035,
+    "cross_fit_share": 0.076
+   },
+   "3": {
+    "split_half_rho": 0.109,
+    "cross_fit_share": 0.122
+   },
+   "5": {
+    "split_half_rho": 0.172,
+    "cross_fit_share": 0.191
+   },
+   "10": {
+    "split_half_rho": 0.287,
+    "cross_fit_share": 0.38
+   }
+  },
+  "observed_split_half": 0.1758
+ }
 }

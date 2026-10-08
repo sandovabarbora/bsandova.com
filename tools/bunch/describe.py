@@ -10,11 +10,16 @@ import json
 from pathlib import Path
 
 import numpy as np
+from scipy.stats import spearmanr
 
 ROOT = Path(__file__).resolve().parents[2]
 spec = importlib.util.spec_from_file_location("bunch_estimate", Path(__file__).with_name("estimate.py"))
 be = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(be)
+
+
+def res_rho(root: Path) -> float:
+    return json.loads((root / "docs/research/bunching-results.json").read_text())["Q2"]["rho_split_half"]
 
 
 def main() -> None:
@@ -92,6 +97,49 @@ def main() -> None:
     seg = ev[ev["birth"]].groupby(["prev_name", "stop_name"], observed=True).size().sort_values(ascending=False)
     out["segments_most_births"] = [{"segment": f"{a} → {b}", "births": int(v)} for (a, b), v in seg.head(5).items()]
     out["platforms_with_zero_births_share"] = round(float((g["births"] == 0).mean()), 4)
+    # added after the article review: line concentration, Q2 without line 9, noise autocorrelation, power of Q2b
+    ev["line"] = ev["pattern"].astype(str).str.split("|").str[0]
+    sh_line = ev.groupby("line").agg(births=("birth", "sum"), eligible=("eligible", "sum"))
+    out["line_9"] = {"share_of_births": round(float(sh_line.loc["9", "births"] / sh_line["births"].sum()), 4),
+                     "share_of_eligible": round(float(sh_line.loc["9", "eligible"] / sh_line["eligible"].sum()), 4),
+                     "births": int(sh_line.loc["9", "births"])}
+    n_dates = int(ps["date_id"].max() + 1)
+    dates = ps.drop_duplicates("date_id").sort_values("date_id")
+    odd = np.zeros(n_dates, bool)
+    odd[dates["date_id"].to_numpy()] = (dates["week"] % 2 == 1).to_numpy()
+    no9 = be.q2(ev[ev["line"] != "9"], n_dates, odd, np.random.default_rng(be.SEED), reps=199)
+    out["q2_without_line_9"] = {k: no9[k] for k in ("platforms", "births", "ratio", "ratio_ci95", "rho_split_half")}
+    dd = d.sort_values(["pair", "k"])
+    dr = (dd["v"] - dd["v1"])
+    lag = lambda m: dd.assign(k=dd["k"] + m)[["pair", "k"]].assign(x=dr.to_numpy())  # noqa: E731
+    ac = {}
+    for m in (1, 2, 3):
+        j = dd[["pair", "k"]].assign(y=dr.to_numpy()).merge(lag(m), on=["pair", "k"])
+        ac[str(m)] = round(float(np.corrcoef(j["y"], j["x"])[0, 1]), 4)
+    out["autocorrelation_of_spacing_changes"] = ac
+    keys, E, B = be.platform_matrix(ev, "stop_id", n_dates)
+    keep, _ = be.min_exposure(E)
+    E, B = E[keep], B[keep]
+    eo, ee = E[:, odd].sum(1), E[:, ~odd].sum(1)
+    total_births = B.sum()
+    rng = np.random.default_rng(be.SEED)
+    hot_n = max(1, int(np.ceil(0.10 * len(E))))
+    sims = {}
+    for mult in (1, 3, 5, 10):
+        w = np.ones(len(E))
+        w[rng.permutation(len(E))[:hot_n]] = mult  # a stable hot tenth of platforms
+        rate = w * total_births / (w * E.sum(1)).sum()
+        rhos, shares = [], []
+        for _ in range(100):
+            bo, b2 = rng.poisson(rate * eo), rng.poisson(rate * ee)
+            with np.errstate(invalid="ignore", divide="ignore"):
+                rhos.append(spearmanr(bo / eo, b2 / ee).statistic)
+            shares.append(be.crossfit(eo, bo, ee, b2))
+        sims[str(mult)] = {"split_half_rho": round(float(np.nanmean(rhos)), 3),
+                           "cross_fit_share": round(float(np.mean(shares)), 3)}
+    out["q2b_power_simulation"] = {"note": "Poisson counts on the real exposures; a stable hot tenth of platforms with the "
+                                           "stated rate multiplier; mean of 100 draws", "by_multiplier": sims,
+                                   "observed_split_half": res_rho(ROOT)}
     (ROOT / "docs/research/bunching-describe.json").write_text(json.dumps(out, indent=1) + "\n")
     print(json.dumps(out, indent=1))
 

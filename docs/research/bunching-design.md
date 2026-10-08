@@ -238,3 +238,16 @@ the design guessed.
 **8 October 2026 (correction of a count in the screening note above).** The share of trips on their line's modal
 pattern is 63–76 % by month (63 % in the eight days of September), not 68–76 % as first written; the screening file
 was right, the note misread it.
+
+**8 October 2026 (after an independent review of the article; descriptions, not registered).** The review asked for
+checks the results alone could not answer, computed in `tools/bunch/describe.py` and `describe_bus.py` and reported as
+description. Line 9 holds 30 % of the sudden closings on 15 % of the exposure, and without it the Q2 ratio is 1.72
+(95 % interval 1.00 to 2.38), no longer wholly above the registered 1.25. A simulation on the real exposures shows that
+a stable hottest tenth of platforms with five times the rate would give an expected split-half correlation of 0.17
+(ten times: 0.29), against 0.18 observed, so the registered 0.50 for Q2b was out of reach at this number of events. The
+autocorrelations of the stop-to-stop changes at two and three stops are 0.000 and −0.001, supporting the instrument.
+For buses, the instrument two, three and four stops back gives +0.0021, +0.0027 and +0.0030. The Q1 interval for trams
+(90 % interval wholly below 0 and wholly within ±0.01) falls under two rules of §6 that disagree; the margin rule was
+applied as coded and the article says so. The comparison of the curve with the shuffle pools swaps with bunches, a
+choice made after the results; compared as registered, without swaps, the last tenth is 1.0 % observed against 0.74 %
+shuffled.
