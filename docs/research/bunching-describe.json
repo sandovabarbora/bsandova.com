@@ -1,0 +1,133 @@
+{
+ "note": "described after the results; not registered",
+ "pairs": 243465,
+ "pairs_ever_bunched": 3170,
+ "share_pairs_ever_bunched": 0.013,
+ "first_bunched_from_r_ge_0.5": 496,
+ "first_bunched_from_0.25_to_0.5": 2404,
+ "first_bunched_at_first_observed_stop": 263,
+ "iv_first_stage": {
+  "coef": 0.9952,
+  "t": 8629.5,
+  "n": 5281510
+ },
+ "bunched_or_swapped_by_decile": {
+  "observed": {
+   "1": 0.0008,
+   "2": 0.0011,
+   "3": 0.0014,
+   "4": 0.0022,
+   "5": 0.0028,
+   "6": 0.0041,
+   "7": 0.0059,
+   "8": 0.0073,
+   "9": 0.0086,
+   "10": 0.0101
+  },
+  "shuffled": {
+   "1": 0.0008,
+   "2": 0.0013,
+   "3": 0.0016,
+   "4": 0.0028,
+   "5": 0.0037,
+   "6": 0.0054,
+   "7": 0.0071,
+   "8": 0.008,
+   "9": 0.0095,
+   "10": 0.011
+  }
+ },
+ "pairs_bunched_at_last_stop_share": 0.0079,
+ "gamma_iv_instrument_3_stops_back": -0.0012,
+ "gamma_iv_instrument_4_stops_back": -0.0012,
+ "gamma_iv_without_timing_points": {
+  "est": 0.0007,
+  "ci95": [
+   0.0001,
+   0.0013
+  ]
+ },
+ "gamma_iv_departures": {
+  "est": 0.0008,
+  "ci95": [
+   0.0001,
+   0.0015
+  ]
+ },
+ "bunched_still_bunched_next_stop": 0.8688,
+ "platforms_rank_corr_birth_rate_vs_large_steps": 0.42,
+ "platforms_rank_corr_drops_vs_rises": 0.9142,
+ "platforms_most_births": [
+  {
+   "stop_id": "U483Z1P",
+   "stop": "N\u00e1rodn\u00ed divadlo",
+   "births": 21,
+   "expected": 2.1
+  },
+  {
+   "stop_id": "U180Z1P",
+   "stop": "Chmelnice",
+   "births": 12,
+   "expected": 2.3
+  },
+  {
+   "stop_id": "U997Z2P",
+   "stop": "Lazarsk\u00e1",
+   "births": 11,
+   "expected": 2.1
+  },
+  {
+   "stop_id": "U1040Z2P",
+   "stop": "And\u011bl",
+   "births": 9,
+   "expected": 2.6
+  },
+  {
+   "stop_id": "U25Z2P",
+   "stop": "Bertramka",
+   "births": 9,
+   "expected": 2.1
+  },
+  {
+   "stop_id": "U4Z2P",
+   "stop": "Arbesovo n\u00e1m\u011bst\u00ed",
+   "births": 8,
+   "expected": 2.1
+  },
+  {
+   "stop_id": "U844Z2P",
+   "stop": "V\u011btrn\u00edk",
+   "births": 8,
+   "expected": 0.8
+  },
+  {
+   "stop_id": "U503Z1P",
+   "stop": "Nuselsk\u00e1 radnice",
+   "births": 7,
+   "expected": 1.9
+  }
+ ],
+ "segments_most_births": [
+  {
+   "segment": "\u00dajezd \u2192 N\u00e1rodn\u00ed divadlo",
+   "births": 17
+  },
+  {
+   "segment": "Kn\u011b\u017esk\u00e1 luka \u2192 Chmelnice",
+   "births": 12
+  },
+  {
+   "segment": "And\u011bl \u2192 Bertramka",
+   "births": 9
+  },
+  {
+   "segment": "N\u00e1rodn\u00ed t\u0159\u00edda \u2192 Lazarsk\u00e1",
+   "births": 9
+  },
+  {
+   "segment": "\u0160vandovo divadlo \u2192 Arbesovo n\u00e1m\u011bst\u00ed",
+   "births": 8
+  }
+ ],
+ "platforms_with_zero_births_share": 0.5533
+}
