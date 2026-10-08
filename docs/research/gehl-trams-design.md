@@ -173,3 +173,10 @@ series' definition of rain:
 - The rain and dry definitions, the labels (§5), m and the other checks are unchanged. Power is recomputed for this
   model with a date-level shock measured from dwell alone (residuals on cell and week effects, averaged by date), as
   the heat study did.
+
+**8 October 2026 (power after the deviation; weather and dwell alone).** `gehl-trams-power.json`. The date-level
+shock, measured from dwell alone, is σ_day 0.41 s. With optional hours 08:00–20:59 and week effects, the optional
+window holds 30 rain hours on 14 dates (10 of them also with a dry hour in the window) and the necessary window 19 on
+10; the simulated SE of θ is 0.29 s and the minimum detectable θ 0.8 s, well under the 8 s rule. With fewer than 30
+optional rain dates the wild cluster bootstrap applies, and the evidence rests on 14 wet weekend days: this is stated
+now. The simulation assumes normal shocks and is a floor on the real interval.
