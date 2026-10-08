@@ -294,7 +294,6 @@ def posthoc_values(x: dict, fig: dict, pp, pct) -> dict:
          "cells_all": n(rl["cells"]), "hubs_shown": n(rl["hubs_shown"]), "hubs_all": n(rl["hubs"]),
          "cov24": pct(rl["connections_share_slack_2_4"]), "tight_n": n(rl["tight_cells"]),
          "def_desc": (f"{df['hub']}, from line {df['a']} towards {df['a_to']} to line {df['b']} towards {df['b_to']}, "
-                      f"{ {'peak': 'in the weekday peaks', 'daytime': 'in the weekday daytime', 'weekend': 'on weekend days', 'evening': 'in the evening'}[df['band']] }, "
                       f"where {pct(df['p3']['p'])} % were made at 3 minutes (rough 95 % interval {pct(df['p3']['lo'])}–"
                       f"{pct(df['p3']['hi'])} %)"),
          "pm2": n(100 * curve[2], 1), "pm3": n(100 * curve[3], 1), "pm95": n(100 * curve[first95], 1),
@@ -306,6 +305,9 @@ def posthoc_values(x: dict, fig: dict, pp, pct) -> dict:
          "base_top": pct(ph["q4_baseline"]["after_a_top_producer"], 1),
          "dw_gap": n(ph["dwell"]["median_od_minus_dep_hat_s"]), "dw_od": pct(ph["dwell"]["made_observed_departure"], 1),
          "dw_hat": pct(ph["dwell"]["made_dep_hat"], 1), "dw_after": pct(ph["dwell"]["share_od_after_dep_hat"], 1)}
+    v["def_band"] = {"peak": "weekday-peak", "daytime": "weekday-daytime", "weekend": "weekend", "evening": "evening"}[df["band"]]
+    am = ph["extrapolation"]["april_may"]["3"]
+    v["exam3p"], v["exam3o"] = pct(am["predicted"], 1), pct(am["observed"], 1)
     for s in ("2", "3", "4"):
         v[f"ex{s}p"], v[f"ex{s}o"] = pct(ex[s]["predicted"], 1), pct(ex[s]["observed"], 1)
     rows = []

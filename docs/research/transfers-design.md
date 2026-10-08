@@ -240,19 +240,20 @@ week weights, instead of building a connections × draws matrix, and forms Q1b i
 arithmetic is the same: on the March 2025 Q1 table, the frozen and the fixed Δp_within agree in all of 200 week draws
 to within 4 × 10⁻¹⁶. The test suite passes on the fixed code (7 tests).
 
-**8 October 2026 (after the results, not registered; recorded 9 October 2026).** `describe.py --post-hoc` added
+**8 October 2026 (after the results, not registered).** `describe.py --post-hoc` added
 `post_hoc_uncertain_breakdown` to `transfers-describe.json` after the results were read: of the 25.7 % of connections
 in the §4.4 "uncertain" class, 1.6 % had an unobserved planned B and 24.1 % an observed planned B whose line ran a trip
 short in that hour; the latter were made 80.3 % of the time against 80.8 % for the rest. The same step rewrote
 `roulette.json` with only the shown cells.
 
-**9 October 2026 (after the results, not registered; an independent review of the article).** `tools/transfer/posthoc.py`,
+**8 October 2026 (after the results, not registered; an independent review of the article).** `tools/transfer/posthoc.py`,
 output `transfers-posthoc.json`; same connection tables and code paths as `estimate.py` and `describe.py`, 199 week
 draws.
 
 - **Omissions.** The §4.4 bounds for Q1b and Q2 and the §7 timing-noise check for Q2 had not been run; they are now.
   Q1b: no connection with an unobserved planned B has donors on other days, so the bounds on unobserved B only equal
-  the estimate (+0.74 pp); with the registered class, −9.99 to +3.54 pp. Q2 at 3 min: 78.4–80.3 % with unobserved B set
+  the estimate (+0.74 pp). This is a structural zero, not a finding: a missing tram changes the day's timetable
+  signature, so Q1b only sees days with fully tracked trams; with the registered class, −9.99 to +3.54 pp. Q2 at 3 min: 78.4–80.3 % with unobserved B set
   to missed / made (registered class 59.7–85.1 %); A's arrival ±30 s moves the share made between 71.5 and 86.0 % and
   the costly share between 16.4 and 30.6 % (B ±30 s is the mirror image for the share made).
 - **Bounds.** The registered bounds (−20.0 to +5.7 pp) overwrite the 24.1 % of connections whose outcome was observed.
@@ -266,7 +267,8 @@ draws.
 - **Calibration.** The in-sample calibration of §2 Q3 is close to true by construction. Out of sample: Δd fitted per
   cell on connections planned ≥ 5 min apart (cells with at least 30) predicts 71.2 / 80.6 / 87.4 % made at 2 / 3 / 4
   min against 71.2 / 79.6 / 86.7 % observed, for 83 % of the connections planned 2–4 min apart (April–May only:
-  69.7 / 79.2 / 86.0 against 70.0 / 77.4 / 85.1 %). This assumes Δd does not depend on the planned slack.
+  69.7 / 79.2 / 86.0 against 70.0 / 77.4 / 85.1 %). This assumes Δd does not depend on the planned slack. The model overpredicts by up to 1–2 pp (79.2 against 77.4 % at 3 min in April–May); slacks of
+  1 min and of 8–10 min in cells timetabled tighter remain untested extrapolations.
 - **Q4 baseline.** 16.6 % of all observed connections planned 2–4 min apart arrive over one of part 1's top tenth of
   segments, against 18.1 % of costly misses.
 - **Roulette.** It opens on the median share made at 3 min among the 1 857 shown cells whose own median slack is 2–4

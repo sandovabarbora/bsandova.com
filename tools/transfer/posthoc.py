@@ -1,4 +1,4 @@
-"""Analyses added after the results of the transfers design (9 October 2026), none of them registered.
+"""Analyses added after the results of the transfers design (8 October 2026), none of them registered.
 
 The reviewer of the article found that the registered §4.4 bounds overwrite outcomes that were observed, that §4.4's
 bounds for Q1b and Q2 and §7's timing check for Q2 had not been run, and that the roulette's calibration was in-sample.
@@ -288,7 +288,7 @@ def main() -> None:
     u = table("u")
     weeks = np.array(sorted(u["week"].unique()))
     W = es.draws(len(weeks), REPS, rng)
-    res = {"note": "after the results, not registered (9 October 2026)", "bootstrap_draws": REPS,
+    res = {"note": "after the results, not registered (8 October 2026)", "bootstrap_draws": REPS,
            "q1_bounds": q1_bounds(u, W, weeks)}
     log.info("q1 bounds done")
     res["q1b_bounds"] = q1b_bounds(u, W, weeks)
