@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why do three 22s come at once? Tram bunching in Prague, 2025</title>
+<meta name="description" content="A pre-specified analysis of {{pairs}} pairs of Prague trams in 2025: the spacing between two trams of a line drifts apart and together stop by stop without amplifying itself, so bunches build gradually along the line, mostly towards its end; sudden closings are rare and cluster where spacing is volatile.">
+<meta property="og:title" content="Why do three 22s come at once?">
+<meta property="og:description" content="Two trams of the same Prague line drift apart and together stop by stop, but the drift does not feed itself: bunches build slowly towards the end of the line. Part 2 of Running late.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://bsandova.com/texts/bunching">
+<meta property="og:image" content="https://bsandova.com/assets/og/bunching.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bsandova.com/assets/og/bunching.jpg">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://bsandova.com/texts/bunching">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../text.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../a24.css">
+<style>
+.text dl.meta{display:block;letter-spacing:normal;text-transform:none;font-size:12px}
+.text dl.meta div{border-right:0;padding-left:0;grid-template-columns:13ch 1fr}
+.text dl.meta dd{overflow-wrap:anywhere}
+@media (max-width:560px){.text dl.meta div{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">research · transit · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Research · Running late, part 2 · Prague trams and buses, spring and summer 2025</p>
+  <h1>Why do three 22s come at once? <em>Tram bunching in Prague, 2025</em></h1>
+  <p class="deck">A pre-specified analysis of the spacing between consecutive trams of the same line finds that it drifts stop by stop without feeding on itself: bunches build slowly towards the end of a line, as independent drift would build them, and the few sudden closings cluster where the spacing is volatile.</p>
+  <dl class="facts">
+    <div><dt>amplification per stop</dt><dd>{{g}} <small>95 % confidence interval (CI) {{g_lo}} to {{g_hi}} · {{g_label}}</small></dd></div>
+    <div><dt>pairs of trams followed</dt><dd>{{pairs}} <small>{{pair_stops_m}} million stops passed in pairs, 15 March – 8 September 2025</small></dd></div>
+    <div><dt>pairs arriving bunched</dt><dd>{{bunched}} % <small>under a quarter of the planned gap apart; {{ever_pct}} % of pairs are bunched somewhere</small></dd></div>
+    <div><dt>sudden closings, hottest tenth of platforms</dt><dd>{{ratio}}× <small>exposure alone; CI {{r_lo}} to {{r_hi}} · {{r_label}}, on {{births}} events</small></dd></div>
+  </dl>
+</header>
+<details class="tldr" open>
+  <summary>Overwhelmed? Here's the short version</summary>
+  <ul>
+    <li>Two trams of the same line leave the terminus a few minutes apart and drift apart and together on the way. Followed over {{pairs}} such pairs in 2025, the drift does not feed on itself: a pair that is off schedule at one stop is no more likely to go further off at the next (an amplification of {{g}} per stop, {{g_lo}} to {{g_hi}}, inside the registered margin, so {{g_label}}).</li>
+    <li>Bunches still build towards the end of the line, from {{d1}} % of pairs near the start to {{d10}} % near the end, but no faster than independent drift builds them: shuffling each tram's stop-to-stop changes between pairs gives the same curve ({{s10}} % at the end).</li>
+    <li>Between the {{tp}} stops where trams are held to time, the estimate is slightly positive ({{g_tp}}); at them, holding pulls it negative. Both are a thousandth of a unit per stop.</li>
+    <li>Bunching is rare: {{bunched}} % of pairs arrive under a quarter of the planned gap apart. {{gradual_pct}} % of bunches form gradually; the sudden closings the design defined, {{births}} of them, are concentrated on some platforms ({{ratio}}× exposure, {{r_label}}), but those are the same places where spacing suddenly reopens: they are volatile, not bunch factories. Too few events to tell whether the places are stable ({{rho_label}}).</li>
+    <li>City buses differ: their spacing does amplify, slightly ({{bg}} per stop, {{bg_label}}).</li>
+    <li>Sudden closings come more often after segments where part 1 found the delay gain most spread out ({{q3}}, {{q3_label}}), partly by construction.</li>
+  </ul>
+</details>
+<dl class="meta">
+  <div><dt>published</dt><dd>8 October 2026 · <a href="../changelog/#bunching">version 1</a></dd></div>
+  <div><dt>work since</dt><dd>October 2026</dd></div>
+</dl>
+<details class="meta-more">
+  <summary>About this study</summary>
+<dl class="meta">
+  <div><dt>status</dt><dd>research, pre-specified analysis (self-timestamped)</dd></div>
+  <div><dt>series</dt><dd><a href="running-late">Running late</a>, part 2</dd></div>
+  <div><dt>registration</dt><dd>design committed at <code>2b78211</code> on 8 October 2026, after two rounds of independent methods review and before any headway was computed; screening at <code>65789a6</code>; estimation code frozen with tests at <code>83f91ec</code> (tag <code>late-bunching-v1</code>), with the change of the primary estimand logged before it; results at <code>8dc4eea</code>. Commit times are self-reported. Arrival times had been read before for <a href="weather-rails">Weather on the rails</a> and <a href="delay-origins">part 1</a>, never as the spacing between two trams. Described after the results, not registered: how bunches form, the deeper instruments, intervals for two variants, the volatility of the platforms and the busiest places (<code>tools/bunch/describe.py</code>). Changes after registration, each dated, are in <a href="../changelog/#bunching-changes">the change log</a>.</dd></div>
+  <div><dt>data</dt><dd>Prague Integrated Transport stop-time history via Golemio, 15 March – 8 September 2025, as used in the author's master's thesis<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup>; stop positions from the PID timetable data<sup class="cite"><a href="#r3">3</a></sup>. The passes are not redistributed; the per-segment values are in <a href="../assets/bunch/segments.json">segments.json</a>, the estimates in <a href="../assets/bunch/results.json">results.json</a> and <a href="../assets/bunch/results-bus.json">results-bus.json</a>, the descriptions in <a href="../assets/bunch/describe.json">describe.json</a>.</dd></div>
+  <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/bunch">tools/bunch/</a>; rebuild: <code>uv run --with numpy --with pandas --with pyarrow --with scipy --with duckdb python tools/bunch/estimate.py</code></dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Why do three 22s come at once? Tram bunching in Prague, 2025</i>. bsandova.com/texts/bunching, version 1.</dd></div>
+  <div><dt>licence</dt><dd>code MIT; text and figures CC BY 4.0</dd></div>
+</dl>
+</details>
+
+{{photo}}
+
+<section>
+<p>Anyone who has waited ten minutes for a tram and then watched two of the same line arrive together knows bunching. The usual account of it comes from buses: a vehicle that falls a little behind finds more people waiting at each stop, takes longer to load them and falls further behind, while the one following finds fewer and catches up, until the two travel together<sup class="cite"><a href="#r7">7</a></sup><sup class="cite"><a href="#r8">8</a></sup>. On that account the spacing between two vehicles is unstable: a small deviation grows by itself. <a href="delay-origins">Part 1</a> of this series found where Prague's trams record their delay. This part asks what happens to the spacing between two trams of the same line as they travel, and whether it breaks down by itself.</p>
+</section>
+
+<section>
+<h2>The question</h2>
+<p>A pair here is two trams of the same line and route that follow each other, scheduled between four and fifteen minutes apart, the frequent service people use without a timetable. Their spacing at a stop is the gap between their arrivals divided by the gap the timetable plans there, so 1 means on plan, 0.5 means half the planned gap, and anything under 0.25 counts as bunched. The pair is followed from the first stop where the two trams are consecutive to the end of the line, or until a third tram of the line comes between them.</p>
+<p>Three questions were written down before any spacing was computed. First, amplification: does a pair that is off plan at one stop move further off at the next? Second, places: do sudden closings, a pair going from at least half the planned gap to under a quarter of it in one stop, happen more often at some platforms than their traffic alone would give, and are those platforms the same in odd and even weeks? Third, whether the closings follow the segments where part 1 found the delay gain most spread out. A question is "supported" if its 95 % interval lies wholly on the predicted side of its line, "not supported" if it lies wholly within the margin set in advance or wholly on the other side, and "inconclusive" otherwise.</p>
+</section>
+
+<section>
+<h2>Data</h2>
+<p>The trams are those of the author's thesis: Prague Integrated Transport's stop-time history from Golemio<sup class="cite"><a href="#r2">2</a></sup>, 15 March to 8 September 2025<sup class="cite"><a href="#r1">1</a></sup>, with the screening of the earlier studies for planned closures and gaps in the feed. A trip counts if it runs its line's usual sequence of stops, which {{modal_lo}}–{{modal_hi}} % of trips do each month; short turns and diversions are left out. The first and last stop of each line are left out too, because the timetable sets the departure there. Routes with fewer than 1 000 pairs over the season, {{thin}} of them, mostly rare variants, are left out, which leaves {{patterns}} routes and {{pairs}} pairs. No two trams of a route share an arrival second at a stop, and the arrivals look measured rather than copied from the timetable: only a fraction of a percent equal it to the second.</p>
+</section>
+
+<section>
+<h2>No amplification</h2>
+<p>The measure of amplification is how much a pair's spacing changes from one stop to the next per unit it is off plan at the first. Measured directly, noise in the arrival times pulls it below zero by itself: an arrival recorded a few seconds late makes the spacing look off at one stop and corrected at the next. The design first proposed to remove that by comparing with shuffled data, but tests on made-up data before the results showed that the shuffle also removes the noise it was meant to keep, so the registered estimate was changed, before any spacing was read, to an instrumental-variable one: the spacing two stops back stands in for the spacing one stop back, which shares none of its recording noise<sup class="cite"><a href="#r4">4</a></sup>. The two are almost perfectly related ({{fs}}), so the instrument is strong.</p>
+<p>Over {{transitions_m}} million steps from one stop to the next, the amplification is {{g}} per stop (95 % CI {{g_lo}} to {{g_hi}}). The margin set in advance for "no amplification" was ±0.01 per stop, and the 90 % interval, {{g90_lo}} to {{g90_hi}}, lies wholly within it, so the prediction of amplification is {{g_label}}. With the spacing three or four stops back as the instrument the estimate is {{g3}} and {{g4}}; resampled by week its interval is {{gw_lo}} to {{gw_hi}}. Measured plainly, without the instrument, it would be {{g_ols}}, and the design's original shuffled comparison {{g_reg}}: both further from zero only because of the recording noise (fig. 1).</p>
+<p>The small negative value is not uniform. Without the {{tp}} stops where trams are held to time, stops where they stand much longer than the network's usual half-minute, the estimate is {{g_tp}} ({{g_tp_lo}} to {{g_tp_hi}}): a slight amplification, less than a tenth of the registered margin. Using departures instead of arrivals, where both trams' departures are recorded (about {{dep_share}} % of stops), it is {{g_dep}}. A reading consistent with both, described after the results: between timing points, the spacing drifts with a very slight tendency to grow, and holding at the timing points pulls it back, so that over the line the two nearly cancel. Neither is large enough to make a bunch by itself.</p>
+<figure data-chart="../assets/bunch/charts.json#gamma">
+  <p class="ch-head">Every estimate of amplification lies within a few thousandths of zero.</p>
+  <img src="../assets/bunch/03-gamma.svg" alt="Amplification per stop with 95 % intervals: the registered estimate {{g}}, the variants between −0.005 and +0.001, all inside the registered ±0.01." loading="lazy">
+  <figcaption><b>fig. 1</b> · Change in a pair's spacing per stop per unit it is off plan, with 95 % bootstrap intervals by day (by week where marked); the shaded band is the margin set in advance; grey, two estimates pulled down by recording noise. Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>Bunches build slowly, towards the end</h2>
+<p>Trams leave the terminus close to plan, and the spacing spreads as they go: its variance grows from {{var1}} in the first tenth of a line to {{var10}} in the last, steadily, as independent changes would make it grow. The share of pairs arriving bunched or swapped grows with it, from {{d1}} % near the start to {{d10}} % near the end (fig. 2). Shuffling each tram's stop-to-stop changes between pairs of the same route, hour and day, which keeps the size of the changes and removes any link between them, gives the same curve or slightly more ({{s10}} % in the last tenth). Swaps are counted with bunches in this comparison because the shuffle lets trams pass each other, which on rails they hardly ever do. Over the whole line, {{bunched}} % of pairs arrive under a quarter of the planned gap apart and {{gap}} % more than 1.75 times it; with the looser and more common cut-offs of half and one and a half times the planned gap, {{b05}} % and {{g15}} %. Judging spacing against the planned gap, rather than in minutes, is how headway adherence is usually measured<sup class="cite"><a href="#r9">9</a></sup>.</p>
+<figure data-chart="../assets/bunch/charts.json#curve">
+  <p class="ch-head">Bunching grows along the line, as fast as independent drift would make it, not faster.</p>
+  <img src="../assets/bunch/02-curve.svg" alt="Share of pairs bunched or swapped by tenth of the way along the line, from {{d1}} % to {{d10}} %, with the shuffled curve at or slightly above it." loading="lazy">
+  <figcaption><b>fig. 2</b> · Pairs arriving under a quarter of the planned gap apart or in swapped order, by tenth of the way along the line (coral), and the same after shuffling each tram's stop-to-stop changes between pairs of the same route, hour and day (grey, dashed). Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>.</figcaption>
+</figure>
+<p>Most bunches form slowly. Of the {{ever}} pairs that are bunched at some stop, {{ever_pct}} % of all pairs, {{gradual_pct}} % arrive there from a spacing between a quarter and a half of the planned gap, closing a little at a time; {{sudden_pct}} % arrive from at least half of it in one stop. Once bunched, a pair tends to stay so: {{stay}} % of bunched pairs are still bunched at the next stop. These counts were made after the results.</p>
+<p>Bunching follows the day. On weekdays it is highest in the afternoon peak and lowest late at night (fig. 3).</p>
+<figure data-chart="../assets/bunch/charts.json#hours">
+  <p class="ch-head">Pairs bunch most in the weekday afternoon peak.</p>
+  <img src="../assets/bunch/04-hours.svg" alt="Share of pairs arriving bunched by the hour the pair set out, weekdays and weekends, highest in the weekday afternoon." loading="lazy">
+  <figcaption><b>fig. 3</b> · Share of pair passes arriving under a quarter of the planned gap apart, by the hour the pair set out, weekdays (coral) and weekends (grey). Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>Sudden closings, and where they happen</h2>
+<p>The design defined the birth of a bunch as a sudden closing: a pair going from at least half the planned gap to under a quarter of it between two stops. That turned out to be rare, {{births}} in {{eligible_m}} million steps, and to miss most bunches, which close gradually. The question about places is therefore about sudden closings, not about bunching in general.</p>
+<p>Platforms were ranked by their rate of sudden closings in odd weeks, and the tenth with the highest rates held {{Sb}} % of the even-week closings, and the other way round; if closings fell anywhere with equal chance per pair passing, that tenth would hold {{Sb0}} %. The ratio is {{ratio}} (95 % CI {{r_lo}} to {{r_hi}}), above the registered 1.25, so concentration is {{r_label}}. It depends on the rule: with the stricter rule registered as a check, a fall from at least three quarters of the gap, the ratio is {{r075}}, with an interval reaching down to {{r075_lo}} ({{r075_label}}); counting closings to under a fifth of the gap it is {{r020}}, to under a third {{r033}} (fig. 4).</p>
+<p>Whether the same platforms stand out in odd and in even weeks could not be told. The split-half correlation is {{rho}} ({{rho_lo}} to {{rho_hi}}), below the registered 0.50, which makes the stability question {{rho_label}}, although a split-half correlation understates the full-sample one<sup class="cite"><a href="#r5">5</a></sup><sup class="cite"><a href="#r6">6</a></sup>; but with about one closing per platform over the season, and none at {{zero_pct}} % of them, even platforms ten times more prone than the rest would not reach 0.50, a limit the design did not foresee. With the looser rule of closing under a third of the gap ({{b033}} closings) the correlation is {{rho033}}.</p>
+<p>The platforms that stand out are volatile rather than bunch factories. Sudden re-openings, the reverse event, are concentrated in the same way ({{r_deaths}}× exposure), and across platforms the share of steps where the spacing suddenly closes and the share where it suddenly opens are almost perfectly related ({{dr}}); the rate of sudden closings follows the share of large steps of either sign ({{vol}}). These relations were computed after the results. Fig. 5 maps how often the spacing changes suddenly on each segment. The largest is the platform at Národní divadlo, with {{nd_b}} sudden closings where its traffic alone would give about {{nd_e}}, {{seg1_b}} of them on trams arriving from Újezd; the next segment is {{seg2}} ({{seg2_b}}). A comparison the design registered, running the closings backwards along the line, uses the same events as the re-openings and so adds no separate test; its ranking agrees with the forward one only weakly ({{fwd_bwd}}), as so few events allow.</p>
+<figure data-chart="../assets/bunch/charts.json#places">
+  <p class="ch-head">Sudden closings concentrate on some platforms, and so do sudden re-openings.</p>
+  <img src="../assets/bunch/05-places.svg" alt="How much more the hottest tenth of platforms holds than exposure alone, with 95 % intervals: the registered {{ratio}} and the checks, all above 1, with re-openings as high." loading="lazy">
+  <figcaption><b>fig. 4</b> · Cross-fitted share of sudden closings at the hottest tenth of platforms divided by the share exposure alone gives, with 95 % bootstrap intervals by day; the line marks the registered 1.25; grey, sudden re-openings by the same procedure. Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>.</figcaption>
+</figure>
+<figure class="mp-fig" data-map="../assets/bunch/map.json">
+  <img class="mp-static" src="../assets/bunch/01-map.svg" alt="Map of Prague's tram network, each segment shaded by how often a pair's spacing changes suddenly there; the darkest segments are in the centre and on a few radial lines." loading="lazy">
+  <figcaption><b>fig. 5</b> · Each tram segment drawn between the stops it joins, each direction on its right, shaded by how often a pair's spacing changed by more than a quarter of the planned gap on it, per 1 000 pairs passing; views for bunched pairs and the count of sudden closings; {{drawn}} of {{segs}} segments with at least 500 pairs placed from the stop positions. Hovering over or tapping a segment gives its values. Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>, stop positions from the PID timetable<sup class="cite"><a href="#r3">3</a></sup>.</figcaption>
+</figure>
+<p>Sudden closings also come more often after segments where part 1 found the delay gain most spread out across passes: across {{q3_seg}} segments the rank correlation is {{q3}} ({{q3_lo}} to {{q3_hi}}), so the link is {{q3_label}}. It is partly built in, since a closing is a large difference between two trams' gains on one segment, and the spread of gains measures the same thing; with the mean gain instead of its spread the correlation is {{q3_mean}}.</p>
+</section>
+
+<section>
+<h2>Buses</h2>
+<p>City buses, routes 100 to 299, analysed alongside with their own labels, do not behave like trams. Over {{bpairs}} pairs their amplification is {{bg}} per stop ({{bg_lo}} to {{bg_hi}}), wholly above zero, so for buses the registered prediction is {{bg_label}}: a bus off its spacing tends to move further off at the next stop. The effect is small, a fifth of a percent per stop, but it has the sign the textbook account predicts<sup class="cite"><a href="#r7">7</a></sup><sup class="cite"><a href="#r8">8</a></sup>. {{bbunched}} % of their pair passes arrive bunched, and buses, unlike trams, also overtake. Their {{bbirths}} sudden closings concentrate strongly on some stops ({{bratio}}× exposure, {{br_lo}} to {{br_hi}}, {{br_label}}), and whether those stops are stable is {{brho_label}} (split-half correlation {{brho}}). Why buses differ was not measured; they share the road with cars, can pass each other and have fewer timing points, and any of these could matter.</p>
+</section>
+
+<section>
+<h2>What this means</h2>
+<p>On Prague's trams in 2025, the spacing between two trams of a line did not break down by itself. It drifted stop by stop, slightly outwards between timing points and back again at them, and bunches built up slowly towards the ends of lines, about as fast as independent drift would build them. The textbook mechanism of a late vehicle falling ever further behind was not visible in the stop-to-stop changes of trams; for buses it was, slightly. Where the spacing suddenly closes, it also suddenly opens: those places are volatile, which the data locate but do not explain.</p>
+</section>
+
+<section>
+<h2>What this does not show</h2>
+<p>The amplification is a net figure. Trams are timetabled and dispatchers hold them at timing points, so a value near zero means that whatever feeds bunching and whatever corrects it cancel out here, not that nothing feeds it. The pairs are two trams of one line scheduled four to fifteen minutes apart, formed near the start of the line; passengers on a stop shared by several lines see a combined spacing this does not measure. {{low_pairs}} pairs scheduled three to four minutes apart were too few to say anything. The sudden closings are located, not explained; incidents, junctions and stops shared by several lines look alike here. The descriptions of how bunches form and of the platforms' volatility were made after the results. Spacing between trams is not passengers' waiting time, and one spring and summer is not every season.</p>
+</section>
+
+<section id="reproduction">
+<h2>Reproduction</h2>
+<p>Every number on this page is filled in from the result files by a script, from the repository root:</p>
+<ol>
+<li>The rain study's screening of closures and feed gaps: <a href="rain-delays">Does rain delay Prague's trams?</a>, Reproduction.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/bunch/screen.py"><code>tools/bunch/screen.py</code></a>: routes, pairs and the screening counts; <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/bunch/timing.py"><code>timing.py</code></a>: the timing points.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/bunch/estimate.py"><code>estimate.py</code></a>, checked by <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/bunch/test_bunch.py"><code>test_bunch.py</code></a>: the registered estimates and checks.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/bunch/describe.py"><code>describe.py</code></a>: the descriptions computed after the results.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/bunch/article.py"><code>article.py</code></a>: the map, the figures and this page.</li>
+</ol>
+<p>The design is <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/bunching-design.md"><code>docs/research/bunching-design.md</code></a>.</p>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Šandová, B. (2026). <i>Persistence Dynamics and Welfare Costs of Urban Public Transport Delays</i>. Master's thesis, Institute of Economic Studies, Faculty of Social Sciences, Charles University, Prague. Summary at <a href="thesis">bsandova.com/texts/thesis</a>. Not yet in a public repository.</li>
+<li id="r2">Operátor ICT. Golemio, Prague's open-data platform: Prague Integrated Transport stop-time history, collected 15 March – 8 September 2025. <a href="https://golemio.cz">golemio.cz</a>. Accessed 8 October 2026.</li>
+<li id="r3">ROPID. Prague Integrated Transport open data: timetable in GTFS (stops, trips and routes). <a href="https://pid.cz/o-systemu/opendata/">pid.cz/o-systemu/opendata</a>. Accessed 8 October 2026.</li>
+<li id="r4">Anderson, T. W., Hsiao, C. (1981). Estimation of dynamic models with error components. <i>Journal of the American Statistical Association</i> 76(375), 598–606. <a href="https://doi.org/10.1080/01621459.1981.10477691">doi:10.1080/01621459.1981.10477691</a>. Accessed 8 October 2026.</li>
+<li id="r5">Spearman, C. (1910). Correlation calculated from faulty data. <i>British Journal of Psychology</i> 3(3), 271–295. <a href="https://doi.org/10.1111/j.2044-8295.1910.tb00206.x">doi:10.1111/j.2044-8295.1910.tb00206.x</a>. Accessed 8 October 2026.</li>
+<li id="r6">Brown, W. (1910). Some experimental results in the correlation of mental abilities. <i>British Journal of Psychology</i> 3(3), 296–322. <a href="https://doi.org/10.1111/j.2044-8295.1910.tb00207.x">doi:10.1111/j.2044-8295.1910.tb00207.x</a>. Accessed 8 October 2026.</li>
+<li id="r7">Daganzo, C. F. (2009). A headway-based approach to eliminate bus bunching: systematic analysis and comparisons. <i>Transportation Research Part B: Methodological</i> 43(10), 913–921. <a href="https://doi.org/10.1016/j.trb.2009.04.002">doi:10.1016/j.trb.2009.04.002</a>. Accessed 8 October 2026.</li>
+<li id="r8">Bartholdi, J. J., Eisenstein, D. D. (2012). A self-coördinating bus route to resist bus bunching. <i>Transportation Research Part B: Methodological</i> 46(4), 481–491. <a href="https://doi.org/10.1016/j.trb.2011.11.001">doi:10.1016/j.trb.2011.11.001</a>. Accessed 8 October 2026.</li>
+<li id="r9">Kittelson &amp; Associates, Parsons Brinckerhoff, KFH Group et al. (2013). <i>Transit Capacity and Quality of Service Manual</i>, 3rd edition. TCRP Report 165. Transportation Research Board. <a href="https://doi.org/10.17226/24766">doi:10.17226/24766</a>. Accessed 8 October 2026.</li>
+</ol>
+</section>
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a> · <a href="running-late">The series</a> · <a href="delay-origins">Part 1</a></p>
+</footer>
+</article>
+
+<script src="../assets/charts.js" defer></script>
+<script src="../assets/map.js" defer></script>
+</body>
+</html>

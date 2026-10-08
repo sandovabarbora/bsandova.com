@@ -234,3 +234,7 @@ the design guessed.
 - **Thresholds and references.** The 0.5 / 1.5 checks are kept as checks; the Transit Capacity and Quality of Service
   Manual (Kittelson & Associates et al., 2013) measures headway adherence relative to the scheduled headway, but its
   exact cut-offs were not checked, so they are not attributed to it.
+
+**8 October 2026 (correction of a count in the screening note above).** The share of trips on their line's modal
+pattern is 63–76 % by month (63 % in the eight days of September), not 68–76 % as first written; the screening file
+was right, the note misread it.
