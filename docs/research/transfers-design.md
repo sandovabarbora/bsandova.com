@@ -229,3 +229,6 @@ same Δp_within for that month; that one month's point estimate was seen in this
 because freed tables are not returned to the system within one process, and was stopped before printing anything.
 Each month now runs in its own process and writes its reduced tables to `tools/data/transfer/estimate/`; the final
 step reads only those. Same rules and code paths.
+The final step then reached 28 GB, building a connections × draws weight matrix for Δp_within; it now sums the
+differences by ISO week before applying the draws, which gives the same numbers, and forms Q1b in smaller blocks. It
+was stopped before printing anything.

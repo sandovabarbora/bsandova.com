@@ -200,16 +200,17 @@ def interval(values: np.ndarray) -> dict:
 
 
 def within_stat(q: pd.DataFrame, W: np.ndarray, weeks: np.ndarray) -> np.ndarray:
-    """Δp_within under each row of week weights W (first row = the data)."""
+    """Δp_within under each row of week weights W (first row = the data); summed by week first, which is exact."""
     wi = {w: i for i, w in enumerate(weeks)}
     wk = np.array([wi[w] for w in q["week"]])
     diff = q["made"].to_numpy() - (q["within_made"] / q["within_n"]).to_numpy()
-    wt = W[:, wk]
-    return (wt @ diff) / wt.sum(axis=1)
+    num = np.bincount(wk, weights=diff, minlength=len(weeks))
+    den = np.bincount(wk, minlength=len(weeks)).astype(float)
+    return (W @ num) / (W @ den)
 
 
 def day_stat(q: pd.DataFrame, S: np.ndarray, N: np.ndarray, W: np.ndarray, weeks: np.ndarray,
-             chunk: int = 500_000) -> np.ndarray:
+             chunk: int = 50_000) -> np.ndarray:
     """Δp_day under each row of W; donor weeks are re-weighted too, so donors come only from the drawn weeks."""
     wi = {w: i for i, w in enumerate(weeks)}
     wk = np.array([wi[w] for w in q["week"]])
@@ -285,9 +286,8 @@ def summarise_checks(q: pd.DataFrame, var: dict[str, pd.DataFrame], weeks: np.nd
     summer = q["date"].map(lambda d: SUMMER[0] <= d <= SUMMER[1]).astype(bool)
     out["school_holidays"] = run(q[summer])
     out["term_time"] = run(q[~summer])
-    pairs = q.groupby(["hub", "aroute", "broute"], observed=True).size()
-    out["by_line_pair"] = {f"{h} {a}>{bb}": run(q[(q["hub"] == h) & (q["aroute"] == a) & (q["broute"] == bb)])
-                           for (h, a, bb), n in pairs.items() if n >= 500}
+    out["by_line_pair"] = {f"{h} {a}>{bb}": run(g) for (h, a, bb), g in
+                           q.groupby(["hub", "aroute", "broute"], observed=True) if len(g) >= 500}
     out["by_hub"] = {h: run(g) for h, g in q.groupby("hub", observed=True) if len(g) >= 500}
     out["hub_and_week_resampling"] = hub_week(q, weeks, rng)
     out["hub_definition_by_stop_name"] = ("identical to the primary: tram platforms have no parent station in the "
@@ -382,8 +382,9 @@ def main() -> None:
         month_stage(fc, fc.with_name(fc.name.replace("connections", "btrips")))
         return
     STAGE.mkdir(parents=True, exist_ok=True)
-    for fc, _ in months():
-        subprocess.run([sys.executable, __file__, "--month", str(fc)], check=True)
+    if "--aggregate" not in sys.argv:  # --aggregate reuses the month tables already written
+        for fc, _ in months():
+            subprocess.run([sys.executable, __file__, "--month", str(fc)], check=True)
     q = stage_table("q")
     for k in ("hub", "akey", "bkey", "aroute", "broute", "band", "daytype"):
         q[k] = q[k].astype(str).astype("category")
