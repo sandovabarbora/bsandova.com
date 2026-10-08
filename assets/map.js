@@ -61,6 +61,8 @@
       const d = f.l ? f.l.map(line => 'M' + line.map(([x, y]) => X(x) + ',' + Y(y)).join('L')).join('')
                     : f.r.map(ring => 'M' + ring.map(([x, y]) => X(x) + ',' + Y(y)).join('L') + 'Z').join('');
       const p = el('path', {d, class: f.l ? 'a ln' : 'a', 'data-i': i}, gA);
+      // set inline so a cached stylesheet without the line rule cannot fill a route as an area
+      if (f.l) Object.assign(p.style, {fill: 'none', strokeWidth: '2.4', strokeLinecap: 'round', strokeLinejoin: 'round'});
       return p;
     });
     const O = S.overlay || {};
