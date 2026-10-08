@@ -62,7 +62,7 @@
   <summary>About this study</summary>
 <dl class="meta">
   <div><dt>status</dt><dd>research, pre-specified analysis (self-timestamped); every result descriptive</dd></div>
-  <div><dt>registration</dt><dd>pre-specified analysis: the series analysis plan was committed at <code>e890c27</code> and <code>12417ae</code> on 1 October 2026, before this analysis was run; the author had worked with these data since March 2026. Commit times are self-reported. Two data definitions and one post-hoc ranking were added after the results (see <a href="#changes">What changed after registration</a>).</dd></div>
+  <div><dt>registration</dt><dd>pre-specified analysis: the series analysis plan was committed at <code>e890c27</code> and <code>12417ae</code> on 1 October 2026, before this analysis was run; the author had worked with these data since March 2026. Commit times are self-reported. Two data definitions and one post-hoc ranking were added after the results (see <a href="../changelog/#pop-bts-changes">What changed after registration</a>).</dd></div>
   <div><dt>data</dt><dd>kworb.net Spotify chart totals for the global chart and 75 national charts, accessed 1 October 2026<sup class="cite"><a href="#r5">5</a></sup>; Wikipedia tour articles at revisions 1375294102, 1377166953 and 1377861360, Boxscore figures as cited there<sup class="cite"><a href="#r6">6</a></sup>; World Bank GDP per capita<sup class="cite"><a href="#r7">7</a></sup>. Hashes in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/pop-measured-files.sha256">pop-measured-files.sha256</a>; the study's rows in <a href="../assets/pop/bts/ones.csv">ones.csv</a>, <a href="../assets/pop/bts/countries.csv">countries.csv</a>, <a href="../assets/pop/bts/songs.csv">songs.csv</a> and <a href="../assets/pop/bts/tour.csv">tour.csv</a>.</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/pop">tools/pop/</a> at the commit that publishes this page; rebuild: <code>uv run --with numpy python tools/pop/analyse.py bts</code> (full order under <a href="#reproduction">Reproduction</a>)</dd></div>
   <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>BTS, measured: a catalogue, not a hit</i>. bsandova.com/texts/pop-bts, version 2.</dd></div>
@@ -145,14 +145,6 @@
 </figure>
 </section>
 
-<section id="changes">
-<h2>What changed after registration</h2>
-<ul>
-<li>1 October 2026, after part 1's results were seen (post hoc): countries are also ranked by days alone, because small markets with many one-day number ones inflate the ratio. The registered ratio and its ranking are reported unchanged.</li>
-<li>2 October 2026, after the results were first computed: an attendance figure that covers several venues is a leg's total, not a run, and is left out of the run question. Three BTS entries of 2018 are leg totals; the parser flagged two (Los Angeles and Tokyo), and the third, Taoyuan, was flagged by hand on 3 October 2026 after an audit.</li>
-<li>2 October 2026, same day: an entry that counts online viewers with the hall is left out of the run and price questions. Three entries of <i>Permission to Dance on Stage</i> are affected. Both rules are in the series design with the reason.</li>
-</ul>
-</section>
 
 <section>
 <h2>What this means</h2>

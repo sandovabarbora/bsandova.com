@@ -4,7 +4,7 @@ deploy; soft rules (word caps) are reported as warnings.
 Hard rules, for every article in texts/*.html:
   - one short-version box (details.tldr), one metadata block (dl.meta) whose version links to the article's change log
     on the changelog page (changelog/#<slug>), and that change log (docs/changelogs/<slug>.html) records the standard
-    check;
+    check; changes after registration are listed there too, never in the article;
   - no claim of review ("referee"), and "pre-registered" only in its negated form ("not pre-registered");
   - references: numbered r1..rN without gaps, every entry cited, every citation resolves;
   - figures numbered 1..n in order, and every "(fig. n)" in the text points at an existing figure;
@@ -64,6 +64,8 @@ def check(path: Path) -> tuple[list[str], list[str]]:
         hard.append("change log does not record the standard check")
     if 'id="changelog"' in s:
         hard.append("change log inside the article; it belongs on the changelog page")
+    if 'id="changes"' in s:
+        hard.append("changes after registration inside the article; they belong in its change log")
     text = visible(s)
     if re.search(r"\breferees?\b", text, re.I):
         hard.append('mentions "referee"')

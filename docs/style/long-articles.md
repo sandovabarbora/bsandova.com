@@ -56,7 +56,7 @@ paragraphs.
 4. **The tests,** with the table.
 5. **Sections per question,** each integrating the short version's descriptive material where it belongs.
 6. **Robustness.**
-7. **"What changed after registration".**
+7. **"What changed after registration"**: since 8 October 2026 in the change log, linked from the metadata, not in the article.
 8. **"What this does not show".**
 9. **References**, merged and renumbered, with no duplicates.
 10. **Footer.**

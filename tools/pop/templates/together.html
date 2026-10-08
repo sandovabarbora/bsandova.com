@@ -61,7 +61,7 @@
   <summary>About this study</summary>
 <dl class="meta">
   <div><dt>status</dt><dd>research, exploratory; models committed before estimation</dd></div>
-  <div><dt>registration</dt><dd>exploratory: the models, the coding of languages and the checks were committed at <code>4fe0484</code> on 2 October 2026, and the code at <code>9545ead</code>, before estimation; results commit <code>85b798f</code>. The inputs had been seen as descriptive results in parts 1–5, so no result here is confirmatory. Commit times are self-reported.</dd></div>
+  <div><dt>registration</dt><dd>exploratory: the models, the coding of languages and the checks were committed at <code>4fe0484</code> on 2 October 2026, and the code at <code>9545ead</code>, before estimation; results commit <code>85b798f</code>. The inputs had been seen as descriptive results in parts 1–5, so no result here is confirmatory. Commit times are self-reported. Changes after registration, each dated, are in <a href="../changelog/#pop-together-changes">the change log</a>.</dd></div>
   <div><dt>data</dt><dd>the published results of <a href="pop-measured">Pop, measured</a>, parts 1–5: <a href="../assets/pop/together/panel.csv">panel.csv</a> ({{m1_n}} artist–country pairs) and <a href="../assets/pop/together/tickets.csv">tickets.csv</a> ({{m2_n}} Boxscore entries), drawn from kworb.net, Wikipedia (Boxscore) and the World Bank</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/pop/together.py">tools/pop/together.py</a> at the commit that publishes this page; rebuild: <code>uv run --with pandas --with numpy --with statsmodels python tools/pop/together.py</code></dd></div>
   <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Pop, measured, together: hits charted longer where the language matched, and tickets barely follow income</i>. bsandova.com/texts/pop-together, version 2.</dd></div>
@@ -138,14 +138,6 @@
 <p>The price model has its own limits. Tour effects remove each tour's level, so the elasticity comes from cities within a tour; a promoter who priced a whole leg in a poorer region lower would show up partly in the tour effect, and push the estimate down. The average ticket mixes cheap and dear seats, and a tour that sold more cheap seats in poorer countries would show a lower average without changing any one price, which would push the estimate up. The data cannot say which of the two dominates. Neither model is causal: they describe how the five artists' songs and tours behaved, under rules fixed before the estimates were seen.</p>
 </section>
 
-<section id="changes">
-<h2>What changed after registration</h2>
-<ul>
-<li>The models and checks are those committed at <code>4fe0484</code>, and the data definitions of parts 2–5 apply as they did there: leg totals (Boxscore rows that sum several shows) and entries that counted online viewers are left out.</li>
-<li>The design reports β as exp(β) − 1 in percent; this page reports the same quantity as a multiple, exp(β): {{m1_x}} times is {{m1_pct}}.</li>
-<li>Added after an audit on 3 October 2026, not registered: the comparison of English and other songs' residuals across the countries that speak none of the five languages, in the section on Czechia.</li>
-</ul>
-</section>
 
 <section>
 <h2>What this means</h2>

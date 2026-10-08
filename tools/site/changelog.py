@@ -152,6 +152,8 @@ def render(items: list[dict]) -> str:
 .art{{max-width:46rem;padding:.6rem 0 .8rem;border-bottom:1px solid var(--line);scroll-margin-top:4rem}}
 .art h3{{font-size:1rem;font-weight:500;margin:0 0 .3rem}}.art h3 small{{font-family:var(--mono);font-size:11px;color:var(--fg-2);margin-left:.6rem}}
 .art ul{{margin:0;padding-left:1.1rem;font-size:.9rem;color:var(--fg-2)}}.art li{{margin:.2rem 0}}
+.art h4{{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-2);font-weight:400;margin:.7rem 0 .2rem;scroll-margin-top:4rem}}
+.art p{{font-size:.9rem;color:var(--fg-2);margin:.2rem 0 .4rem}}.art h4:target{{color:var(--hot)}}
 .art:target{{background:linear-gradient(90deg,var(--line),transparent)}}
 @media (max-width:48rem){{.c{{grid-template-columns:3.2rem 1fr;}}.c .a{{grid-column:2}}.c .s{{grid-column:1/-1}}.c .h,.c .f{{grid-column:auto}}.c .body{{grid-column:1/-1}}}}
 </style>
@@ -162,7 +164,7 @@ def render(items: list[dict]) -> str:
 <header class="text-head">
   <p class="kicker">Changelog · every commit since {first} · generated from git at build time</p>
   <h1>What changed, <em>and when.</em></h1>
-  <p class="deck">The <a href="../status/">status page</a> says whether the jobs ran. This page says what the site itself did: every commit, its area, the files it touched, and the commit to read if you want the diff. Job commits, the surf collector and the model watch writing their data, are kept and greyed, so the two kinds of change stay distinguishable. The commit list is not typed; it is rebuilt from <code>git log</code> on every deploy. Above it are the articles' own change logs, written by hand: corrections, version notes and the editorial-standard check, each under its article, which links here from its version number.</p>
+  <p class="deck">The <a href="../status/">status page</a> says whether the jobs ran. This page says what the site itself did: every commit, its area, the files it touched, and the commit to read if you want the diff. Job commits, the surf collector and the model watch writing their data, are kept and greyed, so the two kinds of change stay distinguishable. The commit list is not typed; it is rebuilt from <code>git log</code> on every deploy. Above it are the articles' own change logs, written by hand: for the registered studies, every change made after registration, then corrections, version notes and the editorial-standard check, each under its article, which links here from its version number.</p>
   <dl class="facts">
     <div><dt>commits</dt><dd>{n_site} <small>by hand</small></dd></div>
     <div><dt>job commits</dt><dd>{n_job} <small>surf · watch, data only</small></dd></div>
