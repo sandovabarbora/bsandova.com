@@ -224,3 +224,8 @@ e425c61 (load only the rows an analysis reads: the flagged returns and same-trun
 before printing any estimate. The test suite passes on the fixed code (7 tests), and on March 2025 the frozen code and
 the fixed code give the same Q1 rows, connection by connection (771 749 rows: made, same-day donor counts), and the
 same Δp_within for that month; that one month's point estimate was seen in this comparison before the full run.
+
+**8 October 2026 (memory, again before any full result).** The month-by-month run still grew past 12 GB by May,
+because freed tables are not returned to the system within one process, and was stopped before printing anything.
+Each month now runs in its own process and writes its reduced tables to `tools/data/transfer/estimate/`; the final
+step reads only those. Same rules and code paths.

@@ -12,10 +12,11 @@ Writes docs/research/transfers-results.json.
 """
 from __future__ import annotations
 
-import gc
 import importlib.util
 import json
 import logging
+import subprocess
+import sys
 from datetime import date
 from pathlib import Path
 
@@ -335,38 +336,55 @@ DAY = ["date", "week", "hub", "akey", "bkey", "daytype", "sig", "tod_a", "tod_b"
        "aroute", "broute", "band", "within_made", "within_n"]
 
 
-def main() -> None:
-    """Month by month (same-day donors, checks and bounds need only their own day), then the week bootstrap on the
-    reduced tables; other-day donors (Q1b) need every month and are formed once all are read."""
-    logging.basicConfig(level=logging.INFO, format="%(message)s")
+STAGE = DATA / "estimate"
+
+
+def month_stage(fc: Path, fb: Path) -> None:
+    """One month's same-day work (donors, checks, bounds, costs), written as small tables for the final stage; run in
+    its own process so the memory a month needs is returned to the system before the next."""
     sc = json.loads((R / "transfers-screen.json").read_text())
     removed = set(sc["hubs_removed_early_departures"])
     miss = pd.read_parquet(DATA / "missing.parquet")
     miss = miss[miss["missing"] > 0]
     short = set(zip(miss["stop_name"].astype(str), miss["route"].astype(str), miss["sdate"].dt.date, miss["hour"]))
-    Q, COST, BOUND, VAR = [], [], [], {}
-    for fc, fb in months():
-        b = b_table(pd.read_parquet(fb))
-        c = prepare(read_connections(fc, False), removed)
-        c["delta_od_c"] = (c["b_od"] - c["b_sd"]).where(~c["b_starts_here"])
-        q = q1_frame(c, b)
-        q["sig"] = signature(q, b)
-        Q.append(q[DAY])
-        c2 = c[(c["slack"] >= 120) & (c["slack"] < 300)].copy()
-        c2["w"] = extra_wait(c2, b)
-        COST.append(c2[["slack", "made", "w", "band", "hub"]])
-        u = c[c["slack"].between(120, 240) & c["q1_hub"]].copy()
-        u["uncertain"] = uncertain(u, short)
-        u["within_made"], u["within_n"] = within_donors(u, b)
-        BOUND.append(u.loc[u["within_n"] > 0, ["week", "made", "uncertain", "within_made", "within_n"]])
-        ex = prepare(read_connections(fc, True), removed)
-        ex["delta_od_c"] = np.nan
-        for k, v in month_checks(c, b, ex).items():
-            VAR.setdefault(k, []).append(v)
-        log.info("%s: %s Q1 connections", fc.name, len(q))
-        del c, b, c2, u, ex
-        gc.collect()
-    q = pd.concat(Q, ignore_index=True)
+    tag = fc.stem.split("_")[1]
+    b = b_table(pd.read_parquet(fb))
+    c = prepare(read_connections(fc, False), removed)
+    c["delta_od_c"] = (c["b_od"] - c["b_sd"]).where(~c["b_starts_here"])
+    q = q1_frame(c, b)
+    q["sig"] = signature(q, b)
+    q[DAY].to_parquet(STAGE / f"q_{tag}.parquet", index=False)
+    c2 = c[(c["slack"] >= 120) & (c["slack"] < 300)].copy()
+    c2["w"] = extra_wait(c2, b)
+    c2[["slack", "made", "w", "band", "hub"]].to_parquet(STAGE / f"cost_{tag}.parquet", index=False)
+    u = c[c["slack"].between(120, 240) & c["q1_hub"]].copy()
+    u["uncertain"] = uncertain(u, short)
+    u["within_made"], u["within_n"] = within_donors(u, b)
+    u.loc[u["within_n"] > 0, ["week", "made", "uncertain", "within_made", "within_n"]].to_parquet(
+        STAGE / f"bound_{tag}.parquet", index=False)
+    ex = prepare(read_connections(fc, True), removed)
+    ex["delta_od_c"] = np.nan
+    for k, v in month_checks(c, b, ex).items():
+        v.to_parquet(STAGE / f"var-{k}_{tag}.parquet", index=False)
+    log.info("%s: %s Q1 connections", fc.name, len(q))
+
+
+def stage_table(prefix: str) -> pd.DataFrame:
+    return pd.concat([pd.read_parquet(f) for f in sorted(STAGE.glob(f"{prefix}_*.parquet"))], ignore_index=True)
+
+
+def main() -> None:
+    """Month by month, each in its own process (same-day donors, checks and bounds need only their own day), then the
+    week bootstrap on the reduced tables; other-day donors (Q1b) need every month and are formed here."""
+    logging.basicConfig(level=logging.INFO, format="%(message)s")
+    if "--month" in sys.argv:
+        fc = Path(sys.argv[sys.argv.index("--month") + 1])
+        month_stage(fc, fc.with_name(fc.name.replace("connections", "btrips")))
+        return
+    STAGE.mkdir(parents=True, exist_ok=True)
+    for fc, _ in months():
+        subprocess.run([sys.executable, __file__, "--month", str(fc)], check=True)
+    q = stage_table("q")
     for k in ("hub", "akey", "bkey", "aroute", "broute", "band", "daytype"):
         q[k] = q[k].astype(str).astype("category")
     weeks = np.array(sorted(q["week"].unique()))
@@ -381,17 +399,14 @@ def main() -> None:
            "q1b_day": interval(day_stat(q, S, N, W, weeks)),
            "q1b_connections_with_donors": int((N.sum(axis=1) > 0).sum())}
     del S, N
-    bd = pd.concat(BOUND, ignore_index=True)
+    bd = stage_table("bound")
     Wc = W[: CHECK_REPS + 1]
     res["bounds"] = {"uncertain_share": round(float(bd["uncertain"].mean()), 4)}
     for name, v in (("all_made", 1.0), ("all_missed", 0.0)):
         res["bounds"][name] = interval(within_stat(bd.assign(made=bd["made"].where(~bd["uncertain"], v)), Wc, weeks))
-    cost_rows = pd.concat(COST, ignore_index=True)
-    res["q2_cost"] = cost(cost_rows.assign(excluded=False))
-    var = {k: pd.concat(v, ignore_index=True) for k, v in VAR.items()}
-    for v in var.values():
-        for k in ("hub", "aroute", "broute", "band"):
-            v[k] = v[k].astype(str)
+    res["q2_cost"] = cost(stage_table("cost").assign(excluded=False))
+    names = sorted({f.stem.rsplit("_", 1)[0][4:] for f in STAGE.glob("var-*_*.parquet")})
+    var = {k: stage_table(f"var-{k}").astype({"hub": str, "aroute": str, "broute": str, "band": str}) for k in names}
     res["checks"] = summarise_checks(q.astype({"hub": str, "aroute": str, "broute": str, "band": str}), var, weeks, rng)
     OUT.write_text(json.dumps(res, ensure_ascii=False, indent=1, default=str) + "\n")
     print(json.dumps({k: res[k] for k in ("q1_connections", "p_obs", "p_within", "q1_within", "q1b_day")}, indent=1))
