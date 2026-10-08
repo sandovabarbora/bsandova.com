@@ -138,8 +138,8 @@ TEMPLATE = '''<!doctype html>
 </section>
 
 <section>
-<h2>The two side by side</h2>
-<p>Both parts use one model on one table: the delay a trip gains within a clock hour, compared with the same route at the same hour and weekday, with the weather of that hour from four ČHMÚ stations. Rain and heat push in opposite directions, and the metro, which neither reaches, stays near zero under both, which is what a weather effect on the street should look like. The rain part compares hours within a date; the heat part compares within a week, because heat lasts all day. The heat part rests on {{hot_dates}} hot days, the rain part on {{rain_dates}} wet ones.</p>
+<h2>Parts 1 and 2 side by side</h2>
+<p>Parts 1 and 2 use one model on one table: the delay a trip gains within a clock hour, compared with the same route at the same hour and weekday, with the weather of that hour from four ČHMÚ stations. Rain and heat push in opposite directions, and the metro, which neither reaches, stays near zero under both, which is what a weather effect on the street should look like. The rain part compares hours within a date; the heat part compares within a week, because heat lasts all day. The heat part rests on {{hot_dates}} hot days, the rain part on {{rain_dates}} wet ones.</p>
 <figure data-chart="../assets/weather-rails/charts.json#compare">
   <p class="ch-head">Rain adds about {{r}} s a trip-hour, heat takes about {{h}} s away; the metro barely moves under either.</p>
   <img src="../assets/weather-rails/01-compare.svg" alt="Delay gained per trip-hour against fair weather, with 95 % intervals: rain above zero for trams and buses, heat below zero for both, the metro near zero in both." loading="lazy">
