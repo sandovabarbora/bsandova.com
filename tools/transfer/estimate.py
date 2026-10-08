@@ -50,10 +50,27 @@ def label(ci95: tuple[float, float], ci90: tuple[float, float]) -> str:
     return "inconclusive"
 
 
+TEXT = ["hub", "akey", "bkey", "aroute", "broute"]
+DROP = ["b_oa", "dist_m"]
+
+
+def read_connections(excluded: bool) -> pd.DataFrame:
+    """Kept connections (all slacks), or the flagged returns and same-trunk pairs at slack 2–4 min only, which only the
+    check without the exclusions (§7) reads; text columns as categories."""
+    filters = ([("excluded", "==", True), ("slack", ">=", 120), ("slack", "<=", 240)] if excluded
+               else [("excluded", "==", False)])
+    parts = []
+    for f in sorted(DATA.glob("connections_*.parquet")):
+        c = pd.read_parquet(f, filters=filters).drop(columns=DROP)
+        parts.append(c.astype({k: "category" for k in TEXT}))
+        log.info("loaded %s: %s rows", f.name, len(c))
+    c = pd.concat(parts, ignore_index=True)
+    return c.astype({k: str for k in TEXT}).astype({k: "category" for k in TEXT})
+
+
 def load() -> tuple[pd.DataFrame, pd.DataFrame]:
-    c = pd.concat([pd.read_parquet(p) for p in sorted(DATA.glob("connections_*.parquet"))], ignore_index=True)
     b = pd.concat([pd.read_parquet(p) for p in sorted(DATA.glob("btrips_*.parquet"))], ignore_index=True)
-    return c, b
+    return read_connections(False), b.astype({"hub": "category", "bkey": "category"})
 
 
 def prepare(c: pd.DataFrame, removed_hubs: set[str]) -> pd.DataFrame:
@@ -67,8 +84,13 @@ def prepare(c: pd.DataFrame, removed_hubs: set[str]) -> pd.DataFrame:
     c["week"] = [d.isocalendar()[1] for d in c["date"]]
     c["tod_a"] = (c["a_sa"] - midnight) % 86400
     c["tod_b"] = (c["b_sd"] - midnight) % 86400
-    c["band"] = [screen.hour_band(d, h) for d, h in zip(c["date"], c["hour"])]
-    c["daytype"] = [screen.day_type(d) for d in c["date"]]
+    days = pd.Series(c["date"].unique())
+    dtype_of = dict(zip(days, days.map(screen.day_type)))
+    c["daytype"] = c["date"].map(dtype_of).astype("category")
+    h = c["hour"]
+    c["band"] = np.select([(h >= 20) | (h < 5), c["daytype"] != "weekday", h.isin([7, 8, 15, 16, 17])],
+                          ["evening", "weekend", "peak"], "daytime")
+    c["band"] = c["band"].astype("category")  # the same bands as screen.hour_band, vectorised
     c["q1_hub"] = ~c["hub"].isin(removed_hubs)
     return score(c)
 
@@ -90,7 +112,7 @@ def b_table(b: pd.DataFrame) -> pd.DataFrame:
 
 
 def group_index(b: pd.DataFrame) -> tuple[np.ndarray, dict]:
-    gid = b.groupby(["date", "hub", "bkey"], sort=False).ngroup().to_numpy()
+    gid = b.groupby(["date", "hub", "bkey"], sort=False, observed=True).ngroup().to_numpy()
     starts = np.r_[0, np.flatnonzero(np.diff(gid)) + 1]
     keys = list(zip(b["date"].to_numpy()[starts], b["hub"].to_numpy()[starts], b["bkey"].to_numpy()[starts]))
     return gid, dict(zip(keys, starts))
@@ -119,7 +141,7 @@ def within_donors(c: pd.DataFrame, b: pd.DataFrame, b_shift: float = 0.0, delta:
 def extra_wait(c: pd.DataFrame, b: pd.DataFrame) -> np.ndarray:
     """w = dep_hat of the first catchable B of the line − scheduled departure of the planned B, censored at 30 min."""
     obs = b[b["dep_hat"].notna()].copy()
-    gid_of = {k: i for i, k in enumerate(obs.groupby(["date", "hub", "bkey"], sort=False).groups)}
+    gid_of = {k: i for i, k in enumerate(obs.groupby(["date", "hub", "bkey"], sort=False, observed=True).groups)}
     og = np.array([gid_of[k] for k in zip(obs["date"], obs["hub"], obs["bkey"])], dtype=np.int64)
     # one sorted key for every (line, day, departure): a single searchsorted finds each connection's first catchable B
     key = og * KEY + obs["dep_hat"].to_numpy()
@@ -136,9 +158,9 @@ def extra_wait(c: pd.DataFrame, b: pd.DataFrame) -> np.ndarray:
 
 def signature(c: pd.DataFrame, b: pd.DataFrame) -> np.ndarray:
     """Timetable period of a line pair on a date (§2 Q1b): the set of A arrival and B departure times there."""
-    a_sig = c.groupby(["hub", "akey", "bkey", "date"])["tod_a"].agg(lambda s: hash(tuple(sorted(set(s)))))
+    a_sig = c.groupby(["hub", "akey", "bkey", "date"], observed=True)["tod_a"].agg(lambda s: hash(tuple(sorted(set(s)))))
     midnight = pd.to_datetime(b["date"]).astype("int64") // 10**9
-    b_sig = b.assign(tod=(b["sd"] - midnight) % 86400).groupby(["hub", "bkey", "date"])["tod"].agg(
+    b_sig = b.assign(tod=(b["sd"] - midnight) % 86400).groupby(["hub", "bkey", "date"], observed=True)["tod"].agg(
         lambda s: hash(tuple(sorted(set(s)))))
     sa = a_sig.reindex(pd.MultiIndex.from_frame(c[["hub", "akey", "bkey", "date"]])).to_numpy()
     sb = b_sig.reindex(pd.MultiIndex.from_frame(c[["hub", "bkey", "date"]])).to_numpy()
@@ -155,7 +177,7 @@ def day_donors(c: pd.DataFrame, weeks: np.ndarray) -> tuple[np.ndarray, np.ndarr
     ordinal = np.array([d.toordinal() for d in c["date"]])
     wk = np.array([wi[w] for w in c["week"]])
     dl, rq = c["delta_b"].to_numpy(), c["req"].to_numpy()
-    for idx in c.groupby(["hub", "akey", "bkey", "daytype", "sig", "tod_a", "tod_b"], sort=False).indices.values():
+    for idx in c.groupby(["hub", "akey", "bkey", "daytype", "sig", "tod_a", "tod_b"], sort=False, observed=True).indices.values():
         if len(idx) < 2:
             continue
         donor = (np.abs(ordinal[idx][:, None] - ordinal[idx][None, :]) > 1) & ~np.isnan(dl[idx])[None, :]
@@ -254,24 +276,28 @@ def checks(c: pd.DataFrame, b: pd.DataFrame, weeks: np.ndarray, rng) -> dict:
         return interval(within_stat(q, W, weeks)) if len(q) else {"est": None, "note": "no connections"}
 
     out: dict = {}
-    od = score(c, delta="delta_od_c")
-    out["observed_departures"] = run(q1_frame(od, b, delta="delta_od"))
+    cq = c[c["slack"].between(120, 240) & c["q1_hub"]]  # the Q1 rows, scored again under each variant
+    out["observed_departures"] = run(q1_frame(score(cq, delta="delta_od_c"), b, delta="delta_od"))
     for name, kw in (("a_plus_30s", {"a_shift": 30}), ("a_minus_30s", {"a_shift": -30}),
                      ("b_plus_30s", {"b_shift": 30}), ("b_minus_30s", {"b_shift": -30})):
-        out[f"timing_{name}"] = run(q1_frame(score(c, **kw), b, b_shift=kw.get("b_shift", 0.0)))
+        out[f"timing_{name}"] = run(q1_frame(score(cq, **kw), b, b_shift=kw.get("b_shift", 0.0)))
     for name, f in (("m_minus_30s", lambda m: m - 30), ("m_plus_30s", lambda m: m + 30),
                     ("m_fixed_2min", lambda m: np.full_like(m, 120.0))):
         out[f"margin_{name}"] = run(q1_frame(replan(c, b, f(c["m"].to_numpy())), b))
-    out["without_exclusions"] = run(q1_frame(c, b, keep_excluded=True))
+    ex = prepare(read_connections(True), set(c.loc[~c["q1_hub"], "hub"].astype(str)))
+    ex["delta_od_c"] = np.nan
+    both = pd.concat([cq, ex], ignore_index=True)
+    out["without_exclusions"] = run(q1_frame(both, b, keep_excluded=True))
+    del ex, both
     q = q1_frame(c, b)
     out["peaks_only"] = run(q[q["band"] == "peak"])
     summer = q["date"].map(lambda d: SUMMER[0] <= d <= SUMMER[1])
     out["school_holidays"] = run(q[summer])
     out["term_time"] = run(q[~summer])
-    pairs = q.groupby(["hub", "aroute", "broute"]).size()
+    pairs = q.groupby(["hub", "aroute", "broute"], observed=True).size()
     out["by_line_pair"] = {f"{h} {a}>{bb}": run(q[(q["hub"] == h) & (q["aroute"] == a) & (q["broute"] == bb)])
                            for (h, a, bb), n in pairs.items() if n >= 500}
-    out["by_hub"] = {h: run(g) for h, g in q.groupby("hub") if len(g) >= 500}
+    out["by_hub"] = {h: run(g) for h, g in q.groupby("hub", observed=True) if len(g) >= 500}
     out["hub_and_week_resampling"] = hub_week(q, weeks, rng)
     out["hub_definition_by_stop_name"] = ("identical to the primary: tram platforms have no parent station in the "
                                           "PID GTFS, so hubs are already keyed by stop name")
@@ -308,9 +334,9 @@ def cost(c: pd.DataFrame) -> dict:
                "censored_share": round(float((g["w"] >= CENSOR_S).mean()), 4)}
         rec["by_band"] = {k: {"connections": int(len(x)), "made": round(float(x["made"].mean()), 4),
                               "costly_miss": round(float((x["w"] > COSTLY_S).mean()), 4)}
-                          for k, x in g.groupby("band")}
+                          for k, x in g.groupby("band", observed=True)}
         rec["by_hub"] = {k: {"connections": int(len(x)), "made": round(float(x["made"].mean()), 4)}
-                         for k, x in g.groupby("hub")}
+                         for k, x in g.groupby("hub", observed=True)}
         out[str(s)] = rec
     return out
 

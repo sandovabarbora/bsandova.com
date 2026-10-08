@@ -44,7 +44,7 @@ def cells(c: pd.DataFrame, rng) -> tuple[list[dict], dict]:
     weeks = np.array(sorted(c["week"].unique()))
     wi = {w: i for i, w in enumerate(weeks)}
     W = es.draws(len(weeks), CELL_REPS, rng)
-    for (hub, a, adir, b, bdir, band), g in c.groupby(["hub", "aroute", "adir", "broute", "bdir", "band"]):
+    for (hub, a, adir, b, bdir, band), g in c.groupby(["hub", "aroute", "adir", "broute", "bdir", "band"], observed=True):
         thin = len(g) < MIN_CONN or g["date"].nunique() < MIN_DATES
         rec = {"hub": hub, "a": str(a), "a_to": adir, "b": str(b), "b_to": bdir, "band": band,
                "connections": int(len(g)), "dates": int(g["date"].nunique()), "thin": bool(thin)}

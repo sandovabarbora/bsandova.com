@@ -161,6 +161,7 @@ def test_checks_and_bounds_run_end_to_end():
                             "hour": [9], "missing": [1]})
     bd = es.bounds(c, b, missing, W, weeks)
     assert bd["all_made"]["est"] >= bd["all_missed"]["est"]
+    es.read_connections = lambda excluded: c.iloc[:0].drop(columns=[x for x in c.columns if x not in c.columns])
     out = es.checks(c, b, weeks, np.random.default_rng(2))
     for k in ("timing_a_plus_30s", "margin_m_plus_30s", "margin_m_fixed_2min", "without_exclusions", "peaks_only"):
         assert "est" in out[k]

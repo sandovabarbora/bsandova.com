@@ -208,3 +208,8 @@ trip-level link found as supported; every check and the bounds. Fixed here, wher
   for its interval; the cell's own share made and its slacks are shown beside it, with a calibration table over all
   cells.
 - **References** verified in Crossref and listed above.
+
+**8 October 2026 (memory, before any result was read).** The first run of the frozen estimate loaded every flagged
+return and same-trunk connection at every slack (46 million rows) and was stopped at 21 GB of memory before it printed
+anything. The estimate now loads only the rows an analysis uses (all kept connections, and the flagged ones at slack
+2–4 min for the §7 check) with text columns as categories; no rule changed.
