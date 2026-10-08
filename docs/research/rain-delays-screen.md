@@ -74,8 +74,27 @@ removes about a fifth of tram line-days. The largest partial closures:
 The full list of 70 partial tram closures, with sources, is in `rain-delays-screen.json` under `spans`; the
 line × date exclusions are under `exclusions`.
 
-## Still to apply (when the thesis files arrive, before any delay value is read)
+## Rules 2 and 3 (8 October 2026, from record timestamps and trip counts only)
 
-- **Rule 2, feed gaps.** Dates with no position for more than 60 consecutive minutes between 05:00 and 23:00, from
-  record timestamps only.
-- **Rule 3, thin units.** Units with fewer than 2 trips, from trip counts only.
+Code: `tools/rain/screen_feed.py`. Output: `rain-delays-screen-feed.json`. The thesis's records arrived as
+`prague_transit.duckdb`; the study uses its table `stop_times_history_modeling` (121 197 794 rows, the count on the
+thesis page). Only trip ids, route types, stop sequence, stop names and observed times were selected; no delay, dwell
+or travel-time column was read.
+
+- **Rule 2, feed gaps.** 8 of 178 dates are excluded: 15 March (records start at 21:48) and 8 September (records end
+  at 01:00), the edges of the window; 3 April, 5 April and 2–4 May, with no records in 05:00–23:00; 9 July, with a
+  1 050-minute gap. No other date has a gap over 41 minutes. 170 dates remain.
+- **Rule 3, thin units.** Trams: 266 247 route × direction × date × hour units, of which 66 874 have fewer than 2
+  trips; they hold 4.2 % of tram trip-hours (66 874 of 1 591 861). City buses: 160 207 of 759 089 units, 5.3 % of
+  trip-hours. The thin units are mostly short turns and diverted trips, which end at a terminal of their own and so
+  form their own direction.
+
+How the records were read (definitions, dated 8 October 2026, before any delay value was read):
+
+- **Records are stop passes, not raw positions.** Each row is a segment from a stop to the next stop, with observed
+  times. "Position" in §1 is read as a stop pass: delay gained in an hour is the trip's delay at its last stop pass in
+  the hour minus its delay at its first.
+- **A record's time** is its observed arrival at the stop, or observed departure when arrival is missing.
+- **Route** is the second field of `rt_trip_id` (`<start time>_<route>_<trip>_<feed date>_<n>`), which parses for
+  every tram record. **Direction** is the trip's terminal: the next stop of its highest-sequence segment.
+- **Modes.** Trams are `route_type = 'tramvaj'`; city buses are `autobus` with routes 100–299.

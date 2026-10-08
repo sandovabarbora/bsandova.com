@@ -165,3 +165,10 @@ exclude, not incidents (*mimořádnost*), because rain can cause incidents; (b) 
 window is the line's regular pattern and does not exclude (author's decision; three tram closures and the Pankrác C
 replacement on line 19). The literal reading is added to §6 as a check. Rule 1 excludes 1 320 tram and 4 076 city bus
 line-days (literal reading: 2 832 and 7 287). Rules 2 and 3 follow when the thesis files arrive.
+
+**8 October 2026 (data arrived; screening rules 2 and 3; no delay value read).** The thesis records are stop passes
+(segments from one stop to the next with observed times), not raw positions; §2 rule 1 applies (delay field and trip
+id exist), and "position" in §1 is read as a stop pass. Route comes from `rt_trip_id`, direction is the trip's
+terminal stop. Rule 2 excludes 8 dates (two window edges and five days with no records, plus 9 July), leaving 170;
+rule 3 drops 4.2 % of tram trip-hours. Details in `rain-delays-screen.md`. The power grid is re-run on the 170 dates
+before estimation.
