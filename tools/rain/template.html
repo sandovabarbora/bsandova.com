@@ -80,7 +80,8 @@
 <h2>Data</h2>
 <p>The delays come from the history of Prague Integrated Transport that the author collected from Golemio, the city's open-data platform, for a master's thesis on how delays persist through the day<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup>. It covers 15 March to 8 September 2025 and holds {{records}} rows. Each row is one vehicle passing one stop on its way to the next, with the scheduled and observed times and the delay at that stop. The design had expected raw positions; the rows turned out to be stop passes, so "position" in the registered definition is read as a stop pass. For each trip and clock hour with at least two passes, the delay gained is the delay at its last pass in the hour minus the delay at its first. A unit of analysis is one route in one direction on one date in one hour, from 05:00 to 23:59 Prague time, and its outcome is the mean delay gained over its trips. The direction is the trip's terminal stop, so short turns and diversions form units of their own.</p>
 <p>The rain comes from the Czech Hydrometeorological Institute's open climate data<sup class="cite"><a href="#r3">3</a></sup>: the hourly precipitation total at Ruzyně, Libuš, Kbely and Klementinum. An hour is a rain hour if the four stations average at least 0.5 mm. It is a dry hour only if all four recorded nothing in that hour and in the two before it, so that wet rails and lingering crowds after a shower do not count as dry. Hours in between are left out of the main comparison and return only in the check by amount of rain. In the window, rain fell in {{rain_hours}} of the service hours on the dates analysed, spread over {{rain_dates}} dates, against {{dry_hours}} dry hours (fig. 1). The wettest day was {{max_rain_day}}, with {{max_rain_hours}} rain hours.</p>
-<figure>
+<figure data-chart="../assets/rain/charts.json#rain">
+  <p class="ch-head">Rain fell in {{rain_hours}} hours on {{rain_dates}} of the {{dates}} dates analysed; most days stayed dry.</p>
   <img src="../assets/rain/05-rain.svg" alt="Bar chart of rain hours per day between 05:00 and 23:59 in Prague, March to September 2025: most days have none, rain days are scattered, with clusters in late April, June and late July." loading="lazy">
   <figcaption><b>fig. 1</b> · Rain hours (four-station mean at least 0.5 mm) per day, 05:00–23:59 Prague time, 15 March – 8 September 2025; grey, a date excluded for a gap in the delay feed. Data: ČHMÚ<sup class="cite"><a href="#r3">3</a></sup>.</figcaption>
 </figure>
@@ -128,9 +129,9 @@
 <section>
 <h2>Routes</h2>
 <p>The design asked for a map of routes by their own estimate, as description rather than test. For the {{n_routes}} tram routes with at least {{min_rain_units}} rain units, every one has a positive estimate, from {{r_lo_est}} seconds on line {{r_lo}} to {{r_hi_est}} on line {{r_hi}}, and {{routes_sig}} of them have an interval wholly above zero (fig. 5). With one estimate per route, some of the spread is chance, and the routes were not ranked or tested against each other, so the map is not evidence that any line suffers more than another.</p>
-<figure>
-  <img src="../assets/rain/04-map.svg" alt="Map of Prague's tram network, each route coloured by its own rain estimate: all routes are shades of blue, none below zero, from {{r_lo_est}} to {{r_hi_est}} seconds per trip-hour." loading="lazy">
-  <figcaption><b>fig. 5</b> · Each tram route drawn from its stop coordinates and coloured by its own estimate of delay gained in a rain hour, from a model with one rain term per route and the levels of fig. 2; descriptive, routes with at least {{min_rain_units}} rain units; overlapping routes are drawn in order of their estimate. Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>, ČHMÚ<sup class="cite"><a href="#r3">3</a></sup>.</figcaption>
+<figure class="mp-fig" data-map="../assets/rain/map.json">
+  <img class="mp-static" src="../assets/rain/04-map.svg" alt="Map of Prague's tram network, each route coloured by its own rain estimate: all routes are shades of blue, none below zero, from {{r_lo_est}} to {{r_hi_est}} seconds per trip-hour." loading="lazy">
+  <figcaption><b>fig. 5</b> · Each tram route drawn from its stop coordinates and coloured by its own estimate of delay gained in a rain hour, from a model with one rain term per route and the levels of fig. 2; descriptive, routes with at least {{min_rain_units}} rain units, the others hatched; hovering over or tapping a route gives its estimate and interval, and the low end of the interval or the number of rain units can be picked instead. Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>, ČHMÚ<sup class="cite"><a href="#r3">3</a></sup>.</figcaption>
 </figure>
 </section>
 
@@ -192,5 +193,6 @@
 </article>
 
 <script src="../assets/charts.js" defer></script>
+<script src="../assets/map.js" defer></script>
 </body>
 </html>

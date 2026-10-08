@@ -134,7 +134,50 @@ def figures(x: dict) -> dict:
     return rain_days()
 
 
+def chains(seg: pd.DataFrame) -> list[list[list[float]]]:
+    """Join a route's stop-to-stop segments into polylines, end to start, so the map JSON stays small."""
+    out_of: dict[tuple, list[tuple]] = {}
+    for r in seg.itertuples():
+        a, b = (round(r.lon0, 5), round(r.lat0, 5)), (round(r.lon1, 5), round(r.lat1, 5))
+        if a != b:
+            out_of.setdefault(a, []).append(b)
+    lines = []
+    for start in list(out_of):
+        while out_of.get(start):
+            line, cur = [start], start
+            while out_of.get(cur):
+                cur = out_of[cur].pop()
+                line.append(cur)
+            lines.append([list(pt) for pt in line])
+    return lines
+
+
+def map_json(desc: dict) -> None:
+    seg = pd.read_parquet(D / "segments.parquet")
+    est = {r["route"]: r for r in desc["by_route"]}
+    feats = []
+    for route in sorted(seg["route"].unique(), key=lambda r: (r in est, est.get(r, {}).get("est_s", 0))):
+        e = est.get(route)
+        if not route.isdigit() or int(route) >= 90:
+            continue  # night and special lines: not in the day estimate
+        feats.append({"id": route, "name": f"line {route}", "l": chains(seg[seg["route"] == route]),
+                      "v": {"est": e["est_s"] if e else None, "lo": e["lo"] if e else None,
+                            "hi": e["hi"] if e else None, "units": e["rain_units"] if e else None}})
+    top = max(r["est_s"] for r in desc["by_route"])
+    spec = {"held": HELD, "features": feats,
+            "views": [{"key": "est", "label": "rain estimate", "fmt": {"dp": 1, "unit": " s", "sign": True},
+                       "scale": "seq", "domain": [0, round(top + 0.5)], "note": "delay gained per trip-hour, descriptive"},
+                      {"key": "lo", "label": "95 % interval, low", "fmt": {"dp": 1, "unit": " s", "sign": True},
+                       "scale": "seq", "domain": [0, round(top + 0.5)]},
+                      {"key": "units", "label": "rain units", "fmt": {"dp": 0}, "scale": "seq"}],
+            "note": f"no estimate: fewer than {desc['min_rain_units_per_route']} rain units",
+            "hint": "hover, tap or use the arrow keys for a route",
+            "data": ["describe.json"]}
+    (A / "map.json").write_text(json.dumps(spec, ensure_ascii=False, separators=(",", ":")))
+
+
 def route_map(desc: dict) -> None:
+    map_json(desc)
     seg = pd.read_parquet(D / "segments.parquet")
     est = {r["route"]: r for r in desc["by_route"]}
     seg = seg[seg["route"].isin(est)]
@@ -163,6 +206,22 @@ def rain_days() -> pd.DataFrame:
     wx = wx[(wx["date"] >= power.START) & (wx["date"] <= power.END) & wx["hour"].isin(power.HOURS)]
     days = wx.groupby("date").agg(rain=("rain", "sum"), dry=("dry", "sum"))
     excluded = set(json.loads((R / "rain-delays-screen-feed.json").read_text())["rule2_dates_excluded"])
+    label = lambda d: f"{d.day} {d.strftime('%b')}"  # noqa: E731
+    rows = [{"x": label(d), "y1": int(r["rain"]), "c": "light" if str(d) in excluded else "held",
+             "tip": f"{label(d)}: {int(r['rain'])} rain hour{'s' if r['rain'] != 1 else ''}"
+                    + (" · excluded, feed gap" if str(d) in excluded else "")} for d, r in days.iterrows() if r["rain"] > 0]
+    charts = json.loads((A / "charts.json").read_text())
+    charts["rain"] = {
+        "alt": "Rain hours per day between 05:00 and 23:59 in Prague, 15 March to 8 September 2025: most days have "
+               "none; rain days are scattered, with clusters in late April, June and late July.",
+        "panels": [{"h": 200, "x": {"kind": "cat", "domain": [label(d) for d in days.index]},
+                    "y": {"kind": "linear", "domain": [0, int(days["rain"].max()) + 1], "fmt": {"dp": 0},
+                          "label": "rain hours, 05:00–23:59"},
+                    "marks": [{"type": "vbar", "rows": rows}]}],
+        "table": {"cols": ["date", "rain hours", "dry hours"],
+                  "rows": [[str(d), int(r["rain"]), int(r["dry"])] for d, r in days.iterrows()]},
+        "data": ["results.json"]}
+    (A / "charts.json").write_text(json.dumps(charts, ensure_ascii=False))
     f, ax = plt.subplots(figsize=(7.2, 2.2))
     for d, r in days.iterrows():
         ax.bar(d, r["rain"], width=0.9, color=LIGHT if str(d) in excluded else HELD)

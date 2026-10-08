@@ -3,11 +3,12 @@
    draws the map from the JSON: a row of views to pick, the areas shaded by the picked value, a tooltip with every
    value of the area under the pointer (or the arrow keys), a legend, a table of all areas and a link to the data.
 
-   Spec: {held, features:[{id, name, sub, r:[[[lon,lat],...]], v:{key:number|null}}],
+   Spec: {held, features:[{id, name, sub, r:[[[lon,lat],...]] for an area or l:[[[lon,lat],...]] for a line (a route),
+                           v:{key:number|null}}],
           views:[{key, label, fmt:{dp, unit, pct, sign}, scale:'seq'|'div', domain:[lo,hi], note,
                   cats:[{v, label}] for a yes/no or categorical view}],
           overlay:{lines:[[[lon,lat],...]], points:[[lon,lat]], labels:[{at:[lon,lat], s}]},
-          note, data:[paths]} */
+          note, hint, data:[paths]} */
 (() => {
   const NS = 'http://www.w3.org/2000/svg';
   const nb = ' ';
@@ -39,7 +40,7 @@
     // equirectangular at Prague's latitude, fitted to 900 units wide
     const lat0 = 50.08, k = 1 / Math.cos(lat0 * Math.PI / 180), W = 900;
     let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
-    S.features.forEach(f => f.r.forEach(ring => ring.forEach(([x, y]) => { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); })));
+    S.features.forEach(f => (f.r || f.l).forEach(ring => ring.forEach(([x, y]) => { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); })));
     const s = W / (x1 - x0), H = Math.round((y1 - y0) * k * s);
     const X = x => +((x - x0) * s).toFixed(1), Y = y => +((y1 - y) * k * s).toFixed(1);
 
@@ -53,9 +54,13 @@
     el('rect', {width: 6, height: 6, fill: '#f4f4f1'}, pat); el('line', {x1: 0, y1: 0, x2: 0, y2: 6, stroke: '#c4c4bf', 'stroke-width': 1.6}, pat);
     const ND = `url(#${pat.id})`;
     const gA = el('g', {}, svg), gO = el('g', {'pointer-events': 'none'}, svg);
+    // a line's colour goes in its style, since the stylesheet's white outline for areas would win over an attribute
+    const paint = (p, c) => { if (p.classList.contains('ln')) p.style.stroke = c; else p.setAttribute('fill', c); };
     const paths = S.features.map((f, i) => {
-      const d = f.r.map(ring => 'M' + ring.map(([x, y]) => X(x) + ',' + Y(y)).join('L') + 'Z').join('');
-      const p = el('path', {d, class: 'a', 'data-i': i}, gA);
+      // an area is filled; a line (f.l) is stroked in the value's colour and drawn above the areas
+      const d = f.l ? f.l.map(line => 'M' + line.map(([x, y]) => X(x) + ',' + Y(y)).join('L')).join('')
+                    : f.r.map(ring => 'M' + ring.map(([x, y]) => X(x) + ',' + Y(y)).join('L') + 'Z').join('');
+      const p = el('path', {d, class: f.l ? 'a ln' : 'a', 'data-i': i}, gA);
       return p;
     });
     const O = S.overlay || {};
@@ -73,7 +78,7 @@
       if (V.cats) {
         // categories: the last one takes the held colour, the others steps of grey
         const cc = V.cats.map((c, j) => j === V.cats.length - 1 ? held : ['#e2e2de', '#b9b9b4', '#8a8a86'][j] || '#8a8a86');
-        paths.forEach((p, i) => { const x = S.features[i].v[V.key], j = V.cats.findIndex(c => c.v === x); p.setAttribute('fill', j < 0 ? ND : cc[j]); p.classList.toggle('nodata', j < 0); });
+        paths.forEach((p, i) => { const x = S.features[i].v[V.key], j = V.cats.findIndex(c => c.v === x); paint(p, j < 0 ? ND : cc[j]); p.classList.toggle('nodata', j < 0); });
         leg.textContent = '';
         V.cats.forEach((c, j) => { const sw = document.createElement('span'); sw.className = 'mp-sw'; sw.style.setProperty('--c', cc[j]); sw.textContent = c.label; leg.append(sw); });
         const t = document.createElement('span'); t.textContent = '· ' + V.label + (V.note ? ' · ' + V.note : ''); leg.append(t);
@@ -86,7 +91,7 @@
       let [lo, hi] = V.domain || [vals[Math.floor(0.02 * (vals.length - 1))], vals[Math.ceil(0.98 * (vals.length - 1))]];
       if (V.scale === 'div' && !V.domain) { const m = Math.max(Math.abs(lo), Math.abs(hi)); lo = -m; hi = m; }
       const ramp = rampOf(held, V.scale, S.neg);
-      paths.forEach((p, i) => { const x = S.features[i].v[V.key]; p.setAttribute('fill', x == null ? ND : ramp(hi > lo ? (x - lo) / (hi - lo) : 0.5)); p.classList.toggle('nodata', x == null); });
+      paths.forEach((p, i) => { const x = S.features[i].v[V.key]; paint(p, x == null ? ND : ramp(hi > lo ? (x - lo) / (hi - lo) : 0.5)); p.classList.toggle('nodata', x == null); });
       leg.textContent = '';
       const a = document.createElement('span'); a.textContent = (vals[0] < lo ? '≤ ' : '') + fmt(lo, V.fmt);
       const i = document.createElement('i'); i.style.background = `linear-gradient(90deg,${[0, 0.25, 0.5, 0.75, 1].map(ramp).join(',')})`;
@@ -113,6 +118,7 @@
       tip.style.left = Math.max(0, Math.min(tx + 14, R.width - tip.offsetWidth - 4)) + 'px';
       tip.style.top = Math.max(0, ty - tip.offsetHeight - 12) + 'px';
       paths.forEach((p, j) => p.classList.toggle('sel', j === i));
+      if (paths[i].classList.contains('ln') && gA.lastChild !== paths[i]) gA.appendChild(paths[i]);  // the picked line on top
     };
     const buildTable = () => {
       const V = S.views[cur];
@@ -131,7 +137,7 @@
     b1.onclick = () => view(false); b2.onclick = () => view(true); view(false);
     ctl.append(b1, b2);
     for (const d of S.data || [url]) ctl.append(Object.assign(document.createElement('a'), {href: d, textContent: 'data · ' + d.split('/').pop()}));
-    const hint = document.createElement('span'); hint.className = 'ch-hint'; hint.textContent = 'hover, tap or use the arrow keys for an area';
+    const hint = document.createElement('span'); hint.className = 'ch-hint'; hint.textContent = S.hint || 'hover, tap or use the arrow keys for an area';
     ctl.append(hint);
     fig.insertBefore(ctl, img);
 
@@ -139,7 +145,7 @@
     box.addEventListener('pointermove', hit); box.addEventListener('pointerdown', hit);
     box.addEventListener('pointerleave', () => { tip.hidden = true; sel = -1; paths.forEach(p => p.classList.remove('sel')); });
     // arrow keys walk the areas west to east
-    const order = S.features.map((f, i) => [i, f.r[0].reduce((a, [x]) => a + x, 0) / f.r[0].length]).sort((a, b) => a[1] - b[1]).map(a => a[0]);
+    const order = S.features.map((f, i) => [i, (f.r || f.l)[0].reduce((a, [x]) => a + x, 0) / (f.r || f.l)[0].length]).sort((a, b) => a[1] - b[1]).map(a => a[0]);
     svg.addEventListener('keydown', e => {
       const at = order.indexOf(sel);
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { detail(order[(at + 1) % order.length]); e.preventDefault(); }
