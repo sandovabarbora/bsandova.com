@@ -125,16 +125,15 @@ a map of routes by estimated δ (descriptive), and the hour-by-hour precipitatio
 ## References
 
 - [R1] Koetse, M. J., Rietveld, P. (2009). The impact of climate change and weather on transport: an overview of
-  empirical findings. *Transportation Research Part D* 14(3), 205–221. [verify DOI before publication]
+  empirical findings. *Transportation Research Part D* 14(3), 205–221. https://doi.org/10.1016/j.trd.2008.12.004
 - [R2] Tsapakis, I., Cheng, T., Bolbol, A. (2013). Impact of weather conditions on macroscopic urban travel times.
-  *Journal of Transport Geography* 28, 204–211. [verify DOI before publication]
+  *Journal of Transport Geography* 28, 204–211. https://doi.org/10.1016/j.jtrangeo.2012.11.003
 - [R3] Arana, P., Cabezudo, S., Peñalba, M. (2014). Influence of weather conditions on transit ridership: a
-  statistical study using data from smartcards. *Transportation Research Part A* 59, 1–12. [verify DOI before
-  publication]
+  statistical study using data from smartcards. *Transportation Research Part A* 59, 1–12. https://doi.org/10.1016/j.tra.2013.10.019
 - [R4] Cameron, A. C., Gelbach, J. B., Miller, D. L. (2008). Bootstrap-based improvements for inference with clustered
-  errors. *Review of Economics and Statistics* 90(3), 414–427. [verify DOI before publication]
+  errors. *Review of Economics and Statistics* 90(3), 414–427. https://doi.org/10.1162/rest.90.3.414
 - [R5] Lakens, D. (2017). Equivalence tests: a practical primer for t tests, correlations, and meta-analyses. *Social
-  Psychological and Personality Science* 8(4), 355–362. [verify DOI before publication]
+  Psychological and Personality Science* 8(4), 355–362. https://doi.org/10.1177/1948550617697177
 
 ## Changes after registration
 
