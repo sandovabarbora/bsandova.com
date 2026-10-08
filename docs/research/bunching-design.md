@@ -3,7 +3,7 @@
 **Status: pre-specified analysis, design committed 8 October 2026, before any headway was computed.** Part 2 of the
 series *Running late*. The steps follow in dated commits: design → screening → code → results. Commit times are
 self-reported. Deviations are listed, dated, in the change log. A draft of this design was reviewed twice by an independent
-model-based reviewer before registration; the version below replaces the draft, whose estimands had no defined null,
+methods reviewer before registration; the version below replaces the draft, whose estimands had no defined null,
 and fixes a bias the first rewrite still had.
 
 ## 0. What has already been seen
@@ -274,3 +274,6 @@ transitions, and from −0.0421 (line 21) to +0.0299 (line 30) with all lines. T
 come at once? Tram bunching in Prague, 2025", since the analysis covers pairs only; this design keeps its registered
 title. The registration commits are tagged `late-bunching-design` (2b78211), `late-bunching-screen` (65789a6),
 `late-bunching-v1` (83f91ec) and `late-bunching-results` (8dc4eea); the tags were added after publication.
+
+**8 October 2026, clarification after publication:** the 'independent methods reviewer' in the status paragraph was a
+model-based reviewer (a separate Claude Sonnet instance), not a person.
