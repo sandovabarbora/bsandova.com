@@ -239,9 +239,7 @@ the design guessed.
 pattern is 63–76 % by month (63 % in the eight days of September), not 68–76 % as first written; the screening file
 was right, the note misread it.
 
-**8 October 2026 (after a review of the article before publication; descriptions, not registered).** That review was a
-self-review by the agent that wrote the article; this entry first called it independent (wording corrected after
-publication, 8 October 2026). The review asked for
+**8 October 2026 (after an independent review of the article; descriptions, not registered).** The review asked for
 checks the results alone could not answer, computed in `tools/bunch/describe.py` and `describe_bus.py` and reported as
 description. Line 9 holds 30 % of the sudden closings on 15 % of the exposure, and without it the Q2 ratio is 1.72
 (95 % interval 1.00 to 2.38), no longer wholly above the registered 1.25. A simulation on the real exposures shows that
@@ -276,4 +274,6 @@ title. The registration commits are tagged `late-bunching-design` (2b78211), `la
 `late-bunching-v1` (83f91ec) and `late-bunching-results` (8dc4eea); the tags were added after publication.
 
 **8 October 2026, clarification after publication:** the 'independent methods reviewer' in the status paragraph was a
-model-based reviewer (a separate Claude Sonnet instance), not a person.
+model-based reviewer (a separate Claude Sonnet instance), not a person. The "independent review of the article" in the
+entry of that title above, and in the change log, was a review before publication by the agent that wrote the article,
+a self-review rather than an independent one.
