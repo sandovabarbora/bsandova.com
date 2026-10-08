@@ -8,7 +8,7 @@
           views:[{key, label, fmt:{dp, unit, pct, sign}, scale:'seq'|'div', domain:[lo,hi], note,
                   cats:[{v, label}] for a yes/no or categorical view, mark:{id, label} to draw one feature in ink}],
           overlay:{lines:[[[lon,lat],...]], points:[[lon,lat]], labels:[{at:[lon,lat], s}]},
-          note, hint, lat0 (projection latitude, default Prague's), base (a basemap JSON {outline, districts, water}
+          note, hint, fit:'features' (frame the features, not the basemap's outline), lat0 (projection latitude, default Prague's), base (a basemap JSON {outline, districts, water}
           drawn under the features, path as for data), data:[paths]} */
 (() => {
   const NS = 'http://www.w3.org/2000/svg';
@@ -41,7 +41,8 @@
     // equirectangular at Prague's latitude, fitted to 900 units wide
     const lat0 = S.lat0 ?? 50.08, k = 1 / Math.cos(lat0 * Math.PI / 180), W = 900;
     let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
-    [...S.features.map(f => f.r || f.l), ...(B ? [B.outline] : [])].forEach(rs => rs.forEach(ring => ring.forEach(([x, y]) => { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); })));
+    [...S.features.map(f => f.r || f.l), ...(B && S.fit !== 'features' ? [B.outline] : [])].forEach(rs => rs.forEach(ring => ring.forEach(([x, y]) => { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); })));
+    if (S.fit === 'features') { const px = (x1 - x0) * 0.03, py = (y1 - y0) * 0.03; x0 -= px; x1 += px; y0 -= py; y1 += py; }  // the basemap is clipped to the features' box
     const s = W / (x1 - x0), H = Math.round((y1 - y0) * k * s);
     const X = x => +((x - x0) * s).toFixed(1), Y = y => +((y1 - y) * k * s).toFixed(1);
 
