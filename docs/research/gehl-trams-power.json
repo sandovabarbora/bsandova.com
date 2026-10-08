@@ -1,16 +1,4 @@
 {
- "necessary": {
-  "rain_hours": 19,
-  "dry_hours": 289,
-  "rain_dates": 10,
-  "dates_with_rain_and_dry_hours": 1
- },
- "optional": {
-  "rain_hours": 15,
-  "dry_hours": 340,
-  "rain_dates": 8,
-  "dates_with_rain_and_dry_hours": 3
- },
  "dispersion": {
   "sigma_e_s": 2.57,
   "sigma_c_s": 0.47,
@@ -18,12 +6,50 @@
   "units_fitted": 155438,
   "median_units_per_date_hour": 46
  },
+ "sigma_day_s": 0.411,
  "margin_m_s": 2.0,
- "sims": 400,
- "se_theta_s": 0.917,
- "mde_theta_s": 2.57,
  "underpowered_rule_4m_s": 8.0,
- "underpowered": false,
- "not_estimable": true,
- "bootstrap": true
+ "sims": 400,
+ "registered": {
+  "optional_hours": "10:00-17:59",
+  "effects": "date",
+  "necessary": {
+   "rain_hours": 19,
+   "dry_hours": 289,
+   "rain_dates": 10,
+   "dates_with_rain_and_dry_hours": 1
+  },
+  "optional": {
+   "rain_hours": 15,
+   "dry_hours": 340,
+   "rain_dates": 8,
+   "dates_with_rain_and_dry_hours": 3
+  },
+  "se_theta_s": 0.91,
+  "mde_theta_s": 2.55,
+  "underpowered": false,
+  "not_estimable": true,
+  "bootstrap": true
+ },
+ "after_deviation": {
+  "optional_hours": "08:00-20:59",
+  "effects": "week",
+  "necessary": {
+   "rain_hours": 19,
+   "dry_hours": 289,
+   "rain_dates": 10,
+   "dates_with_rain_and_dry_hours": 1
+  },
+  "optional": {
+   "rain_hours": 30,
+   "dry_hours": 535,
+   "rain_dates": 14,
+   "dates_with_rain_and_dry_hours": 10
+  },
+  "se_theta_s": 0.288,
+  "mde_theta_s": 0.81,
+  "underpowered": false,
+  "not_estimable": false,
+  "bootstrap": true
+ }
 }
