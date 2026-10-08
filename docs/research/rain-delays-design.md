@@ -156,3 +156,13 @@ the standard error at 1.5–5.5 s, so the "not supported" label (90 % interval w
 lower-noise scenarios; this is stated now, before any delay value is read. The grid is re-run with the dispersion the
 thesis data imply (route-hour spread of delay gained, read without the rain indicator) once the files arrive, as a
 dated note before the estimation.
+
+**8 October 2026 (screening, rule 1; no delay value read).** `rain-delays-screen.md`, code `tools/rain/screen_pid.py`.
+pid.cz deletes finished change pages, so the announcements come from the Internet Archive (2 234 archived change
+pages and 8 list snapshots in the window); 125 of the 173 closures the snapshots list have an archived page, and the
+other 48 enter from the snapshots. Historical GTFS versions were not used: the archives that hold them need an API
+key. Two clarifications of §3 rule 1, fixed before any delay value is read: (a) only planned closures (*výluka*)
+exclude, not incidents (*mimořádnost*), because rain can cause incidents; (b) a closure in force on every day of the
+window is the line's regular pattern and does not exclude (author's decision; three tram closures and the Pankrác C
+replacement on line 19). The literal reading is added to §6 as a check. Rule 1 excludes 1 320 tram and 4 076 city bus
+line-days (literal reading: 2 832 and 7 287). Rules 2 and 3 follow when the thesis files arrive.
