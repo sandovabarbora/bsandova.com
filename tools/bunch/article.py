@@ -202,7 +202,7 @@ def figures(x: dict, t: pd.DataFrame, xy: dict) -> dict:
         ("departures instead of arrivals", v["gamma_iv_departures"]["est"], v["gamma_iv_departures"]["ci95"], "ink"),
         ("plain OLS (pulled down by noise)", q1["gamma_ols"], None, "grey"),
         ("registered shuffle, γ − γ₀", q1["gamma_minus_gamma0_registered"], None, "grey")])
-    charts["gamma"] = range_chart(rows, "Amplification per stop with 95 % intervals: every estimate lies within a "
+    charts["gamma"] = range_chart(rows, "Amplification per stop with 95 % intervals: every pooled estimate lies within a "
                                         "few thousandths of zero, far inside the registered ±0.01; over all stops it "
                                         "is slightly negative, without the timing points and on departures slightly "
                                         "positive.",
@@ -350,7 +350,7 @@ def values(x: dict, t: pd.DataFrame, fig: dict) -> dict:
               "d10u": pct(q4["by_decile"]["10"]["bunched"], 2), "o10swap": pct(q4["by_decile"]["10"]["swap"], 2),
               "var10s": f"{q4['by_decile_shuffled']['10']['var_r']:.3f}",
               "rp": f"{qp['ratio']:.2f}", "rp_lo": f"{qp['ratio_ci95'][0]:.2f}", "rp_hi": f"{qp['ratio_ci95'][1]:.2f}",
-              "Sb0p": pct(qp["S_b0_stratified"]), "rp_strata": n(qp["strata"]),
+              "Sb0p": pct(qp["S_b0_stratified"]), "rp_strata": n(qp["strata"]), "rp_vs": "above" if qp["ratio_ci95"][0] > 1.25 else "below",
               "boot": n(qp["bootstrap_draws"]), "nulls": n(qp["null_draws_per_bootstrap_draw"]),
               "rl": f"{ql['ratio']:.2f}", "rl_lo": f"{ql['ratio_ci95'][0]:.2f}", "rl_hi": f"{ql['ratio_ci95'][1]:.2f}",
               "r_rev": f"{c['reversed_order']['ratio']:.2f}", "r_rev_lo": f"{c['reversed_order']['ratio_ci95'][0]:.2f}",

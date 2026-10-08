@@ -277,3 +277,10 @@ title. The registration commits are tagged `late-bunching-design` (2b78211), `la
 model-based reviewer (a separate Claude Sonnet instance), not a person. The "independent review of the article" in the
 entry of that title above, and in the change log, was a review before publication by the agent that wrote the article,
 a self-review rather than an independent one.
+
+**8 October 2026, clarification after publication (second).** The independent review after publication that led to
+version 2 of the article was model-based, not by a person. Two deviations were not logged before: platforms in Q2 and
+Q2b are keyed on `gtfs_stop_id` directly, not grouped to the physical stop and direction through `stops.txt` as §2 and
+§3 say; and Q3 keeps segments with at least 500 eligible pair-stops (`E.sum(1) >= 500` in `estimate.py`), not 500
+observed pairs. `tools/bunch/review.py` rewrote `bunching-results.json` in place with the corrected Q1 label (the
+version 1 label kept as `label_v1`), so the file is no longer byte-identical to the output of the registered run.
