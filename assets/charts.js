@@ -88,7 +88,7 @@
     const tickFmtY = P.y.tickfmt || (P.y.fmt && {...P.y.fmt, dp: Math.max(P.y.fmt.dp ?? 0, autoDp(P.y))}) || {dp: autoDp(P.y)};
     const yLabels = niceTicks(P.y).map(t => catY ? String(t) : fmt(t, {...tickFmtY, unit: ''}));
     const stackCats = catY && narrow;              // phone: category names sit above their row, not beside it
-    const left = box.x + (catY ? (stackCats ? 4 : Math.min(box.w * 0.46, 12 + 6.4 * maxLen(yLabels))) : 10 + 6.6 * maxLen(yLabels));
+    const left = box.x + (catY ? (stackCats ? 4 : Math.min(box.w * 0.46, 12 + 7.2 * maxLen(yLabels))) : 10 + 6.6 * maxLen(yLabels));
     const top = box.y + (P.title ? 24 : 8) + (P.y.label && !catY ? 16 : 0);
     // an x-axis title wider than the panel breaks at the space nearest its middle, and the panel keeps room for both lines
     const xLab = P.x.label ? (6.6 * P.x.label.length > box.w - 8 ? splitMid(P.x.label) : [P.x.label]) : [];
