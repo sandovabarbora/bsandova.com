@@ -54,6 +54,9 @@ def check(path: Path) -> tuple[list[str], list[str]]:
     if 'class="meta"' not in s:
         hard.append("no metadata block (dl.meta)")
     rel = path.resolve().relative_to(ROOT / "texts").with_suffix("")
+    canon = re.search(r'rel="canonical" href="https://bsandova\.com/texts/([^"]*)"', s)
+    if not canon or canon.group(1).rstrip("/") not in (rel.as_posix(), rel.as_posix().removesuffix("/index")):
+        hard.append("no canonical link to its own /texts/ URL (the article grid in a24.css keys on it)")
     slug = "-".join(x for x in rel.parts if x != "index") or "index"
     log = ROOT / "docs" / "changelogs" / f"{slug}.html"
     if f"changelog/#{slug}" not in s:
