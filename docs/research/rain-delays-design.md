@@ -182,3 +182,11 @@ delay gained on next-hour rain among hours whose next hour is a rain or dry hour
 route's centroid over its stop coordinates (ČHMÚ station positions from `meta1.json`); a dose band with no hours is
 listed as unidentified, not dropped. Order from here: power grid re-run with the dispersion of delay gained on the
 170 dates (read without the rain indicator), then `units.py`, then `estimate.py`.
+
+**8 October 2026 (power re-run, §7; delay gained read without the rain indicator; no rain estimate computed).**
+`tools/rain/power_rerun.py`, output `rain-delays-power-rerun.json`. On the 154 028 tram units left by §3 (170 dates,
+47 with a rain hour, 122 rain and 2 608 dry hours): unit noise σ_e 36.7 s, city-wide date × hour shock σ_c 11.9 s,
+hour-to-hour correlation ρ 0.34, a median 46 units per date × hour. Simulated SE of δ_tram 2.0 s, minimum detectable
+δ 5.6 s: the 30 s rule passes and the "not supported" label is reachable. Code fix found in this step, before any
+rain estimate: pyfixest drops units alone in their cell or date, which broke residuals in the bootstrap and here;
+`estimate.drop_singletons` now removes them before every fit (test added). Next: `estimate.py`.

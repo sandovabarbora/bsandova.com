@@ -141,6 +141,8 @@ def test_label_rules():
 
 def test_wild_bootstrap_interval_covers_the_estimate():
     u, wx = synthetic(delta=20.0, noise=10.0)
+    lone = u.iloc[[0]].assign(direction="lone")  # a singleton cell, as the real data have; must not break the fit
+    u = pd.concat([u, lone], ignore_index=True)
     s = estimate.frame(u, wx, "tram")
     s = s[s["rain"] | s["dry"]].assign(rain=lambda x: x["rain"].astype(int))
     estimate.BOOT_REPS = 49

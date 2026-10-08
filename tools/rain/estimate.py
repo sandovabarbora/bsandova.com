@@ -82,8 +82,17 @@ def frame(units: pd.DataFrame, wx: pd.DataFrame, mode: str, rule1: str | None = 
     return u
 
 
+def drop_singletons(d: pd.DataFrame) -> pd.DataFrame:
+    """Drop units alone in their cell or date, repeatedly, so every fit sees the rows pyfixest would keep."""
+    while True:
+        keep = d.groupby("cell")["cell"].transform("size").gt(1) & d.groupby("date_s")["date_s"].transform("size").gt(1)
+        if keep.all():
+            return d
+        d = d[keep]
+
+
 def fit(d: pd.DataFrame, rhs: str, y: str = "y"):
-    return pf.feols(f"{y} ~ {rhs} | cell + date_s", data=d, vcov={"CRV1": "date_s"})
+    return pf.feols(f"{y} ~ {rhs} | cell + date_s", data=drop_singletons(d), vcov={"CRV1": "date_s"})
 
 
 def interval(m, term: str, level: float) -> tuple[float, float]:
@@ -93,6 +102,7 @@ def interval(m, term: str, level: float) -> tuple[float, float]:
 
 def wild_interval(d: pd.DataFrame, term: str, level: float, rng: np.random.Generator) -> tuple[float, float]:
     """Wild cluster bootstrap by date, Rademacher, unrestricted, percentile-t (Cameron, Gelbach and Miller 2008)."""
+    d = drop_singletons(d)
     m = fit(d, term)
     b, se = float(m.coef()[term]), float(m.se()[term])
     resid = d["y"].to_numpy() - m.predict()
