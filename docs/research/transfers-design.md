@@ -152,8 +152,15 @@ tight transfer by slack, and a map of the hubs, every figure interactive.
 
 ## References
 
-Sources on transfer reliability, walking speed in transit planning and connection planning are cited, verified,
-before the code is frozen, in a dated commit.
+Guo, Z. and Wilson, N.H.M. (2011) Assessing the cost of transfer inconvenience in public transport systems: a case
+study of the London Underground. *Transportation Research Part A: Policy and Practice*, 45(2), 91–104.
+https://doi.org/10.1016/j.tra.2010.11.002
+
+Knoblauch, R.L., Pietrucha, M.T. and Nitzburg, M. (1996) Field studies of pedestrian walking speed and start-up time.
+*Transportation Research Record*, 1538, 27–38. https://doi.org/10.1177/0361198196153800104
+
+Kittelson & Associates et al. (2013) *Transit Capacity and Quality of Service Manual*, 3rd edn. TCRP Report 165.
+Washington, DC: Transportation Research Board. https://doi.org/10.17226/24766
 
 ## Changes after registration
 
@@ -179,3 +186,25 @@ output `transfers-screen.json`.
   assumed intraclass correlation of 0.01; the minimum detectable Δp_within is 2.8 standard errors.
 - **Excluded connections** (returns and same-trunk pairs, §1) are kept in the tables with a flag, so the check without
   the exclusions (§7) can be run; every primary and descriptive figure leaves them out.
+
+**8 October 2026 (estimation code frozen; no connection scored).** `tools/transfer/estimate.py` runs §2 Q1–Q2, §5–§7
+and `tools/transfer/describe.py` the descriptive Q3–Q4; `tools/transfer/test_transfer.py` checks them on made-up data:
+dep_hat for a B that arrives early and waits, a late B and a B that starts at the hub; the planned B and the walking
+margin; the return/trunk flag; exact same-day donors that skip the planned trip and its neighbours; the extra wait and
+its censoring; Δp_within ≈ 0 when the two lines share only the day, while Δp_day picks the shared day up; a planted
+trip-level link found as supported; every check and the bounds. Fixed here, where the design left it open:
+
+- **Labels in the rule's literal order.** Supported is tested first, then not supported, then inconclusive: a 95 %
+  interval wholly below 0 whose 90 % interval lies within ±1 point is "not supported" (as good as independent), with its
+  sign reported; one wholly below 0 that reaches past −1 point is "inconclusive".
+- **Donor counts.** Same-day donors are the trips within 40 positions of the planned B and ±60 min of it (40 is more
+  than any line runs in two hours); other-day donors are counted per donor ISO week, so each bootstrap draw re-weights
+  donors from the drawn weeks only.
+- **Checks.** The margins check re-plans B under the new margin; the observed-departure check scores both the planned B
+  and the donors on observed departures; hub-level and line-pair results are shown for cells with at least 500 Q1
+  connections; the hub-definition check is identical to the primary (hubs are already keyed by stop name). Checks use
+  199 bootstrap draws, the primary 999.
+- **Roulette (Q3).** The curve for slack 1–10 min uses the cell's median walking margin and a 99-draw week bootstrap
+  for its interval; the cell's own share made and its slacks are shown beside it, with a calibration table over all
+  cells.
+- **References** verified in Crossref and listed above.
