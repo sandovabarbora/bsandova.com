@@ -20,6 +20,8 @@ REFS = D["refs"]
 # references added after the audit of 3 October 2026
 ACCESSED = {"DPPD": "3 October 2026", "OZV18": "3 October 2026", "EU1028": "3 October 2026"}
 LABEL = {"yes": "yes", "likely": "likely", "partly": "partly", "no": "not in one term", "other": "state or another body"}
+for _l in D["lists"]:
+    _l["rows"].sort(key=lambda r: list(LABEL).index(r[1]))
 e = html.escape
 order: list[str] = []
 
@@ -83,25 +85,31 @@ COLOURS = {"yes": "#2f8a5b", "likely": "#8cc6a2", "partly": "#d9a83a", "no": "#c
 def parties_chart() -> tuple[str, str]:
     """fig. 1: promises by rating per programme, as a stacked bar per list (charts.js) and a static SVG fallback."""
     rows, shares = [], []
-    names = [f"{l['no']} {l['name']}" for l in D["lists"]]
-    for l, name in zip(D["lists"], names):
+
+    def share(l, ks):
+        return sum(r[1] in ks for r in l["rows"]) / len(l["rows"])
+
+    lists = sorted(D["lists"], key=lambda l: (-share(l, ("yes", "likely")), -share(l, ("partly",))))
+    names = [f"{round(100 * share(l, ('yes', 'likely')))} % · {l['name']}" for l in lists]
+    for l, name in zip(lists, names):
         cc = collections.Counter(r[1] for r in l["rows"])
+        n = len(l["rows"])
         x = 0
         for k in LABEL:
             if cc[k]:
-                rows.append({"y": name, "x0": x, "x1": x + cc[k], "c": COLOURS[k],
+                rows.append({"y": name, "x0": 100 * x / n, "x1": 100 * (x + cc[k]) / n, "c": COLOURS[k],
                              "tip": f"{l['name']}: {LABEL[k]} {cc[k]} of {len(l['rows'])}"})
                 x += cc[k]
         shares.append((cc["yes"] + cc["likely"]) / len(l["rows"]))
-    top = max(len(l["rows"]) for l in D["lists"])
+    top = 100
     spec = {"parties": {
         "alt": "Stacked bars of the promises read in each of the six programmes by rating.",
         "panels": [{"h": 40 * len(names) + 20, "x": {"kind": "linear", "domain": [0, top], "fmt": {"dp": 0},
-                                                       "label": "promises read"},
+                                                       "label": "% of the promises read"},
                     "y": {"kind": "cat", "domain": names}, "marks": [{"type": "hbar", "rows": rows}]}],
         "legend": [{"label": LABEL[k], "c": COLOURS[k], "shape": "box", "o": 1} for k in LABEL],
         "table": {"cols": ["programme", *[LABEL[k] for k in LABEL]],
-                  "rows": [[n, *[collections.Counter(r[1] for r in l["rows"])[k] for k in LABEL]] for n, l in zip(names, D["lists"])]},
+                  "rows": [[n, *[collections.Counter(r[1] for r in l["rows"])[k] for k in LABEL]] for n, l in zip(names, lists)]},
         "data": ["ratings.json"]}}
     (ROOT / "assets/programmes-2026/charts.json").write_text(json.dumps(spec, ensure_ascii=False))
     w, rh, left = 720, 34, 150
@@ -114,7 +122,8 @@ def parties_chart() -> tuple[str, str]:
     svg = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {40 + len(names) * rh}">{"".join(bars)}</svg>'
     (ROOT / "assets/programmes-2026/01-parties.svg").write_text(svg)
     lo, hi = round(100 * min(shares)), round(100 * max(shares))
-    head = f"In each programme, between {lo} % and {hi} % of the promises read are within the city's powers in one term, rated yes or likely."
+    head = (f"Of the promises read, {lists[0]['name']}'s are most often within the city's powers in one term ({hi} % rated "
+            f"yes or likely), {lists[-1]['name']}'s least often ({lo} %).")
     alt = (f"Stacked bars for the six programmes, each split into promises rated yes, likely, partly, not in one term and "
            f"decided by the state or another body; the share rated yes or likely ranges from {lo} % to {hi} %.")
     return head, alt
