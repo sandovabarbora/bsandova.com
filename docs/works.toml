@@ -1,0 +1,426 @@
+# Everything listed on the home page. tools/site/home.py renders the films and "All work" from this file into
+# index.html; edit here, not in index.html.
+#
+# Per work: href, title, kind (small label), status, published (YYYY-MM-DD; the row shows its month), topic (a key of
+# [topics]), optional series (href of the hub this is a part of), optional date (shown instead of published, for
+# theses; within a topic, series come first, then the rest, newest first), optional top = n (shown as the n-th film at the top of the home page, with a [works.film] block).
+
+[topics]
+transit = { title = "Getting around", note = "Trams, buses and streets: delays, weather, fares and darkness." }
+prague = { title = "Prague", note = "One city, from the data it publishes about itself." }
+pop = { title = "Music", note = "Charts, tours and song contests, measured the same way across artists and countries." }
+sport = { title = "Sport", note = "Who a country produces, per capita, compared with its peers." }
+ai = { title = "AI and data", note = "Assistants over warehouses, and the tools that check them." }
+other = { title = "Everything else", note = "Lotteries, film grants, a call-sheet app and other things worth keeping." }
+
+# ---------------------------------------------------------------- Getting around
+
+[[works]]
+href = "texts/weather-rails"
+title = "Weather on the rails"
+kind = "Hub · series of two"
+status = "published"
+published = "2026-10-08"
+topic = "transit"
+top = 1
+[works.film]
+id = "weather-rails"
+label = "Data · Prague transit · a series"
+heading = "Weather<br>on the rails"
+dek = "What rain and heat do to Prague's trams and buses, asked the same way of the same 121 million stop passes, each question registered before the weather met the data."
+photo = "rain-delays"
+vt = "weather-rails"
+credit = 'Photo: <a href="https://commons.wikimedia.org/wiki/File:Praha,_Ko%C5%A1%C3%AD%C5%99e_Kaval%C3%ADrka_v_noci.jpg">Aktron</a> · CC BY-SA 4.0, toned'
+tint = "#05080d"
+move = "translate3d(1.8%,2%,0) scale(1.1)"
+ctas = [["Read the series", "texts/weather-rails"], ["Start with Part 1", "texts/rain-delays"]]
+
+[[works]]
+href = "texts/rain-delays"
+title = "Part 1 · Does rain delay Prague's trams?"
+kind = "Research"
+status = "pre-specified"
+published = "2026-10-08"
+topic = "transit"
+series = "texts/weather-rails"
+
+[[works]]
+href = "texts/heat-delays"
+title = "Part 2 · Does heat delay Prague's trams?"
+kind = "Research"
+status = "pre-specified"
+published = "2026-10-08"
+topic = "transit"
+series = "texts/weather-rails"
+
+[[works]]
+href = "texts/thesis"
+title = "Persistence Dynamics and Welfare Costs of Urban Public Transport Delays"
+kind = "Master's thesis · Charles University"
+status = "exploratory"
+published = "2026-07-01"
+date = "Jul 2026"
+topic = "transit"
+top = 4
+[works.film]
+id = "persistence"
+label = "Master's thesis · IES Director's Award 2026"
+heading = "Persistence"
+dek = "On 121 million stop-pass records from Prague, within-day bus and tram delays are persistent, and for a traveller who can observe the current delay state, standard appraisal overstates the cost of unreliability."
+photo = "thesis"
+credit = 'Photo: <a href="https://commons.wikimedia.org/wiki/File:Praha_%E2%80%93_Zahradn%C3%AD_M%C4%9Bsto,_stanice,_2021_(55).jpg">Draceane</a> · CC BY-SA 4.0, toned'
+tint = "#060606"
+move = "translate3d(-2.6%,1.6%,0) scale(1.11)"
+ctas = [["Read", "texts/thesis"]]
+
+[[works]]
+href = "texts/annual-pass"
+title = "Did a cheaper annual pass fill Vienna's and Prague's trams?"
+kind = "Note"
+status = "note, descriptive"
+published = "2026-10-06"
+topic = "transit"
+
+[[works]]
+href = "texts/dst-darkness"
+title = "When the clocks go back: evening darkness and pedestrian crashes in Czechia"
+kind = "Research"
+status = "pre-specified"
+published = "2026-10-03"
+topic = "transit"
+
+[[works]]
+href = "texts/delayed"
+title = "Delayed All the Time: Prague public transport as sound"
+kind = "Note · sonification"
+status = "note"
+published = "2026-09-14"
+topic = "transit"
+
+# ---------------------------------------------------------------- Prague
+
+[[works]]
+href = "texts/prague-measured"
+title = "Prague, measured"
+kind = "Hub · series of five"
+status = "published"
+published = "2026-09-29"
+topic = "prague"
+top = 2
+[works.film]
+id = "prague-measured"
+label = "Data · Prague · a series in five parts"
+heading = "Prague,<br>measured"
+dek = "Studies of one city from the data it publishes about itself: how its City Assembly votes, how its precincts vote in national elections, how it funds its districts, how housing moves from permit to completion, and how it prices kerb space."
+photo = "prague-rings"
+credit = 'Photo: <a href="https://commons.wikimedia.org/wiki/File:Luka,_l%C3%A1vka,_v_noci.jpg">ŠJů</a> · CC BY-SA 3.0, toned'
+tint = "#0d0c05"
+move = "translate3d(0,2.5%,0) scale(1.08)"
+ctas = [["Read the series", "texts/prague-measured"], ["Start with Part 1", "texts/prague-council"]]
+
+[[works]]
+href = "texts/prague-council"
+title = "Part 1 · Do Prague's councillors vote against less, term after term?"
+kind = "Research"
+status = "pre-specified"
+published = "2026-09-28"
+topic = "prague"
+series = "texts/prague-measured"
+
+[[works]]
+href = "texts/prague-rings"
+title = "Part 2 · Why do Prague's housing estates vote ANO?"
+kind = "Research"
+status = "exploratory, design before modelling"
+published = "2026-09-28"
+topic = "prague"
+series = "texts/prague-measured"
+
+[[works]]
+href = "texts/prague-districts"
+title = "Part 3 · Does a district get more city money when its mayor's party joins City Hall?"
+kind = "Research"
+status = "pre-specified"
+published = "2026-09-28"
+topic = "prague"
+series = "texts/prague-measured"
+
+[[works]]
+href = "texts/prague-housing"
+title = "Part 4 · How long does a Prague flat take, from permit to completion?"
+kind = "Research"
+status = "pre-specified"
+published = "2026-09-28"
+topic = "prague"
+series = "texts/prague-measured"
+
+[[works]]
+href = "texts/prague-parking"
+title = "Part 5 · How many kerb spaces have longer cars cost Prague?"
+kind = "Research"
+status = "pre-specified"
+published = "2026-09-29"
+topic = "prague"
+series = "texts/prague-measured"
+
+[[works]]
+href = "texts/prague-programmes-2026"
+title = "What can Prague's 2026 programmes deliver in one term?"
+kind = "Note"
+status = "note"
+published = "2026-10-01"
+topic = "prague"
+
+# ---------------------------------------------------------------- Pop
+
+[[works]]
+href = "texts/pop-measured"
+title = "Pop, measured"
+kind = "Hub · series of six"
+status = "published"
+published = "2026-10-02"
+topic = "pop"
+top = 3
+[works.film]
+id = "pop-measured"
+label = "Data · pop music · a series in six parts"
+heading = "Pop,<br>measured"
+dek = "Five artists measured the same way, from Spotify's charts and their tours. Hits charted longer where people speak their language, most of all one Spanish song, and tickets barely follow local incomes."
+photo = "pop-harry-styles"
+credit = 'Photo: <a href="https://stocksnap.io/photo/crowd-people-IUJP9OI22I">Anthony Delanoix</a> · CC0, toned'
+tint = "#120608"
+move = "translate3d(2%,-1.8%,0) scale(1.1)"
+ctas = [["Read the series", "texts/pop-measured"], ["Start with the five together", "texts/pop-together"]]
+
+[[works]]
+href = "texts/pop-harry-styles"
+title = "Part 1 · Harry Styles: how long a hit lasts, where, and what a ticket costs"
+kind = "Research"
+status = "pre-specified"
+published = "2026-10-02"
+topic = "pop"
+series = "texts/pop-measured"
+
+[[works]]
+href = "texts/pop-taylor-swift"
+title = "Part 2 · Taylor Swift: a catalogue that sells out everything"
+kind = "Research"
+status = "pre-specified"
+published = "2026-10-02"
+topic = "pop"
+series = "texts/pop-measured"
+
+[[works]]
+href = "texts/pop-bts"
+title = "Part 3 · BTS: a catalogue, not a hit"
+kind = "Research"
+status = "pre-specified"
+published = "2026-10-02"
+topic = "pop"
+series = "texts/pop-measured"
+
+[[works]]
+href = "texts/pop-bad-bunny"
+title = "Part 4 · Bad Bunny: a long hit, everywhere at once"
+kind = "Research"
+status = "pre-specified"
+published = "2026-10-02"
+topic = "pop"
+series = "texts/pop-measured"
+
+[[works]]
+href = "texts/pop-billie-eilish"
+title = "Part 5 · Billie Eilish: two long hits, five years apart"
+kind = "Research"
+status = "pre-specified"
+published = "2026-10-02"
+topic = "pop"
+series = "texts/pop-measured"
+
+[[works]]
+href = "texts/pop-together"
+title = "Part 6 · Together: hits charted longer where the language matched"
+kind = "Research"
+status = "exploratory"
+published = "2026-10-02"
+topic = "pop"
+series = "texts/pop-measured"
+
+[[works]]
+href = "texts/eurovision"
+title = "Eurovision, not Brussels? Diaspora, juries and the EU in Eurovision votes"
+kind = "Research"
+status = "pre-specified"
+published = "2026-10-03"
+topic = "pop"
+
+[[works]]
+href = "texts/concert-effect"
+title = "Does a concert move the charts? Harry Styles's first tour on Spotify"
+kind = "Research"
+status = "pre-specified"
+published = "2026-10-02"
+topic = "pop"
+
+# ---------------------------------------------------------------- Sport
+
+[[works]]
+href = "texts/hockey"
+title = "Player Pool Atlas: Czech ice hockey players, 1995/96–2025/26"
+kind = "Tool · Player Pool Atlas"
+status = "atlas"
+published = "2026-09-14"
+topic = "sport"
+top = 5
+[works.film]
+id = "player-pool-atlas"
+label = "Sport · six nations"
+heading = "Player<br>Pool Atlas"
+dek = "Who a country produces, per capita, compared with its peers: the same five questions asked of six nations the same way. Hockey first, then football."
+photo = "atlas"
+credit = 'Photo: <a href="https://www.rawpixel.com/image/6113855/photo-image-public-domain-people-sunlight">rawpixel</a> · CC0, toned'
+tint = "#04120b"
+move = "rotate(-2deg) scale(1.13)"
+ctas = [["Football", "texts/football"], ["Hockey", "texts/hockey"]]
+
+[[works]]
+href = "texts/football"
+title = "Player Pool Atlas: Czech footballers in Europe, 1995/96–2025/26"
+kind = "Tool · Player Pool Atlas"
+status = "atlas"
+published = "2026-09-14"
+topic = "sport"
+
+# ---------------------------------------------------------------- AI and data
+
+[[works]]
+href = "texts/quaesitor/"
+title = "Quaesitor"
+kind = "Research · AI over data"
+status = "retired"
+published = "2026-09-14"
+topic = "ai"
+
+[[works]]
+href = "texts/silent-detector"
+title = "Can a wrong number be seen coming?"
+kind = "Research · Quaesitor"
+status = "exploratory"
+published = "2026-09-15"
+topic = "ai"
+
+[[works]]
+href = "texts/ai-over-data"
+title = "An LLM assistant over a data warehouse: design notes"
+kind = "Note"
+status = "note"
+published = "2026-09-17"
+topic = "ai"
+
+[[works]]
+href = "texts/sitewitness"
+title = "sitewitness: rules enforced in code"
+kind = "Tool · sitewitness"
+status = "tool v0.1.0"
+published = "2026-09-22"
+topic = "ai"
+
+[[works]]
+href = "texts/quotecheck"
+title = "quotecheck: a quotation check"
+kind = "Tool · quotecheck"
+status = "tool v0.1.0"
+published = "2026-09-15"
+topic = "ai"
+
+[[works]]
+href = "texts/cutover"
+title = "cutover: a table migration check"
+kind = "Tool · cutover"
+status = "tool v0.1.0"
+published = "2026-09-14"
+topic = "ai"
+
+[[works]]
+href = "texts/second-brain"
+title = "A wiki that an agent keeps"
+kind = "Note"
+status = "note"
+published = "2026-09-14"
+topic = "ai"
+
+[[works]]
+href = "texts/thesis-logs"
+title = "Patterns in a university's logs"
+kind = "Master's thesis · VŠE"
+status = "note"
+published = "2025-05-01"
+date = "May 2025"
+topic = "ai"
+
+# ---------------------------------------------------------------- Everything else
+
+[[works]]
+href = "texts/film-fund"
+title = "Does a film-fund grant get a Czech film into cinemas?"
+kind = "Research"
+status = "pre-specified"
+published = "2026-10-01"
+topic = "other"
+
+[[works]]
+href = "texts/lottery"
+title = "Can a lottery player choose better?"
+kind = "Research"
+status = "exploratory"
+published = "2026-09-29"
+topic = "other"
+
+[[works]]
+href = "texts/forecast-verification"
+title = "Forecast verification: protocol"
+kind = "Note"
+status = "in progress, no results yet"
+published = "2026-09-29"
+topic = "other"
+
+[[works]]
+href = "atlantic/"
+title = "The Atlantic, played"
+kind = "Note · sonification"
+status = "note"
+published = "2026-09-15"
+topic = "other"
+
+[[works]]
+href = "texts/brand-reflection"
+title = "Colour and sound in 47 Czech YouTube ad spots, and the language of 24 brand homepages"
+kind = "Note"
+status = "note"
+published = "2026-09-14"
+topic = "other"
+
+[[works]]
+href = "texts/filmrunner"
+title = "FilmRunner, an offline call sheet"
+kind = "Note"
+status = "note"
+published = "2026-09-14"
+topic = "other"
+
+[[works]]
+href = "texts/thesis-eu"
+title = "Franco-German voting after the Treaty of Aachen"
+kind = "Bachelor's thesis · VŠE"
+status = "note"
+published = "2021-04-01"
+date = "Apr 2021"
+topic = "other"
+
+[[works]]
+href = "texts/registered"
+title = "What \"pre-specified\" means on this site"
+kind = "Note · method"
+status = "note"
+published = "2026-10-05"
+topic = "other"
