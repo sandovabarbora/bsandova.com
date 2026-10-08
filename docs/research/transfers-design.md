@@ -232,3 +232,10 @@ step reads only those. Same rules and code paths.
 The final step then reached 28 GB, building a connections × draws weight matrix for Δp_within; it now sums the
 differences by ISO week before applying the draws, which gives the same numbers, and forms Q1b in smaller blocks. It
 was stopped before printing anything.
+
+**8 October 2026 (two more output-neutral fixes, recorded before the results are committed).** bd5e67a runs each
+month in its own process and writes its reduced tables to `tools/data/transfer/estimate/` (memory only; the code
+paths are the frozen ones). af3638a sums the per-connection differences by ISO week before applying the bootstrap's
+week weights, instead of building a connections × draws matrix, and forms Q1b in blocks of 50 000 connections; the
+arithmetic is the same: on the March 2025 Q1 table, the frozen and the fixed Δp_within agree in all of 200 week draws
+to within 4 × 10⁻¹⁶. The test suite passes on the fixed code (7 tests).
