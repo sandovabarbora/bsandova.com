@@ -92,3 +92,20 @@ charts.
 ## References
 
 Further references (on delay propagation and timetable padding) are verified before publication, in a dated commit.
+
+## Changes after registration
+
+**8 October 2026 (screening, §3; no segment's delay summarised).** `tools/late/screen.py`, output
+`delay-origins-screen.json`. The column `delay_gain` equals `real_travel_time − planned_travel_time` in every sampled
+pass and differs from `delay_to − delay_from` in 99.9 % of them: it is running time against schedule, without the
+time spent at the stop. By §3.1 the gain is recomputed as `delay_to − delay_from`, so a segment's gain includes the
+dwell at its first stop; with it, the gain is missing for 2–3 % of tram passes (48 % for `delay_gain`). Running time
+alone is added as a check (§6), decided here before any value is read. After screening: 618 tram segments, 21.4
+million passes, 170 dates; 48 rare tram segments (9 116 passes) removed. Planned closures remove 2–31 % of tram passes
+by month, as in the earlier studies. Stop coordinates from the thesis's stop table cover 279 of the 618 tram segments;
+the map takes the rest from another source, which affects the map only.
+
+**8 October 2026 (code frozen; no segment's delay summarised).** `tools/late/estimate.py` runs §4–§6;
+`tools/late/test_late.py` checks it on made-up data: the concentration share with recoverers outside the denominator,
+the labels, strong stable hotspots labelled supported on both questions, pure noise labelled not supported on both,
+and every check including the peak–midday overlap and the map rows.
