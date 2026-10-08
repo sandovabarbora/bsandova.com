@@ -9,7 +9,7 @@ are self-reported. Deviations are listed, dated, in the change log.
 - **Segments.** Only the schema of `prague_cascade` was read: one row per trip and segment (from a stop to the next
   stop), with `delay_from`, `delay_to`, `delay_gain`, `planned_travel_time`, `real_travel_time`, the stop names and
   the arrival time at the first stop. No value of this table has been printed, summarised or written.
-- **Delays elsewhere.** The thesis (2025) and the *Weather on the rails* studies (October 2026) read delay from
+- **Delays elsewhere.** The thesis (defended 2026, data of 2025) and the *Weather on the rails* studies (October 2026) read delay from
   `stop_times_history_modeling`: its persistence within a day (thesis), and the delay a trip gains within a clock hour,
   averaged over a route-direction and hour, against rain and heat. No delay was ever broken down by place.
 - **Prior expectation.** The author expects delay to be born on a minority of segments, mostly in the centre and at
@@ -109,3 +109,13 @@ the map takes the rest from another source, which affects the map only.
 `tools/late/test_late.py` checks it on made-up data: the concentration share with recoverers outside the denominator,
 the labels, strong stable hotspots labelled supported on both questions, pure noise labelled not supported on both,
 and every check including the peak–midday overlap and the map rows.
+
+**8 October 2026 (map, after the results).** The map's stop positions come from the PID timetable in GTFS (mean of
+the tram platforms of each stop name), not from the thesis's stop table: 599 of the 618 tram segments are placed. The
+"(2025)" after the thesis above was corrected to its defence year, 2026; its data are of 2025.
+
+**8 October 2026 (descriptions after the results, not registered).** `tools/late/describe.py`: the comparison with
+tram volume, the concentration curve and its Gini, the overlap of the top tenth between odd and even weeks, peaks
+against middays on the top segments, the split of the gain into lateness made and early trams coming back to time
+(the cascade read again with the screening rules), and the pattern at six large stops chosen after seeing the top
+list.
