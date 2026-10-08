@@ -98,3 +98,15 @@ dose curve, the checks, and the hour-by-hour temperature series of the window, e
 ## References
 
 To be verified (DOIs and pages) before publication, in a dated commit; none is cited in the analysis itself.
+
+## Changes after registration
+
+**8 October 2026 (power, §6; temperature read, no delay read against temperature).** `tools/heat/power.py`, output
+`heat-delays-power.json`. On the 170 dates left by the rain study's screening (3 230 service hours, none without a
+temperature), 58 dry hours reach 30 °C, on 11 dates in 7 weeks, against 1 341 mild dry hours. The study is estimable
+(≥ 10 hot dates) but has fewer than 30, so the wild cluster bootstrap of §3 applies, and the evidence rests on 11 hot
+days: this is stated now. Deviation: with week effects a shock common to a whole date is not absorbed, so its size was
+measured from the rain study's tram units without any temperature (residuals on cell and week effects, averaged by
+date): σ_day 5.2 s. With the rain study's σ_e 36.7 s, σ_c 11.9 s and ρ 0.34, the simulated SE of δ_tram is 3.3 s and
+the minimum detectable δ 9.1 s (80 % power, two-sided 5 %); the 30 s rule passes, and "not supported" is reachable only
+if the estimate lies near zero.
