@@ -65,8 +65,11 @@ def classify() -> pd.DataFrame:
 
 def sigma_day() -> float:
     import pyfixest as pf
-    sys.path.insert(0, str(ROOT / "tools" / "rain"))
-    from estimate import D, drop_singletons
+    import importlib.util  # the rain study's estimate.py, by path: tools/heat has an estimate.py of its own
+    spec = importlib.util.spec_from_file_location("rain_estimate", ROOT / "tools" / "rain" / "estimate.py")
+    rx = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(rx)
+    D, drop_singletons = rx.D, rx.drop_singletons
     u = pd.read_parquet(D / "units.parquet")
     u = u[(u["mode"] == "tram") & (u["trips"] >= 2) & u["y"].notna() & ~u["rule1"] & ~u["rule2"]].copy()
     u["date"] = pd.to_datetime(u["date"])

@@ -110,3 +110,11 @@ measured from the rain study's tram units without any temperature (residuals on 
 date): σ_day 5.2 s. With the rain study's σ_e 36.7 s, σ_c 11.9 s and ρ 0.34, the simulated SE of δ_tram is 3.3 s and
 the minimum detectable δ 9.1 s (80 % power, two-sided 5 %); the 30 s rule passes, and "not supported" is reachable only
 if the estimate lies near zero.
+
+**8 October 2026 (estimation code frozen; no delay read against temperature).** `tools/heat/estimate.py` runs §3–§5
+with the rain study's frame, screening, labels and singleton rule; `tools/heat/test_heat.py` checks it on made-up data:
+the two-days-later placebo key on a hand example, recovery of a known 15 s effect with week effects, a null effect
+labelled "not supported", the bootstrap path, and every §5 check. Fixed here, where the design left it open: the
+placebo compares mild hours with hours that are not hot but whose same hour two days later is; a check whose regressor
+has no variation is listed as not estimable rather than stopping the run. The power script now loads the rain study's
+code by path (a file-name clash); its output is unchanged.
