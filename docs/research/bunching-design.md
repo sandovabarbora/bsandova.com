@@ -3,7 +3,7 @@
 **Status: pre-specified analysis, design committed 8 October 2026, before any headway was computed.** Part 2 of the
 series *Running late*. The steps follow in dated commits: design → screening → code → results. Commit times are
 self-reported. Deviations are listed, dated, in the change log. A draft of this design was reviewed twice by an independent
-methods reviewer before registration; the version below replaces the draft, whose estimands had no defined null,
+model-based reviewer before registration; the version below replaces the draft, whose estimands had no defined null,
 and fixes a bias the first rewrite still had.
 
 ## 0. What has already been seen
@@ -239,7 +239,9 @@ the design guessed.
 pattern is 63–76 % by month (63 % in the eight days of September), not 68–76 % as first written; the screening file
 was right, the note misread it.
 
-**8 October 2026 (after an independent review of the article; descriptions, not registered).** The review asked for
+**8 October 2026 (after a review of the article before publication; descriptions, not registered).** That review was a
+self-review by the agent that wrote the article; this entry first called it independent (wording corrected after
+publication, 8 October 2026). The review asked for
 checks the results alone could not answer, computed in `tools/bunch/describe.py` and `describe_bus.py` and reported as
 description. Line 9 holds 30 % of the sudden closings on 15 % of the exposure, and without it the Q2 ratio is 1.72
 (95 % interval 1.00 to 2.38), no longer wholly above the registered 1.25. A simulation on the real exposures shows that
@@ -256,3 +258,19 @@ shuffled.
 stops by the rule first written into `screen.py` (432 tram and 1 664 bus stops), which the code-freeze entry above
 replaced; the stops used are those of `tools/bunch/timing.py` (65 of 624 tram stops, 10 of 2 183 bus stops), counted in
 `describe.json` and `describe-bus.json`.
+
+**8 October 2026 (correction after publication, following an independent review).** The registered label rule of §6
+for Q1 was applied in the wrong order in the code: `label_gamma` checked the ±0.01 margin before the clause that lists
+an interval wholly below 0 as inconclusive. The specific clause governs, so Q1 is **inconclusive** (95 % interval
+−0.0018 to −0.0006), not "not supported" as published in version 1. The function now checks that case first, with a
+test on an interval of −0.002 to −0.0005; the label in `bunching-results.json` was recomputed from the stored
+intervals by `tools/bunch/review.py` (the version 1 label is kept there as `label_v1`), and no estimate changed. The
+note in the entry above, "the margin rule was applied as coded", is superseded. Added after publication as post-hoc
+checks, not registered (`bunching-review.json`): Q2 against an exposure null in which births are reassigned at random
+within the same service pattern, with the same cross-fit and a bootstrap over dates of 199 draws with 49 null
+draws each, gives 1.87 (95 % interval 1.45 to 2.44); within the same line 1.91 (1.38 to 2.61). γ_IV by
+line ranges from −0.0175 (line 31) to +0.0029 (line 8) over the 24 lines with at least 50 000 instrumented
+transitions, and from −0.0421 (line 21) to +0.0299 (line 30) with all lines. The article was retitled "Why do two 22s
+come at once? Tram bunching in Prague, 2025", since the analysis covers pairs only; this design keeps its registered
+title. The registration commits are tagged `late-bunching-design` (2b78211), `late-bunching-screen` (65789a6),
+`late-bunching-v1` (83f91ec) and `late-bunching-results` (8dc4eea); the tags were added after publication.

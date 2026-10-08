@@ -1,4 +1,4 @@
-"""Bus check added after the article review (not registered): amplification with the instrument two, three and four
+"""Bus check added after the pre-publication self-review of the article (not registered): amplification with the instrument two, three and four
 stops back, and the autocorrelation of spacing changes. Writes docs/research/bunching-describe-bus.json.
 
     nice -n 20 uv run --with numpy --with pandas --with pyarrow --with scipy python tools/bunch/describe_bus.py
