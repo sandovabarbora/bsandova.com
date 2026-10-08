@@ -12,6 +12,7 @@ Writes docs/research/transfers-results.json.
 """
 from __future__ import annotations
 
+import gc
 import importlib.util
 import json
 import logging
@@ -20,6 +21,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import pyarrow.parquet as pq
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "tools/data/transfer"
@@ -59,8 +61,8 @@ def read_connections(path: Path, excluded: bool) -> pd.DataFrame:
     which only the check without the exclusions (§7) reads; text columns as categories."""
     filters = ([("excluded", "==", True), ("slack", ">=", 120), ("slack", "<=", 240)] if excluded
                else [("excluded", "==", False)])
-    c = pd.read_parquet(path, filters=filters).drop(columns=DROP)
-    return c.astype({k: "category" for k in TEXT})
+    t = pq.read_table(path, filters=filters, read_dictionary=TEXT)  # strings arrive as categories, not objects
+    return t.drop_columns([x for x in DROP if x in t.column_names]).to_pandas()
 
 
 def months() -> list[tuple[Path, Path]]:
@@ -75,7 +77,7 @@ def prepare(c: pd.DataFrame, removed_hubs: set[str]) -> pd.DataFrame:
     c["b_observed"] = c["delta_b"].notna()
     midnight = pd.to_datetime(c["date"]).astype("int64") // 10**9
     c["hour"] = pd.to_datetime(c["a_sa"], unit="s", utc=True).dt.tz_convert("Europe/Prague").dt.hour
-    c["week"] = [d.isocalendar()[1] for d in c["date"]]
+    c["week"] = pd.to_datetime(c["date"]).dt.isocalendar().week.to_numpy().astype(np.int16)
     c["tod_a"] = (c["a_sa"] - midnight) % 86400
     c["tod_b"] = (c["b_sd"] - midnight) % 86400
     days = pd.Series(c["date"].unique())
@@ -363,6 +365,7 @@ def main() -> None:
             VAR.setdefault(k, []).append(v)
         log.info("%s: %s Q1 connections", fc.name, len(q))
         del c, b, c2, u, ex
+        gc.collect()
     q = pd.concat(Q, ignore_index=True)
     for k in ("hub", "akey", "bkey", "aroute", "broute", "band", "daytype"):
         q[k] = q[k].astype(str).astype("category")
