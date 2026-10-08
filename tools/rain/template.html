@@ -32,7 +32,7 @@
 
 <article class="text">
 <header class="text-head">
-  <p class="kicker">Research · transit · Prague trams and buses, March–September 2025</p>
+  <p class="kicker">Research · Weather on the rails, part 1 · Prague trams and buses, March–September 2025</p>
   <h1>Does rain delay Prague's trams? <em>Rain hours and delay, 2025</em></h1>
   <p class="deck">A pre-specified analysis of {{records}} stop passes and the hourly rain gauges of the Czech Hydrometeorological Institute: in an hour with rain, a tram gains about {{d}} seconds more delay than the same route at the same hour and weekday when it is dry. The registered hypothesis is {{label}}; buses, a secondary estimate, gain about as much, and the metro, underground, does not.</p>
   <dl class="facts">
@@ -61,6 +61,7 @@
   <summary>About this study</summary>
 <dl class="meta">
   <div><dt>status</dt><dd>research, pre-specified analysis (self-timestamped)</dd></div>
+  <div><dt>series</dt><dd><a href="weather-rails">Weather on the rails</a>, part 1; part 2 is <a href="heat-delays">Does heat delay Prague's trams?</a></dd></div>
   <div><dt>registration</dt><dd>design committed at <code>be7b3e4</code> on 6 October 2026, before any delay or precipitation value was read; author's decisions at <code>324c528</code>; power from precipitation alone at <code>6584b94</code>; screening at <code>eb23cdf</code> and <code>947f637</code>; code frozen with tests at <code>f5b061d</code>; power with the data's dispersion at <code>11418fb</code>; results at <code>6de9c3f</code>; the chain is kept under the tag <code>rain-delays-v1</code>. Commit times are self-reported. Changes after registration are listed in <a href="../changelog/#rain-delays-changes">the change log</a>.</dd></div>
   <div><dt>data</dt><dd>Prague Integrated Transport stop-time history via Golemio, 15 March – 8 September 2025, as used in the author's master's thesis<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup>; ČHMÚ hourly precipitation, four Prague stations, CC BY 4.0<sup class="cite"><a href="#r3">3</a></sup>; PID change announcements from the Internet Archive<sup class="cite"><a href="#r4">4</a></sup>. The stop passes are not redistributed; the estimates are in <a href="../assets/rain/results.json">results.json</a>.</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/rain">tools/rain/</a> at the commit that publishes this page; rebuild: <code>uv run --with pandas --with pyarrow --with pyfixest python tools/rain/estimate.py</code> (pyfixest {{pyfixest}})</dd></div>
@@ -177,7 +178,7 @@
 
 
 <footer class="text-foot">
-  <p class="back"><a href="../#works">← projects</a></p>
+  <p class="back"><a href="../#works">← projects</a> · <a href="weather-rails">The series</a> · <a href="heat-delays">Part 2: heat</a></p>
 </footer>
 </article>
 

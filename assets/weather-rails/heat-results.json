@@ -1,0 +1,147 @@
+{
+ "thresholds": {
+  "hot": 30.0,
+  "mild": [
+   15.0,
+   25.0
+  ]
+ },
+ "tram": {
+  "delta_s": -14.86,
+  "se_s": 2.91,
+  "ci95": [
+   -20.86,
+   -8.2
+  ],
+  "ci90": [
+   -19.98,
+   -9.85
+  ],
+  "label": "inconclusive",
+  "inference": "wild cluster bootstrap by date",
+  "n_units": 66263,
+  "dates": 134,
+  "hot_dates": 11,
+  "hot_units": 2572
+ },
+ "bus_secondary": {
+  "delta_s": -15.9,
+  "se_s": 4.27,
+  "ci95": [
+   -25.63,
+   -6.09
+  ],
+  "ci90": [
+   -24.57,
+   -8.02
+  ],
+  "label": "inconclusive",
+  "inference": "wild cluster bootstrap by date",
+  "n_units": 216950,
+  "dates": 134,
+  "hot_dates": 11,
+  "hot_units": 8980
+ },
+ "checks_tram": {
+  "date_effects": {
+   "hot": {
+    "est_s": -11.38,
+    "ci95": [
+     -16.42,
+     -6.34
+    ]
+   }
+  },
+  "dose": {
+   "t25_28": {
+    "est_s": -4.2,
+    "ci95": [
+     -7.57,
+     -0.83
+    ]
+   },
+   "t28_30": {
+    "est_s": -9.22,
+    "ci95": [
+     -16.07,
+     -2.37
+    ]
+   },
+   "t30_32": {
+    "est_s": -12.37,
+    "ci95": [
+     -20.6,
+     -4.15
+    ]
+   },
+   "t32_up": {
+    "est_s": -19.55,
+    "ci95": [
+     -26.48,
+     -12.62
+    ]
+   }
+  },
+  "metro": {
+   "hot": {
+    "est_s": -1.45,
+    "ci95": [
+     -4.25,
+     1.34
+    ]
+   }
+  },
+  "threshold_28": {
+   "hot": {
+    "est_s": -11.81,
+    "ci95": [
+     -16.95,
+     -6.67
+    ]
+   }
+  },
+  "threshold_32": {
+   "hot": {
+    "est_s": -20.85,
+    "ci95": [
+     -28.08,
+     -13.62
+    ]
+   }
+  },
+  "wet_hours_kept": {
+   "hot": {
+    "est_s": -11.33,
+    "ci95": [
+     -18.02,
+     -4.64
+    ]
+   },
+   "rain_any": {
+    "est_s": 2.46,
+    "ci95": [
+     -0.21,
+     5.13
+    ]
+   }
+  },
+  "level_instead_of_gain": {
+   "hot": {
+    "est_s": -15.65,
+    "ci95": [
+     -22.95,
+     -8.36
+    ]
+   }
+  },
+  "placebo_two_days_later": {
+   "hot_lead2": {
+    "est_s": -5.19,
+    "ci95": [
+     -11.14,
+     0.77
+    ]
+   }
+  }
+ }
+}
