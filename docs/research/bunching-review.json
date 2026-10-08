@@ -1,0 +1,186 @@
+{
+ "note": "checks added after publication, following the independent review of 8 October 2026; post hoc, not registered",
+ "q1_label": {
+  "published": "not supported",
+  "corrected": "inconclusive"
+ },
+ "gamma_iv_by_line": {
+  "lines": {
+   "21": {
+    "gamma_iv": -0.0421,
+    "transitions": 19097
+   },
+   "31": {
+    "gamma_iv": -0.0175,
+    "transitions": 104253
+   },
+   "6": {
+    "gamma_iv": -0.008,
+    "transitions": 159478
+   },
+   "4": {
+    "gamma_iv": -0.0069,
+    "transitions": 177576
+   },
+   "14": {
+    "gamma_iv": -0.0061,
+    "transitions": 197938
+   },
+   "15": {
+    "gamma_iv": -0.0054,
+    "transitions": 129587
+   },
+   "1": {
+    "gamma_iv": -0.0051,
+    "transitions": 201467
+   },
+   "16": {
+    "gamma_iv": -0.004,
+    "transitions": 296707
+   },
+   "26": {
+    "gamma_iv": -0.0033,
+    "transitions": 199140
+   },
+   "22": {
+    "gamma_iv": -0.0027,
+    "transitions": 133781
+   },
+   "5": {
+    "gamma_iv": -0.0022,
+    "transitions": 161366
+   },
+   "18": {
+    "gamma_iv": -0.0013,
+    "transitions": 225425
+   },
+   "11": {
+    "gamma_iv": -0.0012,
+    "transitions": 138017
+   },
+   "10": {
+    "gamma_iv": -0.0011,
+    "transitions": 233295
+   },
+   "9": {
+    "gamma_iv": -0.0003,
+    "transitions": 808229
+   },
+   "7": {
+    "gamma_iv": -0.0002,
+    "transitions": 153733
+   },
+   "25": {
+    "gamma_iv": -0.0002,
+    "transitions": 111251
+   },
+   "3": {
+    "gamma_iv": -0.0001,
+    "transitions": 152230
+   },
+   "13": {
+    "gamma_iv": 0.0004,
+    "transitions": 74089
+   },
+   "17": {
+    "gamma_iv": 0.0011,
+    "transitions": 412091
+   },
+   "2": {
+    "gamma_iv": 0.0011,
+    "transitions": 238368
+   },
+   "12": {
+    "gamma_iv": 0.0017,
+    "transitions": 83434
+   },
+   "19": {
+    "gamma_iv": 0.0025,
+    "transitions": 262231
+   },
+   "20": {
+    "gamma_iv": 0.0026,
+    "transitions": 304670
+   },
+   "8": {
+    "gamma_iv": 0.0029,
+    "transitions": 272222
+   },
+   "30": {
+    "gamma_iv": 0.0299,
+    "transitions": 31835
+   }
+  },
+  "min": {
+   "line": "21",
+   "gamma_iv": -0.0421,
+   "transitions": 19097
+  },
+  "max": {
+   "line": "30",
+   "gamma_iv": 0.0299,
+   "transitions": 31835
+  },
+  "at_least_50000_transitions": {
+   "lines": 24,
+   "min": {
+    "line": "31",
+    "gamma_iv": -0.0175,
+    "transitions": 104253
+   },
+   "max": {
+    "line": "8",
+    "gamma_iv": 0.0029,
+    "transitions": 272222
+   }
+  }
+ },
+ "q2_null_within_pattern": {
+  "stratum": "pattern",
+  "strata": 64,
+  "platforms": 488,
+  "births": 508,
+  "S_b": 0.1855,
+  "S_b0_stratified": 0.0992,
+  "ratio": 1.87,
+  "ratio_ci95": [
+   1.4544,
+   2.4408
+  ],
+  "plain_null_same_code": {
+   "S_b0": 0.0786,
+   "ratio": 2.359,
+   "ratio_ci95": [
+    1.7502,
+    3.3945
+   ]
+  },
+  "bootstrap_draws": 199,
+  "null_draws_per_bootstrap_draw": 49,
+  "null_draws_point": 199
+ },
+ "q2_null_within_line": {
+  "stratum": "line",
+  "strata": 26,
+  "platforms": 488,
+  "births": 508,
+  "S_b": 0.1855,
+  "S_b0_stratified": 0.0972,
+  "ratio": 1.908,
+  "ratio_ci95": [
+   1.3791,
+   2.6125
+  ],
+  "plain_null_same_code": {
+   "S_b0": 0.0754,
+   "ratio": 2.4607,
+   "ratio_ci95": [
+    1.6945,
+    3.4407
+   ]
+  },
+  "bootstrap_draws": 199,
+  "null_draws_per_bootstrap_draw": 49,
+  "null_draws_point": 199
+ }
+}
