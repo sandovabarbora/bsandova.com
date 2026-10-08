@@ -76,7 +76,7 @@
   <summary>About this study</summary>
 <dl class="meta">
   <div><dt>status</dt><dd>research, pre-specified analysis (self-timestamped)</dd></div>
-  <div><dt>registration</dt><dd>pre-specified analysis: analysis plan committed at <a href="https://github.com/sandovabarbora/bsandova.com/commit/a1ea422">a1ea422</a> on 29 September 2026, 00:32 CEST, before the results commit <a href="https://github.com/sandovabarbora/bsandova.com/commit/497925a">497925a</a> (01:21), before this analysis was run; the author had worked with these data since May 2024; commit times are self-reported, and the branch was pushed on 29 September 2026 at 01:40, after the analysis.</dd></div>
+  <div><dt>registration</dt><dd>pre-specified analysis: analysis plan committed at <a href="https://github.com/sandovabarbora/bsandova.com/commit/a1ea422">a1ea422</a> on 29 September 2026, 00:32 CEST, before the results commit <a href="https://github.com/sandovabarbora/bsandova.com/commit/497925a">497925a</a> (01:21), before this analysis was run; the author had worked with these data since May 2024; commit times are self-reported, and the branch was pushed on 29 September 2026 at 01:40, after the analysis. Changes after registration, each dated, are in <a href="../changelog/#prague-parking-changes">the change log</a>.</dd></div>
   <div><dt>data</dt><dd>Czech vehicle register, open-data export of 1 September 2026; Prague's paid-zone segment layer, snapshot of 28 September 2026; EEA CO<sub>2</sub> monitoring files, final 2010–2022 and counts 2023–2025; each under its publisher's open-data terms; hashes in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-parking-files.sha256">prague-parking-files.sha256</a>.</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/parking6">tools/parking6/</a>, estimates at 497925a; rebuild with <code>tools/parking6/parking6_estimate.py</code> (command and full order under <a href="#reproduction">Reproduction</a>)</dd></div>
   <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>How many kerb spaces have longer cars cost Prague?</i> bsandova.com/texts/prague-parking, version 2. · archive: <a href="https://doi.org/10.5281/zenodo.23040133">doi:10.5281/zenodo.23040133</a> · <a href="../assets/pdf/prague-parking.pdf">PDF</a></dd></div>
@@ -219,27 +219,6 @@
 <p>The registered remedy for the failed calibration check, choosing the curve's shape to close the 3.9 cm gap, could not close it, because the gap is smallest at the edge of the allowed range. The shape was fixed at that edge (k = 1.5), and with the shape drawn across its range the estimates are the same to four decimals.</p>
 </section>
 
-<section id="changes">
-<h2>What changed after registration</h2>
-<p>The design file lists every change with its date<sup class="cite"><a href="#r11">11</a></sup>. On 29 September 2026, before the run on unscrambled lengths (freeze commit <code>e589225</code>):</p>
-<ul>
-<li>The blind dry run scrambled lengths across years within each make, as registered, since scrambling within each year would have kept, and so revealed, the trend being tested.</li>
-<li>The model-line dictionary was frozen. Between 97.3 and 100 % of each year's EEA registrations matched a register model line; the line key merges a few families, such as Hyundai's i-models.</li>
-<li>Implementation shortcuts were fixed in the frozen code: a normal approximation for the imputation variance, an inner bootstrap of 50 draws, a reduced size check (200 simulations), and values that overflowed the extract set to missing.</li>
-</ul>
-<p>On 29 September 2026, after the real run:</p>
-<ul>
-<li>The painted-bay share counted cars with no recorded length as long. The error was found because it gave an impossible negative loss, and it was fixed; the headline estimates did not change beyond the fourth decimal.</li>
-<li>The fleet calibration check failed by 3.9 cm; the code that fixed the shape at k = 1.5 was written after the real run.</li>
-<li>For H2a, the size check at the upper margin (how often the test wrongly passes when the true difference sits exactly on the margin) rejected at 0.11 instead of 0.05, so the test may be too liberal there.</li>
-<li>The variance decomposition gave two small negative shares (−0.015 and −0.001), which are estimator noise and read as zero.</li>
-<li>The level of the permit price is called the gap to the city's own tariffs, not "implicit subsidy (forgone rent)" as the plan's sentence rule required, because the two bracket members computed are policy prices, not rents.</li>
-<li>The reserved-bay fee of 10 Kč per m² a day applies in the zone districts; Prague 13 charges 5 Kč and some outer districts 1 Kč.</li>
-<li>The size component was defined as the gap between the 90th and 10th percentile of a revenue-neutral length price, on the national fleet, because Prague's fleet cannot be identified in the open data.</li>
-<li>Not done: painted bays were not measured, and no 2026 orthophoto sample was labelled, so the parallel share rests on the 2019 labels for Prague 4, 5, 6 and 9 only; two points of the price bracket were not computed; the other cities' prices were not converted to one unit; the count-against-size estimate and its fallback on registrations were not run; the registered robustness checks R4 (discrete segment model), R5 (fleet definitions), R6 (other survival shapes), R10 (area model) and R13 (specification curve) were not run.</li>
-<li>With the off-road variant included, the wheelbase route's figures changed, and the archived wheelbase text carries the correction<sup class="cite"><a href="#r7">7</a></sup>.</li>
-</ul>
-</section>
 
 <section>
 <h2>What this means</h2>

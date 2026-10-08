@@ -1,3 +1,15 @@
+<h4 id="lottery-changes">What changed during the analysis</h4>
+<p>The analyses were first run in May and June 2026 for an unpublished draft. Every number on this page was recomputed on 29 September 2026 with the scripts in <code>tools/lottery/</code>, and the following differ from that draft.</p>
+<ul>
+<li>29 September 2026: the Sportka p-value is now the Monte Carlo value, 0.55; the draft reported the chi-square-table value, 0.75, which assumes independent counts although its own script computed the Monte Carlo value.</li>
+<li>29 September 2026: the expected share of a jackpot is now (1 − e<sup>−<i>m</i></sup>)/<i>m</i>; the draft divided the jackpot by 1 plus the expected number of co-winners, which overstates the effect of popularity. At €25 million the ratio between an unpopular and a popular combination is 1.17, not about 1.4.</li>
+<li>29 September 2026: the posterior predictive check now includes the two draws at €120.2 million that the draft's bins dropped, so the top range has 4 wins in 8 draws (predicted 2.1, p = 0.30) instead of 4 in 6 (1.56, p = 0.096), and the global p-value is 0.80 instead of 0.51. The draft's statement that five of six ranges fell inside their intervals was wrong in its own numbers; all six did.</li>
+<li>29 September 2026: expected values now carry the posterior of sales through and have credible intervals; the draft used the posterior mean alone. The point values agree to within €0.01.</li>
+<li>29 September 2026: the simulation study was rebuilt. The draft compared popularity factors 1.20 and 0.78 on six-column tickets with lower-tier noise drawn from an arbitrary normal distribution and reported one run; this version models every tier, pairs the columns on common random numbers, reports intervals and compares against the exact value. The draft's estimates (+1.94 Kč against +1.93 Kč, 430 jackpots) are not comparable and are not used.</li>
+<li>29 September 2026: prediction intervals are now bootstrapped by drawing day; the draft resampled number-days, which ignores that the six numbers of a day are drawn together. The AUCs, 0.494 and 0.497, are unchanged.</li>
+<li>29 September 2026: added the power of the Sportka test, the separate draws and bonus numbers, and the cross-check against sportkasazka.cz.</li>
+</ul>
+<h4>Change log</h4>
 <ul>
 <li>6 October 2026: charts restyled with a headline and notes at key points; numbers unchanged.</li>
 <li>6 October 2026: retitled from "What a lottery player can choose: Sportka 1994–2026 and Eurojackpot 2025–2026" to a question; text and numbers unchanged.</li>

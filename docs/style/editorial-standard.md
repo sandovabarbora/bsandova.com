@@ -62,7 +62,9 @@ Research sections come in this order:
 4. The tests, with the table.
 5. Results, one section per question.
 6. Robustness, as a table.
-7. What changed after registration: a dated list, each change told once.
+7. What changed after registration: a dated list, each change told once. Since 8 October 2026 it is kept in the
+   article's change log (`docs/changelogs/<slug>.html`, under `<slug>-changes`) and linked from the registration row of
+   the metadata, not printed in the article.
 8. What this means: one short section (at most 200 words) that says what the results support and what they do not,
    for someone who has to decide something about the object studied. It separates what is measured from what is
    inferred, gives no advice that the design cannot carry, and names the decision-relevant quantity with its

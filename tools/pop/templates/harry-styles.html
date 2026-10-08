@@ -62,7 +62,7 @@
   <summary>About this study</summary>
 <dl class="meta">
   <div><dt>status</dt><dd>research, pre-specified analysis (self-timestamped); every result descriptive</dd></div>
-  <div><dt>registration</dt><dd>pre-specified analysis: analysis plan committed at <code>cecad1c</code> on 1 October 2026, before this analysis was run; the series design and two additions at <code>e890c27</code> and <code>12417ae</code>, also before this analysis was run; results commit <code>ebf819f</code>. The author had worked with these data since March 2026. Commit times are self-reported. One analysis was added after the results (see <a href="#changes">What changed after registration</a>).</dd></div>
+  <div><dt>registration</dt><dd>pre-specified analysis: analysis plan committed at <code>cecad1c</code> on 1 October 2026, before this analysis was run; the series design and two additions at <code>e890c27</code> and <code>12417ae</code>, also before this analysis was run; results commit <code>ebf819f</code>. The author had worked with these data since March 2026. Commit times are self-reported. One analysis was added after the results (see <a href="../changelog/#pop-harry-styles-changes">What changed after registration</a>).</dd></div>
   <div><dt>data</dt><dd>kworb.net Spotify chart totals for the global chart and {{kworb_charts}} national charts, accessed {{kworb_date}}<sup class="cite"><a href="#r1">1</a></sup>; Wikipedia tour articles at revisions {{rev_lot}} and {{rev_lot2018}}, Boxscore figures as cited there<sup class="cite"><a href="#r2">2</a></sup><sup class="cite"><a href="#r3">3</a></sup>; World Bank GDP per capita<sup class="cite"><a href="#r4">4</a></sup>. Hashes in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/pop-measured-files.sha256">pop-measured-files.sha256</a>; the study's rows in <a href="../assets/pop/harry-styles/ones.csv">ones.csv</a>, <a href="../assets/pop/harry-styles/countries.csv">countries.csv</a>, <a href="../assets/pop/harry-styles/songs.csv">songs.csv</a> and <a href="../assets/pop/harry-styles/tour.csv">tour.csv</a>.</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/pop">tools/pop/</a> at the commit that publishes this page; rebuild: <code>uv run --with numpy python tools/pop/analyse.py harry-styles</code> (full order under <a href="#reproduction">Reproduction</a>)</dd></div>
   <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Harry Styles, measured: how long a hit lasts, where, and what a ticket costs</i>. bsandova.com/texts/pop-harry-styles, version 2.</dd></div>
@@ -145,16 +145,6 @@
 </figure>
 </section>
 
-<section id="changes">
-<h2>What changed after registration</h2>
-<ul>
-<li>1 October 2026, before this analysis was run: the tours were widened from <i>Love On Tour</i> to every tour since 2017 with Boxscore figures, to match the series (<code>e890c27</code>), and the catalogue and ticket questions were added for all five parts (<code>12417ae</code>).</li>
-<li>1 October 2026, after the results: countries are also ranked by days alone, because small markets with many one-day number ones inflate the registered ratio. The registered ratio and its ranking are reported unchanged (<code>ebf819f</code>).</li>
-<li>2 October 2026, before publication: a parsing error was corrected. The 2017–2018 tour table gives the year in each date rather than in its caption, so its 74 entries had been joined to the latest GDP per capita instead of their own year's. Only the ticket results changed; the first results commit keeps the error for comparison.</li>
-<li>3 October 2026, after an audit: <i>Closer</i> (2016) was found in the reference set of global number ones, kept by a parsing error that gave it a 2026 first-chart date. It breaks the registered rule that songs whose start is not seen are left out, and it makes the share of number ones that lasted longer than <i>{{focal_title}}</i> too high. The figures have not yet been recomputed; the error is disclosed where they appear.</li>
-<li>6 October 2026: <i>Closer</i> left out, as the registered rule requires (its track page is now marked in <code>parse.py</code> as one whose start is not seen), and every figure recomputed with the same scripts. The reference set is 164 number ones, not 165, with 30 left out, not 29, and 31 still charting, not 32. The share of number ones that lasted longer than <i>{{focal_title}}</i> is 4.6 % (95 % CI 1.0 % to 9.1 %), not 5.5 % (1.4 % to 10.3 %): about one in 22, not one in 18. The other own songs and the median are unchanged at the precision shown. The bootstrap intervals of the later questions (the country ratios in fig. 2 and its table, and nights against share sold) draw from the same random stream as this one, so they move slightly though their data did not change; nights against share sold out is −0.10 to 0.16 (was −0.09 to 0.16). No label changed.</li>
-</ul>
-</section>
 
 <section>
 <h2>What this means</h2>
