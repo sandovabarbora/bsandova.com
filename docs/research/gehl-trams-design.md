@@ -180,3 +180,15 @@ window holds 30 rain hours on 14 dates (10 of them also with a dry hour in the w
 10; the simulated SE of θ is 0.29 s and the minimum detectable θ 0.8 s, well under the 8 s rule. With fewer than 30
 optional rain dates the wild cluster bootstrap applies, and the evidence rests on 14 wet weekend days: this is stated
 now. The simulation assumes normal shocks and is a floor on the real interval.
+
+**8 October 2026 (estimation code frozen; no dwell read against weather).** `tools/gehl/estimate.py` runs §4–§6 as
+changed above; `tools/gehl/test_gehl.py` checks it on made-up data: the two-days-later placebo key, the labels
+(including an interval wholly above 0 as inconclusive), recovery of a known −3 s interaction with week effects and the
+bootstrap path, a null interaction labelled "not supported", a rain effect common to both windows cancelling in θ, and
+every check. Fixed here, where the design left it open: `optional` enters the model as a main effect, because a public
+holiday on a weekday shares its cells with ordinary weekdays (it drops out when no such holiday is in the data); units
+are weighted by kept passes; the centre check uses the 46 tram stops inside Praha 1 and 2 by the site's district
+outlines (listed in `gehl-trams-screen.json`), the outskirts check the rest of each unit's passes; the school-holiday
+check drops 17 April and 28 June – 31 August 2025 (Prague's spring breaks fell in February, outside the window); the
+heat contrast uses weekday 15:00–18:59 against weekend and holiday 12:00–18:59. The "stopped passes only" check is
+dropped, as stated under screening.

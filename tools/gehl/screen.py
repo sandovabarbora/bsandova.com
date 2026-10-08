@@ -38,6 +38,7 @@ def load(name: str, path: str):
 PASSES = """
 WITH p AS (
     SELECT rt_trip_id, gtfs_stop_sequence AS seq, gtfs_stop_id AS stop, next_stop_name,
+           stop_name IN (SELECT name FROM centre) AS centre,
            string_split(rt_trip_id, '_')[2] AS route,
            timezone('Europe/Prague', real_current_stop_arrival) AS t,
            real_dwell_time AS d,
@@ -69,11 +70,30 @@ def month_read(con: duckdb.DuckDBPyConnection, month: int) -> tuple[pd.DataFrame
     units = con.execute(f"""
         SELECT route, direction, CAST(t AS DATE) AS date, hour(t) AS hour,
                count(*) AS passes, sum(d) AS dsum, count(*) FILTER (WHERE d > 0) AS stopped,
-               sum(d) FILTER (WHERE d > 0) AS dsum_stopped
+               sum(d) FILTER (WHERE d > 0) AS dsum_stopped,
+               count(*) FILTER (WHERE centre) AS passes_centre, sum(d) FILTER (WHERE centre) AS dsum_centre
         FROM m
         WHERE NOT terminal AND both_times AND d BETWEEN 0 AND {MAX_DWELL} AND hour(t) >= 5
         GROUP BY ALL""").df()
     return units, check, rules
+
+
+def inside(x: float, y: float, ring: list) -> bool:
+    hit = False
+    for (x1, y1), (x2, y2) in zip(ring, ring[1:] + ring[:1]):
+        if (y1 > y) != (y2 > y) and x < x1 + (y - y1) * (x2 - x1) / (y2 - y1):
+            hit = not hit
+    return hit
+
+
+def centre_stops(con: duckdb.DuckDBPyConnection) -> set[str]:
+    """Tram stop names whose coordinates fall in Praha 1 or Praha 2 (district outlines from the site's own map)."""
+    m = json.loads((ROOT / "assets/praha/map-districts.json").read_text())
+    rings = [r for f in m["features"] if f["name"] in ("Praha 1", "Praha 2") for r in f["r"]]
+    stops = con.execute("""SELECT ze_zastavky AS name, avg(ze_zastavky_lat) AS lat, avg(ze_zastavky_lon) AS lon
+                           FROM stop_times_history_intermediate_stops WHERE route_type = 'tramvaj'
+                             AND ze_zastavky_lat IS NOT NULL GROUP BY 1""").df()
+    return {n for n, la, lo in zip(stops["name"], stops["lat"], stops["lon"]) if any(inside(lo, la, r) for r in rings)}
 
 
 def dispersion(u: pd.DataFrame) -> dict:
@@ -98,6 +118,8 @@ def main() -> None:
     for s in ("threads = 2", "memory_limit = '4GB'", "preserve_insertion_order = false",
               "max_temp_directory_size = '4GB'"):
         con.execute(f"SET {s}")
+    names = centre_stops(con)
+    con.register("centre", pd.DataFrame({"name": sorted(names)}))
     parts, checks, rules = [], [], []
     for month in range(3, 10):
         u, c, r = month_read(con, month)
@@ -109,6 +131,9 @@ def main() -> None:
     u = u[(u["date"] >= START) & (u["date"] <= END)]
     u["y"] = u["dsum"] / u["passes"]
     u["y_stopped"] = u["dsum_stopped"] / u["stopped"].where(u["stopped"] > 0)
+    u["y_centre"] = u["dsum_centre"] / u["passes_centre"].where(u["passes_centre"] > 0)
+    rest = u["passes"] - u["passes_centre"]
+    u["y_outer"] = (u["dsum"] - u["dsum_centre"].fillna(0)) / rest.where(rest > 0)
     u["weekday"] = [d.weekday() for d in u["date"]]
     u["holiday"] = u["date"].isin(HOLIDAYS)
 
@@ -143,6 +168,8 @@ def main() -> None:
         "units": {"kept": len(u), "removed_by_rain_study_screening": int(screened_service),
                   "removed_fewer_than_10_passes": small, "routes": int(u["route"].nunique()),
                   "route_directions": int(u.groupby(["route", "direction"]).ngroups), "dates": int(u["date"].nunique())},
+        "centre_stops": {"rule": "stop coordinates inside the Praha 1 or Praha 2 district", "n": len(names),
+                         "names": sorted(names)},
         "dispersion": dispersion(u),
         "margin": {"mean_dwell_dry_necessary_s": round(mean_nec_dry, 2), "m_s": round(0.05 * mean_nec_dry, 1),
                    "units": len(nec_dry)},
