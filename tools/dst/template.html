@@ -123,9 +123,9 @@
   <img src="../assets/dst/04-event.svg" alt="Daily evening-to-midday ratios of pedestrian crashes around the autumn clock change, relative to the day before it, with wide 95 % intervals: mostly below 1 before the change and mostly above 1 after it." loading="lazy">
   <figcaption><b>fig. 3</b> · Event study: ratio of evening (16:00–18:59) to midday (10:00–13:59) crashes with a pedestrian on each day from two weeks before to two weeks after the autumn clock change, against day −1 (the Saturday before the change, fixed at 1), with 95 % intervals clustered by date, log scale; Poisson pseudo-maximum likelihood with a level for every region on every date and for every hour<sup class="cite"><a href="#r5">5</a></sup>. Data: Police of the Czech Republic<sup class="cite"><a href="#r3">3</a></sup>.</figcaption>
 </figure>
-<figure>
-  <img src="../assets/dst/03-map.svg" alt="Two maps of the fourteen Czech regions: minutes of the 16:00–18:59 rush after civil dusk, about 17 to 37 before the clock change and about 103 to 123 after, darkest in the east." loading="lazy">
-  <figcaption><b>fig. 4</b> · Minutes of the evening rush, 16:00–18:59, after civil dusk at each region's centroid, mean over the two weeks before and after the 2025 change; astronomy only<sup class="cite"><a href="#r4">4</a></sup>, no crash data. Regions: Natural Earth<sup class="cite"><a href="#r7">7</a></sup>.</figcaption>
+<figure class="mp-fig" data-map="../assets/dst/map.json">
+  <img class="mp-static" src="../assets/dst/03-map.svg" alt="Two maps of the fourteen Czech regions: minutes of the 16:00–18:59 rush after civil dusk, about 17 to 37 before the clock change and about 103 to 123 after, darkest in the east." loading="lazy">
+  <figcaption><b>fig. 4</b> · Minutes of the evening rush, 16:00–18:59, after civil dusk at each region's centroid, mean over the two weeks before and after the 2025 change; above the map, before or after the change can be picked, and hovering over or tapping a region gives both values; astronomy only<sup class="cite"><a href="#r4">4</a></sup>, no crash data. Regions: Natural Earth<sup class="cite"><a href="#r7">7</a></sup>.</figcaption>
 </figure>
 </section>
 
@@ -173,6 +173,7 @@
 <section id="changelog" class="changelog">
 <h2>Change log</h2>
 <ul>
+<li>8 October 2026: the region map is interactive; numbers unchanged.</li>
 <li>5 October 2026: work dates added. No number changed.</li>
 <li>3 October 2026, after a second review: withdrawn the reading that the event study fits a level shift at the change more than a steady drift; the series cannot tell the two apart. The single significant day is now said to be in the evening series. No number changed.</li>
 <li>3 October 2026, after an audit: the registered event study is now reported (fig. 3; the map becomes fig. 4) and the region map is listed as a fourth change; the sample size in fig. 2 is now the {{n_primary}} cells of the registered model, not the {{n_cells}} of the published file; pedestrian crashes in the windows are given as {{ped_records}} recorded, {{n_ped}} with a known hour; Prague sunset changed from 17:45 → 16:45 to 17:50 → 16:50; the group-trend interval is described as a {{gt_pct_lo}} % fall to an {{gt_pct_hi}} % rise, not "a doubling"; the 17:00 hour is quoted as {{h17_pre}} to {{h17_post}} a day; new figures: {{ev_dark_min}} and {{mo_light_min}} minutes of light lost and gained, the raw difference in differences of {{raw_did}}, the hour and year breakdown of the rise. Withdrawn: that the morning gains about as much light as the evening loses, and the busier-rush and tired-driver readings built on it; that mornings have fewer crashes to begin with; that the placebo shows "no effect"; that the clock change moves darkness and nothing else; that the darkness model is independent support; that crashes without a pedestrian show darkness is hardest on those drivers cannot see; that the excess crashes "would not have happened in the light"; that the risk window is the first two weeks of November. Weakened: the hour-of-darkness doubling is now a secondary model's extrapolation, and the headline now carries the original model's inconclusive {{gt}}.</li>
@@ -187,5 +188,6 @@
 </article>
 
 <script src="../assets/charts.js" defer></script>
+<script src="../assets/map.js" defer></script>
 </body>
 </html>

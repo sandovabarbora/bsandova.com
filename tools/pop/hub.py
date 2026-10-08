@@ -127,7 +127,7 @@ def main() -> None:
       <p>Across the {m1["n"]} artist–country pairs where the focal song charted (pairs where it never charted are left out), comparing each country with itself across artists and each artist with itself across countries, a song lasted {1 + m1["pct"]:.1f} times as long in a country speaking its language (95 % CI {1 + m1["pct_lo"]:.1f}–{1 + m1["pct_hi"]:.1f}): about {exp(m1b["en"]["coef"]):.1f} times for English songs ({m1b["en"]["pairs"]} matched pairs; {exp(m1b["en"]["lo"]):.2f}–{exp(m1b["en"]["hi"]):.2f}) and {exp(m1b["es"]["coef"]):.1f} for Spanish ones ({m1b["es"]["pairs"]}; {exp(m1b["es"]["lo"]):.1f}–{exp(m1b["es"]["hi"]):.1f}), and {1 + wsc["pct"]:.1f} times ({1 + wsc["pct_lo"]:.1f}–{1 + wsc["pct_hi"]:.1f}) without the songs still charting. Across {m2["n"]} tour entries, the average ticket rose with the host country's income at an elasticity of {m2["coef"]:.2f} ({m2["lo"]:.2f} to {m2["hi"]:.2f}; 0 means one price everywhere, 1 prices in proportion to income), {t6["m2_drop_artist"]["bad-bunny"]:.2f} without Bad Bunny, and with intervals that include zero for {wide} alone; so a show cost more days of income in poorer countries. Exploratory: models fixed before estimation, inputs seen in parts 1–5.</p>
     </div>
   </li>''')
-    maps = "".join(f'<figure class="mini"><a href="pop-{slug}"><img src="../assets/pop/{slug}/map.svg" alt="World map for {NAME[slug]}: where the focal song lasted longer than local number ones, and ticket prices in days of income." loading="lazy"></a><figcaption>{NAME[slug]}</figcaption></figure>'
+    maps = "".join(f'<figure class="mini" data-pop="map" data-src="../assets/pop/{slug}/map.svg"><a href="pop-{slug}"><img src="../assets/pop/{slug}/map.svg" alt="World map for {NAME[slug]}: where the focal song lasted longer than local number ones, and ticket prices in days of income." loading="lazy"></a><figcaption>{NAME[slug]}</figcaption></figure>'
                    for slug, *_ in PARTS)
     body = f'''<body>
 <div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">hub · pop · en</span></div>
@@ -224,6 +224,7 @@ def main() -> None:
 <section id="changelog" class="changelog">
 <h2>Change log</h2>
 <ul>
+<li>8 October 2026: the five maps are interactive, as in the parts; numbers unchanged.</li>
 <li>6 October 2026, version 3: <i>Closer</i> (The Chainsmokers, 2016), kept in error in the parts' reference set of global number ones, left out as the registered rule requires, and the parts recomputed. Shares that lasted longer than each focal song: <i>As It Was</i> 5.5 % → 4.6 % (95 % CI 1.4–10.3 → 1.0–9.1), <i>Dynamite</i> 23.8 % → 23.3 % (17.5–31.2 → 16.3–30.6), <i>DtMF</i> 28.6 % → 28.1 % (21.6–36.1 → 21.1–35.6), <i>BIRDS OF A FEATHER</i> 16.4 % → 15.8 % (10.6–22.9 → 9.8–22.4). Taylor Swift's part uses a different reference set and is unchanged. No label changed.</li>
 <li>5 October 2026: work dates added; the wording on the analysis plan corrected to match them. No number changed.</li>
 <li>3 October 2026: version 2, after an audit. Claims withdrawn: that the artists differ most in how spread their listening is, and that some fan bases play catalogues rather than singles (both rested on an unregistered count of songs making half the streams, which grows with the length of the list); that Czech listeners let hits in other languages pass quickly (BTS's <i>Dynamite</i> is sung in English); and "the same dollar price" (prices rose a little with income). Weakened: "several times more days of income" to "more days of income"; part 6's title on this page to "charted longer where the language matched", now with its split by language (1.8 times for English, 4.9 for Spanish), its check without songs still charting (1.9 times), its selection, 0.14 without Bad Bunny and the per-artist intervals that include zero; "one design" to the designs and the three changes made after first results. Replaced: the songs-for-half-the-streams counts (6, 57, 41, 46, 14) with the registered top-song share and Gini. Added: the intervals for the focal songs' places and each artist's top five countries, which the design fixed for this comparison; the 99.5 % sold-out rule and the other definitions; the sold-out range (92–100 %); the limits of the sources; links and access dates for the data. No other number changed.</li>
@@ -236,6 +237,7 @@ def main() -> None:
   <p class="back"><a href="../#works">← projects</a></p>
 </footer>
 </article>
+<script src="../assets/pop/pop.js" defer></script>
 </body>
 </html>
 '''
