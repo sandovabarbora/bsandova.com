@@ -54,23 +54,17 @@ TEXT = ["hub", "akey", "bkey", "aroute", "broute"]
 DROP = ["b_oa", "dist_m"]
 
 
-def read_connections(excluded: bool) -> pd.DataFrame:
-    """Kept connections (all slacks), or the flagged returns and same-trunk pairs at slack 2–4 min only, which only the
-    check without the exclusions (§7) reads; text columns as categories."""
+def read_connections(path: Path, excluded: bool) -> pd.DataFrame:
+    """One month's kept connections (all slacks), or its flagged returns and same-trunk pairs at slack 2–4 min only,
+    which only the check without the exclusions (§7) reads; text columns as categories."""
     filters = ([("excluded", "==", True), ("slack", ">=", 120), ("slack", "<=", 240)] if excluded
                else [("excluded", "==", False)])
-    parts = []
-    for f in sorted(DATA.glob("connections_*.parquet")):
-        c = pd.read_parquet(f, filters=filters).drop(columns=DROP)
-        parts.append(c.astype({k: "category" for k in TEXT}))
-        log.info("loaded %s: %s rows", f.name, len(c))
-    c = pd.concat(parts, ignore_index=True)
-    return c.astype({k: str for k in TEXT}).astype({k: "category" for k in TEXT})
+    c = pd.read_parquet(path, filters=filters).drop(columns=DROP)
+    return c.astype({k: "category" for k in TEXT})
 
 
-def load() -> tuple[pd.DataFrame, pd.DataFrame]:
-    b = pd.concat([pd.read_parquet(p) for p in sorted(DATA.glob("btrips_*.parquet"))], ignore_index=True)
-    return read_connections(False), b.astype({"hub": "category", "bkey": "category"})
+def months() -> list[tuple[Path, Path]]:
+    return [(f, f.with_name(f.name.replace("connections", "btrips"))) for f in sorted(DATA.glob("connections_*.parquet"))]
 
 
 def prepare(c: pd.DataFrame, removed_hubs: set[str]) -> pd.DataFrame:
@@ -237,22 +231,11 @@ def q1_frame(c: pd.DataFrame, b: pd.DataFrame, b_shift: float = 0.0, delta: str 
     return q[(q["within_n"] > 0) & q["made"].notna()]
 
 
-def bounds(c: pd.DataFrame, b: pd.DataFrame, missing: pd.DataFrame, W: np.ndarray, weeks: np.ndarray) -> dict:
-    """§4.4: planned B unobserved, or its line one trip short in that hour (possibly cancelled), counted all made and
-    all missed."""
-    q = c[c["slack"].between(120, 240) & c["q1_hub"] & ~c["excluded"]].copy()
-    q["broute"] = q["broute"].astype(str)
+def uncertain(q: pd.DataFrame, short: set) -> np.ndarray:
+    """§4.4: planned B unobserved, or its line one trip short in that hour (possibly cancelled)."""
     hb = pd.to_datetime(q["b_sd"], unit="s", utc=True).dt.tz_convert("Europe/Prague").dt.hour
-    short = missing[missing["missing"] > 0].assign(date=lambda x: x["sdate"].dt.date)
-    short = set(zip(short["stop_name"], short["route"].astype(str), short["date"], short["hour"]))
-    q["uncertain"] = ~q["b_observed"] | np.array([k in short for k in zip(q["hub"], q["broute"], q["date"], hb)])
-    q["within_made"], q["within_n"] = within_donors(q, b)
-    q = q[q["within_n"] > 0]
-    out = {"uncertain_share": round(float(q["uncertain"].mean()), 4)}
-    for name, v in (("all_made", 1.0), ("all_missed", 0.0)):
-        x = q.assign(made=q["made"].where(~q["uncertain"], v))
-        out[name] = interval(within_stat(x, W, weeks))
-    return out
+    return (~q["b_observed"]).to_numpy() | np.array([k in short for k in zip(
+        q["hub"].astype(str), q["broute"].astype(str), q["date"], hb)])
 
 
 def replan(c: pd.DataFrame, b: pd.DataFrame, m_new: np.ndarray) -> pd.DataFrame:
@@ -269,29 +252,34 @@ def replan(c: pd.DataFrame, b: pd.DataFrame, m_new: np.ndarray) -> pd.DataFrame:
     return score(out)
 
 
-def checks(c: pd.DataFrame, b: pd.DataFrame, weeks: np.ndarray, rng) -> dict:
-    W = draws(len(weeks), CHECK_REPS, rng)
+SMALL = ["date", "week", "hub", "aroute", "broute", "band", "made", "within_made", "within_n"]
 
-    def run(q: pd.DataFrame) -> dict:
-        return interval(within_stat(q, W, weeks)) if len(q) else {"est": None, "note": "no connections"}
 
-    out: dict = {}
-    cq = c[c["slack"].between(120, 240) & c["q1_hub"]]  # the Q1 rows, scored again under each variant
-    out["observed_departures"] = run(q1_frame(score(cq, delta="delta_od_c"), b, delta="delta_od"))
+def month_checks(c: pd.DataFrame, b: pd.DataFrame, ex: pd.DataFrame) -> dict[str, pd.DataFrame]:
+    """The §7 variants for one month, each reduced to the columns the week bootstrap needs."""
+    small = lambda q: q[SMALL]  # noqa: E731
+    cq = c[c["slack"].between(120, 240) & c["q1_hub"]]
+    out = {"observed_departures": small(q1_frame(score(cq, delta="delta_od_c"), b, delta="delta_od"))}
     for name, kw in (("a_plus_30s", {"a_shift": 30}), ("a_minus_30s", {"a_shift": -30}),
                      ("b_plus_30s", {"b_shift": 30}), ("b_minus_30s", {"b_shift": -30})):
-        out[f"timing_{name}"] = run(q1_frame(score(cq, **kw), b, b_shift=kw.get("b_shift", 0.0)))
+        out[f"timing_{name}"] = small(q1_frame(score(cq, **kw), b, b_shift=kw.get("b_shift", 0.0)))
     for name, f in (("m_minus_30s", lambda m: m - 30), ("m_plus_30s", lambda m: m + 30),
                     ("m_fixed_2min", lambda m: np.full_like(m, 120.0))):
-        out[f"margin_{name}"] = run(q1_frame(replan(c, b, f(c["m"].to_numpy())), b))
-    ex = prepare(read_connections(True), set(c.loc[~c["q1_hub"], "hub"].astype(str)))
-    ex["delta_od_c"] = np.nan
-    both = pd.concat([cq, ex], ignore_index=True)
-    out["without_exclusions"] = run(q1_frame(both, b, keep_excluded=True))
-    del ex, both
-    q = q1_frame(c, b)
+        out[f"margin_{name}"] = small(q1_frame(replan(c, b, f(c["m"].to_numpy())), b))
+    both = pd.concat([cq, ex], ignore_index=True) if len(ex) else cq
+    out["without_exclusions"] = small(q1_frame(both, b, keep_excluded=True))
+    return out
+
+
+def summarise_checks(q: pd.DataFrame, var: dict[str, pd.DataFrame], weeks: np.ndarray, rng) -> dict:
+    W = draws(len(weeks), CHECK_REPS, rng)
+
+    def run(x: pd.DataFrame) -> dict:
+        return interval(within_stat(x, W, weeks)) if len(x) else {"est": None, "note": "no connections"}
+
+    out = {k: run(v) for k, v in var.items()}
     out["peaks_only"] = run(q[q["band"] == "peak"])
-    summer = q["date"].map(lambda d: SUMMER[0] <= d <= SUMMER[1])
+    summer = q["date"].map(lambda d: SUMMER[0] <= d <= SUMMER[1]).astype(bool)
     out["school_holidays"] = run(q[summer])
     out["term_time"] = run(q[~summer])
     pairs = q.groupby(["hub", "aroute", "broute"], observed=True).size()
@@ -341,31 +329,67 @@ def cost(c: pd.DataFrame) -> dict:
     return out
 
 
+DAY = ["date", "week", "hub", "akey", "bkey", "daytype", "sig", "tod_a", "tod_b", "delta_b", "req", "made",
+       "aroute", "broute", "band", "within_made", "within_n"]
+
+
 def main() -> None:
+    """Month by month (same-day donors, checks and bounds need only their own day), then the week bootstrap on the
+    reduced tables; other-day donors (Q1b) need every month and are formed once all are read."""
     logging.basicConfig(level=logging.INFO, format="%(message)s")
     sc = json.loads((R / "transfers-screen.json").read_text())
-    c, b = load()
-    b = b_table(b)
-    c = prepare(c, set(sc["hubs_removed_early_departures"]))
-    c["delta_od_c"] = (c["b_od"] - c["b_sd"]).where(~c["b_starts_here"])
-    c["w"] = extra_wait(c, b)
-    weeks = np.array(sorted(c["week"].unique()))
+    removed = set(sc["hubs_removed_early_departures"])
+    miss = pd.read_parquet(DATA / "missing.parquet")
+    miss = miss[miss["missing"] > 0]
+    short = set(zip(miss["stop_name"].astype(str), miss["route"].astype(str), miss["sdate"].dt.date, miss["hour"]))
+    Q, COST, BOUND, VAR = [], [], [], {}
+    for fc, fb in months():
+        b = b_table(pd.read_parquet(fb))
+        c = prepare(read_connections(fc, False), removed)
+        c["delta_od_c"] = (c["b_od"] - c["b_sd"]).where(~c["b_starts_here"])
+        q = q1_frame(c, b)
+        q["sig"] = signature(q, b)
+        Q.append(q[DAY])
+        c2 = c[(c["slack"] >= 120) & (c["slack"] < 300)].copy()
+        c2["w"] = extra_wait(c2, b)
+        COST.append(c2[["slack", "made", "w", "band", "hub"]])
+        u = c[c["slack"].between(120, 240) & c["q1_hub"]].copy()
+        u["uncertain"] = uncertain(u, short)
+        u["within_made"], u["within_n"] = within_donors(u, b)
+        BOUND.append(u.loc[u["within_n"] > 0, ["week", "made", "uncertain", "within_made", "within_n"]])
+        ex = prepare(read_connections(fc, True), removed)
+        ex["delta_od_c"] = np.nan
+        for k, v in month_checks(c, b, ex).items():
+            VAR.setdefault(k, []).append(v)
+        log.info("%s: %s Q1 connections", fc.name, len(q))
+        del c, b, c2, u, ex
+    q = pd.concat(Q, ignore_index=True)
+    for k in ("hub", "akey", "bkey", "aroute", "broute", "band", "daytype"):
+        q[k] = q[k].astype(str).astype("category")
+    weeks = np.array(sorted(q["week"].unique()))
     rng = np.random.default_rng(SEED)
-    q = q1_frame(c, b)
-    q["sig"] = signature(q, b)
     S, N = day_donors(q, weeks)
     W = draws(len(weeks), REPS, rng)
-    log.info("q1 connections %s", len(q))
     res = {"weeks": int(len(weeks)), "q1_connections": int(len(q)), "q1_dates": int(q["date"].nunique()),
-           "q1_hubs": sorted(q["hub"].unique()),
+           "q1_hubs": sorted(q["hub"].astype(str).unique()),
            "p_obs": round(float(q["made"].mean()), 4),
            "p_within": round(float((q["within_made"] / q["within_n"]).mean()), 4),
            "q1_within": interval(within_stat(q, W, weeks)),
            "q1b_day": interval(day_stat(q, S, N, W, weeks)),
            "q1b_connections_with_donors": int((N.sum(axis=1) > 0).sum())}
-    res["bounds"] = bounds(c, b, pd.read_parquet(DATA / "missing.parquet"), W[: CHECK_REPS + 1], weeks)
-    res["q2_cost"] = cost(c)
-    res["checks"] = checks(c, b, weeks, rng)
+    del S, N
+    bd = pd.concat(BOUND, ignore_index=True)
+    Wc = W[: CHECK_REPS + 1]
+    res["bounds"] = {"uncertain_share": round(float(bd["uncertain"].mean()), 4)}
+    for name, v in (("all_made", 1.0), ("all_missed", 0.0)):
+        res["bounds"][name] = interval(within_stat(bd.assign(made=bd["made"].where(~bd["uncertain"], v)), Wc, weeks))
+    cost_rows = pd.concat(COST, ignore_index=True)
+    res["q2_cost"] = cost(cost_rows.assign(excluded=False))
+    var = {k: pd.concat(v, ignore_index=True) for k, v in VAR.items()}
+    for v in var.values():
+        for k in ("hub", "aroute", "broute", "band"):
+            v[k] = v[k].astype(str)
+    res["checks"] = summarise_checks(q.astype({"hub": str, "aroute": str, "broute": str, "band": str}), var, weeks, rng)
     OUT.write_text(json.dumps(res, ensure_ascii=False, indent=1, default=str) + "\n")
     print(json.dumps({k: res[k] for k in ("q1_connections", "p_obs", "p_within", "q1_within", "q1b_day")}, indent=1))
 

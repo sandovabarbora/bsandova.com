@@ -212,4 +212,6 @@ trip-level link found as supported; every check and the bounds. Fixed here, wher
 **8 October 2026 (memory, before any result was read).** The first run of the frozen estimate loaded every flagged
 return and same-trunk connection at every slack (46 million rows) and was stopped at 21 GB of memory before it printed
 anything. The estimate now loads only the rows an analysis uses (all kept connections, and the flagged ones at slack
-2–4 min for the §7 check) with text columns as categories; no rule changed.
+2–4 min for the §7 check) with text columns as categories; no rule changed. A second run still reached 16 GB and was stopped, again before it
+printed anything, so the estimate now runs month by month (same-day donors, checks and bounds need only their own
+day) and keeps only the columns the week bootstrap and the other-day donors need; no rule changed.

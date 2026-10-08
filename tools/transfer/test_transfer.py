@@ -147,24 +147,25 @@ def test_extra_wait_counts_from_the_planned_schedule_and_is_censored():
     assert np.all(w[~caught] >= 600 - 1)  # missed: at least one headway later, at 10-min headways
 
 
-def test_checks_and_bounds_run_end_to_end():
+def test_month_checks_bounds_and_cost_run_end_to_end():
     c, b = synthetic(shared_trip=150.0, shared_day=0.0, days=28)
     c.loc[c.index[::50], "b_dep_hat"] = np.nan  # a few unobserved planned B
     b = es.b_table(b)
     c = es.prepare(c, set())
     c["delta_od_c"] = (c["b_od"] - c["b_sd"]).where(~c["b_starts_here"])
-    c["w"] = es.extra_wait(c, b)
     es.CHECK_REPS = 19
     weeks = np.array(sorted(c["week"].unique()))
-    W = es.draws(len(weeks), 19, np.random.default_rng(1))
-    missing = pd.DataFrame({"stop_name": ["H"], "route": ["2"], "sdate": [pd.Timestamp("2025-04-08")],
-                            "hour": [9], "missing": [1]})
-    bd = es.bounds(c, b, missing, W, weeks)
-    assert bd["all_made"]["est"] >= bd["all_missed"]["est"]
-    es.read_connections = lambda excluded: c.iloc[:0].drop(columns=[x for x in c.columns if x not in c.columns])
-    out = es.checks(c, b, weeks, np.random.default_rng(2))
-    for k in ("timing_a_plus_30s", "margin_m_plus_30s", "margin_m_fixed_2min", "without_exclusions", "peaks_only"):
-        assert "est" in out[k]
+    u = c[c["slack"].between(120, 240)].copy()
+    u["uncertain"] = es.uncertain(u, {("H", "2", date(2025, 4, 8), 9)})
+    assert u["uncertain"].sum() > (~u["b_observed"]).sum()  # the short hour adds to the unobserved ones
+    var = es.month_checks(c, b, c.iloc[:0])
+    for k in ("timing_a_plus_30s", "margin_m_plus_30s", "margin_m_fixed_2min", "without_exclusions",
+              "observed_departures"):
+        assert k in var
+    q = es.q1_frame(c, b)
+    out = es.summarise_checks(q, var, weeks, np.random.default_rng(2))
     assert out["margin_m_minus_30s"]["est"] > 0.03  # the planted link survives a different margin
-    cost = es.cost(c)
+    assert out["observed_departures"]["est"] is None  # no observed departures in the made-up data
+    c2 = c.assign(w=es.extra_wait(c, b))
+    cost = es.cost(c2)
     assert set(cost) == {"3"} and 0 < cost["3"]["made"] < 1
