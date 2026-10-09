@@ -41,7 +41,7 @@
 <header class="text-head">
   <p class="kicker">Hub · Prague, measured · five studies of one city, 2010–2026</p>
   <h1>Prague, <em>measured</em></h1>
-  <p class="deck">Five studies of how Prague's City Assembly votes, how its precincts voted in 2025, how the city funds its districts, how much housing it completes and what longer cars take from its paid kerb.</p>
+  <p class="deck">Five studies of how Prague's City Assembly votes, how its precincts voted in 2025, how the city funds its districts, how much housing it completes and how many more cars its paid kerb would hold with 2012's car lengths.</p>
   <dl class="facts">
     <div><dt>parts published</dt><dd>5 <small>numbered by publication order</small></dd></div>
     <div><dt>designs committed</dt><dd>28–29 Sep 2026 <small>CEST, commit times self-reported</small></dd></div>
@@ -55,16 +55,16 @@
     <li>The order of design and results rests on the author's own git commits, not on an independent registry.</li>
     <li>Each article ends with what its data do not show.</li>
     <li>Part 1: in published final votes, the same councillors voted against less often over time (supported).</li>
-    <li>Part 2: ANO's vote gradient across the panel estates steepened between 2017 and 2025 (supported), which may partly reflect who moved in; census composition explains under half of it (not supported).</li>
-    <li>Part 3: no grant premium for districts aligned with the city's coalition was detected; the test was underpowered.</li>
-    <li>Part 4: a permitted flat takes longer to be completed in Prague than elsewhere in Czechia (supported); the sign is firm, the size uncertain.</li>
-    <li>Part 5: longer cars cost the paid kerb about 1.6 % of its capacity on the model, an upper bound only with respect to bay marking; a gap proportional to car length gives about 1.9 %.</li>
+    <li>Part 2: ANO's vote gradient across the panel estates steepened between 2017 and 2025 (supported), which may partly reflect who moved in; differences in education and citizenship go with under half of it (underpowered).</li>
+    <li>Part 3: no grant premium for districts aligned with the city's coalition was detected, and none was ruled out (inconclusive; the design could detect only about 100 % of a district's usual grants).</li>
+    <li>Part 4: in the monthly counts, completions follow permits later in Prague than elsewhere in Czechia (supported); the sign is firm, the size uncertain.</li>
+    <li>Part 5: on today's kerb, 2012's cars would fit about 1.6 % more, on the model, an upper bound only with respect to bay marking; a gap proportional to car length gives about 1.9 %.</li>
     <li>None of the parts estimates a causal effect, and the order of design and results is self-reported.</li>
   </ul>
 </details>
 
 <dl class="meta">
-  <div><dt>published</dt><dd>29 September 2026 · updated 3 October 2026 · <a href="../changelog/#prague-measured">version 4</a></dd></div>
+  <div><dt>published</dt><dd>29 September 2026 · updated 9 October 2026 · <a href="../changelog/#prague-measured">version 5</a></dd></div>
   <div><dt>work since</dt><dd>May 2024</dd></div>
 </dl>
 <details class="meta-more">
@@ -73,7 +73,7 @@
   <div><dt>status</dt><dd>hub, index of five research articles</dd></div>
   <div><dt>data</dt><dd>public sources, listed in each part's design with a SHA-256 file list; <a href="#data">table below</a></dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com">github.com/sandovabarbora/bsandova.com</a>, one folder under <code>tools/</code> per part; <a href="#data">table below</a></dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Prague, measured</i>. bsandova.com/texts/prague-measured, version 4. · archive: <a href="https://doi.org/10.5281/zenodo.23040133">doi:10.5281/zenodo.23040133</a> · <a href="../assets/pdf/prague-measured.pdf">PDF</a></dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Prague, measured</i>. bsandova.com/texts/prague-measured, version 5. · archive: <a href="https://doi.org/10.5281/zenodo.23040133">doi:10.5281/zenodo.23040133</a> · <a href="../assets/pdf/prague-measured.pdf">PDF</a></dd></div>
   <div><dt>licence</dt><dd>code MIT; text, figures and data CC BY 4.0</dd></div>
 </dl>
 </details>
@@ -86,39 +86,39 @@
     <div>
       <p class="n">Part 1 · the City Assembly · roll calls 2010 to September 2026</p>
       <h2><a href="prague-council">Do Prague's councillors vote against less, term after term?</a></h2>
-      <p>Across the 10 565 roll calls published since 2010, final votes on adopted resolutions that are 55–67 % of those taken, the same councillors' rate of voting against fell to 0.49 times its earlier level per term, pooled over 59 people and three transitions (H1 supported), mostly between 2010–14 and 2014–18. Splits along coalition and opposition rather than left and right (H3), and opposition aimed at planning and property more than grants (H4), were not supported.</p>
+      <p>Across the 10 565 roll calls published since 2010, final votes on adopted resolutions that are 55–67 % of those taken, the same councillors' rate of voting against fell to 0.49 times its earlier level per term (95 % CI 0.38–0.65), pooled over 59 people and three transitions (H1 supported); more than half of it, 54 % on the log scale, comes from 2010–14 to 2014–18. Splits along coalition and opposition rather than left and right (H3), and opposition aimed at planning and property more than grants (H4), were not supported.</p>
     </div>
   </li>
   <li>
-    <a class="still" href="prague-rings" aria-label="Part 2, Why do Prague's housing estates vote ANO?"><span class="shot" style="view-transition-name:ph-prague-rings;--bg:url(../assets/photo/prague-rings.jpg);--bg-s:url(../assets/photo/prague-rings-1200.jpg)"></span></a>
+    <a class="still" href="prague-rings" aria-label="Part 2, How much of ANO's housing-estate vote goes with who lives there?"><span class="shot" style="view-transition-name:ph-prague-rings;--bg:url(../assets/photo/prague-rings.jpg);--bg-s:url(../assets/photo/prague-rings-1200.jpg)"></span></a>
     <div>
       <p class="n">Part 2 · Chamber elections of 2017, 2021 and 2025 · 1 119 precincts</p>
-      <h2><a href="prague-rings">Why do Prague's housing estates vote ANO?</a></h2>
-      <p>ANO won 26 % in precincts where more than seven flats in ten are in panel buildings and 16 % where fewer than one in ten are. In matched precincts its gradient steepened from 0.55 to 0.80 percentage points (pp) per 10 pp of panel flats between 2017 and 2025 (H3 supported), which may partly reflect who moved in. Census education and citizenship account for 43 % of the 2025 gradient, with the direction of its error unknown, and about half with age added (H1b, registered at half, not supported); the metro test (H2) was inconclusive and both turnout tests uninformative.</p>
+      <h2><a href="prague-rings">How much of ANO's housing-estate vote goes with who lives there?</a></h2>
+      <p>ANO won 26 % in precincts where more than seven flats in ten are in panel buildings and 16 % where fewer than one in ten are. In matched precincts its gradient steepened from 0.55 to 0.80 percentage points (pp) per 10 pp of panel flats between 2017 and 2025 (H3 supported), which may partly reflect who moved in. Census education and citizenship go with 43 % of the 2025 gradient, with the direction of its error unknown, and with about half once age is added (H1b underpowered, by the design's rule for collinearity); the test on distance to a station (H2) was inconclusive and both turnout tests uninformative.</p>
     </div>
   </li>
   <li>
-    <a class="still" href="prague-districts" aria-label="Part 3, Does a district get more city money when its mayor's party joins City Hall?"><span class="shot" style="view-transition-name:ph-prague-districts;--bg:url(../assets/photo/prague-districts.jpg);--bg-s:url(../assets/photo/prague-districts-1200.jpg)"></span></a>
+    <a class="still" href="prague-districts" aria-label="Part 3, Do districts whose mayor's party is in City Hall's coalition receive more city grants?"><span class="shot" style="view-transition-name:ph-prague-districts;--bg:url(../assets/photo/prague-districts.jpg);--bg-s:url(../assets/photo/prague-districts-1200.jpg)"></span></a>
     <div>
       <p class="n">Part 3 · city-district budgets 2022–2024 · the city's grants to its districts 2015–2023</p>
-      <h2><a href="prague-districts">Does a district get more city money when its mayor's party joins City Hall?</a></h2>
-      <p>The thirteen large districts spend 8 346 to 17 604 crowns a year per resident, and for the median district 76 % of income is passed on by the city and the state. No premium in in-year grants was detected for districts whose mayor's party joins the city's coalition (not supported, underpowered: the design could detect about 100 %). The estimate, −2 800 crowns per resident a year (95 % CI −8 800 to +1 800), comes from the 2023 change, tested on one year instead of three, and turns positive without the districts of the party that entered in 2023. A premium through investment grants was not supported either.</p>
+      <h2><a href="prague-districts">Do districts whose mayor's party is in City Hall's coalition receive more city grants?</a></h2>
+      <p>The thirteen large districts spend 8 346 to 17 604 crowns a year per resident, and for the median district 76 % of income is passed on by the city and the state. No premium in in-year grants was detected for districts whose mayor's party joins the city's coalition, and none was ruled out (inconclusive: the design could detect only a premium of about 100 % of a district's usual grants). The estimate, −2 800 crowns per resident a year (95 % CI −8 800 to +1 800), comes from the 2023 change, tested on one year instead of three, and turns positive without the districts of the party that entered in 2023. A premium through investment grants was not supported either.</p>
     </div>
   </li>
   <li>
-    <a class="still" href="prague-housing" aria-label="Part 4, How long does a Prague flat take, from permit to completion?"><span class="shot" style="view-transition-name:ph-prague-housing;--bg:url(../assets/photo/prague-housing.jpg);--bg-s:url(../assets/photo/prague-housing-1200.jpg)"></span></a>
+    <a class="still" href="prague-housing" aria-label="Part 4, Do completions follow permits later in Prague than in the rest of Czechia?"><span class="shot" style="view-transition-name:ph-prague-housing;--bg:url(../assets/photo/prague-housing.jpg);--bg-s:url(../assets/photo/prague-housing-1200.jpg)"></span></a>
     <div>
       <p class="n">Part 4 · new homes in Prague, Vienna and Warsaw · 208 European metropolitan regions</p>
-      <h2><a href="prague-housing">How long does a Prague flat take, from permit to completion?</a></h2>
-      <p>Since 2015 Prague has completed 4.5 new homes a year per 1 000 residents, against 6.6 in Vienna's new buildings and 10.4 in Warsaw. By census count, which for Czechia includes reconstructions, its metropolitan region is in the upper quarter of 208 European regions for 2011–2021; on new completions it is mid-table. A permitted Prague flat takes about 11 months longer to receive a house number, the record of completion, than one elsewhere in Czechia (H2 supported). The sign is firm, but the size could be from about 6 to over 30 months, and may partly reflect when completions are registered. The metro test (H5) was indeterminate; three other results were uninformative.</p>
+      <h2><a href="prague-housing">Do completions follow permits later in Prague than in the rest of Czechia?</a></h2>
+      <p>Since 2015 Prague has completed 4.5 new homes a year per 1 000 residents, against 6.6 in Vienna's new buildings and 10.4 in Warsaw. By census count, which for Czechia includes reconstructions, its metropolitan region is in the upper quarter of 208 European regions for 2011–2021; on new completions it is mid-table. In the monthly counts, completions of flats follow permits about 11 months later in Prague than elsewhere in Czechia, by the date a house number, the record of completion, is given (H2 supported). The sign is firm, but the size could be from about 6 to over 30 months, and may partly reflect when completions are registered. The metro test (H5) was indeterminate; three other results were uninformative.</p>
     </div>
   </li>
   <li>
-    <a class="still" href="prague-parking" aria-label="Part 5, How many kerb spaces have longer cars cost Prague?"><span class="shot" style="view-transition-name:ph-prague-parking;--bg:url(../assets/photo/prague-parking.jpg);--bg-s:url(../assets/photo/prague-parking-1200.jpg)"></span></a>
+    <a class="still" href="prague-parking" aria-label="Part 5, How many more cars would Prague's paid kerb hold with 2012's car lengths?"><span class="shot" style="view-transition-name:ph-prague-parking;--bg:url(../assets/photo/prague-parking.jpg);--bg-s:url(../assets/photo/prague-parking-1200.jpg)"></span></a>
     <div>
       <p class="n">Part 5 · paid parking zones and every car in the Czech register</p>
-      <h2><a href="prague-parking">How many kerb spaces have longer cars cost Prague?</a></h2>
-      <p>On today's paid kerb, 2012's cars would fit about 1.6 % more on the model (1.3–1.9 % under the registered inputs; an upper bound with respect to bay marking; 1.0 % if half the parallel bays are painted, about 1.9 % with a gap proportional to length), and the flat resident permit is worth about 120 Kč a year more to a long car than to a short one. New cars in Czechia grew 2.3 cm between 2022 and 2025 (95 % CI −0.3 to +5.2), less than the 6 cm Transport &amp; Environment's series implies (H2b supported: the test is against 6 cm, and the interval does not exclude no growth); H2a was inconclusive (underpowered).</p>
+      <h2><a href="prague-parking">How many more cars would Prague's paid kerb hold with 2012's car lengths?</a></h2>
+      <p>On today's kerb, 2012's cars would fit about 1.6 % more, on the model (1.3–1.9 % under the registered inputs; an upper bound with respect to bay marking; 1.0 % if half the parallel bays are painted, about 1.9 % with a gap proportional to length), and a revenue-neutral resident permit priced by length would put about 120 Kč a year between a long and a short car. New cars in Czechia grew 2.3 cm between 2022 and 2025 (95 % CI −0.3 to +5.2), less than the 6 cm Transport &amp; Environment's series implies (H2b supported: the test is against 6 cm, and the interval does not exclude no growth); H2a was inconclusive (underpowered).</p>
     </div>
   </li>
 </ol>
@@ -132,21 +132,21 @@
 <section>
 <h2>How each part was pre-specified</h2>
 <p>Each part extends a short descriptive article from a written design that fixes the hypotheses, the test and decision rule for each, and the sentence reporting each result, and opens with what the author had already seen. Each design was revised once; the table gives that second version (v2). The series has one author, and there was no external peer review.</p>
-<p>Parts 1, 3, 4 and 5 have a pre-specified analysis: the design was committed on the author's branch before the results, but commit times are self-reported and the branch was pushed after the analysis. The author had worked with these data since May 2024; the designs set the analysis in advance; the author already knew the data. In Part 2 design and results first appear in one commit, so its design is "not independently timestamped." Future studies will be registered on OSF before any outcome is observed.</p>
-<p>Within each part the confirmatory tests share a 5 % family-wise error rate, the chance of any false positive, through Holm's procedure, which tightens each test's threshold. Labels are fixed in each design: supported or not, by that threshold; inconclusive, a negligible effect could not be confirmed or ruled out; indeterminate, neither direction passed; uninformative, a check that the model sees an expected relationship failed; underpowered, only large effects were detectable. Everything decided after the design was committed, including parser corrections made after the outcome was seen, is dated in each article.</p>
+<p>Parts 1, 3, 4 and 5 have a registered analysis plan: design committed before the results commit, as the table gives; commit times are self-reported, and the branch was pushed after the analysis. The author had worked with these data since May 2024; the designs set the analysis in advance; the author already knew the data. In Part 2 design and results first appear in one commit: design written before modelling; not independently timestamped. Future studies will be registered on OSF before any outcome is observed.</p>
+<p>Within each part the confirmatory tests share a 5 % family-wise error rate, the chance of any false positive, through Holm's procedure, which tightens each test's threshold. Labels are fixed in each design: supported or not, by that threshold; inconclusive, a negligible effect could not be confirmed or ruled out; indeterminate, neither direction passed; uninformative, a check that the model sees an expected relationship failed; underpowered, only large effects were detectable. Everything decided after the design was committed, including parser corrections made after the outcome was seen, is dated in each article's change log.</p>
 <div class="tw">
 <table class="ht">
 <thead><tr><th>Part</th><th>Design</th><th>Design v2 commit</th><th>Results commit</th><th>Branch, pushed</th></tr></thead>
 <tbody>
 <tr><td>1 · Assembly</td><td><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-council-design.md">prague-council-design.md</a></td><td class="v"><a href="https://github.com/sandovabarbora/bsandova.com/commit/3830f59"><code>3830f59</code></a> · 28 Sep 22:39</td><td class="v"><a href="https://github.com/sandovabarbora/bsandova.com/commit/a79f48f"><code>a79f48f</code></a> · 28 Sep 22:53</td><td><a href="https://github.com/sandovabarbora/bsandova.com/commits/feature/PRAHA-1x_council-extended">PRAHA-1x_council-extended</a> · 29 Sep 01:36</td></tr>
 <tr><td>2 · Precincts</td><td><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-rings-design.md">prague-rings-design.md</a></td><td class="v" colspan="2"><a href="https://github.com/sandovabarbora/bsandova.com/commit/1283162"><code>1283162</code></a> · design and results together</td><td><a href="https://github.com/sandovabarbora/bsandova.com/commits/feature/PRAHA-2x_rings-extended">PRAHA-2x_rings-extended</a> · 29 Sep 01:36</td></tr>
-<tr><td>3 · Districts</td><td><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-districts-design.md">prague-districts-design.md</a></td><td class="v"><a href="https://github.com/sandovabarbora/bsandova.com/commit/683b0c8"><code>683b0c8</code></a> · 29 Sep 01:07</td><td class="v"><a href="https://github.com/sandovabarbora/bsandova.com/commit/d8270ac"><code>d8270ac</code></a> · 29 Sep 01:29</td><td><a href="https://github.com/sandovabarbora/bsandova.com/commits/feature/PRAHA-3x_districts-extended">PRAHA-3x_districts-extended</a> · 29 Sep 05:18</td></tr>
+<tr><td>3 · Districts</td><td><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-districts-design.md">prague-districts-design.md</a></td><td class="v"><a href="https://github.com/sandovabarbora/bsandova.com/commit/683b0c8"><code>683b0c8</code></a> · 29 Sep 01:07; addendum <a href="https://github.com/sandovabarbora/bsandova.com/commit/7be2ad5"><code>7be2ad5</code></a> · 01:18</td><td class="v"><a href="https://github.com/sandovabarbora/bsandova.com/commit/d8270ac"><code>d8270ac</code></a> · 29 Sep 01:29</td><td><a href="https://github.com/sandovabarbora/bsandova.com/commits/feature/PRAHA-3x_districts-extended">PRAHA-3x_districts-extended</a> · 29 Sep 05:18</td></tr>
 <tr><td>4 · Housing</td><td><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-housing-design.md">prague-housing-design.md</a></td><td class="v"><a href="https://github.com/sandovabarbora/bsandova.com/commit/503ef06"><code>503ef06</code></a> · 29 Sep 00:44</td><td class="v"><a href="https://github.com/sandovabarbora/bsandova.com/commit/4e4301c"><code>4e4301c</code></a> · 29 Sep 01:18</td><td><a href="https://github.com/sandovabarbora/bsandova.com/commits/feature/PRAHA-4x_housing-extended">PRAHA-4x_housing-extended</a> · 29 Sep 01:38</td></tr>
 <tr><td>5 · Parking</td><td><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-parking-design.md">prague-parking-design.md</a></td><td class="v"><a href="https://github.com/sandovabarbora/bsandova.com/commit/a1ea422"><code>a1ea422</code></a> · 29 Sep 00:32</td><td class="v"><a href="https://github.com/sandovabarbora/bsandova.com/commit/497925a"><code>497925a</code></a> · 29 Sep 01:21</td><td><a href="https://github.com/sandovabarbora/bsandova.com/commits/feature/PRAHA-6_parking-study">PRAHA-6_parking-study</a> · 29 Sep 01:40</td></tr>
 </tbody>
 </table>
 </div>
-<p class="regnote">Times are CEST, self-reported, author time; the Part 1 commits were rewritten at 22:57, the Part 3 design commit at 01:19.</p>
+<p class="regnote">Times are CEST, self-reported, author time; the Part 1 commits were rewritten at 22:57, and the Part 3 design commit 683b0c8 and its addendum 7be2ad5 were both written to the branch at 01:19.</p>
 </section>
 
 <section id="data">

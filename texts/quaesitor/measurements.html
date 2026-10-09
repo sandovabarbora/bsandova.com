@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Same correct count, opposite declining — Quaesitor · Barbora Šandová</title>
+<title>Same correct rate, opposite declining — Quaesitor · Barbora Šandová</title>
 <meta name="description" content="Exploratory measurements of two Claude models answering questions with known answers over five data warehouses in fifteen languages: correct, silently wrong and declined answers, questions past the edge of the data, and a run with schema documentation.">
-<meta property="og:title" content="Same correct count, opposite declining — Quaesitor">
+<meta property="og:title" content="Same correct rate, opposite declining — Quaesitor">
 <meta property="og:description" content="Exploratory measurements of two Claude models answering questions with known answers over five data warehouses in fifteen languages: correct, silently wrong and declined answers, questions past the edge of the data, and a run with schema documentation.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://bsandova.com/assets/og.png">
@@ -46,7 +46,7 @@ pre.sql{font-family:var(--mono);font-size:12px;line-height:1.55;color:var(--fg);
 </style>
 
 <!-- ld --><link rel="alternate" type="application/atom+xml" title="Barbora Šandová" href="/feed.xml">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Same correct count, opposite declining — Quaesitor", "description": "Exploratory measurements of two Claude models answering questions with known answers over five data warehouses in fifteen languages: correct, silently wrong and declined answers, questions past the edge of the data, and a run with schema documentation.", "url": "https://bsandova.com/texts/quaesitor/measurements", "image": "https://bsandova.com/assets/og.png", "dateModified": "2026-09-29T15:00:00+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Same correct rate, opposite declining — Quaesitor", "description": "Exploratory measurements of two Claude models answering questions with known answers over five data warehouses in fifteen languages: correct, silently wrong and declined answers, questions past the edge of the data, and a run with schema documentation.", "url": "https://bsandova.com/texts/quaesitor/measurements", "image": "https://bsandova.com/assets/og.png", "dateModified": "2026-10-08T14:23:41+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
 </head>
 <body>
 <div class="top"><b><a href="../../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../../#work">Work</a><a href="../../#works">All work</a><a href="../../#about">About</a><a href="../../ask/" class="ask-link">Ask</a><a href="../../#contact">Contact</a></nav><span class="tr">Quaesitor · 1 of 3 · en</span></div>
@@ -54,8 +54,8 @@ pre.sql{font-family:var(--mono);font-size:12px;line-height:1.55;color:var(--fg);
 
 <header class="text-head">
   <p class="kicker">Research · Quaesitor, text 1 of 3 · two assistants, five warehouses, August 2026</p>
-  <h1>Two assistants with the same correct count <em>and opposite declining</em></h1>
-  <p class="deck">On a planted-trap subscriptions warehouse in fifteen languages, two Claude models each answered 41 of 135 cells correctly, yet one declined 40 times and the other 3 (exploratory, no intervals).</p>
+  <h1>Two assistants with the same correct rate <em>and opposite declining</em></h1>
+  <p class="deck">On a planted-trap subscriptions warehouse in fifteen languages, two Claude models each answered about 30 % of cells correctly (opus 41/135, sonnet 38/126), yet one declined 40 times and the other 3 (exploratory, no intervals).</p>
   <dl class="facts">
     <div><dt>answers</dt><dd>5 794 <small>one per question and repeat in 125 run reports, 11–25 August 2026; 9 unmeasured (the model call failed) · administrative count</small></dd></div>
     <div><dt>retail pack, declined</dt><dd>55 vs 1 <small>opus vs sonnet, 390 cells each; correct 40 vs 28 · administrative count</small></dd></div>
@@ -66,20 +66,20 @@ pre.sql{font-family:var(--mono);font-size:12px;line-height:1.55;color:var(--fg);
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>At equal accuracy the model that declined more left fewer unflagged errors: on subscriptions, 54 silently wrong answers against 91.</li>
+    <li>At about the same correct rate the model that declined more left fewer unflagged errors: on subscriptions, 54 silently wrong answers against 85.</li>
     <li>On a standard schema, real taxi records and a two-system CRM and ERP warehouse, silent-failure rates ran from 20 % to 80 % per model, on 10 to 80 cells each, which is too few for more than a description.</li>
     <li>Asked ten questions the data could not answer, one model declined two to five per language and the other at most one; both returned a number for a customer table that had stopped loading.</li>
-    <li>Schema documentation moved wrong answers closer to the verified value without making more of them correct; this rests on one model, one language and 26 questions.</li>
+    <li>In a before-and-after comparison on one model and one language (26 questions), not a randomised one, wrong answers were closer to the verified value with schema documentation than without it, and no more of them were correct.</li>
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>14 September 2026 · updated 29 September 2026 · <a href="../../changelog/#quaesitor-measurements">version 2</a></dd></div>
+  <div><dt>published</dt><dd>14 September 2026 · updated 9 October 2026 · <a href="../../changelog/#quaesitor-measurements">version 3</a></dd></div>
   <div><dt>work since</dt><dd>July 2026</dd></div>
   <div><dt>status</dt><dd>exploratory research; the service is retired</dd></div>
   <div><dt>registration</dt><dd>not pre-registered</dd></div>
   <div><dt>data</dt><dd>run reports <code>method/outputs/agent_*.md</code> and per-language comparison tables <code>method/outputs/comparison_*.md</code> in the quaesitor repository, runs started 11–25 August 2026 (private; not verifiable); published: the original result pages with run fingerprints, <a href="original/silent-failure-rate">original/</a>, and <a href="../../assets/detector/detector.json">detector.json</a> for the answer count</dd></div>
   <div><dt>code</dt><dd>harness in the quaesitor repository, <code>method/</code>, at <code>b99c89e</code>, 15 September 2026 (private; not verifiable); rebuild of the original pages: <code>make site-build-all</code> at the repository root. A reader cannot rerun the measurements.</dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Two assistants with the same correct count and opposite declining</i>. bsandova.com/texts/quaesitor/measurements, version 2.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Two assistants with the same correct rate and opposite declining</i>. bsandova.com/texts/quaesitor/measurements, version 3.</dd></div>
   <div><dt>licence</dt><dd>text and tables CC BY 4.0; the harness is not released</dd></div>
 </dl>
 
@@ -91,18 +91,18 @@ pre.sql{font-family:var(--mono);font-size:12px;line-height:1.55;color:var(--fg);
 
 <section>
 <h2>Correct, silently wrong and declined answers on two packs</h2>
-<p>On the subscriptions pack both models gave 41 correct answers out of 135 cells; on retail they gave 40 and 28 out of 390.</p>
+<p>On the subscriptions pack both models answered about 30 % of cells correctly, opus 41 of 135 and sonnet 38 of 126; on retail they gave 40 and 28 out of 390.</p>
 </section>
 <div class="scroller wide"><table class="tbl wide"><thead><tr><th>pack</th><th>model</th><th class="n">answers</th><th class="n">correct</th><th class="n">silently wrong</th><th class="n">declined</th></tr></thead>
 <tbody>
 <tr><td>Subscriptions</td><td>A · opus</td><td class="n">135</td><td class="n"><b>41</b></td><td class="n">54</td><td class="n hi">40</td></tr>
-<tr><td>Subscriptions</td><td>B · sonnet</td><td class="n">135</td><td class="n"><b>41</b></td><td class="n">91</td><td class="n hi">3</td></tr>
+<tr><td>Subscriptions</td><td>B · sonnet</td><td class="n">126</td><td class="n"><b>38</b></td><td class="n">85</td><td class="n hi">3</td></tr>
 <tr><td>Retail</td><td>A · opus</td><td class="n">390</td><td class="n"><b>40</b></td><td class="n">227</td><td class="n hi">55</td></tr>
 <tr><td>Retail</td><td>B · sonnet</td><td class="n">390</td><td class="n"><b>28</b></td><td class="n">272</td><td class="n hi">1</td></tr>
 </tbody></table></div>
-<p class="note">Table 1. Answers per model and pack, one verdict per question and language, fifteen languages. Source: the original silent-failure-rate page, August 2026<sup class="cite"><a href="#r4">4</a></sup>. Recomputed on 29 September 2026 from the comparison tables in the repository, the rows match except sonnet on subscriptions, where the Czech run now in the repository has one repeat instead of three and is left out of its comparison table; without it the row reads 126, 38, 85 and 3 (private; not verifiable).</p>
+<p class="note">Table 1. Answers per model and pack, one verdict per question and language, fifteen languages. Source: the original silent-failure-rate page, August 2026<sup class="cite"><a href="#r4">4</a></sup>, and the comparison tables in the repository. Recomputed from those tables on 29 September and 9 October 2026, the rows match the original page except sonnet on subscriptions, where the Czech run now in the repository has one repeat instead of three and is left out of its comparison table; the row shows the recomputed 126, 38, 85 and 3, where the original page gave 135, 41, 91 and 3 (private; not verifiable).</p>
 <section>
-<p>On retail, opus declined 55 times and sonnet once; on subscriptions, 40 times and 3 times<sup class="cite"><a href="#r4">4</a></sup>. The runs do not show why the two models differ. What the table does show is where the non-correct answers went: at the same correct count on subscriptions, the model that declined more left 54 silently wrong answers against 91 for the other, so choosing between them changes the mix of refusals and unflagged errors more than the number of right answers.</p>
+<p>On retail, opus declined 55 times and sonnet once; on subscriptions, 40 times and 3 times<sup class="cite"><a href="#r4">4</a></sup>. The runs do not show why the two models differ. What the table does show is where the non-correct answers went: at about the same correct rate on subscriptions, the model that declined more left 54 silently wrong answers against 85 for the other, so the two models differ in the mix of refusals and unflagged errors more than in the share of right answers.</p>
 </section>
 
 <section>
@@ -134,12 +134,12 @@ WHERE registered_date &gt;= DATE '2026-07-01'
   AND registered_date &lt;  DATE '2026-08-01'
   AND is_test_account = FALSE</pre>
 <p>The query excludes test accounts and returns zero. The customer dimension stopped being written to in February 2025, eighteen months earlier, so the zero reflects a table that is no longer filled, and nothing in the result distinguishes that from a month without sign-ups. Both models answered both questions in that category with a number<sup class="cite"><a href="#r11">11</a></sup>.</p>
-<p>Declining is the correct answer to all ten. In Czech, opus declined five of ten and sonnet none; across fifteen languages opus declined two to five per language and sonnet zero or one<sup class="cite"><a href="#r11">11</a></sup>. An earlier version of the pack asked for quantities with no column behind them (a gross margin where nothing records cost), and both models declined all ten; the current version keeps every column and removes only the data, and only this version separated the two models.</p>
+<p>Declining is the correct answer to all ten. In Czech, opus declined five of ten and sonnet none; across fifteen languages opus declined two to five per language and sonnet zero or one<sup class="cite"><a href="#r11">11</a></sup>. An earlier version of the pack asked for quantities with no column behind them (a gross margin where nothing records cost), and both models declined all ten, according to the original page; those runs are not among the saved reports, so this cannot be checked (not verifiable). The current version keeps every column and removes only the data, and in the saved runs it separated the two models.</p>
 </section>
 
 <section>
 <h2>Correctness and error size with schema documentation</h2>
-<p>A common remedy is to give the model documentation of the schema and the metrics. The retail pack was run with and without it, 26 questions, three repeats, Czech, with only that input changed; the SHA-256 digests of both runs' inputs are recorded on the original page<sup class="cite"><a href="#r6">6</a></sup>.</p>
+<p>A common remedy is to give the model documentation of the schema and the metrics. The retail pack was run with and without it, 26 questions, three repeats, Czech, with only that input changed. This is a before-and-after comparison on one model and one language, run in sequence, not a randomised comparison; the SHA-256 digests of both runs' inputs are recorded on the original page<sup class="cite"><a href="#r6">6</a></sup>.</p>
 </section>
 <div class="scroller wide"><div class="scroller"><table class="grid">
   <caption>claude-sonnet-5, Czech, 26 questions, three repeats each</caption>
@@ -151,7 +151,7 @@ WHERE registered_date &gt;= DATE '2026-07-01'
 </table></div></div>
 <ul class="legend"><li><span class="cell c-correct"></span>correct</li><li><span class="cell c-silent"></span>silently wrong</li><li><span class="cell c-implausible"></span>implausible</li><li><span class="cell c-invalid"></span>did not run, or no number</li></ul>
 <section>
-<p>Correct answers were 2 of 26 without documentation and 2 of 26 with it (exact McNemar, p = 1.00). The size of the error changed: across the 22 questions measurable in both runs the median absolute error fell from 72 % to 23 %, with 15 answers closer to the verified value and 2 further (exact sign test, p = 0.0023). The comparison was run three times, and the sign-test p-values of the three runs were 0.00008, 0.00073 and 0.0023; the figures above are those of the third run, in a clean environment<sup class="cite"><a href="#r6">6</a></sup>.</p>
+<p>Correct answers were 2 of 26 without documentation and 2 of 26 with it (exact McNemar, p = 1.00). The size of the error changed: across the 22 questions measurable in both runs the median absolute error fell from 72 % to 23 %, with 15 answers closer to the verified value and 2 further (exact sign test, p = 0.0023). The comparison was run three times with the same documentation file (SHA-256 98172062a487), on 12 August and twice on 20 August 2026, and the sign-test p-values of the three runs were 0.00008, 0.00073 and 0.0023; the figures above are those of the third run, in a clean environment<sup class="cite"><a href="#r6">6</a></sup>. A fourth run, on 24 August 2026 with a revised documentation file (SHA-256 fdaa056d3b24, report <code>agent_sonnet-docs-clean_cs.md</code>), was left out of the earlier version of this text without a stated reason. Against the same run without documentation it gave 2 of 26 correct and 24 of 26 silently wrong (92 %), and across the 24 questions measurable in both the median absolute error fell from 41 % to 9.6 %, 16 answers closer and 2 further (exact sign test p = 0.0013, computed for this version; private; not verifiable). It points the same way on error size, with a higher silent-failure rate.</p>
 <p>Answers that had been implausibly far from the verified value came back within a plausible range, and none moved the other way; a revenue figure off by about six hundred per cent came back off by about seventy. The prediction before the run was that documentation would reduce refusals, and it did not.</p>
 </section>
 

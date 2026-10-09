@@ -336,3 +336,16 @@ Built by `tools/praha/rings_data.py`, report in `tools/data/praha2x/design_repor
   historical geometry was not checked (deviation from §4), so the registered rule is used alone.
 
 **3 October 2026 (audit).** The H1 note above that says 'G = 57 districts' is a typo: the estimate clusters over 56 districts (rings_extended.json, H1_ANO.delta.G = 56; one district holds no cluster).
+
+**9 October 2026 (clarifications after an independent review; the text above is unchanged).**
+
+- **Status line.** The header's "after review by three independent referees (statistics, electoral geography, census
+  data)" cannot be verified by a reader: the referees are not named, have no stated affiliation, and no report is in
+  the repository. The design first appears in the results commit 1283162, so the only claim the article makes is
+  "design written before modelling; not independently timestamped".
+- **H1b label.** §5 says: "If any VIF > 10, or the H1b minimum detectable θ exceeds 0.3, this is recorded under
+  Changes before estimation. The pre-committed consequence: H1b is reported as underpowered, not as 'place'." The
+  design-stage VIFs were 14.6 (tertiary) and 11.76 (vocational). The 2026-09-28 design-stage entry above applied the
+  consequence only to an "indeterminate" H1b, and the first version of the article reported H1b as "not supported;
+  place beyond composition". Applied as written, H1b and H1b′ are labelled **underpowered**; θ = 0.43 (ANO) and 0.42
+  (SPOLU) are reported as estimates. Correction dated 9 October 2026, after the results.

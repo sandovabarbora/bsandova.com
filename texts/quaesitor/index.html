@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="../../a24.css">
 
 <!-- ld --><link rel="alternate" type="application/atom+xml" title="Barbora Šandová" href="/feed.xml">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Quaesitor — Barbora Šandová", "description": "Three texts from Quaesitor, a retired one-person service that measured how often AI assistants over data warehouses return a wrong number without warning: the measurements, the catalogue of failure modes, and the method with prior evidence.", "url": "https://bsandova.com/texts/quaesitor/", "image": "https://bsandova.com/assets/og/quaesitor.jpg", "dateModified": "2026-09-29T15:00:00+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Quaesitor — Barbora Šandová", "description": "Three texts from Quaesitor, a retired one-person service that measured how often AI assistants over data warehouses return a wrong number without warning: the measurements, the catalogue of failure modes, and the method with prior evidence.", "url": "https://bsandova.com/texts/quaesitor/", "image": "https://bsandova.com/assets/og/quaesitor.jpg", "dateModified": "2026-10-08T14:23:41+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
 </head>
 <body>
 <div class="top"><b><a href="../../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../../#work">Work</a><a href="../../#works">All work</a><a href="../../#about">About</a><a href="../../ask/" class="ask-link">Ask</a><a href="../../#contact">Contact</a></nav><span class="tr">Quaesitor · 2026 · en</span></div>
@@ -35,21 +35,21 @@
   <p class="deck">Three texts from a retired one-person service that asked AI assistants questions with known answers over five warehouses and counted how often they returned a wrong number without any warning.</p>
   <dl class="facts">
     <div><dt>answers</dt><dd>5 794 <small>one per question and repeat in 125 run reports, 11–25 August 2026; 9 unmeasured (the model call failed) · 15 languages · administrative count</small></dd></div>
-    <div><dt>failure modes catalogued</dt><dd>26 <small>each planted in a warehouse built for it · administrative count</small></dd></div>
+    <div><dt>failure modes catalogued</dt><dd>26 <small>in the e-commerce catalogue, each planted in a warehouse built for it · administrative count</small></dd></div>
     <div><dt>median error, without → with documentation</dt><dd>72 % → 23 % <small>22 questions, one model, Czech · exact sign test p = 0.0023 · no interval</small></dd></div>
   </dl>
 </header>
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>Text 1 reports that two Claude models with the same number of correct answers on one pack differed sharply in how often they declined, and that schema documentation made errors smaller without making them rarer.</li>
-    <li>Text 2 lists the planted failure modes with the median size of the error each produced; about a third of them produced errors under 10 %, small enough to look plausible.</li>
-    <li>Text 3 gives the method and eight results by other authors, including a benchmark in which a semantic layer raised accuracy by 17 to 23 points.</li>
+    <li>Text 1 reports that two Claude models with about the same share of correct answers on one pack (about 30 %) differed sharply in how often they declined, and that in a before-and-after run on one model and one language, not randomised, errors were smaller with schema documentation and no rarer.</li>
+    <li>Text 2 lists the failure modes planted in the e-commerce catalogue with the median size of the error each produced; about a third of them produced errors under 10 %, small enough to look plausible.</li>
+    <li>Text 3 gives the method and results by other authors, including a benchmark in which a semantic layer raised accuracy by 17 to 23 points.</li>
     <li>All three are exploratory: the warehouses are synthetic or small, the rates carry no intervals, and the run reports sit in a private repository, so a reader can check the published tables but not rebuild them.</li>
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>14 September 2026 · updated 29 September 2026 · <a href="../../changelog/#quaesitor">version 2</a></dd></div>
+  <div><dt>published</dt><dd>14 September 2026 · updated 9 October 2026 · <a href="../../changelog/#quaesitor">version 3</a></dd></div>
   <div><dt>work since</dt><dd>July 2026</dd></div>
 </dl>
 <details class="meta-more">
@@ -58,7 +58,7 @@
   <div><dt>status</dt><dd>hub, index of three exploratory research texts; the service is retired</dd></div>
   <div><dt>data</dt><dd>125 run reports, <code>method/outputs/agent_*.md</code> in the quaesitor repository, runs started 11–25 August 2026 (private; not verifiable); published: the original result pages under <a href="original/why">original/</a> and the aggregate <a href="../../assets/detector/detector.json">detector.json</a>, whose <code>answers</code> and <code>outcomes</code> fields give the count above</dd></div>
   <div><dt>code</dt><dd>harness and site builder in the quaesitor repository, <code>method/</code>, at <code>b99c89e</code>, 15 September 2026 (private; not verifiable); public: <a href="https://github.com/sandovabarbora/quaesitor-zero">quaesitor-zero</a>, Apache-2.0</dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Quaesitor</i>. bsandova.com/texts/quaesitor, version 2.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Quaesitor</i>. bsandova.com/texts/quaesitor, version 3.</dd></div>
   <div><dt>licence</dt><dd>text CC BY 4.0; the harness is not released; quaesitor-zero Apache-2.0</dd></div>
 </dl>
 </details>
@@ -66,9 +66,9 @@
 
 </article>
 <div class="tx" style="border-top:1px solid var(--line)">
-<a class="tx-row" href="measurements"><span class="i">1 / 3</span><span class="t">Two assistants with the same correct count <em>and opposite declining</em><small>Correct, silently wrong and declined answers of two Claude models on five warehouses, ten questions that reach past the edge of the data, and a before-and-after run with schema documentation.</small></span><span class="y">research</span><span class="go">read →</span></a>
-<a class="tx-row" href="taxonomy"><span class="i">2 / 3</span><span class="t">Twenty-six planted failure modes <em>and the size of each error</em><small>The catalogue, with the median error of the silently wrong answers each trap produced, and twelve access scenarios with the one run recorded against them.</small></span><span class="y">research</span><span class="go">read →</span></a>
-<a class="tx-row" href="why"><span class="i">3 / 3</span><span class="t">Silent failure as accuracy rises: <em>method and prior evidence</em><small>The untested argument behind the service, how a question became a verified one, eight results by other authors with the strongest objection, and what remains now that the service is closed.</small></span><span class="y">research</span><span class="go">read →</span></a>
+<a class="tx-row" href="measurements"><span class="i">1 / 3</span><span class="t">Two assistants with the same correct rate <em>and opposite declining</em><small>Correct, silently wrong and declined answers of two Claude models on five warehouses, ten questions that reach past the edge of the data, and a before-and-after run with schema documentation on one model and one language.</small></span><span class="y">research</span><span class="go">read →</span></a>
+<a class="tx-row" href="taxonomy"><span class="i">2 / 3</span><span class="t">Twenty-six planted failure modes <em>and the size of each error</em><small>The e-commerce catalogue, with the median error of the silently wrong answers each trap produced, and twelve access scenarios with the one run recorded against them.</small></span><span class="y">research</span><span class="go">read →</span></a>
+<a class="tx-row" href="why"><span class="i">3 / 3</span><span class="t">Silent failure as accuracy rises, an untested hypothesis: <em>method and prior evidence</em><small>The untested hypothesis behind the service, how a question became a verified one, results by other authors with the strongest objection, and what remains now that the service is closed.</small></span><span class="y">research</span><span class="go">read →</span></a>
 </div>
 <article class="text" style="padding-top:1.5rem">
 <footer class="text-foot">
