@@ -52,9 +52,9 @@ TEMPLATE = '''<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Running late · Barbora Šandová</title>
-<meta name="description" content="Pre-specified studies of where and why Prague's trams fall behind, from the stop passes of 2025: a tenth of the segments record {{S}} % of the delay, narrowly, the same ones in odd and even weeks; and the spacing between two trams of a line shows practically no amplification from stop to stop; and a connection planned three minutes apart is made {{m3}} times in a hundred.">
+<meta name="description" content="Pre-specified studies of where and how Prague's trams fall behind, from the stop passes of 2025: a tenth of the segments record {{S}} % of the delay, narrowly, the same ones in odd and even weeks; and the spacing between two trams of a line shows practically no amplification from stop to stop; and a connection planned three minutes apart is made {{m3}} times in a hundred.">
 <meta property="og:title" content="Running late">
-<meta property="og:description" content="Where and why Prague's trams fall behind, one pre-specified question at a time: where delay is recorded, why two trams of a line come at once, and whether you make your connection.">
+<meta property="og:description" content="Where and how Prague's trams fall behind, one pre-specified question at a time: where delay is recorded, how often two trams of a line come at once, and whether you make your connection.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://bsandova.com/texts/running-late">
 <meta property="og:image" content="https://bsandova.com/assets/og/running-late.jpg">
@@ -76,7 +76,7 @@ TEMPLATE = '''<!doctype html>
 <header class="text-head">
   <p class="kicker">Hub · Running late · Prague trams and buses, spring and summer 2025</p>
   <h1>Running <em>late</em></h1>
-  <p class="deck">Where and why Prague's trams fall behind, asked one question at a time of the stop passes behind the author's thesis, each question registered before the data that answers it was read.</p>
+  <p class="deck">Where and how Prague's trams fall behind, asked one question at a time of the stop passes behind the author's thesis, each question registered before the data that answers it was read.</p>
   <dl class="facts">
     <div><dt>parts published</dt><dd>3 <small>numbered by publication order</small></dd></div>
     <div><dt>design committed</dt><dd>8 Oct 2026 <small>CEST, commit times self-reported</small></dd></div>
@@ -111,10 +111,10 @@ TEMPLATE = '''<!doctype html>
     </div>
   </li>
   <li>
-    <a class="still" href="bunching" aria-label="Part 2, Why do two 22s come at once?"><span class="shot" style="view-transition-name:ph-bunching;--bg:url(../assets/photo/bunching.jpg);--bg-s:url(../assets/photo/bunching-1200.jpg)"></span></a>
+    <a class="still" href="bunching" aria-label="Part 2, How often do two 22s come at once?"><span class="shot" style="view-transition-name:ph-bunching;--bg:url(../assets/photo/bunching.jpg);--bg-s:url(../assets/photo/bunching-1200.jpg)"></span></a>
     <div>
       <p class="n">Part 2 · bunching · {{pairs}} pairs of trams, 15 March – 8 September 2025</p>
-      <h2><a href="bunching">Why do two 22s come at once? Tram bunching in Prague, 2025</a></h2>
+      <h2><a href="bunching">How often do two 22s come at once? Tram bunching in Prague, 2025</a></h2>
       <p>The spacing between two trams of a line shows practically no amplification from stop to stop ({{g}} per stop, {{g_label}} by the registered rule, corrected in its version 2), and bunches build gradually towards the end of a line. The rare sudden closings concentrate on some platforms, as other rare one-stop events do, and partly by line. City buses show a small positive value ({{bg}}, {{bg_label}}), about the size of the spread among the tram estimates.</p>
     </div>
   </li>
@@ -130,7 +130,7 @@ TEMPLATE = '''<!doctype html>
 </section>
 
 <section>
-<p>The series sits next to <a href="weather-rails">Weather on the rails</a>, which asks what rain and heat do to the same trams.</p>
+<p>The series sits next to <a href="weather-rails">Weather on the rails</a>, which describes how the same trams' delays differ in rain and heat.</p>
 </section>
 
 <footer class="text-foot">

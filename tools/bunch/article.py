@@ -1,4 +1,4 @@
-"""Why do two 22s come at once: figures, the map and the article, every number from the result files.
+"""How often do two 22s come at once: figures, the map and the article, every number from the result files.
 
 Reads docs/research/bunching-{results,results-bus,screen,describe,describe-bus,review}.json and the tram pair tables in tools/data/bunch/;
 writes assets/bunch/ (charts.json, map.json, segments.json, results.json, describe.json, static SVGs) and
