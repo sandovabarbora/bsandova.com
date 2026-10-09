@@ -9,7 +9,7 @@
 transit = { title = "Getting around", note = "Trams, buses and streets: delays, weather, fares and darkness." }
 prague = { title = "Prague", note = "One city, from the data it publishes about itself." }
 culture = { title = "Culture", note = "Music charts and tours, song contests, film grants, adverts, and data turned into sound." }
-sport = { title = "Sport", note = "Who a country produces, per capita, compared with its peers." }
+sport = { title = "Sport", note = "How many of a country's players are in the highest-ranked leagues by UEFA coefficient, per capita, compared with its peers." }
 ai = { title = "AI and data", note = "Assistants over warehouses, and the tools that check them." }
 other = { title = "Everything else", note = "Lotteries, a forecast check, a thesis on EU votes and how the studies here are planned." }
 
@@ -27,7 +27,7 @@ top = 1
 id = "weather-rails"
 label = "Data · Prague transit · a series"
 heading = "Weather<br>on the rails"
-dek = "What rain and heat do to Prague's trams and buses, asked the same way of the same 121 million stop passes, each question registered before the weather met the data."
+dek = "How delays differ in rain and heat on Prague's trams and buses, asked the same way of the same 121 million stop passes, each question pre-specified (self-timestamped) before the weather met the data."
 photo = "rain-delays"
 vt = "weather-rails"
 credit = 'Photo: <a href="https://commons.wikimedia.org/wiki/File:Praha,_Ko%C5%A1%C3%AD%C5%99e_Kaval%C3%ADrka_v_noci.jpg">Aktron</a> · CC BY-SA 4.0, toned'
@@ -320,7 +320,7 @@ top = 5
 id = "player-pool-atlas"
 label = "Sport · six nations"
 heading = "Player<br>Pool Atlas"
-dek = "Who a country produces, per capita, compared with its peers: the same five questions asked of six nations the same way. Hockey first, then football."
+dek = "How many of a country's players are in the highest-ranked leagues by UEFA coefficient, per capita, compared with its peers: the same five questions asked of six nations the same way. Hockey first, then football."
 photo = "atlas"
 credit = 'Photo: <a href="https://www.rawpixel.com/image/6113855/photo-image-public-domain-people-sunlight">rawpixel</a> · CC0, toned'
 tint = "#04120b"
@@ -424,7 +424,7 @@ topic = "other"
 href = "texts/forecast-verification"
 title = "Forecast verification: protocol"
 kind = "Note"
-status = "in progress, first reading 9 Nov 2026"
+status = "in progress, first readings 9 and 16 Nov 2026"
 published = "2026-09-29"
 topic = "other"
 

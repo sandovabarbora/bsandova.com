@@ -14,15 +14,27 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
       - run: pip install -q sitewitness==0.1.0
-      - run: sitewitness eval ask/golden.json --api https://api.bsandova.com --out ask --allowed-misses 30
+      - run: pip install -q pytest && python -m pytest -q ask/test_eval_guard.py   # the guard that decides what gets published
+      # the run is written to a scratch folder first; ask/eval_guard.py publishes it only if at most a quarter of the
+      # requests failed or returned an agent error (5 October 2026: 30 of 30 HTTP 502 were saved over the last good run as 0 / 30)
+      - run: |
+          mkdir -p .eval-run && cp ask/eval-history.json .eval-run/
+          sitewitness eval ask/golden.json --api https://api.bsandova.com --out .eval-run --allowed-misses 30
         env:
           SITEWITNESS_EVAL_KEY: ${{ secrets.ASK_EVAL_KEY }}
+      - id: guard
+        run: |
+          if python ask/eval_guard.py .eval-run ask; then echo "status=ok" >> "$GITHUB_OUTPUT"; else echo "status=failed" >> "$GITHUB_OUTPUT"; fi
       - run: |
           git config user.name "ask-eval"
           git config user.email "ask-eval@users.noreply.github.com"
           git add ask/eval.json ask/eval-history.json
-          git commit -m "ask: eval $(date -u +%F)" || echo "nothing to commit"
+          git commit -m "ask: eval $(date -u +%F) (${{ steps.guard.outputs.status }})" || echo "nothing to commit"
           git push
       - run: gh workflow run deploy.yml
         env:
           GH_TOKEN: ${{ github.token }}
+      - if: steps.guard.outputs.status == 'failed'
+        run: |
+          echo "::error::Ask evaluation failed: most requests failed or returned an agent error; the last good run stays published."
+          exit 1

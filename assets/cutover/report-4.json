@@ -1,0 +1,95 @@
+{
+  "passed": false,
+  "reasons": [
+    "column_mismatch:fare"
+  ],
+  "key": [
+    "day",
+    "zone"
+  ],
+  "old_rows": 7280,
+  "new_rows": 7280,
+  "schema": {
+    "only_in_old": [],
+    "only_in_new": [],
+    "type_changes": [],
+    "compared": [
+      "day",
+      "zone",
+      "trips",
+      "fare",
+      "km"
+    ],
+    "ignored": []
+  },
+  "keys": {
+    "old_nulls": 0,
+    "new_nulls": 0,
+    "old_duplicates": 0,
+    "new_duplicates": 0,
+    "samples": []
+  },
+  "rows": {
+    "only_in_old": 0,
+    "only_in_new": 0,
+    "matched": 7280,
+    "samples_old": [],
+    "samples_new": []
+  },
+  "columns": [
+    {
+      "column": "trips",
+      "mismatches": 0,
+      "tolerance": null,
+      "samples": []
+    },
+    {
+      "column": "fare",
+      "mismatches": 3,
+      "tolerance": "abs 1e-12",
+      "samples": [
+        {
+          "day": "2025-01-06",
+          "zone": 137,
+          "old": 14736.960000000001,
+          "new": 14736.96
+        },
+        {
+          "day": "2025-01-09",
+          "zone": 246,
+          "old": 28583.670000000002,
+          "new": 28583.67
+        },
+        {
+          "day": "2025-01-20",
+          "zone": 142,
+          "old": 30641.670000000002,
+          "new": 30641.67
+        }
+      ]
+    },
+    {
+      "column": "km",
+      "mismatches": 0,
+      "tolerance": "abs 1e-06",
+      "samples": []
+    }
+  ],
+  "partitions": {
+    "column": "day",
+    "total": 33,
+    "identical": 33,
+    "differing": [],
+    "excluded_columns": [
+      "fare",
+      "km"
+    ]
+  },
+  "meta": {
+    "old": "legacy (pandas)",
+    "new": "new (SQL), day cast to date",
+    "partition": "day",
+    "generated": "2026-10-09T08:14:41+00:00",
+    "cutover": "0.1.0"
+  }
+}

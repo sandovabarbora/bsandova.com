@@ -109,7 +109,7 @@ details.how summary:hover{color:var(--ink)}
 <details>
   <summary>How it is scored <small id="m-eval"></small></summary>
   <div class="in">
-<p>Thirty golden questions with known answers, run against the live API by <code>ask/eval.py</code>, results below as they came back. Eighteen ask for a number in a data file, seven for something said in a text, one demands a verbatim quotation, and four should be declined: a phone number, a forecast for Christmas, a poem, a question about the assistant's own configuration. A question counts as correct when the expected value is in the answer, or when the right response is a refusal and it refused. Two protocol flags are computed from the trace, not from the text: a number stated without any tool result in the conversation, and a quotation without a verified <code>quote</code> call<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>Thirty golden questions with known answers, run against the live API by <code>sitewitness eval</code> in the weekly job, results below as they came back. A run in which more than a quarter of the requests failed or returned an agent error (a gateway error, a timeout) is not a score: it is listed under every evaluation as a failed run and the last good run stays here. Eighteen ask for a number in a data file, seven for something said in a text, one demands a verbatim quotation, and four should be declined: a phone number, a forecast for Christmas, a poem, a question about the assistant's own configuration. A question counts as correct when the expected value is in the answer, or when the right response is a refusal and it refused. Two protocol flags are computed from the trace, not from the text: a number stated without any tool result in the conversation, and a quotation without a verified <code>quote</code> call<sup class="cite"><a href="#r1">1</a></sup>.</p>
 <div id="eval"></div>
   </div>
 </details>
@@ -147,7 +147,7 @@ per_ip_per_hour = 12</pre>
 <details>
   <summary>What it is not</summary>
   <div class="in">
-<p>Not a search engine over the web, not a chat about anything, and not a place where a wrong number can hide: the trace under every answer says which file was read. Four guardrails are enforced in code, not in the prompt: an answer produced without any tool call, a number without a tool result, code in the answer, or a quotation that was not verified is replaced by a refusal, and the trace says so. The one miss in the table above is the theme of this site in miniature: the agent read a text instead of the data file and attributed 2 745 stalls to the wrong series, confidently. The cross-check would have caught it; the golden set did. The model is the configured one in the trace, and the cost shown is computed from configured list prices, not from a bill. If today's budget is spent, it says so and the data files stay readable by hand. The agent is the package above; the Worker at <code>api.bsandova.com</code> is a twenty-line proxy<sup class="cite"><a href="#r1">1</a></sup>.</p>
+<p>Not a search engine over the web, not a chat about anything, and not a place where a wrong number can hide: the trace under every answer says which file was read. Five rules are enforced in code, not in the prompt: an answer produced without any tool call, a number without a tool result, code in the answer, a quotation that was not verified, or a source the site does not have is replaced by a refusal, and the trace says so. The one miss in the table above is a false refusal; reading this one trace, the quotation rule read the text between two short quoted words as one long quotation and replaced a correct answer (described in <a href="../texts/sitewitness">sitewitness</a>). The model is the configured one in the trace, and the cost shown is computed from configured list prices, not from a bill. If today's budget is spent, it says so and the data files stay readable by hand. The agent is the package above; the Worker at <code>api.bsandova.com</code> is a thirty-line proxy<sup class="cite"><a href="#r1">1</a></sup>.</p>
 
   </div>
 </details>
@@ -215,6 +215,7 @@ per_ip_per_hour = 12</pre>
   catch { el('s-caps').innerHTML = 'agent offline right now'; el('s-today').innerHTML = ''; }
   try {
     const ev = await (await fetch('eval.json', {cache:'no-store'})).json(); const s = ev.summary;
+    if (s.failed || (ev.rows||[]).filter(r=>r.error).length > ev.rows.length/4) throw new Error('failed run');
     median = Math.round(s.median_ms/1000);
     el('s-eval').innerHTML = `<b>${s.correct} / ${s.n}</b> test questions right`;
     el('m-eval').textContent = `${s.correct} of ${s.n} right · ${s.date}`;
@@ -224,7 +225,7 @@ per_ip_per_hour = 12</pre>
   try {
     const hist = await (await fetch('eval-history.json', {cache:'no-store'})).json();
     el('history').innerHTML = `<div class="scroller"><table class="tbl"><thead><tr><th>date</th><th>model</th><th class="n">correct</th><th class="n">number</th><th class="n">text</th><th class="n">quote</th><th class="n">decline</th><th class="n">protocol</th><th class="n">usd</th><th class="n">median s</th></tr></thead><tbody>` +
-      hist.slice().reverse().map(h=>`<tr><td>${h.date}</td><td class="dim">${esc(h.model||'')}</td><td class="n"><b>${h.correct} / ${h.n}</b></td>${['number','text','quote','decline'].map(k=>`<td class="n">${h.by_kind[k]?h.by_kind[k].ok+'/'+h.by_kind[k].n:'—'}</td>`).join('')}<td class="n ${h.protocol_violations?'miss':''}">${h.protocol_violations}</td><td class="n">${h.cost_usd}</td><td class="n">${(h.median_ms/1000).toFixed(1)}</td></tr>`).join('') + '</tbody></table></div>';
+      hist.slice().reverse().map(h=>h.failed ? `<tr><td>${h.date}</td><td class="dim" colspan="9">run failed, not scored: ${h.failed_requests} of ${h.n} requests failed or returned an agent error (${esc((h.errors||[]).join('; '))})</td></tr>` : `<tr><td>${h.date}</td><td class="dim">${esc(h.model||'')}</td><td class="n"><b>${h.correct} / ${h.n}</b></td>${['number','text','quote','decline'].map(k=>`<td class="n">${h.by_kind[k]?h.by_kind[k].ok+'/'+h.by_kind[k].n:'—'}</td>`).join('')}<td class="n ${h.protocol_violations?'miss':''}">${h.protocol_violations}</td><td class="n">${h.cost_usd}</td><td class="n">${(h.median_ms/1000).toFixed(1)}</td></tr>`).join('') + '</tbody></table></div>';
   } catch { el('history').innerHTML = ''; }
 })();
 </script>
