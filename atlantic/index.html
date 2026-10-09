@@ -60,7 +60,7 @@ canvas{display:block;width:100%;height:auto;margin:1rem 0 .25rem}
   <div class="ctl">
     <button id="play">▶ play</button>
     <label>spot <select id="spot"><option value="ericeira">Ericeira</option><option value="peniche">Peniche</option><option value="sagres">Sagres</option></select></label>
-    <label>seconds per day <input id="spd" type="range" min="0.4" max="2" step="0.1" value="0.9"><b id="spdv">0.9 · 1:24</b></label>
+    <label>seconds per day <input id="spd" type="range" min="0.4" max="2" step="0.1" value="0.9"><b id="spdv">0.9</b></label>
     <span class="stems" id="stems"></span>
   </div>
   <canvas id="c" width="1200" height="260"></canvas>
@@ -77,12 +77,13 @@ canvas{display:block;width:100%;height:auto;margin:1rem 0 .25rem}
 <section>
 <h2>How the sea is mapped</h2>
 <table class="tbl"><thead><tr><th>the sea</th><th>the sound</th><th>range in the data</th></tr></thead><tbody>
-<tr><td>swell height, daily max</td><td>note of the pad, D minor pentatonic over two octaves; louder as it grows</td><td>0.46 – 2.76 m</td></tr>
-<tr><td>mean period</td><td>pulse rate inside the bar: a 10 s groundswell pulses slowly, a 4 s windchop chatters</td><td>3.5 – 10 s</td></tr>
-<tr><td>mean wind</td><td>filtered noise, level with speed; offshore (E ± 60°) opens the filter, onshore closes it</td><td>5 – 26 km/h</td></tr>
-<tr><td>swell direction</td><td>stereo position: north-west left, south-west right</td><td>230 – 340°</td></tr>
+<tr><td>swell height, daily max</td><td>note of the pad, D minor pentatonic over two octaves, mapped from 0.4 to 2.8 m (heights outside are clamped to the lowest or highest note); louder as it grows, up to 2.8 m</td><td id="r-h">…</td></tr>
+<tr><td>mean period</td><td>pulse rate inside the bar: a 10 s groundswell pulses slowly, a 4 s windchop chatters</td><td id="r-p">…</td></tr>
+<tr><td>mean wind</td><td>filtered noise, level with speed up to 26 km/h (stronger wind is clamped to the loudest level); offshore (E ± 60°) opens the filter, onshore closes it</td><td id="r-w">…</td></tr>
+<tr><td>swell direction</td><td>stereo position from 230° (south-west, full left) to 340° (north-north-west, full right); directions outside are clamped to the edge</td><td id="r-d">…</td></tr>
 <tr><td>the surfable rule</td><td>a bell on every day with height 1.0–2.5 m, period ≥ 8 s, wind ≤ 25 km/h or offshore</td><td>the verifier's rule, unchanged</td></tr>
 </tbody></table>
+<p><small>Ranges in the data are computed from <a href="../surf/data/analysis.json">analysis.json</a> for the selected spot each time the page loads.</small></p>
 <p>The mapping is the whole piece. There is no melody written over it and no day is skipped; a flat week sounds like a flat week. The same rule that decides <i>surfable</i> on the <a href="../surf/">verification page</a> decides the bell here, and the same file feeds both, so if the collector misses a morning the bar is silent rather than invented. Delayed All the Time did this for Prague's buses; this is the same idea pointed at the sea, and the reason it was built: some things in data you hear before you see them, and a swell that holds for three days is one of them.</p>
 </section>
 
@@ -91,7 +92,7 @@ canvas{display:block;width:100%;height:auto;margin:1rem 0 .25rem}
 <ol>
 <li id="r1">Šandová, B. (2026): <a href="../texts/forecast-verification">Not worth the flight</a>, the surf forecast verification: collector, analysis file, the surfable rule (height 1.0–2.5 m, mean period ≥ 8 s, wind ≤ 25 km/h or offshore E ± 60°).</li>
 <li id="r2">Open-Meteo Marine Weather API, MFWAM analysis (lead 0), daily aggregates over 06–20 UTC per spot; Open-Meteo Forecast API for wind. Fetched daily by <code>surf/collect.py</code>.</li>
-<li id="r3">Šandová, B. (2025): <a href="../texts/delayed">Delayed All the Time. On Time, Occasionally.</a>, the sonification this one follows: parameter-mapping synthesis in the Web Audio API, no server, no samples.</li>
+<li id="r3">Šandová, B. (2026): <a href="../texts/delayed">Delayed All the Time. On Time, Occasionally.</a>, the sonification this one follows: parameter-mapping synthesis in the Web Audio API, no server, no samples.</li>
 </ol>
 </section>
 <footer class="text-foot"><p class="back"><a href="../#works">← projects</a> · <a href="../surf/">verification</a></p></footer>
@@ -119,6 +120,9 @@ canvas{display:block;width:100%;height:auto;margin:1rem 0 .25rem}
     el('f-go').innerHTML = `${go.length} <small>${go.map(d=>d.day.slice(5)).join(' · ')||'none yet'}</small>`;
     el('f-max').innerHTML = `${mx.swell_max} m <small>${mx.day} · period ${mx.period_mean} s</small>`;
     el('spdv').textContent = `${spd.toFixed(1)} · ${fmt(ds.length*spd)}`;
+    const rng = (k, dp, u) => { const x = ds.map(r=>r[k]).filter(v=>v!=null); return x.length ? `${Math.min(...x).toFixed(dp)} – ${Math.max(...x).toFixed(dp)} ${u}` : '—'; };
+    el('r-h').textContent = rng('swell_max', 2, 'm'); el('r-p').textContent = rng('period_mean', 1, 's');
+    el('r-w').textContent = rng('wind_mean', 0, 'km/h'); el('r-d').textContent = rng('dir_mean', 0, '°');
   }
 
   // --- audio -------------------------------------------------------------
