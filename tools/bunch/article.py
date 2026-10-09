@@ -381,7 +381,7 @@ def main() -> None:
     left = re.findall(r"\{\{\w+\}\}", out)
     assert not left, left
     (ROOT / "texts" / "bunching.html").write_text(out, encoding="utf-8")
-    print(json.dumps({k: v[k] for k in v if k != "photo"}, ensure_ascii=False, indent=0))
+    print(f"written texts/bunching.html, {len(v)} values")
 
 
 if __name__ == "__main__":

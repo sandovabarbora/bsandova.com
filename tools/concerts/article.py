@@ -67,7 +67,6 @@ def figures(res: dict) -> None:
         src = R / f"concert-effect-{name}.{'json' if name == 'results' else 'csv'}"
         shutil.copy(src, A / src.name.replace("concert-effect-", ""))
     ev = res["y1_share"]["event"]
-    base = res["pre_mean"]["y1_share"]
     pts = [{"x": r["e"], "lo": 100 * r["lo"], "hi": 100 * r["hi"], "mid": 100 * r["att"],
             "c": HELD if r["e"] >= 0 else "ink",
             "tip": f"week {r['e']:+d}: {pp(r['att'])} points (band {pp(r['lo'])} to {pp(r['hi'])})"} for r in ev]

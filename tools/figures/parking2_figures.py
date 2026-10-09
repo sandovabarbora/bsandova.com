@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[2]
 D = json.loads((ROOT / "assets/parking2/eea_cz.json").read_text())
 OUT = ROOT / "assets/parking2"
 BG, FG, FG2, LINE = "#161616", "#DCDCD6", "#8A8A84", "#3A3A36"
-ACID, BUS, MINT, VIOLET = "#D6FF3A", "#FF6A3D", "#7ED9A6", "#B78CFF"
+ACID, BUS, VIOLET = "#D6FF3A", "#FF6A3D", "#B78CFF"
 plt.rcParams.update({
     "figure.facecolor": BG, "axes.facecolor": BG, "savefig.facecolor": BG,
     "axes.edgecolor": LINE, "axes.labelcolor": FG2, "xtick.color": FG2, "ytick.color": FG2,

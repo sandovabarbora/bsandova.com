@@ -137,7 +137,6 @@ FILTERS = '<button type="button" data-k="all" aria-pressed="true">all</button>' 
 SECTIONS = "\n".join(list_section(l) for l in D["lists"])
 rows = [r for l in D["lists"] for r in l["rows"]]
 c = collections.Counter(r[1] for r in rows)
-REFLIST = "\n".join(f'<li id="r{i}">{e(REFS[k]).replace("https://", "<a href=\"https://").replace(" (", " (") }</li>'.replace('<a href="https://', 'https://') for i, k in enumerate(order, 1))
 REFLIST = "\n".join(
     f'<li id="r{i}">' + re.sub(r"(https://\S+)", lambda m: f'<a href="{m.group(1)}">{e(m.group(1).split("//")[1])}</a>', e(REFS[k])) + f" Accessed {ACCESSED.get(k, '1 October 2026')}.</li>"
     for i, k in enumerate(order, 1))

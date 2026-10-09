@@ -120,7 +120,7 @@ def figures(x: dict) -> dict:
     A.mkdir(parents=True, exist_ok=True)
     for k in ("results", "describe", "posthoc"):
         shutil.copy(R / f"transfers-{k}.json", A / f"{k}.json")
-    res, d = x["res"], x["desc"]
+    res = x["res"]
     charts = {}
     curve = pooled_curve(x["cells"])
     cost = res["q2_cost"]
@@ -270,7 +270,7 @@ ROBUST = [("registered: same day, slack 2–4 min (999 draws)", "q1_within"),
 def posthoc_values(x: dict, fig: dict, pp, pct) -> dict:
     """Numbers of the analyses added after the results (tools/transfer/posthoc.py)."""
     res, ph, d = x["res"], x["ph"], x["desc"]
-    c, cost = res["checks"], res["q2_cost"]
+    c = res["checks"]
     qb, q1bb, q2, ex, rl = ph["q1_bounds"], ph["q1b_bounds"], ph["q2"]["3"], ph["extrapolation"]["all_months"], ph["roulette"]
     ci = lambda r: f"95 % CI {pp(r['ci95'][0], 2)} to {pp(r['ci95'][1], 2)}"  # noqa: E731
     specs = [c[k]["est"] for k in SPEC_KEYS]
@@ -333,7 +333,7 @@ def main() -> None:
     left = re.findall(r"\{\{\w+\}\}", out)
     assert not left, left
     (ROOT / "texts" / "transfers.html").write_text(out, encoding="utf-8")
-    print(json.dumps({k: v[k] for k in v if k != "photo"}, ensure_ascii=False, indent=0))
+    print(f"written texts/transfers.html, {len(v)} values")
 
 
 if __name__ == "__main__":

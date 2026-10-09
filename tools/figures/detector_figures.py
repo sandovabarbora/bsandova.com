@@ -18,7 +18,7 @@ D = json.loads((ROOT / "assets/detector/detector.json").read_text())
 C = json.loads((ROOT / "assets/detector/auc.json").read_text())
 OUT = ROOT / "assets/detector"
 BG, FG, FG2, LINE = "#161616", "#DCDCD6", "#8A8A84", "#3A3A36"
-ACID, BUS, MINT, VIOLET = "#D6FF3A", "#FF6A3D", "#7ED9A6", "#B78CFF"
+ACID, BUS, VIOLET = "#D6FF3A", "#FF6A3D", "#B78CFF"
 plt.rcParams.update({
     "figure.facecolor": BG, "axes.facecolor": BG, "savefig.facecolor": BG,
     "axes.edgecolor": LINE, "axes.labelcolor": FG2, "xtick.color": FG2, "ytick.color": FG2,

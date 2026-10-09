@@ -1,8 +1,8 @@
 """Brand Reflection synthesis figures from the two studies' spot-level parquet files (CC-BY-4.0 derived metrics)."""
-import pathlib, pandas as pd, numpy as np, matplotlib
+import pathlib, pandas as pd, matplotlib
 matplotlib.use("Agg"); import matplotlib.pyplot as plt
 R = pathlib.Path(__file__).resolve().parents[2]; OUT = R / "assets/brand"; OUT.mkdir(exist_ok=True)
-BG, FG, FG2, LINE, ACID, BUS, MINT, VIOLET = "#161616", "#DCDCD6", "#8A8A84", "#3A3A36", "#D6FF3A", "#FF6A3D", "#7ED9A6", "#B78CFF"
+BG, FG, FG2, LINE, ACID, BUS, VIOLET = "#161616", "#DCDCD6", "#8A8A84", "#3A3A36", "#D6FF3A", "#FF6A3D", "#B78CFF"
 plt.rcParams.update({"figure.facecolor": BG, "axes.facecolor": BG, "savefig.facecolor": BG, "axes.edgecolor": LINE, "axes.labelcolor": FG2,
   "xtick.color": FG2, "ytick.color": FG2, "text.color": FG, "grid.color": LINE, "grid.alpha": .6, "axes.grid": True, "axes.spines.top": False,
   "axes.spines.right": False, "font.family": "monospace", "font.size": 9, "legend.frameon": False, "figure.constrained_layout.use": True, "svg.fonttype": "none"})

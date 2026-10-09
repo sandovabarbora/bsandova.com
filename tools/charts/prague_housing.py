@@ -124,7 +124,7 @@ brows = [("Vienna", [(v["non_profit_share"], "limited-profit housing association
          ("Warsaw", [(w["municipal_and_tbs_share"], "the city and public building societies (TBS)", HELD),
                      (1 - w["municipal_and_tbs_share"], "everyone else", "light")])]
 # the article rounds Warsaw's split as 0.6 % and 100 − 0.6 = 99.4 %, so the two printed shares add to 100
-def pct(city: str, lab: str, share: float) -> str:
+def pct(lab: str, share: float) -> str:
     if lab == "everyone else":
         return n(100 - float(n(100 * w["municipal_and_tbs_share"], 1)), 1, " %")
     return n(100 * share, 1, " %")
@@ -135,7 +135,7 @@ for city, parts in brows:
     left = 0.0
     for share, lab, c in parts:
         seg.append({"y": city, "x0": round(left, 2), "x1": round(left + 100 * share, 2), "c": c,
-                    "tip": f"{city}, 2024\n{lab}\n{pct(city, lab, share)} of completions"})
+                    "tip": f"{city}, 2024\n{lab}\n{pct(lab, share)} of completions"})
         left += 100 * share
 charts["builders-2024"] = {
     "alt": "Two stacked bars for 2024. Vienna: limited-profit housing associations 25 %, public sector 2 %, companies 66 %, private persons 7 %. Warsaw: the city and public building societies 0.6 %, everyone else 99 %.",
@@ -148,7 +148,7 @@ charts["builders-2024"] = {
                 "y": {"kind": "cat", "domain": [r[0] for r in brows]},
                 "marks": [{"type": "hbar", "o": 0.85, "rows": seg}]}],
     "table": {"cols": ["city", "builder", "share of 2024 completions"],
-              "rows": [[city, lab, pct(city, lab, share)] for city, parts in brows for share, lab, _ in parts]},
+              "rows": [[city, lab, pct(lab, share)] for city, parts in brows for share, lab, _ in parts]},
     "data": [DC],
 }
 
