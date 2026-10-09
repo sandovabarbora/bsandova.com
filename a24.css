@@ -1,5 +1,5 @@
-/* bsandova.com — the A24 layer for every page except the classic front page.
-   Loaded after style.css and text.css: remaps the shared tokens (paper white, ink black, one grotesk)
+/* bsandova.com — the A24 layer for every page. The front page (index.html) loads it alone; every other
+   page loads it after style.css and text.css: remaps the shared tokens (paper white, ink black, one grotesk)
    and restyles the shared furniture (top bar, article head, headings, tables, chips). Page-specific
    inline styles keep working because they read the same tokens. */
 
