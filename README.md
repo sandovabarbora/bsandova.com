@@ -32,10 +32,10 @@ reporting sentences in a design committed before the analysis. Commit times are 
 says exactly what was registered when.
 
 1. [Do Prague's councillors vote against less, term after term?](https://bsandova.com/texts/prague-council)
-2. [Why do Prague's housing estates vote ANO?](https://bsandova.com/texts/prague-rings)
-3. [Does a district get more city money when its mayor's party joins City Hall?](https://bsandova.com/texts/prague-districts)
-4. [How long does a Prague flat take, from permit to completion?](https://bsandova.com/texts/prague-housing)
-5. [How many kerb spaces have longer cars cost Prague?](https://bsandova.com/texts/prague-parking)
+2. [How much of ANO's housing-estate vote goes with who lives there?](https://bsandova.com/texts/prague-rings)
+3. [Do districts whose mayor's party is in City Hall's coalition receive more city grants?](https://bsandova.com/texts/prague-districts)
+4. [Do completions follow permits later in Prague than in the rest of Czechia?](https://bsandova.com/texts/prague-housing)
+5. [How many more cars would Prague's paid kerb hold with 2012's car lengths?](https://bsandova.com/texts/prague-parking)
 
 Every article ends with a **Reproduction** section that gives the script order and the command that rebuilds its
 data. The raw inputs are public sources, listed with access dates and SHA-256 hashes in `docs/research/*-files.sha256`.

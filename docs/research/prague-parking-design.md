@@ -710,3 +710,15 @@ Holm 1979; Schuirmann 1987; Cameron, Gelbach & Miller 2008; Webb 2023; Saltelli 
     author.
 
 **3 October 2026 (audit).** §0 says Part I was published on 8 September 2026; git puts its first publication on 14 September 2026. The bound on T&E's rounding stated as ±0.7 cm is ±0.6 cm (0.6 × (L2025 − L2020), each value rounded to ±0.5 cm); `parking6_estimate.py` and `h2.json` now say 0.6.
+
+**9 October 2026 (clarifications after an independent review; the text above is unchanged).**
+
+- **Status line.** The "three referee reports (transport economics, statistics, data audit)" of the header
+  (`prague-parking-referees.md`) are unnamed and give no affiliation, so the review cannot be verified by a reader;
+  the article makes no claim of review, and §0's "seen during review" items are what the author recorded.
+- **Registered robustness not run.** R4 (discrete segment model), R5 (fleet definitions: N1, the Prague fleet, used
+  imports excluded, STK-active ages), R6 (exponential and uniform age shapes), R10 (area model and width
+  encroachment) and R13 (specification curve) were not run. The article now says so.
+- **Estimate files.** `h2.json` comes from the frozen code (sha256 `4fad464b…`) at `497925a`, with the T&E rounding
+  note changed from 0.7 to 0.6 cm at `931fd34` (3 October 2026); `e1.json` and `e4.json` from code `1041a3fb…` at
+  `497925a`; `part2_correction.json` at `497925a`.
