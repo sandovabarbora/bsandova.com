@@ -148,3 +148,8 @@ nights; Taylor Swift's Q3 has 84 entries (was 85), 194 shows (unchanged), longes
 part's tour file has a repeated figure. The Eras Tour's attendance column gives venue, press and capacity figures
 written as sold / available (ten footnoted as rough estimates), not Boxscore's tickets sold; its 100 % is
 capacity-reported.
+
+**9 October 2026 (clarification of today's note).** "Worked with these data since March 2026" means the author has worked
+with these sources continuously since March 2026, in work that led to this study, so the design was written with knowledge of
+the sources, not blind to them. This replaces the reading given earlier today (that its extent was unrecorded, or a
+list of what it covers). The registered text and the dated notes above are unchanged.

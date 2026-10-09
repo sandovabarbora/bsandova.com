@@ -113,3 +113,8 @@ anticipation, no spillover to comparison countries); the accommodation pre-trend
 fails); France's months +2 and +3 fall in the Paris Olympic Games, and France had a second exposure in Lyon in its
 month +1 (Décines-Charpieu, 2–3 June 2024); the United Kingdom, with 15 of the 48 European shows that have attendance figures in Pop, measured's tour file, has no HICP after 2020; three outcomes are
 tested with no correction for multiplicity.
+
+**9 October 2026 (clarification of today's note).** "Worked with these data since March 2026" means the author has worked
+with these sources continuously since March 2026, in work that led to this study, so the design was written with knowledge of
+the sources, not blind to them. This replaces the reading given earlier today (that its extent was unrecorded, or a
+list of what it covers). The registered text and the dated notes above are unchanged.

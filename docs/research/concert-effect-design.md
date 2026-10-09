@@ -123,3 +123,8 @@ None yet.
   requires every pre-trend band from −12 to −2 to include zero; week −10 does not, so the pre-trend check failed.
   The article now reports the summary as a difference relative to countries not yet visited, with no causal reading,
   and the show-week coefficient, which §4 reports without a label, as descriptive.
+
+**9 October 2026 (clarification of today's note).** "Worked with these data since March 2026" means the author has worked
+with these sources continuously since March 2026, in work that led to this study, so the design was written with knowledge of
+the sources, not blind to them. This replaces the reading given earlier today (that its extent was unrecorded, or a
+list of what it covers). The registered text and the dated notes above are unchanged.

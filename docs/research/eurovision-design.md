@@ -237,3 +237,8 @@ the tags were created on 9 October 2026 and are not evidence of the commit dates
 change was made after its result was seen; three were made after the first estimates were printed (the row filter
 for `did2s`, the finals-only and without-2004 checks, the Brexit comparison), as the 3 October estimation note
 records. No number, estimate or label changes.
+
+**9 October 2026 (clarification of today's note).** "Worked with these data since April 2025" means the author has worked
+with these sources continuously since April 2025, in work that led to this study, so the design was written with knowledge of
+the sources, not blind to them. This replaces the reading given earlier today (that its extent was unrecorded, or a
+list of what it covers). The registered text and the dated notes above are unchanged.

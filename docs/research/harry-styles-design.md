@@ -128,3 +128,8 @@ All three are descriptive. None says why a song lasted or why a run sold.
   `pop-harry-styles-results`, created on 9 October 2026; a tag's date is not evidence of the commit's date); on
   main both arrive in the squash commit `1e0a5eb`, so there they are not independently timestamped. The text above
   is left as it stands.
+
+**9 October 2026 (clarification of today's note).** "Worked with these data since March 2026" means the author has worked
+with these sources continuously since March 2026, in work that led to this study, so the design was written with knowledge of
+the sources, not blind to them. This replaces the reading given earlier today (that its extent was unrecorded, or a
+list of what it covers). The registered text and the dated notes above are unchanged.

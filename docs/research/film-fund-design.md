@@ -193,3 +193,8 @@ history of this file at commit `488d7c6`. On main, this design and the results f
 commit `488d7c6`, so the order of design and results is not independently timestamped there; the branch commits
 `3ddd69c` (design) and `5a48067` (results) are self-reported. The wording of 5 October 2026 is kept above; this note
 records what it replaced.
+
+**9 October 2026 (clarification of today's note).** "Worked with these data since July 2024" means the author has worked
+with these sources continuously since July 2024, in work that led to this study, so the design was written with knowledge of
+the sources, not blind to them. This replaces the reading given earlier today (that its extent was unrecorded, or a
+list of what it covers). The registered text and the dated notes above are unchanged.
