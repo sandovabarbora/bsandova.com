@@ -9,7 +9,6 @@ and texts/dst-darkness.html from tools/dst/template.html.
 from __future__ import annotations
 
 import json
-import re
 import shutil
 import sys
 from datetime import timedelta
@@ -28,6 +27,8 @@ from prepare import REGION, change_day  # noqa: E402
 from sun import dark_share  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "tools" / "site"))
+from article_kit import render  # noqa: E402
 R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "dst"
 D = ROOT / "tools" / "data" / "dst"
@@ -297,9 +298,7 @@ def main() -> None:
     fig = figures(res, cells)
     v = values(res, data, cells, fig)
     t = Path(__file__).with_name("template.html").read_text(encoding="utf-8")
-    out = re.sub(r"\{\{(\w+)\}\}", lambda m: str(v[m.group(1)]), t)
-    left = re.findall(r"\{\{\w+\}\}", out)
-    assert not left, left
+    out = render(t, v)
     (ROOT / "texts" / "dst-darkness.html").write_text(out, encoding="utf-8")
     print(f"written texts/dst-darkness.html, {len(v)} values")
 

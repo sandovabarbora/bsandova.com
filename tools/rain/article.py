@@ -10,7 +10,6 @@ tools/rain/template.html.
 from __future__ import annotations
 
 import json
-import re
 from importlib import metadata
 import shutil
 import sys
@@ -23,8 +22,8 @@ from matplotlib.collections import LineCollection
 from matplotlib.colors import Normalize
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
-from article_kit import (GREY, HELD, LIGHT, n, range_chart, range_rows, results_reader, static_range,  # noqa: E402
-                         use_article_style)
+from article_kit import (GREY, HELD, LIGHT, n, range_chart, range_rows, render, results_reader,  # noqa: E402
+                         static_range, use_article_style)
 
 plt = use_article_style()
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -251,9 +250,7 @@ def main() -> None:
     days = figures(x)
     v = values(x, days)
     t = Path(__file__).with_name("template.html").read_text(encoding="utf-8")
-    out = re.sub(r"\{\{(\w+)\}\}", lambda m: str(v[m.group(1)]), t)
-    left = re.findall(r"\{\{\w+\}\}", out)
-    assert not left, left
+    out = render(t, v)
     (ROOT / "texts" / "rain-delays.html").write_text(out, encoding="utf-8")
     print(f"written texts/rain-delays.html, {len(v)} values")
 

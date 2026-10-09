@@ -7,9 +7,12 @@ Reads the results of parts 1–3 in docs/research/; writes texts/running-late.ht
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "tools" / "site"))
+from article_kit import render  # noqa: E402
 NB = " "
 
 
@@ -38,10 +41,7 @@ def main() -> None:
          "spec_lo": f"{100 * min(specs):+.1f}".replace("-", "−"),
          "spec_hi": f"{100 * max(specs):+.1f}".replace("-", "−"),
          "cells_shown": n(ph["roulette"]["cells_shown"])}
-    page = TEMPLATE
-    for k, val in v.items():
-        page = page.replace("{{" + k + "}}", val)
-    assert "{{" not in page
+    page = render(TEMPLATE, v)
     (ROOT / "texts" / "running-late.html").write_text(page, encoding="utf-8")
     print(v)
 
