@@ -105,7 +105,7 @@
   function render(){
     document.getElementById('tabs').innerHTML = D.stations.map(s => `<button type="button" class="${s===station?'on':''}" aria-pressed="${s===station}" data-s="${s}">${NAMES[s]||s}</button>`).join('');
     const last = D.issues[D.issues.length-1]; const L = D.latest[station]; const days = Object.keys(L[MODELS[0]]).sort();
-    document.getElementById('f-days').innerHTML = `${D.issues.length} <small>since ${D.issues[0]} · ${MODELS.length} models · 2 stations</small>`;
+    document.getElementById('f-days').innerHTML = `${D.issues.length} <small>since ${D.issues[0]} · ${MODELS.length} models · ${D.stations.length} stations</small>`;
     const ro = D.recent_obs[station]; const rd = Object.keys(ro).sort(); const y = rd[rd.length-1]; const cy = clim(station, y);
     document.getElementById('f-obs').innerHTML = y ? `${fmt(ro[y].tmax)} / ${fmt(ro[y].tmin)} °C <small>${y} · rain ${fmt(ro[y].precip)} mm · ${NAMES[station]} · climatology ${cy?fmt(cy.tmax_mean):'—'} °C</small>` : '—';
     const S = D.skill[station] || {}; const e1 = S.best_match && S.best_match['1'];

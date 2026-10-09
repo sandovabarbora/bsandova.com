@@ -109,14 +109,14 @@
   const MC = {meteofrance_wave:'#2a78d6', gwam:'#eb6834', ewam:'#1baf7a'};
   const spots = D.spots; let spot = spots[0];
   // facts
-  document.getElementById('f-days').innerHTML = D.issues.length + ' <small>since ' + D.issues[0] + ' · 3 spots × 3 models × 7 days</small>';
+  document.getElementById('f-days').innerHTML = D.issues.length + ' <small>since ' + D.issues[0] + ` · ${spots.length} spots × ${D.models.length} models × ${Math.max(...spots.map(s => D.latest[s].days.length))} days</small>`;
   const c = D.climatology[spot];
   document.getElementById('f-clim').innerHTML = Math.round(100*c.surfable_share) + ' % <small>' + spot + ' · ' + c.from + ' → ' + c.to + '</small>';
   const sk = (D.skill[spot]||{}); const s3 = Object.values(sk).map(m => m['3']).filter(Boolean);
   const n3 = s3.reduce((a,b)=>a+b.n,0); const ok3 = s3.filter(x=>x.mae_swell!=null);
   document.getElementById('f-skill').innerHTML = ok3.length ? ('MAE ' + Math.min(...ok3.map(x=>x.mae_swell)).toFixed(2) + ' m <small>best model, ' + n3 + ' pairs</small>') : ('collecting <small>' + n3 + ' of ' + D.min_pairs + ' pairs</small>');
   const today = D.latest[spot].days[0];
-  document.getElementById('f-call').innerHTML = (today.surfable_votes>=2 ? 'go' : 'not worth the flight') + ' <small>' + today.swell_max_mean + ' m · ' + today.period_mean + ' s · ' + today.surfable_votes + '/3 models</small>';
+  document.getElementById('f-call').innerHTML = (today.surfable_votes>=2 ? 'go' : 'not worth the flight') + ' <small>' + today.swell_max_mean + ' m · ' + today.period_mean + ' s · ' + today.surfable_votes + '/' + D.models.length + ' models</small>';
   // tabs
   const tabs = document.getElementById('spot-tabs');
   tabs.innerHTML = spots.map(s => `<button type="button" data-s="${s}" class="${s===spot?'on':''}" aria-pressed="${s===spot}">${s}</button>`).join('');
@@ -125,7 +125,7 @@
     const L = D.latest[spot];
     document.querySelector('#fc tbody').innerHTML = L.days.map(d => {
       const m = d.models; const v = k => m[k] && m[k].swell_max!=null ? m[k].swell_max.toFixed(2) : '—';
-      return `<tr><td>${d.date}</td><td class="n">${d.lead}</td><td class="n">${v('meteofrance_wave')}</td><td class="n">${v('gwam')}</td><td class="n">${v('ewam')}</td><td class="n dim">${d.swell_max_spread!=null?d.swell_max_spread.toFixed(2):'—'}</td><td class="n">${d.period_mean!=null?d.period_mean.toFixed(1)+' s':'—'}</td><td class="n">${d.wind_mean!=null?Math.round(d.wind_mean)+' km/h':'—'}</td><td class="${d.surfable_votes>=2?'go':'dim'}">${'●'.repeat(d.surfable_votes)}${'○'.repeat(3-d.surfable_votes)}</td></tr>`; }).join('');
+      return `<tr><td>${d.date}</td><td class="n">${d.lead}</td><td class="n">${v('meteofrance_wave')}</td><td class="n">${v('gwam')}</td><td class="n">${v('ewam')}</td><td class="n dim">${d.swell_max_spread!=null?d.swell_max_spread.toFixed(2):'—'}</td><td class="n">${d.period_mean!=null?d.period_mean.toFixed(1)+' s':'—'}</td><td class="n">${d.wind_mean!=null?Math.round(d.wind_mean)+' km/h':'—'}</td><td class="${d.surfable_votes>=2?'go':'dim'}">${'●'.repeat(d.surfable_votes)}${'○'.repeat(D.models.length-d.surfable_votes)}</td></tr>`; }).join('');
     // climatology chart
     const C = D.climatology[spot], W=960, H=260, Lm=44, R=16, T=16, B=44, w = C.weeks;
     const x = i => Lm + i*(W-Lm-R)/Math.max(1,w.length); const bw = (W-Lm-R)/Math.max(1,w.length) - 3;

@@ -102,9 +102,10 @@
   const eco = rows.filter(r => r.pack==='ecommerce');
   const last = months[months.length-1];
   const lastEco = eco.filter(r => month(r.date)===last);
+  const size = pack => rows.filter(r => r.pack===pack).sort((a,b) => a.date.localeCompare(b.date)).pop();  // the newest run's question count and repeats
   document.getElementById('f-months').innerHTML = months.length + ' <small>' + months[0] + ' → ' + last + '</small>';
   document.getElementById('f-models').innerHTML = aliases.length + ' <small>' + [...new Set(rows.map(r=>r.model).filter(m=>m!=='unverified'))].join(' · ') + '</small>';
-  document.getElementById('f-latest').innerHTML = lastEco.map(r => r.alias + ' ' + Math.round(100*r.outcomes.silently_wrong/r.n) + ' %').join(' · ') + ' <small>' + last + ' · 26 questions × 3</small>';
+  document.getElementById('f-latest').innerHTML = lastEco.map(r => r.alias + ' ' + Math.round(100*r.outcomes.silently_wrong/r.n) + ' %').join(' · ') + ' <small>' + last + ` · ${size('ecommerce').n} questions × ${size('ecommerce').repeats}</small>`;
   const cost = rows.filter(r => month(r.date)===last).reduce((s,r)=>s+(r.cost_usd||0),0);
   document.getElementById('f-cost').innerHTML = cost.toFixed(2) + ' USD <small>' + rows.filter(r => month(r.date)===last).length + ' runs</small>';
   // charts
@@ -129,8 +130,8 @@
     document.getElementById(el).innerHTML = s;
     document.getElementById(leg).innerHTML = aliases.filter(a => data.some(d=>d.alias===a)).map(a => `<span><i style="background:${col(a)}"></i>${a} → ${[...new Set(data.filter(d=>d.alias===a).map(d=>d.model))].map(m=>m==='unverified'?'†':m).join(', ')}</span>`).join('') + `<span>${label}</span>`;
   }
-  chart('c1','l1','ecommerce', r => 100*r.outcomes.silently_wrong/r.n, 'silently wrong ÷ 26 · lower is better', 'Share of questions answered silently wrong');
-  chart('c2','l2','abstention', r => 100*r.outcomes.correct/r.n, 'declined ÷ 10 · higher is better', 'Share of questions correctly declined');
+  chart('c1','l1','ecommerce', r => 100*r.outcomes.silently_wrong/r.n, `silently wrong ÷ ${size('ecommerce').n} · lower is better`, 'Share of questions answered silently wrong');
+  chart('c2','l2','abstention', r => 100*r.outcomes.correct/r.n, `declined ÷ ${size('abstention').n} · higher is better`, 'Share of questions correctly declined');
   // table
   const tb = document.querySelector('#runs tbody');
   tb.innerHTML = rows.slice().sort((a,b)=> (b.date+b.pack+b.alias).localeCompare(a.date+a.pack+a.alias)).map(r => `<tr>
