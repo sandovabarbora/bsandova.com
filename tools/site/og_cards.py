@@ -4,13 +4,17 @@ Reads each article's og:title and its film photograph (assets/photo/<name>.jpg),
 and points the article's og:image / twitter:image at it. The front page gets assets/og/home.jpg.
 
 Usage (needs Playwright's Chromium; run from the repo root):
-    uv run --with playwright python tools/site/og_cards.py
+    uv run --with playwright python tools/site/og_cards.py           # only cards whose inputs changed
+    uv run --with playwright python tools/site/og_cards.py --force   # every card
 """
 
 import argparse
+import hashlib
 import html
+import json
+import os
 import re
-import sys
+import tempfile
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
@@ -19,20 +23,8 @@ from shared import ROOT, SITE
 
 OUT = ROOT / "assets" / "og"
 
-TEMPLATE = """<!doctype html><html><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500&family=JetBrains+Mono&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
-<style>
-*{{margin:0;box-sizing:border-box}}
-body{{width:1200px;height:630px;position:relative;overflow:hidden;background:#000;color:#fff;font-family:"Inter Tight",Helvetica,sans-serif}}
-.ph{{position:absolute;inset:0;background:url({photo}) center/cover}}
-.sh{{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.82) 0%,rgba(0,0,0,.35) 50%,rgba(0,0,0,.15) 100%)}}
-.mark{{position:absolute;top:40px;left:56px;font:500 34px/1 "Fraunces",serif;letter-spacing:-.02em}}
-.site{{position:absolute;top:48px;right:56px;font:400 17px "JetBrains Mono",monospace;color:rgba(255,255,255,.8)}}
-.lbl{{position:absolute;left:56px;bottom:{lbl_bottom}px;font:500 20px/1 "Inter Tight";text-transform:uppercase;letter-spacing:.02em;color:rgba(255,255,255,.75)}}
-h1{{position:absolute;left:56px;right:56px;bottom:52px;font:500 {size}px/.95 "Inter Tight";letter-spacing:-.05em}}
-</style></head><body><div class="ph"></div><div class="sh"></div>
-<div class="mark">bŠ</div><div class="site">bsandova.com</div>
-<div class="lbl">{label}</div><h1>{title}</h1></body></html>"""
+TEMPLATE = (Path(__file__).parent / "og_card.html").read_text(encoding="utf-8")
+MANIFEST = OUT / ".manifest.json"  # input hash per card; local only (gitignored), so a rerun skips unchanged cards
 
 
 def fit(title: str) -> tuple[int, int]:
@@ -44,23 +36,22 @@ def fit(title: str) -> tuple[int, int]:
 
 
 def article_info(page: Path) -> tuple[str, str, str] | None:
-    """(og:title, photo file name, kicker) for an article with a film photograph, else None."""
-    s = page.read_text()
+    """(card title, photo file name, kicker) for an article with a film photograph, else None."""
+    s = page.read_text(encoding="utf-8")
     title = re.search(r'<meta property="og:title" content="([^"]+)"', s)
     photo = re.search(r'class="film film-page"[^>]*><div class="shot" style="[^"]*assets/photo/([a-z0-9-]+)\.jpg', s)
-    kicker = re.search(r'<p class="kicker">(.*?)</p>', s, re.S)
     if not (title and photo):
         return None
+    kicker = re.search(r'<p class="kicker">(.*?)</p>', s, re.S)
+    label = re.sub(r"<[^>]+>", "", kicker.group(1)).split("·")[0].strip() if kicker else "bsandova.com"
     h1 = re.search(r"<h1[^>]*>(.*?)</h1>", s, re.S)
     if " — " in title.group(1) and h1:  # a site-suffixed og:title: the headline reads better on a card
-        return html.unescape(re.sub(r"<[^>]+>", "", h1.group(1)).strip()), photo.group(1), \
-            (re.sub(r"<[^>]+>", "", kicker.group(1)).split("·")[0].strip() if kicker else "bsandova.com")
-    label = re.sub(r"<[^>]+>", "", kicker.group(1)).split("·")[0].strip() if kicker else "bsandova.com"
+        return html.unescape(re.sub(r"<[^>]+>", "", h1.group(1)).strip()), photo.group(1), label
     return html.unescape(title.group(1)), photo.group(1), label
 
 
 def set_meta(page: Path, url: str) -> None:
-    old = s = page.read_text()
+    old = s = page.read_text(encoding="utf-8")
     s = re.sub(r'(<meta property="og:image" content=")[^"]+(")', rf"\g<1>{url}\2", s)
     if 'name="twitter:image"' in s:
         s = re.sub(r'(<meta name="twitter:image" content=")[^"]+(")', rf"\g<1>{url}\2", s)
@@ -68,43 +59,81 @@ def set_meta(page: Path, url: str) -> None:
         s = s.replace('<meta name="twitter:card" content="summary_large_image">',
                       f'<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:image" content="{url}">', 1)
     if s != old:
-        page.write_text(s)
+        page.write_text(s, encoding="utf-8")
 
 
-def render(pw_page, title: str, photo: str, label: str, out: Path) -> None:
+def card(title: str, photo: str, label: str) -> tuple[str, str]:
+    """The card's HTML and the hash of everything that decides its pixels."""
     if re.fullmatch(r"(?i)text\s*\d+", label):  # numbered kickers say nothing on a card
         label = ""
     size, lbl_bottom = fit(title)
-    doc = TEMPLATE.format(photo=(ROOT / "assets" / "photo" / f"{photo}.jpg").as_uri(), title=html.escape(title),
-                          label=html.escape(label), size=size, lbl_bottom=lbl_bottom)
-    tmp = OUT / "_card.html"
-    tmp.write_text(doc)
-    pw_page.goto(tmp.as_uri(), wait_until="networkidle")
-    pw_page.wait_for_timeout(300)
-    pw_page.screenshot(path=str(out), type="jpeg", quality=82)
-    tmp.unlink()
+    jpg = ROOT / "assets" / "photo" / f"{photo}.jpg"
+    doc = TEMPLATE.format(photo=jpg.as_uri(), title=html.escape(title), label=html.escape(label), size=size,
+                          lbl_bottom=lbl_bottom)
+    h = hashlib.sha256(Path(__file__).read_bytes())
+    for part in (TEMPLATE, title, label, photo):
+        h.update(part.encode() + b"\0")
+    h.update(jpg.read_bytes())
+    return doc, h.hexdigest()
 
 
-def main(executable: str | None = None) -> None:
+def write_atomic(out: Path, fill) -> None:
+    """fill(path) writes a temporary sibling that replaces `out` in one rename: no half-written card on a crash."""
+    fd, tmp = tempfile.mkstemp(dir=out.parent, prefix=f".{out.stem}.", suffix=out.suffix)
+    os.close(fd)
+    try:
+        fill(tmp)
+        os.replace(tmp, out)
+    finally:
+        Path(tmp).unlink(missing_ok=True)
+
+
+def render(pw_page, doc: str, out: Path) -> None:
+    with tempfile.TemporaryDirectory() as d:
+        src = Path(d) / "card.html"
+        src.write_text(doc, encoding="utf-8")
+        pw_page.goto(src.as_uri(), wait_until="networkidle")
+        pw_page.wait_for_timeout(300)
+        write_atomic(out, lambda tmp: pw_page.screenshot(path=tmp, type="jpeg", quality=82))
+
+
+def main(executable: str | None = None, force: bool = False) -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     pages = sorted((ROOT / "texts").glob("*.html")) + [ROOT / "texts" / "quaesitor" / "index.html"]
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True, executable_path=executable)
-        pw_page = browser.new_page(viewport={"width": 1200, "height": 630})
-        for page in pages:
-            info = article_info(page)
-            if not info:
-                continue
+    cards = []  # (out, page, card info)
+    for page in pages:
+        info = article_info(page)
+        if info:
             slug = "quaesitor" if page.parent.name == "quaesitor" else page.stem
-            render(pw_page, *info, OUT / f"{slug}.jpg")
-            set_meta(page, f"{SITE}/assets/og/{slug}.jpg")
-            print(f"assets/og/{slug}.jpg  {info[0]}")
-        render(pw_page, "Things made out of data", "delayed-red", "Barbora Šandová", OUT / "home.jpg")
-        set_meta(ROOT / "index.html", f"{SITE}/assets/og/home.jpg")
-        browser.close()
+            cards.append((OUT / f"{slug}.jpg", page, info))
+    cards.append((OUT / "home.jpg", ROOT / "index.html", ("Things made out of data", "delayed-red", "Barbora Šandová")))
+    try:
+        seen = {} if force else json.loads(MANIFEST.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        seen = {}
+    todo = []
+    for out, page, info in cards:
+        doc, key = card(*info)
+        if seen.get(out.name) != key or not out.exists():
+            todo.append((out, doc, key, info[0]))
+        set_meta(page, f"{SITE}/assets/og/{out.name}")
+    if todo:
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True, executable_path=executable)
+            pw_page = browser.new_page(viewport={"width": 1200, "height": 630})
+            for out, doc, key, title in todo:
+                render(pw_page, doc, out)
+                seen[out.name] = key
+                print(f"assets/og/{out.name}  {title}")
+            browser.close()
+        write_atomic(MANIFEST, lambda tmp: Path(tmp).write_text(json.dumps(seen, indent=1, sort_keys=True) + "\n",
+                                                                 encoding="utf-8"))
+    print(f"og cards: {len(todo)} rendered, {len(cards) - len(todo)} unchanged")
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description="Render the share card of every article and set its og:image.")
     ap.add_argument("chrome", nargs="?", help="path to a Chrome executable (default: Playwright's own)")
-    main(ap.parse_args().chrome)
+    ap.add_argument("--force", action="store_true", help="render every card, even those whose inputs are unchanged")
+    args = ap.parse_args()
+    main(args.chrome, args.force)
