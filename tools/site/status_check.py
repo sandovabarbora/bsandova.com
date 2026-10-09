@@ -39,7 +39,7 @@ def judge(ok: bool | None, age_h: float | None, cadence_h: float | None) -> str:
 
 def main() -> int:
     now = datetime.now(timezone.utc)
-    jobs = json.loads((ROOT / "status" / "jobs.json").read_text())
+    jobs = json.loads((ROOT / "status" / "jobs.json").read_text(encoding="utf-8"))
     lines, problems = [], 0
     for j in jobs:
         state, detail = "ok", []
@@ -79,7 +79,7 @@ def main() -> int:
         lines.append(f"{state.upper():8s} {j['name']:32s} {' · '.join(detail)}")
     report = "\n".join(lines)
     print(report)
-    Path(os.environ.get("REPORT_PATH", "/dev/null")).write_text(report + "\n")
+    Path(os.environ.get("REPORT_PATH", "/dev/null")).write_text(report + "\n", encoding="utf-8")
     return 1 if problems else 0
 
 

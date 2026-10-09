@@ -37,7 +37,7 @@ def ci(lo: float, hi: float, dp: int = 1) -> str:
 
 def results_reader(prefix: str):
     def read(name: str) -> dict:
-        return json.loads((RESEARCH / f"{prefix}-{name}.json").read_text())
+        return json.loads((RESEARCH / f"{prefix}-{name}.json").read_text(encoding="utf-8"))
     return read
 
 
@@ -51,7 +51,7 @@ def render(template: str, values: dict) -> str:
 def photo_section(slug: str, image: str | None = None) -> str:
     """The page's film still and its credit; `image` names another page's photograph when the page has none of its own."""
     image = image or slug
-    photo = next(p for p in json.loads((ROOT / "assets" / "photo" / "sources.json").read_text()) if p["slug"] == image)
+    photo = next(p for p in json.loads((ROOT / "assets" / "photo" / "sources.json").read_text(encoding="utf-8")) if p["slug"] == image)
     return (f'<section class="film film-page"><div class="shot" style="view-transition-name:ph-{slug};'
             f'--bg:url(../assets/photo/{image}.jpg);--bg-s:url(../assets/photo/{image}-1200.jpg)"></div>'
             f'<p class="credit">Photo: <a href="{photo["page"]}">{photo["author"]}</a> · '

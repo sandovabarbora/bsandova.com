@@ -63,7 +63,7 @@ def palette(folder: Path, held: str | None) -> dict[str, str]:
     if held is None:
         return m
     used = Counter(
-        c.lower() for f in folder.glob("*.svg") for c in HEX.findall(f.read_text()) if c.lower() in ACCENT
+        c.lower() for f in folder.glob("*.svg") for c in HEX.findall(f.read_text(encoding="utf-8")) if c.lower() in ACCENT
     )
     if not used:
         return m
@@ -81,10 +81,10 @@ def recolour(name: str) -> int:
     m = palette(folder, HELD[name])
     n = 0
     for f in sorted(folder.glob("*.svg")):
-        s = f.read_text()
+        s = f.read_text(encoding="utf-8")
         t = HEX.sub(lambda x: m.get(x.group(0).lower(), x.group(0)), s)
         if t != s:
-            f.write_text(t)
+            f.write_text(t, encoding="utf-8")
             n += 1
     return n
 

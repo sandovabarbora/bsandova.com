@@ -31,10 +31,10 @@ def main() -> None:
     targets += ["tools/site/changelog.html", "tools/quaesitor/quaesitor_texts.py", "tools/quaesitor/port_quaesitor.py"]
     for f in targets:
         path = ROOT / f
-        old = path.read_text()
+        old = path.read_text(encoding="utf-8")
         new = rewrite(old)
         if new != old:
-            path.write_text(new)
+            path.write_text(new, encoding="utf-8")
             print(f)
 
 

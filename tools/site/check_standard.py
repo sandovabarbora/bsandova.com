@@ -129,7 +129,7 @@ def main() -> int:
     if home.render(page) != page:
         print("FAIL index.html: differs from docs/works.toml; run tools/site/home.py")
         failed += 1
-    linked = {w["href"].removeprefix("texts/").rstrip("/") for w in home.tomllib.loads(home.CONFIG.read_text())["works"]}
+    linked = {w["href"].removeprefix("texts/").rstrip("/") for w in home.tomllib.loads(home.CONFIG.read_text(encoding="utf-8"))["works"]}
     for p in sorted(TEXTS.glob("*.html")):
         if not p.name.startswith("_") and p.stem not in linked:
             print(f"FAIL {p.relative_to(ROOT)}: not listed in docs/works.toml")

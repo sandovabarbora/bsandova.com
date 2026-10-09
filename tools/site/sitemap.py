@@ -17,7 +17,7 @@ def entries() -> list[tuple[str, str]]:
     for f in tracked_html():
         if f.startswith(SKIP) or f in SKIP:
             continue
-        html = (ROOT / f).read_text()
+        html = (ROOT / f).read_text(encoding="utf-8")
         url = canonical(html)
         if not url or noindex(html):
             continue
