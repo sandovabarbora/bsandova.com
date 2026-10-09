@@ -119,16 +119,19 @@ def figures(res: dict) -> dict:
     pts.sort(key=lambda p: p["x"])
     lo_, hi_ = min(p.get("lo", 0) for p in pts), max(p.get("hi", 0) for p in pts)
     charts["eu"] = {
-        "alt": "Event study of EU accession on the share of points two countries give each other, by contest year "
-               "from the first year both were members; no lasting rise.",
+        "alt": "Share of points two countries give each other, relative to comparison pairs, by contest year from the "
+               "first year both were in the EU; no lasting rise after joining. Before joining, the 95 % intervals exclude "
+               "zero in years " + ", ".join(f"{p['x']:+d} ({p['mid']:+.2f} pp)".replace("-", "−") for p in pts
+                                             if p["x"] < 0 and (p.get("lo", 0) > 0 or p.get("hi", 0) < 0))
+               + ", so the pre-accession trends are not flat.",
         "panels": [{"h": 260, "x": {"kind": "linear", "domain": [-10.5, 10.5], "ticks": list(range(-10, 11, 2)),
                                     "fmt": {"dp": 0}, "label": "contest years from the first year both were in the EU"},
                     "y": {"kind": "linear", "domain": [lo_ * 1.1, hi_ * 1.1], "fmt": {"dp": 1},
-                          "label": "effect on the share of points, percentage points"},
+                          "label": "difference in the share of points, percentage points"},
                     "marks": [{"type": "rule", "axis": "y", "v": 0, "c": "grey"},
                               {"type": "rule", "axis": "x", "v": -0.5, "c": "grey", "dash": "dash", "label": "both in the EU"},
                               {"type": "vrange", "rows": pts, "w": 2}]}],
-        "table": {"cols": ["year", "effect, pp", "95 % interval"],
+        "table": {"cols": ["year", "difference, pp", "95 % interval"],
                   "rows": [[p["x"], round(p["mid"], 3), f"{p.get('lo', 0):.3f} to {p.get('hi', 0):.3f}"] for p in pts]},
         "data": ["results.json"]}
     (A / "charts.json").write_text(json.dumps(charts, ensure_ascii=False))
@@ -253,6 +256,9 @@ def values(res: dict, fig: dict) -> dict:
                   f'<p class="credit">Photo: <a href="{photo["page"]}">{photo["author"]}</a> · {photo["licence"]}, toned</p></section>')
     pre = [e for k, e in res["H3_event"].items() if k.startswith("evm")]
     v |= {"ev_pre_n": str(len(pre)), "ev_pre_excl": str(sum(e["lo"] > 0 or e["hi"] < 0 for e in pre))}
+    excl = sorted(((-int(k[3:]), e) for k, e in res["H3_event"].items() if k.startswith("evm") and (e["lo"] > 0 or e["hi"] < 0)), key=lambda t: t[0])
+    parts = [f"{x} ({100 * e['b']:+.2f} pp)".replace("-", "−") for x, e in excl]
+    v["ev_pre_list"] = ", ".join(parts[:-1]) + " and " + parts[-1] if len(parts) > 1 else "".join(parts)
     h2 = pd.read_parquet(D / "h2.parquet")
     f22 = h2[h2.year == 2022]   # the 2022 final: how many publics gave Ukraine their 12 points
     v |= {"ua_12": str(int((f22.tele == 12).sum())), "ua_n": str(len(f22))}

@@ -71,7 +71,7 @@ def figures(res: dict) -> None:
     label = {"dynamite_as_english": "Dynamite coded as English"}
     checks = [("main model", m1)] + [(label.get(k, k.replace("_", " ")), v) for k, v in res["m1_checks"].items()]
     charts["checks"] = {
-        "alt": "The language effect under each check: every estimate above 1, all intervals above 1.",
+        "alt": "The same-language multiple under each check: every estimate above 1, all intervals above 1.",
         "panels": [{"h": 180, "x": {"kind": "log", "domain": [0.8, 10], "ticks": [1, 2, 3, 5, 8], "fmt": {"dp": 1, "unit": "×"},
                                     "label": "same-language multiple (log scale)"},
                     "y": {"kind": "cat", "domain": [c for c, _ in checks]},
