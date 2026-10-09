@@ -16,6 +16,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
 from article_kit import n  # noqa: E402
+import story_prague  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 A = ROOT / "assets" / "praha"
@@ -211,3 +212,4 @@ charts["spec-curve"] = {
 
 (A / "charts-rings.json").write_text(json.dumps(charts, ensure_ascii=False, indent=1) + "\n")
 print(f"wrote assets/praha/charts-rings.json ({len(charts)} charts)")
+story_prague.story("praha/charts-rings.json")  # the story layer: colours, notes and end labels, as published
