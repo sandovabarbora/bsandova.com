@@ -166,7 +166,7 @@
     svg.addEventListener('keydown', e => {
       const at = order.indexOf(sel);
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { detail(order[(at + 1) % order.length]); e.preventDefault(); }
-      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { detail(order[(at - 1 + order.length) % order.length]); e.preventDefault(); }
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { detail(order[at < 0 ? order.length - 1 : (at - 1 + order.length) % order.length]); e.preventDefault(); }
       else if (e.key === 'Escape') { tip.hidden = true; sel = -1; paths.forEach(p => p.classList.remove('sel')); }
     });
     img.hidden = true;
