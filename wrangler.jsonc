@@ -1,7 +1,7 @@
 {
   // bsandova.com is a static site served as Worker static assets on the zone route below.
   // Deployed by .github/workflows/deploy.yml on every push to main (and by the surf cron's
-  // data commit); `npx wrangler deploy` from a logged-in machine does the same by hand.
+  // data commit); by hand, from a logged-in machine: `./build.sh --in-place && npx wrangler deploy` in a throwaway clone.
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "bsandova-com",
   "compatibility_date": "2026-09-11",

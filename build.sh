@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
-# Stamp asset links with the current git short sha so no cache (GitHub Pages, Cloudflare edge) serves a stale sheet.
-# Portable sed: runs on macOS and in the deploy workflow on Ubuntu.
+# Deploy-only: turns the committed tree into the served one, in place, on the throwaway CI checkout.
+# The stamps (?v=<sha> on every page, the author's name in titles, each article's JSON-LD, feed, sitemap, changelog)
+# never belong in a commit, so this refuses to run in a working tree unless told to (./build.sh --in-place).
+# ?v=<sha> keeps the edge cache (Cloudflare) from serving a stale sheet. Portable sed: macOS and Ubuntu.
 set -euo pipefail
 cd "$(dirname "$0")"
+if [ -z "${CI:-}" ] && [ "${1:-}" != "--in-place" ]; then
+  echo "build.sh stamps every page in place for the deploy; run it in a throwaway copy, or pass --in-place" >&2
+  exit 1
+fi
 # the editorial standard is a gate, not a document: a page that breaks a hard rule stops the deploy
 python3 tools/site/check_standard.py
 v=$(git rev-parse --short HEAD 2>/dev/null || date +%s)

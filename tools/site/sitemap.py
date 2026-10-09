@@ -35,14 +35,20 @@ def entries() -> list[tuple[str, str]]:
     return sorted(set(rows))
 
 
+def write(path: Path, text: str) -> None:
+    if not path.exists() or path.read_text() != text:
+        path.write_text(text)
+
+
 def main() -> None:
     rows = entries()
     urls = "".join(f"  <url><loc>{u}</loc>{f'<lastmod>{d}</lastmod>' if d else ''}</url>\n" for u, d in rows)
-    (ROOT / "sitemap.xml").write_text(
+    write(
+        ROOT / "sitemap.xml",
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         f'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n'
     )
-    (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n")
+    write(ROOT / "robots.txt", f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n")
     print(f"sitemap.xml: {len(rows)} urls")
 
 

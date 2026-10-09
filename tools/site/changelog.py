@@ -34,7 +34,7 @@ AREAS = [  # first match wins; order matters
 ]
 JOB_SUBJECT = re.compile(r"^(surf|watch): \d{4}-\d{2}-\d{2}$")
 # the subject prefix is the author's own word for the area; files only decide when it is missing
-# (build.sh stamps style.css?v= into every text on every commit, so file counts over-vote "texts")
+# (older commits carry build.sh's style.css?v= stamp in every text, so file counts over-vote "texts")
 PREFIX = {
     "texts": "texts", "text": "texts", "engineering": "texts", "contact": "site", "projects": "site", "links": "site",
     "hero": "site", "feat": "site", "fix": "site", "chore": "site", "brand": "brand",
@@ -182,11 +182,16 @@ def render(items: list[dict]) -> str:
 '''
 
 
+def write(path: Path, text: str) -> None:
+    if not path.exists() or path.read_text() != text:
+        path.write_text(text)
+
+
 def main() -> None:
     items = commits()
     OUT.mkdir(exist_ok=True)
-    (OUT / "data.json").write_text(json.dumps(items, indent=1, ensure_ascii=False) + "\n")
-    (OUT / "index.html").write_text(render(items))
+    write(OUT / "data.json", json.dumps(items, indent=1, ensure_ascii=False) + "\n")
+    write(OUT / "index.html", render(items))
     print(f"changelog: {len(items)} commits, {sum(1 for c in items if c['job'])} by jobs")
 
 

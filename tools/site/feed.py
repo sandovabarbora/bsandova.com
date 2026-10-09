@@ -3,7 +3,8 @@
 An article is a page under texts/ with og:type "article" and a canonical URL. Updated is the date of the last commit
 that touched it, so it cannot drift from the site. No published date: most pages were added in one import commit, so
 the first commit says when the site moved, not when the text appeared.
-The JSON-LD block is replaced in place (between the ld markers), so running this twice changes nothing.
+The JSON-LD block is replaced in place (between the ld markers), so running this twice changes nothing. Deploy-only:
+committed pages carry no ld block (its dateModified has no fixed point in a commit); build.sh adds it on the way out.
 
 Usage:
     python3 tools/site/feed.py
@@ -68,9 +69,16 @@ def json_ld(a: dict) -> str:
     return f'\n<!-- ld -->{ALTERNATE}\n<script type="application/ld+json">{body}</script><!-- /ld -->'
 
 
-def stamp(a: dict) -> None:
+def write(path: Path, text: str) -> bool:
+    if path.exists() and path.read_text() == text:
+        return False
+    path.write_text(text)
+    return True
+
+
+def stamp(a: dict) -> bool:
     s = LD.sub("", a["path"].read_text())
-    a["path"].write_text(s.replace("</head>", json_ld(a) + "\n</head>", 1))
+    return write(a["path"], s.replace("</head>", json_ld(a) + "\n</head>", 1))
 
 
 def atom(rows: list[dict]) -> str:
@@ -104,10 +112,9 @@ def atom(rows: list[dict]) -> str:
 
 def main() -> None:
     rows = articles()
-    for a in rows:
-        stamp(a)
-    (ROOT / "feed.xml").write_text(atom(rows))
-    print(f"feed.xml + JSON-LD: {len(rows)} articles")
+    n = sum(stamp(a) for a in rows)
+    write(ROOT / "feed.xml", atom(rows))
+    print(f"feed.xml + JSON-LD: {len(rows)} articles, {n} pages changed")
 
 
 if __name__ == "__main__":
