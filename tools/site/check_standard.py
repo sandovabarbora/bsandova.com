@@ -19,7 +19,8 @@ import re
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+from shared import ROOT, slug as slug_of
+
 TEXTS = ROOT / "texts"
 CAPS = {"research": 3500, "tool": 1500, "note": 900, "hub": 1000}  # maxima only: a short honest page is not padded
 SKIP = {"forecast-verification", "thesis"}  # no word cap: a protocol note, and the thesis summary (about 1 700)
@@ -60,7 +61,7 @@ def check(path: Path) -> tuple[list[str], list[str]]:
     canon = re.search(r'rel="canonical" href="https://bsandova\.com/texts/([^"]*)"', s)
     if not canon or canon.group(1).rstrip("/") not in (rel.as_posix(), rel.as_posix().removesuffix("/index")):
         hard.append("no canonical link to its own /texts/ URL (the article grid in a24.css keys on it)")
-    slug = "-".join(x for x in rel.parts if x != "index") or "index"
+    slug = slug_of(path)
     log = ROOT / "docs" / "changelogs" / f"{slug}.html"
     if f"changelog/#{slug}" not in s:
         hard.append(f"version does not link to its change log (changelog/#{slug})")

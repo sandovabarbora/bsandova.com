@@ -14,8 +14,8 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
-SITE = "https://bsandova.com"
+from shared import ROOT, SITE
+
 GH = "https://api.github.com"
 
 

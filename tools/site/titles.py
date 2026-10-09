@@ -12,9 +12,9 @@ from __future__ import annotations
 import argparse
 import re
 import sys
-from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+from shared import ROOT
+
 NAME = "Barbora Šandová"
 SKIP = {"node_modules", ".venv", "tools", ".git", ".claude"}
 

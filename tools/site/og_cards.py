@@ -15,9 +15,9 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
-ROOT = Path(__file__).resolve().parents[2]
+from shared import ROOT, SITE
+
 OUT = ROOT / "assets" / "og"
-SITE = "https://bsandova.com"
 
 TEMPLATE = """<!doctype html><html><head><meta charset="utf-8">
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500&family=JetBrains+Mono&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">

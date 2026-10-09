@@ -9,9 +9,9 @@ import html
 import sys
 import tomllib
 from datetime import date
-from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+from shared import ROOT
+
 CONFIG, INDEX = ROOT / "docs/works.toml", ROOT / "index.html"
 ARROW = ('<svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3">'
          '<path d="M0 7h54M48 1l6 6-6 6"/></svg>')

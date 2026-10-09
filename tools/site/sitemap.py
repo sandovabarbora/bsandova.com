@@ -7,37 +7,22 @@ Usage:
     python3 tools/site/sitemap.py
 """
 
-import re
-import subprocess
-from pathlib import Path
+from shared import ROOT, SITE, canonical, last_commit, noindex, tracked_html, write
 
-ROOT = Path(__file__).resolve().parents[2]
-SITE = "https://bsandova.com"
 SKIP = ("tools/", "assets/", "404.html")
 
 
-def last_commit_date(path: str) -> str:
-    out = subprocess.run(["git", "log", "-1", "--format=%cs", "--", path], cwd=ROOT, capture_output=True, text=True)
-    return out.stdout.strip()
-
-
 def entries() -> list[tuple[str, str]]:
-    files = subprocess.run(["git", "ls-files", "*.html"], cwd=ROOT, capture_output=True, text=True).stdout.split()
     rows = []
-    for f in files:
+    for f in tracked_html():
         if f.startswith(SKIP) or f in SKIP:
             continue
         html = (ROOT / f).read_text()
-        canon = re.search(r'<link rel="canonical" href="([^"]+)"', html)
-        if not canon or re.search(r'<meta name="robots" content="[^"]*noindex', html):
+        url = canonical(html)
+        if not url or noindex(html):
             continue
-        rows.append((canon.group(1), last_commit_date(f)))
+        rows.append((url, last_commit(f, "%cs")))
     return sorted(set(rows))
-
-
-def write(path: Path, text: str) -> None:
-    if not path.exists() or path.read_text() != text:
-        path.write_text(text)
 
 
 def main() -> None:
