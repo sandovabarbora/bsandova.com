@@ -68,3 +68,14 @@ precipitation alone (no delay read), the season holds only 17 such onsets on 17 
 4–10 s, "not supported" would be unreachable and the pre-trend test powerless, so the study could only end
 inconclusive. It is not run. It becomes feasible with several seasons of stop passes, or with minute-level radar to
 date the rain's arrival per route.
+
+**9 October 2026, follow-ups 3 and 4 not run.** *Darkness by region (3):* from totals already published (about 410
+evening pedestrian crashes in the two weeks after the change, over ten autumns), a regional dose design has far too
+little variation: regions differ by a few minutes of dusk (about 21 minutes from west to east at the extreme). If the
+whole 75 % evening rise were due to the hour of darkness, the effect would be about 0.9 % per minute; the minimum
+detectable slope with these counts is about 2.4 times that, before region × year effects reduce power further, and the
+original study's darkness-dose estimate (H3) was already inconclusive. *Council coalitions (4):* an event study of the
+same councillors around coalition changes would largely repeat Part 1 of *Prague, measured*, which already measures
+within-councillor change against the change in opposition share. Neither is run. None of the three follow-ups recommended first (1, 3, 4) can give an informative answer with the data
+on disk; the others in the table have not been checked for power yet, and the associations already published stay
+described as associations.
