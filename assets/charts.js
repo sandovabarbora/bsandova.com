@@ -2,7 +2,7 @@
    fallback; this script replaces it with a chart drawn from the same numbers, adds a value on hover and on the arrow
    keys, a table view and a link to the data. No dependencies.
 
-   A chart spec: {alt, panels:[{title, h, w, x:axis, y:axis, marks:[...]}], legend:[{label, c, dash, shape}],
+   A chart spec: {alt, panels:[{title, h, w, x:axis, y:axis, marks:[...]}], legend:[{label, c, dash, shape: d|box|o|dot}],
    table:{cols, rows}, data:[paths]}. An axis: {kind:'linear'|'log'|'cat', domain, ticks, fmt, label}. A fmt:
    {dp, unit, pre, sign}. Marks: line, area, dots, hbar, vbar, range, vrange, arrow, cell, rule, span, text (see drawPanel).
    spec.layout: 'rows' stacks the panels vertically at every width. An axis with labels:false draws no category names.
@@ -359,7 +359,7 @@
     svg.addEventListener('keydown', e => {
       if (!targets.length) return;
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { show((cur + 1) % targets.length); e.preventDefault(); }
-      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { show((cur - 1 + targets.length) % targets.length); e.preventDefault(); }
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { show(cur < 0 ? targets.length - 1 : (cur - 1 + targets.length) % targets.length); e.preventDefault(); }
       else if (e.key === 'Escape') show(-1);
     });
     svg.addEventListener('blur', () => show(-1));
@@ -417,10 +417,10 @@
       const lg = document.createElement('ul');
       lg.className = 'ch-legend';
       for (const l of spec.legend) {
-        const li = document.createElement('li');
-        if (l.shape === 'd' || l.shape === 'box' || l.shape === 'o') {
+        const li = document.createElement('li'), shape = l.shape === 'dot' ? 'o' : l.shape;
+        if (shape === 'd' || shape === 'box' || shape === 'o') {
           const i = li.appendChild(document.createElement('i'));
-          i.className = l.shape; i.style.background = col(l.c); if (l.shape === 'box') i.style.opacity = l.o ?? 0.3;
+          i.className = shape; i.style.background = col(l.c); if (shape === 'box') i.style.opacity = l.o ?? 0.3;
         } else {
           const s = el('svg', {width: 22, height: 8, 'aria-hidden': 'true'});
           el('line', {x1: 1, x2: 21, y1: 4, y2: 4, stroke: col(l.c), 'stroke-width': 2, 'stroke-dasharray': DASH[l.dash]}, s);
