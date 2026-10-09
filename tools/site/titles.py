@@ -1,7 +1,7 @@
 """Every page title ends with the author's name, so a search for the name finds the pages and not only the repository.
 
-Idempotent: a title that already holds the name is left alone. Run by build.sh before deploy; og:title is not changed,
-so share cards and the feed keep the plain title.
+Idempotent: a title that already holds the name is left alone. Deploy-only: committed pages keep the plain title and
+build.sh adds the name on the way out; og:title is not changed, so share cards and the feed keep the plain title.
 
     python3 tools/site/titles.py
 """

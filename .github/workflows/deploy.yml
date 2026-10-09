@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }   # the changelog is generated from the full git log
-      - run: ./build.sh   # stamp style.css?v=<sha> so the edge cache cannot serve a stale sheet
+      - run: ./build.sh   # deploy-only stamps (?v=<sha>, titles, JSON-LD, feed) on this throwaway checkout
       - uses: cloudflare/wrangler-action@v3
         with:
           wranglerVersion: "4.131.2"   # assets-only workers need wrangler 4

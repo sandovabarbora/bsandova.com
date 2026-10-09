@@ -54,8 +54,14 @@ dated in the article's change log.
 ## Build and deploy
 
 The site is static and served as Cloudflare Workers static assets (`wrangler.jsonc`). Every push to `main` deploys
-through `.github/workflows/deploy.yml`, which runs `build.sh` first. That script stamps asset versions and
-regenerates the sitemap, the feed and the changelog.
+through `.github/workflows/deploy.yml`, which runs `build.sh` first. That script stamps asset versions, adds the
+author's name to page titles and each article's JSON-LD, recolours any dark-theme figure, and regenerates the sitemap,
+the feed and the changelog.
+
+`build.sh` is deploy-only: it rewrites every page in place, and none of that belongs in a commit. Committed pages are
+what the authors and generators write; it refuses to run outside CI unless given `--in-place`, so run it only in a
+throwaway copy. The other steps (`titles.py`, `feed.py`, `paper_figures.py`, `changelog.py`, `sitemap.py`) write a file
+only when its content changes.
 
 Local preview:
 

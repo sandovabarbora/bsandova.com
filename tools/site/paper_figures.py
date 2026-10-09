@@ -4,7 +4,8 @@ The figure generators (tools/figures/*_figures.py and the atlas builds) draw for
 the A24 layer: paper background, ink text, light grid, and the article's main accent replaced by the colour its
 photograph holds (police-car blue for parking, tram red for Delayed, ...). Other accents map to the validated light
 categorical palette, or to ink when they would clash with the held colour. The mapped colours are not keys of the
-map, so running this twice changes nothing; build.sh runs it after every generator.
+map, so running this twice changes nothing. Run it after a generator so the committed SVG is already on paper;
+build.sh runs it again before deploy, which then changes nothing.
 
 Usage:
     python3 tools/site/paper_figures.py

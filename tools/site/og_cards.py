@@ -59,14 +59,15 @@ def article_info(page: Path) -> tuple[str, str, str] | None:
 
 
 def set_meta(page: Path, url: str) -> None:
-    s = page.read_text()
+    old = s = page.read_text()
     s = re.sub(r'(<meta property="og:image" content=")[^"]+(")', rf"\g<1>{url}\2", s)
     if 'name="twitter:image"' in s:
         s = re.sub(r'(<meta name="twitter:image" content=")[^"]+(")', rf"\g<1>{url}\2", s)
     else:
         s = s.replace('<meta name="twitter:card" content="summary_large_image">',
                       f'<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:image" content="{url}">', 1)
-    page.write_text(s)
+    if s != old:
+        page.write_text(s)
 
 
 def render(pw_page, title: str, photo: str, label: str, out: Path) -> None:
