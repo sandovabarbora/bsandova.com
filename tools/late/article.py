@@ -3,7 +3,7 @@
 Reads docs/research/delay-origins-{results,screen,describe}.json, tools/data/late/segments.parquet and the PID GTFS stops
 (tools/data/praha2/gtfs/); writes assets/late/ (charts.json, map.json, 01-map.svg, 02-top.svg, 03-stops.svg,
 04-checks.svg, results.json, segments.json) and texts/delay-origins.html from tools/late/template.html. Chart
-helpers are tools/site/article_kit.py.
+helpers are tools/site/article_kit.py; stops and map lines are tools/site/tram_geo.py.
 
     uv run --with matplotlib --with pandas --with pyarrow --with duckdb python tools/late/article.py
 """
@@ -15,38 +15,22 @@ import shutil
 import sys
 from pathlib import Path
 
-import duckdb
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
 from article_kit import HELD, n, photo_section, render, results_reader, use_article_style  # noqa: E402
+from tram_geo import offset_line, tram_stops  # noqa: E402
 
 plt = use_article_style()
 ROOT = Path(__file__).resolve().parents[2]
 R, A, D = ROOT / "docs" / "research", ROOT / "assets" / "late", ROOT / "tools" / "data" / "late"
-GTFS = ROOT / "tools" / "data" / "praha2" / "gtfs"
 PROD, REC, GREY = "#c0503f", "#2a7f86", "#666666"  # coral: delay made; teal: delay made up
 PEAK, MIDDAY = set(range(7, 9)) | set(range(15, 18)), set(range(10, 14))
-OFFSET = 0.00011  # degrees: the two directions of a segment drawn side by side, each on its right
 
 
 def load() -> dict:
     j = results_reader("delay-origins")
     return {"res": j("results"), "scr": j("screen"), "desc": j("describe")}
-
-
-def tram_stops() -> pd.DataFrame:
-    """Mean position of the platforms of each stop name that trams serve, from the PID GTFS."""
-    con = duckdb.connect()
-    return con.execute(f"""
-        WITH tram AS (SELECT DISTINCT st.stop_id
-                      FROM read_csv('{GTFS}/stop_times.txt', all_varchar = true) st
-                      JOIN read_csv('{GTFS}/trips.txt', all_varchar = true) t USING (trip_id)
-                      JOIN read_csv('{GTFS}/routes.txt', all_varchar = true) r USING (route_id)
-                      WHERE r.route_type = '0')
-        SELECT s.stop_name AS name, avg(CAST(s.stop_lat AS DOUBLE)) AS lat, avg(CAST(s.stop_lon AS DOUBLE)) AS lon
-        FROM read_csv('{GTFS}/stops.txt', all_varchar = true) s JOIN tram USING (stop_id)
-        GROUP BY 1""").df()
 
 
 def segment_table() -> pd.DataFrame:
@@ -66,15 +50,6 @@ def segment_table() -> pd.DataFrame:
         else:
             t = t.join(g[[k]], how="left")
     return t.reset_index()
-
-
-def offset_line(a: tuple, b: tuple) -> list:
-    (x0, y0), (x1, y1) = a, b
-    k = math.cos(math.radians(50.08))
-    dx, dy = (x1 - x0) * k, y1 - y0
-    L = math.hypot(dx, dy) or 1
-    ox, oy = dy / L * OFFSET / k, -dx / L * OFFSET  # to the right of the direction of travel
-    return [[round(x0 + ox, 5), round(y0 + oy, 5)], [round(x1 + ox, 5), round(y1 + oy, 5)]]
 
 
 def map_spec(t: pd.DataFrame, xy: dict) -> tuple[dict, int]:
