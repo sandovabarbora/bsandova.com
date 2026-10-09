@@ -7,6 +7,7 @@ Usage (needs Playwright's Chromium; run from the repo root):
     uv run --with playwright python tools/site/og_cards.py
 """
 
+import argparse
 import html
 import re
 import sys
@@ -103,4 +104,6 @@ def main(executable: str | None = None) -> None:
 
 
 if __name__ == "__main__":
-    main(sys.argv[1] if len(sys.argv) > 1 else None)
+    ap = argparse.ArgumentParser(description="Render the share card of every article and set its og:image.")
+    ap.add_argument("chrome", nargs="?", help="path to a Chrome executable (default: Playwright's own)")
+    main(ap.parse_args().chrome)
