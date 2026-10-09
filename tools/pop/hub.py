@@ -20,10 +20,10 @@ NB = " "
 PARTS = [  # slug, part number, title on the part's page, what the part is about
     ("harry-styles", 1, "Harry Styles, measured: how long a hit lasts, where, and what a ticket costs",
      "Spotify charts 2017–2026 · two tours, 2017–2023"),
-    ("taylor-swift", 2, "Taylor Swift, measured: a catalogue that sells out everything",
+    ("taylor-swift", 2, "Taylor Swift, measured: chart runs, tour attendance and prices around the Eras Tour",
      "Spotify charts 2017–2026 · two stadium tours · Europe's prices in 2024"),
-    ("bts", 3, "BTS, measured: a catalogue, not a hit", "Spotify charts 2017–2026 · three tours, 2018–2026"),
-    ("bad-bunny", 4, "Bad Bunny, measured: a long hit, everywhere at once", "Spotify charts 2017–2026 · three tours, 2019–2026"),
+    ("bts", 3, "BTS, measured: Dynamite, and streams spread over hundreds of songs", "Spotify charts 2017–2026 · three tours, 2018–2026"),
+    ("bad-bunny", 4, "Bad Bunny, measured: a long-running hit, and tickets in days of income", "Spotify charts 2017–2026 · five tours, 2019–2026"),
     ("billie-eilish", 5, "Billie Eilish, measured: two long hits, five years apart", "Spotify charts 2017–2026 · three tours, 2019–2025"),
 ]
 NAME = {"harry-styles": "Harry Styles", "taylor-swift": "Taylor Swift", "bts": "BTS", "bad-bunny": "Bad Bunny",
@@ -53,6 +53,21 @@ COUNTRY = country_names()
 LIST_CAP = 500  # the kworb artist page lists at most this many songs (part 2, Taylor Swift)
 
 
+def page_title(slug: str, fallback: str) -> str:
+    """The part's current title, read from its built page, so a retitled part is listed under its new title."""
+    page = ROOT / "texts" / f"pop-{slug}.html"
+    m = re.search(r'<meta property="og:title" content="([^"]*)">', page.read_text(encoding="utf-8")) if page.exists() else None
+    return m.group(1).replace("&#39;", "'") if m else fallback
+
+
+def eras_entries() -> int:
+    """Taylor Swift's Q3 entries from the Eras Tour, whose figures on Wikipedia are reported capacity or attendance."""
+    import csv
+    with open(R / "taylor-swift-tour.csv", encoding="utf-8") as f:
+        return sum(1 for t in csv.DictReader(f) if t["tour"] == "The Eras Tour"
+                   and t.get("multi_venue") != "True" and t.get("hybrid") != "True")
+
+
 def part(slug: str) -> dict:
     r = json.loads((R / f"{slug}-results.json").read_text())
     focal = next(p for p in r["q1"]["own"] if p["focal"])
@@ -74,10 +89,13 @@ def summary(p: dict) -> str:
          f"{pct(p['longer'], 1)} of {'number ones' if p['peak'] == 1 else 'songs that also peaked at two'} since 2017 lasted longer "
          f"(95 % CI {pct(p['lo'], 1)} to {pct(p['hi'], 1)}). It outlasted the local median number one in {p['above']} of "
          f"{p['countries']} national charts; in Czechia it lasted {n(p['cz_ratio'], 2)} times as long, {p['cz_rank']}th of {p['ranked']}. "
-         f"{pct(p['sold_out'])} of {p['entries']} Boxscore entries sold out")
+         + (f"{pct(p['sold_out'])} of {p['entries']} tour entries were reported sold out ({eras_entries()} of them Eras Tour figures, "
+            "reported capacity or attendance rather than Boxscore tickets sold)" if p["slug"] == "taylor-swift"
+            else f"{pct(p['sold_out'])} of {p['entries']} Boxscore entries sold out"))
     if p["top_ticket"]:
         s += (f", and the dearest ticket relative to income was in {p['top_ticket']['country']}, "
-              f"{n(p['top_ticket']['days_of_income'], 1)} days of GDP per capita.")
+              f"{n(p['top_ticket']['days_of_income'], 1)} days of GDP per capita"
+              + (" (Reputation Stadium Tour only: the Eras Tour has no gross on Wikipedia)." if p["slug"] == "taylor-swift" else "."))
     else:
         s += "."
     return s
@@ -94,6 +112,7 @@ def main() -> None:
     head = re.sub(r'<meta property="og:title" content="[^"]*">', '<meta property="og:title" content="Pop, measured">', head)
     head = re.sub(r'<meta property="og:description" content="[^"]*">', '<meta property="og:description" content="Harry Styles, Taylor Swift, BTS, Bad Bunny and Billie Eilish, measured the same way: how long a hit lasts, where, whether it is one song or many, how many nights a city fills and what a ticket costs.">', head)
     head = head.replace("prague-measured", "pop-measured").replace("assets/og/prague-council.jpg", "assets/og/pop-harry-styles.jpg")
+    PARTS[:] = [(slug, k, page_title(slug, title), what) for slug, k, title, what in PARTS]
     ps = [part(s) for s, *_ in PARTS]
     items = []
     for (slug, k, title, what), p in zip(PARTS, ps):
@@ -110,23 +129,26 @@ def main() -> None:
         f"<td>{', '.join(p['top5'])}</td>"
         f"<td class=\"v\">{n(p['cz_ratio'], 2)}× · {p['cz_rank']}/{p['ranked']}</td><td class=\"v\">{pct(p['top_share'], 1)} · {p['gini']:.2f} · {p['songs']}{'*' if p['songs'] >= LIST_CAP else ''}</td>"
         f"<td class=\"v\">{pct(p['sold_out'])}</td><td class=\"v\">"
-        + (f"{n(p['top_ticket']['days_of_income'], 1)} · {p['top_ticket']['country']}" if p["top_ticket"] else "–") + "</td></tr>"
+        + (f"{n(p['top_ticket']['days_of_income'], 1)} · {p['top_ticket']['country']}{' (Reputation only)' if p['slug'] == 'taylor-swift' else ''}" if p["top_ticket"] else "–") + "</td></tr>"
         for (slug, k, *_), p in zip(PARTS, ps))
     english = [p for p in ps if p["slug"] in ("harry-styles", "taylor-swift", "billie-eilish")]
     other = [p for p in ps if p not in english]
     so_lo, so_hi = min(p["sold_out"] for p in ps), max(p["sold_out"] for p in ps)
     t6 = json.loads((R / "pop-measured-part6-results.json").read_text())
     m1, m2, m1b, wsc = t6["m1"], t6["m2"], t6["m1b"], t6["m1_checks"]["without_still_charting"]
+    dyn = t6["m1_checks"]["dynamite_as_english"]
     zero = [NAME[a] for a, e in t6["m2c"].items() if e["lo"] < 0 < e["hi"]]
     wide = ", ".join(zero[:-1]) + " and " + zero[-1] if len(zero) > 1 else "".join(zero)
     items.append(f'''  <li>
     <a class="still" href="pop-together" aria-label="Part 6, the five together"><span class="shot" style="view-transition-name:ph-pop-together;--bg:url(../assets/photo/pop-together.jpg);--bg-s:url(../assets/photo/pop-together-1200.jpg)"></span></a>
     <div>
       <p class="n">Part 6 · all five artists · two exploratory models</p>
-      <h2><a href="pop-together">Hits charted longer where the language matched, and tickets barely followed income</a></h2>
-      <p>Across the {m1["n"]} artist–country pairs where the focal song charted (pairs where it never charted are left out), comparing each country with itself across artists and each artist with itself across countries, a song lasted {1 + m1["pct"]:.1f} times as long in a country speaking its language (95 % CI {1 + m1["pct_lo"]:.1f}–{1 + m1["pct_hi"]:.1f}): about {exp(m1b["en"]["coef"]):.1f} times for English songs ({m1b["en"]["pairs"]} matched pairs; {exp(m1b["en"]["lo"]):.2f}–{exp(m1b["en"]["hi"]):.2f}) and {exp(m1b["es"]["coef"]):.1f} for Spanish ones ({m1b["es"]["pairs"]}; {exp(m1b["es"]["lo"]):.1f}–{exp(m1b["es"]["hi"]):.1f}), and {1 + wsc["pct"]:.1f} times ({1 + wsc["pct_lo"]:.1f}–{1 + wsc["pct_hi"]:.1f}) without the songs still charting. Across {m2["n"]} tour entries, the average ticket rose with the host country's income at an elasticity of {m2["coef"]:.2f} ({m2["lo"]:.2f} to {m2["hi"]:.2f}; 0 means one price everywhere, 1 prices in proportion to income), {t6["m2_drop_artist"]["bad-bunny"]:.2f} without Bad Bunny, and with intervals that include zero for {wide} alone; so a show cost more days of income in poorer countries. Exploratory: models fixed before estimation, inputs seen in parts 1–5.</p>
+      <h2><a href="pop-together">{page_title("together", "Pop, measured, together").split(": ", 1)[-1][:1].upper() + page_title("together", "Pop, measured, together").split(": ", 1)[-1][1:]}</a></h2>
+      <p>Across the {m1["n"]} artist–country pairs where the focal song charted (pairs where it never charted are left out), net of the country and the song, a song lasted {1 + m1["pct"]:.1f} times as long in a country speaking the language of its artist's market (95 % CI {1 + m1["pct_lo"]:.1f}–{1 + m1["pct_hi"]:.1f}), and {1 + dyn["pct"]:.1f} times ({1 + dyn["pct_lo"]:.1f}–{1 + dyn["pct_hi"]:.1f}) with BTS's <i>Dynamite</i> coded as English, the language it is sung in: about {exp(m1b["en"]["coef"]):.1f} times for English songs ({m1b["en"]["pairs"]} matched pairs; {exp(m1b["en"]["lo"]):.2f}–{exp(m1b["en"]["hi"]):.2f}) and {exp(m1b["es"]["coef"]):.1f} for Spanish ones ({m1b["es"]["pairs"]}; {exp(m1b["es"]["lo"]):.1f}–{exp(m1b["es"]["hi"]):.1f}), and {1 + wsc["pct"]:.1f} times ({1 + wsc["pct_lo"]:.1f}–{1 + wsc["pct_hi"]:.1f}) without the songs still charting. These are associations: song age, promotion and diaspora audiences are not separated from language, all Spanish pairs are Bad Bunny's and the one Korean pair is BTS's. Across {m2["n"]} tour entries, within a tour, the average ticket was {m2["coef"]:.2f} % higher in countries with 1 % higher GDP per capita, an elasticity of {m2["coef"]:.2f} ({m2["lo"]:.2f} to {m2["hi"]:.2f}; 0 means one price everywhere, 1 prices in proportion to income), {t6["m2_drop_artist"]["bad-bunny"]:.2f} without Bad Bunny, and with intervals that include zero for {wide} alone; so a show cost more days of income in poorer countries. Exploratory: models fixed before estimation, inputs seen in parts 1–5.</p>
     </div>
   </li>''')
+    ce_r = json.loads((R / "concert-effect-results.json").read_text())["y1_share"]
+    ce, ce_label = ce_r["summary"], ce_r["label"]
     maps = "".join(f'<figure class="mini" data-pop="map" data-src="../assets/pop/{slug}/map.svg"><a href="pop-{slug}"><img src="../assets/pop/{slug}/map.svg" alt="World map for {NAME[slug]}: where the focal song lasted longer than local number ones, and ticket prices in days of income." loading="lazy"></a><figcaption>{NAME[slug]}</figcaption></figure>'
                    for slug, *_ in PARTS)
     body = f'''<body>
@@ -146,16 +168,16 @@ def main() -> None:
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>Every part answers the same questions from one data collection, under analysis plans written before the analysis was run (the author had worked with the data since March 2026); two data definitions and one extra collection were added after the first results.</li>
+    <li>Every part answers the same questions from one data collection, under analysis plans committed before the analysis was run. After the first results came two data definitions (leg totals and entries with online viewers), one extra collection (Taylor Swift's peak-two reference set), a third BTS leg total flagged by hand (Taoyuan, 2018), two Bad Bunny tours re-collected from the right pages and his part recomputed, and <i>Closer</i> taken out of the number-one reference set.</li>
     <li>Harry Styles's top song carries {pct(ps[0]['top_share'])} of his Spotify streams, the most of the five (the others {n(100 * min(p['top_share'] for p in ps[1:]))}–{pct(max(p['top_share'] for p in ps[1:]))}); by the Gini, Taylor Swift's and BTS's listening is the most unequal across their longer song lists.</li>
     <li>In Czechia, the focal songs of Harry Styles, Taylor Swift and Billie Eilish sit near the middle of the world ranking and those of BTS (<i>Dynamite</i>, sung in English) and Bad Bunny well below it; with five songs this is a pattern, not a test.</li>
-    <li>For every artist, {n(100 * so_lo)}–{pct(so_hi)} of Boxscore entries sold at least 99.5 % of their tickets, so the data cannot say where demand ends. In the exploratory part 6, ticket prices rose only a little with income, so a ticket cost more days of income in poorer countries.</li>
+    <li>For every artist, {n(100 * so_lo)}–{pct(so_hi)} of tour entries sold at least 99.5 % of their tickets (Taylor Swift's Eras Tour figures are reported capacity, not Boxscore sales), so the data cannot say where demand ends. In the exploratory part 6, average tickets were only a little higher in richer host countries, so a ticket cost more days of income in poorer ones.</li>
     <li>All of it rests on Spotify's charts (no Korean services, no YouTube) and the Boxscore figures on Wikipedia, for five artists chosen for the series rather than sampled; no pattern across artists is tested.</li>
   </ul>
 </details>
 
 <dl class="meta">
-  <div><dt>published</dt><dd>2 October 2026 · updated 6 October 2026 · <a href="../changelog/#pop-measured">version 3</a></dd></div>
+  <div><dt>published</dt><dd>2 October 2026 · updated 9 October 2026 · <a href="../changelog/#pop-measured">version 4</a></dd></div>
   <div><dt>work since</dt><dd>March 2026</dd></div>
 </dl>
 <details class="meta-more">
@@ -164,7 +186,7 @@ def main() -> None:
   <div><dt>status</dt><dd>hub, index of six research articles and one related study</dd></div>
   <div><dt>data</dt><dd>kworb.net Spotify chart totals, Wikipedia tour articles (Boxscore), World Bank GDP per capita, Eurostat HICP; hashes in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/pop-measured-files.sha256">pop-measured-files.sha256</a></dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/pop">tools/pop/</a>, the same scripts for every part; this page is built by <code>tools/pop/hub.py</code></dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Pop, measured</i>. bsandova.com/texts/pop-measured, version 3.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Pop, measured</i>. bsandova.com/texts/pop-measured, version 4.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text, figures and data CC BY 4.0</dd></div>
 </dl>
 </details>
@@ -179,7 +201,7 @@ def main() -> None:
 
 <section id="maps">
 <h2>Five maps</h2>
-<p>Each part's map shades the countries by how many times as long the artist's biggest song lasted in the national chart as the local median number one, blue where longer and grey where shorter, with circles for the average ticket in days of income. Side by side, they show where each artist's audience is: much of the world for Harry Styles and Billie Eilish, the English-speaking world and Asia more than Latin America for Taylor Swift, East and South-East Asia for BTS, and Latin America, Spain and the United States for Bad Bunny.</p>
+<p>Each part's map shades the countries by how many times as long the artist's biggest song lasted in the national chart as the local median number one, blue where longer and grey where shorter, with circles for the average ticket in days of income. Side by side, they show where the song lasted longer than local number ones: much of the world for Harry Styles and Billie Eilish, the English-speaking world and Asia more than Latin America for Taylor Swift, East and South-East Asia for BTS, and Latin America, Spain and the United States for Bad Bunny.</p>
 <div class="minis">{maps}</div>
 </section>
 
@@ -195,17 +217,17 @@ def main() -> None:
 </table>
 </div>
 <p>* The artist page lists 500 songs and Taylor Swift has more, so her list may stop short of her catalogue. Every list counts versions, remixes and re-recordings as separate songs, as kworb lists them.</p>
-<p>Three patterns stand out, none of them tested. Harry Styles's listening leans most on one song ({pct(ps[0]['top_share'], 1)} of his streams), while by the Gini Taylor Swift's ({ps[1]['gini']:.2f}) and BTS's ({ps[2]['gini']:.2f}) are the most unequal, across lists six to ten times as long as his. In Czechia, the three English-language artists' focal songs sit near the middle of the ranking ({", ".join(f"{p['cz_rank']}th of {p['ranked']}" for p in english)}), BTS's and Bad Bunny's well below it ({", ".join(f"{p['cz_rank']}th of {p['ranked']}" for p in other)}); since <i>Dynamite</i> is sung in English, the split is by artist rather than by the song's language, and five songs cannot say why. And for every artist nearly every Boxscore entry sold out, so the series cannot say where demand ends; what it can say, from the exploratory part 6, is that prices rose only a little with income, and for four of the five artists the dearest ticket in days of income was in South-East Asia or Latin America.</p>
+<p>Three patterns stand out, none of them tested. Harry Styles's listening leans most on one song ({pct(ps[0]['top_share'], 1)} of his streams), while by the Gini Taylor Swift's ({ps[1]['gini']:.2f}) and BTS's ({ps[2]['gini']:.2f}) are the most unequal, across lists six to ten times as long as his. In Czechia, the focal songs of Harry Styles, Taylor Swift and Billie Eilish sit near the middle of the ranking ({", ".join(f"{p['cz_rank']}th of {p['ranked']}" for p in english)}), BTS's and Bad Bunny's well below it ({", ".join(f"{p['cz_rank']}th of {p['ranked']}" for p in other)}). <i>Dynamite</i> is sung in English, and with five songs the artist, the language, the release date and the artist's home market cannot be told apart, so the split has no reading beyond the five pairs. And for every artist nearly every tour entry sold out, so the series cannot say where demand ends; what it can say, from the exploratory part 6, is that average tickets were only a little higher in richer host countries, and for four of the five artists the dearest ticket in days of income was in South-East Asia or Latin America.</p>
 </section>
 
 <section id="related">
 <h2>Related</h2>
-<p><a href="concert-effect">Does a concert move the charts?</a>: a pre-specified difference-in-differences that uses Spotify's daily charts to ask whether Harry Styles's first tour raised his share of each country's chart after he played there. In the show week his chart share rose by about three quarters against countries not yet visited, and within three weeks the rise was gone; the registered five-week effect is inconclusive. It is a separate study, not a part of the series.</p>
+<p><a href="concert-effect">Did Harry Styles's chart share rise around his first shows? Visited against not-yet-visited countries, 2017–2018</a>: a pre-specified difference-in-differences that uses Spotify's daily charts to compare Harry Styles's share of each country's chart around his first shows there with countries not yet visited. The registered five-week difference is +{n(ce["att"] * 100, 3)} pp (95 % CI {n(ce["lo"] * 100, 3)} to {n(ce["hi"] * 100, 3)}), {ce_label}, and the pre-trend check failed, so it carries no causal reading; the show-week difference, +{ce_r['event'][[e['e'] for e in ce_r['event']].index(0)]['att'] * 100:.3f} pp, was not registered and is descriptive. It is a separate study, not a part of the series.</p>
 </section>
 
 <section>
 <h2>How the series was registered</h2>
-<p>Part 1's analysis plan was committed first, on 1 October 2026, before this analysis was run (<code>cecad1c</code>). The plan for parts 2–5 and two questions added to all five followed the same evening, also before the analysis was run (<code>e890c27</code>, <code>12417ae</code>). The author had worked with these data since March 2026; the plans set the analysis in advance; the author already knew the data. The data were collected once, for all parts (with one later addition, below), and each part's results were computed from the same files with the same code. Part 2's study of prices during the Eras Tour has its own analysis plan, committed before that analysis was run (<code>f5d702c</code>). Three changes were made after the first results of parts 2–5 had been seen, and are dated in the series design and in each part: two data definitions (attendance cells that span several venues, and entries that mix online viewers with the hall, both left out of the sell-out share) and one extra collection (the track pages of songs that peaked at two, Taylor Swift's reference set). Part 6 has its own design, committed before either model was estimated but after its inputs had been seen, so it is exploratory (<code>4fe0484</code>). Commit times are self-reported; there was no external review.</p>
+<p>Part 1: registered analysis plan, design committed at <code>cecad1c</code> on 1 October 2026, before the results commit <code>ebf819f</code>; commit times are self-reported, and the branch was pushed after the analysis. On <code>main</code> both arrived in one squash commit, <code>1e0a5eb</code>, so there they are not independently timestamped. Parts 2–5: the series design and two questions added to all five were committed at <code>e890c27</code> and <code>12417ae</code> on 1 October 2026, before the results commit <code>8fbadd3</code> of 2 October; commit times are self-reported, and the branch was pushed after the analysis. On <code>main</code> the design arrived in <code>1e0a5eb</code> (2 October, 00:33) and the results in <code>942e304</code> (2 October, 10:41). Part 2's study of prices during the Eras Tour: design committed at <code>f5d702c</code> on 2 October 2026, before the results commit <code>4401fda</code> two minutes later; on <code>main</code> both are in <code>942e304</code>, not independently timestamped. Part 6: design committed at <code>4fe0484</code> on 2 October 2026, before the results commit <code>85b798f</code>, after its inputs had been seen, so it is exploratory; on <code>main</code> both are in <code>3b9f827</code>, not independently timestamped. The original branch commits are tagged <code>pop-&lt;part&gt;-design</code> and <code>pop-&lt;part&gt;-results</code> (tags set on 9 October 2026). "Work since March 2026" dates the author's work with these sources (kworb.net's Spotify chart pages and Wikipedia's tour pages), which the repository does not record (private; not verifiable); the collection analysed was made on 1 October 2026, and what had been seen of it before each design is listed in that design. The data were collected once, for all parts (with one later addition, below), and each part's results were computed from the same files with the same code. Changes made after the first results had been seen are dated in the series design and in each part's change log: two data definitions (attendance cells that span several venues, and entries that mix online viewers with the hall, both left out of the sell-out share); one extra collection (the track pages of songs that peaked at two, Taylor Swift's reference set); a third BTS leg total, Taoyuan 2018, flagged by hand on 3 October; two Bad Bunny tours collected from the wrong Wikipedia pages, re-collected on 3 October with his part recomputed; and <i>Closer</i> (The Chainsmokers) taken out of the number-one reference set on 6 October, with parts 1, 3, 4 and 5 recomputed.</p>
 </section>
 
 <section id="data">

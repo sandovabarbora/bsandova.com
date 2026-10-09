@@ -67,7 +67,9 @@ def figures(res: dict) -> None:
         "table": {"cols": ["songs", "multiple", "95 % interval"],
                   "rows": [[t, round(math.exp(b), 2), f"{math.exp(lo):.2f}–{math.exp(hi):.2f}"] for t, b, lo, hi, _ in lang]},
         "data": ["results.json", "panel.csv"]}}
-    checks = [("registered model", m1)] + [(k.replace("_", " "), v) for k, v in res["m1_checks"].items()]
+    # part 6 is exploratory: the main model was committed before estimation but is not a registered test
+    label = {"dynamite_as_english": "Dynamite coded as English"}
+    checks = [("main model", m1)] + [(label.get(k, k.replace("_", " ")), v) for k, v in res["m1_checks"].items()]
     charts["checks"] = {
         "alt": "The language effect under each check: every estimate above 1, all intervals above 1.",
         "panels": [{"h": 180, "x": {"kind": "log", "domain": [0.8, 10], "ticks": [1, 2, 3, 5, 8], "fmt": {"dp": 1, "unit": "×"},
@@ -177,7 +179,11 @@ def values(res: dict) -> dict:
          "m2_th": n(m2["coef"], 2), "m2_lo": n(m2["lo"], 2), "m2_hi": n(m2["hi"], 2), "m2_n": n(m2["n"]), "m2_clusters": n(m2["clusters"]),
          "m2_tours": n(res["m2_entries"]["tours"]), "m2b_th": n(res["m2b"]["coef"], 2),
          "ten_x": n(10 ** m2["coef"], 2), "ten_pct": n(100 * (1 - 10 ** (-m2["coef"]))),
-         "burden_x": n(10 ** (1 - m2["coef"]), 1)}
+         "burden_x": n(10 ** (1 - m2["coef"]), 1),
+         # the burden's interval follows from the elasticity's: 10^(1 − θ) at the two ends of θ's 95 % CI
+         "burden_lo": n(10 ** (1 - m2["hi"]), 1), "burden_hi": n(10 ** (1 - m2["lo"]), 1)}
+    dyn = ck["dynamite_as_english"]   # the check that codes Dynamite by the language it is sung in, English
+    v |= {"dyn_x": n(1 + dyn["pct"], 1), "dyn_lo": n(1 + dyn["pct_lo"], 1), "dyn_hi": n(1 + dyn["pct_hi"], 1)}
     for k, c in ck.items():
         v[f"ck_{k}"] = n(1 + c["pct"], 1)
         v[f"ck_{k}_lo"] = n(1 + c["pct_lo"], 2)
