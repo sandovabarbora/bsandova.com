@@ -1,6 +1,6 @@
 """Clock change and pedestrian crashes: figures, the region map and the article, every number from the results.
 
-Reads docs/research/dst-darkness-results.json and -data.json, tools/data/dst/cells.parquet and the Natural Earth
+Reads docs/research/dst-darkness-results.json, -data.json and -posthoc.json, tools/data/dst/cells.parquet and the Natural Earth
 regions; writes assets/dst/ (charts.json, 01-hours.svg, 02-checks.svg, 03-map.svg, 04-event.svg, cells.parquet, results.json)
 and texts/dst-darkness.html from tools/dst/template.html.
 
@@ -274,6 +274,13 @@ def values(res: dict, data: dict, cells: pd.DataFrame, fig: dict) -> dict:
     v["mo_ref"] = n(mo.loc[-1])
     v["gt_m"] = f"{c['group_trends']['pm']['ratio']:.2f}"
     v["oth_m"] = f"{c['other_crash_kinds']['pm']['ratio']:.2f}"
+    post = json.loads((R / "dst-darkness-posthoc.json").read_text())
+    lo = post["leave_one_autumn_out"]
+    ymin, ymax = min(lo, key=lambda y: lo[y]["ratio"]), max(lo, key=lambda y: lo[y]["ratio"])
+    v["lo_min"], v["lo_max"] = f"{lo[ymin]['ratio']:.2f}", f"{lo[ymax]['ratio']:.2f}"
+    v["lo_min_year"], v["lo_max_year"] = ymin, ymax
+    v["lo_lowest"] = f"{post['lowest_lower_bound']:.2f}"
+    assert post["evening_rise_total"] == int(v["yr_total"].replace(NB, ""))
     v["extra"] = n(int(v["n_ev_post"].replace(NB, "")) * (1 - 1 / p["pe"]["ratio"]))
     v["extra_year"] = n(int(v["n_ev_post"].replace(NB, "")) * (1 - 1 / p["pe"]["ratio"]) / 10)
     photo = next(x for x in json.loads((ROOT / "assets" / "photo" / "sources.json").read_text()) if x["slug"] == "dst-darkness")

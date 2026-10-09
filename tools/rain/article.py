@@ -1,6 +1,6 @@
-"""Does rain delay Prague's trams: figures and the article, every number from the result files.
+"""Are Prague's trams later in rain hours: figures and the article, every number from the result files.
 
-Reads docs/research/rain-delays-results.json, -describe.json, -power-rerun.json, -screen.json, -screen-feed.json,
+Reads docs/research/rain-delays-results.json, -describe.json, -power-rerun.json, -screen.json, -screen-feed.json, -posthoc.json,
 ČHMÚ hourly precipitation and tools/data/rain/segments.parquet; writes assets/rain/ (charts.json, 01-modes.svg,
 02-dose.svg, 03-checks.svg, 04-map.svg, 05-rain.svg, results.json) and texts/rain-delays.html from
 tools/rain/template.html.
@@ -54,7 +54,7 @@ def ci(lo: float, hi: float, dp: int = 1) -> str:
 def load() -> dict:
     j = lambda name: json.loads((R / f"rain-delays-{name}.json").read_text())  # noqa: E731
     return {"res": j("results"), "desc": j("describe"), "pow": j("power-rerun"), "scr": j("screen"),
-            "feed": j("screen-feed")}
+            "feed": j("screen-feed"), "post": j("posthoc")}
 
 
 def range_rows(items: list[tuple[str, dict, str]]) -> list[dict]:
@@ -92,7 +92,7 @@ def static_range(rows: list[dict], path: Path, label: str, xlim: tuple[float, fl
 
 def figures(x: dict) -> dict:
     A.mkdir(parents=True, exist_ok=True)
-    for name in ("results", "describe", "power-rerun"):
+    for name in ("results", "describe", "power-rerun", "posthoc"):
         shutil.copy(R / f"rain-delays-{name}.json", A / f"{name}.json")
     res, desc = x["res"], x["desc"]
     c = res["checks_tram"]
@@ -106,6 +106,7 @@ def figures(x: dict) -> dict:
         ("registered estimate", {"est_s": t["delta_s"], "ci95": t["ci95"]}, "held"),
         ("placebo: next hour", c["placebo_lead"]["rain_next"], "ink"),
         ("post-hoc placebo", desc["placebo_posthoc"]["rain_next"], "grey"),
+        ("temperature, post-hoc", x["post"]["temperature_bands_2c"], "grey"),
         ("with earlier hours", c["lags"]["rain"], "ink"),
         ("nearest station", c["nearest_station"]["rain_st"], "ink"),
         ("delay level", c["level_instead_of_gain"]["rain"], "ink"),
@@ -117,11 +118,12 @@ def figures(x: dict) -> dict:
                              f"the metro, underground, {n(c['metro']['rain']['est_s'], 1, True)} s.",
                              unit, [-10, 20], [-10, -5, 0, 5, 10, 15, 20]),
         "dose": range_chart(dose, "Delay gained by trams in an hour by how much rain fell, against dry hours, with "
-                            "95 % intervals: the estimate grows with the amount of rain.",
+                            "95 % intervals: the estimate is larger in heavier rain.",
                             "seconds of delay gained per trip-hour, against dry hours", [-5, 60],
                             [0, 10, 20, 30, 40, 50, 60]),
-        "checks": range_chart(checks, "The registered tram estimate and its checks, with 95 % intervals: every "
-                              "check except the placebos lies near the estimate.", unit, [-10, 20],
+        "checks": range_chart(checks, "The registered tram estimate and its checks, with 95 % intervals: the "
+                              "registered placebo lies above zero (it failed); the other checks, including the "
+                              "post-hoc temperature control, lie near the estimate.", unit, [-10, 20],
                               [-10, -5, 0, 5, 10, 15, 20]),
     }
     charts["modes"]["panels"][0]["marks"].append(
@@ -235,7 +237,7 @@ def rain_days() -> pd.DataFrame:
 
 
 def values(x: dict, days: pd.DataFrame) -> dict:
-    res, desc, pw, scr, feed = x["res"], x["desc"], x["pow"], x["scr"], x["feed"]
+    res, desc, pw, scr, feed, post = x["res"], x["desc"], x["pow"], x["scr"], x["feed"], x["post"]
     t, b, c = res["tram"], res["bus_secondary"], res["checks_tram"]
     rm = desc["raw_means"]
     routes = desc["by_route"]
@@ -263,6 +265,8 @@ def values(x: dict, days: pd.DataFrame) -> dict:
         "pp_n": n(desc["placebo_posthoc"]["next_rain_units"]),
         "rain_days_window": n(int((days["rain"] > 0).sum())), "max_rain_day": str(days["rain"].idxmax().strftime("%-d %B")),
         "max_rain_hours": n(int(days["rain"].max())),
+        "pl_pct": n(100 * c["placebo_lead"]["rain_next"]["est_s"] / t["delta_s"]),
+        "temp_rain": n(post["mean_temperature_c"]["rain_hours"], 1), "temp_dry": n(post["mean_temperature_c"]["dry_hours"], 1),
     }
     lo_r, hi_r = min(routes, key=lambda r: r["est_s"]), max(routes, key=lambda r: r["est_s"])
     v.update({"r_lo": lo_r["route"], "r_lo_est": n(lo_r["est_s"], 1), "r_hi": hi_r["route"], "r_hi_est": n(hi_r["est_s"], 1)})
@@ -274,7 +278,8 @@ def values(x: dict, days: pd.DataFrame) -> dict:
                    ("l0", c["lags"]["rain"]), ("l1", c["lags"]["rain_l1"]), ("l2", c["lags"]["rain_l2"]),
                    ("ns", c["nearest_station"]["rain_st"]), ("lv", c["level_instead_of_gain"]["rain"]),
                    ("kept", c["disruption_days_kept"]["rain"]), ("lit", c["rule1_literal"]["rain"]),
-                   ("mt", c["metro"]["rain"])):
+                   ("mt", c["metro"]["rain"]), ("tc", post["temperature_bands_2c"]),
+                   ("tlin", post["linear_temperature"])):
         put(key, e)
     for k, _, _ in DOSE:
         put(k, c["dose"][k])

@@ -95,7 +95,9 @@ with their source.
   registration, a Zenodo DOI, or a signed tag pushed to the public remote. The page cites it by its id.
 - A design committed on the author's own branch before the results commit is described as follows: "registered
   analysis plan: design committed at `<hash>` on `<date>`, before the results commit `<hash>`; commit times are
-  self-reported, and the branch was pushed after the analysis." This applies to Parts 1, 3, 4 and 5 (parking).
+  self-reported, and the branch was pushed after the analysis." Where GitHub's activity log shows the design on the
+  public branch before the results, the last clause is replaced by the push times it records, with the note that a
+  push is not a tamper-evident anchor (amended 9 October 2026). This applies to Parts 1, 3, 4 and 5 (parking).
 - Where the design first appears in the same commit as the results (Part 2), the only permitted wording is "design
   written and reviewed before modelling; not independently timestamped."
 - Everything the author had already seen when registering is disclosed in the article, not only in the design

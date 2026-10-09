@@ -1,6 +1,6 @@
-"""Does rain empty Prague's trams: figures and the article, every number from the result files.
+"""Are tram stops shorter in rain: figures and the article, every number from the result files.
 
-Reads docs/research/gehl-trams-{results,power,screen,coverage}.json and part 2's heat-delays-results.json; writes
+Reads docs/research/gehl-trams-{results,power,screen,coverage,posthoc}.json and part 2's heat-delays-results.json; writes
 assets/rain-dwell/ (charts.json, 01-windows.svg, 02-checks.svg, 03-heat.svg, results.json) and texts/rain-dwell.html
 from tools/gehl/template.html. Chart helpers are the rain article's.
 
@@ -30,7 +30,8 @@ UNIT = "seconds of dwell per stop"
 def load() -> dict:
     j = lambda name: json.loads((R / f"{name}.json").read_text())  # noqa: E731
     return {"res": j("gehl-trams-results"), "pow": j("gehl-trams-power"), "scr": j("gehl-trams-screen"),
-            "cov": j("gehl-trams-coverage"), "heat": j("heat-delays-results"), "rain": j("rain-delays-results")}
+            "cov": j("gehl-trams-coverage"), "heat": j("heat-delays-results"), "rain": j("rain-delays-results"),
+            "post": j("gehl-trams-posthoc")}
 
 
 def margin_rules(chart: dict, m: float) -> dict:
@@ -42,10 +43,12 @@ def margin_rules(chart: dict, m: float) -> dict:
 def figures(x: dict) -> None:
     A.mkdir(parents=True, exist_ok=True)
     shutil.copy(R / "gehl-trams-results.json", A / "results.json")
-    res, m = x["res"], x["res"]["margin_m_s"]
+    shutil.copy(R / "gehl-trams-posthoc.json", A / "posthoc.json")
+    res, m, post = x["res"], x["res"]["margin_m_s"], x["post"]
     p, c = res["primary_theta"], res["checks"]
     theta = {"est_s": p["est_s"], "ci95": p["ci95"]}
-    windows = range_rows([("rain, weekday mornings", c["by_window"]["rain"], "ink"),
+    boot = post["morning_rain_bootstrap"]
+    windows = range_rows([("rain, weekday mornings", {"est_s": boot["est_s"], "ci95": boot["wild_bootstrap_ci95"]}, "ink"),
                           ("weekend difference (θ)", theta, "held")])
     checks = range_rows([
         ("registered θ", theta, "held"),
@@ -57,7 +60,8 @@ def figures(x: dict) -> None:
         ("outer stops", c["outer"]["rain_opt"], "ink"),
         ("0.5–2 mm, weekend", c["dose"]["r0_2_opt"], "ink"),
         ("2–5 mm, weekend", c["dose"]["r2_5_opt"], "ink"),
-        ("placebo: 2 days later", c["placebo_rain_two_days_later"]["rain_opt"], "grey")])
+        ("placebo: 2 days later", c["placebo_rain_two_days_later"]["rain_opt"], "grey"),
+        ("delay held, run 9 Oct", post["delay_held"]["with_delay_gained"]["rain_opt"], "grey")])
     t2 = x["heat"]["tram"]
     heat = [{**r, "c": HEAT if r["y"].startswith("delay") else r["c"]} for r in range_rows([
         ("delay gained, part 2", {"est_s": t2["delta_s"], "ci95": t2["ci95"]}, "ink"),
@@ -102,7 +106,8 @@ def values(x: dict) -> dict:
          "t2_hi": n(t2["ci95"][1], 1),
          "dwell": n(scr["margin"]["mean_dwell_dry_necessary_s"], 1), "units_all": n(scr["units"]["kept"]),
          "centre_n": n(scr["centre_stops"]["n"]),
-         "cov_rain": n(100 * cov["rain"]["share"], 1), "cov_dry": n(100 * cov["dry"]["share"], 1),
+         "cov_rain": n(100 * cov["rain"]["share"], 2), "cov_dry": n(100 * cov["dry"]["share"], 2),
+         "t2_label": t2["label"], "nec_rain_dates": n(x["post"]["morning_rain_bootstrap"]["rain_dates_weekday_morning"]),
          "cov_diff": n(cov["rain_minus_dry_within_dates"]["difference_points"], 1),
          "cov_hot": n(cov["hot_minus_mild_within_dates"]["difference_points"], 1),
          "r1d": n(x["rain"]["tram"]["delta_s"], 1), "pyfixest": metadata.version("pyfixest")}
@@ -117,6 +122,11 @@ def values(x: dict) -> dict:
                    ("r1", c["dose"]["r0_2"]), ("r2", c["dose"]["r2_5"]), ("r3", c["dose"]["r5_up"]),
                    ("pl", c["placebo_rain_two_days_later"]["rain_opt"]), ("hg", c["heat_gehl_contrast"]["hot_opt"])):
         put(key, e)
+    boot, held = x["post"]["morning_rain_bootstrap"], x["post"]["delay_held"]["with_delay_gained"]
+    v["rn_a_lo"], v["rn_a_hi"] = v["rn_lo"], v["rn_hi"]
+    v["rn_lo"], v["rn_hi"] = n(boot["wild_bootstrap_ci95"][0], 2), n(boot["wild_bootstrap_ci95"][1], 2)
+    put("dh_th", held["rain_opt"])
+    put("dh_rn", held["rain"])
     v["rn_abs"] = n(abs(c["by_window"]["rain"]["est_s"]), 2)
     v["rn_pct"] = n(100 * abs(c["by_window"]["rain"]["est_s"]) / scr["margin"]["mean_dwell_dry_necessary_s"], 1)
     photo = next(q for q in json.loads((ROOT / "assets/photo/sources.json").read_text()) if q["slug"] == "rain-dwell")
