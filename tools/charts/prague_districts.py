@@ -154,7 +154,7 @@ for ev, (c, lab) in ev_style.items():
             for r, v, y in dash[1:]]})
 ev_rows = []
 for i in range(len(ev_rel["2018"])):
-    (r1, v1, y1), (r2, v2, y2) = ev_rel["2018"][i], ev_rel["2023"][i]
+    (r1, v1, y1), (_, v2, y2) = ev_rel["2018"][i], ev_rel["2023"][i]
     ev_rows.append([n(r1, sign=True), str(y1), pct(v1), str(y2), pct(v2) + (" (drawdown lists)" if y2 in es["2023"]["descriptive_years"] else "")])
 charts["event-study"] = {
     "legend": [{"label": "coalition change of Nov 2018", "c": "light"}, {"label": "coalition change of Feb 2023", "c": HELD},

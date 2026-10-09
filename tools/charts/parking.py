@@ -79,7 +79,6 @@ charts["new-cars"] = {
 # fig. 3 · the two registered tests
 T = H["tests"]
 d = H["estimates"]["delta_margin_cm"]
-cmf = {"dp": 1, "unit": " cm", "sign": True}
 charts["tests"] = {
     "alt": "Left: the difference between the register and the wheelbase route with its 90 % interval against the ±4.4 cm margin. Right: new-car growth 2022 to 2025 with its 95 % interval against 3.0, 4.5 and 6.0 cm.",
     "panels": [

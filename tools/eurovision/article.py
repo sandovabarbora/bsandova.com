@@ -277,7 +277,7 @@ def main() -> None:
     out = re.sub(r"\{\{(\w+)\}\}", lambda m: str(v[m.group(1)]), t)
     assert not re.findall(r"\{\{\w+\}\}", out)
     (ROOT / "texts" / "eurovision.html").write_text(out, encoding="utf-8")
-    print(json.dumps({k: v[k] for k in v if k not in ("photo", "top_rows")}, ensure_ascii=False, indent=0))
+    print(f"written texts/eurovision.html, {len(v)} values")
 
 
 if __name__ == "__main__":

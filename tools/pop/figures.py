@@ -160,7 +160,7 @@ def main(slug: str) -> None:
         tour = [t for t in rows(f"{slug}-tour.csv") if t.get("multi_venue") != "True" and t.get("hybrid") != "True"]
         pts = [{"x": int(t["nights"]), "y": round(100 * int(t["sold"]) / int(t["available"]), 2),
                 "tip": f"{t['venue']}, {t['city']} ({t['tour']}): {t['nights']} night(s), "
-                         + (f"capacity-reported" if t["tour"] in CAPACITY_REPORTED else
+                         + ("capacity-reported" if t["tour"] in CAPACITY_REPORTED else
                             f"{100 * int(t['sold']) / int(t['available']):.1f} % sold")} for t in tour]
         charts["tour"] = {
             "alt": f"{len(tour)} {'tour' if any(t['tour'] in CAPACITY_REPORTED for t in tour) else 'Boxscore'} entries: share of tickets sold against nights in the run; "
