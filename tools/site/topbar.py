@@ -1,7 +1,7 @@
 """One top bar for every subpage: the bŠ mark and the same five links, with paths relative to each page.
 
 Rewrites the <div class="top"> brand and nav in every tracked page, and in the page templates of the generators
-(tools/site/changelog.py, tools/quaesitor/quaesitor_texts.py, tools/quaesitor/port_quaesitor.py), so a regenerated page keeps the same bar.
+(tools/site/changelog.html, tools/quaesitor/quaesitor_texts.py, tools/quaesitor/port_quaesitor.py), so a regenerated page keeps the same bar.
 The page label (<span class="tr">) is left alone.
 
 Usage:
@@ -28,7 +28,7 @@ def rewrite(text: str) -> str:
 
 def main() -> None:
     targets = [f for f in tracked_html() if not f.startswith(SKIP) and f not in SKIP]
-    targets += ["tools/site/changelog.py", "tools/quaesitor/quaesitor_texts.py", "tools/quaesitor/port_quaesitor.py"]
+    targets += ["tools/site/changelog.html", "tools/quaesitor/quaesitor_texts.py", "tools/quaesitor/port_quaesitor.py"]
     for f in targets:
         path = ROOT / f
         old = path.read_text()
