@@ -33,6 +33,9 @@ def visible(s: str) -> str:
 def body_words(s: str) -> int:
     """Words of the sections between the metadata block and the references, without tables, figures and captions."""
     a = s.find("</dl>", s.find('class="meta"'))
+    more = s.find('class="meta-more"')
+    if more > 0:  # the folded "About this note" metadata is not body text
+        a = s.find("</details>", more)
     b = s.find('id="refs"')
     b = b if b > 0 else s.find('<footer')
     part = s[a:b] if a > 0 and b > a else s
