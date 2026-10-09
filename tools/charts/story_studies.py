@@ -106,8 +106,8 @@ def film() -> None:
     below = next(m for m in lines if m["pts"][-1][0] == 0)
     jump = above["pts"][0][1] - below["pts"][-1][1]
     callout(p, x=0, y=above["pts"][0][1], dx=16, dy=-14, anchor="start",
-            s=f"jump at the cut-off: {jump:+.0f} points, underpowered",
-            narrow={"s": f"jump {jump:+.0f} points,\nunderpowered", "dy": -22})
+            s=f"difference at the cut-off: {jump:+.0f} points, underpowered",
+            narrow={"s": f"difference {jump:+.0f} points,\nunderpowered", "dy": -22})
     save("film", charts, None)
 
 

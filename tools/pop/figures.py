@@ -25,6 +25,9 @@ import matplotlib.pyplot as plt  # noqa: E402
 ROOT = Path(__file__).resolve().parents[2]
 R = ROOT / "docs" / "research"
 INK, GREY, LIGHT = "#111111", "#666666", "#b5b5b0"
+# tours whose Wikipedia attendance column gives venue, press or capacity figures (sold = available by construction),
+# not Boxscore's tickets sold (9 October 2026)
+CAPACITY_REPORTED = {"The Eras Tour"}
 # each artist keeps one colour in every chart of the series (assets/palette.json); a part's own songs and its Czech row wear it
 NAME = {"harry-styles": "Harry Styles", "taylor-swift": "Taylor Swift", "bts": "BTS", "bad-bunny": "Bad Bunny",
         "billie-eilish": "Billie Eilish"}
@@ -157,9 +160,10 @@ def main(slug: str) -> None:
         tour = [t for t in rows(f"{slug}-tour.csv") if t.get("multi_venue") != "True" and t.get("hybrid") != "True"]
         pts = [{"x": int(t["nights"]), "y": round(100 * int(t["sold"]) / int(t["available"]), 2),
                 "tip": f"{t['venue']}, {t['city']} ({t['tour']}): {t['nights']} night(s), "
-                         f"{100 * int(t['sold']) / int(t['available']):.1f} % sold"} for t in tour]
+                         + (f"capacity-reported" if t["tour"] in CAPACITY_REPORTED else
+                            f"{100 * int(t['sold']) / int(t['available']):.1f} % sold")} for t in tour]
         charts["tour"] = {
-            "alt": f"{len(tour)} Boxscore entries: share of tickets sold against nights in the run; "
+            "alt": f"{len(tour)} {'tour' if any(t['tour'] in CAPACITY_REPORTED for t in tour) else 'Boxscore'} entries: share of tickets sold against nights in the run; "
                    f"{100 * res['q3']['share_sold_out']:.0f} % sold 99.5 % or more.",
             "panels": [{"h": 220, "x": {"kind": "linear", "domain": [0, max(p["x"] for p in pts) + 1], "fmt": {"dp": 0},
                                         "label": "nights in the run"},

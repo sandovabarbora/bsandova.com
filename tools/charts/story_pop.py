@@ -82,7 +82,7 @@ def artist(slug: str) -> None:
         if len(runs) == 1:
             q = runs[0]
             callout(p, {"x": q["x"], "y": q["y"], "dx": -10, "dy": 26, "anchor": "end",
-                        "s": f"{venue(q)}, {q['x']} nights, {q['y']:.0f} % sold",
+                        "s": f"{venue(q)}, {q['x']} nights, " + ("capacity-reported" if "capacity-reported" in q["tip"] else f"{q['y']:.0f} % sold"),
                         "narrow": {"s": f"{q['x']} nights,\n{venue(q)}"}})
         low = min(pts, key=lambda q: q["y"])
         if low["y"] < 99.5:

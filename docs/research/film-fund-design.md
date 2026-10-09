@@ -177,3 +177,24 @@ decided blind before the funding key was opened.
 **5 October 2026 — wording only.** The status line and §0 now state that the author had worked with these data
 since July 2024, and statements about what had been looked at are scoped to this analysis. No rule, number or
 label changed.
+
+**9 October 2026 — correction to the 5 October wording change.** The 5 October 2026 change rewrote the status line
+and parts of §0 in place instead of appending. The registered status line read: "**Status: design committed 1
+October 2026, before any application is linked to a release or to admissions.** Registration is self-timestamped. No
+OSF entry is made, by the author's decision of 1 October 2026. In the article this is a "registered analysis plan:
+design committed at `<hash>` on 1 October 2026, before the results commit; commit times are self-reported"." The
+registered §0 read, for the outcome sources: "**Outcome sources (structure only).** I have checked which columns the
+UFD premiere lists (2000–2025) and the UFD annual and monthly market tables contain. LUMIERE (European Audiovisual
+Observatory) was queried once, for Czech-produced films of production year 2019, to see its format. That query
+showed the titles and admissions of its first three rows (*Ženy v běhu*, *Poslední aristokratka*, *Přes prsty*). No
+application has been matched to any outcome. No admissions figure has been compared with any score." The heading of
+§3 read "Linking applications to films (fixed before any outcome is looked at)". The original text is in the
+history of this file at commit `488d7c6`. On main, this design and the results first appear together in the squash
+commit `488d7c6`, so the order of design and results is not independently timestamped there; the branch commits
+`3ddd69c` (design) and `5a48067` (results) are self-reported. The wording of 5 October 2026 is kept above; this note
+records what it replaced.
+
+**9 October 2026 (clarification of today's note).** "Worked with these data since July 2024" means the author has worked
+with these sources continuously since July 2024, in work that led to this study, so the design was written with knowledge of
+the sources, not blind to them. This replaces the reading given earlier today (that its extent was unrecorded, or a
+list of what it covers). The registered text and the dated notes above are unchanged.

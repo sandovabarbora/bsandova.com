@@ -77,7 +77,7 @@ def values(slug: str) -> dict:
     v["q2_top_days"] = ", ".join(f"{name.get(c['country'], c['country'].upper())} ({n(c['days'])})" for c in by_days[:3])
     ranked = [c for c in cs if c["ranked"]]
     second = ranked[1:4]
-    v["q2_top_ratio"] = ", ".join(f"{name.get(c['country'], c['country'].upper())} ({n(c['ratio'], 1)}×)" for c in second)
+    v["q2_top_ratio"] = ", ".join(f"{name.get(c['country'], c['country'].upper())} ({n(c['ratio'], 1)}×{', still charting, so a lower bound' if c['still_charting'] else ''})" for c in second)
     for c in cs:   # every country's values, so a template can name any of them: <cc>_ratio, <cc>_days, …
         k = c["country"]
         v |= {f"{k}_ratio": n(c["ratio"], 1 if c["ratio"] < 10 else 0), f"{k}_ratio2": n(c["ratio"], 2), f"{k}_days": n(c["days"]),
@@ -177,6 +177,23 @@ def values(slug: str) -> dict:
         v |= {"e_acc_after_neg": n(sum(r["att"] < 0 for r in after)), "e_acc_after_n": n(len(after)),
               "e_acc_after_zero": n(sum(r["lo"] <= 0 <= r["hi"] for r in after)),
               "e_hicp_geos": n(len({r["geo"] for r in rows("eras-inflation-hicp.csv")}))}
+        pw = json.loads((R / "eras-inflation-pointwise.json").read_text())   # post-hoc pointwise intervals
+        for k, short in (("accommodation", "acc"), ("restaurants", "res"), ("all_items", "all")):
+            for r in pw[k]:   # e_pw_<short>_m<e>_lo / _hi, e.g. e_pw_acc_m0_lo; months before the show as m_4
+                key = f"e_pw_{short}_m{r['e']}".replace("-", "_")
+                v |= {f"{key}_lo": n(r["lo"], 2), f"{key}_hi": n(r["hi"], 2)}
+        pre = [r for r in e["accommodation"]["event"] if -6 <= r["e"] <= -2 and not r["lo"] <= 0 <= r["hi"]]
+        v |= {f"e_loo_{c.lower()}": n(x, 2) for c, x in e["leave_one_out"].items()}
+        v["e_acc_pre_fail"] =", ".join(f"month {n(r['e'])}" for r in pre) or "none"
+        p1 = json.loads((R / "taylor-swift-peak1-posthoc.json").read_text())   # post-hoc: her own number ones
+        v["p1_n"] = n(p1["n_number_ones"])
+        v["p1_count"] = n(len(p1["songs"]))
+        v["p1_list"] = "; ".join(f"<i>{s['label'].split(' - ', 1)[1]}</i>, {n(s['days'])} days ({pct(s['share_longer'], 1)} lasted longer, 95 % CI {pct(s['ci95'][0], 1)} to {pct(s['ci95'][1], 1)}{', still charting' if s['still_charting'] else ''})"
+                                 for s in p1["songs"][:4])
+        tour_all = rows("taylor-swift-tour.csv")
+        for t_, key in (("Reputation Stadium Tour", "rep"), ("The Eras Tour", "eras")):
+            es = [t for t in tour_all if t["tour"] == t_]
+            v |= {f"q3_{key}_entries": n(len(es)), f"q3_{key}_shows": n(sum(int(t["nights"]) for t in es))}
     artist = json.loads((Path(__file__).with_name("artists.json")).read_text(encoding="utf-8"))[slug]
     for name in artist["tours"]:   # rev_<tour slug>: the Wikipedia revision of each tour article
         key = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
