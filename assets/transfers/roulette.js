@@ -4,7 +4,7 @@
 (() => {
   const BANDS = { peak: "weekday peak", daytime: "weekday daytime", weekend: "weekend daytime", evening: "evening" };
   const pct = (v) => `${Math.round(100 * v)} %`;
-  const min = (s) => (s < 0 ? `${Math.round(s)} s` : s < 90 ? `${Math.round(s)} s` : `${(s / 60).toFixed(1)} min`);
+  const min = (s) => (s < 90 ? `${Math.round(s)} s` : `${(s / 60).toFixed(1)} min`);
   const el = (tag, attrs = {}, kids = []) => {
     const e = document.createElement(tag);
     for (const [k, v] of Object.entries(attrs)) k === "text" ? (e.textContent = v) : e.setAttribute(k, v);

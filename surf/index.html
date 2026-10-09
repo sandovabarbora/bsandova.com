@@ -108,8 +108,6 @@
   const D = await (await fetch('data.json', {cache:'no-store'})).json();
   const MC = {meteofrance_wave:'#2a78d6', gwam:'#eb6834', ewam:'#1baf7a'};
   const spots = D.spots; let spot = spots[0];
-  const rule = D.surfable_rule;
-  const surf = r => r && r.swell_max!=null && r.period_mean!=null && r.swell_max>=rule.swell_max_m[0] && r.swell_max<=rule.swell_max_m[1] && r.period_mean>=rule.period_min_s && (r.wind_mean==null || r.wind_mean<=rule.wind_max_kmh || Math.abs(((r.wind_dir-rule.offshore_deg[0]+180)%360)-180)<=rule.offshore_deg[1]);
   // facts
   document.getElementById('f-days').innerHTML = D.issues.length + ' <small>since ' + D.issues[0] + ' · 3 spots × 3 models × 7 days</small>';
   const c = D.climatology[spot];

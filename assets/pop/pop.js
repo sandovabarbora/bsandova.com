@@ -53,7 +53,7 @@
       const max = Math.max(...songs.map(s => s.d)), cols = Math.floor((W - 20) / step);
       const bin = Math.ceil(max / cols / 10) * 10, X = d => 10 + Math.floor(d / bin) * step + r;
       const stack = {};
-      for (const s of songs) { const b = Math.floor(s.d / bin); stack[b] = (stack[b] || 0) + 1; s._b = b; s._k = stack[b]; }
+      for (const s of songs) { const b = Math.floor(s.d / bin); stack[b] = (stack[b] || 0) + 1; s._k = stack[b]; }
       const H = Math.max(...Object.values(stack)) * step + 34;
       const svg = el('svg', {class: 'ch-svg', viewBox: `0 0 ${W} ${H}`, role: 'img',
         'aria-label': `${n} ${whats} since 2017 in the global chart, by days in the global Top 200; the median is ${data.median} days.`}, wrap);

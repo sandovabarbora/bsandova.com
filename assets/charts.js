@@ -4,7 +4,7 @@
 
    A chart spec: {alt, panels:[{title, h, w, x:axis, y:axis, marks:[...]}], legend:[{label, c, dash, shape: d|box|o|dot}],
    table:{cols, rows}, data:[paths]}. An axis: {kind:'linear'|'log'|'cat', domain, ticks, fmt, label}. A fmt:
-   {dp, unit, pre, sign}. Marks: line, area, dots, hbar, vbar, range, vrange, arrow, cell, rule, span, text (see drawPanel).
+   {dp, unit, pre, sign}. Marks: line, area, dots, hbar, vbar, range, vrange, arrow, rule, span, callout, text (see drawPanel).
    spec.layout: 'rows' stacks the panels vertically at every width. An axis with labels:false draws no category names.
    A line may carry o (opacity) and end (a label at its last point, in ink; give the panel padRight for it); a callout
    {x, y, s, dx, dy, anchor, narrow:{...}} ties a short note to one data point. Data marks wipe in from the left the
@@ -84,7 +84,7 @@
     const catY = P.y.kind === 'cat';
     // ticks without a format get as many decimals as their step needs
     const autoDp = ax => ax.kind === 'cat' ? 0 : Math.max(0, ...niceTicks(ax).map(t => (String(t).split('.')[1] || '').length));
-    const tickFmtX = P.x.tickfmt || (P.x.fmt && {...P.x.fmt, dp: Math.max(P.x.fmt.dp ?? 0, autoDp(P.x))}) || {dp: autoDp(P.x), nogroup: P.x.year};
+    const tickFmtX = P.x.tickfmt || (P.x.fmt && {...P.x.fmt, dp: Math.max(P.x.fmt.dp ?? 0, autoDp(P.x))}) || {dp: autoDp(P.x)};
     const tickFmtY = P.y.tickfmt || (P.y.fmt && {...P.y.fmt, dp: Math.max(P.y.fmt.dp ?? 0, autoDp(P.y))}) || {dp: autoDp(P.y)};
     const yLabels = niceTicks(P.y).map(t => catY ? String(t) : fmt(t, {...tickFmtY, unit: ''}));
     const stackCats = catY && narrow;              // phone: category names sit above their row, not beside it
@@ -227,15 +227,6 @@
           el('circle', {cx: a, cy: y, r: 4, fill: col(r.fromC || 'light'), stroke: COL.grey}, gm);
           if (r.label) el('text', {x: Math.max(a, b) + 8, y: y + 4, class: 'ch-val'}, gm).textContent = r.label;
           targets.push({px: b, py: y, tip: r.tip, box: [Math.min(a, b), y - 7, Math.abs(b - a), 14]});
-        }
-      } else if (m.type === 'cell') {
-        // a matrix on two category axes: rows {x, y, v, s (text), tip}; shade is one hue, light to dark over m.domain
-        const [v0, v1] = m.domain;
-        for (const r of m.rows) {
-          const cx = X(r.x), cy = Y(r.y), w = X.step - 4, h = Y.step - 4, t = Math.max(0, Math.min(1, (r.v - v0) / (v1 - v0)));
-          el('rect', {x: cx - w / 2, y: cy - h / 2, width: w, height: h, fill: col(m.c), 'fill-opacity': 0.08 + 0.72 * t, rx: 2}, gm);
-          el('text', {x: cx, y: cy + 4, 'text-anchor': 'middle', class: 'ch-val', style: t > 0.55 ? 'fill:#fff;stroke:none' : null}, gm).textContent = r.s;
-          targets.push({px: cx, py: cy, tip: r.tip, box: [cx - w / 2, cy - h / 2, w, h]});
         }
       } else if (m.type === 'callout') {
         // a note tied to one data point by a short leader; narrow screens may give their own offsets or text
