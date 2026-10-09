@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Weather on the rails · Barbora Šandová</title>
-<meta name="description" content="Three pre-specified studies of one season of Prague's trams and buses: rain adds about 9.7 seconds of delay per trip-hour, heat takes about 14.9 seconds away, and neither changes who boards on weekends more than on weekday mornings.">
+<meta name="description" content="Three pre-specified studies of one season of Prague's trams and buses: about 9.7 seconds more delay gained per trip-hour in rain hours, about 14.9 seconds less in hot hours, both associations, and no weekend-against-weekday difference in how much shorter stops are in rain.">
 <meta property="og:title" content="Weather on the rails">
-<meta property="og:description" content="Rain slows Prague's trams by about 9.7 seconds an hour; heat, unexpectedly, does the opposite; and stops shorten in the rain alike on weekdays and weekends. Three pre-specified studies of the same 121 million stop passes.">
+<meta property="og:description" content="Prague's trams gained about 9.7 seconds more delay in rain hours and about 14.9 seconds less in hot hours, both associations; stops were slightly shorter in rain, alike on weekdays and weekends. Three pre-specified studies of the same 121 million stop passes.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://bsandova.com/texts/weather-rails">
 <meta property="og:image" content="https://bsandova.com/assets/og/weather-rails.jpg">
@@ -28,7 +28,7 @@
 <header class="text-head">
   <p class="kicker">Hub · Weather on the rails · Prague trams, buses and the metro, summer 2025</p>
   <h1>Weather <em>on the rails</em></h1>
-  <p class="deck">Three studies of what the weather does to Prague's public transport, asked the same way of the same 121 million stop passes: one about rain, one about heat, and one about who still boards.</p>
+  <p class="deck">Three pre-specified studies of how Prague's tram and bus delays and stop times differ with the weather, on the same 121 million stop passes: rain hours, hot hours, and dwell as a passenger proxy.</p>
   <dl class="facts">
     <div><dt>parts published</dt><dd>3 <small>numbered by publication order</small></dd></div>
     <div><dt>designs committed</dt><dd>6 and 8 Oct 2026 <small>CEST, commit times self-reported</small></dd></div>
@@ -38,15 +38,14 @@
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
     <li>Each part fixed its question, its model and its reading rule before the weather was joined to the delays.</li>
-    <li>Part 1: in an hour with rain, a tram gains about 9.7 seconds more delay than in a dry hour (5.8 to 13.6, supported).</li>
-    <li>Part 2: in a dry hour at 30 °C or more, a tram gains about 14.9 seconds less delay than in a mild one (−20.9 to −8.2), the opposite of the registered expectation, so inconclusive.</li>
-    <li>The metro, underground, barely moves in either: −2.8 s in rain, −1.4 s in heat.</li>
-    <li>Part 3: rain shortens a tram's stop by about 0.25 seconds, alike on weekday mornings and weekend days (difference +0.04 s, −0.29 to 0.37, not supported), so Jan Gehl's split between necessary and optional trips does not show in boarding; heat does not shorten stops (−0.12 s).</li>
-    <li>Parts 1 and 2 measure the sum of passengers, traffic and the vehicles themselves; part 3 rules out shorter stops as the reason heat helps.</li>
+    <li>Part 1: in an hour with rain, a tram gained about 9.7 seconds more delay than in a dry hour (5.8 to 13.6, supported); the registered placebo failed (5.8 s), so it is an adjusted association.</li>
+    <li>Part 2: in a dry hour at 30 °C or more, a tram gained about 14.9 seconds less delay than in a mild one (−20.9 to −8.2), the opposite of the registered expectation, so inconclusive; it rests on 11 hot days.</li>
+    <li>Part 3: in rain hours a tram's stop was about 0.25 seconds shorter, with no clear weekend-against-weekday-morning difference (+0.04 s, −0.29 to 0.37, not supported), so Jan Gehl's split between necessary and optional trips does not show in dwell.</li>
+    <li>Parts 1 and 2 measure the sum of passengers, traffic and the vehicles themselves; part 3 finds no shorter stops in hot hours (−0.12 s), and traffic is untested.</li>
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>8 October 2026 · <a href="../changelog/#weather-rails">version 1</a></dd></div>
+  <div><dt>published</dt><dd>8 October 2026 · updated 9 October 2026 · <a href="../changelog/#weather-rails">version 2</a></dd></div>
   <div><dt>work since</dt><dd>October 2026</dd></div>
 </dl>
 
@@ -56,27 +55,27 @@
 <h2>The parts</h2>
 <ol class="parts">
   <li>
-    <a class="still" href="rain-delays" aria-label="Part 1, Does rain delay Prague's trams?"><span class="shot" style="view-transition-name:ph-rain-delays;--bg:url(../assets/photo/rain-delays.jpg);--bg-s:url(../assets/photo/rain-delays-1200.jpg)"></span></a>
+    <a class="still" href="rain-delays" aria-label="Part 1, Are Prague's trams later in rain hours?"><span class="shot" style="view-transition-name:ph-rain-delays;--bg:url(../assets/photo/rain-delays.jpg);--bg-s:url(../assets/photo/rain-delays-1200.jpg)"></span></a>
     <div>
       <p class="n">Part 1 · rain · March–September 2025, 47 days with rain</p>
-      <h2><a href="rain-delays">Does rain delay Prague's trams?</a></h2>
-      <p>In an hour with at least 0.5 mm of rain, a tram gains 9.7 seconds more delay than in a dry hour of the same route, hour and weekday on the same date (5.8 to 13.6, supported); the effect grows with the amount of rain and stops when it does.</p>
+      <h2><a href="rain-delays">Are Prague's trams later in rain hours?</a></h2>
+      <p>In an hour with at least 0.5 mm of rain, a tram gained 9.7 seconds more delay than in a dry hour of the same route, hour and weekday on the same date (5.8 to 13.6, supported); the difference is larger in heavier rain, but the registered placebo failed, so it is an adjusted association.</p>
     </div>
   </li>
   <li>
-    <a class="still" href="heat-delays" aria-label="Part 2, Does heat delay Prague's trams?"><span class="shot" style="view-transition-name:ph-heat-delays;--bg:url(../assets/photo/heat-delays.jpg);--bg-s:url(../assets/photo/heat-delays-1200.jpg)"></span></a>
+    <a class="still" href="heat-delays" aria-label="Part 2, Are Prague's trams more delayed in hot hours?"><span class="shot" style="view-transition-name:ph-heat-delays;--bg:url(../assets/photo/heat-delays.jpg);--bg-s:url(../assets/photo/heat-delays-1200.jpg)"></span></a>
     <div>
       <p class="n">Part 2 · heat · summer 2025, 11 days at 30 °C or more</p>
-      <h2><a href="heat-delays">Does heat delay Prague's trams?</a></h2>
-      <p>In a dry hour at 30 °C or more, a tram gains 14.9 seconds less delay than in a mild hour of the same route and week (−20.9 to −8.2); registered as more delay, so inconclusive, with the hotter hours showing the larger difference.</p>
+      <h2><a href="heat-delays">Are Prague's trams more delayed in hot hours?</a></h2>
+      <p>In a dry hour at 30 °C or more, a tram gained 14.9 seconds less delay than in a mild hour of the same route and week (−20.9 to −8.2); registered as more delay, so inconclusive; an association on 11 hot days whose cause the data cannot distinguish.</p>
     </div>
   </li>
   <li>
-    <a class="still" href="rain-dwell" aria-label="Part 3, Does rain empty Prague's trams?"><span class="shot" style="view-transition-name:ph-rain-dwell;--bg:url(../assets/photo/rain-dwell.jpg);--bg-s:url(../assets/photo/rain-dwell-1200.jpg)"></span></a>
+    <a class="still" href="rain-dwell" aria-label="Part 3, Are tram stops shorter in rain?"><span class="shot" style="view-transition-name:ph-rain-dwell;--bg:url(../assets/photo/rain-dwell.jpg);--bg-s:url(../assets/photo/rain-dwell-1200.jpg)"></span></a>
     <div>
       <p class="n">Part 3 · rain, heat and who boards · 14 wet weekend days</p>
-      <h2><a href="rain-dwell">Does rain empty Prague's trams?</a></h2>
-      <p>Rain shortens a tram's stop by about 0.25 seconds on a weekday morning and by the same on a weekend day (difference +0.04 s, −0.29 to 0.37, not supported), so the trips that bad weather cancels are not mainly the optional ones; heat leaves stops unchanged (−0.12 s).</p>
+      <h2><a href="rain-dwell">Are tram stops shorter in rain?</a></h2>
+      <p>In rain hours a tram's stop was about 0.25 seconds shorter on a weekday morning, and the weekend difference is +0.04 s (−0.29 to 0.37, not supported), so dwell gives no sign that rain cancels mainly optional trips; hot hours show no shorter stops (−0.12 s).</p>
     </div>
   </li>
 </ol>
@@ -84,11 +83,11 @@
 
 <section>
 <h2>Parts 1 and 2 side by side</h2>
-<p>Parts 1 and 2 use one model on one table: the delay a trip gains within a clock hour, compared with the same route at the same hour and weekday, with the weather of that hour from four ČHMÚ stations. Rain and heat push in opposite directions, and the metro, which neither reaches, stays near zero under both, which is what a weather effect on the street should look like. The rain part compares hours within a date; the heat part compares within a week, because heat lasts all day. The heat part rests on 11 hot days, the rain part on 47 wet ones.</p>
+<p>Parts 1 and 2 use the same table and outcome, the delay a trip gains within a clock hour, compared with the same route at the same hour and weekday, with the weather of that hour from four ČHMÚ stations, but not the same model: part 1 compares hours within a date (date effects), part 2 within a week (week effects), because heat lasts all day. Part 2's registered check with date effects gives −11.4 seconds (−16.4 to −6.3). The two estimates have opposite signs. The metro's intervals include zero under both, −2.8 s in rain (−6.1 to 0.6) and −1.4 s in heat (−4.2 to 1.3), which fits a difference on the street rather than one common to all modes, without showing what causes it. The heat part rests on 11 hot days, the rain part on 47 wet ones.</p>
 <figure data-chart="../assets/weather-rails/charts.json#compare">
-  <p class="ch-head">Rain adds about 9.7 s a trip-hour, heat takes about 14.9 s away; the metro barely moves under either.</p>
+  <p class="ch-head">About 9.7 s more delay gained per trip-hour in rain hours, about 14.9 s less in hot hours; the metro's intervals include zero.</p>
   <img src="../assets/weather-rails/01-compare.svg" alt="Delay gained per trip-hour against fair weather, with 95 % intervals: rain above zero for trams and buses, heat below zero for both, the metro near zero in both." loading="lazy">
-  <figcaption><b>fig. 1</b> · Seconds of delay gained per trip in a rain hour against a dry hour (part 1) and in a hot dry hour against a mild one (part 2), with 95 % intervals; blue, rain; coral, heat; grey, the metro. Each estimate is the registered model of its part. Data: as in the parts.</figcaption>
+  <figcaption><b>fig. 1</b> · Seconds of delay gained per trip in a rain hour against a dry hour (part 1) and in a hot dry hour against a mild one (part 2), with 95 % intervals; blue, rain; coral, heat; grey, the metro. Each estimate is the registered model of its part: date effects for rain, week effects for heat. Data: as in the parts.</figcaption>
 </figure>
 </section>
 

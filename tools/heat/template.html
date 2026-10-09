@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Does heat delay Prague's trams? Hot hours and delay, 2025</title>
-<meta name="description" content="A pre-specified analysis of 121 million stop passes and ČHMÚ ten-minute temperatures: in a dry hour at 30 °C or more, a Prague tram gains about {{d}} seconds less delay than in a mild hour, the opposite of what was expected.">
-<meta property="og:title" content="Does heat delay Prague's trams?">
-<meta property="og:description" content="In an hour at 30 °C or more, a Prague tram gains about {{d}} seconds less delay than in a mild hour of the same route and week; the metro does not change; summer 2025.">
+<title>Are Prague's trams more delayed in hot hours? Hot hours and delay, 2025</title>
+<meta name="description" content="A pre-specified analysis of 121 million stop passes and ČHMÚ ten-minute temperatures: in a dry hour at 30 °C or more, a Prague tram gained about {{d}} seconds less delay than in a mild hour, the opposite of what was expected; an association on 11 hot days.">
+<meta property="og:title" content="Are Prague's trams more delayed in hot hours?">
+<meta property="og:description" content="In an hour at 30 °C or more, a Prague tram gained about {{d}} seconds less delay than in a mild hour of the same route and week, an association on 11 hot days; the metro shows no clear change; summer 2025.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://bsandova.com/texts/heat-delays">
 <meta property="og:image" content="https://bsandova.com/assets/og/heat-delays.jpg">
@@ -33,8 +33,8 @@
 <article class="text">
 <header class="text-head">
   <p class="kicker">Research · Weather on the rails, part 2 · Prague trams and buses, summer 2025</p>
-  <h1>Does heat delay Prague's trams? <em>Hot hours and delay, 2025</em></h1>
-  <p class="deck">A pre-specified analysis of the same stop passes as the rain study and of ten-minute temperatures from four Prague stations: in a dry hour at 30 °C or more, a tram gains about {{d}} seconds less delay than in a mild hour of the same route, hour and weekday in the same week. The registered hypothesis expected the opposite; by its rule the result is {{label}}, with the reason that the interval lies wholly below zero.</p>
+  <h1>Are Prague's trams more delayed in hot hours? <em>Hot hours and delay, 2025</em></h1>
+  <p class="deck">In dry hours at 30 °C or more, Prague's trams gained about {{d}} seconds less delay than in mild hours of the same week ({{d_lo}} to {{d_hi}}), the opposite of the registered expectation: {{label}}.</p>
   <dl class="facts">
     <div><dt>trams, hot against mild</dt><dd>{{d_signed}} s <small>delay gained per trip-hour · 95 % confidence interval (CI) {{d_lo}} to {{d_hi}} · {{label}}: the opposite sign</small></dd></div>
     <div><dt>city buses, secondary</dt><dd>−{{bd}} s <small>95 % CI {{bd_lo}} to {{bd_hi}}</small></dd></div>
@@ -45,26 +45,25 @@
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>The rain study asked whether a wet hour slows Prague's trams; it does, by about ten seconds. This part asks the same of a hot hour, with the same data and code.</li>
-    <li>The answer runs the other way: in a dry hour at 30 °C or more, a tram gains about {{d}} seconds less delay than in a mild hour ({{d_lo}} to {{d_hi}}). Buses gain about {{bd}} seconds less.</li>
-    <li>The hotter the hour, the larger the difference, and the metro, underground, does not change.</li>
-    <li>It rests on {{hot_dates}} hot days of one summer, so the interval comes from a bootstrap that treats each day as one piece of evidence.</li>
-    <li>The data cannot say why. The likeliest reading is fewer passengers and fewer cars on the hottest afternoons, which this study did not measure.</li>
+    <li>Part 1 found trams about ten seconds later per trip-hour in rain hours, an association. This part asks the same of hot hours, with the same data and code, and the difference runs the other way; buses gained about {{bd}} seconds less, and the metro shows no clear change.</li>
+    <li>It rests on {{hot_dates}} hot days of one summer, mostly in the school holidays; the main interval is a bootstrap by day, but the checks' intervals are analytic with about {{hot_dates}} date clusters and are probably too narrow.</li>
+    <li>The registered placebo, the heat of two days later, gives {{pl}} seconds ({{pl_lo}} to {{pl_hi}}), about {{pl_pct}} % of the main estimate, so part of the contrast may belong to hot spells rather than to hot hours.</li>
+    <li>Fewer passengers, less traffic, roadworks paused in the holidays or the holiday timetable could each be behind it; the data cannot distinguish these explanations. Part 3 later found no shorter stops in hot hours.</li>
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>8 October 2026 · <a href="../changelog/#heat-delays">version 1</a></dd></div>
+  <div><dt>published</dt><dd>8 October 2026 · updated 9 October 2026 · <a href="../changelog/#heat-delays">version 2</a></dd></div>
   <div><dt>work since</dt><dd>October 2026</dd></div>
 </dl>
 <details class="meta-more">
   <summary>About this study</summary>
 <dl class="meta">
   <div><dt>status</dt><dd>research, pre-specified analysis (self-timestamped)</dd></div>
-  <div><dt>series</dt><dd><a href="weather-rails">Weather on the rails</a>, part 2; part 1 is <a href="rain-delays">Does rain delay Prague's trams?</a></dd></div>
-  <div><dt>registration</dt><dd>design committed at <code>56e041a</code> on 8 October 2026, before any temperature value was read; power from temperature and dispersion only at <code>52dc94c</code>; code frozen with tests at <code>09601e1</code>; results at <code>61374d3</code>; the chain is kept under the tag <code>heat-delays-v1</code>. Commit times are self-reported. The delays had been read before, for the rain study, but never against temperature. Changes after registration, each dated, are in <a href="../changelog/#heat-delays-changes">the change log</a>.</dd></div>
+  <div><dt>series</dt><dd><a href="weather-rails">Weather on the rails</a>, part 2; part 1 is <a href="rain-delays">Are Prague's trams later in rain hours?</a></dd></div>
+  <div><dt>registration</dt><dd>registered analysis plan: design committed at <code>56e041a</code> on 8 October 2026, before the results commit <code>61374d3</code>; commit times are self-reported. GitHub's event log shows the design on the public branch before 13:10 UTC on 8 October 2026, before the results were pushed at 13:38 UTC; a push is not a tamper-evident anchor. The design was committed before any temperature value was read; power from temperature and dispersion only at <code>52dc94c</code>; code frozen with tests at <code>09601e1</code>; results at <code>61374d3</code>; the chain is kept under the tag <code>heat-delays-v1</code>. The delays had been read before, for the rain study, but never against temperature. Changes after registration, each dated, are in <a href="../changelog/#heat-delays-changes">the change log</a>.</dd></div>
   <div><dt>data</dt><dd>Prague Integrated Transport stop-time history via Golemio, 15 March – 8 September 2025, as used in the author's master's thesis<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup>; ČHMÚ ten-minute air temperature and hourly precipitation, four Prague stations, CC BY 4.0<sup class="cite"><a href="#r3">3</a></sup>. The stop passes are not redistributed; the estimates are in <a href="../assets/heat/results.json">results.json</a>.</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/heat">tools/heat/</a>, built on <a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/rain">tools/rain/</a>; rebuild: <code>uv run --with pandas --with pyarrow --with pyfixest python tools/heat/estimate.py</code> (pyfixest {{pyfixest}})</dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Does heat delay Prague's trams? Hot hours and delay, 2025</i>. bsandova.com/texts/heat-delays, version 1.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Are Prague's trams more delayed in hot hours? Hot hours and delay, 2025</i>. bsandova.com/texts/heat-delays, version 2.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text and figures CC BY 4.0; weather data ČHMÚ, CC BY 4.0</dd></div>
 </dl>
 </details>
@@ -72,13 +71,13 @@
 {{photo}}
 
 <section>
-<p>The rain study found that a wet hour costs a Prague tram about ten seconds of delay, more in heavier rain, and nothing underground. Heat is the other weather that gets blamed for a slow summer commute: rails and overhead lines have limits, air conditioning fails, passengers move slowly. Studies of weather and transport mostly report that extreme heat slows traffic and changes how many people travel<sup class="cite"><a href="#r4">4</a></sup><sup class="cite"><a href="#r5">5</a></sup>, but how that adds up for a tram on its own rails is an empirical question with a short answer in the data Prague already has.</p>
+<p>The rain study found that a Prague tram gained about ten seconds more delay in a wet hour than in a dry one, more in heavier rain, and no clear change underground, an association whose registered placebo failed. Heat is the other weather that gets blamed for a slow summer commute: rails and overhead lines have limits, air conditioning fails, passengers move slowly. Studies of weather and transport mostly report slower traffic and changed ridership in extreme heat<sup class="cite"><a href="#r4">4</a></sup><sup class="cite"><a href="#r5">5</a></sup>; how delay differs for a tram on its own rails is an empirical question the data Prague already has can describe.</p>
 <p>The question was written down before any temperature was read. In a dry clock hour at 30 °C or more, does a Prague tram gain more delay than in a mild hour, between 15 and 25 °C, of the same route, direction, hour and weekday, in the same week? The comparison is within the week rather than within the day, because heat lasts all afternoon and a hot day differs from a mild day of the same week, not from its own morning. Buses were measured alongside as a secondary estimate and the metro as a control.</p>
 </section>
 
 <section>
 <h2>Data</h2>
-<p>The delays are the rain study's, unchanged: {{n_units}} tram units in hot or mild dry hours, each a route in one direction in one clock hour, with its trips' mean delay gained, after the same screening for planned closures, feed gaps and thin units. The temperature is the Czech Hydrometeorological Institute's ten-minute air temperature at Ruzyně, Libuš, Kbely and Klementinum<sup class="cite"><a href="#r3">3</a></sup>, averaged over the hour and the four stations. An hour counts only if it is dry by the rain study's rule, so that rain and heat do not mix. In the window, {{hot_hours}} dry hours reached 30 °C, on {{hot_dates}} days in {{hot_weeks}} weeks between mid-June and late August, the longest runs on 2 July and 13–15 August (fig. 1); the warmest hour averaged {{tmax}} °C. There were {{mild_hours}} mild dry hours to compare them with.</p>
+<p>The delays are the rain study's, unchanged: {{n_units}} tram units in hot or mild dry hours, each a route in one direction in one clock hour, with its trips' mean delay gained, after the same screening for planned closures, feed gaps and thin units. The temperature is the Czech Hydrometeorological Institute's ten-minute air temperature at Ruzyně, Libuš, Kbely and Klementinum<sup class="cite"><a href="#r3">3</a></sup>, averaged over the hour and the four stations. An hour counts only if it is dry by the rain study's rule, so that rain and heat do not mix. In the window, {{hot_hours}} dry hours reached 30 °C, on {{hot_dates}} days in {{hot_weeks}} weeks between mid-June and late August, the longest runs on 2 July and 13–15 August (fig. 1); eight of the {{hot_dates}} days fell in the school holidays, which began on 28 June, and 15 August was a Friday at the height of the holiday season. The warmest hour averaged {{tmax}} °C. There were {{mild_hours}} mild dry hours to compare them with.</p>
 <figure data-chart="../assets/heat/charts.json#days">
   <p class="ch-head">Only {{hot_dates}} days reached 30 °C in a dry hour, from mid-June to late August.</p>
   <img src="../assets/heat/04-days.svg" alt="Bar chart of dry hours at 30 °C or more per day in Prague, summer 2025: eleven days, the longest with nine and ten hours on 2 July and 14–15 August." loading="lazy">
@@ -93,19 +92,19 @@
 
 <section>
 <h2>Trams, buses and the metro</h2>
-<p>In a dry hour at 30 °C or more, a Prague tram gains {{d}} seconds less delay than in a mild hour of the same route, hour and weekday in the same week (95 % CI {{d_lo}} to {{d_hi}}). The design expected more delay, so the interval does not lie above zero, nor within ±10 seconds; by the rule the hypothesis is {{label}}, and the reason is that the estimate has the opposite sign. The raw averages point the same way: a tram trip gained {{t_hot}} seconds in an average hot hour and {{t_mild}} in an average mild one. Buses gain {{bd}} seconds less in a hot hour ({{bd_lo}} to {{bd_hi}}), from {{b_mild}} to {{b_hot}} seconds on average. The metro, underground and on its own track, shows {{mt}} seconds ({{mt_lo}} to {{mt_hi}}), close to zero (fig. 2).</p>
+<p>In a dry hour at 30 °C or more, a Prague tram gained {{d}} seconds less delay than in a mild hour of the same route, hour and weekday in the same week (95 % CI {{d_lo}} to {{d_hi}}). The design expected more delay, so the interval does not lie above zero, nor within ±10 seconds; by the rule the hypothesis is {{label}}, and the reason is that the estimate has the opposite sign. The raw averages point the same way: a tram trip gained {{t_hot}} seconds in an average hot hour and {{t_mild}} in an average mild one. Buses gain {{bd}} seconds less in a hot hour ({{bd_lo}} to {{bd_hi}}), from {{b_mild}} to {{b_hot}} seconds on average. The metro, underground and on its own track, shows {{mt}} seconds ({{mt_lo}} to {{mt_hi}}), close to zero (fig. 2).</p>
 <figure data-chart="../assets/heat/charts.json#modes">
-  <p class="ch-head">In a hot hour, trams gain {{d}} s less delay than in a mild one ({{d_lo}} to {{d_hi}}); buses likewise, the metro not.</p>
+  <p class="ch-head">In hot hours, trams gained {{d}} s less delay than in mild ones ({{d_lo}} to {{d_hi}}); buses likewise; the metro shows no clear change.</p>
   <img src="../assets/heat/01-modes.svg" alt="Delay gained per trip-hour in a hot hour against a mild one, with 95 % intervals: trams {{d_signed}} s and buses below zero, the metro {{mt}} s around zero." loading="lazy">
   <figcaption><b>fig. 2</b> · Seconds of delay gained per trip in a dry clock hour at 30 °C or more against a dry hour at 15–25 °C, with 95 % wild-cluster-bootstrap intervals by date for trams and buses (clustered by date for the metro); levels for every route × direction × hour × weekday and every week; n = {{n_units}} tram units, {{b_units}} bus units. Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>, ČHMÚ<sup class="cite"><a href="#r3">3</a></sup>.</figcaption>
 </figure>
 </section>
 
 <section>
-<h2>Hotter, faster</h2>
-<p>Split by temperature, the difference grows with the heat. Against mild hours, trams gain {{t25_28}} seconds of delay at 25–28 °C ({{t25_28_lo}} to {{t25_28_hi}}), {{t28_30}} at 28–30 °C ({{t28_30_lo}} to {{t28_30_hi}}), {{t30_32}} at 30–32 °C ({{t30_32_lo}} to {{t30_32_hi}}) and {{t32_up}} at 32 °C or more ({{t32_up_lo}} to {{t32_up_hi}}) (fig. 3). A pattern this regular is harder to attribute to a few unusual days than a single contrast would be, although the hottest band rests on the fewest hours.</p>
+<h2>Hotter hours, less delay gained</h2>
+<p>Split by temperature, the difference is larger in hotter hours. Against mild hours, trams gain {{t25_28}} seconds of delay at 25–28 °C ({{t25_28_lo}} to {{t25_28_hi}}), {{t28_30}} at 28–30 °C ({{t28_30_lo}} to {{t28_30_hi}}), {{t30_32}} at 30–32 °C ({{t30_32_lo}} to {{t30_32_hi}}) and {{t32_up}} at 32 °C or more ({{t32_up_lo}} to {{t32_up_hi}}) (fig. 3). The bands are not independent evidence: the hottest hours fall on the same few days, so the pattern can come from those days as easily as from temperature, and the intervals are analytic, clustered by date over about {{hot_dates}} hot days, and probably too narrow. The hottest band rests on the fewest hours.</p>
 <figure data-chart="../assets/heat/charts.json#dose">
-  <p class="ch-head">The hotter the hour, the less delay: {{t25_28}} s at 25–28 °C, {{t32_up}} s at 32 °C or more.</p>
+  <p class="ch-head">Hotter hours went with less delay gained: {{t25_28}} s at 25–28 °C, {{t32_up}} s at 32 °C or more.</p>
   <img src="../assets/heat/02-dose.svg" alt="Delay gained by trams by temperature band against mild hours, with 95 % intervals: {{t25_28}} s at 25–28 °C, {{t28_30}} s at 28–30 °C, {{t30_32}} s at 30–32 °C and {{t32_up}} s at 32 °C or more." loading="lazy">
   <figcaption><b>fig. 3</b> · Seconds of delay gained per tram trip-hour by the hour's four-station mean temperature, each band against dry hours at 15–25 °C, with 95 % intervals clustered by date; same levels as fig. 2. Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>, ČHMÚ<sup class="cite"><a href="#r3">3</a></sup>.</figcaption>
 </figure>
@@ -113,29 +112,29 @@
 
 <section>
 <h2>Checks</h2>
-<p>The registered checks keep the sign (fig. 4). Comparing within the date instead of the week, as the rain study did, gives {{de}} seconds ({{de_lo}} to {{de_hi}}). Calling an hour hot from 28 °C gives {{t28}} ({{t28_lo}} to {{t28_hi}}), and from 32 °C {{t32}} ({{t32_lo}} to {{t32_hi}}). Keeping wet hours, with rain in the model, gives {{wet}} ({{wet_lo}} to {{wet_hi}}), and measuring the delay a tram carries rather than the delay it gains gives {{lv}} ({{lv_lo}} to {{lv_hi}}). The placebo, which uses the heat of the same hour two days later, should be near zero; it is {{pl}} seconds ({{pl_lo}} to {{pl_hi}}). Its interval includes zero, but its point estimate is not small, which suggests that part of the contrast belongs to hot spells as such rather than to the hot hour.</p>
+<p>The registered checks keep the sign, but their intervals are analytic, clustered by date over about {{hot_dates}} hot days, and probably too narrow (fig. 4). Comparing within the date instead of the week, as the rain study did, gives {{de}} seconds ({{de_lo}} to {{de_hi}}). Calling an hour hot from 28 °C gives {{t28}} ({{t28_lo}} to {{t28_hi}}), and from 32 °C {{t32}} ({{t32_lo}} to {{t32_hi}}). Keeping wet hours, with rain in the model, gives {{wet}} ({{wet_lo}} to {{wet_hi}}), and measuring the delay a tram carries rather than the delay it gains gives {{lv}} ({{lv_lo}} to {{lv_hi}}). The placebo, which uses the heat of the same hour two days later, should be near zero; it is {{pl}} seconds ({{pl_lo}} to {{pl_hi}}), about {{pl_pct}} % of the main estimate. Its interval includes zero, but its point estimate is not small, which suggests that part of the contrast belongs to hot spells, or to the weeks they fall in, rather than to the hot hour.</p>
 <figure data-chart="../assets/heat/charts.json#checks">
-  <p class="ch-head">Every check stays below zero; the placebo, {{pl}} s, includes zero but is not small.</p>
-  <img src="../assets/heat/03-checks.svg" alt="The registered tram estimate {{d_signed}} s and its checks with 95 % intervals, all below zero, and the placebo {{pl}} s with an interval including zero." loading="lazy">
+  <p class="ch-head">Every check but the placebo has an interval below zero (analytic, about {{hot_dates}} date clusters); the placebo, {{pl}} s, includes zero but is about {{pl_pct}} % of the main estimate.</p>
+  <img src="../assets/heat/03-checks.svg" alt="The registered tram estimate {{d_signed}} s and its checks with 95 % intervals, all with intervals below zero, and the placebo {{pl}} s with an interval including zero." loading="lazy">
   <figcaption><b>fig. 4</b> · The registered tram estimate and the checks of the design, seconds of delay gained per trip-hour with 95 % intervals (bootstrap for the registered estimate, clustered by date for the checks). Data: PID via Golemio<sup class="cite"><a href="#r2">2</a></sup>, ČHMÚ<sup class="cite"><a href="#r3">3</a></sup>.</figcaption>
 </figure>
 </section>
 
 <section>
 <h2>What this means</h2>
-<p>Measured: on the hottest afternoons of summer 2025, Prague's trams and buses fell behind their timetables more slowly than on mild afternoons of the same weeks, by about {{d}} seconds per trip and hour for trams, about {{t_pct}} % of a mild hour's delay gained. The registered hypothesis expected the reverse. The study cannot say why. The reading that fits the controls best is that heat empties the streets: fewer passengers boarding means shorter stops, and fewer cars means fewer junctions blocked, while the metro, which depends on neither cars nor street junctions, does not change. Ridership and traffic on those afternoons were not measured here, so that reading is a hypothesis for a next study, not a finding. For a timetable planner, the result says that heat as such is not a source of delay in Prague's summer as it was in 2025; rain is.</p>
+<p>Measured: on the hottest afternoons of summer 2025, Prague's trams and buses fell behind their timetables more slowly than on mild afternoons of the same weeks, by about {{d}} seconds per trip and hour for trams, about {{t_pct}} % of a mild hour's delay gained. The registered hypothesis expected the reverse. The study cannot say why. Fewer passengers, fewer cars at junctions, roadworks or diversions that differ between hot and mild days, and the holiday timetable are all possible, and the data cannot distinguish these explanations; the placebo suggests part of the contrast belongs to hot spells rather than hot hours. Ridership and traffic were not measured here. A note added on 9 October 2026: part 3 of this series, published the same day as this part, found no shorter tram stops in hot hours ({{dwell_h}} s per stop), so fewer passengers boarding is not supported by dwell; traffic remains untested. For a timetable planner, the result is a description of 2025's {{hot_dates}} hot days, not a forecast for other summers.</p>
 </section>
 
 <section>
 <h2>What this does not show</h2>
-<p>The result rests on {{hot_dates}} hot days of one summer, and a different summer could look different; the bootstrap widens the interval for that, but it cannot add days. A hot hour bundles many things, from the number of passengers to the traffic and the people who stay at home, and the estimate is their sum. The placebo is not clean. Temperature is measured at four stations, not on the rails or in the vehicles. The study says nothing about comfort on board, about heat above the {{tmax}} °C of the warmest hour, or about other years and cities.</p>
+<p>The result rests on {{hot_dates}} hot days of one summer, between mid-June and late August, most of them in the school holidays, with holiday timetables and lighter commuting, and one of them, 15 August, at the height of the holiday season; week effects absorb some of this but not differences between days of the same week. A different summer could look different; the bootstrap widens the main interval for that, but it cannot add days, and the checks' intervals are analytic. A hot hour bundles many things, from the number of passengers to traffic, roadworks and heat faults on vehicles and overhead lines, and the estimate is their sum. The placebo is not clean. Temperature is measured at four stations, none of them on the tram network, not on the rails or in the vehicles. The study says nothing about comfort on board, about heat above the {{tmax}} °C of the warmest hour, or about other years and cities.</p>
 </section>
 
 <section id="reproduction">
 <h2>Reproduction</h2>
 <p>Every number on this page is filled in from the result files by a script, from the repository root:</p>
 <ol>
-<li>The rain study's steps, which build and screen the units: <a href="rain-delays">Does rain delay Prague's trams?</a>, Reproduction.</li>
+<li>The rain study's steps, which build and screen the units: <a href="rain-delays">Are Prague's trams later in rain hours?</a>, Reproduction.</li>
 <li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/heat/power.py"><code>tools/heat/power.py</code></a>: hot and mild hours and the power calculation.</li>
 <li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/heat/estimate.py"><code>estimate.py</code></a>, checked by <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/heat/test_heat.py"><code>test_heat.py</code></a>: the registered estimates and checks.</li>
 <li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/heat/describe.py"><code>describe.py</code></a> and <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/heat/article.py"><code>article.py</code></a>: the descriptive numbers, the figures and this page.</li>
