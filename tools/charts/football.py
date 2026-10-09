@@ -5,8 +5,8 @@ assets/football/ so the page links what it draws:
   per-head.json   data/snapshot/cze/per_capita.parquet (players in the nine strongest leagues per million, 2025/26)
   big5.json       docs/charts/big5.json (players with 450+ Big-5 minutes per season, 1995/96-2025/26)
   atlas-mf.json   docs/charts/atlas_MF.json, the home-eligible midfielders of 2025/26 (style and quality projections)
-Writes assets/football/charts.json and the static fallback assets/football/per-head.svg (the other fallbacks are the
-atlas's own renders). Rungs use the one palette of the atlas list: top-9 league in the held green, stepping-stone
+Writes assets/football/charts.json and the static fallbacks assets/football/per-head.svg and big5-series.svg (the
+midfielder fallback is the atlas's own render). Rungs use the one palette of the atlas list: top-9 league in the held green, stepping-stone
 league ink, other covered league grey, home league light grey, no minutes hairline.
 
     python3 tools/charts/football.py                         # build from the copies in assets/football/
@@ -130,6 +130,34 @@ def per_head_svg(rows: list[dict]) -> str:
     return "\n".join(out + ["</svg>"]) + "\n"
 
 
+def big5_series_svg(years: list[int], lines: list[tuple], per: list[tuple]) -> str:
+    """The static fallback of fig. 2 from the same big5.json, so the image without JavaScript shows the corrected count."""
+    w, l, r, gap = 700, 56, 70, 36
+    panels = [(lines, 300, 40, [0, 10, 20, 30, 40], "players, 450+ minutes"), (per, 190, 10, [0, 2, 4, 6, 8, 10], "players per million")]
+    hgt = 8 + sum(p[1] for p in panels) + gap * len(panels) + 24
+    out = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {hgt}" font-family="JetBrains Mono, monospace" font-size="11">',
+           f'<rect width="{w}" height="{hgt}" fill="#ffffff"/>']
+    x = lambda yr: l + (yr - years[0]) / (years[-1] - years[0]) * (w - l - r)
+    top = 8
+    for series, h, ymax, ticks, label in panels:
+        top += gap
+        y = lambda v, t=top, h=h, m=ymax: t + h - v / m * h
+        out.append(f'<text x="0" y="{top - 14}" fill="#111111">{label}</text>')
+        for t in ticks:
+            out.append(f'<line x1="{l}" x2="{w - r}" y1="{y(t):.1f}" y2="{y(t):.1f}" stroke="#e6e6e3"/>')
+            out.append(f'<text x="{l - 8}" y="{y(t) + 4:.1f}" text-anchor="end" fill="#8a8a8a">{t}</text>')
+        for yr in range(years[0], years[-1] + 1, 5):
+            out.append(f'<text x="{x(yr):.1f}" y="{top + h + 16}" text-anchor="middle" fill="#8a8a8a">{yr}/{(yr + 1) % 100:02d}</text>')
+        for name, vals, st in series:
+            pts = " ".join(f"{x(yr):.1f},{y(v):.1f}" for yr, v in zip(years, vals) if v is not None)
+            out.append(f'<polyline points="{pts}" fill="none" stroke="{st["c"]}" stroke-width="{st["w"]}"/>')
+        for name, vals, st in series:
+            if st["c"] != LIGHT:
+                out.append(f'<text x="{x(years[-1]) + 6:.1f}" y="{y(vals[-1]) + 4:.1f}" fill="{st["c"]}">{name}</text>')
+        top += h
+    return "\n".join(out + ["</svg>"]) + "\n"
+
+
 def build() -> dict:
     charts = {}
 
@@ -184,6 +212,9 @@ def build() -> dict:
     marks.append({"type": "text", "x": years[-1], "y": cz[-1] + 2.4, "anchor": "end", "c": HELD, "s": f"{season(seasons[-1])}: {cz[-1]}"})
     per = [{"type": "line", "name": B["countries"][c]["name"], "pts": series(c, "per_million"), "fmt": {"dp": 2}, **style(c)}
            for c in reversed([home, *contrast])]
+    (A / "big5-series.svg").write_text(big5_series_svg(
+        years, [(B["countries"][c]["name"], B["countries"][c]["n"][i0:], style(c)) for c in reversed(order)],
+        [(B["countries"][c]["name"], B["countries"][c]["per_million"][i0:], style(c)) for c in reversed([home, *contrast])]))
     charts["big5"] = {
         "alt": img_alt("big5-series.svg"),
         "layout": "rows",

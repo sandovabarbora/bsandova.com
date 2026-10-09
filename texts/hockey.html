@@ -46,7 +46,7 @@
 <header class="text-head">
   <p class="kicker">Tool · Player Pool Atlas · Czech ice hockey players, 1995/96–2025/26</p>
   <h1>Player Pool Atlas, hockey: <em>the Czech player pool against nine peers</em></h1>
-  <p class="deck">A descriptive atlas of Czech professional hockey players against nine peer nations: per head Czechia ranks 4th of 10 in the NHL, and its NHL group has worn down since 2001/02 without one clear break.</p>
+  <p class="deck">Descriptive atlas of Czech hockey against nine peers: per head Czechia ranks 4th of 10 in the NHL; Czech NHL regulars fell from 58 in 2001/02 to 20 in 2025/26, with no single clear break.</p>
   <dl class="facts">
     <div><dt>NHL players per million, 2025/26</dt><dd>1.83 <small>20 players · 4th of 10 · peer median 1.21 · administrative count</small></dd></div>
     <div><dt>Czech NHL players at the games threshold</dt><dd>58 → 20 <small>2001/02 · 2025/26 · administrative count</small></dd></div>
@@ -58,14 +58,14 @@
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
     <li>The atlas counts Czech players in the NHL and Europe's four strongest leagues against nine peers.</li>
-    <li>Per head, Czechia is in the middle of the ten, far behind Sweden and Finland.</li>
+    <li>Per head, Czechia is 4th of ten in the NHL, 5th with the home leagues counted, far behind Sweden and Finland; population is Eurostat's of 1 January 2026.</li>
     <li>Czech NHL players fell from 58 in 2001/02 to 20 in 2025/26, gradually: no single season of decline stands out. The NHL rank holds under two other thresholds.</li>
     <li>Everything here is description. The KHL and the Slovak league are not covered, and the AHL is not, because its terms forbid automated access; if Czech players moved there, the NHL fall overstates the loss.</li>
     <li>For 649 of the 867 Czech players, nationality comes only from the Extraliga foreigner flag or a licence: eligibility, not citizenship.</li>
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>14 September 2026 · updated 29 September 2026 · <a href="../changelog/#hockey">version 3</a></dd></div>
+  <div><dt>published</dt><dd>14 September 2026 · updated 9 October 2026 · <a href="../changelog/#hockey">version 4</a></dd></div>
   <div><dt>work since</dt><dd>March 2023</dd></div>
 </dl>
 <details class="meta-more">
@@ -74,7 +74,7 @@
   <div><dt>status</dt><dd>tool v0.1.0 · exploratory analysis, not pre-registered</dd></div>
   <div><dt>data</dt><dd>NHL stats REST, Liiga, SHL, hokej.cz, DEL and National League statistics, Eurostat <code>demo_gind</code> (updated 21 July 2026) and Wikipedia rosters (CC BY-SA 4.0), all fetched 29 September 2026; processed snapshot committed in <code>data/snapshot/</code> with a SHA-256 list; source data under their owners' terms, derived JSON in the repository</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/czehockey-player-pool-atlas">sandovabarbora/czehockey-player-pool-atlas</a> at <code>d1f9f88</code> (MIT); <code>uv sync &amp;&amp; make restore-snapshot &amp;&amp; make analysis &amp;&amp; make pages</code></dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Player Pool Atlas, hockey: the Czech player pool against nine peers</i>. bsandova.com/texts/hockey, version 3.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Player Pool Atlas, hockey: the Czech player pool against nine peers</i>. bsandova.com/texts/hockey, version 4.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text, figures and data CC BY 4.0</dd></div>
 </dl>
 </details>
@@ -98,7 +98,7 @@
 
 <section>
 <h2>Worked example: Czechia in 2025/26</h2>
-<p>Twenty Czech players reached the games threshold in the NHL, 1.83 per million inhabitants, 4th of 10 and above the peer median of 1.21. Sweden (7.26) and Finland (7.25) have about four times the Czech rate. Counting the five leagues, Czechia has 53 players, 4.86 per million, 5th of 10 against a peer median of 3.55<sup class="cite"><a href="#r1">1</a></sup>. That rank is not like for like: the five leagues include the home leagues of Finland, Sweden, Switzerland and Germany but not the Extraliga. With each nation's home league left out, Czechia ranks 4th of 10 against a peer median of 2.66 (computed here from the atlas's per-league counts).</p>
+<p>Twenty Czech players reached the games threshold in the NHL, 1.83 per million inhabitants (Eurostat population on 1 January 2026; the football atlas divides by the population on 1 January 2024, so the two atlases' rates are not on the same population date), 4th of 10 and above the peer median of 1.21. Sweden (7.26) and Finland (7.25) have about four times the Czech rate. Counting the five leagues, Czechia has 53 players, 4.86 per million, 5th of 10 against a peer median of 3.55<sup class="cite"><a href="#r1">1</a></sup>. That rank is not like for like: the five leagues include the home leagues of Finland, Sweden, Switzerland and Germany but not the Extraliga. With each nation's home league left out, Czechia ranks 4th of 10 against a peer median of 2.66 (computed here from the atlas's per-league counts).</p>
 <figure data-chart="../assets/hockey/charts.json#per-head">
   <p class="ch-head">Descriptive: Czechia has 1.83 NHL players per million, 4th of 10 and above the peer median of 1.21; Sweden and Finland have about four times the rate.</p>
   <img src="../assets/hockey/per-head.svg" alt="Horizontal bars, NHL players per million inhabitants, 2025/26: Sweden 7.26, Finland 7.25, Latvia 3.25, Czechia 1.83 in blue, Slovakia 1.29, Switzerland 1.21, Denmark 0.66, Norway 0.36, Austria 0.22, Germany 0.10; dashed line at the peer median 1.21." loading="lazy">
@@ -119,9 +119,9 @@
 <tr><td>SHL</td><td class="n">16.7 %</td><td class="n">11.4 %</td><td class="n">15.0 %</td><td class="n">9.4 %</td></tr>
 </tbody></table></div>
 <p>The National League and the DEL publish no birth dates, so their shares are not measured. Abroad, over 2020/21–2025/26, Czech NHL skaters played 0.98 times the median ice time of their league, season and position and scored 0.87 times its points per game; in the Liiga the ratios are 1.09 and 1.40, in the SHL 1.08 and 1.30<sup class="cite"><a href="#r1">1</a></sup>.</p>
-<p>Across 21 World Championship and Olympic rosters since 2010, Czech roster spots came on average 30 % from the NHL, 28 % from the Extraliga, 25 % from the KHL, 13 % from rung 2 and 3 % from other leagues; the Czech NHL share is 2nd of the ten nations. No KHL player has been on the roster since the 2022 World Championship, and the 2026 World Championship roster had 4 NHL players, 6 from rung 2 and 14 from the Extraliga<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r12">12</a></sup>.</p>
+<p>Across 21 World Championship and Olympic rosters since 2010, Czech roster spots came on average 30 % from the NHL, 28 % from the Extraliga, 25 % from the KHL, 13 % from rung 2 and 3 % from other leagues; the Czech NHL share is 2nd of the ten nations. No KHL player has been on the roster since the 2023 World Championship; 2022 had one, and the 2026 World Championship roster had 4 NHL players, 6 from rung 2 and 14 from the Extraliga<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r12">12</a></sup>.</p>
 <figure data-chart="../assets/hockey/charts.json#roster">
-  <p class="ch-head">Czech roster spots since 2010 came 30 % from the NHL, 28 % from the Extraliga and 25 % from the KHL; no KHL player since the 2022 World Championship.</p>
+  <p class="ch-head">Czech roster spots since 2010 came 30 % from the NHL, 28 % from the Extraliga and 25 % from the KHL; no KHL player since the 2023 World Championship; 2022 had one.</p>
   <img src="../assets/hockey/roster.svg" alt="Stacked bars for 21 Czech World Championship and Olympic rosters, 2010 to 2026, by the league of each player's club: NHL in blue, rung 2 in black, Extraliga in light grey, KHL in mid grey, other leagues pale; the KHL part disappears after 2022." loading="lazy">
   <figcaption><b>fig. 3</b> · Czech roster spots at every World Championship (WC) and Olympics (OG) since 2010 by the league of the player's club at the time: NHL blue, rung 2 black, Extraliga light grey, KHL mid grey, other leagues pale; n = 21 tournaments, 529 roster spots. English Wikipedia roster articles at fixed revisions; atlas <code>outputs/q6_national_team.json</code>, snapshot of 29 September 2026.</figcaption>
 </figure>

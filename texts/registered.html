@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>What "pre-specified" means on this site · Barbora Šandová</title>
-<meta name="description" content="A short note on what a pre-specified analysis on this site is: the plan committed to a public repository before the analysis was run, in dated steps, timestamped by the author, not by an independent registry.">
+<meta name="description" content="A short note on what a pre-specified analysis on this site is: the plan committed on the author's branch before the analysis was run, in dated steps, timestamped by the author's own machine, not by an independent registry.">
 <meta property="og:title" content="What &quot;pre-specified&quot; means on this site">
-<meta property="og:description" content="The plan is committed before the analysis is run, in dated steps, and timestamped by the author, not by an independent registry such as OSF.">
+<meta property="og:description" content="The plan is committed on the author's branch before the analysis is run, in dated steps, and timestamped by the author's machine, not by an independent registry such as OSF.">
 <meta property="og:type" content="article">
 <meta name="theme-color" content="#ffffff">
 <link rel="canonical" href="https://bsandova.com/texts/registered">
@@ -29,36 +29,36 @@
 <header class="text-head">
   <p class="kicker">Note · 5 October 2026 · how the studies here are planned</p>
   <h1>What "pre-specified" means <em>on this site</em></h1>
-  <p class="deck">Most of the work here ran for months or years before it was published. A pre-specified analysis is one whose plan, the questions, the method and the rule for reading the result, was committed to a public repository before that analysis was run.</p>
+  <p class="deck">Most of the work here ran for months or years before it was published. A pre-specified analysis is one whose plan, the questions, the method and the rule for reading the result, was committed on the author's branch, in a repository that is public, before that analysis was run.</p>
 </header>
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
     <li>The studies are long-running work: each page says since when, and the author has usually known the data for a long time.</li>
     <li>"Pre-specified analysis" means the plan for the published analysis was written and committed before it was run, so the analysis could not be chosen to fit its result.</li>
-    <li>The commits are public on GitHub, but their times are recorded by the author's machine, so they show the order of the steps, not an independent seal. Nothing here is registered with OSF or AsPredicted.</li>
-    <li>Every change after the plan is listed with its date in the study's design file and in the article.</li>
+    <li>The plan is committed on the author's branch before the analysis; the branch was usually pushed to GitHub after it. The order of the steps rests on commit times the author's machine recorded, not on an independent seal. Nothing here is registered with OSF or AsPredicted.</li>
+    <li>Every change after the plan is listed with its date in the study's design file and the article's change log.</li>
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>5 October 2026 · <a href="../changelog/#registered">version 1</a></dd></div>
+  <div><dt>published</dt><dd>5 October 2026 · updated 9 October 2026 · <a href="../changelog/#registered">version 2</a></dd></div>
 </dl>
 
 <section>
 <h2>What is pre-specified</h2>
-<p>Each study marked "pre-specified" has a design file in the repository, under <code>docs/research/</code>. It states the questions, the hypotheses where there are any, the data and how they are cleaned, the model, the checks, and a rule for reading each result fixed in advance: a result is <i>supported</i> if its interval lies wholly on the expected side, <i>not supported</i> if it lies within a stated margin of no effect, and <i>inconclusive</i> otherwise. The plan sets the analysis in advance; it does not mean the data were new to the author, who has usually worked with them for a long time, and each design says since when.</p>
-<p>The steps then follow in separate commits: the design; a power calculation where there is one; the code, tested on invented data; the data step; the results. Each article's "About this study" box names those commits, and each can be opened on GitHub. Anything changed after the plan, a source that turned out different, a model that did not converge, a check that was forgotten, is added to the design file as a dated note and repeated in the article's list of changes.</p>
+<p>Each study marked "pre-specified" has a design file in the repository, under <code>docs/research/</code>. It states the questions, the hypotheses where there are any, the data and how they are cleaned, the model, the checks, and a rule for reading each result fixed in advance. A result is <i>supported</i> if its interval lies wholly on the expected side. Where the design states a margin of no effect, so that the result can be read as equivalence, it is <i>not supported</i> if its interval lies wholly within that margin; where no margin is stated, as in the forecast checks, it is <i>not supported</i> only if its interval lies wholly on the other side, and a claim of no effect can then be found not supported but never supported. Anything else is <i>inconclusive</i>. Each design sets the interval and the margin it uses. The plan sets the analysis in advance; it does not mean the data were new to the author, who has usually worked with them for a long time, and each design says since when.</p>
+<p>The steps then follow in separate commits: the design; a power calculation where there is one; the code, tested on invented data; the data step; the results. Each article's "About this study" box names those commits, and each can be opened on GitHub. Anything changed after the plan, a source that turned out different, a model that did not converge, a check that was forgotten, is added to the design file as a dated note and repeated in the article's change log.</p>
 </section>
 
 <section>
 <h2>What it is not</h2>
-<p>It is not a preregistration in the sense economists and psychologists usually mean, which is filed with an independent registry, timestamped by it, and made before any data are collected. Here the timestamps come from the author's own commits, usually pushed the same day, and the data are often familiar. What the record shows is the order of the steps and every change after the plan; what it cannot show is that the analysis was never tried before the plan was written. That rests on trust in the author, and the design files try to earn it by being specific.</p>
+<p>It is not a preregistration in the sense economists and psychologists usually mean, which is filed with an independent registry, timestamped by it, and made before any data are collected. Here the plan is committed on the author's own branch before the analysis, and the branch was usually pushed to GitHub after the analysis, not before it; the order of the steps rests on commit times recorded by the author's machine, and the data are often familiar. What the record shows is the order of the steps and every change after the plan; what it cannot show is that the analysis was never tried before the plan was written. That rests on trust in the author, and the design files try to earn it by being specific.</p>
 <p>Studies marked <i>exploratory</i> have no such plan. They describe and compare, and their findings are suggestions for a pre-specified analysis, not results.</p>
 </section>
 
 <section>
 <h2>Why not a registry</h2>
-<p>Most studies here are personal and run alongside other work. A registry entry for each would add little that a public commit history does not already show. Where the stakes are higher, such as a study that compares named parties before an election, the plan is held to stricter rules: a frozen protocol, an embargo until the polls close, and a right of reply for every party before anything is published.</p>
+<p>Most studies here are personal and run alongside other work. A registry entry for each would add little that a public commit history does not already show. Where the stakes are higher, such as a study that compares named parties before an election, I intend to hold the plan to stricter rules: a frozen protocol, an embargo until the polls close, and a right of reply for every party before anything is published. No study published here has used them yet.</p>
 </section>
 
 
