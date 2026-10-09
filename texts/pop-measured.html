@@ -77,7 +77,18 @@
 
 <section class="series">
 <h2>The parts</h2>
-<p>Each part's focal song is the artist's most-streamed song on kworb's totals of Spotify's global chart, chosen by that rule. "Lasted longer" is the share of songs with the same global peak since 2017 that spent more days in the global Top 200, with songs still charting counted as lasting at least their days so far (Kaplan–Meier); the 95 % CI comes from 2 000 bootstrap resamples. A country's ratio is the focal song's days in its national chart divided by the median days of that country's own number ones. A Boxscore entry is one venue, for one night or a run, as Billboard reported it and Wikipedia lists it; it counts as sold out at 99.5 % of tickets sold or more.</p>
+<p>The terms of the summaries below are defined in the table.</p>
+<div class="tw">
+<table class="ht">
+<thead><tr><th>Term</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td>focal song</td><td>the artist's most-streamed song on kworb's totals of Spotify's global chart, chosen by that rule</td></tr>
+<tr><td>lasted longer</td><td>the share of songs with the same global peak since 2017 that spent more days in the global Top 200, with songs still charting counted as lasting at least their days so far (Kaplan–Meier); the 95 % CI comes from 2 000 bootstrap resamples</td></tr>
+<tr><td>a country's ratio</td><td>the focal song's days in its national chart divided by the median days of that country's own number ones</td></tr>
+<tr><td>Boxscore entry</td><td>one venue, for one night or a run, as Billboard reported it and Wikipedia lists it; it counts as sold out at 99.5 % of tickets sold or more</td></tr>
+</tbody>
+</table>
+</div>
 <ol class="parts">
   <li>
     <a class="still" href="pop-harry-styles" aria-label="Part 1, Harry Styles, measured: how long a hit lasts, where, and what a ticket costs"><span class="shot" style="view-transition-name:ph-pop-harry-styles;--bg:url(../assets/photo/pop-harry-styles.jpg);--bg-s:url(../assets/photo/pop-harry-styles-1200.jpg)"></span></a>
@@ -132,7 +143,7 @@
 
 <section id="maps">
 <h2>Five maps</h2>
-<p>Each part's map shades the countries by how many times as long the artist's biggest song lasted in the national chart as the local median number one, blue where longer and grey where shorter, with circles for the average ticket in days of income. Side by side, they show where the song lasted longer than local number ones: much of the world for Harry Styles and Billie Eilish, the English-speaking world and Asia more than Latin America for Taylor Swift, East and South-East Asia for BTS, and Latin America, Spain and the United States for Bad Bunny.</p>
+<p>Each part's map shades the countries by how many times as long the artist's biggest song lasted in the national chart as the local median number one, blue where longer and grey where shorter, with circles for the average ticket in days of income. Side by side, the maps show that the song lasted longer than local number ones in much of the world for Harry Styles and Billie Eilish, the English-speaking world and Asia more than Latin America for Taylor Swift, East and South-East Asia for BTS, and Latin America, Spain and the United States for Bad Bunny.</p>
 <div class="minis"><figure class="mini" data-pop="map" data-src="../assets/pop/harry-styles/map.svg"><a href="pop-harry-styles"><img src="../assets/pop/harry-styles/map.svg" alt="World map for Harry Styles: where the focal song lasted longer than local number ones, and ticket prices in days of income." loading="lazy"></a><figcaption>Harry Styles</figcaption></figure><figure class="mini" data-pop="map" data-src="../assets/pop/taylor-swift/map.svg"><a href="pop-taylor-swift"><img src="../assets/pop/taylor-swift/map.svg" alt="World map for Taylor Swift: where the focal song lasted longer than local number ones, and ticket prices in days of income." loading="lazy"></a><figcaption>Taylor Swift</figcaption></figure><figure class="mini" data-pop="map" data-src="../assets/pop/bts/map.svg"><a href="pop-bts"><img src="../assets/pop/bts/map.svg" alt="World map for BTS: where the focal song lasted longer than local number ones, and ticket prices in days of income." loading="lazy"></a><figcaption>BTS</figcaption></figure><figure class="mini" data-pop="map" data-src="../assets/pop/bad-bunny/map.svg"><a href="pop-bad-bunny"><img src="../assets/pop/bad-bunny/map.svg" alt="World map for Bad Bunny: where the focal song lasted longer than local number ones, and ticket prices in days of income." loading="lazy"></a><figcaption>Bad Bunny</figcaption></figure><figure class="mini" data-pop="map" data-src="../assets/pop/billie-eilish/map.svg"><a href="pop-billie-eilish"><img src="../assets/pop/billie-eilish/map.svg" alt="World map for Billie Eilish: where the focal song lasted longer than local number ones, and ticket prices in days of income." loading="lazy"></a><figcaption>Billie Eilish</figcaption></figure></div>
 </section>
 
@@ -162,12 +173,46 @@
 
 <section>
 <h2>How the series was registered</h2>
-<p>Part 1: registered analysis plan, design committed at <code>cecad1c</code> on 1 October 2026, before the results commit <code>ebf819f</code>; commit times are self-reported, and the branch was pushed after the analysis. On <code>main</code> both arrived in one squash commit, <code>1e0a5eb</code>, so there they are not independently timestamped. Parts 2–5: the series design and two questions added to all five were committed at <code>e890c27</code> and <code>12417ae</code> on 1 October 2026, before the results commit <code>8fbadd3</code> of 2 October; commit times are self-reported, and the branch was pushed after the analysis. On <code>main</code> the design arrived in <code>1e0a5eb</code> (2 October, 00:33) and the results in <code>942e304</code> (2 October, 10:41). Part 2's study of prices during the Eras Tour: design committed at <code>f5d702c</code> on 2 October 2026, before the results commit <code>4401fda</code> two minutes later; on <code>main</code> both are in <code>942e304</code>, not independently timestamped. Part 6: design committed at <code>4fe0484</code> on 2 October 2026, before the results commit <code>85b798f</code>, after its inputs had been seen, so it is exploratory; on <code>main</code> both are in <code>3b9f827</code>, not independently timestamped. The original branch commits are tagged <code>pop-&lt;part&gt;-design</code> and <code>pop-&lt;part&gt;-results</code> (tags set on 9 October 2026). "Work since March 2026" means the author has worked with these sources (kworb.net's Spotify chart pages and Wikipedia's tour pages) continuously since then, in work that led to these studies, so the designs were written with knowledge of the sources, not blind to them; the collection analysed was made on 1 October 2026, and what had been seen of it before each design is listed in that design. The data were collected once, for all parts (with one later addition, below), and each part's results were computed from the same files with the same code. Changes made after the first results had been seen are dated in the series design and in each part's change log: two data definitions (attendance cells that span several venues, and entries that mix online viewers with the hall, both left out of the sell-out share); one extra collection (the track pages of songs that peaked at two, Taylor Swift's reference set); a third BTS leg total, Taoyuan 2018, flagged by hand on 3 October; two Bad Bunny tours collected from the wrong Wikipedia pages, re-collected on 3 October with his part recomputed; and <i>Closer</i> (The Chainsmokers) taken out of the number-one reference set on 6 October, with parts 1, 3, 4 and 5 recomputed.</p>
+<p>The first table gives each study's design and results commits. For Part 1 and for the series design of Parts 2–5 this is a registered analysis plan, with the design committed before the results commit; commit times are self-reported, and the branch was pushed after the analysis. Part 6's design came after its inputs had been seen, so it is exploratory. The original branch commits are tagged <code>pop-&lt;part&gt;-design</code> and <code>pop-&lt;part&gt;-results</code> (tags set on 9 October 2026). "Work since March 2026" means the author has worked with these sources (kworb.net's Spotify chart pages and Wikipedia's tour pages) continuously since then, in work that led to these studies, so the designs were written with knowledge of the sources, not blind to them; the collection analysed was made on 1 October 2026, and what had been seen of it before each design is listed in that design. The data were collected once, for all parts (with one later addition, below), and each part's results were computed from the same files with the same code. Changes made after the first results had been seen are dated in the series design and in each part's change log, and listed in the second table.</p>
+<div class="tw">
+<table class="ht">
+<thead><tr><th>Study</th><th>Design commit</th><th>Results commit</th><th>On <code>main</code></th></tr></thead>
+<tbody>
+<tr><td>Part 1</td><td class="v"><code>cecad1c</code> · 1 October 2026</td><td class="v"><code>ebf819f</code></td><td>both in one squash commit, <code>1e0a5eb</code>, so there not independently timestamped</td></tr>
+<tr><td>Parts 2–5: the series design and two questions added to all five</td><td class="v"><code>e890c27</code> and <code>12417ae</code> · 1 October 2026</td><td class="v"><code>8fbadd3</code> · 2 October</td><td>design in <code>1e0a5eb</code> (2 October, 00:33), results in <code>942e304</code> (2 October, 10:41)</td></tr>
+<tr><td>Part 2's study of prices during the Eras Tour</td><td class="v"><code>f5d702c</code> · 2 October 2026</td><td class="v"><code>4401fda</code>, two minutes later</td><td>both in <code>942e304</code>, not independently timestamped</td></tr>
+<tr><td>Part 6 (exploratory: after its inputs had been seen)</td><td class="v"><code>4fe0484</code> · 2 October 2026</td><td class="v"><code>85b798f</code></td><td>both in <code>3b9f827</code>, not independently timestamped</td></tr>
+</tbody>
+</table>
+</div>
+<div class="tw">
+<table class="ht">
+<thead><tr><th>Change after the first results</th><th>Date</th></tr></thead>
+<tbody>
+<tr><td>two data definitions: attendance cells that span several venues, and entries that mix online viewers with the hall, both left out of the sell-out share</td><td class="v">–</td></tr>
+<tr><td>one extra collection: the track pages of songs that peaked at two, Taylor Swift's reference set</td><td class="v">–</td></tr>
+<tr><td>a third BTS leg total, Taoyuan 2018, flagged by hand</td><td class="v">3 October</td></tr>
+<tr><td>two Bad Bunny tours collected from the wrong Wikipedia pages, re-collected, with his part recomputed</td><td class="v">3 October</td></tr>
+<tr><td><i>Closer</i> (The Chainsmokers) taken out of the number-one reference set, with parts 1, 3, 4 and 5 recomputed</td><td class="v">6 October</td></tr>
+</tbody>
+</table>
+</div>
 </section>
 
 <section id="data">
 <h2>Data and code</h2>
-<p>Every part reads the same sources: kworb.net's totals of Spotify's global and national charts and its artist pages (<a href="https://kworb.net/spotify/">kworb.net/spotify</a>, accessed 1 October 2026); the English Wikipedia articles of the artists' tours with Billboard's Boxscore figures, at the revisions listed in each part's references (accessed 1 October 2026); and the World Bank's GDP per capita, current US$, <code>NY.GDP.PCAP.CD</code> (<a href="https://data.worldbank.org/indicator/NY.GDP.PCAP.CD">data.worldbank.org</a>, accessed 1 October 2026). Part 2 adds Eurostat's harmonised price indices, <code>prc_hicp_midx</code> (<a href="https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_midx/default/table">ec.europa.eu/eurostat</a>, accessed 2 October 2026). The scripts in <code>tools/pop/</code> collect, parse, analyse and draw every part, and each article's numbers are filled in from its published results file.</p>
+<p>Every part reads the same sources, and Part 2 adds Eurostat's price indices; the first table lists them with their access dates. The scripts in <code>tools/pop/</code> collect, parse, analyse and draw every part, and each article's numbers are filled in from its published results file.</p>
+<div class="tw">
+<table class="ht">
+<thead><tr><th>Source</th><th>Where</th><th>Accessed</th></tr></thead>
+<tbody>
+<tr><td>kworb.net's totals of Spotify's global and national charts and its artist pages</td><td><a href="https://kworb.net/spotify/">kworb.net/spotify</a></td><td class="v">1 October 2026</td></tr>
+<tr><td>the English Wikipedia articles of the artists' tours with Billboard's Boxscore figures</td><td>at the revisions listed in each part's references</td><td class="v">1 October 2026</td></tr>
+<tr><td>the World Bank's GDP per capita, current US$, <code>NY.GDP.PCAP.CD</code></td><td><a href="https://data.worldbank.org/indicator/NY.GDP.PCAP.CD">data.worldbank.org</a></td><td class="v">1 October 2026</td></tr>
+<tr><td>Part 2 only: Eurostat's harmonised price indices, <code>prc_hicp_midx</code></td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_midx/default/table">ec.europa.eu/eurostat</a></td><td class="v">2 October 2026</td></tr>
+</tbody>
+</table>
+</div>
 <div class="tw">
 <table class="ht">
 <thead><tr><th>Part</th><th>Results</th><th>Rows</th></tr></thead>
