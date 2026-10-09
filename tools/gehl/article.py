@@ -2,25 +2,24 @@
 
 Reads docs/research/gehl-trams-{results,power,screen,coverage,posthoc}.json and part 2's heat-delays-results.json; writes
 assets/rain-dwell/ (charts.json, 01-windows.svg, 02-checks.svg, 03-heat.svg, results.json) and texts/rain-dwell.html
-from tools/gehl/template.html. Chart helpers are the rain article's.
+from tools/gehl/template.html. Chart helpers are tools/site/article_kit.py.
 
     uv run --with matplotlib --with pandas --with pyarrow --with duckdb --with pyfixest python tools/gehl/article.py
 """
 from __future__ import annotations
 
-import importlib.util
 import json
 import re
 import shutil
+import sys
 from importlib import metadata
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
-_spec = importlib.util.spec_from_file_location("rain_article", ROOT / "tools" / "rain" / "article.py")
-ra = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(ra)
-n, ci, range_rows, range_chart, static_range = ra.n, ra.ci, ra.range_rows, ra.range_chart, ra.static_range
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
+from article_kit import n, range_chart, range_rows, results_reader, static_range, use_article_style  # noqa: E402
 
+use_article_style()
+ROOT = Path(__file__).resolve().parents[2]
 R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "rain-dwell"
 HEAT = "#b4532a"
@@ -28,10 +27,10 @@ UNIT = "seconds of dwell per stop"
 
 
 def load() -> dict:
-    j = lambda name: json.loads((R / f"{name}.json").read_text())  # noqa: E731
-    return {"res": j("gehl-trams-results"), "pow": j("gehl-trams-power"), "scr": j("gehl-trams-screen"),
-            "cov": j("gehl-trams-coverage"), "heat": j("heat-delays-results"), "rain": j("rain-delays-results"),
-            "post": j("gehl-trams-posthoc")}
+    j = results_reader("gehl-trams")
+    return {"res": j("results"), "pow": j("power"), "scr": j("screen"), "cov": j("coverage"),
+            "heat": results_reader("heat-delays")("results"), "rain": results_reader("rain-delays")("results"),
+            "post": j("posthoc")}
 
 
 def margin_rules(chart: dict, m: float) -> dict:
@@ -63,14 +62,13 @@ def figures(x: dict) -> None:
         ("placebo: 2 days later", c["placebo_rain_two_days_later"]["rain_opt"], "grey"),
         ("delay held, run 9 Oct", post["delay_held"]["with_delay_gained"]["rain_opt"], "grey")])
     t2 = x["heat"]["tram"]
-    heat = [{**r, "c": HEAT if r["y"].startswith("delay") else r["c"]} for r in range_rows([
-        ("delay gained, part 2", {"est_s": t2["delta_s"], "ci95": t2["ci95"]}, "ink"),
-        ("dwell, this part", res["heat_secondary"], "held")])]
+    heat = range_rows([("delay gained, part 2", {"est_s": t2["delta_s"], "ci95": t2["ci95"]}, HEAT),
+                       ("dwell, this part", res["heat_secondary"], "held")])
     charts = {
         "windows": margin_rules(range_chart(
             windows, f"Change in dwell in a rain hour, with 95 % intervals and the ±{n(m, 1)} s band: weekday "
-                     f"mornings {n(c['by_window']['rain']['est_s'], 2, True)} s; the weekend difference "
-                     f"{n(p['est_s'], 2, True)} s, inside the band.", UNIT + ", rain against dry", [-2.5, 2.5],
+                     f"mornings {n(c['by_window']['rain']['est_s'], 2, sign=True)} s; the weekend difference "
+                     f"{n(p['est_s'], 2, sign=True)} s, inside the band.", UNIT + ", rain against dry", [-2.5, 2.5],
             [-2, -1, 0, 1, 2]), m),
         "checks": margin_rules(range_chart(
             checks, "The registered weekend difference and its checks, with 95 % intervals: all near zero except the "
@@ -78,21 +76,20 @@ def figures(x: dict) -> None:
             [-2.5, 2.5], [-2, -1, 0, 1, 2]), m),
         "heat": range_chart(heat, f"Hot against mild hours, with 95 % intervals: trams gained "
                                   f"{n(abs(t2['delta_s']), 1)} s less delay in part 2, while dwell changes by "
-                                  f"{n(res['heat_secondary']['est_s'], 2, True)} s.", "seconds per trip-hour (delay) "
+                                  f"{n(res['heat_secondary']['est_s'], 2, sign=True)} s.", "seconds per trip-hour (delay) "
                             "or per stop (dwell), hot against mild", [-25, 5], [-20, -10, 0]),
     }
     charts["heat"]["data"] = ["results.json", "../heat/results.json"]
     (A / "charts.json").write_text(json.dumps(charts, ensure_ascii=False))
-    flat = lambda rows: [{**r, "c": "held" if r["c"] == HEAT else r["c"]} for r in rows]  # noqa: E731
     static_range(windows, A / "01-windows.svg", UNIT, (-2.5, 2.5))
     static_range(checks, A / "02-checks.svg", UNIT, (-2.5, 2.5))
-    static_range(flat(heat), A / "03-heat.svg", "seconds, hot against mild", (-25, 5))
+    static_range(heat, A / "03-heat.svg", "seconds, hot against mild", (-25, 5))
 
 
 def values(x: dict) -> dict:
     res, pw, scr, cov, t2 = x["res"], x["pow"]["after_deviation"], x["scr"], x["cov"], x["heat"]["tram"]
     p, h, c = res["primary_theta"], res["heat_secondary"], res["checks"]
-    v = {"m": n(res["margin_m_s"], 1), "th": n(p["est_s"], 2, True), "th_lo": n(p["ci95"][0], 2),
+    v = {"m": n(res["margin_m_s"], 1), "th": n(p["est_s"], 2, sign=True), "th_lo": n(p["ci95"][0], 2),
          "th_hi": n(p["ci95"][1], 2), "th90_lo": n(p["ci90"][0], 2), "th90_hi": n(p["ci90"][1], 2), "label": p["label"],
          "n_units": n(p["n_units"]), "dates": n(p["dates"]), "opt_dates": n(p["treated_dates"]),
          "opt_hours": n(pw["optional"]["rain_hours"]), "nec_hours": n(pw["necessary"]["rain_hours"]),
@@ -101,7 +98,7 @@ def values(x: dict) -> dict:
          "reg_opt_dates": n(x["pow"]["registered"]["optional"]["rain_dates"]),
          "reg_both_opt": n(x["pow"]["registered"]["optional"]["dates_with_rain_and_dry_hours"]),
          "reg_both_nec": n(x["pow"]["registered"]["necessary"]["dates_with_rain_and_dry_hours"]),
-         "h": n(h["est_s"], 2, True), "h_lo": n(h["ci95"][0], 2), "h_hi": n(h["ci95"][1], 2), "hlabel": h["label"],
+         "h": n(h["est_s"], 2, sign=True), "h_lo": n(h["ci95"][0], 2), "h_hi": n(h["ci95"][1], 2), "hlabel": h["label"],
          "h_dates": n(h["treated_dates"]), "t2": n(abs(t2["delta_s"]), 1), "t2_lo": n(t2["ci95"][0], 1),
          "t2_hi": n(t2["ci95"][1], 1),
          "dwell": n(scr["margin"]["mean_dwell_dry_necessary_s"], 1), "units_all": n(scr["units"]["kept"]),
@@ -113,7 +110,7 @@ def values(x: dict) -> dict:
          "r1d": n(x["rain"]["tram"]["delta_s"], 1), "pyfixest": metadata.version("pyfixest")}
 
     def put(key: str, e: dict) -> None:
-        v[key], v[key + "_lo"], v[key + "_hi"] = n(e["est_s"], 2, True), n(e["ci95"][0], 2), n(e["ci95"][1], 2)
+        v[key], v[key + "_lo"], v[key + "_hi"] = n(e["est_s"], 2, sign=True), n(e["ci95"][0], 2), n(e["ci95"][1], 2)
 
     for key, e in (("rn", c["by_window"]["rain"]), ("de", c["date_effects"]["rain_opt"]),
                    ("ev", c["evening"]["rain_opt"]), ("sc", c["school_holidays_out"]["rain_opt"]),

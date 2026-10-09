@@ -3,28 +3,27 @@
 Reads docs/research/delay-origins-{results,screen,describe}.json, tools/data/late/segments.parquet and the PID GTFS stops
 (tools/data/praha2/gtfs/); writes assets/late/ (charts.json, map.json, 01-map.svg, 02-top.svg, 03-stops.svg,
 04-checks.svg, results.json, segments.json) and texts/delay-origins.html from tools/late/template.html. Chart
-helpers are the rain article's.
+helpers are tools/site/article_kit.py.
 
-    uv run --with matplotlib --with pandas --with pyarrow --with duckdb --with pyfixest python tools/late/article.py
+    uv run --with matplotlib --with pandas --with pyarrow --with duckdb python tools/late/article.py
 """
 from __future__ import annotations
 
-import importlib.util
 import json
 import math
 import re
 import shutil
+import sys
 from pathlib import Path
 
 import duckdb
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[2]
-_spec = importlib.util.spec_from_file_location("rain_article", ROOT / "tools" / "rain" / "article.py")
-ra = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(ra)
-plt, n = ra.plt, ra.n
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
+from article_kit import HELD, n, results_reader, use_article_style  # noqa: E402
 
+plt = use_article_style()
+ROOT = Path(__file__).resolve().parents[2]
 R, A, D = ROOT / "docs" / "research", ROOT / "assets" / "late", ROOT / "tools" / "data" / "late"
 GTFS = ROOT / "tools" / "data" / "praha2" / "gtfs"
 PROD, REC, GREY = "#c0503f", "#2a7f86", "#666666"  # coral: delay made; teal: delay made up
@@ -33,7 +32,7 @@ OFFSET = 0.00011  # degrees: the two directions of a segment drawn side by side,
 
 
 def load() -> dict:
-    j = lambda name: json.loads((R / f"delay-origins-{name}.json").read_text())  # noqa: E731
+    j = results_reader("delay-origins")
     return {"res": j("results"), "scr": j("screen"), "desc": j("describe")}
 
 
@@ -163,7 +162,7 @@ def figures(x: dict, t: pd.DataFrame, xy: dict) -> dict:
     o = t.sort_values("hours")
     sel = pd.concat([o.tail(15).iloc[::-1], o.head(15)])
     top = [{"y": f"{r.seg_from} → {r.seg_to}", "x0": 0, "x1": round(r.hours), "c": PROD if r.hours > 0 else REC,
-            "tip": f"{r.seg_from} → {r.seg_to}: {n(r.hours, 0, True)} h in all, {n(r.all, 1, True)} s per pass, "
+            "tip": f"{r.seg_from} → {r.seg_to}: {n(r.hours, 0, sign=True)} h in all, {n(r.all, 1, sign=True)} s per pass, "
                    f"{n(r.passes)} passes"} for r in sel.itertuples()]
     charts = {"top": hbar_chart(top, "The 15 tram segments that made the most delay and the 15 that made up the most, "
                                      "in hours over the season.", "hours of delay, 15 March – 8 September 2025",
@@ -176,7 +175,7 @@ def figures(x: dict, t: pd.DataFrame, xy: dict) -> dict:
     for q in x["desc"]["tram"]["large_stops"]:
         m = q["per_pass_s"]
         rows.append({"y": f"{q['stop']} · {q['side']}", "x0": 0, "x1": round(m, 1), "c": PROD if m > 0 else REC,
-                     "tip": f"{q['side']} {q['stop']}: {n(m, 1, True)} s per pass over {q['segments']} segments"})
+                     "tip": f"{q['side']} {q['stop']}: {n(m, 1, sign=True)} s per pass over {q['segments']} segments"})
         table.append([q["stop"], q["side"], round(m, 1), q["segments"], q["passes"]])
     charts["stops"] = hbar_chart(rows, "Delay gained per pass on the segments arriving at and leaving six large stops: "
                                        "leaving costs time at all six; at the busiest, trams make time up arriving.",
@@ -264,7 +263,7 @@ def figures(x: dict, t: pd.DataFrame, xy: dict) -> dict:
     f, ax = plt.subplots(figsize=(7.2, 0.3 * len(chk) + 0.8))
     for i, r in enumerate(reversed(chk)):
         ax.plot([r["lo"], r["hi"]], [i, i], color="#111111", lw=1.2)
-        ax.plot(r["mid"], i, "o", color=ra.HELD if r["c"] == "held" else "#111111", ms=4)
+        ax.plot(r["mid"], i, "o", color=HELD if r["c"] == "held" else "#111111", ms=4)
     ax.axvline(0.5, color=GREY, lw=0.8)
     ax.set_yticks(range(len(chk)), [r["y"] for r in reversed(chk)], fontsize=7)
     ax.set_xlim(0, 1)
@@ -306,14 +305,14 @@ def values(x: dict, t: pd.DataFrame, fig: dict) -> dict:
          "def_off": n(100 * scr["definition_check"]["share_delay_gain_not_delay_difference"], 1),
          "sampled": n(scr["definition_check"]["sampled"])}
     for i, r in enumerate(o.head(4).itertuples(), 1):
-        v[f"p{i}"], v[f"p{i}_h"], v[f"p{i}_s"] = p(r), n(r.hours), n(r.all, 0, True)
+        v[f"p{i}"], v[f"p{i}_h"], v[f"p{i}_s"] = p(r), n(r.hours), n(r.all, 0, sign=True)
     for i, r in enumerate(o.tail(2).iloc[::-1].itertuples(), 1):
-        v[f"r{i}"], v[f"r{i}_h"], v[f"r{i}_s"] = p(r), n(abs(r.hours)), n(r.all, 0, True)
+        v[f"r{i}"], v[f"r{i}_h"], v[f"r{i}_s"] = p(r), n(abs(r.hours)), n(r.all, 0, sign=True)
     pick = lambda a, b: t[(t["seg_from"] == a) & (t["seg_to"] == b)].iloc[0]["all"]  # noqa: E731
-    v["vod"], v["vac"] = n(pick("Vodičkova", "Václavské náměstí"), 0, True), n(pick("Václavské náměstí", "Jindřišská"), 0, True)
+    v["vod"], v["vac"] = n(pick("Vodičkova", "Václavské náměstí"), 0, sign=True), n(pick("Václavské náměstí", "Jindřišská"), 0, sign=True)
     st = {(r[0], r[1]): r[2] for r in fig["stops"]}
-    v["and_in"], v["and_out"] = n(st[("Anděl", "arriving")], 0, True), n(st[("Anděl", "leaving")], 0, True)
-    v["hn_in"], v["hn_out"] = n(st[("Hlavní nádraží", "arriving")], 0, True), n(st[("Hlavní nádraží", "leaving")], 0, True)
+    v["and_in"], v["and_out"] = n(st[("Anděl", "arriving")], 0, sign=True), n(st[("Anděl", "leaving")], 0, sign=True)
+    v["hn_in"], v["hn_out"] = n(st[("Hlavní nádraží", "arriving")], 0, sign=True), n(st[("Hlavní nádraží", "leaving")], 0, sign=True)
     dt = x["desc"]["tram"]
     v["vol"], v["byd"] = n(100 * dt["top_tenth_pass_share"], 1), n(100 * dt["top_tenth_by_delay_pass_share"], 1)
     v["ovl"] = n(100 * dt["overlap_busiest_and_largest_producers"])
