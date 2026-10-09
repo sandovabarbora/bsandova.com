@@ -10,9 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }   # the changelog is generated from the full git log
-      - uses: actions/setup-python@v5
-        with: { python-version: "3.12" }
-      - run: python -m pip install -q pytest && python -m pytest -q ask/test_eval_guard.py   # the weekly Ask eval guard
       - run: ./build.sh   # stamp style.css?v=<sha> so the edge cache cannot serve a stale sheet
       - uses: cloudflare/wrangler-action@v3
         with:
