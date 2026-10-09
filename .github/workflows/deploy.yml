@@ -4,6 +4,8 @@ on:
     branches: [main]
   workflow_dispatch:
 concurrency: deploy
+permissions:
+  contents: read
 jobs:
   cloudflare:
     runs-on: ubuntu-latest
