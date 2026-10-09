@@ -22,6 +22,8 @@ import matplotlib.pyplot as plt  # noqa: E402
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "site"))
 from article_kit import photo_section, render  # noqa: E402
+sys.path.insert(0, str(ROOT / "tools" / "charts"))
+import story_pop  # noqa: E402
 R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "concerts"
 INK, GREY, LIGHT = "#111111", "#666666", "#b5b5b0"
@@ -196,6 +198,7 @@ def main() -> None:
     out = render(t, v)
     (ROOT / "texts" / "concert-effect.html").write_text(out, encoding="utf-8")
     print("written texts/concert-effect.html")
+    story_pop.concerts()  # the story layer: notes at key points, as published
 
 
 if __name__ == "__main__":

@@ -15,6 +15,9 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
+import sys  # noqa: E402
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
+from paper_figures import recolour  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 # corrected 29 Sep 2026: Text 02 with M1 + M1G (assets/parking6/part2_correction.json)
@@ -55,3 +58,5 @@ def fig():
 
 
 fig()
+
+recolour("parking3")  # on paper, the article's held colour as accent, as published

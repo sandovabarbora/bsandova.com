@@ -1,8 +1,9 @@
 """Story layer for the Pop, measured charts and the concert-effect study: notes at key points and labels at line ends.
 
-Run after the generators (tools/pop/figures.py, tools/eras/figures.py, tools/pop/together_article.py,
-tools/concerts/article.py), which write the numbers and take each artist's colour from assets/palette.json. This script
-only adds callouts, reading every value it prints from the chart's own data, and never changes a value. Idempotent.
+Each generator (tools/pop/figures.py, tools/eras/figures.py, tools/pop/together_article.py, tools/concerts/article.py)
+calls its function here after writing the numbers, which take each artist's colour from assets/palette.json, so a
+regenerate keeps the layer. It only adds callouts, reading every value it prints from the chart's own data, and never
+changes a value. Idempotent.
 
     python3 tools/charts/story_pop.py
 """

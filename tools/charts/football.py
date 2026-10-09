@@ -22,6 +22,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
 from article_kit import n  # noqa: E402
+import story_rest  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 A = ROOT / "assets" / "football"
@@ -274,3 +275,4 @@ if __name__ == "__main__":
     out = build()
     (A / "charts.json").write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")) + "\n")
     print(f"wrote {A / 'charts.json'}: {', '.join(out)}")
+    story_rest.football()  # the story layer: notes at key points and labels at line ends, as published

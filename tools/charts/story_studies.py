@@ -1,9 +1,10 @@
 """Story layer for the stand-alone studies' charts: notes at key points, read from each chart's own data.
 
-Covers Eurovision, the clock change (DST), the film fund, the lottery and the silent-wrong-number detector. Run after
-their generators (tools/eurovision/article.py, tools/dst/article.py, tools/film/figures.py, tools/charts/lottery.py,
-tools/charts/silent_detector.py), which write the numbers; these charts keep their role colours (the article's accent for
-the result, grey for context), so this script only adds callouts and never changes a value. Idempotent.
+Covers Eurovision, the clock change (DST), the film fund, the lottery and the silent-wrong-number detector. Their
+generators (tools/eurovision/article.py, tools/dst/article.py, tools/film/figures.py, tools/charts/lottery.py,
+tools/charts/silent_detector.py) call the matching function after writing the numbers, so a regenerate keeps it; these
+charts keep their role colours (the article's accent for the result, grey for context), so this script only adds
+callouts and never changes a value. Idempotent.
 
     python3 tools/charts/story_studies.py
 """

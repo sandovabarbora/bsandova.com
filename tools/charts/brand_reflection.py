@@ -14,6 +14,7 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+import story_rest
 
 ROOT = Path(__file__).resolve().parents[2]
 A = ROOT / "assets/brand"
@@ -132,3 +133,4 @@ charts["two-commitments"] = {
 n_brand, n_world, n_music = (sum(r["color_gap_deg"] < 20 for r in D), sum(r["color_gap_deg"] > 100 for r in D), sum(r["music_fraction"] > .5 for r in D))
 (A / "charts.json").write_text(json.dumps(charts, ensure_ascii=False, separators=(",", ":")))
 print(len(D), "spots; brand-led", n_brand, "world-led", n_world, "music-led", n_music, ";", len(charts), "charts →", A / "charts.json")
+story_rest.brand()  # the story layer: colours, notes and end labels, as published

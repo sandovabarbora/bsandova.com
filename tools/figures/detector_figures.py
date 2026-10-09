@@ -12,6 +12,9 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
+import sys  # noqa: E402
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
+from paper_figures import recolour  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 D = json.loads((ROOT / "assets/detector/detector.json").read_text())
@@ -74,3 +77,5 @@ def fig2():
 
 
 fig1(); fig2(); print("ok")
+
+recolour("detector")  # on paper, the article's held colour as accent, as published

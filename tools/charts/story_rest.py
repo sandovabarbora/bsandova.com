@@ -1,9 +1,10 @@
 """Story layer for the remaining charts: the two atlases, the sonification note, Brand Reflection and the surf base rate.
 
-Run after their generators (tools/charts/football.py, hockey.py, delayed.py, brand_reflection.py, surf.py), which write
-the numbers. The atlases keep their own palette (Czechia in the atlas's held colour, peers in ink and grey), which is a
-role colour, not an entity colour, so this script only adds labels at line ends and notes at key points; every value in
-a note is read from the chart's own data. It never changes a value. Idempotent.
+Their generators (tools/charts/football.py, hockey.py, delayed.py, brand_reflection.py, surf.py) call the matching
+function after writing the numbers, so a regenerate keeps the layer. The atlases keep their own palette (Czechia in the
+atlas's held colour, peers in ink and grey), which is a role colour, not an entity colour, so this script only adds
+labels at line ends and notes at key points; every value in a note is read from the chart's own data. It never changes a
+value. Idempotent.
 
     python3 tools/charts/story_rest.py
 """

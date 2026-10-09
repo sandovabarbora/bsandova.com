@@ -13,6 +13,7 @@ import json
 import math
 from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
+import story_prague
 
 ROOT = Path(__file__).resolve().parents[2]
 DIR = ROOT / "assets" / "praha"
@@ -220,3 +221,4 @@ charts["builders-poland"]["panels"][0]["x"]["tickfmt"] = {"dp": 0}
 
 (DIR / "charts-housing.json").write_text(json.dumps(charts, ensure_ascii=False, separators=(",", ":")) + "\n")
 print("wrote assets/praha/charts-housing.json:", ", ".join(charts))
+story_prague.story("praha/charts-housing.json")  # the story layer: colours, notes and end labels, as published

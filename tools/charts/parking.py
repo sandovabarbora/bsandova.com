@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import story_prague
 
 ROOT = Path(__file__).resolve().parents[2]
 A = ROOT / "assets"
@@ -247,8 +248,8 @@ sub = [("size: long vs short car, at today's 1 200 Kč", cz["X_p90_minus_p10_kc"
        ("level: reserved-bay fee − 1 200", lv["upper_OZV_10kc_m2_day"]["subsidy"], "ink")]
 rnd = lambda x: round(x, -1) if x < 1000 else round(x, -2)  # noqa: E731
 charts["subsidy"] = {
-    "alt": "Horizontal bars on a log scale in Kč a year: the size component of the implicit subsidy at three price levels, and the two ends of the level bracket.",
-    "legend": [{"label": "size component (long − short car)", "c": "held", "shape": "box", "o": 0.85}, {"label": "level of the implicit subsidy (forgone rent)", "c": "ink", "shape": "box", "o": 0.85}],
+    "alt": "Horizontal bars on a log scale in Kč a year: the size component of the price at three price levels, and the gap between the first-car permit and the city's own tariffs.",
+    "legend": [{"label": "size component (long − short car)", "c": "held", "shape": "box", "o": 0.85}, {"label": "gap to the city's own tariffs", "c": "ink", "shape": "box", "o": 0.85}],
     "panels": [{"h": 240, "x": {"kind": "log", "domain": [50, 200000], "ticks": [100, 1000, 10000, 100000], "label": "Kč a year per car, log scale", "fmt": {"dp": 0}},
                 "y": {"kind": "cat", "domain": [s[0] for s in sub]},
                 "marks": [{"type": "hbar", "rows": [{"y": lab, "x0": 50, "x1": val, "c": cc, "label": n(rnd(val), 0, " Kč"),
@@ -336,3 +337,4 @@ for spec in charts.values():
     spec["data"] = ["../" + p for p in spec["data"]]
 (A / "parking6/charts.json").write_text(json.dumps(charts, ensure_ascii=False, separators=(",", ":")))
 print(len(charts), "charts →", A / "parking6/charts.json")
+story_prague.story("parking6/charts.json")  # the story layer: colours, notes and end labels, as published

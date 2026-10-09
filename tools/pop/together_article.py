@@ -24,6 +24,8 @@ import pandas as pd  # noqa: E402
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "site"))
 from article_kit import photo_section, render  # noqa: E402
+sys.path.insert(0, str(ROOT / "tools" / "charts"))
+import story_pop  # noqa: E402
 R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "pop" / "together"
 INK, GREY, LIGHT = "#111111", "#666666", "#b5b5b0"
@@ -233,6 +235,7 @@ def main() -> None:
     v = values(res)
     (ROOT / "texts" / "pop-together.html").write_text(render(t, v), encoding="utf-8")
     print("written texts/pop-together.html")
+    story_pop.together()  # the story layer: notes at key points, as published
 
 
 if __name__ == "__main__":

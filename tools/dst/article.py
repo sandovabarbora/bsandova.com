@@ -29,6 +29,8 @@ from sun import dark_share  # noqa: E402
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "site"))
 from article_kit import photo_section, render  # noqa: E402
+sys.path.insert(0, str(ROOT / "tools" / "charts"))
+import story_studies  # noqa: E402
 R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "dst"
 D = ROOT / "tools" / "data" / "dst"
@@ -298,6 +300,7 @@ def main() -> None:
     out = render(t, v)
     (ROOT / "texts" / "dst-darkness.html").write_text(out, encoding="utf-8")
     print(f"written texts/dst-darkness.html, {len(v)} values")
+    story_studies.dst()  # the story layer: notes at key points, as published
 
 
 if __name__ == "__main__":

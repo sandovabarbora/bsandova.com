@@ -4,8 +4,9 @@ The figure generators (tools/figures/*_figures.py and the atlas builds) draw for
 the A24 layer: paper background, ink text, light grid, and the article's main accent replaced by the colour its
 photograph holds (police-car blue for parking, tram red for Delayed, ...). Other accents map to the validated light
 categorical palette, or to ink when they would clash with the held colour. The mapped colours are not keys of the
-map, so running this twice changes nothing. Run it after a generator so the committed SVG is already on paper;
-build.sh runs it again before deploy, which then changes nothing.
+map, so running this twice changes nothing. The figure generators (tools/figures/*_figures.py) call recolour() on
+their folder after drawing, so the committed SVG is already on paper; build.sh runs it again before deploy, which then
+changes nothing.
 
 Usage:
     python3 tools/site/paper_figures.py
@@ -74,18 +75,23 @@ def palette(folder: Path, held: str | None) -> dict[str, str]:
     return m
 
 
+def recolour(name: str) -> int:
+    """Recolour one article's folder (assets/<name>/*.svg); the figure generators call this after drawing."""
+    folder = ROOT / "assets" / name
+    m = palette(folder, HELD[name])
+    n = 0
+    for f in sorted(folder.glob("*.svg")):
+        s = f.read_text()
+        t = HEX.sub(lambda x: m.get(x.group(0).lower(), x.group(0)), s)
+        if t != s:
+            f.write_text(t)
+            n += 1
+    return n
+
+
 def main() -> None:
-    for name, held in HELD.items():
-        folder = ROOT / "assets" / name
-        m = palette(folder, held)
-        n = 0
-        for f in sorted(folder.glob("*.svg")):
-            s = f.read_text()
-            t = HEX.sub(lambda x: m.get(x.group(0).lower(), x.group(0)), s)
-            if t != s:
-                f.write_text(t)
-                n += 1
-        print(f"{name}: {n} recoloured")
+    for name in HELD:
+        print(f"{name}: {recolour(name)} recoloured")
 
 
 if __name__ == "__main__":

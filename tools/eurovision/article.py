@@ -25,6 +25,8 @@ from shapely.geometry import shape  # noqa: E402
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "site"))
 from article_kit import photo_section, render  # noqa: E402
+sys.path.insert(0, str(ROOT / "tools" / "charts"))
+import story_studies  # noqa: E402
 R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "eurovision"
 D = ROOT / "tools" / "data" / "eurovision"
@@ -276,6 +278,7 @@ def main() -> None:
     out = render(t, v)
     (ROOT / "texts" / "eurovision.html").write_text(out, encoding="utf-8")
     print(f"written texts/eurovision.html, {len(v)} values")
+    story_studies.eurovision()  # the story layer: notes at key points, as published
 
 
 if __name__ == "__main__":
