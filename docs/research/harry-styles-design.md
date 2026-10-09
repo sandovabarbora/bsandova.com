@@ -113,3 +113,23 @@ All three are descriptive. None says why a song lasted or why a run sold.
   date, not in its caption, so the parser left those 74 entries without a year and joined them to the latest GDP
   per capita instead of their own year's, as §4 of the series design requires. Fixed in `tools/pop/parse.py`; Q5
   changed (the Philippines from 9.7 to 10.4 days, Norway now the lowest); Q1–Q4 did not change.
+- **9 October 2026, correction after publication, following a model-based review.** On 5 October 2026
+  (`c953c92`) the status line at the top of this file, §0 and the dates of the first two entries above were
+  rewritten in place, without a dated note. The status line had read: "**Status: design committed 1 October 2026,
+  before any chart days or ticket counts are collected.** Registration is self-timestamped, as for the film fund
+  study. In the article this is a "registered analysis plan: design committed at `<hash>` on 1 October 2026, before
+  the results commit; commit times are self-reported"." §0 had described the kworb.net pages and the Wikipedia
+  tour page as seen for their structure only ("No other row was read", "No country value was read"), and the two
+  entries above had been dated "before any data of part 1 were parsed or any figure computed". The rewritten
+  phrase "the author had worked with these data since March 2026" means that the author had used the sources
+  (kworb.net's Spotify chart pages and Wikipedia's tour articles) before; the collection analysed here is dated
+  1 October 2026, and its time relative to this design's commit is not recorded independently. The design was
+  committed at `cecad1c` and the results at `ebf819f` on the branch (tags `pop-harry-styles-design` and
+  `pop-harry-styles-results`, created on 9 October 2026; a tag's date is not evidence of the commit's date); on
+  main both arrive in the squash commit `1e0a5eb`, so there they are not independently timestamped. The text above
+  is left as it stands.
+
+**9 October 2026 (clarification of today's note).** "Worked with these data since March 2026" means the author has worked
+with these sources continuously since March 2026, in work that led to this study, so the design was written with knowledge of
+the sources, not blind to them. This replaces the reading given earlier today (that its extent was unrecorded, or a
+list of what it covers). The registered text and the dated notes above are unchanged.

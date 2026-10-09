@@ -33,6 +33,9 @@
 .text>.meta div+div{padding-left:0}
 .text>.meta div:last-child{border-bottom:1px solid #ececea}
 </style>
+
+<!-- ld --><link rel="alternate" type="application/atom+xml" title="Barbora Šandová" href="/feed.xml">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Patterns in a university's logs (master's thesis, VŠE 2025)", "description": "A note on a 2025 master's thesis at the Prague University of Economics and Business: a pipeline that groups log lines into patterns with the Extended Nagappan–Vouk algorithm, F1 96.0 % on a hand-labelled test set, and a month's logs in about 15 minutes against an estimated 12 hours before.", "url": "https://bsandova.com/texts/thesis-logs", "image": "https://bsandova.com/assets/og/thesis-logs.jpg", "dateModified": "2026-10-08T14:23:41+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
 </head>
 <body>
 <div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">note · thesis · en</span></div>
@@ -45,7 +48,7 @@
   <dl class="facts">
     <div><dt>log sources the university keeps</dt><dd>2 200+ <small>about 30 analysed before · as reported in the thesis</small></dd></div>
     <div><dt>pattern detection, F1 on a hand-labelled test set</dt><dd>96.0 % <small>against 79.1 % for regular expressions · in-sample, as reported</small></dd></div>
-    <div><dt>a month of logs, time to analyse</dt><dd>15 min <small>against an estimated 12 h before · three changes combined · as reported</small></dd></div>
+    <div><dt>a month of logs, time to analyse</dt><dd>15 min <small>against an estimated 12 h before · combines parallel processing, Parquet and the algorithm · as reported</small></dd></div>
   </dl>
 </header>
 <details class="tldr" open>
@@ -58,15 +61,15 @@
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>2 October 2026 · updated 3 October 2026 · <a href="../changelog/#thesis-logs">version 2</a></dd></div>
+  <div><dt>published</dt><dd>2 October 2026 · updated 9 October 2026 · <a href="../changelog/#thesis-logs">version 4</a></dd></div>
 </dl>
 <details class="meta-more">
   <summary>About this note</summary>
 <dl class="meta">
   <div><dt>status</dt><dd>note; a summary of a thesis written in 2025 and defended at the Faculty of Informatics and Statistics, published here on 2 October 2026</dd></div>
-  <div><dt>thesis</dt><dd>Šandová, B. (2025). <i>Patternizace logů Vysoké školy ekonomické</i> [Patterns in the logs of the Prague University of Economics and Business]. Master's thesis, supervisor Ing. Karel Maršálek, consultant Ing. Karel Šimeček, Ph.D. Nominated for the IT SPY 2025 national thesis award<sup class="cite"><a href="#r1">1</a></sup>.</dd></div>
+  <div><dt>thesis</dt><dd>Šandová, B. (2025). <i>Patternizace logů Vysoké školy ekonomické</i> [Patterns in the logs of the Prague University of Economics and Business]. Master's thesis, supervisor Ing. Karel Maršálek, consultant Ing. Karel Šimeček, Ph.D. Entered the IT SPY 2025 national thesis competition<sup class="cite"><a href="#r1">1</a></sup>.</dd></div>
   <div><dt>data</dt><dd>the university's own logs; not public. Figures are as reported in the thesis and cannot be reproduced from this page.</dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Patterns in a university's logs (master's thesis, VŠE 2025)</i>. bsandova.com/texts/thesis-logs, version 2.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Patterns in a university's logs (master's thesis, VŠE 2025)</i>. bsandova.com/texts/thesis-logs, version 4.</dd></div>
   <div><dt>licence</dt><dd>text CC BY 4.0; the thesis and the logs are not redistributed here</dd></div>
 </dl>
 </details>
@@ -92,7 +95,7 @@
 
 <section>
 <h2>What I would do differently now</h2>
-<p>The accuracy figures rest on one hand-labelled test set, and the thesis does not report its size or an interval around the F1 score; I would report both, and how far the labellers agreed. The threshold was tuned on that same set, so 96.0 % is an optimistic, in-sample figure; I would tune on one part of the labelled data and report on another. The comparison was with my own regular expressions, which is a low bar: the standard benchmark for log parsing compares automatic log parsers such as Drain and Spell across sixteen public log datasets<sup class="cite"><a href="#r3">3</a></sup>, and that is where a new parser should be measured. And the speed-up mixes three changes against a loosely defined baseline, so it cannot say which mattered. The engineering stands; the evaluation is where the thesis was a first draft of what this site now tries to do by default.</p>
+<p>The accuracy figures rest on one hand-labelled test set, and the thesis does not report its size or an interval around the F1 score; I would report both, and how far the labellers agreed. The threshold was tuned on that same set, so 96.0 % is an optimistic, in-sample figure; I would tune on one part of the labelled data and report on another. The comparison was with my own regular expressions, which is a low bar: the standard benchmark for log parsing compares automatic log parsers such as Drain and Spell across sixteen public log datasets<sup class="cite"><a href="#r3">3</a></sup>, and that is where a new parser should be measured. And the speed-up mixes three changes against a loosely defined baseline, so it cannot say which mattered. The evaluation is where the thesis was a first draft of what this site now tries to do by default.</p>
 </section>
 
 <section class="refs" id="refs">

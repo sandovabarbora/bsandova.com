@@ -1,6 +1,7 @@
 """Eras Tour and prices: the registered estimates (design §3–5), written to docs/research/eras-inflation-results.json.
 
     uv run --with csdid --with pandas --with numpy python tools/eras/estimate.py
+    uv run --with csdid --with pandas --with numpy python tools/eras/estimate.py --pointwise   # post-hoc intervals
 """
 
 from __future__ import annotations
@@ -122,5 +123,19 @@ def main() -> None:
     print("written eras-inflation-results.json")
 
 
+def pointwise() -> None:
+    """Post-hoc (9 October 2026), not registered: pointwise 95 % intervals, estimate ± 1.96 × the stored standard
+    error, beside the registered uniform bands, which hold for all thirteen months at once and so are wider. Read from
+    the registered results, which are not refitted. Writes docs/research/eras-inflation-pointwise.json."""
+    res = json.loads((R / "eras-inflation-results.json").read_text())
+    out = {"post_hoc": "9 October 2026", "z": 1.959964}
+    for k in Q:
+        out[k] = [{"e": r["e"], "att": r["att"], "lo": r["att"] - 1.959964 * r["se"], "hi": r["att"] + 1.959964 * r["se"],
+                   "uniform_lo": r["lo"], "uniform_hi": r["hi"]} for r in res[k]["event"]]
+    (R / "eras-inflation-pointwise.json").write_text(json.dumps(out, indent=1))
+    print("written eras-inflation-pointwise.json")
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+    pointwise() if "--pointwise" in sys.argv else main()

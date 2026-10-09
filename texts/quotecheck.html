@@ -44,7 +44,7 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 </style>
 
 <!-- ld --><link rel="alternate" type="application/atom+xml" title="Barbora Šandová" href="/feed.xml">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "quotecheck: a quotation check", "description": "quotecheck tells whether a quotation occurs in its source, tolerant of extraction noise and reporting most rewording as drift. Method, tests, limits and four runs against real books.", "url": "https://bsandova.com/texts/quotecheck", "image": "https://bsandova.com/assets/og/quotecheck.jpg", "dateModified": "2026-09-29T11:33:59+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "quotecheck: a quotation check", "description": "quotecheck tells whether a quotation occurs in its source, tolerant of extraction noise and reporting most rewording as drift. Method, tests, limits and four runs against real books.", "url": "https://bsandova.com/texts/quotecheck", "image": "https://bsandova.com/assets/og/quotecheck.jpg", "dateModified": "2026-10-08T14:23:41+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
 </head>
 <body>
 <div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">tool · quotecheck · 2026 · en</span></div>
@@ -53,12 +53,12 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 <header class="text-head">
   <p class="kicker">Tool · quotecheck 0.1.0 · checking quotations against their source</p>
   <h1>quotecheck: checking that <em>a quotation</em> is in its source</h1>
-  <p class="deck">A Python package that tells whether a quotation occurs in a source, tolerant of extraction noise and reporting most rewording as drift, though a short word dropped from inside a sentence still passes; it reports ABSENT for a fabricated ISACA quotation and, in the edition checked, for a sentence commonly attributed to Viktor Frankl.</p>
+  <p class="deck">A Python package that tells whether a quotation occurs in a source, tolerant of extraction noise and reporting light rewording as drift, though a short word dropped from inside a sentence still passes; it reports ABSENT for a fabricated ISACA quotation and, in the edition checked, for a sentence commonly attributed to Viktor Frankl.</p>
   <dl class="facts">
     <div><dt>false-alarm classes</dt><dd>6 <small>genuine quotations an earlier check called fabricated · administrative count</small></dd></div>
     <div><dt>tests</dt><dd>20 <small>passing on 29 September 2026 · administrative count</small></dd></div>
     <div><dt>CISA passages re-checked</dt><dd>292 <small>on 15 wiki pages, 27 August 2026 · administrative count, private; not verifiable</small></dd></div>
-    <div><dt>splices found</dt><dd>14 <small>of 16 defects agents found on their finished pages; a splice is two real fragments joined into a sentence the source does not contain · administrative count, private; not verifiable</small></dd></div>
+    <div><dt>splices found by agents (private; not verifiable)</dt><dd>14 <small>of 16 defects two agents found on their own finished pages; a splice is two real fragments joined into a sentence the source does not contain · administrative count, private; not verifiable</small></dd></div>
   </dl>
 </header>
 <details class="tldr" open>
@@ -71,7 +71,7 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>15 September 2026 · updated 3 October 2026 · <a href="../changelog/#quotecheck">version 3</a></dd></div>
+  <div><dt>published</dt><dd>15 September 2026 · updated 9 October 2026 · <a href="../changelog/#quotecheck">version 4</a></dd></div>
   <div><dt>work since</dt><dd>January 2026</dd></div>
 </dl>
 <details class="meta-more">
@@ -80,7 +80,7 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
   <div><dt>status</dt><dd>tool v0.1.0</dd></div>
   <div><dt>data</dt><dd>none published; the four example runs use the extracted full text of copyrighted books, which are not redistributed; the incident counts come from the wiki's own log, entries of 27 and 28 August 2026 (private; not verifiable)</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/quotecheck">sandovabarbora/quotecheck</a>, tag v0.1.0 (commit 762bce2); test with <code>uv run pytest</code></dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>quotecheck: checking that a quotation is in its source</i>. bsandova.com/texts/quotecheck, version 3.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>quotecheck: checking that a quotation is in its source</i>. bsandova.com/texts/quotecheck, version 4.</dd></div>
   <div><dt>licence</dt><dd>package code Apache-2.0; text CC BY 4.0</dd></div>
 </dl>
 </details>
@@ -89,7 +89,7 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 
 <section>
 <h2>What it does, and comparable tools</h2>
-<p><code>quotecheck</code> answers one question: does this quotation occur in this source? It was written for <a href="second-brain">a wiki that an agent keeps</a>, which quotes its sources hundreds of times, after a fabricated quotation reached it. An agent reading the ISACA <i>CISA Review Manual</i> produced, as ISACA's own words, <i>"a security audit does not typically test information security in an organization but just indicates the extent of compliance with standards"</i>. The manual does not contain that sentence. The clause <i>"indicates the extent of compliance with standards"</i> occurs once, in the other column of a two-column page: the manual is a 304 MB scanned PDF, and <code>pdftotext</code>, a common PDF-to-text converter, in its <code>-layout</code> mode joins the two columns line by line into sentences that read well and never existed<sup class="cite"><a href="#r1">1</a></sup>. The sentence survived review in this case because it matched what the brief was looking for, the compliance profession criticising itself in its own credentialing text, so the strength of a claim was no guide to which quotations needed checking. In the wiki's own repository the checker's earlier form is the script <code>quote.py</code> (private; not verifiable).</p>
+<p><code>quotecheck</code> answers one question: does this quotation occur in this source? It was written for <a href="second-brain">a wiki that an agent keeps</a>, which quotes its sources hundreds of times, after a fabricated quotation reached it. An agent reading the ISACA <i>CISA Review Manual</i> produced, as ISACA's own words, <i>"a security audit does not typically test information security in an organization but just indicates the extent of compliance with standards"</i>. The manual does not contain that sentence. The clause <i>"indicates the extent of compliance with standards"</i> occurs once, in the other column of a two-column page: the manual is a 304 MB scanned PDF, and the likely route, inferred from one case, is <code>pdftotext</code>, a common PDF-to-text converter, whose <code>-layout</code> mode can join two columns line by line into sentences that never existed<sup class="cite"><a href="#r1">1</a></sup>. In the author's reading, it survived review because it matched what the brief was looking for, the compliance profession criticising itself. In the wiki's own repository the checker's earlier form is the script <code>quote.py</code> (private; not verifiable).</p>
 <p>General fuzzy matchers already find near-matches of a string in a text. Python's <code>difflib</code> scores the similarity of two sequences<sup class="cite"><a href="#r2">2</a></sup>, and RapidFuzz computes Levenshtein (edit-distance) scores quickly, including a <code>partial_ratio</code> for the best-matching substring<sup class="cite"><a href="#r3">3</a></sup>. Work on citations in language-model output, such as the ALCE benchmark, asks a different question, whether a cited passage supports a generated claim, and answers it with a model<sup class="cite"><a href="#r4">4</a></sup>. <code>quotecheck</code> is narrower than either. It asks whether the words in quotation marks are in the source verbatim, it gives a named, ordered answer rather than a score, and it shows the reader only the source's original text, never the normalised form in which the match was found.</p>
 </section>
 
@@ -114,7 +114,7 @@ $ quotecheck CISA-Review-Manual/source.txt "a security audit does not typically 
 
 $ quotecheck Mans-Search-for-Meaning/source.txt "Between stimulus and response there is a space"
 <i>ABSENT</i>   Between stimulus and response there is a space</pre>
-<p>These four runs were made against the extracted full text of the four books and are reproduced with the context lines shortened: the tool prints about sixty folded characters of source on each side of the match<sup class="cite"><a href="#r6">6</a></sup>. Steinbeck's sentence had been transcribed without its inner quotation marks and is found. Hardy's is found in two halves because the scan put a page number, 4, inside the sentence. The ISACA sentence is absent. So is the sentence most often attributed to Viktor Frankl, <i>"Between stimulus and response there is a space. In that space is our power to choose our response"</i>, in the text of the Beacon Press edition of <i>Man's Search for Meaning</i> that was checked. Quote Investigator could not find it in Frankl's works either and traces its spread to Stephen R. Covey, who said he had read it in a book he could not identify<sup class="cite"><a href="#r7">7</a></sup>.</p>
+<p>These four runs were made against the extracted full text of the four books and are reproduced with the context lines shortened: the tool prints about sixty folded characters of source on each side of the match<sup class="cite"><a href="#r6">6</a></sup>. Steinbeck's sentence had been transcribed without its inner quotation marks and is found. Hardy's is found in two halves around a page number, 4, that the scan most likely put inside the sentence. The ISACA sentence is absent. So is the sentence most often attributed to Viktor Frankl, <i>"Between stimulus and response there is a space. In that space is our power to choose our response"</i>, in the text of the Beacon Press edition of <i>Man's Search for Meaning</i> that was checked. Quote Investigator could not find it in Frankl's works either and traces its spread to Stephen R. Covey, who said he had read it in a book he could not identify<sup class="cite"><a href="#r7">7</a></sup>.</p>
 </section>
 
 <section>
@@ -125,7 +125,7 @@ $ quotecheck Mans-Search-for-Meaning/source.txt "Between stimulus and response t
 
 <section>
 <h2>Limits</h2>
-<p>The tool needs the source as text and is only as good as the extraction. A two-column scan still produces sentences that read well and never existed, and the tool will find them, because they are in the text it was given. The drift threshold of 0.80 and the twelve-character gap were set by hand on these cases and have not been tuned or validated on other material. FOUND* accepts any twelve folded characters inside a sentence, so a quotation that omits a short word such as <i>not</i> passes as found, and because it tries only the longest matching opening at its first occurrence, a genuine interrupted quotation whose opening words recur earlier in the book can be reported as drift or absent. The tests cover a splice whose halves are far apart, not an omitted negation. The tool does not judge whether a paraphrase is fair, only whether quotation marks were earned, and it says nothing about a quotation from a source it has not been shown.</p>
+<p>The tool needs the source as text and is only as good as the extraction. A two-column scan still produces sentences that read well and never existed, and the tool will find them, because they are in the text it was given. The drift threshold of 0.80 and the twelve-character gap were set by hand on these cases and have not been tuned or validated on other material. FOUND* accepts any twelve folded characters inside a sentence, so a quotation that omits a short word such as <i>not</i> passes as found, and because it tries only the longest matching opening at its first occurrence, a genuine interrupted quotation whose opening words recur earlier in the book can be reported as drift or absent. The tests cover a splice whose halves are far apart, not an omitted negation. Dropping whitespace also drops word boundaries: <i>"the rapist"</i> is FOUND in a source that says <i>therapist</i>, and the reverse. The tool does not judge whether a paraphrase is fair, only whether quotation marks were earned, and it says nothing about a quotation from a source it has not been shown.</p>
 </section>
 
 <section>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FilmRunner, an offline call sheet · Barbora Šandová</title>
-<meta name="description" content="A film-production platform cut down to its call-sheet module: a web app with ordered revisions that crews can open without signal. Its data model, the first build and the code review that changed it, the second build and its nine architecture decision records, and what has not yet been tested.">
+<meta name="description" content="A film-production platform cut down to its call-sheet module: a web app with ordered revisions that crews can open without signal. Its data model, the first build and the review findings that changed it, the second build and its nine architecture decision records, and what has not yet been tested.">
 <meta property="og:title" content="FilmRunner, an offline call sheet">
 <meta property="og:description" content="A film-production platform cut down to its call-sheet module, a web app crews can open without signal. No pilot with a working crew has run yet.">
 <meta property="og:type" content="article">
@@ -27,7 +27,7 @@
 </style>
 
 <!-- ld --><link rel="alternate" type="application/atom+xml" title="Barbora Šandová" href="/feed.xml">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "FilmRunner, an offline call sheet", "description": "A film-production platform cut down to its call-sheet module: a web app with ordered revisions that crews can open without signal. Its data model, the first build and the code review that changed it, the second build and its nine architecture decision records, and what has not yet been tested.", "url": "https://bsandova.com/texts/filmrunner", "image": "https://bsandova.com/assets/og/filmrunner.jpg", "dateModified": "2026-10-03T12:00:00+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "FilmRunner, an offline call sheet", "description": "A film-production platform cut down to its call-sheet module: a web app with ordered revisions that crews can open without signal. Its data model, the first build and the review findings that changed it, the second build and its nine architecture decision records, and what has not yet been tested.", "url": "https://bsandova.com/texts/filmrunner", "image": "https://bsandova.com/assets/og/filmrunner.jpg", "dateModified": "2026-10-09T10:21:28+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
 </head>
 <body>
 <div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">note · filmrunner · 2026 · en</span></div>
@@ -38,7 +38,7 @@
   <h1>FilmRunner, an offline <em>call sheet</em></h1>
   <p class="deck">A film-production platform cut down to its call-sheet module, a web app with ordered revisions that crews can open without signal; no pilot with a working crew has run yet.</p>
   <dl class="facts">
-    <div><dt>code review, first build</dt><dd>2 critical <small>fail-open findings, plus 4 high-severity · recorded in the fix commit of 13 May 2026 · administrative count, private; not verifiable</small></dd></div>
+    <div><dt>review findings, first build</dt><dd>2 critical <small>fail-open findings, plus 4 high-severity · from a review of unknown origin, recorded in a commit message of 13 May 2026 · administrative count, private; not verifiable</small></dd></div>
     <div><dt>second build</dt><dd>9 ADRs <small>architecture decision records in docs/adr, numbered ADR-001 to ADR-008 with 001 used twice · administrative count, private; not verifiable</small></dd></div>
   </dl>
 </header>
@@ -53,8 +53,8 @@
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>14 September 2026 · updated 3 October 2026 · <a href="../changelog/#filmrunner">version 3</a></dd></div>
-  <div><dt>work since</dt><dd>January 2022</dd></div>
+  <div><dt>published</dt><dd>14 September 2026 · updated 9 October 2026 · <a href="../changelog/#filmrunner">version 4</a></dd></div>
+  <div><dt>work since</dt><dd>January 2022, continuous work that led to this build; the first build's repository history begins on 17 January 2026</dd></div>
 </dl>
 <details class="meta-more">
   <summary>About this note</summary>
@@ -62,7 +62,7 @@
   <div><dt>status</dt><dd>note</dd></div>
   <div><dt>data</dt><dd>none; the demo bundles one sample shoot day</dd></div>
   <div><dt>code</dt><dd>sandovabarbora/filmrunner, commit a9012db, 28 September 2026 (private; not verifiable); live demo public on GitHub Pages</dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>FilmRunner, an offline call sheet</i>. bsandova.com/texts/filmrunner, version 3.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>FilmRunner, an offline call sheet</i>. bsandova.com/texts/filmrunner, version 4.</dd></div>
   <div><dt>licence</dt><dd>text and figures CC BY 4.0; the FilmRunner code is private and not licensed for reuse</dd></div>
 </dl>
 </details>
@@ -76,13 +76,13 @@
 
 <section>
 <h2>The first build and why it was set aside</h2>
-<p>The author of this note is FilmRunner's founder, and every source cited below is her own private record. The first build, whose repository history runs from 17 January to 31 May 2026, was production management for mid-budget films: script import, an AI-drafted breakdown (the list of what each scene needs), a stripboard schedule (scenes ordered into shoot days) and the published call sheet, with company single sign-on, a data processing agreement, error reporting that strips personal data and Stripe, Twilio and Frame.io integrations around it. A code review of one day's commits, recorded in the commit of 13 May 2026 that fixed its findings, reported two critical fail-open defects, flaws that grant access when a check fails or a setting is missing, and four high-severity findings fixed in the same commit; the record does not name the reviewer. A development-mode check compared the environment against "production", so a blank variable counted as development, and it was changed to an explicit list of development environments. Automatic account creation through single sign-on trusted the browser's claim about how the user had signed in, and it now checks the provider and a verified e-mail on the server<sup class="cite"><a href="#r2">2</a></sup>. On 14 September 2026 the author restarted around the call sheet alone, because the old repository had "accumulated surface area without a validated wedge"<sup class="cite"><a href="#r3">3</a></sup>.</p>
+<p>The author of this note is FilmRunner's founder, and every source cited below is her own private record. The first build, whose repository history runs from 17 January to 31 May 2026, was production management for mid-budget films: script import, an AI-drafted breakdown (the list of what each scene needs), a stripboard schedule (scenes ordered into shoot days) and the published call sheet, with company single sign-on, a data processing agreement, error reporting that strips personal data and Stripe, Twilio and Frame.io integrations around it. A commit message of 13 May 2026 records two critical fail-open defects, flaws that grant access when a check fails or a setting is missing, and four high-severity findings from a review of unknown origin, all fixed in that commit (private; not verifiable); the record does not say who or what made the review. A development-mode check compared the environment against "production", so a blank variable counted as development, and it was changed to an explicit list of development environments. Automatic account creation through single sign-on trusted the browser's claim about how the user had signed in, and it now checks the provider and a verified e-mail on the server<sup class="cite"><a href="#r2">2</a></sup>. On 14 September 2026 the author restarted around the call sheet alone, because the old repository had "accumulated surface area without a validated wedge"<sup class="cite"><a href="#r3">3</a></sup>.</p>
 </section>
 
 <section>
 <h2>The second build and what it lacks</h2>
 <p>The second build keeps only the call sheet. The back end is FastAPI, SQLAlchemy 2.0, Alembic and PostgreSQL, hosted on Fly.io in Frankfurt with Supabase used as plain Postgres; the front end is a React, Vite and TypeScript progressive web app, a web page that can be installed and run offline, which caches the last sheet in the browser. Sign-in uses Supabase Auth with a code or link sent by e-mail, and the API enforces each production's roles. Nine decision records cover the back-end and front-end stacks, hosting, the editor, sign-in, roles, location services, web push and rate limits on public endpoints<sup class="cite"><a href="#r3">3</a></sup>. The <a href="https://sandovabarbora.github.io/filmrunner/">live demo</a> serves a sample shoot day, and the <a href="https://sandovabarbora.github.io/filmrunner/editor.html">editor</a> is the assistant director's side of the same sheet. The repository's automated browser tests check that a sheet loaded once online still renders from the cache, marked as offline with the time it was saved, when its data request then fails<sup class="cite"><a href="#r6">6</a></sup>. That is a headless browser in a test, not a check on crews' phones, and no device test is recorded.</p>
-<p>StudioBinder, SetHero, Movie Magic Scheduling, Yamdu and Croogloo already issue call sheets. The project's own desk research, built mostly from vendor pages and search snippets, could confirm offline viewing only for Movie Magic's exported PDF<sup class="cite"><a href="#r4">4</a></sup>. No pilot with an assistant director outside the project has run: the first is blocked on the author's own steps as of 28 September 2026, so there is no timed test or count of revisions handled on a real shoot day<sup class="cite"><a href="#r5">5</a></sup>.</p>
+<p>StudioBinder, SetHero, Movie Magic Scheduling, Yamdu and Croogloo already issue call sheets. The project's own desk research, built mostly from vendor pages and search snippets, could confirm offline viewing only for Movie Magic's exported PDF<sup class="cite"><a href="#r4">4</a></sup>; for the other four tools offline viewing is not confirmed either way. No pilot with an assistant director outside the project has run: the first is blocked on the author's own steps as of 28 September 2026, so there is no timed test or count of revisions handled on a real shoot day<sup class="cite"><a href="#r5">5</a></sup>.</p>
 </section>
 
 <section class="refs" id="refs">

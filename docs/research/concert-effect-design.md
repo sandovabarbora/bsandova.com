@@ -104,3 +104,27 @@ listening.
 ## Changes after registration
 
 None yet.
+
+- **9 October 2026, correction to the record, after publication.** On 5 October 2026 (commit `c953c92`) the status
+  line and §0 of this file were rewritten in place; registered text should not have been edited. As committed at
+  `54fe975` on 2 October 2026 they read: "**Status: design committed 2 October 2026, before the chart data were
+  downloaded or opened.** Registration is self-timestamped, as for the film fund study and Pop, measured. In the
+  article this is a "registered analysis plan: design committed at `<hash>` on 2 October 2026, before the results
+  commit; commit times are self-reported"." In §0, the tour bullet ended "Their sell-through and ticket prices were
+  seen. No streaming figure for any date before 2026 was seen.", and the chart bullet read "**Chart data.** Only the
+  dataset's metadata was read (title, size 3.48 GB, licence ODbL for the database, last updated 9 February 2022,
+  description: Spotify's daily Top 200 and Viral 50 for every region, 2017–2021)." The 5 October wording ("the
+  author had worked with these data since March 2026") does not say which data it covers, and the repository does
+  not document it (private; not verifiable). The design commit `54fe975` and the results commit `b156dfb` are on
+  the branch of pull request 33 and are kept by the tags `concert-effect-design` and `concert-effect-results`,
+  created on 9 October 2026; on `main` both are in the squash commit `cdd9c4f` and are not independently
+  timestamped there.
+- **9 October 2026, reading of the registered labels, after publication.** The §6 condition for "supported"
+  requires every pre-trend band from −12 to −2 to include zero; week −10 does not, so the pre-trend check failed.
+  The article now reports the summary as a difference relative to countries not yet visited, with no causal reading,
+  and the show-week coefficient, which §4 reports without a label, as descriptive.
+
+**9 October 2026 (clarification of today's note).** "Worked with these data since March 2026" means the author has worked
+with these sources continuously since March 2026, in work that led to this study, so the design was written with knowledge of
+the sources, not blind to them. This replaces the reading given earlier today (that its extent was unrecorded, or a
+list of what it covers). The registered text and the dated notes above are unchanged.

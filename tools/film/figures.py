@@ -81,7 +81,7 @@ def main() -> None:
             "tip": f"{r.b - 0.5:+.0f} to {r.b + 0.5:+.0f} points: {r.share * 100:.0f} % of {int(r.n)} reached cinemas"} for r in g.itertuples()]
     o1 = R["Q1"]["O1_release"]
     charts["release"] = {
-        "alt": f"Share of applications that reached Czech cinemas by 30 September 2026, in 1-point bins around the cut-off, with local linear fits within {h:.1f} points on each side; the estimated jump at the cut-off is {o1['coef'] * 100:+.0f} percentage points (95 % CI {o1['lo'] * 100:+.0f} to {o1['hi'] * 100:+.0f}).",
+        "alt": f"Share of applications that reached Czech cinemas by 30 September 2026, in 1-point bins around the cut-off, with local linear fits within {h:.1f} points on each side; the estimated difference at the cut-off is {o1['coef'] * 100:+.0f} percentage points (95 % CI {o1['lo'] * 100:+.0f} to {o1['hi'] * 100:+.0f}).",
         "legend": [{"label": "funded side", "c": "held", "shape": "dot"}, {"label": "unfunded side", "c": "grey", "shape": "dot"},
                    {"label": f"local linear fit, {h:.1f} points each side", "c": "ink"}],
         "panels": [{"h": 280, "title": "share released in Czech cinemas by 30 Sep 2026",

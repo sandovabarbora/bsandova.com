@@ -44,7 +44,7 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 </style>
 
 <!-- ld --><link rel="alternate" type="application/atom+xml" title="Barbora Šandová" href="/feed.xml">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "cutover: a table migration check", "description": "cutover compares an old and a new version of a table in five ordered checks and a verdict, and passes only when nothing differs. Method, tests, limits and a worked example on a month of NYC taxi data.", "url": "https://bsandova.com/texts/cutover", "image": "https://bsandova.com/assets/og/cutover.jpg", "dateModified": "2026-10-03T12:00:00+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "cutover: a table migration check", "description": "cutover compares an old and a new version of a table in five ordered checks and a verdict, and passes only when nothing differs. Method, tests, limits and a worked example on a month of NYC taxi data.", "url": "https://bsandova.com/texts/cutover", "image": "https://bsandova.com/assets/og/cutover.jpg", "dateModified": "2026-10-08T14:23:41+02:00", "author": {"@type": "Person", "name": "Barbora Šandová", "url": "https://bsandova.com/"}}</script><!-- /ld -->
 </head>
 <body>
 <div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">tool · cutover · 2026 · en</span></div>
@@ -53,7 +53,7 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 <header class="text-head">
   <p class="kicker">Tool · cutover 0.1.0 · comparing two versions of a table</p>
   <h1>cutover: checking that <em>a table migration</em> changed nothing</h1>
-  <p class="deck">A Python package that compares two versions of a table in five ordered checks and a verdict; on a month of NYC taxi aggregates it failed a first run on two differences and passed once both were addressed.</p>
+  <p class="deck">A Python package that compares two versions of a table in five ordered checks and a verdict; on a month of NYC taxi aggregates it failed a first run on two differences and passed after a cast and a declared half-cent tolerance.</p>
   <dl class="facts">
     <div><dt>checks</dt><dd>5 <small>schema · key · row set · columns · fingerprints, then a verdict · administrative count</small></dd></div>
     <div><dt>tests</dt><dd>41 <small>passing on 29 September 2026 · administrative count</small></dd></div>
@@ -71,16 +71,16 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>14 September 2026 · updated 3 October 2026 · <a href="../changelog/#cutover">version 3</a></dd></div>
+  <div><dt>published</dt><dd>14 September 2026 · updated 9 October 2026 · <a href="../changelog/#cutover">version 4</a></dd></div>
   <div><dt>work since</dt><dd>May 2026</dd></div>
 </dl>
 <details class="meta-more">
   <summary>About this tool</summary>
 <dl class="meta">
   <div><dt>status</dt><dd>tool v0.1.0</dd></div>
-  <div><dt>data</dt><dd>NYC TLC yellow taxi trip records, January 2025, <code>yellow_tripdata_2025-01.parquet</code>, downloaded 14 September 2026; reports <a href="../assets/cutover/report-1.json">report-1.json</a> and <a href="../assets/cutover/report-2.json">report-2.json</a>, written by cutover 0.1.0 on 14 September 2026</dd></div>
-  <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/cutover">sandovabarbora/cutover</a>, tag v0.1.0 (commit 3bf9b72); demo <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/demos/cutover_demo.py">tools/demos/cutover_demo.py</a>, rebuilt with <code>uv run --with cutover --with pandas python tools/demos/cutover_demo.py</code></dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>cutover: checking that a table migration changed nothing</i>. bsandova.com/texts/cutover, version 3.</dd></div>
+  <div><dt>data</dt><dd>NYC TLC yellow taxi trip records, January 2025, <code>yellow_tripdata_2025-01.parquet</code>, downloaded 14 September 2026; reports <a href="../assets/cutover/report-1.json">report-1.json</a> and <a href="../assets/cutover/report-2.json">report-2.json</a>, written by cutover 0.1.0 on 14 September 2026; re-runs <a href="../assets/cutover/report-3.json">report-3.json</a> and <a href="../assets/cutover/report-4.json">report-4.json</a>, written by cutover 0.1.0 on 9 October 2026</dd></div>
+  <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/cutover">sandovabarbora/cutover</a>, tag v0.1.0 (commit 3bf9b72); demo <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/demos/cutover_demo.py">tools/demos/cutover_demo.py</a>, rebuilt with <code>uv run --with cutover --with pandas python tools/demos/cutover_demo.py</code> (add <code>--strict</code> for runs 3 and 4)</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>cutover: checking that a table migration changed nothing</i>. bsandova.com/texts/cutover, version 4.</dd></div>
   <div><dt>licence</dt><dd>package code Apache-2.0; demo script MIT; text, figures and data CC BY 4.0</dd></div>
 </dl>
 </details>
@@ -120,7 +120,7 @@ cutover: <b>PASS</b>
 rows: old 7,280 · new 7,280 · matched on key 7,280 · only in old 0 · only in new 0
 columns: 0 / 3 columns with mismatches
 fingerprints: 33 / 33 partitions identical by day</pre>
-<p>The 33 identical fingerprints cover day, zone and trips only: fare and km carry tolerances, so they are left out of the hash and are checked only by the column step. The half-cent fare tolerance was declared after run 1 had shown the 343 mismatches. Its rationale is that the new side rounds to cents and the legacy side does not, so a difference below half a cent can be rounding. It is about 10<sup>9</sup> times the largest difference observed, so a genuine fare change smaller than half a cent per zone and day would also pass, and neither the column step nor the fingerprints would show it. Re-running the second comparison on 29 September 2026 with an absolute fare tolerance of 10<sup>−9</sup> gave PASS, which leaves far less room, and with 10<sup>−12</sup> it gave FAIL on fare; these re-runs were not saved as reports. Both reports are published as written, <a href="../assets/cutover/report-1">run 1</a> and <a href="../assets/cutover/report-2">run 2</a>, with JSON next to each<sup class="cite"><a href="#r8">8</a></sup>.</p>
+<p>The 33 identical fingerprints cover day, zone and trips only: fare and km carry tolerances, so they are left out of the hash and are checked only by the column step. The half-cent fare tolerance was declared after run 1 had shown the 343 mismatches. Its rationale is that the new side rounds to cents and the legacy side does not, so a difference below half a cent can be rounding. It is about 10<sup>9</sup> times the largest difference observed, so a genuine fare change smaller than half a cent per zone and day would also pass, and neither the column step nor the fingerprints would show it. Re-running the second comparison with an absolute fare tolerance of 10<sup>−9</sup> gave PASS, which leaves far less room, and with 10<sup>−12</sup> it gave FAIL on fare, with 3 mismatches; the re-runs of 29 September 2026 were not saved, and they were repeated and saved as reports on 9 October 2026 with the same results. All four reports are published as written, <a href="../assets/cutover/report-1">run 1</a>, <a href="../assets/cutover/report-2">run 2</a>, <a href="../assets/cutover/report-3">run 3</a> (10<sup>−9</sup>) and <a href="../assets/cutover/report-4">run 4</a> (10<sup>−12</sup>), with JSON next to each<sup class="cite"><a href="#r8">8</a></sup>.</p>
 </section>
 
 <section>
@@ -149,7 +149,7 @@ fingerprints: 33 / 33 partitions identical by day</pre>
 <li id="r5">dbt Labs (2026). dbt-audit-helper. GitHub. <a href="https://github.com/dbt-labs/dbt-audit-helper">github.com/dbt-labs/dbt-audit-helper</a>. Accessed 29 September 2026.</li>
 <li id="r6">Tobiko Data (2026). Table diff guide. SQLMesh documentation. <a href="https://sqlmesh.readthedocs.io/en/stable/guides/tablediff/">sqlmesh.readthedocs.io/en/stable/guides/tablediff</a>. Accessed 29 September 2026.</li>
 <li id="r7">NYC Taxi &amp; Limousine Commission (2025). TLC Trip Record Data, yellow taxi, January 2025, file <code>yellow_tripdata_2025-01.parquet</code>. <a href="https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page">nyc.gov/site/tlc/about/tlc-trip-record-data.page</a>. Downloaded 14 September 2026. Rows dated outside the month are a known property of the monthly files.</li>
-<li id="r8">Šandová, B. (2026). cutover demo: <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/demos/cutover_demo.py">tools/demos/cutover_demo.py</a>, design in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/superpowers/specs/2026-09-14-cutover-design.md">the spec</a> (pre-release design; its tolerance formula and time-zone handling differ from version 0.1.0 as described above), reports <a href="../assets/cutover/report-1.json">report-1.json</a> and <a href="../assets/cutover/report-2.json">report-2.json</a>. bsandova.com repository. Accessed 29 September 2026.</li>
+<li id="r8">Šandová, B. (2026). cutover demo: <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/demos/cutover_demo.py">tools/demos/cutover_demo.py</a>, design in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/superpowers/specs/2026-09-14-cutover-design.md">the spec</a> (pre-release design; its tolerance formula and time-zone handling differ from version 0.1.0 as described above), reports <a href="../assets/cutover/report-1.json">report-1.json</a>, <a href="../assets/cutover/report-2.json">report-2.json</a>, and the re-runs of 9 October 2026 (<code>--strict</code>) <a href="../assets/cutover/report-3.json">report-3.json</a> and <a href="../assets/cutover/report-4.json">report-4.json</a>. bsandova.com repository. Accessed 29 September 2026.</li>
 </ol>
 </section>
 

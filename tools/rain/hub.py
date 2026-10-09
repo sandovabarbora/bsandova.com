@@ -32,10 +32,10 @@ def main() -> None:
                           ("heat: trams", e(ht), "ink"), ("heat: buses", e(hb), "ink"), ("heat: metro", hm, "grey")])
     rows = [{**r, "c": HEAT if r["y"].startswith("heat") and r["c"] == "ink" else r["c"]} for r in rows]
     A.mkdir(parents=True, exist_ok=True)
-    chart = ra.range_chart(rows, f"Delay gained per trip-hour against fair weather, with 95 % intervals: rain adds "
-                           f"about {n(rt['delta_s'], 1)} s for trams and {n(rb['delta_s'], 1)} s for buses, heat "
-                           f"removes about {n(abs(ht['delta_s']), 1)} and {n(abs(hb['delta_s']), 1)} s, and the metro "
-                           f"barely moves under either.", "seconds of delay gained per trip-hour, against a dry or "
+    chart = ra.range_chart(rows, f"Delay gained per trip-hour against fair weather, with 95 % intervals: in rain hours "
+                           f"about {n(rt['delta_s'], 1)} s more for trams and {n(rb['delta_s'], 1)} s for buses, in hot "
+                           f"hours about {n(abs(ht['delta_s']), 1)} and {n(abs(hb['delta_s']), 1)} s less; the metro's "
+                           f"intervals include zero under both.", "seconds of delay gained per trip-hour, against a dry or "
                            "mild hour", [-30, 20], [-30, -20, -10, 0, 10, 20])
     shutil.copy(R / "rain-delays-results.json", A / "rain-results.json")
     shutil.copy(R / "heat-delays-results.json", A / "heat-results.json")
@@ -46,6 +46,11 @@ def main() -> None:
     v = {"r": n(rt["delta_s"], 1), "r_lo": n(rt["ci95"][0], 1), "r_hi": n(rt["ci95"][1], 1), "rl": rt["label"],
          "h": n(abs(ht["delta_s"]), 1), "h_lo": n(ht["ci95"][0], 1), "h_hi": n(ht["ci95"][1], 1), "hl": ht["label"],
          "rm": n(rm["est_s"], 1), "hm": n(hm["est_s"], 1), "hot_dates": n(ht["hot_dates"]),
+         "rm_lo": n(rm["ci95"][0], 1), "rm_hi": n(rm["ci95"][1], 1), "hm_lo": n(hm["ci95"][0], 1),
+         "hm_hi": n(hm["ci95"][1], 1), "hde": n(heat["checks_tram"]["date_effects"]["hot"]["est_s"], 1),
+         "hde_lo": n(heat["checks_tram"]["date_effects"]["hot"]["ci95"][0], 1),
+         "hde_hi": n(heat["checks_tram"]["date_effects"]["hot"]["ci95"][1], 1),
+         "rpl": n(rain["checks_tram"]["placebo_lead"]["rain_next"]["est_s"], 1),
          "rain_dates": n(rt["rain_dates"]), "th": n(dwell["primary_theta"]["est_s"], 2, True),
          "th_lo": n(dwell["primary_theta"]["ci95"][0], 2), "th_hi": n(dwell["primary_theta"]["ci95"][1], 2),
          "tl": dwell["primary_theta"]["label"], "dh": n(dwell["heat_secondary"]["est_s"], 2, True),
@@ -75,9 +80,9 @@ TEMPLATE = '''<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Weather on the rails · Barbora Šandová</title>
-<meta name="description" content="Three pre-specified studies of one season of Prague's trams and buses: rain adds about {{r}} seconds of delay per trip-hour, heat takes about {{h}} seconds away, and neither changes who boards on weekends more than on weekday mornings.">
+<meta name="description" content="Three pre-specified studies of one season of Prague's trams and buses: about {{r}} seconds more delay gained per trip-hour in rain hours, about {{h}} seconds less in hot hours, both associations, and no weekend-against-weekday difference in how much shorter stops are in rain.">
 <meta property="og:title" content="Weather on the rails">
-<meta property="og:description" content="Rain slows Prague's trams by about {{r}} seconds an hour; heat, unexpectedly, does the opposite; and stops shorten in the rain alike on weekdays and weekends. Three pre-specified studies of the same 121 million stop passes.">
+<meta property="og:description" content="Prague's trams gained about {{r}} seconds more delay in rain hours and about {{h}} seconds less in hot hours, both associations; stops were slightly shorter in rain, alike on weekdays and weekends. Three pre-specified studies of the same 121 million stop passes.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://bsandova.com/texts/weather-rails">
 <meta property="og:image" content="https://bsandova.com/assets/og/weather-rails.jpg">
@@ -99,7 +104,7 @@ TEMPLATE = '''<!doctype html>
 <header class="text-head">
   <p class="kicker">Hub · Weather on the rails · Prague trams, buses and the metro, summer 2025</p>
   <h1>Weather <em>on the rails</em></h1>
-  <p class="deck">Three studies of what the weather does to Prague's public transport, asked the same way of the same 121 million stop passes: one about rain, one about heat, and one about who still boards.</p>
+  <p class="deck">Three pre-specified studies of how Prague's tram and bus delays and stop times differ with the weather, on the same 121 million stop passes: rain hours, hot hours, and dwell as a passenger proxy.</p>
   <dl class="facts">
     <div><dt>parts published</dt><dd>3 <small>numbered by publication order</small></dd></div>
     <div><dt>designs committed</dt><dd>6 and 8 Oct 2026 <small>CEST, commit times self-reported</small></dd></div>
@@ -109,15 +114,14 @@ TEMPLATE = '''<!doctype html>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
     <li>Each part fixed its question, its model and its reading rule before the weather was joined to the delays.</li>
-    <li>Part 1: in an hour with rain, a tram gains about {{r}} seconds more delay than in a dry hour ({{r_lo}} to {{r_hi}}, {{rl}}).</li>
-    <li>Part 2: in a dry hour at 30 °C or more, a tram gains about {{h}} seconds less delay than in a mild one ({{h_lo}} to {{h_hi}}), the opposite of the registered expectation, so {{hl}}.</li>
-    <li>The metro, underground, barely moves in either: {{rm}} s in rain, {{hm}} s in heat.</li>
-    <li>Part 3: rain shortens a tram's stop by about {{dr}} seconds, alike on weekday mornings and weekend days (difference {{th}} s, {{th_lo}} to {{th_hi}}, {{tl}}), so Jan Gehl's split between necessary and optional trips does not show in boarding; heat does not shorten stops ({{dh}} s).</li>
-    <li>Parts 1 and 2 measure the sum of passengers, traffic and the vehicles themselves; part 3 rules out shorter stops as the reason heat helps.</li>
+    <li>Part 1: in an hour with rain, a tram gained about {{r}} seconds more delay than in a dry hour ({{r_lo}} to {{r_hi}}, {{rl}}); the registered placebo failed ({{rpl}} s), so it is an adjusted association.</li>
+    <li>Part 2: in a dry hour at 30 °C or more, a tram gained about {{h}} seconds less delay than in a mild one ({{h_lo}} to {{h_hi}}), the opposite of the registered expectation, so {{hl}}; it rests on {{hot_dates}} hot days.</li>
+    <li>Part 3: in rain hours a tram's stop was about {{dr}} seconds shorter, with no clear weekend-against-weekday-morning difference ({{th}} s, {{th_lo}} to {{th_hi}}, {{tl}}), so Jan Gehl's split between necessary and optional trips does not show in dwell.</li>
+    <li>Parts 1 and 2 measure the sum of passengers, traffic and the vehicles themselves; part 3 finds no shorter stops in hot hours ({{dh}} s), and traffic is untested.</li>
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>8 October 2026 · <a href="../changelog/#weather-rails">version 1</a></dd></div>
+  <div><dt>published</dt><dd>8 October 2026 · updated 9 October 2026 · <a href="../changelog/#weather-rails">version 2</a></dd></div>
   <div><dt>work since</dt><dd>October 2026</dd></div>
 </dl>
 
@@ -126,24 +130,24 @@ TEMPLATE = '''<!doctype html>
 <section>
 <h2>The parts</h2>
 <ol class="parts">
-''' + PART.format(k=1, slug="rain-delays", title="Does rain delay Prague's trams?",
+''' + PART.format(k=1, slug="rain-delays", title="Are Prague's trams later in rain hours?",
                   n="Part 1 · rain · March–September 2025, {{rain_dates}} days with rain",
-                  text="In an hour with at least 0.5 mm of rain, a tram gains {{r}} seconds more delay than in a dry hour of the same route, hour and weekday on the same date ({{r_lo}} to {{r_hi}}, {{rl}}); the effect grows with the amount of rain and stops when it does.") + PART.format(
-    k=2, slug="heat-delays", title="Does heat delay Prague's trams?",
+                  text="In an hour with at least 0.5 mm of rain, a tram gained {{r}} seconds more delay than in a dry hour of the same route, hour and weekday on the same date ({{r_lo}} to {{r_hi}}, {{rl}}); the difference is larger in heavier rain, but the registered placebo failed, so it is an adjusted association.") + PART.format(
+    k=2, slug="heat-delays", title="Are Prague's trams more delayed in hot hours?",
     n="Part 2 · heat · summer 2025, {{hot_dates}} days at 30 °C or more",
-    text="In a dry hour at 30 °C or more, a tram gains {{h}} seconds less delay than in a mild hour of the same route and week ({{h_lo}} to {{h_hi}}); registered as more delay, so {{hl}}, with the hotter hours showing the larger difference.") + PART.format(
-    k=3, slug="rain-dwell", title="Does rain empty Prague's trams?",
+    text="In a dry hour at 30 °C or more, a tram gained {{h}} seconds less delay than in a mild hour of the same route and week ({{h_lo}} to {{h_hi}}); registered as more delay, so {{hl}}; an association on {{hot_dates}} hot days whose cause the data cannot distinguish.") + PART.format(
+    k=3, slug="rain-dwell", title="Are tram stops shorter in rain?",
     n="Part 3 · rain, heat and who boards · {{wet_weekends}} wet weekend days",
-    text="Rain shortens a tram's stop by about {{dr}} seconds on a weekday morning and by the same on a weekend day (difference {{th}} s, {{th_lo}} to {{th_hi}}, {{tl}}), so the trips that bad weather cancels are not mainly the optional ones; heat leaves stops unchanged ({{dh}} s).") + '''</ol>
+    text="In rain hours a tram's stop was about {{dr}} seconds shorter on a weekday morning, and the weekend difference is {{th}} s ({{th_lo}} to {{th_hi}}, {{tl}}), so dwell gives no sign that rain cancels mainly optional trips; hot hours show no shorter stops ({{dh}} s).") + '''</ol>
 </section>
 
 <section>
 <h2>Parts 1 and 2 side by side</h2>
-<p>Parts 1 and 2 use one model on one table: the delay a trip gains within a clock hour, compared with the same route at the same hour and weekday, with the weather of that hour from four ČHMÚ stations. Rain and heat push in opposite directions, and the metro, which neither reaches, stays near zero under both, which is what a weather effect on the street should look like. The rain part compares hours within a date; the heat part compares within a week, because heat lasts all day. The heat part rests on {{hot_dates}} hot days, the rain part on {{rain_dates}} wet ones.</p>
+<p>Parts 1 and 2 use the same table and outcome, the delay a trip gains within a clock hour, compared with the same route at the same hour and weekday, with the weather of that hour from four ČHMÚ stations, but not the same model: part 1 compares hours within a date (date effects), part 2 within a week (week effects), because heat lasts all day. Part 2's registered check with date effects gives {{hde}} seconds ({{hde_lo}} to {{hde_hi}}). The two estimates have opposite signs. The metro's intervals include zero under both, {{rm}} s in rain ({{rm_lo}} to {{rm_hi}}) and {{hm}} s in heat ({{hm_lo}} to {{hm_hi}}), which fits a difference on the street rather than one common to all modes, without showing what causes it. The heat part rests on {{hot_dates}} hot days, the rain part on {{rain_dates}} wet ones.</p>
 <figure data-chart="../assets/weather-rails/charts.json#compare">
-  <p class="ch-head">Rain adds about {{r}} s a trip-hour, heat takes about {{h}} s away; the metro barely moves under either.</p>
+  <p class="ch-head">About {{r}} s more delay gained per trip-hour in rain hours, about {{h}} s less in hot hours; the metro's intervals include zero.</p>
   <img src="../assets/weather-rails/01-compare.svg" alt="Delay gained per trip-hour against fair weather, with 95 % intervals: rain above zero for trams and buses, heat below zero for both, the metro near zero in both." loading="lazy">
-  <figcaption><b>fig. 1</b> · Seconds of delay gained per trip in a rain hour against a dry hour (part 1) and in a hot dry hour against a mild one (part 2), with 95 % intervals; blue, rain; coral, heat; grey, the metro. Each estimate is the registered model of its part. Data: as in the parts.</figcaption>
+  <figcaption><b>fig. 1</b> · Seconds of delay gained per trip in a rain hour against a dry hour (part 1) and in a hot dry hour against a mild one (part 2), with 95 % intervals; blue, rain; coral, heat; grey, the metro. Each estimate is the registered model of its part: date effects for rain, week effects for heat. Data: as in the parts.</figcaption>
 </figure>
 </section>
 

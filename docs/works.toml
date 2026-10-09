@@ -9,7 +9,7 @@
 transit = { title = "Getting around", note = "Trams, buses and streets: delays, weather, fares and darkness." }
 prague = { title = "Prague", note = "One city, from the data it publishes about itself." }
 culture = { title = "Culture", note = "Music charts and tours, song contests, film grants, adverts, and data turned into sound." }
-sport = { title = "Sport", note = "Who a country produces, per capita, compared with its peers." }
+sport = { title = "Sport", note = "How many of a country's players are in the highest-ranked leagues by UEFA coefficient, per capita, compared with its peers." }
 ai = { title = "AI and data", note = "Assistants over warehouses, and the tools that check them." }
 other = { title = "Everything else", note = "Lotteries, a forecast check, a thesis on EU votes and how the studies here are planned." }
 
@@ -27,7 +27,7 @@ top = 1
 id = "weather-rails"
 label = "Data · Prague transit · a series"
 heading = "Weather<br>on the rails"
-dek = "What rain and heat do to Prague's trams and buses, asked the same way of the same 121 million stop passes, each question registered before the weather met the data."
+dek = "How delays differ in rain and heat on Prague's trams and buses, asked the same way of the same 121 million stop passes, each question pre-specified (self-timestamped) before the weather met the data."
 photo = "rain-delays"
 vt = "weather-rails"
 credit = 'Photo: <a href="https://commons.wikimedia.org/wiki/File:Praha,_Ko%C5%A1%C3%AD%C5%99e_Kaval%C3%ADrka_v_noci.jpg">Aktron</a> · CC BY-SA 4.0, toned'
@@ -37,7 +37,7 @@ ctas = [["Read the series", "texts/weather-rails"], ["Start with Part 1", "texts
 
 [[works]]
 href = "texts/rain-delays"
-title = "Part 1 · Does rain delay Prague's trams?"
+title = "Part 1 · Are Prague's trams later in rain hours?"
 kind = "Research"
 status = "pre-specified"
 published = "2026-10-08"
@@ -46,7 +46,7 @@ series = "texts/weather-rails"
 
 [[works]]
 href = "texts/heat-delays"
-title = "Part 2 · Does heat delay Prague's trams?"
+title = "Part 2 · Are Prague's trams more delayed in hot hours?"
 kind = "Research"
 status = "pre-specified"
 published = "2026-10-08"
@@ -55,7 +55,7 @@ series = "texts/weather-rails"
 
 [[works]]
 href = "texts/rain-dwell"
-title = "Part 3 · Does rain empty Prague's trams?"
+title = "Part 3 · Are tram stops shorter in rain?"
 kind = "Research"
 status = "pre-specified"
 published = "2026-10-08"
@@ -173,7 +173,7 @@ series = "texts/prague-measured"
 
 [[works]]
 href = "texts/prague-rings"
-title = "Part 2 · Why do Prague's housing estates vote ANO?"
+title = "Part 2 · How much of ANO's housing-estate vote goes with who lives there?"
 kind = "Research"
 status = "exploratory, design before modelling"
 published = "2026-09-28"
@@ -182,7 +182,7 @@ series = "texts/prague-measured"
 
 [[works]]
 href = "texts/prague-districts"
-title = "Part 3 · Does a district get more city money when its mayor's party joins City Hall?"
+title = "Part 3 · Do districts whose mayor's party is in City Hall's coalition receive more city grants?"
 kind = "Research"
 status = "pre-specified"
 published = "2026-09-28"
@@ -191,7 +191,7 @@ series = "texts/prague-measured"
 
 [[works]]
 href = "texts/prague-housing"
-title = "Part 4 · How long does a Prague flat take, from permit to completion?"
+title = "Part 4 · Do completions follow permits later in Prague than in the rest of Czechia?"
 kind = "Research"
 status = "pre-specified"
 published = "2026-09-28"
@@ -200,7 +200,7 @@ series = "texts/prague-measured"
 
 [[works]]
 href = "texts/prague-parking"
-title = "Part 5 · How many kerb spaces have longer cars cost Prague?"
+title = "Part 5 · How many more cars would Prague's paid kerb hold with 2012's car lengths?"
 kind = "Research"
 status = "pre-specified"
 published = "2026-09-29"
@@ -229,7 +229,7 @@ top = 3
 id = "pop-measured"
 label = "Data · pop music · a series in six parts"
 heading = "Pop,<br>measured"
-dek = "Five artists measured the same way, from Spotify's charts and their tours. Hits charted longer where people speak their language, most of all one Spanish song, and tickets barely follow local incomes."
+dek = "Five artists measured the same way, from Spotify's charts and their tours. Songs lasted longer where their artist's market language is spoken, an association carried most by one Spanish song, and ticket prices varied little with local incomes."
 photo = "pop-harry-styles"
 credit = 'Photo: <a href="https://stocksnap.io/photo/crowd-people-IUJP9OI22I">Anthony Delanoix</a> · CC0, toned'
 tint = "#120608"
@@ -247,7 +247,7 @@ series = "texts/pop-measured"
 
 [[works]]
 href = "texts/pop-taylor-swift"
-title = "Part 2 · Taylor Swift: a catalogue that sells out everything"
+title = "Part 2 · Taylor Swift: chart runs, tour attendance and prices around the Eras Tour"
 kind = "Research"
 status = "pre-specified"
 published = "2026-10-02"
@@ -256,7 +256,7 @@ series = "texts/pop-measured"
 
 [[works]]
 href = "texts/pop-bts"
-title = "Part 3 · BTS: a catalogue, not a hit"
+title = "Part 3 · BTS: Dynamite, and streams spread over hundreds of songs"
 kind = "Research"
 status = "pre-specified"
 published = "2026-10-02"
@@ -265,7 +265,7 @@ series = "texts/pop-measured"
 
 [[works]]
 href = "texts/pop-bad-bunny"
-title = "Part 4 · Bad Bunny: a long hit, everywhere at once"
+title = "Part 4 · Bad Bunny: a long-running hit, and tickets in days of income"
 kind = "Research"
 status = "pre-specified"
 published = "2026-10-02"
@@ -283,7 +283,7 @@ series = "texts/pop-measured"
 
 [[works]]
 href = "texts/pop-together"
-title = "Part 6 · Together: hits charted longer where the language matched"
+title = "Part 6 · Together: songs lasted longer in their artist's language market, and ticket prices varied little with income"
 kind = "Research"
 status = "exploratory"
 published = "2026-10-02"
@@ -292,7 +292,7 @@ series = "texts/pop-measured"
 
 [[works]]
 href = "texts/eurovision"
-title = "Eurovision, not Brussels? Diaspora, juries and the EU in Eurovision votes"
+title = "Diaspora, juries and the EU in Eurovision votes, 1975–2025"
 kind = "Research"
 status = "pre-specified"
 published = "2026-10-03"
@@ -300,7 +300,7 @@ topic = "culture"
 
 [[works]]
 href = "texts/concert-effect"
-title = "Does a concert move the charts? Harry Styles's first tour on Spotify"
+title = "Did Harry Styles's chart share rise around his first shows? Visited against not-yet-visited countries, 2017–2018"
 kind = "Research"
 status = "pre-specified"
 published = "2026-10-02"
@@ -320,7 +320,7 @@ top = 5
 id = "player-pool-atlas"
 label = "Sport · six nations"
 heading = "Player<br>Pool Atlas"
-dek = "Who a country produces, per capita, compared with its peers: the same five questions asked of six nations the same way. Hockey first, then football."
+dek = "How many of a country's players are in the highest-ranked leagues by UEFA coefficient, per capita, compared with its peers: the same five questions asked of six nations the same way. Hockey first, then football."
 photo = "atlas"
 credit = 'Photo: <a href="https://www.rawpixel.com/image/6113855/photo-image-public-domain-people-sunlight">rawpixel</a> · CC0, toned'
 tint = "#04120b"
@@ -406,7 +406,7 @@ topic = "ai"
 
 [[works]]
 href = "texts/film-fund"
-title = "Does a film-fund grant get a Czech film into cinemas?"
+title = "Are projects just above the Czech film fund's funding line more often released in cinemas?"
 kind = "Research"
 status = "pre-specified"
 published = "2026-10-01"
@@ -424,7 +424,7 @@ topic = "other"
 href = "texts/forecast-verification"
 title = "Forecast verification: protocol"
 kind = "Note"
-status = "in progress, first reading 9 Nov 2026"
+status = "in progress, first readings 9 and 16 Nov 2026"
 published = "2026-09-29"
 topic = "other"
 
@@ -438,7 +438,7 @@ topic = "culture"
 
 [[works]]
 href = "texts/brand-reflection"
-title = "Colour and sound in 47 Czech YouTube ad spots, and the language of 24 brand homepages"
+title = "Colour and sound in 47 Czech YouTube ad spots, and the language of 23 brand homepages"
 kind = "Note"
 status = "note"
 published = "2026-09-14"

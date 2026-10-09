@@ -933,3 +933,12 @@ run:
 
 - "Pre-registered" replaced by "pre-specified" (§2 and §10), and §0 now covers items seen privately before the commit as
   well as those published or recorded. No number, rule, estimate or label changed.
+
+**9 October 2026 (clarifications after an independent review; the text above is unchanged).**
+
+- **Status line.** The "three referees (housing economics, statistics, data audit)" of the header
+  (`prague-housing-referees.md`) are unnamed and give no affiliation, so the review cannot be verified by a reader;
+  the article makes no claim of review.
+- **Timing of the 29 September entries.** The entries "2026-09-29, before any outcome was joined" and "2026-09-29,
+  after estimation" first appear in the results commit `4e4301c`, committed together with the results. That the
+  first was written before outcomes were joined is the author's own record and is not separately timestamped.

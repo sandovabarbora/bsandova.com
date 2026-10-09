@@ -207,3 +207,38 @@ between 2016 and 2025 (the last accession was Croatia's in 2013), so there is no
 **5 October 2026 (wording).** Work dates added: the author has worked with these data since April 2025. Notes that
 read as if the votes had not been seen before the design are scoped to this analysis. No number, estimate, label or
 reference changed.
+
+**9 October 2026 (correction of the 5 October rewording; registered text quoted).** On 5 October 2026 (commit
+`c953c92`) four passages of this file were rewritten in place instead of being corrected by a dated note. The
+registered wording, as committed at `f304d8c` (tag `eurovision-design`) and in the later dated notes of 3 October, was:
+
+- Status: "**Status: design committed 3 October 2026, before any vote, migrant-stock or refugee figure was downloaded
+  or opened.** Registration is self-timestamped, as for the other studies: design → power → code → data → results,
+  each in a dated commit. In the article: "registered analysis plan: design committed at `<hash>` on 3 October 2026,
+  before the data commit; commit times are self-reported"."
+- §0, Votes: "The Eurovision Song Contest dataset by Spijkervet (GitHub, releases to 2023) [D1]: its README, the
+  release list and the description of `votes.csv` (year, round, from, to, points). The Mirovision repository by
+  Burgoyne, Spijkervet and Baker (MIT) [D2]: its file list and the header lines of `data/CSV/votes.csv` (year, round,
+  from_country, to_country, total_points, televoting_points, jury_points) and `jurors.csv` (year, round,
+  from_country, jurors A–E, to_country). No row was read."
+- Power note heading: "3 October 2026 (power; before any vote was read)", and in it: "(its points columns were not
+  read)".
+- Sources note heading: "3 October 2026 (sources; files downloaded, only headers, round labels and country codes
+  read)", and in it: "Read so far: the header lines, …".
+
+The rewording added that the author had worked with these data since April 2025. The repository holds no record of
+that earlier work, so what it covers (the public vote datasets, Eurovision results in general) rests on the author's
+statement (private; not verifiable); read with it, the registered statement "No row was read" describes this
+analysis's files, not the author's prior knowledge of the votes. The article now uses the
+wording of the editorial standard, §6: design committed at `f304d8c` on 3 October 2026, before the results commit
+`70f75a9` (tag `eurovision-results`); commit times are self-reported, and the branch was pushed after the analysis.
+Both commits reach `main` only in the squash commit `961638c`, so on `main` they are not independently timestamped;
+the tags were created on 9 October 2026 and are not evidence of the commit dates. The article had said that no
+change was made after its result was seen; three were made after the first estimates were printed (the row filter
+for `did2s`, the finals-only and without-2004 checks, the Brexit comparison), as the 3 October estimation note
+records. No number, estimate or label changes.
+
+**9 October 2026 (clarification of today's note).** "Worked with these data since April 2025" means the author has worked
+with these sources continuously since April 2025, in work that led to this study, so the design was written with knowledge of
+the sources, not blind to them. This replaces the reading given earlier today (that its extent was unrecorded, or a
+list of what it covers). The registered text and the dated notes above are unchanged.
