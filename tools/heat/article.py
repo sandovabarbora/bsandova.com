@@ -16,7 +16,8 @@ from importlib import metadata
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
-from article_kit import n, range_chart, range_rows, render, results_reader, static_range, use_article_style  # noqa: E402
+from article_kit import (n, photo_section, range_chart, range_rows, render, results_reader, static_range,  # noqa: E402
+                         use_article_style)
 
 plt = use_article_style()
 ROOT = Path(__file__).resolve().parents[2]
@@ -117,11 +118,7 @@ def values(x: dict) -> dict:
         put(key, e)
     for k in DOSE_LABEL:
         put(k, c["dose"][k])
-    photo = next(p for p in json.loads((ROOT / "assets/photo/sources.json").read_text()) if p["slug"] == "heat-delays")
-    v["photo"] = ('<section class="film film-page"><div class="shot" style="view-transition-name:ph-heat-delays;'
-                  '--bg:url(../assets/photo/heat-delays.jpg);--bg-s:url(../assets/photo/heat-delays-1200.jpg)"></div>'
-                  f'<p class="credit">Photo: <a href="{photo["page"]}">{photo["author"]}</a> · {photo["licence"]}, '
-                  'toned</p></section>')
+    v["photo"] = photo_section("heat-delays")
     return v
 
 

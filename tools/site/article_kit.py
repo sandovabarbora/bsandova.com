@@ -5,7 +5,8 @@ import json
 import re
 from pathlib import Path
 
-RESEARCH = Path(__file__).resolve().parents[2] / "docs" / "research"
+ROOT = Path(__file__).resolve().parents[2]
+RESEARCH = ROOT / "docs" / "research"
 NB = " "
 HELD, INK, GREY, LIGHT = "#34507c", "#111111", "#666666", "#b5b5b0"
 TOKEN = re.compile(r"\{\{(\w+)\}\}")
@@ -45,6 +46,16 @@ def render(template: str, values: dict) -> str:
     if missing:
         raise KeyError(f"no value for {', '.join(missing)}")
     return TOKEN.sub(lambda m: str(values[m.group(1)]), template)
+
+
+def photo_section(slug: str, image: str | None = None) -> str:
+    """The page's film still and its credit; `image` names another page's photograph when the page has none of its own."""
+    image = image or slug
+    photo = next(p for p in json.loads((ROOT / "assets" / "photo" / "sources.json").read_text()) if p["slug"] == image)
+    return (f'<section class="film film-page"><div class="shot" style="view-transition-name:ph-{slug};'
+            f'--bg:url(../assets/photo/{image}.jpg);--bg-s:url(../assets/photo/{image}-1200.jpg)"></div>'
+            f'<p class="credit">Photo: <a href="{photo["page"]}">{photo["author"]}</a> · '
+            f'{photo["licence"]}, toned</p></section>')
 
 
 def range_rows(items: list[tuple[str, dict, str]], held: str = "held") -> list[dict]:

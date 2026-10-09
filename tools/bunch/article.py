@@ -19,7 +19,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "site"))
-from article_kit import render  # noqa: E402
+from article_kit import photo_section, render  # noqa: E402
 
 
 def load_module(name: str, path: str):
@@ -364,11 +364,7 @@ def values(x: dict, t: pd.DataFrame, fig: dict) -> dict:
               "gla_min": g4(gl["min"]["gamma_iv"]), "gla_min_line": gl["min"]["line"],
               "gla_max": g4(gl["max"]["gamma_iv"]), "gla_max_line": gl["max"]["line"],
               "g_label_v1": rv["q1_label"]["published"]})
-    photo = next(q for q in json.loads((ROOT / "assets/photo/sources.json").read_text()) if q["slug"] == "bunching")
-    v["photo"] = ('<section class="film film-page"><div class="shot" style="view-transition-name:ph-bunching;'
-                  '--bg:url(../assets/photo/bunching.jpg);--bg-s:url(../assets/photo/bunching-1200.jpg)"></div>'
-                  f'<p class="credit">Photo: <a href="{photo["page"]}">{photo["author"]}</a> · '
-                  f'{photo["licence"]}, toned</p></section>')
+    v["photo"] = photo_section("bunching")
     return v
 
 

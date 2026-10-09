@@ -23,7 +23,7 @@ import pandas as pd  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "site"))
-from article_kit import render  # noqa: E402
+from article_kit import photo_section, render  # noqa: E402
 R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "pop" / "together"
 INK, GREY, LIGHT = "#111111", "#666666", "#b5b5b0"
@@ -222,10 +222,7 @@ def values(res: dict) -> dict:
     v |= {"inc_lo_c": names.get(lo_c, lo_c), "inc_hi_c": names.get(hi_c, hi_c), "inc_lo": n(tk.min()), "inc_hi": n(tk.max()),
           "inc_span": n(span), "span_price": n(span ** m2["coef"], 1), "span_burden": n(span ** (1 - m2["coef"])),
           "example_price": n(100 * (tk.min() / tk.max()) ** m2["coef"])}
-    photo = next(p for p in json.loads((ROOT / "assets" / "photo" / "sources.json").read_text()) if p["slug"] == "pop-together")
-    v["photo"] = ('<section class="film film-page"><div class="shot" style="view-transition-name:ph-pop-together;'
-                  '--bg:url(../assets/photo/pop-together.jpg);--bg-s:url(../assets/photo/pop-together-1200.jpg)"></div>'
-                  f'<p class="credit">Photo: <a href="{photo["page"]}">{photo["author"]}</a> · {photo["licence"]}, toned</p></section>')
+    v["photo"] = photo_section("pop-together")
     return v
 
 

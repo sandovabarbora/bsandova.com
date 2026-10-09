@@ -19,7 +19,7 @@ import duckdb
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
-from article_kit import HELD, n, render, results_reader, use_article_style  # noqa: E402
+from article_kit import HELD, n, photo_section, render, results_reader, use_article_style  # noqa: E402
 
 plt = use_article_style()
 ROOT = Path(__file__).resolve().parents[2]
@@ -333,11 +333,7 @@ def values(x: dict, t: pd.DataFrame, fig: dict) -> dict:
               "brho_hi4": f"{bus['rho']['ci95'][1]:.4f}",
               "ar_h": n(e["top_producers_on_lateness"][2]["gain_h"]), "ar_l": n(e["top_producers_on_lateness"][2]["lateness_h"]),
               "ar_e": n(100 * (1 - e["top_producers_on_lateness"][2]["lateness_h"] / e["top_producers_on_lateness"][2]["gain_h"]))})
-    photo = next(q for q in json.loads((ROOT / "assets/photo/sources.json").read_text()) if q["slug"] == "delay-origins")
-    v["photo"] = ('<section class="film film-page"><div class="shot" style="view-transition-name:ph-delay-origins;'
-                  '--bg:url(../assets/photo/delay-origins.jpg);--bg-s:url(../assets/photo/delay-origins-1200.jpg)"></div>'
-                  f'<p class="credit">Photo: <a href="{photo["page"]}">{photo["author"]}</a> · '
-                  f'{photo["licence"]}, toned</p></section>')
+    v["photo"] = photo_section("delay-origins")
     return v
 
 

@@ -24,7 +24,7 @@ from shapely.geometry import shape  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "site"))
-from article_kit import render  # noqa: E402
+from article_kit import photo_section, render  # noqa: E402
 R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "eurovision"
 D = ROOT / "tools" / "data" / "eurovision"
@@ -252,10 +252,7 @@ def values(res: dict, fig: dict) -> dict:
         "de_top": ", ".join(f"{NAMES[k]} ({v:+.1f})" for k, v in de_top).replace("-", "−"),
         "pyfixest": res["versions"]["pyfixest"],
     }
-    photo = next(x for x in json.loads((ROOT / "assets" / "photo" / "sources.json").read_text()) if x["slug"] == "eurovision")
-    v["photo"] = ('<section class="film film-page"><div class="shot" style="view-transition-name:ph-eurovision;'
-                  '--bg:url(../assets/photo/eurovision.jpg);--bg-s:url(../assets/photo/eurovision-1200.jpg)"></div>'
-                  f'<p class="credit">Photo: <a href="{photo["page"]}">{photo["author"]}</a> · {photo["licence"]}, toned</p></section>')
+    v["photo"] = photo_section("eurovision")
     pre = [e for k, e in res["H3_event"].items() if k.startswith("evm")]
     v |= {"ev_pre_n": str(len(pre)), "ev_pre_excl": str(sum(e["lo"] > 0 or e["hi"] < 0 for e in pre))}
     excl = sorted(((-int(k[3:]), e) for k, e in res["H3_event"].items() if k.startswith("evm") and (e["lo"] > 0 or e["hi"] < 0)), key=lambda t: t[0])

@@ -19,7 +19,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "site"))
-from article_kit import render  # noqa: E402
+from article_kit import photo_section, render  # noqa: E402
 
 
 def load_module(name: str, path: str):
@@ -248,11 +248,7 @@ def values(x: dict, fig: dict) -> dict:
     excl = lambda d: 100 * np.mean([x_["ci95"][0] > 0 or x_["ci95"][1] < 0 for x_ in d.values()])  # noqa: E731
     v["lp_excl"], v["hub_excl"] = n(excl(c["by_line_pair"]), 1), n(excl(c["by_hub"]), 1)
     v.update(posthoc_values(x, fig, pp, pct))
-    photo = next(q for q in json.loads((ROOT / "assets/photo/sources.json").read_text()) if q["slug"] == "transfers")
-    v["photo"] = ('<section class="film film-page"><div class="shot" style="view-transition-name:ph-transfers;'
-                  '--bg:url(../assets/photo/transfers.jpg);--bg-s:url(../assets/photo/transfers-1200.jpg)"></div>'
-                  f'<p class="credit">Photo: <a href="{photo["page"]}">{photo["author"]}</a> · '
-                  f'{photo["licence"]}, toned</p></section>')
+    v["photo"] = photo_section("transfers")
     return v
 
 
