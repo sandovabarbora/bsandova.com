@@ -12,6 +12,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import story_prague
+
 ROOT = Path(__file__).resolve().parents[2]
 A = ROOT / "assets"
 DIR = A / "praha"
@@ -235,3 +237,4 @@ for k, spec in charts.items():
 out = DIR / "charts-districts.json"
 out.write_text(json.dumps(charts, ensure_ascii=False, separators=(",", ":")))
 print(len(charts), "charts →", out)
+story_prague.story("praha/charts-districts.json")  # the story layer: notes at key points, as published

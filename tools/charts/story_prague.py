@@ -1,9 +1,8 @@
 """Story layer for the Prague, measured charts: entity colours, labels at line ends and notes at key points.
 
-prague_council.py, prague_housing.py and parking.py call story() on their file after writing the numbers, so a
-regenerate keeps the layer. prague_rings.py and prague_districts.py do not: their published files carry no story layer
-(dropped when #90 regenerated them), and running this script on its own would add it back. It only changes colours, adds
-end labels and callouts, and never touches a value. Parties and cities take their colour from assets/palette.json, the
+Each generator (prague_council.py, prague_rings.py, prague_districts.py, prague_housing.py, parking.py) calls story() on
+its file after writing the numbers, so a regenerate keeps the layer. It only changes colours, adds end labels and
+callouts, and never touches a value. Parties and cities take their colour from assets/palette.json, the
 same in every article; the rest keeps the article's own accent or recedes to grey. Idempotent.
 
     python3 tools/charts/story_prague.py
