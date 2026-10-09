@@ -57,3 +57,14 @@ doubtful; **no** = the data do not exist.
 1, 3 and 4 are the strongest next registered studies: the data are on disk, the designs are standard, and each would
 turn an association already published into a tested causal claim or a clear null. 2 and 6 follow. Of the tool
 experiments, the sitewitness adversarial set is the cheapest and most useful.
+
+## Changes after this note
+
+**9 October 2026, follow-up 1 (rain onset) not run.** A design was drafted and reviewed before registration. The review
+showed that a credible version needs a stricter onset (rain at ≥ 2 of 4 stations after ≥ 6 dry hours), a reference
+period before the hour in which Part 1's placebo failed, and an equivalence test of the pre-trend. Counted from
+precipitation alone (no delay read), the season holds only 17 such onsets on 17 dates (23 with a 3-hour run-up,
+7–10 under the looser mean-based rule). With so few events the minimum detectable effect would exceed the expected
+4–10 s, "not supported" would be unreachable and the pre-trend test powerless, so the study could only end
+inconclusive. It is not run. It becomes feasible with several seasons of stop passes, or with minute-level radar to
+date the rain's arrival per route.
