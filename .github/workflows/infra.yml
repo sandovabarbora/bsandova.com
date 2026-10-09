@@ -4,6 +4,8 @@ on:
     paths: ["infra/**"]
   pull_request:
     paths: ["infra/**"]
+permissions:
+  contents: read
 jobs:
   check:
     runs-on: ubuntu-latest
