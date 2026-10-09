@@ -126,14 +126,26 @@
 
 <section id="related">
 <h2>Related</h2>
-<p><a href="prague-programmes-2026">What can Prague's 2026 programmes deliver in one term?</a> is a note outside the series. It reads the six main programmes for the October 2026 city election against the city's legal powers and the time building takes, and uses Part 4's housing figures as its scale. It has no registered design and makes no statistical claim.</p>
+<p><a href="prague-programmes-2026">What can Prague's 2026 programmes deliver in one term?</a>, a note outside the series, reads the six main programmes for the October 2026 city election against the city's legal powers and the time building takes, using Part 4's housing figures as its scale; it has no registered design and makes no statistical claim.</p>
 </section>
 
 <section>
 <h2>How each part was pre-specified</h2>
-<p>Each part extends a short descriptive article from a written design that fixes the hypotheses, the test and decision rule for each, and the sentence reporting each result, and opens with what the author had already seen. Each design was revised once; the table gives that second version (v2). The series has one author, and there was no external peer review.</p>
-<p>Parts 1, 3, 4 and 5 have a registered analysis plan: design committed before the results commit, as the table gives; commit times are self-reported, and the branch was pushed after the analysis. The author has worked with these sources continuously since May 2024, in work that led to these studies, so the designs were written with knowledge of the sources, not blind to them; they set the analysis in advance. In Part 2 design and results first appear in one commit: design written before modelling; not independently timestamped. Future studies will be registered on OSF before any outcome is observed.</p>
-<p>Within each part the confirmatory tests share a 5 % family-wise error rate, the chance of any false positive, through Holm's procedure, which tightens each test's threshold. Labels are fixed in each design: supported or not, by that threshold; inconclusive, a negligible effect could not be confirmed or ruled out; indeterminate, neither direction passed; uninformative, a check that the model sees an expected relationship failed; underpowered, only large effects were detectable. Everything decided after the design was committed, including parser corrections made after the outcome was seen, is dated in each article's change log.</p>
+<p>Each part extends a short descriptive article from a written design that fixes the hypotheses, the test and decision rule for each, and the sentence reporting each result, and opens with what the author had already seen. Each design was revised once; the commit table gives that second version (v2). The series has one author and no external peer review.</p>
+<p>Parts 1, 3, 4 and 5 have a registered analysis plan: design committed before the results commit, as the commit table gives; commit times are self-reported, and the branch was pushed after the analysis. The author has worked with these sources continuously since May 2024, in work leading to these studies, so the designs were written knowing the sources, not blind to them; they set the analysis in advance. In Part 2 design and results first appear in one commit: design written before modelling; not independently timestamped. Future studies will be registered on OSF before any outcome is observed.</p>
+<p>Within each part the confirmatory tests share a 5 % family-wise error rate, the chance of any false positive, through Holm's procedure, which tightens each test's threshold. The table below defines the labels each design fixes. Every decision after the design commit, including parser corrections made after the outcome was seen, is dated in each article's change log.</p>
+<div class="tw">
+<table class="ht">
+<thead><tr><th>Label</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td>supported or not</td><td>by that threshold</td></tr>
+<tr><td>inconclusive</td><td>a negligible effect could not be confirmed or ruled out</td></tr>
+<tr><td>indeterminate</td><td>neither direction passed</td></tr>
+<tr><td>uninformative</td><td>a check that the model sees an expected relationship failed</td></tr>
+<tr><td>underpowered</td><td>only large effects were detectable</td></tr>
+</tbody>
+</table>
+</div>
 <div class="tw">
 <table class="ht">
 <thead><tr><th>Part</th><th>Design</th><th>Design v2 commit</th><th>Results commit</th><th>Branch, pushed</th></tr></thead>
@@ -144,9 +156,9 @@
 <tr><td>4 · Housing</td><td><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-housing-design.md">prague-housing-design.md</a></td><td class="v"><a href="https://github.com/sandovabarbora/bsandova.com/commit/503ef06"><code>503ef06</code></a> · 29 Sep 00:44</td><td class="v"><a href="https://github.com/sandovabarbora/bsandova.com/commit/4e4301c"><code>4e4301c</code></a> · 29 Sep 01:18</td><td><a href="https://github.com/sandovabarbora/bsandova.com/commits/feature/PRAHA-4x_housing-extended">PRAHA-4x_housing-extended</a> · 29 Sep 01:38</td></tr>
 <tr><td>5 · Parking</td><td><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-parking-design.md">prague-parking-design.md</a></td><td class="v"><a href="https://github.com/sandovabarbora/bsandova.com/commit/a1ea422"><code>a1ea422</code></a> · 29 Sep 00:32</td><td class="v"><a href="https://github.com/sandovabarbora/bsandova.com/commit/497925a"><code>497925a</code></a> · 29 Sep 01:21</td><td><a href="https://github.com/sandovabarbora/bsandova.com/commits/feature/PRAHA-6_parking-study">PRAHA-6_parking-study</a> · 29 Sep 01:40</td></tr>
 </tbody>
+<tfoot><tr><td colspan="5" class="regnote">Times are CEST, self-reported, author time; the Part 1 commits were rewritten at 22:57, and the Part 3 design commit 683b0c8 and its addendum 7be2ad5 were both written to the branch at 01:19.</td></tr></tfoot>
 </table>
 </div>
-<p class="regnote">Times are CEST, self-reported, author time; the Part 1 commits were rewritten at 22:57, and the Part 3 design commit 683b0c8 and its addendum 7be2ad5 were both written to the branch at 01:19.</p>
 </section>
 
 <section id="data">
