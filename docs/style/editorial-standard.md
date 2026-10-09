@@ -14,14 +14,17 @@ Every page is exactly one kind and says so in its kicker.
 
 A page that cannot meet the standard for its kind moves down a kind or is retired. It is never published half-way.
 
-## 2. Length caps (body text, without tables, captions and references)
+## 2. Length caps (body text, without tables, captions, references and the folded metadata)
 
 | Kind | Words |
 |---|---|
-| Research | 2 500–3 500 (thesis summary about 1 700) |
-| Tool | 1 000–1 500 |
-| Note | 400–900 |
+| Research | at most 3 500 |
+| Tool | at most 1 500 |
+| Note | at most 900 |
 | Hub | at most 1 000 |
+
+There is no minimum length (dropped 9 October 2026): a page says what its evidence supports and stops; a short
+null result is not padded.
 
 ## 3. Header, in the same order on every page
 
