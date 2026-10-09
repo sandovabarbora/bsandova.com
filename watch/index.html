@@ -135,7 +135,7 @@
     <td>${r.date}</td><td><b>${r.alias}</b> → ${r.model}${r.note ? ` <span class="dim" title="${r.note.replace(/"/g,'&quot;')}">†</span>` : ''}</td><td class="dim">${(r.cli||'').replace(' (Claude Code)','')}</td><td>${r.pack}</td>
     <td class="n">${r.n}</td><td class="n">${r.outcomes.correct}</td><td class="n hi">${r.outcomes.silently_wrong}</td><td class="n">${r.outcomes.implausible}</td><td class="n">${r.outcomes.refused}</td><td class="n">${r.unstable ?? '—'}</td>
     <td class="n">${r.cost_usd!=null ? r.cost_usd.toFixed(2)+' USD' : '—'}</td><td><code>q ${r.sha_questions||'—'} · w ${r.sha_warehouse||'—'} · p ${r.sha_prompt||'—'}</code></td></tr>`).join('');
-})();
+})().catch(e => console.warn('watch:', e));
 </script>
 </body>
 </html>

@@ -156,7 +156,7 @@
   document.getElementById('f-fresh').innerHTML = `${counts.ok} · ${counts.late} · ${counts.stale} <small>${counts.na ? counts.na+' unknown' : 'every source read'}</small>`;
   document.getElementById('f-cost').innerHTML = `${costMonth.toFixed(2)} USD <small>model watch; everything else is free</small>`;
   document.getElementById('f-when').innerHTML = `${iso(now)} <small>in your browser, just now</small>`;
-})();
+})().catch(e => console.warn('status:', e));
 </script>
 </body>
 </html>

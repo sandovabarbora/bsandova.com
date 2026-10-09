@@ -200,7 +200,7 @@ canvas{display:block;width:100%;height:auto;margin:1rem 0 .25rem}
   el('stems').innerHTML = Object.keys(stems).map(k=>`<button class="on" data-k="${k}">${k}</button>`).join('');
   el('stems').addEventListener('click', e=>{ const k=e.target.dataset.k; if(!k) return; stems[k]=!stems[k]; e.target.classList.toggle('on', stems[k]); if(playing) stop(); });
   facts(); draw(-1);
-})();
+})().catch(e => console.warn('atlantic:', e));
 </script>
 </body>
 </html>

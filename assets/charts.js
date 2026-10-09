@@ -458,9 +458,13 @@
     const hint = ctl.appendChild(document.createElement('span'));
     hint.className = 'ch-hint'; hint.textContent = 'hover or use the arrow keys for values';
     fig.insertBefore(ctl, img);
-    img.hidden = true;
     fig.classList.add('ch-live');
-    render(fig, spec);
+    try { render(fig, spec); } catch (e) {  // the static figure stays
+      fig.querySelectorAll(':scope > .ch-legend, :scope > .ch, :scope > .ch-table, :scope > .ch-ctl').forEach(n => n.remove());
+      fig.classList.remove('ch-live');
+      throw e;
+    }
+    img.hidden = true;
     let raf = 0;
     new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => render(fig, spec)); }).observe(holder);
   }
@@ -469,7 +473,10 @@
   document.querySelectorAll('figure[data-chart]').forEach(fig => {
     const [url, id] = fig.dataset.chart.split('#');
     (cache[url] ||= fetch(url).then(r => r.ok ? r.json() : Promise.reject(r.status)))
-      .then(all => { if (all[id]) { mount(fig, all[id], url); watchFocus(fig, id); } })
-      .catch(() => {});  // the static figure stays
+      .then(all => {
+        if (!all[id]) { console.warn('charts.js:', url, `no spec "${id}"`); return; }
+        mount(fig, all[id], url); watchFocus(fig, id);
+      })
+      .catch(e => console.warn('charts.js:', url, e));  // the static figure stays
   });
 })();

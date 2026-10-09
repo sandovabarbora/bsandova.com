@@ -178,7 +178,8 @@
     const url = fig.dataset.map;
     const rel = (d, from) => d.startsWith('../') ? d : new URL(d, new URL(from, location.href)).href;
     fetch(url).then(r => r.ok ? r.json() : Promise.reject(r.status))
-      .then(S => S.base ? fetch(rel(S.base, url)).then(r => r.ok ? r.json() : null).catch(() => null).then(B => mount(fig, S, url, B))
+      .then(S => S.base ? fetch(rel(S.base, url)).then(r => r.ok ? r.json() : Promise.reject(r.status))
+                            .catch(e => { console.warn('map.js:', S.base, e); return null; }).then(B => mount(fig, S, url, B))
                         : mount(fig, S, url))
       .catch(e => console.warn('map.js:', url, e));
   });

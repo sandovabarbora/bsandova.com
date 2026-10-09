@@ -40,8 +40,6 @@
     const wrap = h('div', {class: 'pop-wrap'}, box);
     const tip = h('div', {class: 'ch-tip', hidden: ''}, wrap);
     img.after(box);
-    img.hidden = true;
-    fig.classList.add('ch-live');
 
     let marked = null;
     const say = s => {
@@ -94,7 +92,9 @@
       if (!hit) { out.textContent = `Not among the ${whats} since 2017.`; return; }
       marked = hit; say(hit); draw();
     });
-    draw();
+    try { draw(); } catch (e) { box.remove(); throw e; }  // the static figure stays
+    img.hidden = true;
+    fig.classList.add('ch-live');
     new ResizeObserver(() => draw()).observe(wrap);
   }
 
@@ -121,7 +121,9 @@
   // <figure data-pop="map" data-src="…/map.svg">: the map is inlined so each country can show its values on hover
   async function map(fig) {
     const img = fig.querySelector('img');
-    const svg = new DOMParser().parseFromString(await (await fetch(fig.dataset.src)).text(), 'image/svg+xml').documentElement;
+    const r = await fetch(fig.dataset.src);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const svg = new DOMParser().parseFromString(await r.text(), 'image/svg+xml').documentElement;
     svg.classList.add('pop-map');
     const wrap = h('div', {class: 'pop-wrap'});
     const tip = h('div', {class: 'ch-tip', hidden: ''}, wrap);
@@ -147,7 +149,7 @@
       const data = await (await fetch(fig.dataset.src)).json();
       if (data.c) { HELD = data.c; fig.style.setProperty('--pop-c', data.c); }
       ({ones, tickets})[fig.dataset.pop]?.(fig, data);
-    } catch (e) { /* the static figure stays */ }
+    } catch (e) { console.warn('pop.js:', fig.dataset.src, e); }  // the static figure stays
   });
   document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', run) : run();
 })();

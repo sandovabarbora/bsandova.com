@@ -283,7 +283,7 @@
 
 <script>
 (async () => {
-  let c; try { c = await (await fetch("../assets/praha/cities.json")).json(); } catch (e) { return; }
+  let c; try { c = await (await fetch("../assets/praha/cities.json")).json(); } catch (e) { console.warn("prague-housing:", e); return; }
   const n = v => v.toLocaleString("en").replace(/,/g, " ");
   document.getElementById("yt").innerHTML = c.years.map(y => {
     const p = c.prague[y], v = c.vienna[y], w = c.warsaw[y];
@@ -292,7 +292,7 @@
   }).join("");
 })();
 (async () => {
-  let r; try { r = await (await fetch("../assets/praha/housing_extended_robust.json")).json(); } catch (e) { return; }
+  let r; try { r = await (await fetch("../assets/praha/housing_extended_robust.json")).json(); } catch (e) { console.warn("prague-housing:", e); return; }
   const names = {H2: "H2 · permit to house number", H4: "H4 · builders, Poland", H5: "H5 · the metro"};
   const pc = v => Math.round(100 * v) + " %";
   document.getElementById("sc").innerHTML = Object.entries(names).map(([k, lab]) => {
