@@ -1,0 +1,100 @@
+{
+ "note": "added 9 October 2026 after a review of the frozen code; not registered",
+ "directions": {
+  "tram_route_directions": 1789,
+  "tram_routes": 45,
+  "route_17_directions": 81,
+  "sample_route_directions": 482,
+  "sample_route_directions_under_50_units": 318
+ },
+ "registered": {
+  "delta_s": 9.7,
+  "ci95": [
+   5.76,
+   13.64
+  ],
+  "ci90": [
+   6.4,
+   13.0
+  ],
+  "label": "supported",
+  "n_units": 132443
+ },
+ "top_2_directions_per_route": {
+  "delta_s": 9.81,
+  "ci95": [
+   6.3,
+   13.31
+  ],
+  "ci90": [
+   6.87,
+   12.74
+  ],
+  "label": "supported",
+  "n_units": 104286
+ },
+ "directions_with_50_units_or_more": {
+  "delta_s": 9.6,
+  "ci95": [
+   5.69,
+   13.51
+  ],
+  "ci90": [
+   6.33,
+   12.88
+  ],
+  "label": "supported",
+  "n_units": 130367
+ },
+ "quality3": {
+  "heat_registered": {
+   "hot_hours": 58,
+   "hot_dates": 11,
+   "mild_hours": 1341
+  },
+  "precipitation_values_dropped": 299,
+  "temperature_values_dropped": 1765,
+  "tram_without_quality3": {
+   "delta_s": 10.01,
+   "ci95": [
+    6.0,
+    14.02
+   ],
+   "ci90": [
+    6.65,
+    13.37
+   ],
+   "label": "supported",
+   "n_units": 126462
+  },
+  "heat_precipitation_only": {
+   "hot_hours": 39,
+   "hot_dates": 9,
+   "mild_hours": 1267
+  },
+  "heat_temperature_only": {
+   "hot_hours": 58,
+   "hot_dates": 11,
+   "mild_hours": 1340
+  },
+  "heat_both": {
+   "hot_hours": 39,
+   "hot_dates": 9,
+   "mild_hours": 1267
+  },
+  "heat_tram_both": {
+   "delta_s": -14.79,
+   "ci95": [
+    -23.76,
+    -5.35
+   ],
+   "ci90": [
+    -22.61,
+    -6.7
+   ],
+   "label": "inconclusive",
+   "n_units": 62119,
+   "hot_dates": 9
+  }
+ }
+}
