@@ -21,7 +21,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 TEXTS = ROOT / "texts"
-CAPS = {"research": (2500, 3500), "tool": (1000, 1500), "note": (400, 900), "hub": (0, 1000)}
+CAPS = {"research": 3500, "tool": 1500, "note": 900, "hub": 1000}  # maxima only: a short honest page is not padded
 SKIP = {"forecast-verification", "thesis"}  # no word cap: a protocol note, and the thesis summary (about 1 700)
 
 
@@ -102,10 +102,10 @@ def check(path: Path) -> tuple[list[str], list[str]]:
             hard.append(f"link to missing page {href}")
     k = kind(s)
     if k in CAPS and path.stem not in SKIP:
-        lo, hi = CAPS[k]
+        hi = CAPS[k]
         n = body_words(s)
-        if not lo * 0.9 <= n <= hi * 1.1:
-            soft.append(f"{k} body about {n} words (cap {lo}–{hi})")
+        if n > hi * 1.1:
+            soft.append(f"{k} body about {n} words (cap {hi})")
     return hard, soft
 
 
