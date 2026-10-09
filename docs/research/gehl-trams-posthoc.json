@@ -1,0 +1,65 @@
+{
+ "note": "run 9 October 2026, after publication",
+ "delay_held": {
+  "registered": "design \u00a76, not run before publication",
+  "units": 38608,
+  "share_of_units_with_delay_gained": 1.0,
+  "same_sample_without_control": {
+   "rain_opt": {
+    "est_s": 0.04,
+    "ci95": [
+     -0.27,
+     0.36
+    ]
+   },
+   "rain": {
+    "est_s": -0.25,
+    "ci95": [
+     -0.42,
+     -0.08
+    ]
+   }
+  },
+  "with_delay_gained": {
+   "rain_opt": {
+    "est_s": 0.1,
+    "ci95": [
+     -0.21,
+     0.42
+    ]
+   },
+   "rain": {
+    "est_s": -0.35,
+    "ci95": [
+     -0.52,
+     -0.17
+    ]
+   },
+   "gain": {
+    "est_s": 0.01,
+    "ci95": [
+     0.0,
+     0.01
+    ]
+   }
+  }
+ },
+ "morning_rain_bootstrap": {
+  "registered": "post-hoc",
+  "rain_dates_weekday_morning": 10,
+  "est_s": -0.25,
+  "analytic_ci95": [
+   -0.42,
+   -0.08
+  ],
+  "wild_bootstrap_ci95": [
+   -0.44,
+   -0.04
+  ],
+  "wild_bootstrap_ci90": [
+   -0.41,
+   -0.08
+  ],
+  "inference": "wild cluster bootstrap by date, 999 Rademacher draws, percentile-t"
+ }
+}

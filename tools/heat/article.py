@@ -1,4 +1,4 @@
-"""Does heat delay Prague's trams: figures and the article, every number from the result files.
+"""Are Prague's trams more delayed in hot hours: figures and the article, every number from the result files.
 
 Reads docs/research/heat-delays-results.json, -describe.json, -power.json; writes assets/heat/ (charts.json,
 01-modes.svg, 02-dose.svg, 03-checks.svg, 04-days.svg, results.json, describe.json) and texts/heat-delays.html from
@@ -62,10 +62,11 @@ def figures(x: dict) -> None:
                              f"the metro {n(c['metro']['hot']['est_s'], 1, True)} s.", unit, [-30, 10],
                              [-30, -20, -10, 0, 10]),
         "dose": range_chart(dose, "Delay gained by trams by the hour's temperature against mild hours, with 95 % "
-                            "intervals: the hotter the hour, the less delay.", "seconds per trip-hour, against mild "
+                            "intervals: hotter hours went with less delay gained; the bands share the same few hot days.", "seconds per trip-hour, against mild "
                             "hours (15–25 °C)", [-30, 5], [-30, -20, -10, 0]),
         "checks": range_chart(checks, "The registered tram estimate and its checks, with 95 % intervals: every "
-                              "check is below zero except the placebo, whose interval includes zero.", unit,
+                              "check but the placebo has an interval below zero (analytic, about 11 date clusters); the "
+                              "placebo's interval includes zero.", unit,
                               [-30, 10], [-30, -20, -10, 0, 10]),
     }
     days = [d for d in desc["hot_days"] if date(2025, 5, 1) <= date.fromisoformat(d["date"]) <= date(2025, 9, 8)]
@@ -108,7 +109,10 @@ def values(x: dict) -> dict:
          "sig_day": n(pw["sigma_day_s"], 1), "tmax": n(desc["tmax_window"], 1),
          "t_hot": n(rm["tram"]["hot"]["mean_s"], 1), "t_mild": n(rm["tram"]["mild"]["mean_s"], 1),
          "b_hot": n(rm["bus"]["hot"]["mean_s"], 1), "b_mild": n(rm["bus"]["mild"]["mean_s"], 1),
-         "t_pct": n(100 * abs(t["delta_s"]) / rm["tram"]["mild"]["mean_s"]), "pyfixest": metadata.version("pyfixest")}
+         "t_pct": n(100 * abs(t["delta_s"]) / rm["tram"]["mild"]["mean_s"]), "pyfixest": metadata.version("pyfixest"),
+         "pl_pct": n(100 * c["placebo_two_days_later"]["hot_lead2"]["est_s"] / t["delta_s"]),
+         "hot_sundays": n(sum(date.fromisoformat(d["date"]).weekday() == 6 for d in desc["hot_days"] if d["hot_hours"])),
+         "dwell_h": n(json.loads((R / "gehl-trams-results.json").read_text())["heat_secondary"]["est_s"], 2, True)}
 
     def put(key, e):
         v[key], v[key + "_lo"], v[key + "_hi"] = n(e["est_s"], 1), n(e["ci95"][0], 1), n(e["ci95"][1], 1)

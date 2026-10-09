@@ -11,6 +11,8 @@ COPY watch/data.json ./watch/data.json
 COPY assets/detector/detector.json ./assets/detector/detector.json
 COPY assets/parking2/eea_cz.json ./assets/parking2/eea_cz.json
 COPY assets/cutover/report-2.json ./assets/cutover/report-2.json
+COPY assets/cutover/report-3.json ./assets/cutover/report-3.json
+COPY assets/cutover/report-4.json ./assets/cutover/report-4.json
 COPY assets/library.json ./assets/library.json
 COPY status/jobs.json ./status/jobs.json
 COPY changelog/data.json ./changelog/data.json

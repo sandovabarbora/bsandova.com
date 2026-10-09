@@ -46,33 +46,33 @@
   <p class="deck">Vienna cut its annual pass in 2012 and Prague in 2015. The published passenger counts cannot say what the cuts did: too few cities count passengers the same way every year, most of the region cut prices too, and Prague changed how it counts a year before its cut. This note shows the series and why they cannot carry an estimate.</p>
   <dl class="facts">
     <div><dt>annual-pass cut</dt><dd>−19 % · −23 % <small>Vienna 1 May 2012, €449 → €365 · Prague 1 July 2015, CZK 4&nbsp;750 → 3&nbsp;650 · tariff documents</small></dd></div>
-    <div><dt>Vienna, passengers a year</dt><dd>+2.7 % → +0.8 % <small>average yearly change, 2005–2011 → 2012–2019 · administrative count</small></dd></div>
+    <div><dt>Vienna, passengers a year</dt><dd>+2.7 % → +1.2 % <small>average yearly change, 2005–2011 → 2011–2019, the second including +3.6 % from 2011 to 2012 · administrative count</small></dd></div>
     <div><dt>Prague, passengers a year</dt><dd>−0.4 % → 0.0 % <small>2005–2011 → 2015–2019; counting method changes in 2014 · operator estimate</small></dd></div>
-    <div><dt>cities with a clean series</dt><dd>3 of 17 <small>screened before any count was read: Vienna, Prague, Brno · too few for a comparison</small></dd></div>
+    <div><dt>cities passing the screen</dt><dd>3 → 2 of 17 <small>as run before any count was read: Vienna, Prague, Brno; on re-reading Prague fails it · too few for a comparison</small></dd></div>
   </dl>
 </header>
 <details class="tldr" open>
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
-    <li>Vienna's €365 annual pass is often credited with filling its trams. Its passenger count was already rising before the 2012 cut, by 2.7 % a year, and rose more slowly after it, by 0.8 % a year.</li>
+    <li>Vienna's €365 annual pass became a reference for other cities. Its passenger count was already rising before the May 2012 cut, by 2.7 % a year in 2005–2011, and rose by 1.2 % a year from 2011 to 2019, a span that includes the +3.6 % of 2011 to 2012; U-Bahn extensions and a wider tariff change fall in the same years.</li>
     <li>Prague's count is flat around its 2015 cut, but Prague switched from ticket sales to surveys in 2014, so its before and after are not measured the same way.</li>
-    <li>A fair comparison needs similar cities without a cut. Of 17 candidates, only Brno counts the same way every year and kept its price; one control is not enough.</li>
-    <li>Berlin and Germany fell by about a third in 2020–2021 and were back near their 2019 level by 2024–2025, in the years of the 9-euro ticket and the Deutschlandticket; with COVID in the same years, the tickets' share cannot be separated.</li>
+    <li>A fair comparison needs similar cities without a cut. Of 17 candidates, the screen as run passed Vienna, Prague and Brno; on re-reading Prague fails it, which leaves Brno, which did not cut its pass, as the only comparison city. One control is not enough.</li>
+    <li>Berlin and Germany fell by about a third in 2020–2021 and were back near their 2019 level by 2024–2025; the 9-euro ticket and the Deutschlandticket arrived during the same recovery from COVID, so the series cannot separate the tickets from it.</li>
     <li>Nothing here is an effect. The series are shown so the question stays open honestly.</li>
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>6 October 2026 · <a href="../changelog/#annual-pass">version 1</a></dd></div>
+  <div><dt>published</dt><dd>6 October 2026 · updated 9 October 2026 · <a href="../changelog/#annual-pass">version 2</a></dd></div>
   <div><dt>work since</dt><dd>October 2026</dd></div>
 </dl>
 <details class="meta-more">
   <summary>About this note</summary>
 <dl class="meta">
   <div><dt>status</dt><dd>note, descriptive; no effect estimated and no label given</dd></div>
-  <div><dt>design</dt><dd>a pre-specified synthetic-control study, then a staggered difference-in-differences, each committed before any passenger count was read; both were found not estimable by their own unit rules, and the study became this note on 6 October 2026<sup class="cite"><a href="#r1">1</a></sup></dd></div>
+  <div><dt>registration</dt><dd>registered analysis plan: design committed at <code>64cd225</code> on 5 October 2026, before the passenger counts were committed at <code>8be63f3</code> on 6 October 2026; commit times are self-reported. GitHub's activity log shows the design on the public branch from 21:36 UTC on 5 October 2026; a push is not a tamper-evident anchor. The synthetic-control design and the staggered difference-in-differences that replaced it (<code>4cbd737</code>) were both found not estimable by their own unit rules, and the study became this note on 6 October 2026<sup class="cite"><a href="#r1">1</a></sup>. Changes, including the extension of the window to 2025 and the Berlin and Germany block, are dated in <a href="../changelog/#annual-pass">the change log</a>.</dd></div>
   <div><dt>data</dt><dd>operator and statistics-office passenger counts and tariff documents, collected 6 October 2026<sup class="cite"><a href="#r2">2</a></sup><sup class="cite"><a href="#r3">3</a></sup><sup class="cite"><a href="#r4">4</a></sup><sup class="cite"><a href="#r5">5</a></sup><sup class="cite"><a href="#r6">6</a></sup>; every row with its source in <a href="../assets/transit/passengers.csv">passengers.csv</a> and <a href="../assets/transit/prices.csv">prices.csv</a></dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/transit">tools/transit/</a>; figures: <code>uv run --with matplotlib --with pandas python tools/transit/note.py</code></dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Did a cheaper annual pass fill Vienna's and Prague's trams?</i> bsandova.com/texts/annual-pass, version 1.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Did a cheaper annual pass fill Vienna's and Prague's trams?</i> bsandova.com/texts/annual-pass, version 2.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text, figures and data CC BY 4.0</dd></div>
 </dl>
 </details>
@@ -80,8 +80,8 @@
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-annual-pass;--bg:url(../assets/photo/annual-pass.jpg);--bg-s:url(../assets/photo/annual-pass-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Wien_Linie_01_15_Dr.-Karl-Renner-Ring_a.jpg">Peter Gugerell</a> · CC0, toned</p></section>
 
 <section>
-<p>In May 2012 Vienna cut its annual pass from €449 to €365, a euro a day, and the "Vienna model" became a reference for cities that want more people on trams. In July 2015 Prague cut its annual coupon from CZK 4 750 to CZK 3 650 (fig. 3). Brno, the third city here, raised its pass in 2012 and has kept it since.</p>
-<p>The plan was to compare each cut with similar cities that did not cut. That needs cities that count passengers the same way every year and kept their price. A screen of 17 candidates, done before any count was read, found three: Vienna, Prague and Brno<sup class="cite"><a href="#r1">1</a></sup>. Most other cities in the region either cut their own pass between 2012 and 2020, changed their network, or publish no series for the whole window. With one control city the comparison cannot be made, so this note only describes.</p>
+<p>In May 2012 Vienna cut its annual pass from €449 to €365, a euro a day, and the "Vienna model" became a reference for cities that want more people on trams. In July 2015 Prague cut its annual coupon from CZK 4 750 to CZK 3 650 (fig. 3). Brno, the third city here, raised its pass in December 2008 and again in January 2012 and has kept the 2012 price since.</p>
+<p>The plan was to compare each cut with similar cities that did not cut. That needs cities that count passengers the same way every year and kept their price. A screen of 17 candidates, done before any count was read, passed three: Vienna, Prague and Brno<sup class="cite"><a href="#r1">1</a></sup>. On re-reading, Prague fails it (see "Breaks in the series"), which leaves two. Most other cities in the region either cut their own pass between 2012 and 2020, changed their network, or publish no series for the whole window. With one control city the comparison cannot be made, so this note only describes.</p>
 </section>
 
 <section>
@@ -92,7 +92,7 @@
   <img src="../assets/transit/01-cities.svg" alt="Annual passengers in Vienna, Prague and Brno, 2005–2025, each indexed to its own 2005–2011 mean: Vienna rises from 93 to 119 by 2019, Prague stays near 100 with drops in 2011 and 2014, Brno rises slowly; all three fall in 2020." loading="lazy">
   <figcaption><b>fig. 1</b> · Annual passengers of the city operator, 2005–2025, each city's own 2005–2011 mean = 100; Vienna orange, Prague blue, Brno green; dotted, the two price cuts; dashed, Prague's two changes of counting method, to surveys in 2014 and automatic counts in 2020; shaded, 2020 onwards. Descriptive, no model. Sources: Stadt Wien and Wiener Linien<sup class="cite"><a href="#r2">2</a></sup>, DPP<sup class="cite"><a href="#r3">3</a></sup>, DPMB<sup class="cite"><a href="#r4">4</a></sup>.</figcaption>
 </figure>
-<p data-focus="cities:Vienna">Vienna's count rose from 747 million journeys in 2005 to 875 million in 2011, by 2.7 % a year, and kept rising after the cut, more slowly: 0.8 % a year from 2012 to 2019, to 961 million. Whatever the cut did, the growth often credited to it had started earlier.</p>
+<p data-focus="cities:Vienna">Vienna's count rose from 747 million journeys in 2005 to 875 million in 2011, by 2.7 % a year. From 2011 to 2012, the year of the cut, it rose by 3.6 %, and from 2012 to 2019 by 0.8 % a year, to 961 million; over 2011–2019 as a whole that is 1.2 % a year. The growth had started before the cut. The same years also brought extensions of the U2 line inside the city, in 2008, 2010 and 2013<sup class="cite"><a href="#r1">1</a></sup>, and the annual-pass cut was part of a wider tariff change on 1 May 2012<sup class="cite"><a href="#r7">7</a></sup>, whose other fares are not analysed here, so the series cannot separate the cut from them.</p>
 <p data-focus="cities:Prague">Prague's count is flat: −0.4 % a year before 2012 and 0.0 % a year from 2015 to 2019. Two of its steps are not passengers but bookkeeping. The 2011 figure is 8 % lower partly because of a buy-back of tickets already sold, and in 2014 DPP replaced ticket-sales estimates with transport surveys, a year before the cut; the count fell 5.7 % that year. Prague's before and after the cut are therefore measured differently. Brno grew slowly throughout, by 0.9 % a year to 2011 and 0.4 % a year from 2012 to 2019.</p>
 <p>All three fell in 2020. Against 2019, Vienna was 9 % lower in 2024 and Brno 4 % higher in 2025. Prague's 2025 figure is 15 % lower, but Prague switched to automatic passenger counting in 2020, so that gap is not like for like either.</p>
 </section>
@@ -105,7 +105,7 @@
   <img src="../assets/transit/02-germany.svg" alt="Annual passengers of local public transport in Berlin and Germany, 2012–2025, indexed to 2019: both rise to 2019, fall by about a third in 2020–2021 and return near the 2019 level by 2024–2025." loading="lazy">
   <figcaption><b>fig. 2</b> · Annual passengers of local scheduled public transport, Berlin (violet) and Germany (grey), 2019 = 100; shaded, the 9-euro ticket; dotted, the Deutschlandticket. Germany before 2019 is on an earlier reporting basis; 2020–2022 are preliminary; Germany 2025 is not yet published. Sources: Amt für Statistik Berlin-Brandenburg<sup class="cite"><a href="#r5">5</a></sup>, Destatis<sup class="cite"><a href="#r6">6</a></sup>.</figcaption>
 </figure>
-<p>Both fell to about two thirds of 2019 in 2020–2021 and recovered after the cheap tickets, Berlin to 2 % below 2019 in 2025 and Germany to 1 % below in 2024. Since the tickets were nationwide and arrived with the end of the pandemic, no German city is left as a comparison, and the recovery cannot be divided between them.</p>
+<p>Both fell to about two thirds of 2019 in 2020–2021 and recovered in the years of the cheap tickets, Berlin to 2 % below 2019 in 2025 and Germany to 1 % below in 2024. Since the tickets were nationwide and arrived with the end of the pandemic, no German city is left as a comparison, and the recovery cannot be divided between them.</p>
 </section>
 
 <section>
@@ -134,7 +134,7 @@
 
 <section>
 <h2>What this will not show</h2>
-<p>It does not show whether a cheaper pass raises ridership, in Vienna, Prague or anywhere: the lines bundle price with network growth, population, fuel prices and, for Prague, a change of method. It does not show who rides more, since the counts are journeys, not people. It does not compare levels between cities. In Vienna the pass went to €467 in January 2026, and the next years of counts will show what happens after a rise.</p>
+<p>It does not show whether a cheaper pass raises ridership, in Vienna, Prague or anywhere: the lines bundle price with network growth (in Vienna, the U-Bahn extensions), the rest of a tariff change (Vienna's of May 2012), population, fuel prices and, for Prague, a change of method. It does not show who rides more, since the counts are journeys, not people. It does not compare levels between cities. In Vienna the pass went to €467 in January 2026, and the next years of counts will show what happens after a rise.</p>
 </section>
 
 <section class="refs" id="refs">

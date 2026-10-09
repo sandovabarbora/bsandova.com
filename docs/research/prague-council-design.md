@@ -340,3 +340,18 @@ All three H4 categories exceed the 8-sitting rule. The weights for θ are n_plan
   - H1 on stayers only.
 
 5 October 2026: status and §0 reworded; the author had worked with these data since May 2024.
+
+**9 October 2026 (clarifications after an independent review; the text above is unchanged).**
+
+- **Status line.** The header's "after review by three referees (legislative studies, statistics, data audit)" cannot
+  be verified by a reader: the referees are not named, have no stated affiliation, and their reports are not in the
+  repository. The article makes no claim of review.
+- **Deviation, H1 stayers.** §2 registers "the stayer-only estimate (status unchanged)". The code
+  (`council_extended.py`, `h1`) defines a stayer as a councillor whose share of seated votes cast while their club was
+  in opposition changed by less than 0.5 between the two terms. The reported 26 people, × 0.86 (p = 0.14), use the
+  code's definition. A version with the share literally unchanged was not run. Recorded as a deviation on this date,
+  after the results.
+- **H1 interval.** The 95 % interval of the pooled ratio given in the article, 0.38–0.65, is a t interval over the 59
+  person means (sd_D = 1.057 in `council_extended.json`). It was not registered and was added after the results.
+- **H3 inference wording.** The registered moving-block bootstrap over sittings (block 3) is what the code runs; the
+  article had described it as resampling whole sittings, and now says moving-block bootstrap in blocks of three.

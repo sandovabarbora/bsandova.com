@@ -55,7 +55,7 @@ alt["event-study"] = ("Two lines of the difference between districts that became
                       "the next two years, dashed, −95 % and +46 %.")
 alt["estimate"] = ("Interval chart. The pooled estimate, −37 %, with a 95 % Conley–Taber interval from −115 to +21 %, and a wider simplified "
                    "HonestDiD interval from −143 to +69 %. The 2018 change alone at +20 %, the 2023 change alone at −67 %. A grey band marks "
-                   "±20 %, a green band the published premiums of 26–47 %, and a dashed line at +100 % the smallest change the design could "
+                   "±20 %, a green band the published premiums of 36–47 %, and a dashed line at +100 % the smallest change the design could "
                    "detect.")
 alt["spec-curve"] = ("Thirty-six dots sorted from about −81 % to +1 %. Six are above zero. The registered alignment rule gives estimates between "
                      "about −60 % and 0 %, the seat-majority rule between −81 % and −4 %, and the largest-list rule between −21 % and +1 %.")
@@ -178,13 +178,13 @@ by = {k: v["estimate"] / v["pre_level_ctrl"] * 100 for k, v in h["by_event"].ite
 L_CT, L_HON, L_EV = "pooled · 95 % Conley–Taber", "pooled · HonestDiD (simplified), M̄ = 1", "by event · 2018, 2023"
 iv = lambda a, b: f"{n(a)} to {pct(b)}"  # noqa: E731
 charts["estimate"] = {
-    "legend": [{"label": "published premiums 26–47 %", "c": HELD, "shape": "box", "o": 0.2}, {"label": "equivalence margin ±20 %", "c": "grey", "shape": "box", "o": 0.15},
+    "legend": [{"label": "published premiums 36–47 %", "c": HELD, "shape": "box", "o": 0.2}, {"label": "equivalence margin ±20 %", "c": "grey", "shape": "box", "o": 0.15},
                {"label": "detectable at 80 % power", "c": "ink", "dash": "dash"},
                {"label": "2018 change", "c": "light", "shape": "o"}, {"label": "2023 change", "c": HELD, "shape": "o"}],
     "panels": [{"h": 230, "x": {"kind": "linear", "domain": [-160, 150], "ticks": [-150, -100, -50, 0, 50, 100],
                                 "label": "on becoming aligned · % of controls' usual grants", "tickfmt": {"dp": 0, "sign": True}},
                 "y": {"kind": "cat", "domain": ["", L_CT, L_HON, L_EV]},
-                "marks": [{"type": "span", "v0": 26, "v1": 47, "c": HELD, "o": 0.14, "label": "published 26–47 %"},
+                "marks": [{"type": "span", "v0": 36, "v1": 47, "c": HELD, "o": 0.14, "label": "published 36–47 %"},
                           {"type": "span", "v0": -20, "v1": 20, "c": "grey", "o": 0.12, "label": "±20 %"},
                           {"type": "rule", "axis": "x", "v": 100, "c": "ink", "dash": "dash", "label": "detectable at 80 % power", "anchor": "end", "dy": 26,
                            "tip": "about +100 %: the smallest change\nthe design could detect at 80 % power"},
@@ -201,7 +201,7 @@ charts["estimate"] = {
     "table": {"cols": ["", "estimate", "interval"],
               "rows": [[L_CT, pct(est), iv(*ct)], [L_HON, pct(est), iv(*hon)], ["pooled · HonestDiD (simplified), M̄ = 0.5", pct(est), iv(*hon5)],
                        ["2018 change alone", pct(by["2018"]), ""], ["2023 change alone", pct(by["2023"]), ""],
-                       ["published premiums", "26 to 47 %", ""], ["equivalence margin", "±20 %", ""], ["detectable at 80 % power", "about +100 %", ""]]},
+                       ["published premiums", "36 to 47 %", ""], ["equivalence margin", "±20 %", ""], ["detectable at 80 % power", "about +100 %", ""]]},
     "data": [DE],
 }
 

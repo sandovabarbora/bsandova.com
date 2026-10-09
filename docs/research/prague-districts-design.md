@@ -861,3 +861,18 @@ third to a half more", with Germany's sign depending on the bloc.
 **3 October 2026 (audit).** Several notes in this file are dated 30 September 2026; the commits that carry them are of 29 September 2026, which is the correct date. The corrected-parser Lin concordance (0.795, reported above as disclosure only) is not in `prague-districts-bridge.json`, which keeps the registered 0.7246.
 
 **5 October 2026.** Wording only: statements that no amount was read or touched are scoped to this analysis and this design. The author had worked with these data for a long time before the plan was committed. The plan sets the analysis in advance; the author already knew the data. No number, estimate or result changed.
+
+**9 October 2026 (clarifications after an independent review; the text above is unchanged).**
+
+- **Status line.** The "three referee reports" of the header (`prague-districts-referees.md`) are unnamed and give no
+  affiliation, so they cannot be verified by a reader; the article makes no claim of review. The same holds for the
+  "independent audit" of the 30 September entries: its findings are reported above with their effects, but who made
+  it is not stated, and the article does not call it independent.
+- **Commit times.** `683b0c8` has author time 01:07:33 and committer time 01:19:10; the addendum `7be2ad5` has author
+  time 01:18:50 and the same committer time. The article cites both.
+- **H1 label.** §6.2 fixes that "a null H1 will therefore be reported as 'inconclusive'" unless the TOST rejects. The
+  TOST p is 0.53, so H1 is labelled **inconclusive**; the first versions of the article said "not supported,
+  underpowered".
+- **Literature magnitudes (§2).** Brollo and Nannicini (2012): about 40 % (Brazil, close races); Migueis (2013): 19 %;
+  Solé-Ollé and Sorribas-Navarro (2008): the abstract gives no single magnitude. The Italian (36–47 %) and German
+  figures remain unchecked against the papers' tables.
