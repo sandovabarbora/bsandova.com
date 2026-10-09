@@ -13,19 +13,12 @@ Usage:
 import html
 import json
 import re
-import subprocess
-from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
-SITE = "https://bsandova.com"
+from shared import ROOT, SITE, canonical, last_commit, noindex, write
+
 AUTHOR = {"@type": "Person", "name": "Barbora Šandová", "url": f"{SITE}/"}
 LD = re.compile(r"\n?<!-- ld -->.*?<!-- /ld -->\n?", re.S)
 ALTERNATE = '<link rel="alternate" type="application/atom+xml" title="Barbora Šandová" href="/feed.xml">'
-
-
-def last_commit(path: str) -> str:
-    args = ["git", "log", "-1", "--format=%cI", "--", path]
-    return subprocess.run(args, cwd=ROOT, capture_output=True, text=True).stdout.strip()
 
 
 def meta(s: str, key: str, attr: str = "property") -> str:
@@ -37,18 +30,18 @@ def articles() -> list[dict]:
     rows = []
     for page in sorted((ROOT / "texts").rglob("*.html")):
         s = page.read_text()
-        canon = re.search(r'<link rel="canonical" href="([^"]+)"', s)
-        if meta(s, "og:type") != "article" or not canon or "noindex" in meta(s, "robots", "name"):
+        url = canonical(s)
+        if meta(s, "og:type") != "article" or not url or noindex(s):
             continue
         rel = str(page.relative_to(ROOT))
         rows.append(
             {
                 "path": page,
-                "url": canon.group(1),
+                "url": url,
                 "title": meta(s, "og:title"),
                 "summary": meta(s, "description", "name") or meta(s, "og:description"),
                 "image": meta(s, "og:image"),
-                "updated": last_commit(rel),
+                "updated": last_commit(rel, "%cI"),
             }
         )
     return sorted(rows, key=lambda a: a["updated"], reverse=True)
@@ -67,13 +60,6 @@ def json_ld(a: dict) -> str:
     }
     body = json.dumps({k: v for k, v in data.items() if v}, ensure_ascii=False).replace("</", "<\\/")
     return f'\n<!-- ld -->{ALTERNATE}\n<script type="application/ld+json">{body}</script><!-- /ld -->'
-
-
-def write(path: Path, text: str) -> bool:
-    if path.exists() and path.read_text() == text:
-        return False
-    path.write_text(text)
-    return True
 
 
 def stamp(a: dict) -> bool:

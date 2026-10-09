@@ -9,10 +9,9 @@ Usage:
 """
 
 import re
-import subprocess
-from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+from shared import ROOT, tracked_html
+
 LINKS = [("#work", "Work"), ("#works", "All work"), ("#about", "About"), ("ask/", "Ask"), ("#contact", "Contact")]
 BAR = re.compile(r'(<div class="top">)<b><a href="([^"]*)"[^>]*>[^<]*</a></b><nav>.*?</nav>')
 SKIP = ("tools/", "assets/", "index.html")
@@ -28,8 +27,7 @@ def rewrite(text: str) -> str:
 
 
 def main() -> None:
-    files = subprocess.run(["git", "ls-files", "*.html"], cwd=ROOT, capture_output=True, text=True).stdout.split()
-    targets = [f for f in files if not f.startswith(SKIP) and f not in SKIP]
+    targets = [f for f in tracked_html() if not f.startswith(SKIP) and f not in SKIP]
     targets += ["tools/site/changelog.py", "tools/quaesitor/quaesitor_texts.py", "tools/quaesitor/port_quaesitor.py"]
     for f in targets:
         path = ROOT / f

@@ -17,9 +17,9 @@ import json
 import re
 import subprocess
 from collections import Counter, defaultdict
-from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+from shared import ROOT, slug, write
+
 OUT = ROOT / "changelog"
 LOGS = ROOT / "docs" / "changelogs"
 MONTHS = "January February March April May June July August September October November December".split()
@@ -76,26 +76,21 @@ def commits() -> list[dict]:
     return out
 
 
-def slug_of(page: Path) -> str:
-    rel = page.relative_to(ROOT / "texts").with_suffix("")
-    return "-".join(p for p in rel.parts if p != "index") or "index"
-
-
 def articles() -> list[dict]:
     """Each article with a change log: its title, URL, version and the hand-kept list, newest-changed first."""
     out = []
     for page in sorted((ROOT / "texts").rglob("*.html")):
-        slug = slug_of(page)
-        log = LOGS / f"{slug}.html"
+        key = slug(page)
+        log = LOGS / f"{key}.html"
         if not log.exists():
             continue
         s = page.read_text(encoding="utf-8")
         title = re.search(r"<title>(.*?)</title>", s, re.S).group(1).split(" · Barbora")[0].strip()
-        version = re.search(r'changelog/#' + re.escape(slug) + r'">(version \d+)<', s)
+        version = re.search(r'changelog/#' + re.escape(key) + r'">(version \d+)<', s)
         body = log.read_text(encoding="utf-8")
         dates = [(int(y), MONTHS.index(m) + 1, int(d)) for d, m, y in re.findall(r"(\d{1,2}) (" + "|".join(MONTHS) + r") (\d{4})", body)]
         href = "../" + str(page.relative_to(ROOT).with_suffix("")).replace("/index", "/")
-        out.append({"slug": slug, "title": title, "href": href, "version": version.group(1) if version else "",
+        out.append({"slug": key, "title": title, "href": href, "version": version.group(1) if version else "",
                     "latest": max(dates) if dates else (0, 0, 0), "body": body})
     return sorted(out, key=lambda a: (a["latest"], a["title"]), reverse=True)
 
@@ -180,11 +175,6 @@ def render(items: list[dict]) -> str:
 </body>
 </html>
 '''
-
-
-def write(path: Path, text: str) -> None:
-    if not path.exists() or path.read_text() != text:
-        path.write_text(text)
 
 
 def main() -> None:
