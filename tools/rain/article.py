@@ -1,4 +1,4 @@
-"""Does rain delay Prague's trams: figures and the article, every number from the result files.
+"""Are Prague's trams later in rain hours: figures and the article, every number from the result files.
 
 Reads docs/research/rain-delays-results.json, -describe.json, -power-rerun.json, -screen.json, -screen-feed.json, -posthoc.json,
 ČHMÚ hourly precipitation and tools/data/rain/segments.parquet; writes assets/rain/ (charts.json, 01-modes.svg,

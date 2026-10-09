@@ -111,6 +111,7 @@ def values(x: dict) -> dict:
          "b_hot": n(rm["bus"]["hot"]["mean_s"], 1), "b_mild": n(rm["bus"]["mild"]["mean_s"], 1),
          "t_pct": n(100 * abs(t["delta_s"]) / rm["tram"]["mild"]["mean_s"]), "pyfixest": metadata.version("pyfixest"),
          "pl_pct": n(100 * c["placebo_two_days_later"]["hot_lead2"]["est_s"] / t["delta_s"]),
+         "hot_sundays": n(sum(date.fromisoformat(d["date"]).weekday() == 6 for d in desc["hot_days"] if d["hot_hours"])),
          "dwell_h": n(json.loads((R / "gehl-trams-results.json").read_text())["heat_secondary"]["est_s"], 2, True)}
 
     def put(key, e):
