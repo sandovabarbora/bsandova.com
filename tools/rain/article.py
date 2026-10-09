@@ -16,16 +16,17 @@ import shutil
 import sys
 from pathlib import Path
 
-import matplotlib
+import duckdb
+import matplotlib.dates as mdates
+import pandas as pd
+from matplotlib.collections import LineCollection
+from matplotlib.colors import Normalize
 
-matplotlib.use("Agg")
-import duckdb  # noqa: E402
-import matplotlib.dates as mdates  # noqa: E402
-import matplotlib.pyplot as plt  # noqa: E402
-import pandas as pd  # noqa: E402
-from matplotlib.collections import LineCollection  # noqa: E402
-from matplotlib.colors import Normalize  # noqa: E402
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
+from article_kit import (GREY, HELD, LIGHT, n, range_chart, range_rows, results_reader, static_range,  # noqa: E402
+                         use_article_style)
 
+plt = use_article_style()
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import power  # noqa: E402
 from estimate import DOSE, weather  # noqa: E402
@@ -34,60 +35,13 @@ ROOT = Path(__file__).resolve().parents[2]
 R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "rain"
 D = ROOT / "tools" / "data" / "rain"
-HELD, INK, GREY, LIGHT = "#34507c", "#111111", "#666666", "#b5b5b0"
-NB = " "
-plt.rcParams.update({"font.family": "Helvetica", "font.size": 9, "axes.spines.top": False, "axes.spines.right": False,
-                     "axes.edgecolor": GREY, "xtick.color": GREY, "ytick.color": GREY, "svg.fonttype": "none"})
 DOSE_LABEL = {"p0_1_0_5": "0.1–0.5 mm", "p0_5_2": "0.5–2 mm", "p2_5": "2–5 mm", "p5_up": "≥ 5 mm"}
 
 
-def n(v: float, dp: int = 0, sign: bool = False) -> str:
-    s = f"{abs(v):,.{dp}f}".replace(",", NB)
-    neg = v < 0 and round(abs(v), dp) != 0
-    return ("−" if neg else ("+" if sign and v > 0 else "")) + s
-
-
-def ci(lo: float, hi: float, dp: int = 1) -> str:
-    return f"{n(lo, dp)} to {n(hi, dp)}"
-
-
 def load() -> dict:
-    j = lambda name: json.loads((R / f"rain-delays-{name}.json").read_text())  # noqa: E731
+    j = results_reader("rain-delays")
     return {"res": j("results"), "desc": j("describe"), "pow": j("power-rerun"), "scr": j("screen"),
             "feed": j("screen-feed"), "post": j("posthoc")}
-
-
-def range_rows(items: list[tuple[str, dict, str]]) -> list[dict]:
-    return [{"y": lab, "lo": e["ci95"][0], "hi": e["ci95"][1], "mid": e["est_s"], "c": c,
-             "tip": f"{lab}: {n(e['est_s'], 1, True)} s ({ci(*e['ci95'])})"} for lab, e, c in items]
-
-
-def range_chart(rows: list[dict], alt: str, label: str, domain: list[float], ticks: list[float]) -> dict:
-    return {"alt": alt,
-            "panels": [{"h": 34 * len(rows) + 20,
-                        "x": {"kind": "linear", "domain": domain, "ticks": ticks, "fmt": {"dp": 0, "sign": True},
-                              "label": label},
-                        "y": {"kind": "cat", "domain": [r["y"] for r in rows]},
-                        "marks": [{"type": "rule", "axis": "x", "v": 0, "c": "grey"}, {"type": "range", "rows": rows}]}],
-            "table": {"cols": ["estimate", "seconds", "95 % interval"],
-                      "rows": [[r["y"], round(r["mid"], 2), f"{r['lo']:.2f} to {r['hi']:.2f}"] for r in rows]},
-            "data": ["results.json"]}
-
-
-def static_range(rows: list[dict], path: Path, label: str, xlim: tuple[float, float]) -> None:
-    f, ax = plt.subplots(figsize=(7.2, 0.42 * len(rows) + 0.8))
-    for i, r in enumerate(reversed(rows)):
-        c = {"held": HELD, "ink": INK, "grey": GREY}[r["c"]]
-        ax.plot([r["lo"], r["hi"]], [i, i], color=c, lw=2.5, solid_capstyle="round")
-        ax.plot(r["mid"], i, "o", color=c, ms=6, mec="white")
-    ax.axvline(0, color=GREY, lw=0.8)
-    ax.set_yticks(range(len(rows)))
-    ax.set_yticklabels([r["y"] for r in reversed(rows)])
-    ax.set_xlim(*xlim)
-    ax.set_xlabel(label)
-    f.tight_layout()
-    f.savefig(path)
-    plt.close(f)
 
 
 def figures(x: dict) -> dict:
@@ -114,8 +68,8 @@ def figures(x: dict) -> dict:
         ("closures, literal", c["rule1_literal"]["rain"], "ink")])
     charts = {
         "modes": range_chart(modes, f"Delay gained in a rain hour against a dry hour, with 95 % intervals: trams "
-                             f"{n(t['delta_s'], 1, True)} s and buses {n(b['delta_s'], 1, True)} s, both above zero; "
-                             f"the metro, underground, {n(c['metro']['rain']['est_s'], 1, True)} s.",
+                             f"{n(t['delta_s'], 1, sign=True)} s and buses {n(b['delta_s'], 1, sign=True)} s, both above zero; "
+                             f"the metro, underground, {n(c['metro']['rain']['est_s'], 1, sign=True)} s.",
                              unit, [-10, 20], [-10, -5, 0, 5, 10, 15, 20]),
         "dose": range_chart(dose, "Delay gained by trams in an hour by how much rain fell, against dry hours, with "
                             "95 % intervals: the estimate is larger in heavier rain.",

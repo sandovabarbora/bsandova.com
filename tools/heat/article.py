@@ -2,26 +2,25 @@
 
 Reads docs/research/heat-delays-results.json, -describe.json, -power.json; writes assets/heat/ (charts.json,
 01-modes.svg, 02-dose.svg, 03-checks.svg, 04-days.svg, results.json, describe.json) and texts/heat-delays.html from
-tools/heat/template.html. Chart helpers are the rain article's.
+tools/heat/template.html. Chart helpers are tools/site/article_kit.py.
 
     uv run --with matplotlib --with pandas --with pyarrow --with duckdb --with pyfixest python tools/heat/article.py
 """
 from __future__ import annotations
 
-import importlib.util
 import json
 import re
 import shutil
+import sys
 from datetime import date
 from importlib import metadata
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
-_spec = importlib.util.spec_from_file_location("rain_article", ROOT / "tools" / "rain" / "article.py")
-ra = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(ra)
-plt, n, ci, range_rows, range_chart, static_range = ra.plt, ra.n, ra.ci, ra.range_rows, ra.range_chart, ra.static_range
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
+from article_kit import n, range_chart, range_rows, results_reader, static_range, use_article_style  # noqa: E402
 
+plt = use_article_style()
+ROOT = Path(__file__).resolve().parents[2]
 R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "heat"
 HEAT = "#b4532a"  # the site's coral: heat, against the rain article's blue
@@ -29,12 +28,8 @@ DOSE_LABEL = {"t25_28": "25–28 °C", "t28_30": "28–30 °C", "t30_32": "30–
 
 
 def load() -> dict:
-    j = lambda name: json.loads((R / f"heat-delays-{name}.json").read_text())  # noqa: E731
+    j = results_reader("heat-delays")
     return {"res": j("results"), "desc": j("describe"), "pow": j("power")}
-
-
-def recolour(rows: list[dict]) -> list[dict]:
-    return [{**r, "c": HEAT if r["c"] == "held" else r["c"]} for r in rows]
 
 
 def figures(x: dict) -> None:
@@ -44,22 +39,22 @@ def figures(x: dict) -> None:
     res, desc = x["res"], x["desc"]
     t, b, c = res["tram"], res["bus_secondary"], res["checks_tram"]
     unit = "seconds of delay gained per trip-hour, hot against mild"
-    modes = recolour(range_rows([("trams", {"est_s": t["delta_s"], "ci95": t["ci95"]}, "held"),
-                                 ("buses (secondary)", {"est_s": b["delta_s"], "ci95": b["ci95"]}, "ink"),
-                                 ("metro (control)", c["metro"]["hot"], "grey")]))
-    dose = recolour(range_rows([(DOSE_LABEL[k], c["dose"][k], "held") for k in DOSE_LABEL]))
-    checks = recolour(range_rows([
+    modes = range_rows([("trams", {"est_s": t["delta_s"], "ci95": t["ci95"]}, "held"),
+                        ("buses (secondary)", {"est_s": b["delta_s"], "ci95": b["ci95"]}, "ink"),
+                        ("metro (control)", c["metro"]["hot"], "grey")], held=HEAT)
+    dose = range_rows([(DOSE_LABEL[k], c["dose"][k], "held") for k in DOSE_LABEL], held=HEAT)
+    checks = range_rows([
         ("registered estimate", {"est_s": t["delta_s"], "ci95": t["ci95"]}, "held"),
         ("same date, not week", c["date_effects"]["hot"], "ink"),
         ("hot from 28 °C", c["threshold_28"]["hot"], "ink"),
         ("hot from 32 °C", c["threshold_32"]["hot"], "ink"),
         ("wet hours kept", c["wet_hours_kept"]["hot"], "ink"),
         ("delay level", c["level_instead_of_gain"]["hot"], "ink"),
-        ("placebo: 2 days later", c["placebo_two_days_later"]["hot_lead2"], "grey")]))
+        ("placebo: 2 days later", c["placebo_two_days_later"]["hot_lead2"], "grey")], held=HEAT)
     charts = {
         "modes": range_chart(modes, f"Delay gained in a hot hour against a mild one, with 95 % intervals: trams "
-                             f"{n(t['delta_s'], 1, True)} s and buses {n(b['delta_s'], 1, True)} s, both below zero; "
-                             f"the metro {n(c['metro']['hot']['est_s'], 1, True)} s.", unit, [-30, 10],
+                             f"{n(t['delta_s'], 1, sign=True)} s and buses {n(b['delta_s'], 1, sign=True)} s, both below zero; "
+                             f"the metro {n(c['metro']['hot']['est_s'], 1, sign=True)} s.", unit, [-30, 10],
                              [-30, -20, -10, 0, 10]),
         "dose": range_chart(dose, "Delay gained by trams by the hour's temperature against mild hours, with 95 % "
                             "intervals: hotter hours went with less delay gained; the bands share the same few hot days.", "seconds per trip-hour, against mild "
@@ -86,7 +81,7 @@ def figures(x: dict) -> None:
     (A / "charts.json").write_text(json.dumps(charts, ensure_ascii=False))
     for rows, name, label, xlim in ((modes, "01-modes", unit, (-30, 10)), (dose, "02-dose", unit, (-30, 5)),
                                     (checks, "03-checks", unit, (-30, 10))):
-        static_range([{**r, "c": "held" if r["c"] == HEAT else r["c"]} for r in rows], A / f"{name}.svg", label, xlim)
+        static_range(rows, A / f"{name}.svg", label, xlim)
     f, ax = plt.subplots(figsize=(7.2, 2.0))
     hot = [d for d in days if d["hot_hours"]]
     ax.bar([lab(d["date"]) for d in hot], [d["hot_hours"] for d in hot], color=HEAT)
@@ -112,7 +107,7 @@ def values(x: dict) -> dict:
          "t_pct": n(100 * abs(t["delta_s"]) / rm["tram"]["mild"]["mean_s"]), "pyfixest": metadata.version("pyfixest"),
          "pl_pct": n(100 * c["placebo_two_days_later"]["hot_lead2"]["est_s"] / t["delta_s"]),
          "hot_sundays": n(sum(date.fromisoformat(d["date"]).weekday() == 6 for d in desc["hot_days"] if d["hot_hours"])),
-         "dwell_h": n(json.loads((R / "gehl-trams-results.json").read_text())["heat_secondary"]["est_s"], 2, True)}
+         "dwell_h": n(json.loads((R / "gehl-trams-results.json").read_text())["heat_secondary"]["est_s"], 2, sign=True)}
 
     def put(key, e):
         v[key], v[key + "_lo"], v[key + "_hi"] = n(e["est_s"], 1), n(e["ci95"][0], 1), n(e["ci95"][1], 1)
