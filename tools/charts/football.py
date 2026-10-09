@@ -20,10 +20,12 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
+from article_kit import n  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[2]
 A = ROOT / "assets" / "football"
 HTML = ROOT / "texts" / "football.html"
-NB = " "
 
 HELD = "#2f7a36"  # the pitch green the article's photograph holds
 RUNG = {  # one rung palette for every chart and list of the atlas
@@ -63,11 +65,6 @@ def refresh(atlas: Path) -> None:
                    "m": "minutes", "a": "age", "tier": "rung of the league"},
         "points": pts,
     }, ensure_ascii=False, separators=(",", ":")) + "\n")
-
-
-def n(v: float, dp: int = 2) -> str:
-    s = f"{abs(v):,.{dp}f}".replace(",", NB)
-    return ("−" if v < 0 else "") + s
 
 
 def season(s: str) -> str:
@@ -242,7 +239,7 @@ def build() -> dict:
         x, y, cl = (p["x"], p["y"], p["c"]) if proj == "style" else (p["qx"], p["qy"], p["cq"])
         nt = "\nnational-team call-up 2024–26" if p["nt"] else ""
         return (f"{p['n']}, {p['t']}\n{p['lg'].split('-', 1)[1]} · {RUNG[p['tier']][1]}\n{n(p['m'], 0)} minutes · age {p['a']}" +
-                f"\n{proj} projection: PC1 {n(x)}, PC2 {n(y)} · cluster {cl}{nt}")
+                f"\n{proj} projection: PC1 {n(x, 2)}, PC2 {n(y, 2)} · cluster {cl}{nt}")
 
     def panel(proj: str, title: str) -> dict:
         kx, ky = ("x", "y") if proj == "style" else ("qx", "qy")
@@ -264,8 +261,8 @@ def build() -> dict:
                    {"label": "○ ringed: national-team call-up 2024–26", "c": "#ffffff", "shape": "box", "o": 0}],
         "panels": [panel("style", "style projection, raw rates"), panel("quality", "quality projection, UEFA multipliers applied")],
         "table": {"cols": ["player", "club", "league", "rung", "minutes", "age", "style PC1", "style PC2", "cluster", "quality PC1", "quality PC2", "cluster", "call-up"],
-                  "rows": [[p["n"], p["t"], p["lg"].split("-", 1)[1], RUNG[p["tier"]][1], str(p["m"]), str(p["a"]), n(p["x"]), n(p["y"]), p["c"],
-                            n(p["qx"]), n(p["qy"]), p["cq"], "yes" if p["nt"] else ""] for p in sorted(pts, key=lambda p: p["n"])]},
+                  "rows": [[p["n"], p["t"], p["lg"].split("-", 1)[1], RUNG[p["tier"]][1], str(p["m"]), str(p["a"]), n(p["x"], 2), n(p["y"], 2), p["c"],
+                            n(p["qx"], 2), n(p["qy"], 2), p["cq"], "yes" if p["nt"] else ""] for p in sorted(pts, key=lambda p: p["n"])]},
         "data": [D_MF],
     }
     return charts

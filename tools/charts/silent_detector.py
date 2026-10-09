@@ -10,24 +10,21 @@ static SVG fallbacks from the same two files.
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
+from article_kit import n  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 A = ROOT / "assets/detector"
 D = json.loads((A / "detector.json").read_text())
 C = json.loads((A / "auc.json").read_text())
 DATA = ["../assets/detector/answers.csv", "../assets/detector/auc.json", "../assets/detector/detector.json"]
-NB = " "
-
-
-def n(v: float, dp: int = 0, unit: str = "") -> str:
-    """Numbers as the article writes them: a space between thousands, a real minus sign."""
-    s = f"{abs(v):,.{dp}f}".replace(",", NB)
-    return ("−" if v < 0 else "") + s + unit
 
 
 def pct(v: float, dp: int = 0) -> str:
-    return n(100 * v, dp, " %")
+    return n(100 * v, dp, unit=" %")
 
 
 def ci(r: dict) -> str:

@@ -9,17 +9,15 @@ from __future__ import annotations
 
 import csv
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
+from article_kit import n  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 A = ROOT / "assets/lottery"
 R = json.loads((A / "results.json").read_text())
-NB = " "
-
-
-def n(v: float, dp: int = 0, unit: str = "") -> str:
-    s = f"{abs(v):,.{dp}f}".replace(",", NB)
-    return ("−" if v < 0 else "") + s + unit
 
 
 def rows(name: str) -> list[dict]:
