@@ -28,6 +28,15 @@ def get(url: str) -> dict | list:
         return json.load(r)
 
 
+def judge(ok: bool | None, age_h: float | None, cadence_h: float | None) -> str:
+    """A failed last run outranks fresh data; without a cadence or a data age there is nothing to call late."""
+    if ok is False:
+        return "failed"
+    if cadence_h and age_h is not None:
+        return "ok" if age_h < cadence_h else "late" if age_h < 2 * cadence_h else "stale"
+    return "ok"
+
+
 def main() -> int:
     now = datetime.now(timezone.utc)
     jobs = json.loads((ROOT / "status" / "jobs.json").read_text())
@@ -62,11 +71,7 @@ def main() -> int:
                 if done:
                     ok = done[0]["conclusion"] == "success"
                     detail.append(f"last run {done[0]['run_started_at'][:16]} {done[0]['conclusion']}")
-            cad = j.get("cadence_hours")
-            if ok is False:
-                state = "failed"
-            elif cad and age_h is not None:
-                state = "ok" if age_h < cad else "late" if age_h < 2 * cad else "stale"
+            state = judge(ok, age_h, j.get("cadence_hours"))
         except Exception as e:  # noqa: BLE001
             state, detail = "unknown", [f"could not read: {e}"]
         if state != "ok":
