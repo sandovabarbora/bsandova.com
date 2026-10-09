@@ -17,11 +17,13 @@ import json
 import re
 import subprocess
 from collections import Counter, defaultdict
+from pathlib import Path
 
 from shared import ROOT, slug, write
 
 OUT = ROOT / "changelog"
 LOGS = ROOT / "docs" / "changelogs"
+TEMPLATE = (Path(__file__).parent / "changelog.html").read_text(encoding="utf-8")
 MONTHS = "January February March April May June July August September October November December".split()
 AREAS = [  # first match wins; order matters
     (r"^(surf|watch)/data", "data"),
@@ -120,61 +122,8 @@ def render(items: list[dict]) -> str:
     art_rows = ['<h2 id="articles">Article change logs</h2>'] + [
         f'<section class="art" id="{a["slug"]}"><h3><a href="{a["href"]}">{html.escape(a["title"])}</a>'
         f'<small>{a["version"]}</small></h3>{a["body"]}</section>' for a in arts] + ['<h2 id="commits">Commits</h2>']
-    return f'''<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Changelog</title>
-<meta name="description" content="Every change to bsandova.com, read from git at build time: what changed, when, in which part of the site, with the commit. Job commits (surf, watch) shown separately.">
-<meta name="theme-color" content="#161616">
-<link rel="canonical" href="https://bsandova.com/changelog/">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="../style.css">
-<link rel="stylesheet" href="../text.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../a24.css">
-<style>
-.text h2{{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-2);font-weight:400;margin:1.8rem 0 .4rem;border-bottom:1px solid var(--line);padding-bottom:.4rem}}
-.log{{list-style:none;margin:0;padding:0;max-width:64rem}}
-.c{{display:grid;grid-template-columns:3.2rem 7.5rem minmax(0,1fr) auto auto;gap:.2rem 1rem;align-items:baseline;padding:.45rem 0;border-bottom:1px solid var(--line);font-size:.92rem}}
-.c .t,.c .h,.c .f{{font-family:var(--mono);font-size:11px;color:var(--fg-2)}}
-.c .a{{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--coral)}}
-.c.job .a{{color:var(--fg-2)}}.c.job .s{{color:var(--fg-2)}}
-.c .s{{color:var(--fg)}}.c .h{{color:var(--fg-2)}}.c .h:hover{{color:var(--hot)}}
-.c .body{{grid-column:3/-1;margin:0;font-size:.85rem;color:var(--fg-2);white-space:pre-wrap}}
-.art{{max-width:46rem;padding:.6rem 0 .8rem;border-bottom:1px solid var(--line);scroll-margin-top:4rem}}
-.art h3{{font-size:1rem;font-weight:500;margin:0 0 .3rem}}.art h3 small{{font-family:var(--mono);font-size:11px;color:var(--fg-2);margin-left:.6rem}}
-.art ul{{margin:0;padding-left:1.1rem;font-size:.9rem;color:var(--fg-2)}}.art li{{margin:.2rem 0}}
-.art h4{{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-2);font-weight:400;margin:.7rem 0 .2rem;scroll-margin-top:4rem}}
-.art p{{font-size:.9rem;color:var(--fg-2);margin:.2rem 0 .4rem}}.art h4:target{{color:var(--hot)}}
-.art:target{{background:linear-gradient(90deg,var(--line),transparent)}}
-@media (max-width:48rem){{.c{{grid-template-columns:3.2rem 1fr;}}.c .a{{grid-column:2}}.c .s{{grid-column:1/-1}}.c .h,.c .f{{grid-column:auto}}.c .body{{grid-column:1/-1}}}}
-</style>
-</head>
-<body>
-<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">changelog · en</span></div>
-<article class="text">
-<header class="text-head">
-  <p class="kicker">Changelog · every commit since {first} · generated from git at build time</p>
-  <h1>What changed, <em>and when.</em></h1>
-  <p class="deck">The <a href="../status/">status page</a> says whether the jobs ran. This page says what the site itself did: every commit, its area, the files it touched, and the commit to read if you want the diff. Job commits, the surf collector and the model watch writing their data, are kept and greyed, so the two kinds of change stay distinguishable. The commit list is not typed; it is rebuilt from <code>git log</code> on every deploy. Above it are the articles' own change logs, written by hand: for the registered studies, every change made after registration, then corrections, version notes and the editorial-standard check, each under its article, which links here from its version number.</p>
-  <dl class="facts">
-    <div><dt>commits</dt><dd>{n_site} <small>by hand</small></dd></div>
-    <div><dt>job commits</dt><dd>{n_job} <small>surf · watch, data only</small></dd></div>
-    <div><dt>days</dt><dd>{len(days)} <small>{first} → {days[0] if days else ""}</small></dd></div>
-    <div><dt>articles</dt><dd><a href="#articles">{len(arts)}</a> <small>with a change log</small></dd></div>
-    <div><dt>data</dt><dd><a href="data.json">data.json</a> <small>one record per commit</small></dd></div>
-  </dl>
-</header>
-<section class="film film-page"><div class="shot" style="view-transition-name:ph-page-changelog;--bg:url(../assets/photo/page-changelog.jpg);--bg-s:url(../assets/photo/page-changelog-1200.jpg)"></div><p class="credit">Photo: <a href="https://stocksnap.io/photo/dark-room-KR8L2PXHCS">Alexa Mazzarello</a> · CC0, toned</p></section>
-{"".join(art_rows)}{"".join(rows)}
-<footer class="text-foot"><p class="back"><a href="../#works">← projects</a> · <a href="../status/">status</a></p></footer>
-</article>
-</body>
-</html>
-'''
+    return TEMPLATE.format(first=first, n_site=n_site, n_job=n_job, n_days=len(days), last=days[0] if days else "",
+                           n_arts=len(arts), articles="".join(art_rows), commits="".join(rows))
 
 
 def main() -> None:
