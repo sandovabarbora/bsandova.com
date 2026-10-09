@@ -17,7 +17,7 @@ from datetime import date
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from eval_guard import failed_record, is_failed_run  # noqa: E402
+from eval_guard import add_failed, failed_record, is_failed_run  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent
 API = sys.argv[1] if len(sys.argv) > 1 else "https://api.bsandova.com"
@@ -55,12 +55,12 @@ def main() -> None:
                "model": next((r.get("model") for r in rows if r.get("model")), None)}
     hist_p = ROOT / "eval-history.json"
     hist = json.loads(hist_p.read_text()) if hist_p.exists() else []
-    failed = is_failed_run(rows)  # most requests never reached the agent: keep the last good eval.json
+    failed = is_failed_run(rows)  # most requests failed or returned an agent error: keep the last good eval.json
     if failed:
         summary = failed_record(summary, rows)
     else:
         (ROOT / "eval.json").write_text(json.dumps({"summary": summary, "rows": rows}, indent=1, ensure_ascii=False) + "\n")
-    hist = [h for h in hist if h["date"] != summary["date"]] + [summary]
+    hist = add_failed(hist, summary) if failed else [h for h in hist if h["date"] != summary["date"]] + [summary]
     hist_p.write_text(json.dumps(hist, indent=1, ensure_ascii=False) + "\n")
     print(json.dumps(summary, indent=1))
     if failed:

@@ -31,13 +31,13 @@ def _setup(tmp_path: Path, errors: int) -> tuple[Path, Path]:
     return run, ask
 
 
-def test_all_transport_errors_keep_the_last_good_run_and_fail(tmp_path):
+def test_all_failed_requests_keep_the_last_good_run_and_fail(tmp_path):
     run, ask = _setup(tmp_path, errors=4)
     assert g.publish(run, ask) == 1
     assert json.loads((ask / "eval.json").read_text())["summary"]["date"] == "2026-09-22"
     hist = json.loads((ask / "eval-history.json").read_text())
     assert [h["date"] for h in hist] == ["2026-09-22", "2026-10-05"]
-    assert hist[-1]["failed"] is True and hist[-1]["transport_errors"] == 4
+    assert hist[-1]["failed"] is True and hist[-1]["failed_requests"] == 4
 
 
 def test_a_run_that_reached_the_agent_is_published(tmp_path):
@@ -45,6 +45,15 @@ def test_a_run_that_reached_the_agent_is_published(tmp_path):
     assert g.publish(run, ask) == 0
     assert json.loads((ask / "eval.json").read_text())["summary"]["date"] == "2026-10-05"
     assert not any(h.get("failed") for h in json.loads((ask / "eval-history.json").read_text()))
+
+
+def test_failed_run_never_replaces_a_good_run_of_the_same_date(tmp_path):
+    run, ask = _setup(tmp_path, errors=4)
+    good_same_day = {**GOOD, "date": "2026-10-05"}
+    (ask / "eval-history.json").write_text(json.dumps([GOOD, good_same_day]))
+    assert g.publish(run, ask) == 1
+    hist = json.loads((ask / "eval-history.json").read_text())
+    assert hist == [GOOD, good_same_day]
 
 
 def test_empty_run_is_failed():
