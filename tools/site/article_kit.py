@@ -58,6 +58,17 @@ def photo_section(slug: str, image: str | None = None) -> str:
             f'{photo["licence"]}, toned</p></section>')
 
 
+def part_item(slug: str, k: int, title: str, kicker: str, text: str, image: str | None = None, *,
+              label: str | None = None) -> str:
+    """One part on a series hub; `label` is the screen-reader name when the visible title is longer."""
+    image = image or slug
+    return (f'  <li>\n    <a class="still" href="{slug}" aria-label="Part {k}, {label or title}"><span class="shot" '
+            f'style="view-transition-name:ph-{slug};--bg:url(../assets/photo/{image}.jpg);'
+            f'--bg-s:url(../assets/photo/{image}-1200.jpg)"></span></a>\n'
+            f'    <div>\n      <p class="n">{kicker}</p>\n      <h2><a href="{slug}">{title}</a></h2>\n'
+            f'      <p>{text}</p>\n    </div>\n  </li>')
+
+
 def range_rows(items: list[tuple[str, dict, str]], held: str = "held") -> list[dict]:
     return [{"y": lab, "lo": e["ci95"][0], "hi": e["ci95"][1], "mid": e["est_s"], "c": held if c == "held" else c,
              "tip": f"{lab}: {n(e['est_s'], 1, sign=True)} s ({ci(*e['ci95'])})"} for lab, e, c in items]
