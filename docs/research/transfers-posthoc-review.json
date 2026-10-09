@@ -1,0 +1,125 @@
+{
+ "note": "added 9 October 2026 after a review of the frozen code; not registered",
+ "transfers-results.json": {
+  "labelled": 1073,
+  "ci95_wholly_below_0": 55,
+  "label_differs": 11,
+  "differs": {
+   "/checks/by_line_pair/Anděl 10>4": {
+    "est": -0.0051,
+    "ci95": [
+     -0.0078,
+     -0.002
+    ],
+    "label": "not supported",
+    "below_zero_first": "inconclusive"
+   },
+   "/checks/by_line_pair/Anděl 16>12": {
+    "est": -0.0028,
+    "ci95": [
+     -0.0049,
+     -0.0006
+    ],
+    "label": "not supported",
+    "below_zero_first": "inconclusive"
+   },
+   "/checks/by_line_pair/Anděl 20>16": {
+    "est": -0.0045,
+    "ci95": [
+     -0.0079,
+     -0.0008
+    ],
+    "label": "not supported",
+    "below_zero_first": "inconclusive"
+   },
+   "/checks/by_line_pair/Anděl 7>20": {
+    "est": -0.0042,
+    "ci95": [
+     -0.0079,
+     -0.0003
+    ],
+    "label": "not supported",
+    "below_zero_first": "inconclusive"
+   },
+   "/checks/by_line_pair/I. P. Pavlova 22>11": {
+    "est": -0.0064,
+    "ci95": [
+     -0.0094,
+     -0.0019
+    ],
+    "label": "not supported",
+    "below_zero_first": "inconclusive"
+   },
+   "/checks/by_line_pair/Kotlářka 10>16": {
+    "est": -0.0009,
+    "ci95": [
+     -0.002,
+     -0.0001
+    ],
+    "label": "not supported",
+    "below_zero_first": "inconclusive"
+   },
+   "/checks/by_line_pair/Náměstí Bratří Synků 19>11": {
+    "est": -0.0049,
+    "ci95": [
+     -0.0097,
+     -0.0006
+    ],
+    "label": "not supported",
+    "below_zero_first": "inconclusive"
+   },
+   "/checks/by_line_pair/Palackého náměstí 16>3": {
+    "est": -0.0023,
+    "ci95": [
+     -0.0047,
+     -0.0001
+    ],
+    "label": "not supported",
+    "below_zero_first": "inconclusive"
+   },
+   "/checks/by_line_pair/Strossmayerovo náměstí 26>17": {
+    "est": -0.0061,
+    "ci95": [
+     -0.009,
+     -0.003
+    ],
+    "label": "not supported",
+    "below_zero_first": "inconclusive"
+   },
+   "/checks/by_line_pair/Strossmayerovo náměstí 6>12": {
+    "est": -0.0036,
+    "ci95": [
+     -0.0076,
+     -0.0001
+    ],
+    "label": "not supported",
+    "below_zero_first": "inconclusive"
+   },
+   "/checks/by_hub/Kotlářka": {
+    "est": -0.0061,
+    "ci95": [
+     -0.0076,
+     -0.0043
+    ],
+    "label": "not supported",
+    "below_zero_first": "inconclusive"
+   }
+  }
+ },
+ "transfers-posthoc.json": {
+  "labelled": 12,
+  "ci95_wholly_below_0": 3,
+  "label_differs": 1,
+  "differs": {
+   "/q1_bounds/unobserved_all_missed": {
+    "est": -0.0064,
+    "ci95": [
+     -0.008,
+     -0.0049
+    ],
+    "label": "not supported",
+    "below_zero_first": "inconclusive"
+   }
+  }
+ }
+}
