@@ -10,8 +10,8 @@ from __future__ import annotations
 
 import json
 import math
-import re
 import shutil
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -23,6 +23,8 @@ from matplotlib.patches import Polygon as MPoly  # noqa: E402
 from shapely.geometry import shape  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "tools" / "site"))
+from article_kit import render  # noqa: E402
 R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "eurovision"
 D = ROOT / "tools" / "data" / "eurovision"
@@ -274,8 +276,7 @@ def main() -> None:
     fig = figures(res)
     v = values(res, fig)
     t = Path(__file__).with_name("template.html").read_text(encoding="utf-8")
-    out = re.sub(r"\{\{(\w+)\}\}", lambda m: str(v[m.group(1)]), t)
-    assert not re.findall(r"\{\{\w+\}\}", out)
+    out = render(t, v)
     (ROOT / "texts" / "eurovision.html").write_text(out, encoding="utf-8")
     print(f"written texts/eurovision.html, {len(v)} values")
 

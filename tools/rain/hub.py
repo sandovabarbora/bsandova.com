@@ -13,7 +13,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
-from article_kit import n, range_chart, range_rows, static_range, use_article_style  # noqa: E402
+from article_kit import n, range_chart, range_rows, render, static_range, use_article_style  # noqa: E402
 
 use_article_style()
 ROOT = Path(__file__).resolve().parents[2]
@@ -54,10 +54,7 @@ def main() -> None:
          "tl": dwell["primary_theta"]["label"], "dh": n(dwell["heat_secondary"]["est_s"], 2, sign=True),
          "dr": n(abs(dwell["checks"]["by_window"]["rain"]["est_s"]), 2),
          "wet_weekends": n(dwell["primary_theta"]["treated_dates"])}
-    page = TEMPLATE
-    for k, val in v.items():
-        page = page.replace("{{" + k + "}}", str(val))
-    assert "{{" not in page
+    page = render(TEMPLATE, v)
     (ROOT / "texts" / "weather-rails.html").write_text(page, encoding="utf-8")
     print(v)
 

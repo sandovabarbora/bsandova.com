@@ -16,6 +16,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "tools" / "site"))
+from article_kit import render  # noqa: E402
 R = ROOT / "docs" / "research"
 RAW = ROOT / "tools" / "data" / "pop" / "raw"
 NB = " "
@@ -207,10 +209,7 @@ def values(slug: str) -> dict:
 def main(slug: str) -> None:
     template = (Path(__file__).with_name("templates") / f"{slug}.html").read_text(encoding="utf-8")
     v = values(slug)
-    missing = sorted(set(re.findall(r"\{\{(\w+)\}\}", template)) - set(v))
-    if missing:
-        sys.exit(f"keys not computed: {missing}")
-    out = re.sub(r"\{\{(\w+)\}\}", lambda m: v[m.group(1)], template)
+    out = render(template, v)
     (ROOT / "texts" / f"pop-{slug}.html").write_text(out, encoding="utf-8")
     print("written", f"texts/pop-{slug}.html", f"{len(re.sub(r'<[^>]+>', ' ', out).split())} words in the page")
 

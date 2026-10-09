@@ -2,11 +2,13 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 RESEARCH = Path(__file__).resolve().parents[2] / "docs" / "research"
 NB = " "
 HELD, INK, GREY, LIGHT = "#34507c", "#111111", "#666666", "#b5b5b0"
+TOKEN = re.compile(r"\{\{(\w+)\}\}")
 
 
 def use_article_style():
@@ -36,6 +38,13 @@ def results_reader(prefix: str):
     def read(name: str) -> dict:
         return json.loads((RESEARCH / f"{prefix}-{name}.json").read_text())
     return read
+
+
+def render(template: str, values: dict) -> str:
+    missing = sorted(set(TOKEN.findall(template)) - set(values))
+    if missing:
+        raise KeyError(f"no value for {', '.join(missing)}")
+    return TOKEN.sub(lambda m: str(values[m.group(1)]), template)
 
 
 def range_rows(items: list[tuple[str, dict, str]], held: str = "held") -> list[dict]:

@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import json
 import math
-import re
 import shutil
 import sys
 from pathlib import Path
@@ -23,6 +22,8 @@ import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "tools" / "site"))
+from article_kit import render  # noqa: E402
 R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "pop" / "together"
 INK, GREY, LIGHT = "#111111", "#666666", "#b5b5b0"
@@ -233,10 +234,7 @@ def main() -> None:
     figures(res)
     t = (Path(__file__).with_name("templates") / "together.html").read_text(encoding="utf-8")
     v = values(res)
-    missing = sorted(set(re.findall(r"\{\{(\w+)\}\}", t)) - set(v))
-    if missing:
-        sys.exit(f"keys not computed: {missing}")
-    (ROOT / "texts" / "pop-together.html").write_text(re.sub(r"\{\{(\w+)\}\}", lambda m: v[m.group(1)], t), encoding="utf-8")
+    (ROOT / "texts" / "pop-together.html").write_text(render(t, v), encoding="utf-8")
     print("written texts/pop-together.html")
 
 

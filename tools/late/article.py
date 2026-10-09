@@ -11,7 +11,6 @@ from __future__ import annotations
 
 import json
 import math
-import re
 import shutil
 import sys
 from pathlib import Path
@@ -20,7 +19,7 @@ import duckdb
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
-from article_kit import HELD, n, results_reader, use_article_style  # noqa: E402
+from article_kit import HELD, n, render, results_reader, use_article_style  # noqa: E402
 
 plt = use_article_style()
 ROOT = Path(__file__).resolve().parents[2]
@@ -349,9 +348,7 @@ def main() -> None:
     fig = figures(x, t, xy)
     v = values(x, t, fig)
     tpl = Path(__file__).with_name("template.html").read_text(encoding="utf-8")
-    out = re.sub(r"\{\{(\w+)\}\}", lambda m: str(v[m.group(1)]), tpl)
-    left = re.findall(r"\{\{\w+\}\}", out)
-    assert not left, left
+    out = render(tpl, v)
     (ROOT / "texts" / "delay-origins.html").write_text(out, encoding="utf-8")
     print(f"written texts/delay-origins.html, {len(v)} values")
 

@@ -9,14 +9,13 @@ from tools/gehl/template.html. Chart helpers are tools/site/article_kit.py.
 from __future__ import annotations
 
 import json
-import re
 import shutil
 import sys
 from importlib import metadata
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
-from article_kit import n, range_chart, range_rows, results_reader, static_range, use_article_style  # noqa: E402
+from article_kit import n, range_chart, range_rows, render, results_reader, static_range, use_article_style  # noqa: E402
 
 use_article_style()
 ROOT = Path(__file__).resolve().parents[2]
@@ -139,9 +138,7 @@ def main() -> None:
     figures(x)
     v = values(x)
     t = Path(__file__).with_name("template.html").read_text(encoding="utf-8")
-    out = re.sub(r"\{\{(\w+)\}\}", lambda mm: str(v[mm.group(1)]), t)
-    left = re.findall(r"\{\{\w+\}\}", out)
-    assert not left, left
+    out = render(t, v)
     (ROOT / "texts" / "rain-dwell.html").write_text(out, encoding="utf-8")
     print(f"written texts/rain-dwell.html, {len(v)} values")
 

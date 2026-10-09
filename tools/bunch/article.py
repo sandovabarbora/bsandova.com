@@ -10,14 +10,16 @@ from __future__ import annotations
 
 import importlib.util
 import json
-import re
 import shutil
+import sys
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "tools" / "site"))
+from article_kit import render  # noqa: E402
 
 
 def load_module(name: str, path: str):
@@ -377,9 +379,7 @@ def main() -> None:
     fig = figures(x, t, xy)
     v = values(x, t, fig)
     tpl = Path(__file__).with_name("template.html").read_text(encoding="utf-8")
-    out = re.sub(r"\{\{(\w+)\}\}", lambda m: str(v[m.group(1)]), tpl)
-    left = re.findall(r"\{\{\w+\}\}", out)
-    assert not left, left
+    out = render(tpl, v)
     (ROOT / "texts" / "bunching.html").write_text(out, encoding="utf-8")
     print(f"written texts/bunching.html, {len(v)} values")
 

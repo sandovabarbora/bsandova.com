@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import csv
 import json
-import re
 import shutil
 import sys
 from pathlib import Path
@@ -21,6 +20,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "tools" / "site"))
+from article_kit import render  # noqa: E402
 R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "concerts"
 INK, GREY, LIGHT = "#111111", "#666666", "#b5b5b0"
@@ -195,10 +196,7 @@ def main() -> None:
     figures(res)
     t = Path(__file__).with_name("template.html").read_text(encoding="utf-8")
     v = values(res)
-    missing = sorted(set(re.findall(r"\{\{(\w+)\}\}", t)) - set(v))
-    if missing:
-        sys.exit(f"keys not computed: {missing}")
-    out = re.sub(r"\{\{(\w+)\}\}", lambda m: v[m.group(1)], t)
+    out = render(t, v)
     (ROOT / "texts" / "concert-effect.html").write_text(out, encoding="utf-8")
     print("written texts/concert-effect.html")
 
