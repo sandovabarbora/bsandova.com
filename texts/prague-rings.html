@@ -296,7 +296,8 @@
     const f = views[v][1], vals = P.map(f).sort((a, b) => a - b), lo = vals[Math.floor(.02 * vals.length)], hi = vals[Math.floor(.98 * vals.length)];
     paths.forEach((el, i) => el.setAttribute("fill", ramp((f(P[i]) - lo) / (hi - lo))));
     leg.innerHTML = `${pc(lo)} <i style="background:linear-gradient(90deg,${[0, .33, .66, 1].map(ramp).join(",")})"></i> ${pc(hi)} · ${views[v][0]}`;
-    bar.querySelectorAll("button").forEach((b, j) => b.classList.toggle("on", j === v));
+    bar.querySelectorAll("button").forEach((b, j) => { b.classList.toggle("on", j === v); b.setAttribute("aria-pressed", j === v); });
+    box.querySelector("svg").setAttribute("aria-label", `Map of Prague's ${P.length} precincts shaded by ${views[v][0]}, ${pc(lo)} to ${pc(hi)}, with the metro lines and stations in black`);
   }
   bar.innerHTML = views.map(([n]) => `<button type="button">${n}</button>`).join("");
   bar.querySelectorAll("button").forEach((b, j) => b.addEventListener("click", () => show(j)));

@@ -63,7 +63,7 @@ canvas{display:block;width:100%;height:auto;margin:1rem 0 .25rem}
     <label>seconds per day <input id="spd" type="range" min="0.4" max="2" step="0.1" value="0.9"><b id="spdv">0.9</b></label>
     <span class="stems" id="stems"></span>
   </div>
-  <canvas id="c" width="1200" height="260"></canvas>
+  <canvas id="c" width="1200" height="260" role="img"></canvas>
   <div class="now">
     <div><span>day</span><b id="n-day">—</b></div>
     <div><span>swell max</span><b id="n-h">—</b></div>
@@ -119,6 +119,7 @@ canvas{display:block;width:100%;height:auto;margin:1rem 0 .25rem}
     el('f-days').innerHTML = `${ds.length} <small>${ds[0].day} → ${ds[ds.length-1].day} · ${spot}</small>`;
     el('f-go').innerHTML = `${go.length} <small>${go.map(d=>d.day.slice(5)).join(' · ')||'none yet'}</small>`;
     el('f-max').innerHTML = `${mx.swell_max} m <small>${mx.day} · period ${mx.period_mean} s</small>`;
+    el('c').setAttribute('aria-label', `Daily maximum swell at ${spot}, ${ds.length} days, ${ds[0].day} to ${ds[ds.length-1].day}: ${go.length} surfable days in blue; the highest, ${mx.swell_max} m, on ${mx.day}`);
     el('spdv').textContent = `${spd.toFixed(1)} · ${fmt(ds.length*spd)}`;
     const rng = (k, dp, u) => { const x = ds.map(r=>r[k]).filter(v=>v!=null); return x.length ? `${Math.min(...x).toFixed(dp)} – ${Math.max(...x).toFixed(dp)} ${u}` : '—'; };
     el('r-h').textContent = rng('swell_max', 2, 'm'); el('r-p').textContent = rng('period_mean', 1, 's');

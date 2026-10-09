@@ -103,7 +103,7 @@
   const clim = (s, d) => (C.stations[s]||{})[String(doy(d))];
   const fmt = v => v==null ? '—' : v.toFixed(1);
   function render(){
-    document.getElementById('tabs').innerHTML = D.stations.map(s => `<button class="${s===station?'on':''}" data-s="${s}">${NAMES[s]||s}</button>`).join('');
+    document.getElementById('tabs').innerHTML = D.stations.map(s => `<button type="button" class="${s===station?'on':''}" aria-pressed="${s===station}" data-s="${s}">${NAMES[s]||s}</button>`).join('');
     const last = D.issues[D.issues.length-1]; const L = D.latest[station]; const days = Object.keys(L[MODELS[0]]).sort();
     document.getElementById('f-days').innerHTML = `${D.issues.length} <small>since ${D.issues[0]} · ${MODELS.length} models · 2 stations</small>`;
     const ro = D.recent_obs[station]; const rd = Object.keys(ro).sort(); const y = rd[rd.length-1]; const cy = clim(station, y);
