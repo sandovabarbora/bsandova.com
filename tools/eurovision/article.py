@@ -213,7 +213,7 @@ def values(res: dict, fig: dict) -> dict:
         "R": f"{h1['R']:.2f}", "R_lo": f"{h1['R_lo']:.2f}", "R_hi": f"{h1['R_hi']:.2f}", "label": h1["label"],
         "b": f"{h1['b']:.2f}", "b_lo": f"{h1['lo']:.2f}", "b_hi": f"{h1['hi']:.2f}", "n_cells": n(h1["n"]),
         "per90": n(per90, 1), "n_voters": str(w.i.nunique()), "n_pairs": n(len(pairs)),
-        "bin_lo_gap": f"{b.gap.iloc[0]:+.1f}".replace("-", "−"), "bin_hi_gap": f"+{b.gap.iloc[-1]:.1f}",
+        "bin_lo_gap": f"{b.gap.iloc[0]:+.2f}".replace("-", "−"), "bin_hi_gap": f"+{b.gap.iloc[-1]:.2f}",
         "bin_hi_tele": n(b.tele.iloc[-1], 2), "bin_hi_jury": n(b.jury.iloc[-1], 2),
         "bin_lo_tele": n(b.tele.iloc[0], 2), "bin_lo_jury": n(b.jury.iloc[0], 2),
         "bin_lo_gap2": n(b.gap.iloc[0], 2), "bin_hi_gap2": f"+{b.gap.iloc[-1]:.2f}",
@@ -229,7 +229,7 @@ def values(res: dict, fig: dict) -> dict:
         "lt_hi": f"{math.exp(c['with_contiguity_language']['lt']['hi']):.2f}",
         "h2": f"{res['H2']['b']:+.2f}".replace("-", "−"), "h2_lo": n(res["H2"]["lo"], 2), "h2_hi": n(res["H2"]["hi"], 2),
         "h2_label": res["H2"]["label"], "h2_voters": str(res["H2"]["voters"]),
-        "h3_pp": n(100 * h3["b"], 2), "h3_lo": n(100 * h3["lo"], 2), "h3_hi": n(100 * h3["hi"], 2),
+        "h3_pp": n(100 * h3["b"], 2), "h3_pp_abs": n(abs(100 * h3["b"]), 2), "h3_lo": n(100 * h3["lo"], 2), "h3_hi": n(100 * h3["hi"], 2),
         "h3_pct": n(h3["pct"]), "h3_base": n(100 * h3["pre_mean"], 1), "h3_label": h3["label"],
         "h3_pairs": str(h3["treated_pairs"]), "h3_dropped": str(h3["dropped_pairs"]),
         "h3_fin": n(100 * res["H3_checks"]["finals_only"]["b"], 2), "h3_margin": n(10 * h3["pre_mean"], 2),
@@ -251,6 +251,14 @@ def values(res: dict, fig: dict) -> dict:
     v["photo"] = ('<section class="film film-page"><div class="shot" style="view-transition-name:ph-eurovision;'
                   '--bg:url(../assets/photo/eurovision.jpg);--bg-s:url(../assets/photo/eurovision-1200.jpg)"></div>'
                   f'<p class="credit">Photo: <a href="{photo["page"]}">{photo["author"]}</a> · {photo["licence"]}, toned</p></section>')
+    pre = [e for k, e in res["H3_event"].items() if k.startswith("evm")]
+    v |= {"ev_pre_n": str(len(pre)), "ev_pre_excl": str(sum(e["lo"] > 0 or e["hi"] < 0 for e in pre))}
+    h2 = pd.read_parquet(D / "h2.parquet")
+    f22 = h2[h2.year == 2022]   # the 2022 final: how many publics gave Ukraine their 12 points
+    v |= {"ua_12": str(int((f22.tele == 12).sum())), "ua_n": str(len(f22))}
+    log = json.loads((D / "prepare_log.json").read_text())   # H1 cells without a UN figure, dropped as registered
+    miss, cells = log["h1_missing_x_cells"], log["h1_missing_x_cells"] + log["h1_cells"]
+    v |= {"miss_cells": n(miss), "all_cells": n(cells), "miss_pct": n(100 * miss / cells)}
     v["bin_hi_abs"], v["bin_lo_abs"] = v["bin_hi_gap"].lstrip("+"), v["bin_lo_gap"].lstrip("−")  # for the chart headline
     return v
 
