@@ -2,13 +2,13 @@
 
 Reads docs/research/bunching-{results,results-bus,screen,describe,describe-bus,review}.json and the tram pair tables in tools/data/bunch/;
 writes assets/bunch/ (charts.json, map.json, segments.json, results.json, describe.json, static SVGs) and
-texts/bunching.html from tools/bunch/template.html. Chart and map helpers are part 1's and the rain article's.
+texts/bunching.html from tools/bunch/template.html. Chart helpers are tools/bunch/chart_kit.py; stops and map lines
+are tools/site/tram_geo.py.
 
     uv run --with matplotlib --with pandas --with pyarrow --with duckdb --with scipy --with numpy python tools/bunch/article.py
 """
 from __future__ import annotations
 
-import importlib.util
 import json
 import shutil
 import sys
@@ -19,22 +19,15 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "site"))
-from article_kit import photo_section, render  # noqa: E402
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from article_kit import GREY, n, photo_section, render, use_article_style  # noqa: E402
+from tram_geo import offset_line, tram_stops  # noqa: E402
 
+plt = use_article_style()
+import estimate as be  # noqa: E402
+from chart_kit import HELD, line_chart, range_chart, range_rows, static_lines, static_range  # noqa: E402
 
-def load_module(name: str, path: str):
-    spec = importlib.util.spec_from_file_location(name, ROOT / path)
-    m = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(m)
-    return m
-
-
-ra = load_module("rain_article", "tools/rain/article.py")
-la = load_module("late_article", "tools/late/article.py")
-be = load_module("bunch_estimate", "tools/bunch/estimate.py")
-plt, n = ra.plt, ra.n
 R, A = ROOT / "docs" / "research", ROOT / "assets" / "bunch"
-INK, HELD, GREY, LIGHT = "#111111", "#c0503f", "#666666", "#b5b5b0"
 
 
 def load() -> dict:
@@ -64,7 +57,7 @@ def map_spec(t: pd.DataFrame, xy: dict, top: str) -> tuple[dict, int]:
         a, b = str(r.prev_name), str(r.stop_name)
         if a in xy and b in xy and a != b:
             feats.append({"id": f"{a} → {b}", "name": f"{a} → {b}", "sub": f"{n(r.transitions)} pair passes",
-                          "l": [la.offset_line(xy[a], xy[b])],
+                          "l": [offset_line(xy[a], xy[b])],
                           "v": {"steps": round(float(r.steps_per_1000), 2), "bunched": round(float(r.bunched_per_1000), 2),
                                 "births": int(r.births)}})
     per = {"dp": 1, "unit": " ‰"}
@@ -99,63 +92,6 @@ def static_map(spec: dict, path: Path) -> None:
     cb.set_label("sudden headway changes per 1 000 pair passes", color=GREY)
     f.tight_layout()
     f.savefig(path, dpi=220)
-    plt.close(f)
-
-
-def line_chart(series: list[dict], alt: str, xlab: str, ylab: str, xdom: list, ydom: list, table: dict,
-               data: list, yfmt: dict) -> dict:
-    return {"alt": alt, "panels": [{"h": 240, "x": {"kind": "linear", "domain": xdom, "fmt": {"dp": 0}, "label": xlab},
-                                    "y": {"kind": "linear", "domain": ydom, "fmt": yfmt, "label": ylab},
-                                    "marks": [{"type": "line", "dots": True, **s} for s in series]}],
-            "legend": [{"label": s["name"], "c": s["c"]} for s in series], "table": table, "data": data}
-
-
-def static_lines(series: list[dict], path: Path, xlab: str, ylab: str) -> None:
-    f, ax = plt.subplots(figsize=(7.2, 2.8))
-    for s in series:
-        ax.plot([p[0] for p in s["pts"]], [p[1] for p in s["pts"]], color=s["c"], lw=1.6, marker="o", ms=3,
-                ls="--" if s.get("dash") else "-")
-    ax.set_xlabel(xlab)
-    ax.set_ylabel(ylab)
-    f.tight_layout()
-    f.savefig(path)
-    plt.close(f)
-
-
-def range_rows(rows: list[tuple]) -> list[dict]:
-    out = []
-    for lab, est, ci, col in rows:
-        lo, hi = (ci if ci else (est, est))
-        tip = f"{lab}: {est:+.4f}" + (f" ({lo:+.4f} to {hi:+.4f})" if ci else "")
-        out.append({"y": lab, "lo": lo, "hi": hi, "mid": est, "c": col, "tip": tip})
-    return out
-
-
-def range_chart(rows: list[dict], alt: str, label: str, domain: list, band: float | None, line: float,
-                fmt: dict, data: list) -> dict:
-    marks = []
-    if band:
-        marks.append({"type": "span", "v0": -band, "v1": band, "c": "grey", "o": 0.08, "label": "the registered ±0.01"})
-    marks += [{"type": "rule", "axis": "x", "v": line, "c": "grey"}, {"type": "range", "rows": rows}]
-    return {"alt": alt, "panels": [{"h": 26 * len(rows) + 40, "x": {"kind": "linear", "domain": domain, "fmt": fmt,
-                                                                   "label": label},
-                                    "y": {"kind": "cat", "domain": [r["y"] for r in rows]}, "marks": marks}],
-            "table": {"cols": ["version", "estimate", "95 % interval"],
-                      "rows": [[r["y"], r["mid"], "" if r["lo"] == r["hi"] else f"{r['lo']} to {r['hi']}"] for r in rows]},
-            "data": data}
-
-
-def static_range(rows: list[dict], path: Path, label: str, xlim: tuple, line: float) -> None:
-    f, ax = plt.subplots(figsize=(7.2, 0.3 * len(rows) + 0.9))
-    for i, r in enumerate(reversed(rows)):
-        ax.plot([r["lo"], r["hi"]], [i, i], color=INK, lw=1.2)
-        ax.plot(r["mid"], i, "o", color=HELD if r["c"] == "held" else INK, ms=4)
-    ax.axvline(line, color=GREY, lw=0.8)
-    ax.set_yticks(range(len(rows)), [r["y"] for r in reversed(rows)], fontsize=7)
-    ax.set_xlim(*xlim)
-    ax.set_xlabel(label)
-    f.tight_layout()
-    f.savefig(path)
     plt.close(f)
 
 
@@ -371,7 +307,7 @@ def values(x: dict, t: pd.DataFrame, fig: dict) -> dict:
 def main() -> None:
     x = load()
     t = segment_table()
-    xy = {r.name: (r.lon, r.lat) for r in la.tram_stops().itertuples()}
+    xy = {r.name: (r.lon, r.lat) for r in tram_stops().itertuples()}
     fig = figures(x, t, xy)
     v = values(x, t, fig)
     tpl = Path(__file__).with_name("template.html").read_text(encoding="utf-8")

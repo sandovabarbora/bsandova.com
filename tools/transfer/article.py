@@ -2,13 +2,12 @@
 
 Reads docs/research/transfers-{design,screen,results,describe}.json and the roulette cells in assets/transfers/;
 writes assets/transfers/ (charts.json, map.json, results.json, describe.json, static SVGs) and texts/transfers.html
-from tools/transfer/template.html. Chart helpers are part 2's.
+from tools/transfer/template.html. Chart helpers are part 2's, in tools/bunch/chart_kit.py.
 
     uv run --with matplotlib --with pandas --with pyarrow --with duckdb --with scipy --with numpy python tools/transfer/article.py
 """
 from __future__ import annotations
 
-import importlib.util
 import json
 import shutil
 import sys
@@ -19,20 +18,13 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "site"))
-from article_kit import photo_section, render  # noqa: E402
+sys.path.insert(0, str(ROOT / "tools" / "bunch"))
+from article_kit import GREY, INK, n, photo_section, render, use_article_style  # noqa: E402
 
+plt = use_article_style()
+from chart_kit import HELD, line_chart, range_chart, range_rows, static_lines, static_range  # noqa: E402
 
-def load_module(name: str, path: str):
-    spec = importlib.util.spec_from_file_location(name, ROOT / path)
-    m = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(m)
-    return m
-
-
-ba = load_module("bunch_article", "tools/bunch/article.py")
-plt, n = ba.plt, ba.n
 R, A = ROOT / "docs" / "research", ROOT / "assets" / "transfers"
-HELD, INK, GREY = ba.HELD, ba.INK, ba.GREY
 HUB_HALF_M = 120  # half the side of the square drawn for a hub on the map
 
 
@@ -133,7 +125,7 @@ def figures(x: dict) -> dict:
             "pts": [[int(s), round(100 * cost[s]["costly_miss"], 1)] for s in ("2", "3", "4")]}]
     first95 = next(s for s, p in curve if p >= 0.95)
     cm = dict(curve)
-    charts["slack"] = ba.line_chart(
+    charts["slack"] = line_chart(
         ser, "Share of tram-to-tram connections made by the minutes planned between them, Prague 2025. Among "
              f"connections planned that way: {100 * cost['2']['made']:.0f} % at 2 minutes, "
              f"{100 * cost['3']['made']:.0f} % at 3 and {100 * cost['4']['made']:.0f} % at 4. Read off the pooled "
@@ -147,11 +139,11 @@ def figures(x: dict) -> dict:
         ["results.json", "roulette.json"], {"dp": 0})
     charts["slack"]["panels"][0]["marks"][0]["name"] = "made, pooled model over all shown cells"
     charts["slack"]["legend"][0]["label"] = "made, pooled model over all shown cells"
-    ba.static_lines(ser, A / "02-slack.svg", "minutes planned", "% of connections")
+    static_lines(ser, A / "02-slack.svg", "minutes planned", "% of connections")
 
     q1, q1b, c = res["q1_within"], res["q1b_day"], res["checks"]
     pb = x["ph"]["q1_bounds"]
-    rows = ba.range_rows([
+    rows = range_rows([
         ("registered: same day, slack 2–4", q1["est"], q1["ci95"], "held"),
         ("post-hoc bound: unobserved B all made", pb["unobserved_all_made"]["est"], pb["unobserved_all_made"]["ci95"],
          "grey"),
@@ -173,17 +165,17 @@ def figures(x: dict) -> dict:
         r["lo"], r["hi"], r["mid"] = round(100 * r["lo"], 2), round(100 * r["hi"], 2), round(100 * r["mid"], 2)
         r["tip"] = f"{r['y']}: {r['mid']:+.2f} pp ({r['lo']:+.2f} to {r['hi']:+.2f})"
     specs = [r for r in rows[3:] if not r["y"].startswith("other days") and not r["y"].startswith("hubs")]
-    chart = ba.range_chart(rows, "How much more often connections were made than with the two lines' delays set "
-                                 "against other trips of the same day, in percentage points with 95 % intervals: "
-                                 f"the registered estimate is {q1['est'] * 100:+.2f}; the checks run from "
-                                 f"{min(r['mid'] for r in specs):+.2f} to {max(r['mid'] for r in specs):+.2f}; the "
-                                 "post-hoc bounds for connections whose planned tram was not observed run from "
-                                 f"{100 * pb['unobserved_all_missed']['est']:+.2f} to "
-                                 f"{100 * pb['unobserved_all_made']['est']:+.2f}.",
-                           "percentage points", [-1.2, 1.6], 1.0, 0.0, {"dp": 1}, ["results.json", "posthoc.json"])
+    chart = range_chart(rows, "How much more often connections were made than with the two lines' delays set "
+                              "against other trips of the same day, in percentage points with 95 % intervals: "
+                              f"the registered estimate is {q1['est'] * 100:+.2f}; the checks run from "
+                              f"{min(r['mid'] for r in specs):+.2f} to {max(r['mid'] for r in specs):+.2f}; the "
+                              "post-hoc bounds for connections whose planned tram was not observed run from "
+                              f"{100 * pb['unobserved_all_missed']['est']:+.2f} to "
+                              f"{100 * pb['unobserved_all_made']['est']:+.2f}.",
+                        "percentage points", [-1.2, 1.6], 1.0, 0.0, {"dp": 1}, ["results.json", "posthoc.json"])
     chart["panels"][0]["marks"][0]["label"] = "the registered ±1 point"
     charts["checks"] = chart
-    ba.static_range(rows, A / "03-checks.svg", "percentage points", (-1.2, 1.6), 0.0)
+    static_range(rows, A / "03-checks.svg", "percentage points", (-1.2, 1.6), 0.0)
 
     spec, drawn = map_spec(x)
     (A / "map.json").write_text(json.dumps(spec, ensure_ascii=False, separators=(",", ":")))
