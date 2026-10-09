@@ -54,7 +54,7 @@
 <script>
 (async function(){
   const d = await (await fetch('../assets/library.json')).json();
-  const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   document.getElementById('shelves').innerHTML = d.shelves.map(s => `<section class="shelf"><h2>${esc(s.name)} · ${s.items.length}</h2><ol>${s.items.map(([t,a,y]) => `<li><span class="t">${esc(t)}</span><span class="m"><span class="a">${esc(a||'')}</span><span class="y">${y||''}</span></span></li>`).join('')}</ol></section>`).join('');
   document.getElementById('f-n').innerHTML = d.shelves.reduce((n,s)=>n+s.items.length,0) + ' <small>of a few hundred sources</small>';
   document.getElementById('f-s').innerHTML = d.shelves.length + ' <small>' + d.shelves.map(s=>s.name.toLowerCase()).join(' · ') + '</small>';
