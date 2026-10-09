@@ -166,7 +166,7 @@ per_ip_per_hour = 12</pre>
 (async function(){
   const API = 'https://api.bsandova.com';
   const el = id => document.getElementById(id);
-  const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   // questions from the golden set, so each is known to work; the last two try to catch it out
   const EX = [
     ['surf', '#4a90b8', 'How many surfable days did Ericeira have in the climatology window on the surf page?'],
@@ -220,12 +220,12 @@ per_ip_per_hour = 12</pre>
     el('s-eval').innerHTML = `<b>${s.correct} / ${s.n}</b> test questions right`;
     el('m-eval').textContent = `${s.correct} of ${s.n} right · ${s.date}`;
     el('eval').innerHTML = `<div class="scroller"><table class="tbl"><thead><tr><th>kind</th><th>question</th><th>answer (first line)</th><th>tools</th><th class="n">tokens</th><th class="n">usd</th><th>ok</th></tr></thead><tbody>` +
-      ev.rows.map(r=>`<tr><td class="dim">${r.kind}</td><td>${esc(r.q)}</td><td>${esc((r.answer||r.error||'').split('\n')[0].slice(0,110))}</td><td class="dim">${(r.tools||[]).join(' → ')}</td><td class="n">${(r.input_tokens||0)+(r.output_tokens||0)}</td><td class="n">${r.cost_usd??'—'}</td><td class="${r.ok?'ok':'miss'}">${r.ok?'✓':'✗'}${r.protocol_violation?' <span class="miss">'+esc(r.enforced||'protocol')+'</span>':''}</td></tr>`).join('') + '</tbody></table></div>';
+      ev.rows.map(r=>`<tr><td class="dim">${esc(r.kind)}</td><td>${esc(r.q)}</td><td>${esc((r.answer||r.error||'').split('\n')[0].slice(0,110))}</td><td class="dim">${esc((r.tools||[]).join(' → '))}</td><td class="n">${(r.input_tokens||0)+(r.output_tokens||0)}</td><td class="n">${r.cost_usd??'—'}</td><td class="${r.ok?'ok':'miss'}">${r.ok?'✓':'✗'}${r.protocol_violation?' <span class="miss">'+esc(r.enforced||'protocol')+'</span>':''}</td></tr>`).join('') + '</tbody></table></div>';
   } catch { el('s-eval').innerHTML = ''; el('eval').innerHTML = '<p>No evaluation run published yet.</p>'; }
   try {
     const hist = await (await fetch('eval-history.json', {cache:'no-store'})).json();
     el('history').innerHTML = `<div class="scroller"><table class="tbl"><thead><tr><th>date</th><th>model</th><th class="n">correct</th><th class="n">number</th><th class="n">text</th><th class="n">quote</th><th class="n">decline</th><th class="n">protocol</th><th class="n">usd</th><th class="n">median s</th></tr></thead><tbody>` +
-      hist.slice().reverse().map(h=>h.failed ? `<tr><td>${h.date}</td><td class="dim" colspan="9">run failed, not scored: ${h.failed_requests} of ${h.n} requests failed or returned an agent error (${esc((h.errors||[]).join('; '))})</td></tr>` : `<tr><td>${h.date}</td><td class="dim">${esc(h.model||'')}</td><td class="n"><b>${h.correct} / ${h.n}</b></td>${['number','text','quote','decline'].map(k=>`<td class="n">${h.by_kind[k]?h.by_kind[k].ok+'/'+h.by_kind[k].n:'—'}</td>`).join('')}<td class="n ${h.protocol_violations?'miss':''}">${h.protocol_violations}</td><td class="n">${h.cost_usd}</td><td class="n">${(h.median_ms/1000).toFixed(1)}</td></tr>`).join('') + '</tbody></table></div>';
+      hist.slice().reverse().map(h=>h.failed ? `<tr><td>${esc(h.date)}</td><td class="dim" colspan="9">run failed, not scored: ${h.failed_requests} of ${h.n} requests failed or returned an agent error (${esc((h.errors||[]).join('; '))})</td></tr>` : `<tr><td>${esc(h.date)}</td><td class="dim">${esc(h.model||'')}</td><td class="n"><b>${h.correct} / ${h.n}</b></td>${['number','text','quote','decline'].map(k=>`<td class="n">${h.by_kind[k]?esc(h.by_kind[k].ok+'/'+h.by_kind[k].n):'—'}</td>`).join('')}<td class="n ${h.protocol_violations?'miss':''}">${h.protocol_violations}</td><td class="n">${h.cost_usd}</td><td class="n">${(h.median_ms/1000).toFixed(1)}</td></tr>`).join('') + '</tbody></table></div>';
   } catch { el('history').innerHTML = ''; }
 })();
 </script>

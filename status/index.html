@@ -52,7 +52,7 @@
   <p class="deck">Every live thing on this site is a scheduled job writing a data file that a static page reads. This page reads the same files and asks GitHub what ran, then judges freshness against the cadence each job promised. A card goes green only when a source said so; when a source cannot be read, the card says that, because a status page that guesses is worse than none.</p>
   <dl class="facts">
     <div><dt>jobs</dt><dd id="f-jobs">…</dd></div>
-    <div><dt>fresh · late · stale</dt><dd id="f-fresh">…</dd></div>
+    <div><dt>fresh · late · stale · failed</dt><dd id="f-fresh">…</dd></div>
     <div><dt>cost this month</dt><dd id="f-cost">…</dd></div>
     <div><dt>checked</dt><dd id="f-when">…</dd></div>
   </dl>
@@ -67,7 +67,8 @@
 <table class="tbl"><thead><tr><th>state</th><th>meaning</th></tr></thead><tbody>
 <tr><td><span class="st ok"><i></i>fresh</span></td><td>the newest data (or deploy) is younger than the job's cadence, and the last run, where a run log exists, succeeded</td></tr>
 <tr><td><span class="st late"><i></i>late</span></td><td>older than one cadence but younger than two: one missed run</td></tr>
-<tr><td><span class="st stale"><i></i>stale</span></td><td>older than two cadences, or the last run failed</td></tr>
+<tr><td><span class="st stale"><i></i>stale</span></td><td>older than two cadences</td></tr>
+<tr><td><span class="st fail"><i></i>failed</span></td><td>the last finished run failed, whatever the age of the data</td></tr>
 <tr><td><span class="st na"><i></i>unknown</span></td><td>a source could not be read (the GitHub API allows 60 unauthenticated requests an hour per address); nothing is assumed</td></tr>
 </tbody></table>
 <p class="note">Cadence is declared per job in <a href="jobs.json">jobs.json</a>, next to the schedule, the sources and the links. The page has no memory: it does not store history, does not notify anyone, and shows the last run only. History lives in the data files and in the GitHub run logs the cards link to. Nothing here is typed.</p>
@@ -83,11 +84,13 @@
   const jobs = await (await fetch('jobs.json', {cache:'no-store'})).json();
   const now = new Date();
   const fmtAgo = d => { if(!d) return '—'; const h=(now-d)/36e5; return h<1 ? `${Math.round(h*60)} min ago` : h<48 ? `${h.toFixed(1)} h ago` : `${(h/24).toFixed(1)} d ago`; };
+  const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  const at = (o, k) => k.split('.').reduce((a, x) => a?.[x], o);  // a data file's generated_key from jobs.json, e.g. summary.date
   const iso = d => d ? d.toISOString().replace('T',' ').slice(0,16)+' UTC' : '—';
   const gh = async url => { const r = await fetch('https://api.github.com/'+url, {headers:{Accept:'application/vnd.github+json'}}); if(!r.ok) throw new Error(`GitHub API ${r.status}`); return r.json(); };
-  const judge = (ageH, cadenceH, ok) => ok===false ? 'stale' : cadenceH==null ? (ok==null ? 'na' : 'ok') : ageH==null ? 'na' : ageH < cadenceH ? 'ok' : ageH < 2*cadenceH ? 'late' : 'stale';
+  const judge = (ageH, cadenceH, ok) => ok===false ? 'fail' : cadenceH==null ? (ok==null ? 'na' : 'ok') : ageH==null ? 'na' : ageH < cadenceH ? 'ok' : ageH < 2*cadenceH ? 'late' : 'stale';
   const state = {ok:'fresh', late:'late', stale:'stale', fail:'failed', na:'unknown'};
-  let costMonth = 0; const counts = {ok:0,late:0,stale:0,na:0};
+  let costMonth = 0; const counts = {ok:0,late:0,stale:0,fail:0,na:0};
   const cards = await Promise.all(jobs.map(async j => {
     const kv = []; let ok = null, dataAge = null, err = [];
     // data file
@@ -95,21 +98,21 @@
       try {
         const d = await (await fetch(j.data.file, {cache:'no-store'})).json();
         if (j.id === 'ask-eval') {
-          const gen = new Date(d.summary.date+'T05:00:00Z'); dataAge = (now-gen)/36e5;
-          kv.push(['last eval', `${d.summary.date} <span class="dim">· ${fmtAgo(gen)}</span>`]);
+          const day = at(d, j.data.generated_key), gen = new Date(day+'T05:00:00Z'); dataAge = (now-gen)/36e5;
+          kv.push(['last eval', `${day} <span class="dim">· ${fmtAgo(gen)}</span>`]);
           kv.push(['score', `<b>${d.summary.correct} / ${d.summary.n}</b> <span class="dim">· ${d.summary.protocol_violations} protocol violations · ${d.summary.cost_usd} USD</span>`]);
         }
         if (j.id === 'weather') {
-          const gen = new Date(d.generated+'T06:40:00Z'); dataAge = (now-gen)/36e5;
-          kv.push(['data generated', `${d.generated} <span class="dim">· ${fmtAgo(gen)}</span>`]);
+          const day = at(d, j.data.generated_key), gen = new Date(day+'T06:40:00Z'); dataAge = (now-gen)/36e5;
+          kv.push(['data generated', `${day} <span class="dim">· ${fmtAgo(gen)}</span>`]);
           kv.push(['issues stored / expected', `${d.quality.issues} / ${d.quality.expected_issues}`]);
           kv.push(['observation days', Object.entries(d.quality.observation_days).map(([s,n])=>`${s} ${n}`).join(' · ')]);
           const pairsMax = Math.max(0, ...Object.values(d.skill||{}).flatMap(s=>Object.values(s).flatMap(l=>Object.values(l).map(e=>e.n||0))));
           kv.push(['gate', `${pairsMax} / ${d.gates.min_pairs} pairs at best lead`]);
         }
         if (j.id === 'surf') {
-          const gen = new Date(d.generated+'T06:10:00Z'); dataAge = (now-gen)/36e5;
-          kv.push(['data generated', `${d.generated} <span class="dim">· ${fmtAgo(gen)}</span>`]);
+          const day = at(d, j.data.generated_key), gen = new Date(day+'T06:10:00Z'); dataAge = (now-gen)/36e5;
+          kv.push(['data generated', `${day} <span class="dim">· ${fmtAgo(gen)}</span>`]);
           kv.push(['issues stored / expected', `${d.quality.issues} / ${d.quality.expected_issues}` + (d.quality.missing_issue_dates.length? ` <span class="dim">missing ${d.quality.missing_issue_dates.join(', ')}</span>`:'')]);
           const nulls = Object.entries(d.quality.null_share_by_model).map(([m,v])=>`${m} ${Math.round(v*100)} %`).join(' · ');
           kv.push(['null share by model', nulls]);
@@ -133,11 +136,12 @@
     if (j.runs.github_workflow) {
       const w = j.runs.github_workflow;
       try {
-        const r = (await gh(`repos/${w.repo}/actions/workflows/${w.workflow}/runs?per_page=1`)).workflow_runs[0];
+        // a run still in progress has no conclusion yet; judge the last finished one, as tools/site/status_check.py does
+        const r = (await gh(`repos/${w.repo}/actions/workflows/${w.workflow}/runs?per_page=1&status=completed`)).workflow_runs[0];
         const started = new Date(r.run_started_at), ended = new Date(r.updated_at);
         ok = r.conclusion === 'success';
-        kv.unshift(['last run', `<a href="${r.html_url}">${iso(started)}</a> <span class="dim">· ${fmtAgo(started)} · ${Math.round((ended-started)/1000)} s · ${r.event}</span>`]);
-        kv.splice(1,0,['result', ok ? 'success' : `<b>${r.conclusion||r.status}</b>`]);
+        kv.unshift(['last run', `<a href="${esc(r.html_url)}">${iso(started)}</a> <span class="dim">· ${fmtAgo(started)} · ${Math.round((ended-started)/1000)} s · ${esc(r.event)}</span>`]);
+        kv.splice(1,0,['result', ok ? 'success' : `<b>${esc(r.conclusion||r.status)}</b>`]);
         if (dataAge==null && j.cadence_hours==null) dataAge = null;
       } catch(e){ err.push('GitHub API: '+e.message); ok = null; }
     }
@@ -148,12 +152,12 @@
     const s = err.length && ok==null ? 'na' : judge(dataAge, j.cadence_hours, ok);
     counts[s]++;
     kv.push(['schedule', j.schedule]); kv.push(['cost', j.cost]);
-    if (err.length) kv.push(['could not read', err.join(' · ')]);
+    if (err.length) kv.push(['could not read', esc(err.join(' · '))]);
     return `<div class="job"><span class="st ${s}"><i></i>${state[s]}</span><h2>${j.name}</h2><p class="what">${j.what}</p><dl class="kv">${kv.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl><div class="links">${j.links.map(([t,h])=>`<a href="${h}">${t}</a>`).join('')}</div></div>`;
   }));
   document.getElementById('jobs').innerHTML = cards.join('');
   document.getElementById('f-jobs').innerHTML = `${jobs.length} <small>${jobs.map(j=>j.id).join(' · ')}</small>`;
-  document.getElementById('f-fresh').innerHTML = `${counts.ok} · ${counts.late} · ${counts.stale} <small>${counts.na ? counts.na+' unknown' : 'every source read'}</small>`;
+  document.getElementById('f-fresh').innerHTML = `${counts.ok} · ${counts.late} · ${counts.stale} · ${counts.fail} <small>${counts.na ? counts.na+' unknown' : 'every source read'}</small>`;
   document.getElementById('f-cost').innerHTML = `${costMonth.toFixed(2)} USD <small>model watch; everything else is free</small>`;
   document.getElementById('f-when').innerHTML = `${iso(now)} <small>in your browser, just now</small>`;
 })().catch(e => console.warn('status:', e));
