@@ -79,14 +79,9 @@ def all_work(cfg: dict) -> str:
             + "\n".join(groups) + "\n  </section>")
 
 
-def splice(page: str, name: str, body: str, start: str, end: str) -> str:
-    """Replace the block between <!-- name --> markers; the first run finds it by its first and last tags."""
+def splice(page: str, name: str, body: str) -> str:
     a, b = f"<!-- {name} -->", f"<!-- /{name} -->"
-    if a in page:
-        i, j = page.index(a), page.index(b) + len(b)
-    else:
-        i = page.index(start)
-        j = page.index(end, i) if end.startswith("<section") else page.index(end, i) + len(end)
+    i, j = page.index(a), page.index(b) + len(b)
     return page[:i] + f"{a}\n{body}\n  {b}" + page[j:]
 
 
@@ -98,8 +93,8 @@ def render(page: str) -> str:
     assert all(w["series"] in hrefs for w in cfg["works"] if "series" in w), "a part's hub is missing"
     tops = sorted(w["top"] for w in cfg["works"] if "top" in w)
     assert tops == list(range(1, len(tops) + 1)), f"top must run 1..n without gaps: {tops}"
-    page = splice(page, "films", films(cfg["works"]), '<section class="film"', '<section class="band" id="about"')
-    return splice(page, "works", all_work(cfg), '<section class="idx" id="works"', "</section>")
+    page = splice(page, "films", films(cfg["works"]))
+    return splice(page, "works", all_work(cfg))
 
 
 def main() -> None:

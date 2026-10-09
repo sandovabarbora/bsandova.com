@@ -12,12 +12,12 @@ NOINDEX = re.compile(r'<meta name="robots" content="[^"]*noindex')
 
 
 def tracked_html() -> list[str]:
-    return subprocess.run(["git", "ls-files", "*.html"], cwd=ROOT, capture_output=True, text=True).stdout.split()
+    return subprocess.run(["git", "ls-files", "*.html"], cwd=ROOT, capture_output=True, text=True, check=True).stdout.split()
 
 
 def last_commit(path: str, fmt: str) -> str:
     args = ["git", "log", "-1", f"--format={fmt}", "--", path]
-    return subprocess.run(args, cwd=ROOT, capture_output=True, text=True).stdout.strip()
+    return subprocess.run(args, cwd=ROOT, capture_output=True, text=True, check=True).stdout.strip()
 
 
 def canonical(page: str) -> str | None:

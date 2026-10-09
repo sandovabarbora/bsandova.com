@@ -29,7 +29,7 @@ def meta(s: str, key: str, attr: str = "property") -> str:
 def articles() -> list[dict]:
     rows = []
     for page in sorted((ROOT / "texts").rglob("*.html")):
-        s = page.read_text()
+        s = page.read_text(encoding="utf-8")
         url = canonical(s)
         if meta(s, "og:type") != "article" or not url or noindex(s):
             continue
@@ -63,7 +63,7 @@ def json_ld(a: dict) -> str:
 
 
 def stamp(a: dict) -> bool:
-    s = LD.sub("", a["path"].read_text())
+    s = LD.sub("", a["path"].read_text(encoding="utf-8"))
     return write(a["path"], s.replace("</head>", json_ld(a) + "\n</head>", 1))
 
 

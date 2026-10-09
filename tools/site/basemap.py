@@ -27,19 +27,19 @@ def rings(geom, tol: float) -> list[list[list[float]]]:
 
 def main() -> None:
     by = defaultdict(list)
-    for f in json.loads((SRC / "okrsky_praha.geojson").read_text())["features"]:
+    for f in json.loads((SRC / "okrsky_praha.geojson").read_text(encoding="utf-8"))["features"]:
         by[f["properties"]["momc"]].append(shape(f["geometry"]).buffer(0))
     districts = {k: unary_union(v) for k, v in by.items()}
     outline = unary_union(list(districts.values()))
     water = []
     river = SRC / "vltava.json"
     if river.exists():
-        lines = [LineString([(p["lon"], p["lat"]) for p in e["geometry"]]) for e in json.loads(river.read_text())["elements"]]
+        lines = [LineString([(p["lon"], p["lat"]) for p in e["geometry"]]) for e in json.loads(river.read_text(encoding="utf-8"))["elements"]]
         merged = linemerge(lines).intersection(outline.buffer(0.01)).simplify(0.0005)
         water = [[[round(x, 4), round(y, 4)] for x, y in l.coords] for l in getattr(merged, "geoms", [merged])]
     base = {"outline": rings(outline, 0.0008), "districts": [r for g in districts.values() for r in rings(g, 0.0008)],
             "water": water, "credit": "base: Prague's city districts from the election precincts; river © OpenStreetMap contributors (ODbL)"}
-    OUT.write_text(json.dumps(base, separators=(",", ":")))
+    OUT.write_text(json.dumps(base, separators=(",", ":")), encoding="utf-8")
     print(len(districts), "districts;", len(water), "river lines;", OUT.stat().st_size // 1024, "kB")
 
 
