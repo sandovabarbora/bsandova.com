@@ -22,7 +22,7 @@ from matplotlib.collections import LineCollection
 from matplotlib.colors import Normalize
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
-from article_kit import (GREY, HELD, LIGHT, n, range_chart, range_rows, render, results_reader,  # noqa: E402
+from article_kit import (GREY, HELD, LIGHT, n, photo_section, range_chart, range_rows, render, results_reader,  # noqa: E402
                          static_range, use_article_style)
 
 plt = use_article_style()
@@ -236,11 +236,7 @@ def values(x: dict, days: pd.DataFrame) -> dict:
         put(key, e)
     for k, _, _ in DOSE:
         put(k, c["dose"][k])
-    photo = next(p for p in json.loads((ROOT / "assets/photo/sources.json").read_text()) if p["slug"] == "rain-delays")
-    v["photo"] = ('<section class="film film-page"><div class="shot" style="view-transition-name:ph-rain-delays;'
-                  '--bg:url(../assets/photo/rain-delays.jpg);--bg-s:url(../assets/photo/rain-delays-1200.jpg)"></div>'
-                  f'<p class="credit">Photo: <a href="{photo["page"]}">{photo["author"]}</a> · {photo["licence"]}, '
-                  'toned</p></section>')
+    v["photo"] = photo_section("rain-delays")
     v["pyfixest"] = metadata.version("pyfixest")
     return v
 

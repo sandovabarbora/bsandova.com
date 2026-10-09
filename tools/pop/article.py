@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "site"))
-from article_kit import render  # noqa: E402
+from article_kit import photo_section, render  # noqa: E402
 R = ROOT / "docs" / "research"
 RAW = ROOT / "tools" / "data" / "pop" / "raw"
 NB = " "
@@ -144,10 +144,7 @@ def values(slug: str) -> dict:
         d = re.sub(r"^([A-Z][a-z]+) (\d{1,2})$", r"\2 \1", prague["first_date"].strip())   # "June 1" -> "1 June"
         v |= {"prague_venue": prague["venue"].replace("O 2", "O2"), "prague_date": f"{d} {prague['year']}",
               "prague_sold": n(int(prague["sold"])), "prague_rev": n(int(prague["revenue_usd"])) if prague["revenue_usd"] else ""}
-    photo = next(p for p in json.loads((ROOT / "assets" / "photo" / "sources.json").read_text()) if p["slug"] == f"pop-{slug}")
-    v["photo"] = (f'<section class="film film-page"><div class="shot" style="view-transition-name:ph-pop-{slug};'
-                  f'--bg:url(../assets/photo/pop-{slug}.jpg);--bg-s:url(../assets/photo/pop-{slug}-1200.jpg)"></div>'
-                  f'<p class="credit">Photo: <a href="{photo["page"]}">{photo["author"]}</a> · {photo["licence"]}, toned</p></section>')
+    v["photo"] = photo_section(f"pop-{slug}")
     meta = json.loads((RAW / "collected.json").read_text())
     v |= {"kworb_date": "1 October 2026" if meta["date"] == "2026-10-01" else meta["date"], "kworb_charts": n(len([c for c in meta["countries"] if c != "global"]))}   # national charts only
     for other in ("harry-styles", "taylor-swift", "bts", "bad-bunny", "billie-eilish"):   # Czechia across the series

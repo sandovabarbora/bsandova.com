@@ -28,7 +28,7 @@ from sun import dark_share  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "site"))
-from article_kit import render  # noqa: E402
+from article_kit import photo_section, render  # noqa: E402
 R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "dst"
 D = ROOT / "tools" / "data" / "dst"
@@ -284,10 +284,7 @@ def values(res: dict, data: dict, cells: pd.DataFrame, fig: dict) -> dict:
     assert post["evening_rise_total"] == int(v["yr_total"].replace(NB, ""))
     v["extra"] = n(int(v["n_ev_post"].replace(NB, "")) * (1 - 1 / p["pe"]["ratio"]))
     v["extra_year"] = n(int(v["n_ev_post"].replace(NB, "")) * (1 - 1 / p["pe"]["ratio"]) / 10)
-    photo = next(x for x in json.loads((ROOT / "assets" / "photo" / "sources.json").read_text()) if x["slug"] == "dst-darkness")
-    v["photo"] = ('<section class="film film-page"><div class="shot" style="view-transition-name:ph-dst-darkness;'
-                  '--bg:url(../assets/photo/dst-darkness.jpg);--bg-s:url(../assets/photo/dst-darkness-1200.jpg)"></div>'
-                  f'<p class="credit">Photo: <a href="{photo["page"]}">{photo["author"]}</a> · {photo["licence"]}, toned</p></section>')
+    v["photo"] = photo_section("dst-darkness")
     return v
 
 

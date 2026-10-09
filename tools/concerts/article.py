@@ -21,7 +21,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "site"))
-from article_kit import render  # noqa: E402
+from article_kit import photo_section, render  # noqa: E402
 R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "concerts"
 INK, GREY, LIGHT = "#111111", "#666666", "#b5b5b0"
@@ -184,10 +184,7 @@ def values(res: dict) -> dict:
           "jump_neg": ", ".join(f"{c} ({pp(v)})" for c, v in rp["jump"].items() if v < 0),
           "jump_zero": ", ".join(c for c, v in rp["jump"].items() if v == 0), "n_zero": n(sum(v == 0 for v in rp["jump"].values())),
           "mde": n(100 * 1.96 * y1["summary"]["se"] / base)}
-    photo = next(p for p in json.loads((ROOT / "assets" / "photo" / "sources.json").read_text()) if p["slug"] == "concert-effect")
-    v["photo"] = ('<section class="film film-page"><div class="shot" style="view-transition-name:ph-concert-effect;'
-                  '--bg:url(../assets/photo/concert-effect.jpg);--bg-s:url(../assets/photo/concert-effect-1200.jpg)"></div>'
-                  f'<p class="credit">Photo: <a href="{photo["page"]}">{photo["author"]}</a> · {photo["licence"]}, toned</p></section>')
+    v["photo"] = photo_section("concert-effect")
     return v
 
 

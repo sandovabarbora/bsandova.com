@@ -15,7 +15,8 @@ from importlib import metadata
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
-from article_kit import n, range_chart, range_rows, render, results_reader, static_range, use_article_style  # noqa: E402
+from article_kit import (n, photo_section, range_chart, range_rows, render, results_reader, static_range,  # noqa: E402
+                         use_article_style)
 
 use_article_style()
 ROOT = Path(__file__).resolve().parents[2]
@@ -125,11 +126,7 @@ def values(x: dict) -> dict:
     put("dh_rn", held["rain"])
     v["rn_abs"] = n(abs(c["by_window"]["rain"]["est_s"]), 2)
     v["rn_pct"] = n(100 * abs(c["by_window"]["rain"]["est_s"]) / scr["margin"]["mean_dwell_dry_necessary_s"], 1)
-    photo = next(q for q in json.loads((ROOT / "assets/photo/sources.json").read_text()) if q["slug"] == "rain-dwell")
-    v["photo"] = ('<section class="film film-page"><div class="shot" style="view-transition-name:ph-rain-dwell;'
-                  '--bg:url(../assets/photo/rain-dwell.jpg);--bg-s:url(../assets/photo/rain-dwell-1200.jpg)"></div>'
-                  f'<p class="credit">Photo: <a href="{photo["page"]}">{photo["author"]}</a> · '
-                  f'{photo["licence"]}, toned</p></section>')
+    v["photo"] = photo_section("rain-dwell")
     return v
 
 
