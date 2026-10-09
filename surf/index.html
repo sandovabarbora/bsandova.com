@@ -121,8 +121,8 @@
   document.getElementById('f-call').innerHTML = (today.surfable_votes>=2 ? 'go' : 'not worth the flight') + ' <small>' + today.swell_max_mean + ' m · ' + today.period_mean + ' s · ' + today.surfable_votes + '/3 models</small>';
   // tabs
   const tabs = document.getElementById('spot-tabs');
-  tabs.innerHTML = spots.map(s => `<button data-s="${s}" class="${s===spot?'on':''}">${s}</button>`).join('');
-  tabs.addEventListener('click', e => { if (e.target.dataset.s) { spot = e.target.dataset.s; [...tabs.children].forEach(b=>b.classList.toggle('on', b.dataset.s===spot)); render(); } });
+  tabs.innerHTML = spots.map(s => `<button type="button" data-s="${s}" class="${s===spot?'on':''}" aria-pressed="${s===spot}">${s}</button>`).join('');
+  tabs.addEventListener('click', e => { if (e.target.dataset.s) { spot = e.target.dataset.s; [...tabs.children].forEach(b=>{ b.classList.toggle('on', b.dataset.s===spot); b.setAttribute('aria-pressed', b.dataset.s===spot); }); render(); } });
   function render() {
     const L = D.latest[spot];
     document.querySelector('#fc tbody').innerHTML = L.days.map(d => {
@@ -131,7 +131,7 @@
     // climatology chart
     const C = D.climatology[spot], W=960, H=260, Lm=44, R=16, T=16, B=44, w = C.weeks;
     const x = i => Lm + i*(W-Lm-R)/Math.max(1,w.length); const bw = (W-Lm-R)/Math.max(1,w.length) - 3;
-    let s = `<svg viewBox="0 0 ${W} ${H}">`;
+    let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Share of surfable days per ISO week at ${spot}, ${C.days} days, ${C.from} to ${C.to}, ${Math.round(100*C.surfable_share)} % overall">`;
     for (const v of [0,25,50,75,100]) { const y = T + (100-v)*(H-T-B)/100; s += `<line class="grid" x1="${Lm}" x2="${W-R}" y1="${y}" y2="${y}"/><text class="axis" x="${Lm-6}" y="${y+4}" text-anchor="end">${v}%</text>`; }
     w.forEach((k,i) => { const pct = 100*k.surfable/k.n, y = T + (100-pct)*(H-T-B)/100; s += `<rect x="${x(i)}" y="${y}" width="${bw}" height="${H-B-y}" fill="${pct>0?'#1f64ad':'#e6e6e3'}"><title>${k.week} · ${k.surfable}/${k.n} surfable · max swell ${k.swell_max_mean} m · period ${k.period_mean} s</title></rect>`; if (i%3===0) s += `<text class="axis" x="${x(i)+bw/2}" y="${H-14}" text-anchor="middle">${k.week.slice(5)}</text>`; });
     s += '</svg>';

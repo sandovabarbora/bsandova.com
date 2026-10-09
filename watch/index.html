@@ -108,12 +108,14 @@
   const cost = rows.filter(r => month(r.date)===last).reduce((s,r)=>s+(r.cost_usd||0),0);
   document.getElementById('f-cost').innerHTML = cost.toFixed(2) + ' USD <small>' + rows.filter(r => month(r.date)===last).length + ' runs</small>';
   // charts
-  function chart(el, leg, pack, metric, label) {
+  function chart(el, leg, pack, metric, label, name) {
     const data = rows.filter(r => r.pack===pack);
+    const latest = aliases.map(a => data.filter(d => d.alias===a).sort((p,q) => p.date.localeCompare(q.date)).pop()).filter(Boolean);
+    const alt = `${name} per model and month, ${pack} pack, ${months[0]} to ${months[months.length-1]}; latest: ${latest.map(r => `${r.alias} ${Math.round(metric(r))} %`).join(', ')}; ${label.split(' · ').pop()}`;
     const W=960, H=320, L=48, R=16, T=16, B=40;
     const xs = months; const x = i => L + (xs.length===1 ? (W-L-R)/2 : i*(W-L-R)/(xs.length-1));
     const y = v => T + (100-v)*(H-T-B)/100;
-    let s = `<svg viewBox="0 0 ${W} ${H}">`;
+    let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${alt}">`;
     for (const v of [0,25,50,75,100]) s += `<line class="grid" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text class="axis" x="${L-8}" y="${y(v)+4}" text-anchor="end">${v} %</text>`;
     xs.forEach((m,i) => s += `<text class="axis" x="${x(i)}" y="${H-12}" text-anchor="middle">${m}</text>`);
     for (const a of aliases) {
@@ -127,8 +129,8 @@
     document.getElementById(el).innerHTML = s;
     document.getElementById(leg).innerHTML = aliases.filter(a => data.some(d=>d.alias===a)).map(a => `<span><i style="background:${col(a)}"></i>${a} → ${[...new Set(data.filter(d=>d.alias===a).map(d=>d.model))].map(m=>m==='unverified'?'†':m).join(', ')}</span>`).join('') + `<span>${label}</span>`;
   }
-  chart('c1','l1','ecommerce', r => 100*r.outcomes.silently_wrong/r.n, 'silently wrong ÷ 26 · lower is better');
-  chart('c2','l2','abstention', r => 100*r.outcomes.correct/r.n, 'declined ÷ 10 · higher is better');
+  chart('c1','l1','ecommerce', r => 100*r.outcomes.silently_wrong/r.n, 'silently wrong ÷ 26 · lower is better', 'Share of questions answered silently wrong');
+  chart('c2','l2','abstention', r => 100*r.outcomes.correct/r.n, 'declined ÷ 10 · higher is better', 'Share of questions correctly declined');
   // table
   const tb = document.querySelector('#runs tbody');
   tb.innerHTML = rows.slice().sort((a,b)=> (b.date+b.pack+b.alias).localeCompare(a.date+a.pack+a.alias)).map(r => `<tr>
