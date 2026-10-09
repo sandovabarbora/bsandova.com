@@ -21,6 +21,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
 from article_kit import n  # noqa: E402
+import story_rest  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 A = ROOT / "assets/delayed"
@@ -151,5 +152,6 @@ charts = {"five-days": {
                                                "method": "event-weighted mean of bus, tram and trolleybus arrival delay per 5-minute window; five-window moving average (mean of the windows that exist at the edges); chorus as the player at 798f726 plays it: smoothed value above 68 % of the day's maximum, runs shorter than 4 windows dropped, gaps shorter than 3 windows between choruses filled, windows before 05:00 or after 22:30 with no metro stop event set to night. chorus_minutes_raw_threshold counts the windows above the threshold before those steps",
                                                "days": dump}, ensure_ascii=False, separators=(",", ":")))
 (A / "charts.json").write_text(json.dumps(charts, ensure_ascii=False, separators=(",", ":")))
+story_rest.delayed()  # the story layer: colours, notes and end labels, as published
 for r in rows:
     print(r)

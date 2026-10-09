@@ -26,6 +26,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from analyse import load  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "tools" / "charts"))
+import story_studies  # noqa: E402
 A = ROOT / "assets" / "film"
 DATA = ROOT / "tools" / "data" / "film"
 HELD, INK, GREY, LIGHT = "#34507c", "#111111", "#666666", "#b5b5b0"
@@ -137,6 +139,7 @@ def main() -> None:
     ax.set_xlabel("points relative to the call's mean"); ax.set_ylabel("Czech admissions")
     f.tight_layout(); f.savefig(A / "03-audience.svg"); plt.close(f)
     print(f"wrote {A}: {len(out)} applications, charts {list(charts)}")
+    story_studies.film()  # the story layer: notes at key points, as published
 
 
 if __name__ == "__main__":

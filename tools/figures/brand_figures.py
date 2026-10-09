@@ -1,5 +1,8 @@
 """Brand Reflection synthesis figures from the two studies' spot-level parquet files (CC-BY-4.0 derived metrics)."""
 import pathlib, pandas as pd, matplotlib
+import sys  # noqa: E402
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "site"))
+from paper_figures import recolour  # noqa: E402
 matplotlib.use("Agg"); import matplotlib.pyplot as plt
 R = pathlib.Path(__file__).resolve().parents[2]; OUT = R / "assets/brand"; OUT.mkdir(exist_ok=True)
 BG, FG, FG2, LINE, ACID, BUS, VIOLET = "#161616", "#DCDCD6", "#8A8A84", "#3A3A36", "#D6FF3A", "#FF6A3D", "#B78CFF"
@@ -33,3 +36,5 @@ fig, ax = plt.subplots(figsize=(8, 3.2)); ax.bar(range(len(ds)), ds.voice_fracti
 ax.axhline(50, color=FG, ls=":", lw=1); ax.set_xticks([]); ax.set_xlabel("47 spots, sorted by non-speech share"); ax.set_ylabel("share of runtime (%)"); ax.legend(loc="lower right")
 fig.savefig(OUT / "03-voice-music.svg"); plt.close(fig)
 print("median tempo", d.tempo_bpm.median().round(0), "minor share", (d["mode"] == "minor").mean().round(2))
+
+recolour("brand")  # on paper, the article's held colour as accent, as published

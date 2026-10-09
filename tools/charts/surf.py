@@ -12,6 +12,7 @@ from __future__ import annotations
 import json
 from datetime import date
 from pathlib import Path
+import story_rest
 
 ROOT = Path(__file__).resolve().parents[2]
 ANALYSIS = json.loads((ROOT / "surf/data/analysis.json").read_text())["spots"]
@@ -140,3 +141,4 @@ charts = {
 
 OUT.write_text(json.dumps(charts, ensure_ascii=False, indent=1) + "\n")
 print(f"wrote {OUT.relative_to(ROOT)}: {', '.join(charts)}")
+story_rest.surf()  # the story layer: colours, notes and end labels, as published

@@ -23,6 +23,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "tools" / "charts"))
+import story_pop  # noqa: E402
 R = ROOT / "docs" / "research"
 INK, GREY, LIGHT = "#111111", "#666666", "#b5b5b0"
 # tours whose Wikipedia attendance column gives venue, press or capacity figures (sold = available by construction),
@@ -183,6 +185,7 @@ def main(slug: str) -> None:
                                                   "peak": int(rows(f"{slug}-ones.csv")[0]["peak"])},
                                                  ensure_ascii=False))
     print("written", out.relative_to(ROOT))
+    story_pop.artist(slug)  # the story layer: notes at key points, as published
 
 
 if __name__ == "__main__":

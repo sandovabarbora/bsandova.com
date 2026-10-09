@@ -15,6 +15,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
 from article_kit import n  # noqa: E402
+import story_studies  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 A = ROOT / "assets/detector"
@@ -109,3 +110,4 @@ charts["transfer"] = {
 
 (A / "charts.json").write_text(json.dumps(charts, ensure_ascii=False, indent=1) + "\n")
 print("wrote", A / "charts.json", list(charts))
+story_studies.detector()  # the story layer: colours, notes and end labels, as published

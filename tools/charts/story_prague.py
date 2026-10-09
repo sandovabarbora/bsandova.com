@@ -1,8 +1,10 @@
 """Story layer for the Prague, measured charts: entity colours, labels at line ends and notes at key points.
 
-Run after the chart generators (tools/charts/prague_*.py, parking.py), which write the numbers; this script only
-changes colours, adds end labels and callouts, and never touches a value. Parties and cities take their colour from
-assets/palette.json, the same in every article; the rest keeps the article's own accent or recedes to grey. Idempotent.
+prague_council.py, prague_housing.py and parking.py call story() on their file after writing the numbers, so a
+regenerate keeps the layer. prague_rings.py and prague_districts.py do not: their published files carry no story layer
+(dropped when #90 regenerated them), and running this script on its own would add it back. It only changes colours, adds
+end labels and callouts, and never touches a value. Parties and cities take their colour from assets/palette.json, the
+same in every article; the rest keeps the article's own accent or recedes to grey. Idempotent.
 
     python3 tools/charts/story_prague.py
 """
@@ -123,18 +125,24 @@ def apply(chart: dict, st: dict) -> None:
             leg.insert(k + 1, entry)
 
 
+def story(rel: str) -> None:
+    """Apply the story layer to one file under assets/; its generator calls this after writing it."""
+    style, stories = STORY[rel]
+    f = A / rel
+    charts = json.loads(f.read_text())
+    for cid, st in stories.items():
+        apply(charts[cid], st)
+    if style == "indent":
+        s = json.dumps(charts, ensure_ascii=False, indent=1) + "\n"
+    else:
+        s = json.dumps(charts, ensure_ascii=False, separators=(",", ":")) + ("\n" if style == "compact" else "")
+    f.write_text(s)
+    print(f"{rel}: {len(stories)} charts")
+
+
 def main() -> None:
-    for rel, (style, stories) in STORY.items():
-        f = A / rel
-        charts = json.loads(f.read_text())
-        for cid, st in stories.items():
-            apply(charts[cid], st)
-        if style == "indent":
-            s = json.dumps(charts, ensure_ascii=False, indent=1) + "\n"
-        else:
-            s = json.dumps(charts, ensure_ascii=False, separators=(",", ":")) + ("\n" if style == "compact" else "")
-        f.write_text(s)
-        print(f"{rel}: {len(stories)} charts")
+    for rel in STORY:
+        story(rel)
 
 
 if __name__ == "__main__":

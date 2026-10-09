@@ -16,6 +16,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
 from article_kit import n  # noqa: E402
+import story_prague  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 A = ROOT / "assets"
@@ -222,3 +223,4 @@ for spec in charts.values():
 out = A / "zhmp/charts-council.json"
 out.write_text(json.dumps(charts, ensure_ascii=False, separators=(",", ":"), allow_nan=False))
 print(len(charts), "charts →", out)
+story_prague.story("zhmp/charts-council.json")  # the story layer: colours, notes and end labels, as published

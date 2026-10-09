@@ -169,7 +169,7 @@ def svg(S: dict) -> str:
 
 def main() -> None:
     S = build()
-    OUT.write_text(json.dumps(S, ensure_ascii=False, separators=(",", ":")) + "\n")
+    OUT.write_text(json.dumps(S, ensure_ascii=False, separators=(",", ":")))
     SVG.write_text(svg(S))
     t = S["totals"]
     print(f"{OUT.name}: {OUT.stat().st_size / 1024:.0f} KB, {t['cells']} squares, {t['flats']} flats, "

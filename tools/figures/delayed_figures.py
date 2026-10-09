@@ -2,6 +2,9 @@
 (smoothed delay above 68 % of the day's maximum, runs shorter than 4 windows dropped, gaps shorter than 3 windows between choruses filled,
 windows before 05:00 or after 22:30 with no metro stop event set to night)."""
 import json, pathlib, numpy as np, matplotlib
+import sys  # noqa: E402
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "site"))
+from paper_figures import recolour  # noqa: E402
 matplotlib.use("Agg"); import matplotlib.pyplot as plt
 R = pathlib.Path(__file__).resolve().parents[2]; OUT = R / "assets/delayed"; OUT.mkdir(exist_ok=True)
 BG, FG, FG2, LINE, ACID, BUS, VIOLET = "#161616", "#DCDCD6", "#8A8A84", "#3A3A36", "#D6FF3A", "#FF6A3D", "#B78CFF"
@@ -47,3 +50,5 @@ for ax, day in zip(axes, days):
 axes[-1].set_xticks(range(0, 25, 3)); axes[-1].set_xlabel("hour of day · red = chorus as played (smoothed delay above 68 % of the day's maximum, short runs and night dropped)")
 fig.savefig(OUT / "01-five-days.svg"); plt.close(fig)
 for r in rows: print(r)
+
+recolour("delayed")  # on paper, the article's held colour as accent, as published

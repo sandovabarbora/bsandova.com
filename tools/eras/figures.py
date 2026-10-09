@@ -7,6 +7,7 @@ with a static fallback and the published results and series.
 from __future__ import annotations
 
 import json
+import sys
 import shutil
 from pathlib import Path
 
@@ -16,6 +17,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "tools" / "charts"))
+import story_pop  # noqa: E402
 R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "pop" / "taylor-swift"
 INK, GREY = "#111111", "#666666"
@@ -65,6 +68,7 @@ def main() -> None:
     ax.set_xlabel("months from the first show in the country"); ax.set_ylabel("difference, percentage points")
     f.tight_layout(); f.savefig(A / "06-eras.svg"); plt.close(f)
     print("written eras chart")
+    story_pop.artist("taylor-swift")  # the story layer: notes at key points, as published
 
 
 if __name__ == "__main__":
