@@ -1,0 +1,12 @@
+name: check
+on:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  standard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/site/check_standard.py   # the editorial gate the deploy runs, before merge
+      - run: python3 tools/site/home.py --check

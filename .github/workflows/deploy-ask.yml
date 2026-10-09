@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }   # the changelog is generated from the full git log
       - run: python3 tools/site/changelog.py   # changelog/data.json is generated, not committed
       - uses: superfly/flyctl-actions/setup-flyctl@fc53c09e1bc3be6f54706524e3b82c4f462f77be  # v1.5
       - run: flyctl deploy --remote-only --config deploy/fly.toml
