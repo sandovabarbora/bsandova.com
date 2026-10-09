@@ -9,7 +9,7 @@ and rebuilt.
 
 | Path | Contents |
 |---|---|
-| `index.html`, `texts/`, `cv/` | The site: front page, articles and CV (static HTML, no framework) |
+| `index.html`, `texts/` | The site: front page and articles (static HTML, no framework) |
 | `docs/works.toml` | Every work on the front page: its topic, its series and whether it is one of the films at the top (`top = n`); `tools/site/home.py` writes the films and All work into `index.html`, and the standard check fails if the two differ or an article is missing |
 | `texts/prague-*.html` | *Prague, measured*: the hub and Parts 1–5 |
 | `surf/`, `weather/`, `status/`, `watch/`, `library/`, `atlantic/`, `changelog/` | Live pages; `surf/` and `weather/` also hold their daily collectors and verifiers |
