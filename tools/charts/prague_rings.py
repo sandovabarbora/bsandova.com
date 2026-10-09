@@ -11,7 +11,11 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
+from article_kit import n  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 A = ROOT / "assets" / "praha"
@@ -20,16 +24,9 @@ E = json.loads((A / "rings_extended.json").read_text())
 R = json.loads((A / "rings_robust.json").read_text())
 
 HELD = "#9a7b0a"  # the ochre the Part 2 figures use (figures_rings_extended.py, figures_metro.py)
-NB = " "
 DM = "../assets/praha/metro2025.json"
 DE = "../assets/praha/rings_extended.json"
 DR = "../assets/praha/rings_robust.json"
-
-
-def n(v: float, dp: int = 2, sign: bool = False) -> str:
-    """Numbers as the article writes them: a space between thousands, a real minus sign, + where asked."""
-    s = f"{abs(v):,.{dp}f}".replace(",", NB)
-    return ("−" if v < 0 else ("+" if sign and v > 0 else "")) + s
 
 
 def pct(v: float, dp: int = 1) -> str:
@@ -97,7 +94,7 @@ att = [
 
 def att_tip(lab, b0, b1, th):
     return (f"{lab}\nwithout composition {n(b0, 3)}\nwith education and citizenship {n(b1, 3)}\n"
-            f"half the original {n(b0 / 2)}\ngoes with composition {pct(100 * th, 0)}")
+            f"half the original {n(b0 / 2, 2)}\ngoes with composition {pct(100 * th, 0)}")
 
 
 charts["attenuation"] = {
@@ -118,7 +115,7 @@ charts["attenuation"] = {
                     *[{"type": "text", "x": 1.28, "y": lab, "anchor": "end", "c": "ink", "s": pct(100 * th, 0)} for lab, b0, b1, th in att],
                 ]}],
     "table": {"cols": ["", "without composition", "with education and citizenship", "half the original", "share going with composition"],
-              "rows": [[lab, n(b0, 3), n(b1, 3), n(b0 / 2), pct(100 * th, 0)] for lab, b0, b1, th in att]},
+              "rows": [[lab, n(b0, 3), n(b1, 3), n(b0 / 2, 2), pct(100 * th, 0)] for lab, b0, b1, th in att]},
     "data": [DE, DR],
 }
 
@@ -132,7 +129,7 @@ margin = E["H2"]["margin"]
 charts["metro-equivalence"] = {
     "alt": IMG_ALT["metro-equivalence"],
     "legend": [{"label": "estimate and 90 % interval", "c": HELD, "shape": "o"},
-               {"label": f"± {n(margin)}: too small to matter", "c": "grey", "shape": "box", "o": 0.14}],
+               {"label": f"± {n(margin, 2)}: too small to matter", "c": "grey", "shape": "box", "o": 0.14}],
     "panels": [{"h": 220,
                 "x": {"kind": "linear", "domain": [-0.6, 0.4], "ticks": [-0.6, -0.4, -0.2, 0, 0.2, 0.4],
                       "label": "ANO points per doubling of metro distance", "tickfmt": {"dp": 1}},
@@ -142,11 +139,11 @@ charts["metro-equivalence"] = {
                     {"type": "rule", "axis": "x", "v": 0, "c": "grey"},
                     {"type": "range", "c": HELD, "w": 2,
                      "rows": [{"y": lab, "mid": est, "lo": lo, "hi": hi,
-                               "tip": f"{lab}\n{n(est, 3, True)} per doubling\n90 % interval {n(lo, 3, True)} to {n(hi, 3, True)}"}
+                               "tip": f"{lab}\n{n(est, 3, sign=True)} per doubling\n90 % interval {n(lo, 3, sign=True)} to {n(hi, 3, sign=True)}"}
                               for lab, est, lo, hi in met]},
                 ]}],
     "table": {"cols": ["", "estimate", "90 % interval, low", "90 % interval, high"],
-              "rows": [[lab, n(est, 3, True), n(lo, 3, True), n(hi, 3, True)] for lab, est, lo, hi in met]},
+              "rows": [[lab, n(est, 3, sign=True), n(lo, 3, sign=True), n(hi, 3, sign=True)] for lab, est, lo, hi in met]},
     "data": [DE, DR],
 }
 
@@ -169,10 +166,10 @@ charts["steepening"] = {
                      "pts": [[y, s5[str(y)], s20[str(y)]] for y in yrs]},
                     {"type": "line", "name": "matched", "c": HELD, "w": 2.4, "dots": True, "fmt": f2,
                      "pts": [[y, ys[str(y)]] for y in yrs]},
-                    *[{"type": "text", "x": y, "y": ys[str(y)] + 0.06, "anchor": "middle", "c": "ink", "s": n(ys[str(y)])} for y in yrs],
+                    *[{"type": "text", "x": y, "y": ys[str(y)] + 0.06, "anchor": "middle", "c": "ink", "s": n(ys[str(y)], 2)} for y in yrs],
                 ]}],
     "table": {"cols": ["election", "matched (10 % rule)", "5 % rule", "20 % rule"],
-              "rows": [[str(y), n(ys[str(y)]), n(s5[str(y)]), n(s20[str(y)])] for y in yrs]},
+              "rows": [[str(y), n(ys[str(y)], 2), n(s5[str(y)], 2), n(s20[str(y)], 2)] for y in yrs]},
     "data": [DE],
 }
 

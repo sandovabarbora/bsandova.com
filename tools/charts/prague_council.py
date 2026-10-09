@@ -10,8 +10,12 @@ from __future__ import annotations
 
 import json
 import math
+import sys
 from datetime import datetime
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
+from article_kit import n  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 A = ROOT / "assets"
@@ -21,18 +25,11 @@ O = json.loads((A / "zhmp/council_extended.json").read_text())
 
 HELD = "#a8201a"  # the red of the article's photograph, as in tools/zhmp/figures.py
 COALITION = {"SPOLU", "Piráti", "STAN"}
-NB = " "
 DV, DT, DO = "assets/zhmp/votes2022.json", "assets/zhmp/terms.json", "assets/zhmp/council_extended.json"
 
 
-def n(v: float, dp: int = 0, unit: str = "") -> str:
-    """Numbers as the article writes them: a space between thousands, a real minus sign."""
-    s = f"{abs(v):,.{dp}f}".replace(",", NB)
-    return ("−" if v < 0 else "") + s + unit
-
-
 def pct(v: float, dp: int = 0) -> str:
-    return n(v, dp, " %")
+    return n(v, dp, unit=" %")
 
 
 def wavg(xs: list[float], ws: list[float]) -> float:

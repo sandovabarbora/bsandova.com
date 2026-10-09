@@ -16,7 +16,11 @@ assets/delayed/charts.json.
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
+from article_kit import n  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 A = ROOT / "assets/delayed"
@@ -25,12 +29,6 @@ NB = " "
 HELD = "#b3202c"  # the article's held colour (tools/site/paper_figures.py), the chorus fill in the static figure
 SURF = ["autobus", "tramvaj", "trolejbus"]
 ORDER = ["easter", "summer", "school", "typical", "meltdown"]
-
-
-def n(v: float, dp: int = 0, unit: str = "") -> str:
-    """Numbers as the article writes them: a space between thousands, a real minus sign."""
-    s = f"{abs(v):,.{dp}f}".replace(",", NB)
-    return ("−" if round(v, dp) < 0 else "") + s + unit
 
 
 def clock(i: int) -> str:
@@ -111,8 +109,8 @@ for k, day in enumerate(days):
     marks.append({"type": "dots", "c": "transparent", "shape": "d",
                   "pts": [{"x": round(t[q], 4), "y": round(d[q], 1),
                            "tip": f"{day['label']} · {clock(q)}–{clock(q + 1) if q < 287 else '24:00'}\n"
-                                  f"surface delay {n(d[q], 0, ' s')}\nsmoothed {n(sm[q], 0, ' s')}"
-                                  f"{' · ' + ('night', 'verse', 'chorus')[sect[q]]} (threshold {n(thr, 0, ' s')})\n{n(cnt[q])} surface stop events"}
+                                  f"surface delay {n(d[q], 0, unit=' s')}\nsmoothed {n(sm[q], 0, unit=' s')}"
+                                  f"{' · ' + ('night', 'verse', 'chorus')[sect[q]]} (threshold {n(thr, 0, unit=' s')})\n{n(cnt[q])} surface stop events"}
                           for q in range(288)]})
     last = k == len(days) - 1
     panels.append({"h": 150 + (24 if last else 0),
@@ -122,7 +120,7 @@ for k, day in enumerate(days):
                    "y": {"kind": "linear", "domain": [bottom, top], "ticks": list(range(int(bottom), int(top) + 1, step)),
                          "label": "s late" if k == 0 else None, "tickfmt": {"dp": 0}},
                    "marks": marks})
-    rows.append([day["label"], day["disc"], n(day["total"]), n(mean, 0, " s"), n(thr, 0, " s"), n(sum(chorus) * 5, 0, " min")])
+    rows.append([day["label"], day["disc"], n(day["total"]), n(mean, 0, unit=" s"), n(thr, 0, unit=" s"), n(sum(chorus) * 5, 0, unit=" min")])
     dump.append({"id": day["id"], "label": day["label"], "disc": day["disc"], "total": day["total"],
                  "mean_surface_delay_s": round(mean, 1), "chorus_threshold_s": round(thr, 1), "chorus_minutes": sum(chorus) * 5,
                  "chorus_minutes_raw_threshold": sum(raw_chorus) * 5,
