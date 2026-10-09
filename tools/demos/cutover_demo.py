@@ -1,6 +1,7 @@
 """Demo for texts/cutover.html: a 'legacy' pandas daily aggregate vs a 'new' SQL one over NYC yellow taxi, January 2025.
 
-    .venv/bin/python tools/demos/cutover_demo.py
+    .venv/bin/python tools/demos/cutover_demo.py            # runs 1 and 2
+    .venv/bin/python tools/demos/cutover_demo.py --strict   # runs 3 and 4 only: run 2 with a fare tolerance of 1e-9 and 1e-12
 
 Downloads one public parquet (~59 MB) into tools/data/, builds both aggregates, runs cutover,
 writes assets/cutover/report-1.{html,json} and report-2.{html,json} and prints the text report. Whatever it finds is reported as found.
@@ -8,6 +9,7 @@ writes assets/cutover/report-1.{html,json} and report-2.{html,json} and prints t
 
 from __future__ import annotations
 
+import sys
 import urllib.request
 from pathlib import Path
 
@@ -56,6 +58,17 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     old, nw = legacy(SRC), new(SRC)
     old.name, nw.name = "legacy (pandas)", "new (SQL)"
+
+    if "--strict" in sys.argv:
+        # runs 3 and 4: run 2 with the half-cent fare tolerance tightened, to see how much room it leaves
+        nw2 = nw.assign(day=nw.day.dt.date)
+        nw2.name = "new (SQL), day cast to date"
+        for n, tol in ((3, 1e-9), (4, 1e-12)):
+            r = cutover.compare(old, nw2, key=["day", "zone"], partition="day", tolerance={"km": 1e-6, "fare": tol})
+            (OUT / f"report-{n}.html").write_text(r.to_html())
+            (OUT / f"report-{n}.json").write_text(r.to_json())
+            print(f"--- run {n} (fare tolerance {tol})\n" + r.to_text())
+        return
 
     # run 1: as written
     r1 = cutover.compare(old, nw, key=["day", "zone"], partition="day", tolerance={"km": 1e-6})
