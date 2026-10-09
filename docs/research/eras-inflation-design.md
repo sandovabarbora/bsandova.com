@@ -90,3 +90,26 @@ For each question, on the event-month-0 effect:
 ## Changes after registration
 
 None yet.
+
+**9 October 2026 (a correction to the 5 October rewording, after a model-based review after publication).** The
+status line and §0 of this design were rewritten in place on 5 October 2026 (`c953c92`). The original wording, as
+committed at `f5d702c` on 2 October 2026, was: "**Status: design committed 2 October 2026, before any price index
+value was downloaded or read.**"; on Wikipedia, "Its Boxscore figures were seen only as structure (50 attendance
+cells)"; and on Eurostat: "One request to the HICP monthly index (`prc_hicp_midx`, COICOP CP112, unit I15) for Sweden
+and Austria, January–February 2023, was made to check the format; it returned four values, which were not printed or
+read. A second request read only the dataset's latest month (December 2025) for Czechia, not its value." That
+disclosure was replaced by "The author has worked with these data since March 2026"; the original stands as the
+record of what was seen. The rewording covers the source (Eurostat's HICP), which the author had used since March
+2026; the series analysed were downloaded on 2 October 2026 and committed at `dc9dba3`, after this plan by the
+self-reported commit order. Design, code (`d1d25cd`), data (`dc9dba3`) and results (`4401fda`) were committed within
+two minutes on the branch (tags `pop-eras-design` and `pop-eras-results`, created on 9 October 2026, so they do not
+date the commits) and reach `main` in one squash commit, `942e304`, so the order is not independently timestamped.
+
+**9 October 2026 (post hoc, not registered).** The article now gives pointwise 95 % intervals (estimate ± 1.96 ×
+the stored standard error, `tools/eras/estimate.py --pointwise`, `eras-inflation-pointwise.json`) beside the
+registered 95 % uniform bands, which the article had called "95 % CI". The labels are unchanged; they use the
+uniform bands as registered. Limits now stated in the article: the identifying assumptions (parallel trends, no
+anticipation, no spillover to comparison countries); the accommodation pre-trend at month −4 (the registered check
+fails); France's months +2 and +3 fall in the Paris Olympic Games, and France had a second exposure in Lyon in its
+month +1 (Décines-Charpieu, 2–3 June 2024); the United Kingdom, with 15 of the 48 European shows that have attendance figures in Pop, measured's tour file, has no HICP after 2020; three outcomes are
+tested with no correction for multiplicity.

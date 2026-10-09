@@ -120,3 +120,31 @@ listed in `parse.py` (`UNSEEN_START`) and left out; of the other 22 kept songs w
 none was released before 2017. Q1 was recomputed for the four parts that use the peak-1 set (Taylor Swift's uses
 peak 2 and does not contain it). Because one random stream serves every bootstrap in `analyse.py`, the intervals of
 Q2 and Q3 are redrawn too, with unchanged data and point estimates.
+
+**9 October 2026 (a correction to the 5 October rewording, after a model-based review after publication).** The
+status line and §0 of this design were rewritten in place on 5 October 2026 (`c953c92`). The original wording, as
+committed at `e890c27` on 1 October 2026, was: "**Status: design committed 1 October 2026, before any result of part
+1 (Harry Styles) has been computed or seen, and before any data of parts 2–5 are collected.**"; in §0, BTS was chosen
+over BLACKPINK "before any chart figure of either group was seen"; part 1's collection had "No figure from it … read
+beyond what that design lists"; the tour pages were counted "without reading any figure"; and §4 was "added before
+any data of the series were read". The rewording "the author had worked with these data since March 2026" covers the
+sources (kworb.net's Spotify chart pages and Wikipedia's tour pages), which the author had used since March 2026; the
+files analysed here were collected on 1 October 2026, after this plan by the self-reported commit order. In the
+articles the registration now reads: design committed at `e890c27` and `12417ae` on 1 October 2026, before the results
+commit `8fbadd3` on 2 October 2026 (tags `pop-<slug>-design` and `pop-<slug>-results`, created on 9 October 2026 at
+those commits, so the tags do not date them); commit times are self-reported, and the branch was pushed after the
+analysis. On `main` the plan is in `1e0a5eb` (2 October 2026, 00:33) and the results of parts 2–5 in `942e304`
+(2 October 2026, 10:41). This entry adds to the design; it changes no rule.
+
+**9 October 2026 (a deviation found after publication).** §2 says that every other song of the artist with global
+peak 1 is also placed in Q1. In part 2 (Taylor Swift, focal song peak 2) her own number ones were not placed. They
+are placed post hoc among part 1's number-ones set by `tools/pop/peak1.py` (`taylor-swift-peak1-posthoc.json`) and
+reported in part 2 as post-hoc.
+
+**9 October 2026 (Q3 data, a correction after publication).** The Eras Tour's Wikipedia table prints one attendance
+figure for Wembley Stadium (753 112, footnoted "Attendance from the eight nights combined") in two cells, June and
+August 2024; `parse.py` had read it as two entries. `merge_repeated` in `parse.py` now keeps one entry of eight
+nights; Taylor Swift's Q3 has 84 entries (was 85), 194 shows (unchanged), longest run 8 nights (was 6). No other
+part's tour file has a repeated figure. The Eras Tour's attendance column gives venue, press and capacity figures
+written as sold / available (ten footnoted as rough estimates), not Boxscore's tickets sold; its 100 % is
+capacity-reported.

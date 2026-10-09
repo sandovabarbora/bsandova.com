@@ -196,7 +196,22 @@ def tour_tables(page: dict) -> list[dict]:
             # a hybrid entry counts online viewers with the hall, so neither its sell-through nor its price is a hall's
             e["hybrid"] = bool(re.search(r"weverse|online|youtube|livestream|virtual|streaming", e["venue"], re.I)) \
                 or e["sold"] > e["available"]
-        out.extend(entries.values())
+        out.extend(merge_repeated(list(entries.values())))
+    return out
+
+
+def merge_repeated(entries: list[dict]) -> list[dict]:
+    """One figure printed in two cells of a table (Swift's Wembley 2024: 753 112 footnoted "from the eight nights
+    combined") is one entry, not two: the later cell's nights join the first (post-hoc, 9 October 2026)."""
+    seen: dict[tuple, dict] = {}
+    out = []
+    for e in entries:
+        key = (e["venue"], e["city"], e["sold"], e["available"], e["revenue_usd"])
+        if key in seen:
+            seen[key]["nights"] += e["nights"]
+            continue
+        seen[key] = e
+        out.append(e)
     return out
 
 
