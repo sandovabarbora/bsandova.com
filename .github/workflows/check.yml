@@ -13,3 +13,6 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
       - run: pip install -q pytest && python -m pytest -q surf/tests weather/tests ask/test_eval_guard.py   # the verifiers' tests and the eval guard
+      - run: pip install -q -r tools/requirements-tests.txt
+      # the study suites (made-up data) and the golden-master pins; pins whose inputs live only in tools/data skip here
+      - run: python -m pytest -q -rs tools/rain tools/heat tools/late tools/bunch tools/gehl tools/transfer tools/dst tools/eurovision tools/eras
