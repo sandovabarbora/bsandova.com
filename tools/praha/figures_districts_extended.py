@@ -93,8 +93,8 @@ def estimate(e: dict) -> None:
     hon = [v / cm * 100 for v in e["honest"]["1.0"]]
     by = {k: v["estimate"] / v["pre_level_ctrl"] * 100 for k, v in h["by_event"].items()}  # each event, own level
     fig, ax = plt.subplots(figsize=(8, 3.1))
-    ax.axvspan(26, 47, color=HELD, alpha=0.14, lw=0)  # Spain, Brazil, Italy: about 40 %, 26–41 %, 36–47 %
-    ax.text(49, 3.55, "published\n26–47 %", ha="left", va="top", color=HELD, fontsize=8)
+    ax.axvspan(36, 47, color=HELD, alpha=0.14, lw=0)  # Brazil about 40 %, Italy 36–47 % (Spain: no magnitude in the abstract)
+    ax.text(49, 3.55, "published\n36–47 %", ha="left", va="top", color=HELD, fontsize=8)
     ax.axvspan(-20, 20, color=GRID, alpha=0.8, lw=0)
     ax.text(-22, 3.55, "±20 %", ha="right", va="top", color=GREY, fontsize=8)
     ax.axvline(100, color=INK, lw=0.8, ls=(0, (2, 2)))

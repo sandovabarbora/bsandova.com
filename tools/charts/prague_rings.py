@@ -97,7 +97,7 @@ att = [
 
 def att_tip(lab, b0, b1, th):
     return (f"{lab}\nwithout composition {n(b0, 3)}\nwith education and citizenship {n(b1, 3)}\n"
-            f"half the original {n(b0 / 2)}\nexplained {pct(100 * th, 0)}")
+            f"half the original {n(b0 / 2)}\ngoes with composition {pct(100 * th, 0)}")
 
 
 charts["attenuation"] = {
@@ -117,7 +117,7 @@ charts["attenuation"] = {
                                                          for lab, b0, b1, th in att]},
                     *[{"type": "text", "x": 1.28, "y": lab, "anchor": "end", "c": "ink", "s": pct(100 * th, 0)} for lab, b0, b1, th in att],
                 ]}],
-    "table": {"cols": ["", "without composition", "with education and citizenship", "half the original", "explained"],
+    "table": {"cols": ["", "without composition", "with education and citizenship", "half the original", "share going with composition"],
               "rows": [[lab, n(b0, 3), n(b1, 3), n(b0 / 2), pct(100 * th, 0)] for lab, b0, b1, th in att]},
     "data": [DE, DR],
 }
@@ -176,12 +176,12 @@ charts["steepening"] = {
     "data": [DE],
 }
 
-# fig. 6 · specification curve: share of ANO's estate gradient explained, 48 specifications sorted
+# fig. 6 · specification curve: share of ANO's estate gradient going with composition, 48 specifications sorted
 spec = sorted(R["robustness"]["14_specification_curve"]["rows"], key=lambda x: x["ANO_theta"])
 SAMPLE = {"all": "all clusters", ">=300": "precincts with 300+ registered voters", "homogeneous": "homogeneous squares only"}
 PANEL = {"4+41": "panel broad", "4": "panel narrow"}
 SE = {"wild": "bootstrap errors", "conley": "spatial errors"}
-VERDICT = {"place beyond composition": "less than half explained", "indeterminate": "indeterminate"}
+VERDICT = {"place beyond composition": "significantly less than half", "indeterminate": "indeterminate"}
 
 
 def spec_desc(x: dict) -> str:
@@ -191,21 +191,21 @@ def spec_desc(x: dict) -> str:
 
 charts["spec-curve"] = {
     "alt": IMG_ALT["spec-curve"],
-    "legend": [{"label": "significantly less than half explained", "c": HELD, "shape": "o"},
+    "legend": [{"label": "significantly less than half going with composition", "c": HELD, "shape": "o"},
                {"label": "indeterminate", "c": "light", "shape": "o"},
                {"label": "half", "c": "ink", "dash": "dash"}],
     "panels": [{"h": 240,
                 "x": {"kind": "linear", "domain": [0, len(spec) + 1], "ticks": [], "nogrid": True,
                       "label": f"{len(spec)} specifications, sorted"},
-                "y": {"kind": "linear", "domain": [0, 60], "ticks": [0, 10, 20, 30, 40, 50, 60], "label": "share explained (%)"},
+                "y": {"kind": "linear", "domain": [0, 60], "ticks": [0, 10, 20, 30, 40, 50, 60], "label": "share going with composition (%)"},
                 "marks": [
                     {"type": "rule", "axis": "y", "v": 50, "c": "ink", "dash": "dash", "label": "half", "anchor": "end"},
                     {"type": "dots", "r": 3.5,
                      "pts": [{"x": i + 1, "y": round(100 * x["ANO_theta"], 1), "c": HELD if x["ANO"] == "place beyond composition" else "light",
-                              "tip": f"{spec_desc(x)}\n{n(x['n'], 0)} clusters\nexplained {pct(100 * x['ANO_theta'], 0)}\n{VERDICT[x['ANO']]}"}
+                              "tip": f"{spec_desc(x)}\n{n(x['n'], 0)} clusters\ngoes with composition {pct(100 * x['ANO_theta'], 0)}\n{VERDICT[x['ANO']]}"}
                              for i, x in enumerate(spec)]},
                 ]}],
-    "table": {"cols": ["#", "weights", "allocation", "panel", "sample", "errors", "clusters", "explained", "verdict"],
+    "table": {"cols": ["#", "weights", "allocation", "panel", "sample", "errors", "clusters", "share going with composition", "verdict"],
               "rows": [[str(i + 1), "votes" if x["weighted"] else "none", x["alloc"], PANEL[x["panel"]].split()[1], SAMPLE[x["sample"]],
                         SE[x["se"]].split()[0], n(x["n"], 0), pct(100 * x["ANO_theta"], 0), VERDICT[x["ANO"]]]
                        for i, x in enumerate(spec)]},

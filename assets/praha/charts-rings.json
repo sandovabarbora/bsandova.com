@@ -4,11 +4,11 @@
   "legend": [
    {
     "label": "ANO",
-    "c": "#a87a00"
+    "c": "#9a7b0a"
    },
    {
     "label": "Pirates",
-    "c": "#6a4fc0",
+    "c": "ink",
     "dash": "dash"
    }
   ],
@@ -48,7 +48,7 @@
      {
       "type": "line",
       "name": "ANO",
-      "c": "#a87a00",
+      "c": "#9a7b0a",
       "dash": null,
       "notip": true,
       "pts": [
@@ -77,7 +77,7 @@
      {
       "type": "line",
       "name": "Pirates",
-      "c": "#6a4fc0",
+      "c": "ink",
       "dash": "dash",
       "notip": true,
       "pts": [
@@ -105,7 +105,7 @@
      },
      {
       "type": "dots",
-      "c": "#a87a00",
+      "c": "#9a7b0a",
       "shape": null,
       "r": 3.5,
       "pts": [
@@ -138,7 +138,7 @@
      },
      {
       "type": "dots",
-      "c": "#6a4fc0",
+      "c": "ink",
       "shape": "d",
       "r": 3.5,
       "pts": [
@@ -207,7 +207,7 @@
      {
       "type": "line",
       "name": "ANO",
-      "c": "#a87a00",
+      "c": "#9a7b0a",
       "dash": null,
       "notip": true,
       "pts": [
@@ -240,7 +240,7 @@
      {
       "type": "line",
       "name": "Pirates",
-      "c": "#6a4fc0",
+      "c": "ink",
       "dash": "dash",
       "notip": true,
       "pts": [
@@ -272,7 +272,7 @@
      },
      {
       "type": "dots",
-      "c": "#a87a00",
+      "c": "#9a7b0a",
       "shape": null,
       "r": 3.5,
       "pts": [
@@ -310,7 +310,7 @@
      },
      {
       "type": "dots",
-      "c": "#6a4fc0",
+      "c": "ink",
       "shape": "d",
       "r": 3.5,
       "pts": [
@@ -382,7 +382,7 @@
      {
       "type": "line",
       "name": "ANO",
-      "c": "#a87a00",
+      "c": "#9a7b0a",
       "dash": null,
       "notip": true,
       "pts": [
@@ -402,13 +402,12 @@
         ">70",
         26.01
        ]
-      ],
-      "end": true
+      ]
      },
      {
       "type": "line",
       "name": "Pirates",
-      "c": "#6a4fc0",
+      "c": "ink",
       "dash": "dash",
       "notip": true,
       "pts": [
@@ -428,12 +427,11 @@
         ">70",
         14.49
        ]
-      ],
-      "end": true
+      ]
      },
      {
       "type": "dots",
-      "c": "#a87a00",
+      "c": "#9a7b0a",
       "shape": null,
       "r": 3.5,
       "pts": [
@@ -461,7 +459,7 @@
      },
      {
       "type": "dots",
-      "c": "#6a4fc0",
+      "c": "ink",
       "shape": "d",
       "r": 3.5,
       "pts": [
@@ -486,27 +484,8 @@
         "tip": "flats in panel buildings: >70 %\nPirates 14.5 %\n328 precincts"
        }
       ]
-     },
-     {
-      "type": "callout",
-      "x": "<10",
-      "y": 16.04,
-      "dx": 0,
-      "dy": 26,
-      "anchor": "middle",
-      "s": "16 %"
-     },
-     {
-      "type": "callout",
-      "x": ">70",
-      "y": 26.01,
-      "dx": -6,
-      "dy": -16,
-      "anchor": "end",
-      "s": "26 %"
      }
-    ],
-    "padRight": 64
+    ]
    }
   ],
   "table": {
@@ -630,7 +609,7 @@
   ]
  },
  "attenuation": {
-  "alt": "Arrow chart. For each row an arrow runs from the estate gradient without composition (grey dot) to the gradient with education and citizenship held equal (ochre dot), with a dashed mark at half the original. ANO 2025: 0.99 to 0.56, 43 % explained. ANO 2025 with age added: 0.99 to 0.47, 52 %. ANO 2021: 0.86 to 0.48, 44 %. SPOLU 2025: −0.60 to −0.35, 42 %. SPOLU 2021: −0.77 to −0.53, 31 %.",
+  "alt": "Arrow chart. For each row an arrow runs from the estate gradient without composition (grey dot) to the gradient with education and citizenship held equal (ochre dot), with a dashed mark at half the original. ANO 2025: 0.99 to 0.56, 43 % going with composition. ANO 2025 with age added: 0.99 to 0.47, 52 %. ANO 2021: 0.86 to 0.48, 44 %. SPOLU 2025: −0.60 to −0.35, 42 %. SPOLU 2021: −0.77 to −0.53, 31 %.",
   "legend": [
    {
     "label": "without composition",
@@ -639,11 +618,7 @@
    },
    {
     "label": "education and citizenship held equal",
-    "c": "#a87a00"
-   },
-   {
-    "label": "the same for SPOLU",
-    "c": "grey"
+    "c": "#9a7b0a"
    },
    {
     "label": "half the original gradient",
@@ -697,40 +672,35 @@
         "mid": 0.4925,
         "shape": "d",
         "fill": "grey",
-        "tip": "ANO 2025\nwithout composition 0.985\nwith education and citizenship 0.565\nhalf the original 0.49\nexplained 43 %",
-        "c": "#a87a00"
+        "tip": "ANO 2025\nwithout composition 0.985\nwith education and citizenship 0.565\nhalf the original 0.49\ngoes with composition 43 %"
        },
        {
         "y": "ANO 2025, + age",
         "mid": 0.4925,
         "shape": "d",
         "fill": "grey",
-        "tip": "ANO 2025, + age\nwithout composition 0.985\nwith education and citizenship 0.468\nhalf the original 0.49\nexplained 52 %",
-        "c": "#a87a00"
+        "tip": "ANO 2025, + age\nwithout composition 0.985\nwith education and citizenship 0.468\nhalf the original 0.49\ngoes with composition 52 %"
        },
        {
         "y": "ANO 2021",
         "mid": 0.429,
         "shape": "d",
         "fill": "grey",
-        "tip": "ANO 2021\nwithout composition 0.858\nwith education and citizenship 0.479\nhalf the original 0.43\nexplained 44 %",
-        "c": "#a87a00"
+        "tip": "ANO 2021\nwithout composition 0.858\nwith education and citizenship 0.479\nhalf the original 0.43\ngoes with composition 44 %"
        },
        {
         "y": "SPOLU 2025",
         "mid": -0.2985,
         "shape": "d",
         "fill": "grey",
-        "tip": "SPOLU 2025\nwithout composition −0.597\nwith education and citizenship −0.346\nhalf the original −0.30\nexplained 42 %",
-        "c": "grey"
+        "tip": "SPOLU 2025\nwithout composition −0.597\nwith education and citizenship −0.346\nhalf the original −0.30\ngoes with composition 42 %"
        },
        {
         "y": "SPOLU 2021",
         "mid": -0.3855,
         "shape": "d",
         "fill": "grey",
-        "tip": "SPOLU 2021\nwithout composition −0.771\nwith education and citizenship −0.531\nhalf the original −0.39\nexplained 31 %",
-        "c": "grey"
+        "tip": "SPOLU 2021\nwithout composition −0.771\nwith education and citizenship −0.531\nhalf the original −0.39\ngoes with composition 31 %"
        }
       ]
      },
@@ -742,36 +712,31 @@
         "y": "ANO 2025",
         "from": 0.985,
         "to": 0.565,
-        "tip": "ANO 2025\nwithout composition 0.985\nwith education and citizenship 0.565\nhalf the original 0.49\nexplained 43 %",
-        "c": "#a87a00"
+        "tip": "ANO 2025\nwithout composition 0.985\nwith education and citizenship 0.565\nhalf the original 0.49\ngoes with composition 43 %"
        },
        {
         "y": "ANO 2025, + age",
         "from": 0.985,
         "to": 0.468,
-        "tip": "ANO 2025, + age\nwithout composition 0.985\nwith education and citizenship 0.468\nhalf the original 0.49\nexplained 52 %",
-        "c": "#a87a00"
+        "tip": "ANO 2025, + age\nwithout composition 0.985\nwith education and citizenship 0.468\nhalf the original 0.49\ngoes with composition 52 %"
        },
        {
         "y": "ANO 2021",
         "from": 0.858,
         "to": 0.479,
-        "tip": "ANO 2021\nwithout composition 0.858\nwith education and citizenship 0.479\nhalf the original 0.43\nexplained 44 %",
-        "c": "#a87a00"
+        "tip": "ANO 2021\nwithout composition 0.858\nwith education and citizenship 0.479\nhalf the original 0.43\ngoes with composition 44 %"
        },
        {
         "y": "SPOLU 2025",
         "from": -0.597,
         "to": -0.346,
-        "tip": "SPOLU 2025\nwithout composition −0.597\nwith education and citizenship −0.346\nhalf the original −0.30\nexplained 42 %",
-        "c": "grey"
+        "tip": "SPOLU 2025\nwithout composition −0.597\nwith education and citizenship −0.346\nhalf the original −0.30\ngoes with composition 42 %"
        },
        {
         "y": "SPOLU 2021",
         "from": -0.771,
         "to": -0.531,
-        "tip": "SPOLU 2021\nwithout composition −0.771\nwith education and citizenship −0.531\nhalf the original −0.39\nexplained 31 %",
-        "c": "grey"
+        "tip": "SPOLU 2021\nwithout composition −0.771\nwith education and citizenship −0.531\nhalf the original −0.39\ngoes with composition 31 %"
        }
       ]
      },
@@ -824,7 +789,7 @@
     "without composition",
     "with education and citizenship",
     "half the original",
-    "explained"
+    "share going with composition"
    ],
    "rows": [
     [
@@ -874,7 +839,7 @@
   "legend": [
    {
     "label": "estimate and 90 % interval",
-    "c": "#a87a00",
+    "c": "#9a7b0a",
     "shape": "o"
    },
    {
@@ -931,7 +896,7 @@
      },
      {
       "type": "range",
-      "c": "#a87a00",
+      "c": "#9a7b0a",
       "w": 2,
       "rows": [
        {
@@ -1011,11 +976,11 @@
   "legend": [
    {
     "label": "819 matched precincts",
-    "c": "#a87a00"
+    "c": "#9a7b0a"
    },
    {
     "label": "5 % (410) and 20 % (982) matching rules",
-    "c": "#a87a00",
+    "c": "#9a7b0a",
     "shape": "box",
     "o": 0.25
    }
@@ -1062,7 +1027,7 @@
      {
       "type": "area",
       "name": "5 %–20 % rules",
-      "c": "#a87a00",
+      "c": "#9a7b0a",
       "o": 0.15,
       "fmt": {
        "dp": 2
@@ -1088,7 +1053,7 @@
      {
       "type": "line",
       "name": "matched",
-      "c": "#a87a00",
+      "c": "#9a7b0a",
       "w": 2.4,
       "dots": true,
       "fmt": {
@@ -1169,11 +1134,11 @@
   ]
  },
  "spec-curve": {
-  "alt": "Dot chart of 48 specifications sorted by the share of ANO's estate gradient explained by composition, from 31 % to 44 %, all below a dashed line at 50 %. Ochre dots, 36 of 48, mark specifications where the remainder is significantly more than half; grey dots are indeterminate.",
+  "alt": "Dot chart of 48 specifications sorted by the share of ANO's estate gradient going with composition, from 31 % to 44 %, all below a dashed line at 50 %. Ochre dots, 36 of 48, mark specifications where the remainder is significantly more than half; grey dots are indeterminate.",
   "legend": [
    {
-    "label": "significantly less than half explained",
-    "c": "#a87a00",
+    "label": "significantly less than half going with composition",
+    "c": "#9a7b0a",
     "shape": "o"
    },
    {
@@ -1215,7 +1180,7 @@
       50,
       60
      ],
-     "label": "share explained (%)"
+     "label": "share going with composition (%)"
     },
     "marks": [
      {
@@ -1234,290 +1199,290 @@
        {
         "x": 1,
         "y": 30.8,
-        "c": "#a87a00",
-        "tip": "unweighted, by area, panel broad,\nall clusters, bootstrap errors\n282 clusters\nexplained 31 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by area, panel broad,\nall clusters, bootstrap errors\n282 clusters\ngoes with composition 31 %\nsignificantly less than half"
        },
        {
         "x": 2,
         "y": 30.8,
-        "c": "#a87a00",
-        "tip": "unweighted, by area, panel broad,\nall clusters, spatial errors\n282 clusters\nexplained 31 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by area, panel broad,\nall clusters, spatial errors\n282 clusters\ngoes with composition 31 %\nsignificantly less than half"
        },
        {
         "x": 3,
         "y": 32.2,
-        "c": "#a87a00",
-        "tip": "unweighted, by area, panel narrow,\nall clusters, bootstrap errors\n282 clusters\nexplained 32 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by area, panel narrow,\nall clusters, bootstrap errors\n282 clusters\ngoes with composition 32 %\nsignificantly less than half"
        },
        {
         "x": 4,
         "y": 32.2,
-        "c": "#a87a00",
-        "tip": "unweighted, by area, panel narrow,\nall clusters, spatial errors\n282 clusters\nexplained 32 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by area, panel narrow,\nall clusters, spatial errors\n282 clusters\ngoes with composition 32 %\nsignificantly less than half"
        },
        {
         "x": 5,
         "y": 32.5,
-        "c": "#a87a00",
-        "tip": "unweighted, by flats, panel narrow,\nhomogeneous squares only, bootstrap errors\n205 clusters\nexplained 32 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by flats, panel narrow,\nhomogeneous squares only, bootstrap errors\n205 clusters\ngoes with composition 32 %\nsignificantly less than half"
        },
        {
         "x": 6,
         "y": 32.5,
-        "c": "#a87a00",
-        "tip": "unweighted, by flats, panel narrow,\nhomogeneous squares only, spatial errors\n205 clusters\nexplained 32 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by flats, panel narrow,\nhomogeneous squares only, spatial errors\n205 clusters\ngoes with composition 32 %\nsignificantly less than half"
        },
        {
         "x": 7,
         "y": 32.7,
-        "c": "#a87a00",
-        "tip": "unweighted, by flats, panel broad,\nhomogeneous squares only, bootstrap errors\n200 clusters\nexplained 33 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by flats, panel broad,\nhomogeneous squares only, bootstrap errors\n200 clusters\ngoes with composition 33 %\nsignificantly less than half"
        },
        {
         "x": 8,
         "y": 32.7,
-        "c": "#a87a00",
-        "tip": "unweighted, by flats, panel broad,\nhomogeneous squares only, spatial errors\n200 clusters\nexplained 33 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by flats, panel broad,\nhomogeneous squares only, spatial errors\n200 clusters\ngoes with composition 33 %\nsignificantly less than half"
        },
        {
         "x": 9,
         "y": 32.9,
-        "c": "#a87a00",
-        "tip": "unweighted, by area, panel narrow,\nhomogeneous squares only, bootstrap errors\n205 clusters\nexplained 33 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by area, panel narrow,\nhomogeneous squares only, bootstrap errors\n205 clusters\ngoes with composition 33 %\nsignificantly less than half"
        },
        {
         "x": 10,
         "y": 32.9,
-        "c": "#a87a00",
-        "tip": "unweighted, by area, panel narrow,\nhomogeneous squares only, spatial errors\n205 clusters\nexplained 33 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by area, panel narrow,\nhomogeneous squares only, spatial errors\n205 clusters\ngoes with composition 33 %\nsignificantly less than half"
        },
        {
         "x": 11,
         "y": 33.0,
-        "c": "#a87a00",
-        "tip": "unweighted, by area, panel broad,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\nexplained 33 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by area, panel broad,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\ngoes with composition 33 %\nsignificantly less than half"
        },
        {
         "x": 12,
         "y": 33.0,
-        "c": "#a87a00",
-        "tip": "unweighted, by area, panel broad,\nprecincts with 300+ registered voters, spatial errors\n278 clusters\nexplained 33 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by area, panel broad,\nprecincts with 300+ registered voters, spatial errors\n278 clusters\ngoes with composition 33 %\nsignificantly less than half"
        },
        {
         "x": 13,
         "y": 33.4,
-        "c": "#a87a00",
-        "tip": "unweighted, by area, panel broad,\nhomogeneous squares only, bootstrap errors\n200 clusters\nexplained 33 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by area, panel broad,\nhomogeneous squares only, bootstrap errors\n200 clusters\ngoes with composition 33 %\nsignificantly less than half"
        },
        {
         "x": 14,
         "y": 33.4,
-        "c": "#a87a00",
-        "tip": "unweighted, by area, panel broad,\nhomogeneous squares only, spatial errors\n200 clusters\nexplained 33 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by area, panel broad,\nhomogeneous squares only, spatial errors\n200 clusters\ngoes with composition 33 %\nsignificantly less than half"
        },
        {
         "x": 15,
         "y": 33.7,
-        "c": "#a87a00",
-        "tip": "unweighted, by flats, panel broad,\nall clusters, bootstrap errors\n282 clusters\nexplained 34 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by flats, panel broad,\nall clusters, bootstrap errors\n282 clusters\ngoes with composition 34 %\nsignificantly less than half"
        },
        {
         "x": 16,
         "y": 33.7,
-        "c": "#a87a00",
-        "tip": "unweighted, by flats, panel broad,\nall clusters, spatial errors\n282 clusters\nexplained 34 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by flats, panel broad,\nall clusters, spatial errors\n282 clusters\ngoes with composition 34 %\nsignificantly less than half"
        },
        {
         "x": 17,
         "y": 34.4,
-        "c": "#a87a00",
-        "tip": "unweighted, by area, panel narrow,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\nexplained 34 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by area, panel narrow,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\ngoes with composition 34 %\nsignificantly less than half"
        },
        {
         "x": 18,
         "y": 34.4,
-        "c": "#a87a00",
-        "tip": "unweighted, by area, panel narrow,\nprecincts with 300+ registered voters, spatial errors\n278 clusters\nexplained 34 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by area, panel narrow,\nprecincts with 300+ registered voters, spatial errors\n278 clusters\ngoes with composition 34 %\nsignificantly less than half"
        },
        {
         "x": 19,
         "y": 34.8,
-        "c": "#a87a00",
-        "tip": "unweighted, by flats, panel narrow,\nall clusters, bootstrap errors\n282 clusters\nexplained 35 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by flats, panel narrow,\nall clusters, bootstrap errors\n282 clusters\ngoes with composition 35 %\nsignificantly less than half"
        },
        {
         "x": 20,
         "y": 34.8,
-        "c": "#a87a00",
-        "tip": "unweighted, by flats, panel narrow,\nall clusters, spatial errors\n282 clusters\nexplained 35 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by flats, panel narrow,\nall clusters, spatial errors\n282 clusters\ngoes with composition 35 %\nsignificantly less than half"
        },
        {
         "x": 21,
         "y": 35.5,
-        "c": "#a87a00",
-        "tip": "unweighted, by flats, panel broad,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\nexplained 36 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by flats, panel broad,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\ngoes with composition 36 %\nsignificantly less than half"
        },
        {
         "x": 22,
         "y": 35.5,
-        "c": "#a87a00",
-        "tip": "unweighted, by flats, panel broad,\nprecincts with 300+ registered voters, spatial errors\n278 clusters\nexplained 36 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by flats, panel broad,\nprecincts with 300+ registered voters, spatial errors\n278 clusters\ngoes with composition 36 %\nsignificantly less than half"
        },
        {
         "x": 23,
         "y": 36.8,
-        "c": "#a87a00",
-        "tip": "unweighted, by flats, panel narrow,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\nexplained 37 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by flats, panel narrow,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\ngoes with composition 37 %\nsignificantly less than half"
        },
        {
         "x": 24,
         "y": 36.8,
-        "c": "#a87a00",
-        "tip": "unweighted, by flats, panel narrow,\nprecincts with 300+ registered voters, spatial errors\n278 clusters\nexplained 37 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "unweighted, by flats, panel narrow,\nprecincts with 300+ registered voters, spatial errors\n278 clusters\ngoes with composition 37 %\nsignificantly less than half"
        },
        {
         "x": 25,
         "y": 40.4,
-        "c": "#a87a00",
-        "tip": "weighted, by area, panel broad,\nall clusters, bootstrap errors\n282 clusters\nexplained 40 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "weighted, by area, panel broad,\nall clusters, bootstrap errors\n282 clusters\ngoes with composition 40 %\nsignificantly less than half"
        },
        {
         "x": 26,
         "y": 40.4,
-        "c": "#a87a00",
-        "tip": "weighted, by area, panel broad,\nall clusters, spatial errors\n282 clusters\nexplained 40 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "weighted, by area, panel broad,\nall clusters, spatial errors\n282 clusters\ngoes with composition 40 %\nsignificantly less than half"
        },
        {
         "x": 27,
         "y": 40.6,
-        "c": "#a87a00",
-        "tip": "weighted, by area, panel broad,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\nexplained 41 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "weighted, by area, panel broad,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\ngoes with composition 41 %\nsignificantly less than half"
        },
        {
         "x": 28,
         "y": 40.6,
-        "c": "#a87a00",
-        "tip": "weighted, by area, panel broad,\nprecincts with 300+ registered voters, spatial errors\n278 clusters\nexplained 41 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "weighted, by area, panel broad,\nprecincts with 300+ registered voters, spatial errors\n278 clusters\ngoes with composition 41 %\nsignificantly less than half"
        },
        {
         "x": 29,
         "y": 41.2,
-        "c": "#a87a00",
-        "tip": "weighted, by area, panel narrow,\nall clusters, bootstrap errors\n282 clusters\nexplained 41 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "weighted, by area, panel narrow,\nall clusters, bootstrap errors\n282 clusters\ngoes with composition 41 %\nsignificantly less than half"
        },
        {
         "x": 30,
         "y": 41.2,
-        "c": "#a87a00",
-        "tip": "weighted, by area, panel narrow,\nall clusters, spatial errors\n282 clusters\nexplained 41 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "weighted, by area, panel narrow,\nall clusters, spatial errors\n282 clusters\ngoes with composition 41 %\nsignificantly less than half"
        },
        {
         "x": 31,
         "y": 41.4,
-        "c": "#a87a00",
-        "tip": "weighted, by area, panel narrow,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\nexplained 41 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "weighted, by area, panel narrow,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\ngoes with composition 41 %\nsignificantly less than half"
        },
        {
         "x": 32,
         "y": 41.4,
-        "c": "#a87a00",
-        "tip": "weighted, by area, panel narrow,\nprecincts with 300+ registered voters, spatial errors\n278 clusters\nexplained 41 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "weighted, by area, panel narrow,\nprecincts with 300+ registered voters, spatial errors\n278 clusters\ngoes with composition 41 %\nsignificantly less than half"
        },
        {
         "x": 33,
         "y": 42.1,
         "c": "light",
-        "tip": "weighted, by area, panel narrow,\nhomogeneous squares only, bootstrap errors\n205 clusters\nexplained 42 %\nindeterminate"
+        "tip": "weighted, by area, panel narrow,\nhomogeneous squares only, bootstrap errors\n205 clusters\ngoes with composition 42 %\nindeterminate"
        },
        {
         "x": 34,
         "y": 42.1,
         "c": "light",
-        "tip": "weighted, by area, panel narrow,\nhomogeneous squares only, spatial errors\n205 clusters\nexplained 42 %\nindeterminate"
+        "tip": "weighted, by area, panel narrow,\nhomogeneous squares only, spatial errors\n205 clusters\ngoes with composition 42 %\nindeterminate"
        },
        {
         "x": 35,
         "y": 42.6,
-        "c": "#a87a00",
-        "tip": "weighted, by flats, panel broad,\nall clusters, bootstrap errors\n282 clusters\nexplained 43 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "weighted, by flats, panel broad,\nall clusters, bootstrap errors\n282 clusters\ngoes with composition 43 %\nsignificantly less than half"
        },
        {
         "x": 36,
         "y": 42.6,
         "c": "light",
-        "tip": "weighted, by flats, panel broad,\nall clusters, spatial errors\n282 clusters\nexplained 43 %\nindeterminate"
+        "tip": "weighted, by flats, panel broad,\nall clusters, spatial errors\n282 clusters\ngoes with composition 43 %\nindeterminate"
        },
        {
         "x": 37,
         "y": 42.8,
-        "c": "#a87a00",
-        "tip": "weighted, by flats, panel broad,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\nexplained 43 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "weighted, by flats, panel broad,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\ngoes with composition 43 %\nsignificantly less than half"
        },
        {
         "x": 38,
         "y": 42.8,
         "c": "light",
-        "tip": "weighted, by flats, panel broad,\nprecincts with 300+ registered voters, spatial errors\n278 clusters\nexplained 43 %\nindeterminate"
+        "tip": "weighted, by flats, panel broad,\nprecincts with 300+ registered voters, spatial errors\n278 clusters\ngoes with composition 43 %\nindeterminate"
        },
        {
         "x": 39,
         "y": 42.8,
         "c": "light",
-        "tip": "weighted, by flats, panel narrow,\nhomogeneous squares only, bootstrap errors\n205 clusters\nexplained 43 %\nindeterminate"
+        "tip": "weighted, by flats, panel narrow,\nhomogeneous squares only, bootstrap errors\n205 clusters\ngoes with composition 43 %\nindeterminate"
        },
        {
         "x": 40,
         "y": 42.8,
         "c": "light",
-        "tip": "weighted, by flats, panel narrow,\nhomogeneous squares only, spatial errors\n205 clusters\nexplained 43 %\nindeterminate"
+        "tip": "weighted, by flats, panel narrow,\nhomogeneous squares only, spatial errors\n205 clusters\ngoes with composition 43 %\nindeterminate"
        },
        {
         "x": 41,
         "y": 42.9,
-        "c": "#a87a00",
-        "tip": "weighted, by flats, panel narrow,\nall clusters, bootstrap errors\n282 clusters\nexplained 43 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "weighted, by flats, panel narrow,\nall clusters, bootstrap errors\n282 clusters\ngoes with composition 43 %\nsignificantly less than half"
        },
        {
         "x": 42,
         "y": 42.9,
         "c": "light",
-        "tip": "weighted, by flats, panel narrow,\nall clusters, spatial errors\n282 clusters\nexplained 43 %\nindeterminate"
+        "tip": "weighted, by flats, panel narrow,\nall clusters, spatial errors\n282 clusters\ngoes with composition 43 %\nindeterminate"
        },
        {
         "x": 43,
         "y": 43.0,
-        "c": "#a87a00",
-        "tip": "weighted, by flats, panel narrow,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\nexplained 43 %\nless than half explained"
+        "c": "#9a7b0a",
+        "tip": "weighted, by flats, panel narrow,\nprecincts with 300+ registered voters, bootstrap errors\n278 clusters\ngoes with composition 43 %\nsignificantly less than half"
        },
        {
         "x": 44,
         "y": 43.0,
         "c": "light",
-        "tip": "weighted, by flats, panel narrow,\nprecincts with 300+ registered voters, spatial errors\n278 clusters\nexplained 43 %\nindeterminate"
+        "tip": "weighted, by flats, panel narrow,\nprecincts with 300+ registered voters, spatial errors\n278 clusters\ngoes with composition 43 %\nindeterminate"
        },
        {
         "x": 45,
         "y": 43.2,
         "c": "light",
-        "tip": "weighted, by area, panel broad,\nhomogeneous squares only, bootstrap errors\n200 clusters\nexplained 43 %\nindeterminate"
+        "tip": "weighted, by area, panel broad,\nhomogeneous squares only, bootstrap errors\n200 clusters\ngoes with composition 43 %\nindeterminate"
        },
        {
         "x": 46,
         "y": 43.2,
         "c": "light",
-        "tip": "weighted, by area, panel broad,\nhomogeneous squares only, spatial errors\n200 clusters\nexplained 43 %\nindeterminate"
+        "tip": "weighted, by area, panel broad,\nhomogeneous squares only, spatial errors\n200 clusters\ngoes with composition 43 %\nindeterminate"
        },
        {
         "x": 47,
         "y": 43.9,
         "c": "light",
-        "tip": "weighted, by flats, panel broad,\nhomogeneous squares only, bootstrap errors\n200 clusters\nexplained 44 %\nindeterminate"
+        "tip": "weighted, by flats, panel broad,\nhomogeneous squares only, bootstrap errors\n200 clusters\ngoes with composition 44 %\nindeterminate"
        },
        {
         "x": 48,
         "y": 43.9,
         "c": "light",
-        "tip": "weighted, by flats, panel broad,\nhomogeneous squares only, spatial errors\n200 clusters\nexplained 44 %\nindeterminate"
+        "tip": "weighted, by flats, panel broad,\nhomogeneous squares only, spatial errors\n200 clusters\ngoes with composition 44 %\nindeterminate"
        }
       ]
      }
@@ -1533,7 +1498,7 @@
     "sample",
     "errors",
     "clusters",
-    "explained",
+    "share going with composition",
     "verdict"
    ],
    "rows": [
@@ -1546,7 +1511,7 @@
      "bootstrap",
      "282",
      "31 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "2",
@@ -1557,7 +1522,7 @@
      "spatial",
      "282",
      "31 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "3",
@@ -1568,7 +1533,7 @@
      "bootstrap",
      "282",
      "32 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "4",
@@ -1579,7 +1544,7 @@
      "spatial",
      "282",
      "32 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "5",
@@ -1590,7 +1555,7 @@
      "bootstrap",
      "205",
      "32 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "6",
@@ -1601,7 +1566,7 @@
      "spatial",
      "205",
      "32 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "7",
@@ -1612,7 +1577,7 @@
      "bootstrap",
      "200",
      "33 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "8",
@@ -1623,7 +1588,7 @@
      "spatial",
      "200",
      "33 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "9",
@@ -1634,7 +1599,7 @@
      "bootstrap",
      "205",
      "33 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "10",
@@ -1645,7 +1610,7 @@
      "spatial",
      "205",
      "33 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "11",
@@ -1656,7 +1621,7 @@
      "bootstrap",
      "278",
      "33 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "12",
@@ -1667,7 +1632,7 @@
      "spatial",
      "278",
      "33 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "13",
@@ -1678,7 +1643,7 @@
      "bootstrap",
      "200",
      "33 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "14",
@@ -1689,7 +1654,7 @@
      "spatial",
      "200",
      "33 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "15",
@@ -1700,7 +1665,7 @@
      "bootstrap",
      "282",
      "34 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "16",
@@ -1711,7 +1676,7 @@
      "spatial",
      "282",
      "34 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "17",
@@ -1722,7 +1687,7 @@
      "bootstrap",
      "278",
      "34 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "18",
@@ -1733,7 +1698,7 @@
      "spatial",
      "278",
      "34 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "19",
@@ -1744,7 +1709,7 @@
      "bootstrap",
      "282",
      "35 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "20",
@@ -1755,7 +1720,7 @@
      "spatial",
      "282",
      "35 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "21",
@@ -1766,7 +1731,7 @@
      "bootstrap",
      "278",
      "36 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "22",
@@ -1777,7 +1742,7 @@
      "spatial",
      "278",
      "36 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "23",
@@ -1788,7 +1753,7 @@
      "bootstrap",
      "278",
      "37 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "24",
@@ -1799,7 +1764,7 @@
      "spatial",
      "278",
      "37 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "25",
@@ -1810,7 +1775,7 @@
      "bootstrap",
      "282",
      "40 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "26",
@@ -1821,7 +1786,7 @@
      "spatial",
      "282",
      "40 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "27",
@@ -1832,7 +1797,7 @@
      "bootstrap",
      "278",
      "41 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "28",
@@ -1843,7 +1808,7 @@
      "spatial",
      "278",
      "41 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "29",
@@ -1854,7 +1819,7 @@
      "bootstrap",
      "282",
      "41 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "30",
@@ -1865,7 +1830,7 @@
      "spatial",
      "282",
      "41 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "31",
@@ -1876,7 +1841,7 @@
      "bootstrap",
      "278",
      "41 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "32",
@@ -1887,7 +1852,7 @@
      "spatial",
      "278",
      "41 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "33",
@@ -1920,7 +1885,7 @@
      "bootstrap",
      "282",
      "43 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "36",
@@ -1942,7 +1907,7 @@
      "bootstrap",
      "278",
      "43 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "38",
@@ -1986,7 +1951,7 @@
      "bootstrap",
      "282",
      "43 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "42",
@@ -2008,7 +1973,7 @@
      "bootstrap",
      "278",
      "43 %",
-     "less than half explained"
+     "significantly less than half"
     ],
     [
      "44",
