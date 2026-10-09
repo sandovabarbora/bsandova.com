@@ -54,7 +54,7 @@ TEMPLATE = '''<!doctype html>
 <title>Running late · Barbora Šandová</title>
 <meta name="description" content="Pre-specified studies of where and how Prague's trams fall behind, from the stop passes of 2025: a tenth of the segments record {{S}} % of the delay, narrowly, the same ones in odd and even weeks; and the spacing between two trams of a line shows practically no amplification from stop to stop; and a connection planned three minutes apart is made {{m3}} times in a hundred.">
 <meta property="og:title" content="Running late">
-<meta property="og:description" content="Where and how Prague's trams fall behind, one pre-specified question at a time: where delay is recorded, why two trams of a line come at once, and whether you make your connection.">
+<meta property="og:description" content="Where and how Prague's trams fall behind, one pre-specified question at a time: where delay is recorded, how often two trams of a line come at once, and whether you make your connection.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://bsandova.com/texts/running-late">
 <meta property="og:image" content="https://bsandova.com/assets/og/running-late.jpg">
@@ -111,10 +111,10 @@ TEMPLATE = '''<!doctype html>
     </div>
   </li>
   <li>
-    <a class="still" href="bunching" aria-label="Part 2, Why do two 22s come at once?"><span class="shot" style="view-transition-name:ph-bunching;--bg:url(../assets/photo/bunching.jpg);--bg-s:url(../assets/photo/bunching-1200.jpg)"></span></a>
+    <a class="still" href="bunching" aria-label="Part 2, How often do two 22s come at once?"><span class="shot" style="view-transition-name:ph-bunching;--bg:url(../assets/photo/bunching.jpg);--bg-s:url(../assets/photo/bunching-1200.jpg)"></span></a>
     <div>
       <p class="n">Part 2 · bunching · {{pairs}} pairs of trams, 15 March – 8 September 2025</p>
-      <h2><a href="bunching">Why do two 22s come at once? Tram bunching in Prague, 2025</a></h2>
+      <h2><a href="bunching">How often do two 22s come at once? Tram bunching in Prague, 2025</a></h2>
       <p>The spacing between two trams of a line shows practically no amplification from stop to stop ({{g}} per stop, {{g_label}} by the registered rule, corrected in its version 2), and bunches build gradually towards the end of a line. The rare sudden closings concentrate on some platforms, as other rare one-stop events do, and partly by line. City buses show a small positive value ({{bg}}, {{bg_label}}), about the size of the spread among the tram estimates.</p>
     </div>
   </li>

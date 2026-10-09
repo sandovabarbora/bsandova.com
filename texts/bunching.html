@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Why do two 22s come at once? Tram bunching in Prague, 2025</title>
+<title>How often do two 22s come at once? Tram bunching in Prague, 2025</title>
 <meta name="description" content="A pre-specified analysis of 243 465 pairs of Prague trams in 2025: the spacing between two trams of a line drifts apart and together stop by stop with practically no amplification, bunches build gradually towards the end of a line, and the rare sudden closings concentrate on some platforms, and partly by line.">
-<meta property="og:title" content="Why do two 22s come at once? Tram bunching in Prague, 2025">
+<meta property="og:title" content="How often do two 22s come at once? Tram bunching in Prague, 2025">
 <meta property="og:description" content="Two trams of the same Prague line drift apart and together stop by stop with practically no amplification; bunches build slowly towards the end of the line. Part 2 of Running late.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://bsandova.com/texts/bunching">
@@ -33,7 +33,7 @@
 <article class="text">
 <header class="text-head">
   <p class="kicker">Research · Running late, part 2 · Prague trams and buses, spring and summer 2025</p>
-  <h1>Why do two 22s come at once? <em>Tram bunching in Prague, 2025</em></h1>
+  <h1>How often do two 22s come at once? <em>Tram bunching in Prague, 2025</em></h1>
   <p class="deck">Followed stop by stop, the spacing between two trams of the same line shows practically no amplification, inconclusive by the registered rule, and bunches build gradually towards the end of a line.</p>
   <dl class="facts">
     <div><dt>amplification per stop</dt><dd>−0.0012 <small>95 % confidence interval (CI) −0.0018 to −0.0006 · inconclusive (wholly below zero), practically zero</small></dd></div>
@@ -53,7 +53,7 @@
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>8 October 2026 · updated 8 October 2026 · <a href="../changelog/#bunching">version 2</a></dd></div>
+  <div><dt>published</dt><dd>8 October 2026 · updated 9 October 2026 · <a href="../changelog/#bunching">version 3</a></dd></div>
   <div><dt>work since</dt><dd>October 2026</dd></div>
 </dl>
 <details class="meta-more">
@@ -64,7 +64,7 @@
   <div><dt>registration</dt><dd>design committed at <code>2b78211</code> (tag <code>late-bunching-design</code>) on 8 October 2026, before any headway was computed; screening at <code>65789a6</code> (tag <code>late-bunching-screen</code>); estimation code frozen with tests at <code>83f91ec</code> (tag <code>late-bunching-v1</code>), with the change of the primary estimand logged before it; results at <code>8dc4eea</code> (tag <code>late-bunching-results</code>). Commit times are self-reported; the tags were added after publication and are not independent timestamps. Arrival times had been read before for <a href="weather-rails">Weather on the rails</a> and <a href="delay-origins">part 1</a>, never as the spacing between two trams. Described after the results, not registered: how bunches form, the deeper instruments, intervals for two variants, the volatility of the platforms, the busiest places, the pooling of swaps in the comparison with the shuffle, line 9 and the ratio without it, the autocorrelation of the changes, the power simulation for the stability test, and the checks on buses (<code>tools/bunch/describe.py</code>, <code>describe_bus.py</code>); added after publication, the null within route variants and the estimates by line (<code>review.py</code>). Changes after registration and after publication, each dated, are in <a href="../changelog/#bunching-changes">the change log</a>.</dd></div>
   <div><dt>data</dt><dd>Prague Integrated Transport stop-time history via Golemio, 15 March – 8 September 2025, as used in the author's master's thesis<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup>; stop positions from the PID timetable data<sup class="cite"><a href="#r3">3</a></sup>. The passes are not redistributed; the per-segment values are in <a href="../assets/bunch/segments.json">segments.json</a>, the estimates in <a href="../assets/bunch/results.json">results.json</a> and <a href="../assets/bunch/results-bus.json">results-bus.json</a>, the descriptions in <a href="../assets/bunch/describe.json">describe.json</a> and <a href="../assets/bunch/review.json">review.json</a>.</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/bunch">tools/bunch/</a>; rebuild: <code>uv run --with numpy --with pandas --with pyarrow --with scipy --with duckdb python tools/bunch/estimate.py</code></dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Why do two 22s come at once? Tram bunching in Prague, 2025</i>. bsandova.com/texts/bunching, version 2.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>How often do two 22s come at once? Tram bunching in Prague, 2025</i>. bsandova.com/texts/bunching, version 3.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text and figures CC BY 4.0</dd></div>
 </dl>
 </details>
