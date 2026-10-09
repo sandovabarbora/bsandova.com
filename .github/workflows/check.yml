@@ -10,3 +10,6 @@ jobs:
       - uses: actions/checkout@v4
       - run: python3 tools/site/check_standard.py   # the editorial gate the deploy runs, before merge
       - run: python3 tools/site/home.py --check
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -q pytest && python -m pytest -q surf/tests weather/tests ask/test_eval_guard.py   # the verifiers' tests and the eval guard
