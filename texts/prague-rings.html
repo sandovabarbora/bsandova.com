@@ -273,7 +273,7 @@
   const box = document.getElementById("pm"), tip = document.getElementById("pm-tip"), bar = document.getElementById("pm-bar");
   let P, M;
   try { [P, M] = await Promise.all(["precincts2025.json", "metro_lines.json"].map(f => fetch("../assets/praha/" + f).then(r => r.json()))); }
-  catch (e) { document.documentElement.classList.remove("js"); return; }
+  catch (e) { console.warn("prague-rings:", e); document.documentElement.classList.remove("js"); return; }
   const k = 1 / Math.cos(50.08 * Math.PI / 180), W = 900;
   let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
   P.forEach(p => p.r.forEach(r => r.forEach(([x, y]) => { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); })));
@@ -317,7 +317,7 @@
 </script>
 <script>
 (async () => {
-  let r; try { r = await (await fetch("../assets/praha/rings_robust.json")).json(); } catch (e) { return; }
+  let r; try { r = await (await fetch("../assets/praha/rings_robust.json")).json(); } catch (e) { console.warn("prague-rings:", e); return; }
   const names = {"1_unweighted": "unweighted", "3_without_redrawn": "without precincts redrawn after Dec 2025",
     "4_min_300_registered": "precincts with 300+ voters", "6_panel_code_4": "panel: wall panels only",
     "7_area_allocation": "census spread by area", "8_stated_and_populated": "education stated, 50+ residents",

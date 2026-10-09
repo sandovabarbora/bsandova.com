@@ -262,7 +262,7 @@
 (async () => {
   const tbody = document.querySelector("#dt tbody"), heads = [...document.querySelectorAll("#dt th")];
   let rows = [];
-  try { rows = (await (await fetch("../assets/praha/districts.json")).json()).districts; } catch (e) { return; }
+  try { rows = (await (await fetch("../assets/praha/districts.json")).json()).districts; } catch (e) { console.warn("prague-districts:", e); return; }
   rows.forEach(r => { Object.assign(r, r.shares); const w = r.lists_2022[0]; r.list = w ? w.list : ""; r.listSeats = w ? `${w.seats} of ${r.seats}` : ""; });
   const pct = v => Math.round(100 * v) + " %", num = v => v.toLocaleString("en").replace(/,/g, " ");
   let key = "per_head", dir = -1, size = "all";

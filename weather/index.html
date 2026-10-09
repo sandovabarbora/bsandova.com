@@ -143,7 +143,7 @@
   }
   document.getElementById('tabs').addEventListener('click', e => { if (e.target.dataset.s) { station = e.target.dataset.s; render(); } });
   render();
-})();
+})().catch(e => console.warn('weather:', e));
 </script>
 </body>
 </html>

@@ -320,7 +320,7 @@
   const order = ["SPOLU", "Piráti", "STAN", "Praha sobě", "ANO", "SPD", "Nezařazená"];
   const tbody = document.querySelector("#mt tbody"), heads = [...document.querySelectorAll("#mt th")];
   let rows = [];
-  try { rows = await (await fetch("../assets/zhmp/members2022.json")).json(); } catch (e) { return; }
+  try { rows = await (await fetch("../assets/zhmp/members2022.json")).json(); } catch (e) { console.warn("prague-council:", e); return; }
   const pct = v => v == null ? "—" : Math.round(100 * v) + " %";
   const short = n => n === "neurčeno" ? "unnamed replacement" : n.replace(/\s+(Mgr\.|Ing\.|JUDr\.|MUDr\.|RNDr\.|PhDr\.|doc\.|prof\.|Bc\.|MgA\.|Dr\.|arch\.|et|PhD\.|Ph\.D\.,?|CSc\.|MBA|MSc\.|M\.A\.|,)+/g, " ").trim();
   let key = "attendance", dir = 1, club = "all";
