@@ -112,3 +112,21 @@ def test_a_registered_run_writes_results_with_the_mde(synthetic_root):
     saved = json.loads((synthetic_root / "docs" / "research" / "procurement-bunching-results.json").read_text())
     assert saved["decision"]["D_new_a"]["label"] == out["decision"]["D_new_a"]["label"]
     assert len(saved["robustness"]) == len(out["robustness"]) == 21
+    assert saved["hlidac"]["skipped"] and saved["type_cross_check"]["hlidac"] == "skipped"
+    assert saved["type_cross_check"]["stems"] in {"passes", "fails", "not available"}
+
+
+def test_a_hlidac_classification_adds_two_type_rows_and_a_cross_check(synthetic_root):
+    df = pd.read_parquet(synthetic_root / "tools" / "data" / "procurement" / "contracts.parquet")
+    rng = np.random.default_rng(1)
+    sample = df.sample(30_000, random_state=1)
+    works = pd.array(np.where(rng.random(len(sample)) < 0.05, None, rng.random(len(sample)) < 0.3), dtype="boolean")
+    hl = synthetic_root / "tools" / "data" / "procurement" / "hlidac_types.parquet"
+    pd.DataFrame({"id": sample["id"].to_numpy(), "works": works}).to_parquet(hl, index=False)
+    try:
+        out = estimate.run(True, synthetic_root, synthetic_root / "missing.json")
+    finally:
+        hl.unlink()
+    assert len(out["robustness"]) == 23 and out["hlidac"]["classified_in_primary"] > 0
+    assert out["type_cross_check"]["hlidac"] in {"passes", "fails", "not available"}
+    assert not set(estimate.TYPE_ROWS["hlidac"]) & set(out["sensitivity"]["rows_that_flip"])

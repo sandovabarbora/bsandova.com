@@ -30,8 +30,10 @@ SECONDARY = ["D_new_b", "D_old_b", "D_new_a_supplies_services", "D_new_a_works",
 ROW_KEYS = ["D_new_a", "D_old_a", "D_new_b", "D_old_b", "D_new_a_supplies_services", "D_new_a_works",
             "D_new_b_supplies_services", "D_new_b_works"]
 START_ROWS = {"post from 3 April 2025": "at most", "post from 1 October 2025": "at least"}
-NOT_COUNTED = {*START_ROWS, "placebo date 1 January 2023 (pre only)", "type split: works by subject stems",
-               "type split: supplies and services by subject stems"}
+TYPE_ROWS = {"stems": ("type split: works by subject stems", "type split: supplies and services by subject stems"),
+             "hlidac": ("type split: works by Hlídač classification (sample)",
+                        "type split: supplies and services by Hlídač classification (sample)")}
+NOT_COUNTED = {*START_ROWS, "placebo date 1 January 2023 (pre only)", *TYPE_ROWS["stems"], *TYPE_ROWS["hlidac"]}
 
 
 def summarise(point: dict, ci: dict, keys: list[str]) -> dict:
@@ -67,6 +69,18 @@ def sensitivity(rows: dict, primary: dict) -> dict:
     return {"rows_that_flip": flips, "sensitive": len(flips) >= 3,
             "failed_rows": [n for n, r in rows.items() if "failed" in r], "start_rows": starts,
             "placebo_date_inside_margin": bool(placebo_ok)}
+
+
+def cross_check(rows: dict, works_row: str, other_row: str) -> str:
+    """§7.6: within works no response is expected at 3 M, within supplies and services none at 9 M; each passes if its
+    90 % interval lies inside ±0.15."""
+    def inside(row, key):
+        r = rows.get(row, {})
+        return "failed" not in r and key in r and -bu.MARGIN < r[key]["ci90"][0] and r[key]["ci90"][1] < bu.MARGIN
+    if any("failed" in rows.get(r, {"failed": 1}) for r in (works_row, other_row)):
+        return "not available"
+    ok = inside(works_row, "D_new_a_supplies_services") and inside(other_row, "D_new_a_works")
+    return "passes" if ok else "fails"
 
 
 def monthly_exact(df: pd.DataFrame) -> dict:
@@ -142,8 +156,22 @@ def run(quick: bool, root: Path = ROOT, power_path: Path = POWER) -> dict:
     pre = main_df[main_df["period"] == "pre"]
     rob("placebo date 1 January 2023 (pre only)", pre,
         period=np.where(pre["concluded"].str[:10] >= "2023-01-01", "post", "pre"))
-    rob("type split: works by subject stems", main_df[main_df["works"]])
-    rob("type split: supplies and services by subject stems", main_df[~main_df["works"]])
+    rob(TYPE_ROWS["stems"][0], main_df[main_df["works"]])
+    rob(TYPE_ROWS["stems"][1], main_df[~main_df["works"]])
+    out["type_cross_check"] = {"stems": cross_check(out["robustness"], *TYPE_ROWS["stems"])}
+    hl_path = root / "tools" / "data" / "procurement" / "hlidac_types.parquet"
+    if hl_path.exists():  # optional (§4.11): written by hlidac.py only when a token was present
+        hl = pd.read_parquet(hl_path).dropna(subset=["works"]).rename(columns={"works": "hl_works"})
+        typed = main_df.merge(hl, on="id")
+        hw = typed["hl_works"].astype(bool)
+        out["hlidac"] = {"classified_in_primary": int(len(typed)),
+                         "agreement_with_stems": float((hw == typed["works"]).mean()) if len(typed) else None}
+        rob(TYPE_ROWS["hlidac"][0], typed[hw])
+        rob(TYPE_ROWS["hlidac"][1], typed[~hw])
+        out["type_cross_check"]["hlidac"] = cross_check(out["robustness"], *TYPE_ROWS["hlidac"])
+    else:
+        out["hlidac"] = {"skipped": "no Hlídač státu classification (token absent or hlidac.py not run)"}
+        out["type_cross_check"]["hlidac"] = "skipped"
 
     out["sensitivity"] = sensitivity(out["robustness"], primary_ungated)
     save()
