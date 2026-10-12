@@ -37,7 +37,8 @@
     "ciziMena": 922,
     "navazanyZaznam": 9449,
     "schvalil": 27992,
-    "cisloSmlouvy": 77618
+    "cisloSmlouvy": 77618,
+    "evidencniCisloZakazky": 0
    },
    "hodnotaBezDph_unparsable": 0,
    "currency": {
@@ -102,12 +103,146 @@
     "published before concluded": 148,
     "over 365 days": 971
    },
+   "presence_by_period_all_values": {
+    "pre": {
+     "records": 91080,
+     "hodnotaBezDph": 63216,
+     "hodnotaVcetneDph only": 16328
+    },
+    "other": {
+     "records": 469,
+     "hodnotaBezDph": 132,
+     "hodnotaVcetneDph only": 48
+    },
+    "transition": {
+     "records": 3,
+     "hodnotaBezDph": 3,
+     "hodnotaVcetneDph only": 0
+    }
+   },
    "far_band_counts_hodnotaBezDph": {
-    "(120000, 240000]": 11841,
-    "(60000, 120000]": 18452,
-    "(240000, 450000]": 7221,
+    "(120000, 240000]": 11840,
+    "(60000, 120000]": 18447,
+    "(240000, 450000]": 7220,
     "(30000000, 45000000]": 151,
-    "(15000000, 22000000]": 228
+    "(15000000, 22000000]": 219
+   },
+   "far_band_presence_by_vat_value": {
+    "(120000, 240000]": {
+     "with VAT": 9088,
+     "also without VAT": 5635
+    },
+    "(60000, 120000]": {
+     "with VAT": 14326,
+     "also without VAT": 8964
+    },
+    "(240000, 450000]": {
+     "with VAT": 4885,
+     "also without VAT": 3226
+    },
+    "(30000000, 45000000]": {
+     "with VAT": 114,
+     "also without VAT": 86
+    },
+    "(15000000, 22000000]": {
+     "with VAT": 129,
+     "also without VAT": 103
+    }
+   },
+   "outside_blind_with_value": 51553,
+   "outside_blind_value_equals_vat_value": 4842,
+   "outside_blind_content_key_duplicates_removed": 313,
+   "stem_hits_all_records": {
+    "objednávk": 25723,
+    "objednávka": 22242,
+    "dotac": 5999,
+    "WORKS": 5175,
+    "rámcov": 2085,
+    "veřejnoprávní smlouv": 1652,
+    "nájem": 1344,
+    "nájm": 1060,
+    "prodej": 981,
+    "příspěvku": 950,
+    "ročn": 694,
+    "výpůjč": 620,
+    "o spolupráci": 557,
+    "darovac": 382,
+    "pacht": 322,
+    "budoucí": 318,
+    "služebnost": 266,
+    "věcného břemen": 221,
+    "poskytnutí podpory": 163,
+    "dodatk": 145,
+    "půjčk": 136,
+    "úvěr": 131,
+    "grant": 118,
+    "příspěvek": 103,
+    "směnn": 69,
+    "za rok": 54,
+    "finanční podpor": 47,
+    "memorand": 31,
+    "zápůjč": 26,
+    "měsíčn": 24,
+    "partnersk": 23,
+    "za měsíc": 22,
+    "paušál": 14,
+    "věcné břemen": 9,
+    "hodinov": 9,
+    "pracovní smlouv": 8
+   },
+   "stem_hits_outside_blind": {
+    "objednávk": 17708,
+    "objednávka": 14856,
+    "WORKS": 2694,
+    "dotac": 2492,
+    "příspěvku": 751,
+    "rámcov": 721,
+    "nájem": 721,
+    "veřejnoprávní smlouv": 522,
+    "prodej": 479,
+    "nájm": 476,
+    "ročn": 400,
+    "pacht": 246,
+    "darovac": 163,
+    "služebnost": 163,
+    "budoucí": 146,
+    "věcného břemen": 144,
+    "o spolupráci": 132,
+    "výpůjč": 77,
+    "dodatk": 64,
+    "příspěvek": 55,
+    "úvěr": 48,
+    "půjčk": 35,
+    "finanční podpor": 34,
+    "za rok": 28,
+    "směnn": 28,
+    "grant": 20,
+    "měsíčn": 10,
+    "za měsíc": 9,
+    "partnersk": 9,
+    "memorand": 6,
+    "paušál": 5,
+    "věcné břemen": 4,
+    "zápůjč": 4,
+    "hodinov": 3,
+    "poskytnutí podpory": 2
+   },
+   "flags_outside_blind": {
+    "call_off": 17708,
+    "works": 2694,
+    "not_purchase": 5954,
+    "framework": 721,
+    "periodic": 452
+   },
+   "linked_records": {
+    "navazanyZaznam": 9449,
+    "navazanyZaznam and stem dodatk": 72
+   },
+   "payer_flags": {
+    "subjekt/platce=None": 65866,
+    "some party prijemce=1": 36381,
+    "some party prijemce=0": 0,
+    "subjekt/platce=1": 25686
    },
    "element_paths": {
     "": 1,
@@ -168,7 +303,8 @@
     "ciziMena": 1125,
     "navazanyZaznam": 12176,
     "schvalil": 26732,
-    "cisloSmlouvy": 85585
+    "cisloSmlouvy": 85585,
+    "evidencniCisloZakazky": 167
    },
    "hodnotaBezDph_unparsable": 0,
    "currency": {
@@ -231,12 +367,150 @@
     "over 365 days": 1015,
     "92-365 days": 1320
    },
+   "presence_by_period_all_values": {
+    "post": {
+     "records": 98433,
+     "hodnotaBezDph": 68060,
+     "hodnotaVcetneDph only": 18147
+    },
+    "pre": {
+     "records": 852,
+     "hodnotaBezDph": 450,
+     "hodnotaVcetneDph only": 238
+    },
+    "transition": {
+     "records": 565,
+     "hodnotaBezDph": 314,
+     "hodnotaVcetneDph only": 143
+    },
+    "other": {
+     "records": 704,
+     "hodnotaBezDph": 341,
+     "hodnotaVcetneDph only": 134
+    }
+   },
    "far_band_counts_hodnotaBezDph": {
     "(120000, 240000]": 13117,
-    "(60000, 120000]": 20608,
-    "(240000, 450000]": 7906,
-    "(15000000, 22000000]": 277,
+    "(60000, 120000]": 20601,
+    "(240000, 450000]": 7899,
+    "(15000000, 22000000]": 274,
     "(30000000, 45000000]": 141
+   },
+   "far_band_presence_by_vat_value": {
+    "(60000, 120000]": {
+     "with VAT": 15961,
+     "also without VAT": 9995
+    },
+    "(120000, 240000]": {
+     "with VAT": 9872,
+     "also without VAT": 6172
+    },
+    "(240000, 450000]": {
+     "with VAT": 5357,
+     "also without VAT": 3399
+    },
+    "(15000000, 22000000]": {
+     "with VAT": 176,
+     "also without VAT": 143
+    },
+    "(30000000, 45000000]": {
+     "with VAT": 83,
+     "also without VAT": 57
+    }
+   },
+   "outside_blind_with_value": 56674,
+   "outside_blind_value_equals_vat_value": 3740,
+   "outside_blind_content_key_duplicates_removed": 391,
+   "stem_hits_all_records": {
+    "objednávk": 32411,
+    "objednávka": 28020,
+    "WORKS": 5514,
+    "dotac": 3494,
+    "rámcov": 2006,
+    "nájem": 1590,
+    "nájm": 1330,
+    "příspěvku": 1268,
+    "prodej": 1114,
+    "výpůjč": 714,
+    "o spolupráci": 656,
+    "veřejnoprávní smlouv": 653,
+    "darovac": 464,
+    "poskytnutí podpory": 341,
+    "ročn": 316,
+    "pacht": 305,
+    "budoucí": 298,
+    "služebnost": 256,
+    "věcného břemen": 224,
+    "úvěr": 215,
+    "půjčk": 151,
+    "dodatk": 121,
+    "grant": 95,
+    "příspěvek": 92,
+    "směnn": 80,
+    "za rok": 42,
+    "měsíčn": 37,
+    "finanční podpor": 37,
+    "za měsíc": 31,
+    "memorand": 28,
+    "věcné břemen": 23,
+    "partnersk": 23,
+    "paušál": 20,
+    "zápůjč": 20,
+    "pracovní smlouv": 10,
+    "hodinov": 6
+   },
+   "stem_hits_outside_blind": {
+    "objednávk": 22691,
+    "objednávka": 18975,
+    "WORKS": 2970,
+    "příspěvku": 967,
+    "dotac": 871,
+    "nájem": 796,
+    "rámcov": 780,
+    "nájm": 549,
+    "prodej": 453,
+    "výpůjč": 222,
+    "ročn": 183,
+    "veřejnoprávní smlouv": 178,
+    "pacht": 177,
+    "věcného břemen": 167,
+    "služebnost": 163,
+    "darovac": 161,
+    "budoucí": 133,
+    "poskytnutí podpory": 89,
+    "o spolupráci": 80,
+    "příspěvek": 69,
+    "úvěr": 57,
+    "dodatk": 44,
+    "půjčk": 38,
+    "směnn": 31,
+    "za rok": 30,
+    "měsíčn": 21,
+    "grant": 17,
+    "věcné břemen": 14,
+    "za měsíc": 12,
+    "zápůjč": 10,
+    "paušál": 9,
+    "partnersk": 5,
+    "memorand": 2,
+    "hodinov": 2
+   },
+   "flags_outside_blind": {
+    "call_off": 22691,
+    "not_purchase": 4691,
+    "works": 2970,
+    "periodic": 252,
+    "framework": 780
+   },
+   "linked_records": {
+    "navazanyZaznam": 12176,
+    "navazanyZaznam and stem dodatk": 78
+   },
+   "payer_flags": {
+    "subjekt/platce=None": 72399,
+    "some party prijemce=1": 44503,
+    "some party prijemce=0": 0,
+    "subjekt/platce=1": 28155
    },
    "element_paths": {
     "": 1,

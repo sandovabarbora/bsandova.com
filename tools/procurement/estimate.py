@@ -1,10 +1,10 @@
-"""The registered analysis (design §5–§8) on tools/data/procurement/contracts.parquet. Not run before registration.
+"""The registered analysis (design §5–§10) on tools/data/procurement/contracts.parquet. Not run before registration.
 
     OMP_NUM_THREADS=2 nice -n 20 uv run --with numpy==2.5.3 --with scipy==1.18.1 --with pandas==3.0.6 \
         --with pyarrow==26.0.0 python tools/procurement/estimate.py [--quick]
 
---quick uses 99 bootstrap draws for every row (a check run whose output is not published); the registered run
-uses 999 for the primary row and 199 for the robustness rows.
+--quick is a crash check: 99 draws for every row, nothing written, and the only output is "ok". The registered run
+uses 999 draws for the primary row and 199 for the others, and writes procurement-bunching-results.json.
 """
 from __future__ import annotations
 
@@ -22,7 +22,13 @@ import bunching as bu  # noqa: E402
 
 ROOT = HERE.parents[1]
 POWER = ROOT / "docs" / "research" / "procurement-bunching-power.json"
-MDE_UNDERPOWERED = 0.30  # §9: a hypothesis whose data-step MDE exceeds this is labelled underpowered in advance
+SECONDARY = ["D_new_b", "D_old_b", "D_new_a_supplies_services", "D_new_a_works", "D_old_a_supplies_services",
+             "D_old_a_works", "D_new_b_supplies_services", "D_new_b_works", "k_low_minus_high",
+             "controls_a_pre", "controls_a_post", "controls_b_pre", "controls_b_post"]
+ROW_KEYS = ["D_new_a", "D_old_a", "D_new_b", "D_old_b", "D_new_a_supplies_services", "D_new_a_works",
+            "D_new_b_supplies_services", "D_new_b_works"]
+NOT_SENSITIVITY = {"placebo date 1 January 2023 (pre only)", "type split: works by subject stems",
+                   "type split: supplies and services by subject stems"}
 
 
 def summarise(point: dict, ci: dict, keys: list[str]) -> dict:
@@ -30,63 +36,93 @@ def summarise(point: dict, ci: dict, keys: list[str]) -> dict:
             for k in keys}
 
 
+def arrays(df: pd.DataFrame):
+    return df["value"].to_numpy(float), df["authority"].fillna("?").to_numpy(), df["period"].to_numpy()
+
+
+def monthly_exact(df: pd.DataFrame) -> dict:
+    """§7.6, descriptive: by month of conclusion, the share of contracts in the range priced at exactly each limit
+    and at the control millions (pooled)."""
+    in_range = df[(df["value"] > bu.LO) & (df["value"] <= bu.HI)]
+    month = in_range["concluded"].str[:7]
+    out = {}
+    for name, v in {"2M": 2e6, "3M": 3e6, "6M": 6e6, "9M": 9e6}.items():
+        out[name] = (in_range["value"].sub(v).abs() < 0.5).groupby(month).mean().to_dict()
+    ctrl = np.isin(np.round(in_range["value"]), np.array(bu.CONTROLS, float)) & bu.exact_million(in_range["value"].to_numpy())
+    out["controls"] = pd.Series(ctrl, index=in_range.index).groupby(month).mean().to_dict()
+    return out
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--quick", action="store_true")
     a = ap.parse_args()
     draws_main, draws_rob = (99, 99) if a.quick else (999, 199)
-    df = pd.read_parquet(ROOT / "tools" / "data" / "procurement" / "contracts.parquet")
-    main_rows = df[df["value"].gt(0)]
-    v, auth, per = main_rows["value"].to_numpy(), main_rows["authority"].fillna("?").to_numpy(), main_rows["period"].to_numpy()
-    keys = ["D_new", "D_old", "D_new_supplies_services", "D_new_works", "D_old_supplies_services", "D_old_works",
-            "control_ratio", "placebo_controls", "controls_pooled_pre", "controls_pooled_post"]
     power = json.loads(POWER.read_text()) if POWER.exists() else {}
-    under = {h: power.get("data_step_mde", {}).get(h, 0.0) > MDE_UNDERPOWERED for h in ("D_new", "D_old")}
+    if "data_step_mde" not in power and not a.quick:
+        raise SystemExit("data_step_mde missing: run power.py <n_pre> <n_post> first (§9.3)")
+    mde = power.get("data_step_mde", {})
+    df = pd.read_parquet(ROOT / "tools" / "data" / "procurement" / "contracts.parquet")
+    df = df[df["value"].gt(0)]
+    main_df = df[df["period"].isin(["pre", "post"])]
+    v, auth, per = arrays(main_df)
 
     point, ci = bu.estimate(v, auth, per, draws=draws_main)
-    adjust = "ratio"
-    if ci["controls_pooled_pre"]["ci95"][0] <= 0:  # §6.2 fallback, decided before any D is read
-        adjust = "difference"
-        point, ci = bu.estimate(v, auth, per, draws=draws_main, adjust=adjust)
-    gate = abs(point["placebo_controls"]) > bu.MARGIN and not (
-        ci["placebo_controls"]["ci95"][0] <= 0 <= ci["placebo_controls"]["ci95"][1])
-    labels = {h: ("inconclusive" if gate and not under[h] else
-                  bu.label(ci[h]["ci95"], ci[h]["ci90"], underpowered=under[h])) for h in ("D_new", "D_old")}
-    out = {"adjust": adjust, "placebo_gate_failed": gate, "labels": labels, "primary": summarise(point, ci, keys),
-           "locations": {k: point[k] for k in point if k.startswith(("old_", "new_", "control_", "above_"))},
-           "robustness": {}}
+    adjust = point["adjust"]
+    gate = bu.gate_failed(point, ci)
+    labels = {}
+    for h in bu.PRIMARY:
+        lab, note = bu.label(ci[h]["ci95"], ci[h]["ci90"], underpowered=mde.get(h, 0.0) > bu.UNDERPOWERED_MDE,
+                             gate=gate)
+        labels[h] = {"label": lab, "note": note}
+    placebos = [k for k in point if k.startswith("placebo_")]
+    out = {"adjust": adjust, "gate_failed": gate, "labels": labels,
+           "primary": summarise(point, ci, list(bu.PRIMARY)), "secondary": summarise(point, ci, SECONDARY + placebos),
+           "locations": {k: point[k] for k in point if k.startswith(("a_", "b_", "r_", "m_above_"))},
+           "monthly_exact_share": monthly_exact(df), "robustness": {}}
 
-    def rob(name: str, values=v, authority=auth, period=per, **kw) -> None:
-        p, c = bu.estimate(values, authority, period, draws=draws_rob, **{"adjust": adjust, **kw})
-        out["robustness"][name] = summarise(p, c, ["D_new", "D_old", "placebo_controls"])
+    def rob(name: str, frame: pd.DataFrame = main_df, period=None, **kw) -> None:
+        vv, aa, pp = arrays(frame)
+        p, c = bu.estimate(vv, aa, pp if period is None else period, draws=draws_rob, **{"adjust": adjust, **kw})
+        out["robustness"][name] = summarise(p, c, ROW_KEYS)
 
     rob("window 2.5 % below", spec=bu.Spec(share_below=0.025))
     rob("window 10 % below", spec=bu.Spec(share_below=0.10))
     rob("polynomial degree 5", spec=bu.Spec(degree=5))
     rob("polynomial degree 9", spec=bu.Spec(degree=9))
-    rob("no control adjustment", adjust="none")
-    rob("additive control adjustment", adjust="difference")
-    rob("exact whole millions dropped", drop_exact_millions=True, adjust="difference")
+    rob("other adjustment of a", adjust="difference" if adjust == "ratio" else "ratio")
+    rob("neighbouring controls only", spec=bu.Spec(control_set="neighbours"))
     rob("VAT images excluded from the fit", spec=bu.Spec(exclude_vat_images=True))
-    late = (per == "pre") | (pd.to_datetime(main_rows["concluded"].str[:10]) >= "2025-10-01").to_numpy()
-    rob("post from 1 October 2025", v[late], auth[late], per[late])
-    no_covid = ~pd.to_datetime(main_rows["concluded"].str[:10]).dt.year.isin([2020, 2021]).to_numpy()
-    rob("pre 2022–2024 only", v[no_covid], auth[no_covid], per[no_covid])
-    counts = pd.Series(auth).value_counts()
-    small = ~np.isin(auth, counts.index[: max(1, len(counts) // 100)])
-    rob("largest 1 % of authorities dropped", v[small], auth[small], per[small])
-    vat_only = df[df["value"].isna() & df["value_vat"].gt(0)]
-    rob("with VAT-only values / 1.21 (R-VAT)", np.r_[v, vat_only["value_vat"].to_numpy() / 1.21],
-        np.r_[auth, vat_only["authority"].fillna("?").to_numpy()], np.r_[per, vat_only["period"].to_numpy()])
-    pre_only = main_rows[main_rows["period"] == "pre"]
-    fake = np.where(pd.to_datetime(pre_only["concluded"].str[:10]) >= "2023-01-01", "post", "pre")
-    rob("placebo date 1 January 2023 (pre period only)", pre_only["value"].to_numpy(),
-        pre_only["authority"].fillna("?").to_numpy(), fake)
-    for kind, flag in (("works", True), ("supplies_services", False)):
-        sub = main_rows["works"].to_numpy() == flag
-        rob(f"type split: {kind} by subject keywords (§4.5)", v[sub], auth[sub], per[sub])
+    vat_only = df[df["value"].isna() & df["value_vat"].gt(0) & df["period"].isin(["pre", "post"])].assign(
+        value=lambda x: x["value_vat"] / 1.21)
+    rob("R-VAT: VAT-only prices added, / 1.21", pd.concat([main_df, vat_only]))
+    rob("equal with- and without-VAT values dropped", main_df[~main_df["equal_values"]])
+    with_transition = df[df["period"].isin(["pre", "post", "transition"])].assign(
+        period=lambda x: x["period"].replace("transition", "post"))
+    rob("post from 3 April 2025", with_transition)
+    rob("post from 1 October 2025", main_df[(main_df["period"] == "pre") | (main_df["concluded"].str[:10] >= "2025-10-01")])
+    rob("pre 2022–2024 only", main_df[main_df["concluded"].str[:4].isin(["2022", "2023", "2024", "2025", "2026"])])
+    counts = main_df["authority"].value_counts()
+    rob("largest 1 % of authorities dropped", main_df[~main_df["authority"].isin(counts.index[: max(1, len(counts) // 100)])])
+    rob("linked records dropped", main_df[~main_df["linked"]])
+    rob("call-offs (objednávka) dropped", main_df[~main_df["call_off"]])
+    rob("frameworks and periodic prices dropped", main_df[~main_df["framework"] & ~main_df["periodic"]])
+    rob("authority flagged as payer only", main_df[main_df["payer_flag"]])
+    pre = main_df[main_df["period"] == "pre"]
+    rob("placebo date 1 January 2023 (pre only)", pre,
+        period=np.where(pre["concluded"].str[:10] >= "2023-01-01", "post", "pre"))
+    rob("type split: works by subject stems", main_df[main_df["works"]])
+    rob("type split: supplies and services by subject stems", main_df[~main_df["works"]])
+
+    lo = ci["D_new_a"]["ci95"][0]
+    flips = [n for n, r in out["robustness"].items() if n not in NOT_SENSITIVITY and (
+        np.sign(r["D_new_a"]["estimate"]) != np.sign(point["D_new_a"]) or (lo > 0) != (r["D_new_a"]["ci95"][0] > 0))]
+    out["sensitivity"] = {"rows_that_flip": flips, "sensitive": len(flips) >= 3}
+    if a.quick:
+        print("ok")
+        return
     (ROOT / "docs" / "research" / "procurement-bunching-results.json").write_text(json.dumps(out, indent=1))
-    print(json.dumps({"labels": labels, "adjust": adjust, "placebo_gate_failed": gate}, indent=1))
+    print(json.dumps({"labels": labels, "adjust": adjust, "gate_failed": gate, "sensitive": out["sensitivity"]["sensitive"]}))
 
 
 if __name__ == "__main__":
