@@ -95,19 +95,57 @@ def test_bootstrap_label_and_gate_on_a_clear_move():
     assert bu.label(ci["D_new_a"]["ci95"], ci["D_new_a"]["ci90"])[0] == "supported"
 
 
-def test_gate_rules():
-    names = [f"placebo_a_control_{c // 1_000_000}M" for c in bu.CONTROLS]
-    point = {k: 0.0 for k in names} | {"placebo_a_gate_mean": 0.0}
-    ci = {k: {"ci90": (-0.1, 0.1)} for k in names} | {"placebo_a_gate_mean": {"ci90": (-0.05, 0.05)}}
-    assert not bu.gate_failed(point, ci) and not bu.gate_failed(point, ci, strict=True)
-    wide = ci | {"placebo_a_control_8M": {"ci90": (-0.2, 0.1)}}  # one wide control: the strict rule fails
-    assert bu.gate_failed(point, wide, strict=True) and not bu.gate_failed(point, wide)
-    pooled_wide = ci | {"placebo_a_gate_mean": {"ci90": (-0.2, 0.1)}}  # absence of evidence is not a pass
-    assert bu.gate_failed(point, pooled_wide)
-    off = ci | {"placebo_a_control_4M": {"ci90": (0.2, 0.4)}}  # one control wholly outside the margin
-    assert bu.gate_failed(point | {"placebo_a_control_4M": 0.3}, off)
-    far = ci | {"placebo_a_control_12M": {"ci90": (-0.5, 0.5)}}  # not a gate control
-    assert not bu.gate_failed(point, far, strict=True)
+def _gate_inputs(bias_ci=(-0.05, 0.05), k_ci=(-0.1, 0.1), adjust="ratio"):
+    point = {"adjust": adjust}
+    ci = {"placebo_a_mean": {"ci90": bias_ci}, "k_low_minus_high": {"ci90": k_ci}}
+    return point, ci
+
+
+def test_gate_fails_only_on_a_bias_or_a_k_drift_wholly_outside_their_bounds():
+    assert bu.gate_failed(*_gate_inputs()) == (False, [])
+    assert bu.gate_failed(*_gate_inputs(bias_ci=(-0.3, 0.1)))[0] is False  # wide, not wholly outside
+    assert bu.gate_failed(*_gate_inputs(bias_ci=(0.16, 0.4))) == (True, ["placebo bias"])
+    assert bu.gate_failed(*_gate_inputs(k_ci=(0.55, 0.9))) == (True, ["k unstable by magnitude"])
+    assert bu.gate_failed(*_gate_inputs(k_ci=(0.55, 0.9), adjust="difference"))[0] is False
+
+
+def test_calibration_subtracts_the_placebo_bias_and_inflates_the_se():
+    point = {"D_new_a": 0.30, "D_old_a": 0.20, "placebo_a_mean": 0.05, "placebo_a_sd": 0.10}
+    ci = {"D_new_a": {"se": 0.04}, "D_old_a": {"se": 0.04}} | {k: {"se": 0.06} for k in bu.PLACEBO_KEYS}
+    new, old = bu.calibrate(point, ci, "D_new_a"), bu.calibrate(point, ci, "D_old_a")
+    assert new["estimate"] == pytest.approx(0.25) and old["estimate"] == pytest.approx(0.25)
+    assert new["se"] == pytest.approx((0.04 ** 2 + 0.10 ** 2 - 0.06 ** 2) ** 0.5)
+    quiet = ci | {k: {"se": 0.2} for k in bu.PLACEBO_KEYS}  # placebo spread within its own noise: no inflation
+    assert bu.calibrate(point, quiet, "D_new_a")["se"] == pytest.approx(0.04)
+
+
+def test_the_failure_cap_covers_every_label_key_at_one_percent():
+    point = {k: 0.0 for k in bu.label_keys("ratio")} | {"adjust": "ratio"}
+    reps = [dict(point) for _ in range(100)]
+    for k in bu.label_keys("ratio"):
+        trial = [dict(r) for r in reps]
+        trial[0][k] = float("nan")  # 1 of 100: at the cap, allowed
+        assert bu.summarise_draws(point, trial, bu.label_keys("ratio"))[k]["failed_draws"] == 1
+        trial[1][k] = float("nan")  # 2 of 100: over the cap
+        with pytest.raises(RuntimeError):
+            bu.summarise_draws(point, trial, bu.label_keys("ratio"))
+
+
+def test_non_convergence_and_a_missing_authority_fail_loudly():
+    X = bu.design_matrix(7)
+    with pytest.raises(RuntimeError):
+        bu.poisson_fit(np.arange(bu.N_BINS, dtype=float), X, iters=1)
+    v, a, p = draw(World(n_pre=20_000, n_post=5_000), 3)
+    a = a.astype(object)
+    a[0] = None
+    with pytest.raises(ValueError):
+        bu.estimate(v, a, p, draws=0)
+
+
+def test_rounding_that_drifts_by_magnitude_moves_k_low_minus_high():
+    flat = point(World(**BIG))["k_low_minus_high"]
+    drift = point(World(**BIG, round_1m={"pre": 0.1, "post": 0.1}, round_1m_drift={"pre": 0.0, "post": 1.0}))
+    assert abs(flat) < 0.2 and drift["k_low_minus_high"] < -0.5
 
 
 def test_labels_follow_the_rule_in_its_literal_order():

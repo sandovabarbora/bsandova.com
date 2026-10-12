@@ -27,7 +27,6 @@ CONTROLS = (4_000_000, 5_000_000, 7_000_000, 8_000_000, 10_000_000, 12_000_000, 
 # Proximity-weighted controls (robustness row and the validity gate, §7.1): the nearest usable controls.
 NEIGHBOURS = {"new_supplies_services": (4_000_000, 5_000_000), "old_supplies_services": (4_000_000, 5_000_000),
               "new_works": (8_000_000, 10_000_000), "old_works": (5_000_000, 7_000_000)}
-GATE_CONTROLS = (4_000_000, 5_000_000, 8_000_000, 10_000_000)
 LOW_CONTROLS, HIGH_CONTROLS = (4_000_000, 5_000_000), (10_000_000, 12_000_000, 13_000_000)
 EU_CENTRAL = (3_568_000, 3_653_000, 3_494_000, 3_491_000)
 EU_SUBCENTRAL = (5_494_000, 5_610_000, 5_401_000, 5_386_000)
@@ -39,6 +38,14 @@ MARGIN = 0.15
 UNDERPOWERED_MDE = 0.25  # = MARGIN / 1.645 × 2.80, rounded down: above it "not supported" is out of reach (§8.1)
 MAX_FAILED_SHARE = 0.01  # bootstrap draws with an undefined statistic; above this the run stops (§8.4)
 PRIMARY = ("D_new_a", "D_old_a")
+K_STABILITY = 0.5  # §7.1: gate fails if the 90 % CI of k_low − k_high lies wholly outside ±0.5
+PLACEBO_KEYS = tuple(f"placebo_a_control_{c // 1_000_000}M" for c in CONTROLS)
+Z95, Z90 = 1.959964, 1.644854
+
+
+def label_keys(adjust: str) -> tuple:
+    """Every bootstrap statistic that enters a label or the gate; the failure cap applies to all of them."""
+    return (*PRIMARY, "placebo_a_mean", *PLACEBO_KEYS, *(("k_low_minus_high",) if adjust == "ratio" else ()))
 
 
 def exact_million(values: np.ndarray) -> np.ndarray:
@@ -115,8 +122,8 @@ def poisson_fit(y: np.ndarray, X: np.ndarray, iters: int = 100) -> np.ndarray:
         step = np.linalg.lstsq(X * np.sqrt(mu)[:, None], (y - mu) / np.sqrt(mu), rcond=None)[0]
         beta += step
         if np.max(np.abs(step)) < 1e-9:
-            break
-    return beta
+            return beta
+    raise RuntimeError("Poisson counterfactual did not converge")
 
 
 def excess(open_counts: np.ndarray, exact_counts: np.ndarray, spec: Spec) -> dict[str, float]:
@@ -174,8 +181,9 @@ def contrasts(pre: dict, post: dict, spec: Spec, adjust: str) -> dict[str, float
             name = f"control_{c // 1_000_000}M"
             exp_c, _ = adjusted(pre, post, name, tuple(o for o in CONTROLS if o != c), what, adjust)
             out[f"placebo_{what}_{name}"] = post[f"{what}_{name}"] - exp_c
-        out[f"placebo_{what}_gate_mean"] = float(np.mean([out[f"placebo_{what}_control_{c // 1_000_000}M"]
-                                                          for c in GATE_CONTROLS]))
+        # §7.1: mean and spread of the seven leave-one-out placebos, the bias and noise of the adjustment
+        pl = [out[f"placebo_{what}_control_{c // 1_000_000}M"] for c in CONTROLS]
+        out[f"placebo_{what}_mean"], out[f"placebo_{what}_sd"] = float(np.mean(pl)), float(np.std(pl, ddof=1))
     for what in ("a", "b"):
         out[f"controls_{what}_pre"], out[f"controls_{what}_post"] = pooled(pre, CONTROLS, what), pooled(post, CONTROLS, what)
     k_low = pooled(post, LOW_CONTROLS, "a") / pooled(pre, LOW_CONTROLS, "a") if pooled(pre, LOW_CONTROLS, "a") > 0 else float("nan")
@@ -211,7 +219,9 @@ def estimate(values, authority, period, spec: Spec | None = None, draws: int = 9
     """Point estimates and a cluster bootstrap by contracting authority (drawn with all its contracts in both
     periods). adjust=None applies the full-sample rule of choose_adjust; the choice is fixed for every draw."""
     spec = spec or Spec()
-    values, authority, period = np.asarray(values, float), np.asarray(authority), np.asarray(period)
+    values, authority, period = np.asarray(values, float), np.asarray(authority, object), np.asarray(period)
+    if any(x is None or (isinstance(x, float) and math.isnan(x)) or str(x).strip() in ("", "?") for x in authority):
+        raise ValueError("a contract has no publishing authority (IČO); it cannot be clustered")
     adjust = adjust or choose_adjust(values, period)
     ids, mats = matrices(values, authority, period)
 
@@ -230,33 +240,61 @@ def estimate(values, authority, period, spec: Spec | None = None, draws: int = 9
     rng = np.random.default_rng(seed)
     reps = [run(np.bincount(rng.integers(0, len(ids), len(ids)), minlength=len(ids)).astype(float))
             for _ in range(draws)]
+    return point, summarise_draws(point, reps, label_keys(adjust)) if draws else {}
+
+
+def summarise_draws(point: dict, reps: list[dict], capped: tuple) -> dict:
+    """Percentile intervals over defined draws; stops if more than MAX_FAILED_SHARE of the draws are undefined for
+    any statistic that enters a label or the gate."""
     ci = {}
-    if draws:
-        for k in point:
-            if k == "adjust":
-                continue
-            arr = np.array([r[k] for r in reps], float)
-            failed = int(np.isnan(arr).sum())
-            if k in PRIMARY and failed > MAX_FAILED_SHARE * draws:
-                raise RuntimeError(f"{k}: {failed} of {draws} bootstrap draws undefined")
-            ci[k] = {"ci95": tuple(np.nanpercentile(arr, [2.5, 97.5])), "ci90": tuple(np.nanpercentile(arr, [5, 95])),
-                     "se": float(np.nanstd(arr, ddof=1)), "failed_draws": failed}
-    return point, ci
+    for k in point:
+        if k == "adjust":
+            continue
+        arr = np.array([r[k] for r in reps], float)
+        failed = int(np.isnan(arr).sum())
+        if k in capped and failed > MAX_FAILED_SHARE * len(reps):
+            raise RuntimeError(f"{k}: {failed} of {len(reps)} bootstrap draws undefined")
+        ci[k] = {"ci95": tuple(np.nanpercentile(arr, [2.5, 97.5])), "ci90": tuple(np.nanpercentile(arr, [5, 95])),
+                 "se": float(np.nanstd(arr, ddof=1)), "failed_draws": failed}
+    return ci
 
 
-def gate_failed(point: dict, ci: dict, margin: float = MARGIN, strict: bool = False) -> bool:
-    """§7.1. Adopted rule: the mean placebo over the four gate controls must have its 90 % interval inside ±margin
-    (absence of evidence is not a pass), and each gate control's own placebo must have its point estimate inside
-    ±margin and its 90 % interval not wholly outside it. strict=True is the round-1 reviewer's rule (every gate
-    control's 90 % interval inside ±margin), kept for the power comparison of §9."""
-    def inside(k):
-        lo, hi = ci[k]["ci90"]
-        return -margin < lo and hi < margin
-    names = [f"placebo_a_control_{c // 1_000_000}M" for c in GATE_CONTROLS]
-    if strict:
-        return not all(inside(k) for k in names)
-    each = all(abs(point[k]) < margin and ci[k]["ci90"][0] < margin and ci[k]["ci90"][1] > -margin for k in names)
-    return not (inside("placebo_a_gate_mean") and each)
+def calibrate(point: dict, ci: dict, key: str) -> dict:
+    """§6.2: D corrected by the mean leave-one-out placebo, with its standard error inflated by the placebos'
+    spread beyond their own sampling noise: se² + max(0, s_placebo² − mean(se_placebo²)). D_old has the opposite
+    sign convention to the placebos, so the bias is added back."""
+    sign = 1.0 if key.startswith("D_new") else -1.0
+    est = point[key] - sign * point["placebo_a_mean"]
+    excess_var = max(0.0, point["placebo_a_sd"] ** 2 - float(np.mean([ci[k]["se"] ** 2 for k in PLACEBO_KEYS])))
+    se = math.sqrt(ci[key]["se"] ** 2 + excess_var)
+    return {"estimate": est, "se": se, "ci95": (est - Z95 * se, est + Z95 * se), "ci90": (est - Z90 * se, est + Z90 * se),
+            "placebo_bias": point["placebo_a_mean"], "placebo_excess_var": excess_var}
+
+
+def gate_failed(point: dict, ci: dict, margin: float = MARGIN) -> tuple[bool, list[str]]:
+    """§7.1, registered gate: fails if (i) the mean placebo's 90 % interval lies wholly outside ±margin (a bias of the
+    round-number adjustment larger than the margin), or (ii) with the ratio adjustment, the 90 % interval of
+    k_low − k_high lies wholly outside ±K_STABILITY (the adjustment differs by magnitude). Returns (failed, reasons)."""
+    reasons = []
+    lo, hi = ci["placebo_a_mean"]["ci90"]
+    if lo > margin or hi < -margin:
+        reasons.append("placebo bias")
+    if point.get("adjust") == "ratio":
+        klo, khi = ci["k_low_minus_high"]["ci90"]
+        if klo > K_STABILITY or khi < -K_STABILITY:
+            reasons.append("k unstable by magnitude")
+    return bool(reasons), reasons
+
+
+def decide(point: dict, ci: dict, mde: dict | None = None) -> dict:
+    """The labels of §8.1 for H1 and H2 on the calibrated D, with the gate. mde: data-step MDE per hypothesis."""
+    gate, reasons = gate_failed(point, ci)
+    out = {"gate_failed": gate, "gate_reasons": reasons}
+    for h in PRIMARY:
+        cal = calibrate(point, ci, h)
+        lab, note = label(cal["ci95"], cal["ci90"], underpowered=(mde or {}).get(h, 0.0) > UNDERPOWERED_MDE, gate=gate)
+        out[h] = {"label": lab, "note": note, **cal}
+    return out
 
 
 def label(ci95, ci90, underpowered: bool = False, gate: bool = False, margin: float = MARGIN) -> tuple[str, str]:

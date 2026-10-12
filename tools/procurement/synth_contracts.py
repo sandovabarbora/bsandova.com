@@ -17,6 +17,8 @@ class World:
     tilt_sd: float = 0.0  # authority-specific value level: prices × exp(N(0, tilt_sd)) per authority
     round_100k: float = 0.15  # share rounded up to the next 100 000
     round_1m: dict = field(default_factory=lambda: {"pre": 0.02, "post": 0.02})  # share rounded to a whole million
+    # rounding that drifts by magnitude: the probability is multiplied by (price / 3 M) ** drift[period]
+    round_1m_drift: dict = field(default_factory=lambda: {"pre": 0.0, "post": 0.0})
     habit_shape: float | None = None  # gamma shape of an authority's round-million habit; None = same for all
     move: dict = field(default_factory=lambda: {"pre": 0.0, "post": 0.0})  # share moved from just above a limit
     move_from: float = 0.05  # moved contracts come from (T, (1 + move_from) T]
@@ -46,7 +48,8 @@ def draw(world: World, seed: int = 1):
         # draw on a wider support, then tilt, so the tilted prices still cover the range
         v = pareto(rng, n, world.alpha, LO / 3, HI * 3) * tilt[a]
         v = np.where(rng.random(n) < world.round_100k, np.ceil(v / 100_000) * 100_000, v)
-        m = rng.random(n) < np.clip(world.round_1m[p] * habit[a], 0, 1)
+        tilt_m = (np.maximum(v, 1.0) / 3_000_000) ** world.round_1m_drift[p]
+        m = rng.random(n) < np.clip(world.round_1m[p] * habit[a] * tilt_m, 0, 1)
         v = np.where(m, np.maximum(np.round(v / 1_000_000), 1) * 1_000_000, v)
         for t in (OLD if p == "pre" else NEW).values():
             near = (v > t) & (v <= (1 + world.move_from) * t) & (rng.random(n) < world.relevant_share)
