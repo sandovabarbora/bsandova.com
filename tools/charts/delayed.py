@@ -138,10 +138,10 @@ for p in panels:
         p["y"]["tickfmt"]["pre"] = NB * pad
 
 charts = {"five-days": {
-    "alt": "Five stacked line charts of surface transit delay over 24 hours for the five days on the record, with the chorus the player plays shaded: where the smoothed delay exceeds 68 percent of the day's maximum, after short runs and night windows are dropped.",
+    "alt": "Five stacked line charts of surface transit delay over 24 hours for the five days on the record, with the chorus of the first version (engine v1) shaded: where the smoothed delay exceeds 68 percent of the day's maximum, after short runs and night windows are dropped.",
     "layout": "rows",
     "legend": [{"label": "surface delay, event-weighted (bus, tram, trolleybus)", "c": "ink"},
-               {"label": "chorus, as the player plays it", "c": HELD, "shape": "box", "o": 0.35},
+               {"label": "chorus, as engine v1 plays it", "c": HELD, "shape": "box", "o": 0.35},
                {"label": "68 % of the day's maximum smoothed delay", "c": "grey", "dash": "dot"}],
     "panels": panels,
     "table": {"cols": ["day", "date", "stop events", "mean surface delay", "chorus threshold", "chorus"], "rows": rows},
