@@ -1,6 +1,6 @@
 # Just under the limit: Czech public contracts and the small-scale procurement threshold — research design
 
-**Status: draft analysis plan, revised 12 October 2026 after an independent round-1 review (§16). No contract
+**Status: draft analysis plan, revised 12 October 2026 after two independent review rounds (see the end of the file). No contract
 value in the analysis range has been read, counted or plotted.** Registration follows the workflow of §14. The design
 and its code are committed on `feature/PROC-1_procurement-bunching`. The study is described as pre-registered only if
 Bára pushes the branch and a signed tag `procurement-bunching-design` to the public remote before the data step
@@ -22,6 +22,7 @@ the session's scratchpad) from dated news articles, and its facts were treated a
 | E3 | `data.smlouvy.gov.cz` index of dumps | Whole index (file names, SHA-1, sizes, generation times) | None |
 | E4 | Daily dumps `dump_2017_01_01.xml` (25 records), `dump_2023_01_01.xml` (empty) and `dump_2024_01_01.xml` (145 records) | Element paths and their counts only (a scratchpad script equivalent to the path pass of `structure.py`); no text value printed | None |
 | E5 | Monthly dumps `dump_2024_05.xml` (91 552 records) and `dump_2025_10.xml` (100 554 records), two passes of `tools/procurement/structure.py` (the second after the review) | Element paths, field presence, currencies, year concluded, publication lag, distinct publishers, presence of each price field by design period over all values, subject-stem hits over all records. Every count that conditions on value uses only records whose price without VAT and whose VAT-inclusive price / 1.21 both lie outside BLIND = 0.45–14 million Kč: counts in five far bands, presence of the price without VAT by band of the VAT-inclusive price, equal with- and without-VAT values, content-key duplicates, stem and flag hits. Output: `docs/research/procurement-bunching-structure.json` | No count, share or statistic conditioned on a value inside BLIND |
+| E5′ | The same two dumps: stems | The stem lists of `rules.py` were changed after the first structure pass (`dodatek` → `dodatk`; frameworks, call-offs and periodic prices added) and before the second, so the stems were not frozen before their hit counts were seen. The hit counts are over all records or outside BLIND only | None about the analysis range |
 | E6 | Synthetic data | Tests, power simulations and two smoke runs of `estimate.py` | None |
 
 Not seen: any value, count, share or plot of contracts priced between 0.45 and 14 million Kč; any contract subject
@@ -158,10 +159,15 @@ robustness row. `subjekt/platce` (1 = the publisher pays) is filled on 28 % of r
 `prijemce = 0`. Dumps are regenerated whenever a contract is modified or withdrawn, for any past period, and a
 withdrawn contract disappears from every dump.
 
-**Terms.** The register's open-data page [D1] declares the metadata open data and warns that they contain personal
-data under the GDPR: the recipient becomes a controller and must delete data that are later withdrawn. The study keeps
-the dumps local and outside the repository, publishes only aggregates (bin counts and estimates), and re-downloads
-nothing after the freeze.
+**Terms and personal data.** The register's open-data page [D1] declares the metadata open data and warns that they
+contain personal data under the GDPR: the recipient becomes a controller and must delete data that are later
+withdrawn. The legal basis is Art. 6(1)(f) GDPR (legitimate interest in research on public spending, on data the
+state publishes for that purpose), with the safeguards of Art. 89(1): data minimisation and aggregate publication.
+The rules are: the raw dumps stay local and outside the repository; `contracts.parquet` keeps only the record id,
+the publishing authority's IČO (a public body), the conclusion date, the prices and the screening flags, and never a
+party's name or IČO or the subject text; contracts with natural persons are not excluded (that would select on the
+counterparty, and the parquet holds nothing about them); only aggregates (bin counts and estimates) are published;
+after the results commit the raw dumps are deleted, and the manifest's hashes and the minimised parquet are kept.
 
 ### 3.2 Value definition and the measurement mismatch
 
@@ -187,7 +193,7 @@ payers or one number typed twice, which is then the price without VAT for a non-
 robustness row. A VAT-inclusive price typed as without VAT puts a contract at 1.21 times its value, so the limits'
 "VAT images" (2.42, 3.63, 7.26 and 10.89 million) are excluded from the fit in a robustness row, and 11 million is
 not a control. Before estimating, the data step reports the presence of the price without VAT by period over all
-values (§4.8); a difference of more than 5 percentage points between periods is reported in the article beside the
+values (§4.9); a difference of more than 5 percentage points between periods is reported in the article beside the
 results.
 
 **What it does to the estimand.** The estimands are mass in the distribution of **recorded contract prices without
@@ -223,9 +229,12 @@ Fixed now; `prepare.py` reports the count after each step in `docs/research/proc
    The 3 April and 1 October starts are robustness rows with the reading rules of §10. Years before 2020 are left out
    because the sub-central EU thresholds of 2016–2019 (5.706 and 5.944 million) lie inside the 6 million window.
 2. **Versions.** Records with `platnyZaznam = 1`; for each `idSmlouvy`, the highest `idVerze`.
-3. **Content-key duplicates.** Among records with a price without VAT, one record per (sorted IČO of the publisher
-   and all parties, conclusion date, `cisloSmlouvy`, price without VAT), keeping the latest. The count removed is
-   reported (in the two months read, outside BLIND, 313 and 391 within a single dump, 0.6–0.7 %).
+3. **Content-key duplicates.** Among records with a price without VAT **and a non-empty `cisloSmlouvy`**, all but
+   the latest record per (sorted IČO of the publisher and all parties, conclusion date, `cisloSmlouvy`, price without
+   VAT) are flagged and left out of the primary analysis; without a contract number, two genuine contracts can share
+   the rest of the key, so nothing is flagged. The flagged count is reported separately for prices at an exact whole
+   million and for other prices, and a robustness row keeps them (in the two months read, outside BLIND and before the
+   number condition, 313 and 391 within a single dump, 0.6–0.7 %).
 4. **Price.** CZK (no `ciziMena`), no `cenaNeuvedena`, price without VAT > 0.
 5. **Not a purchase.** Records whose subject contains a stem of `NOT_PURCHASE` in `rules.py` (grants and subsidies,
    gifts, leases and loans, easements, future and cooperation agreements, sales, exchanges, public-law contracts,
@@ -238,11 +247,14 @@ Fixed now; `prepare.py` reports the count after each step in `docs/research/proc
    Orders are kept because a small purchase is often awarded by an order; a framework's or a periodic price is not the
    price of one award, so they get their own row.
 7. **Range.** Prices in (500 000, 13 500 000] Kč.
-8. **Presence check.** Before `estimate.py`, the share of records with a price without VAT and with a VAT-inclusive
+8. **Publishing authority.** Records without a publisher IČO are dropped and counted; `bunching.estimate` stops
+   with an error if any reaches it, instead of pooling them into one cluster.
+9. **Presence check.** Before `estimate.py`, the share of records with a price without VAT and with a VAT-inclusive
    price only, by period, over all values.
-9. **Type (secondary only).** A works flag from the `WORKS` stems of `rules.py`. Before the type split is read, 300
-   records drawn at random from prices outside BLIND are labelled by hand (supplies, services, works, not a purchase)
-   and the flag's accuracy is reported.
+10. **Hand-labelled check of the stems (secondary).** Before any type split or flag row is read, 300 records drawn at
+   random from prices outside BLIND are labelled by hand (supplies, services, works, not a purchase, call-off,
+   framework). The report gives the accuracy of the `WORKS` flag and the precision of the `call_off`, `framework` and
+   `not_purchase` stems.
 
 The primary analysis **pools all contract types**. Each limit binds one type, so the other type dilutes the
 estimate by its share at that location; the dilution biases towards zero and creates no excess of its own (§9.2).
@@ -289,7 +301,7 @@ With E(L) = Σ ĉ over the band (0.95 L, L], the expected number of contracts in
 - **b(L), excess strictly below L** = Σ over the band of (open count − ĉ) / E(L), contracts at exactly L excluded.
 
 a + b is the total excess of the band. b_inner and b_outer, the same over (0.975 L, L) and (0.95 L, 0.975 L], describe
-its shape (§7.4).
+its shape (§7.3).
 
 **H1 is carried by a.** § 27 makes a price equal to the limit legal, and for a direct award the price in the
 contract is the legal value, so an authority or a bidder who wants the largest contract that stays small-scale can
@@ -320,18 +332,28 @@ residual below 0.15 with the ratio and above 0.2 with the additive form.
 millions only: the ratio is used if at least 200 contracts in the pre period and 50 in the post period sit at exactly a
 control million, the additive form otherwise; the choice is recorded and applied to every bootstrap draw. A draw in
 which k is undefined (no exact-control contract in the pre period of that draw) is counted as failed; intervals use
-the remaining draws (`nanpercentile`), and if more than 1 % of draws fail for D_new,a or D_old,a the run stops with an
-error instead of producing a label.
+the remaining draws (`nanpercentile`), and if more than 1 % of draws fail for any statistic that enters a label or the gate (D_new,a, D_old,a, the seven
+placebos, their mean and, with the ratio, k_low − k_high) the run stops with an error instead of producing a label.
+
+**Calibration by the placebos.** Each control C in turn is treated as a "new limit", with k from the other six:
+placebo_C = a(C, post) − k₋C·a(C, pre). Their mean P̄ is the bias of the adjustment at a round million with no legal
+meaning, and their spread s_P beyond their own sampling noise is the error the adjustment adds at a single location.
+The labelled statistics are calibrated: D*_new,a = D_new,a − P̄ and D*_old,a = D_old,a + P̄ (the opposite sign
+convention), with standard error se* = √(se² + max(0, s_P² − mean of the seven placebos' bootstrap se²)), where se is
+D's own bootstrap standard error; the 95 % and 90 % intervals are D* ± 1.960 se* and ± 1.645 se*. With seven
+placebos the spread is estimated on six degrees of freedom, so it is a rough correction; it is the one the lead
+reviewer recommended (round 2).
 
 **Controls.** The primary k pools all seven controls, weighted by their expected counts, for precision. Proximity-weighted
 controls (4 and 5 million for the 2 and 3 million limits, 5 and 7 for 6 million, 8 and 10 for 9 million) are a
 robustness row, and the stability of k across magnitude (k from 4–5 million against k from 10–13 million) is reported
-(§7.2).
+(§7.1).
 
 ### 6.3 What the move would identify and what it would not
 
-Under assumptions A1–A5, D_new,a > 0 would identify a response of recorded contract prices to the legal limit: more
-contracts priced at exactly 3 and 9 million when, and because, those became the limits. It would not identify which
+Under assumptions A1–A5, D*_new,a > 0 would be consistent with a response of recorded contract prices to the legal
+limit: more contracts priced at exactly 3 and 9 million after those became the limits, beyond what round millions
+explain. It would not identify which
 behaviour produced it. From prices alone the design cannot tell apart an estimated value or a price set to fit the
 limit (manipulation in the sense of [R1]), a legitimate narrowing of scope, a budget set at the limit and a bidder
 pricing to it, or splitting (which moves mass far below the limit, mostly outside the band). The article will call it
@@ -341,7 +363,7 @@ whether discretion below the limit raises prices or favours particular firms.
 ### 6.4 Assumptions
 
 A1, a smooth counterfactual for the open histogram, given sub-million rounding. A2, proportional rounding: exact-million
-mass changes by a common factor k across locations between periods (tested by §7.1–§7.2). A3, no other change at the
+mass changes by a common factor k across locations between periods (tested by §7.1). A3, no other change at the
 limit locations on the change date (§6.5). A4, stable coverage: the Registr smluv act was last amended with effect from
 1 January 2025 (consolidated version 8). A5, stable reporting: the share of VAT-inclusive prices typed as without VAT,
 and the presence of the price without VAT, do not change at the limits differently across periods.
@@ -355,26 +377,25 @@ not D_new,a). Internal rules may keep 2 and 6 million as category bounds (§2.2)
 
 ## 7. Placebos and checks
 
-1. **Validity gate (can change the labels).** Each control C in turn is treated as a "new limit", with k computed
-   from the other six: placebo_C = a(C, post) − k₋C·a(C, pre). The gate controls are the neighbours of the new limits,
-   4, 5, 8 and 10 million. The gate passes if (i) the mean of the four placebos has its 90 % interval inside ±0.15
-   (absence of evidence is not a pass), and (ii) each of the four has its point estimate inside ±0.15 and its 90 %
-   interval not wholly outside it. If the gate fails, H1 and H2 are labelled inconclusive. The other three controls'
-   placebos are reported. The stricter rule proposed in review (each gate control's own 90 % interval inside ±0.15)
-   is reported beside it; §9.3 shows why it is not the registered rule.
-2. **Stability of k.** k from 4–5 million and k from 10–13 million, and their difference with its interval; reported
-   with the sentence "the round-number adjustment differs by magnitude" if the 95 % interval of the difference excludes
-   0 and the difference exceeds 0.25.
-3. **Placebo date.** The pre period alone, split at 1 January 2023: D_new,a and D_old,a should be close to 0.
-4. **Shape of b.** b_inner against b_outer at each limit and period: an excess concentrated just under the limit
-   against one spread over the band. Descriptive.
-5. **Missing mass** above each limit, m(T) over (T, 1.05 T], in both periods. Descriptive.
-6. **Monthly series.** By month of conclusion, January 2020 – June 2026, the share of contracts in the range priced at
+1. **Validity gate (can change the labels; the lead reviewer's recommendation, round 2).** The placebos calibrate D
+   (§6.2), so the gate stops a label only when the calibration itself cannot be trusted. It fails if (i) the 90 %
+   interval of the mean placebo P̄ lies wholly outside ±0.15: the adjustment is off at round millions by more than the
+   margin, too far for a linear correction to be credible; or (ii) with the ratio adjustment, the 90 % interval of
+   k_low − k_high (k from 4–5 million against k from 10–13 million) lies wholly outside ±0.5: the taste for round
+   millions changed by magnitude, which A2 rules out, and half the scale of k is a change no common factor can absorb.
+   If the gate fails, H1 and H2 are labelled inconclusive, with the reason. The seven placebos, P̄, s_P, k_low and
+   k_high are reported. Earlier gate rules are described under "Changes before registration".
+2. **Placebo date.** The pre period alone, split at 1 January 2023, read by the "not supported" rule: a 90 % interval
+   of D_new,a inside ±0.15 passes; otherwise the article says that the design finds a response where there was no
+   change of limit.
+3. **Shape of b.** b_inner against b_outer at each limit and period. Descriptive.
+4. **Missing mass** above each limit, m(T) over (T, 1.05 T], in both periods. Descriptive.
+5. **Monthly series.** By month of conclusion, January 2020 – June 2026, the share of contracts in the range priced at
    exactly 2, 3, 6 and 9 million and at the pooled controls. Descriptive, shown as a figure.
-7. **Type cross-check (needs §4.9).** Within the works flag, no change is expected at 3 million; within supplies and
+6. **Type cross-check (needs §4.10).** Within the works flag, no change is expected at 3 million; within supplies and
    services, none at 9 million.
 
-All of 1–7 are implemented in `bunching.py` and `estimate.py`.
+All of 1–6 are implemented in `bunching.py` and `estimate.py`.
 
 ## 8. Reading rules
 
@@ -384,9 +405,9 @@ Applied in this order, to each hypothesis on its own:
 
 1. **Underpowered** if the minimum detectable effect computed at the data step (§9.4) exceeds 0.25.
 2. **Inconclusive** if the validity gate of §7.1 fails.
-3. **Not supported** if the 90 % interval of D lies wholly inside (−0.15, +0.15). If the 95 % interval also lies
-   above 0, the pre-written sentence is "a response was detected but is smaller than the margin of 0.15".
-4. **Supported** if the 95 % interval lies wholly above 0.
+3. **Not supported** if the 90 % interval of D* lies wholly inside (−0.15, +0.15) (sentences in §8.2, with and
+   without the note "detected, below the margin", which applies when the 95 % interval also lies above 0).
+4. **Supported** if the 95 % interval of D* lies wholly above 0.
 5. **Inconclusive** otherwise; an interval wholly below 0 is reported as such.
 
 The margin 0.15 is the smallest response the author considers worth an article on the pooled scale: 15 contracts
@@ -402,7 +423,12 @@ errors) below 0.255; the bound is 0.25.
 - H1 supported, H2 not supported or inconclusive: "More contracts were priced at exactly the new limits; at the old
   limits the mass did not measurably shrink, which internal rules keeping 2 and 6 million as category bounds, the
   § 18(3) part amount near 2 million and slow adjustment could each explain."
-- H1 not supported: "No more contracts were priced at exactly the new limits than round millions explain."
+- H1 not supported, without the note: "No more contracts were priced at exactly the new limits than round millions
+  explain, within 0.15 on the pooled scale, i.e. within 0.15 / s among the contracts the limits bind (0.30 if half of
+  the contracts there are of the binding type)."
+- H1 not supported, with the note "detected, below the margin": "Slightly more contracts were priced at exactly the new
+  limits than round millions explain, but the difference is smaller than the margin of 0.15 on the pooled scale
+  (0.15 / s among the contracts the limits bind), so the study does not count it as a response."
 - H1 inconclusive or underpowered: the label and its reason; H2 is not read as evidence of a response.
 
 The headline is H1. H2 never supports H1, and b, location-specific and type-specific estimates carry no labels.
@@ -416,7 +442,9 @@ tallies across hypotheses.
 ### 8.4 Inference
 
 Cluster bootstrap by publishing authority (`subjekt/ico`): 999 draws for the primary row, 199 for the others,
-percentile intervals over defined draws (§6.2). An authority is drawn with all its contracts in both periods.
+percentile intervals over defined draws (§6.2) for unlabelled statistics and the calibrated normal intervals of
+§6.2 for D*. An authority is drawn with all its contracts in both periods. The Poisson counterfactual must converge
+(steps below 10⁻⁹ within 100 iterations) in the point estimate and in every draw, or the run stops.
 
 ## 9. Power
 
@@ -433,69 +461,81 @@ two; the retained-share scenarios below span part of that uncertainty.
 (σ = 1.5), each with its own price level (lognormal, σ = 0.3) and its own habit of rounding to whole millions (gamma,
 shape 0.5); 15 % of prices are rounded up to the next 100 000. The share rounded to a whole million is unknown and is
 swept over 2 %, 10 % and 30 %. The retained share after screening is 0.6 or 0.35, and the post period is 12 months.
-For each scenario the registered estimator runs 150 times under the null and twice with a 199-draw cluster bootstrap;
-the MDE is 2.80 times the larger of the simulation spread and the bootstrap standard error. Dilution: in the tests, a
+For each scenario the registered estimator runs 150 times under the null for the spread of D, and once with a
+199-draw bootstrap for the calibrated standard error; the MDE is 2.80 times the larger. Labels and the gate are then
+computed by the registered code (`bunching.decide`, which `estimate.py` calls) on 60 simulated datasets under the null
+and 60 with a planted placement at exactly the limits (30 % of the binding-type contracts just above each limit, in
+both periods; half of the contracts are of the binding type), each with a 99-draw bootstrap. A seventh scenario lets
+the rounding share grow with price in the post period only (probability × price / 3 M), so k differs by magnitude
+and the gate's k-stability rule is exercised. Dilution: in the tests, a
 planted response among half of the contracts gives a pooled estimate of 0.35–0.65 of the undiluted one, so the MDE on
 the scale of affected contracts is MDE / s.
 
 ### 9.3 Results
 
-MDE at 80 % power on the pooled scale (`docs/research/procurement-bunching-power.json`). The ratio adjustment was
-chosen in every simulation.
+From `docs/research/procurement-bunching-power.json`. MDE at 80 % power on the pooled scale (D* for a). Label and gate
+rates come from 40 simulated datasets per cell, each run through `bunching.decide`; with 40 datasets a rate of 0.05 is
+2 of 40, so the rates carry a sampling error of several points. The planted alternative gives a calibrated D*_new,a of
+about 0.19–0.20.
 
-| Retained | Rounded to a million | Contracts pre / post | D_new,a | D_old,a | D_new,b | D_old,b | D_new,a at s = 0.3 / 0.5 / 0.7 | Gate passes under the null: registered / strict |
-|---|---|---|---|---|---|---|---|---|
-| 0.60 | 2 % | 407 612 / 81 522 | 0.04 | 0.05 | 0.11 | 0.09 | 0.12 / 0.07 / 0.05 | 1.00 / 1.00 |
-| 0.60 | 10 % | 407 612 / 81 522 | 0.08 | 0.10 | 0.11 | 0.10 | 0.26 / 0.16 / 0.11 | 1.00 / 0.92 |
-| 0.60 | 30 % | 407 612 / 81 522 | 0.15 | 0.22 | 0.12 | 0.11 | 0.50 / 0.30 / 0.21 | 0.88 / 0.01 |
-| 0.35 | 2 % | 237 774 / 47 554 | 0.05 | 0.07 | 0.14 | 0.14 | 0.17 / 0.10 / 0.07 | 1.00 / 1.00 |
-| 0.35 | 10 % | 237 774 / 47 554 | 0.10 | 0.14 | 0.16 | 0.14 | 0.32 / 0.19 / 0.14 | 0.99 / 0.51 |
-| 0.35 | 30 % | 237 774 / 47 554 | 0.20 | 0.32 | 0.17 | 0.16 | 0.66 / 0.40 / 0.28 | 0.59 / 0.00 |
+| Retained | Rounded to a million | Contracts pre / post | MDE D_new,a (s = 0.3 / 0.5 / 0.7) | MDE D_old,a | MDE D_new,b | Null: gate fails | Null: "supported" | Null: "not supported" | Alternative: "supported" (effective power, gate included) |
+|---|---|---|---|---|---|---|---|---|---|
+| 0.60 | 2 % | 407 612 / 81 522 | 0.04 (0.13 / 0.08 / 0.06) | 0.05 | 0.11 | 0.00 | 0.00 | 1.00 | 1.00 |
+| 0.60 | 10 % | 407 612 / 81 522 | 0.08 (0.25 / 0.15 / 0.11) | 0.10 | 0.11 | 0.00 | 0.00 | 0.98 | 1.00 |
+| 0.60 | 30 % | 407 612 / 81 522 | 0.15 (0.50 / 0.30 / 0.21) | 0.22 | 0.12 | 0.00 | 0.05 | 0.53 | 0.80 |
+| 0.35 | 2 % | 237 774 / 47 554 | 0.06 (0.20 / 0.12 / 0.08) | 0.08 | 0.14 | 0.00 | 0.00 | 1.00 | 1.00 |
+| 0.35 | 10 % | 237 774 / 47 554 | 0.10 (0.33 / 0.20 / 0.14) | 0.15 | 0.16 | 0.00 | 0.03 | 0.88 | 1.00 |
+| 0.35 | 30 % | 237 774 / 47 554 | 0.20 (0.68 / 0.41 / 0.29) | 0.36 | 0.17 | 0.00 | 0.08 | 0.33 | 0.68 |
+| 0.60 | 10 %, drifting by magnitude after the change | 407 612 / 81 522 | 1.20 | 1.22 | 0.12 | 1.00 | 0.00 | 0.00 | 0.00 (gate fails in every dataset) |
 
-H1 stays below the underpowered bound of 0.25 in every scenario; H2 exceeds it only with the fewest contracts and the
-heaviest rounding, where it would be labelled underpowered. Exact-mass noise grows with the share of round-million
-prices, because k and every a carry it. On the scale of the contracts a limit binds, the design detects a response of
-0.07–0.17 if half of them are of the binding type and rounding is light, and needs 0.30–0.40 if rounding is heavy.
-
-The strict gate (every one of the four controls' 90 % intervals inside ±0.15) passes under the null in 92–100 % of
-simulations with light rounding but in 0–1 % with 30 % rounding: a single control's exact mass is too noisy, so the
-strict rule would label H1 inconclusive by construction whenever rounding is common, whatever the truth. The
-registered rule requires the pooled placebo of the four controls to be inside the margin, which keeps "absence of
-evidence is not a pass", and rejects any control whose own placebo point lies outside the margin or whose interval
-lies wholly outside it; it passes in 59–100 % of null simulations.
+The gate never fails when rounding changes by a common factor, and it fails in every dataset when rounding drifts by
+magnitude. In that scenario the calibrated D*_new,a is −0.37 under the null and −0.18 under the alternative, so
+without the gate the calibration would have produced wrong labels; with it, every label is "inconclusive". With
+heavy rounding (30 %) the rate of a false "supported" under the null is 0.05–0.08 against a nominal 0.025: the
+calibrated normal interval is too narrow when single-location noise is large, because six degrees of freedom
+underestimate the placebos' spread. The MDE of H1 stays below the underpowered bound of 0.25 in all the common-factor
+scenarios; H2 exceeds it with the fewest contracts and the heaviest rounding (0.36), where it would be labelled
+underpowered. On the scale of the contracts a limit binds, the design detects 0.06–0.20 with light rounding and needs
+0.21–0.68 with heavy rounding, depending on s.
 
 ### 9.4 At the data step
 
-After `prepare.py` and before `estimate.py`, `power.py <n_pre> <n_post>` reruns the three rounding scenarios with the
-real numbers of contracts in the range (two totals, no histogram) and writes the worst case over the sweep as
-`data_step_mde`. A hypothesis whose MDE exceeds 0.25 is labelled underpowered (§8.1). `estimate.py` refuses to run
+`prepare.py --totals-to-power` passes the real numbers of primary contracts in the range (pre and post) and of
+authorities straight to `power.data_step`, which reruns the MDE for the three rounding scenarios and writes the worst
+case as `data_step_mde`; the totals are neither printed nor written. A hypothesis whose MDE exceeds 0.25 is labelled underpowered (§8.1). `estimate.py` refuses to run
 without it.
 
 ## 10. Robustness
 
-Each row is reported in a table with D_new,a, D_old,a and D_new,b; none relabels. **Aggregate rule:** if 3 or more of
-the rows marked † flip the sign of D_new,a or move its 95 % interval across 0 relative to the primary, the article says
-"the result is sensitive to specification" next to the headline (`estimate.py` computes this).
+Each row is reported in a table with D_new,a, D_old,a, D_new,b and the calibrated D*_new,a; none relabels. Each row
+runs inside its own error handler (a row that fails, for example with an undefined k, is recorded as failed and
+listed), and the results file is written after every row. **Aggregate rule:** a row marked † flips if its own label
+for H1, computed by §8.1 on its D* without the gate and the underpowered rule, differs from the primary's label
+computed the same way. A label flip is used rather than a fixed change of the point estimate because the labels are
+what the article reports, and a change of, say, 0.05 means different things at different standard errors. If 3 or
+more of the 16 † rows flip, the article says "the result is sensitive to specification" next to the headline. The two
+start-date rows are not counted; they read by direction.
 
 | Row | Change | Reading |
 |---|---|---|
 | Windows † | 2.5 % and 10 % bands | a depends on the band only through E(L); a large change points to a poor counterfactual |
 | Polynomial † | degree 5 and 9 | as above |
 | Adjustment † | the other form (additive or ratio) | a sign change means the result rests on the rounding model |
-| Neighbouring controls † | k per limit from its neighbours | a large change means k varies with magnitude (§7.2) |
+| Neighbouring controls † | k per limit from its neighbours | a large change means k varies with magnitude (§7.1) |
 | VAT images † | excluded from the fit | a change means VAT typing errors matter |
 | R-VAT † | VAT-only prices added, / 1.21 | a change means the 18 % without a price without VAT differ |
+| No deduplication † | content-key duplicates kept | a change means duplicated records drive the result |
 | Equal values † | records with equal with- and without-VAT values dropped | as above, for the 7–9 % with equal values |
-| Post from 3 April 2025 † | transition quarter included | expected smaller than the primary under slow adjustment |
-| Post from 1 October 2025 † | first quarter after the transition dropped too | expected at least as large as the primary under slow adjustment; smaller would point to a transient response |
+| Post from 3 April 2025 | transition quarter included | "consistent" if D* is at most the primary's (slow adjustment dilutes the first quarter) |
+| Post from 1 October 2025 | first quarter after the transition dropped too | "consistent" if D* is at least the primary's; smaller points to a transient response |
 | Pre 2022–2024 † | pandemic years dropped | a change points to a pre-period trend |
 | Concentration † | largest 1 % of authorities dropped | a change means a few authorities drive the result |
 | Linked records † | dropped | a change means linked records (meaning undocumented, §3.1) matter |
 | Call-offs † | dropped | a change means orders under frameworks drive the result |
 | Frameworks and periodic prices † | dropped | as above |
 | Payer flag † | only records whose publisher is flagged as payer (28 %) | a change means sales or income contracts survive the stems |
-| Placebo date | §7.3 | should be close to 0 |
-| Type split | works and supplies/services separately by stems (and by Hlídač státu's classification if used) | §7.7 |
+| Placebo date | §7.2 | 90 % interval inside ±0.15 |
+| Type split | works and supplies/services separately by stems (and by Hlídač státu's classification if used) | §7.6 |
 
 ## 11. Choices register
 
@@ -518,14 +558,16 @@ the rows marked † flip the sign of D_new,a or move its 95 % interval across 0 
 | Screening stems | `rules.py` | Written without reading subjects; hit counts reported; payer-flag row |
 | Margin | 0.15 | §8.1; the author's smallest response of interest |
 | Underpowered bound | 0.25 | Derived from the margin (§8.1) |
-| Gate | pooled four-control placebo plus no individual failure | §7.1, §9.3 |
+| Calibration | D minus mean placebo, SE inflated by the placebos' excess spread | §6.2; the lead reviewer's recommendation |
+| Gate | mean placebo or k_low − k_high wholly outside ±0.15 / ±0.5 (90 %) | §7.1; ±0.5 is arbitrary, half the scale of k |
 | Bootstrap | by authority, 999 / 199 draws | Contracts of one authority are not independent |
-| Sensitivity rule | 3 of 17 † rows | Arbitrary; stated in advance |
+| Sensitivity rule | label flip in 3 of 16 † rows | §10; the count of 3 is arbitrary |
+| Deduplication | content key with a contract number | §4.3; no-deduplication row |
 
 ## 12. Exposure handling during the analysis
 
-The order is fixed: register (§14) → collect all dumps → `prepare.py` (prints "ok"; screening counts only) →
-`power.py` data step (prints "ok") → `estimate.py` once → results commit. `estimate.py --quick` is a crash check: it
+The order is fixed: register (§14) → collect all dumps → `prepare.py --totals-to-power` (prints "ok"; screening counts only, totals go
+straight to the power data step) → `estimate.py` once → results commit. `estimate.py --quick` is a crash check: it
 writes nothing and prints only "ok". No histogram of the range is drawn before the results commit. Any look outside
 this order is logged in the change log with its date and what was seen.
 
@@ -539,6 +581,8 @@ this order is logged in the change log with its date and what was seen.
   contracts at or below 50 000 Kč, and trade secrets may hide some state companies' prices (§ 5(6)).
 - **Splitting** mostly places parts far below the limit and escapes the band.
 - **Short post period.** Twelve months, after a transition quarter.
+- **Scale.** "Not supported" bounds a response at 0.15 on the pooled scale, which is 0.15 / s among the contracts the
+  limit binds: 0.30 if half of them are of its type, 0.50 if 30 %.
 - **Type.** The pooled analysis dilutes each limit by the other type; the type split rests on keywords.
 - **Not a purchase.** The stems are coarse; grants and sales that survive add round-number noise.
 - **Field meanings.** `navazanyZaznam` is documented only as a link; the payer flag is filled on 28 % of records.
@@ -570,28 +614,38 @@ this order is logged in the change log with its date and what was seen.
    download of the published files would give estimated values and types for recorded procedures), or a Hlídač státu
    token for a second classification.
 3. **Post start.** 1 July 2025 (designed) against 3 April 2025.
-4. **Margins.** 0.15 and the derived 0.25, on the pooled scale.
-5. **Gate.** The registered rule (§7.1) or the stricter per-control rule, which §9.3 shows would make H1 inconclusive
-   by construction if many contracts are rounded to whole millions.
+4. **Margins.** 0.15 and the derived 0.25, on the pooled scale (0.15 / s on the scale of the contracts a limit binds).
+5. **Gate and calibration.** The registered design (§6.2, §7.1) is the lead reviewer's recommendation from round 2:
+   D calibrated by the seven placebos, and a gate on the placebo bias and on k-stability only. The k-stability bound
+   ±0.5 is a judgement call. Under heavy rounding the calibrated normal interval gives a false "supported" in 5–8 % of
+   null simulations (§9.3); using t quantiles with six degrees of freedom (2.447 and 1.943) instead of 1.960 and 1.645
+   would widen it, at some cost in power. Not adopted without your decision.
 6. **H2.** Labelled, or descriptive only.
-7. **Stems.** `rules.py`, which act on text nobody has read.
-8. **Download and compute.** About 10 GB of dumps and one full run (a synthetic run of the same size takes under a
-   second per estimate, so the full run takes minutes).
+7. **Stems.** `rules.py`, which act on text nobody has read; they were revised once after their hit counts were seen
+   (§0.1, E5′).
+8. **Download, compute and retention.** About 10 GB of dumps, one full run (minutes), and deletion of the raw dumps
+   after the results commit (§3.1).
 9. **Slug** `procurement-bunching`.
 
 ## 16. Code and reproduction
 
-- `collect.py` (dumps and manifest), `structure.py` (the E5 pass), `rules.py` (stems), `prepare.py` (§4),
-  `bunching.py` (histograms, counterfactual, a and b, contrasts, placebos, gate, bootstrap, labels),
-  `synth_contracts.py` (made-up contracts: rounding with authority habits and price levels, placement at or below a
-  limit, dilution by type), `power.py` (§9), `estimate.py` (§6–§10), `test_procurement.py`.
-- The tests check: a price equal to a limit falls below it; every whole million is in a window; rounding alone moves
-  neither estimand; placement at the limit lands in a and spread below it in b, with missing mass above; more rounding
-  after the change is scaled out of a by the ratio and not by the additive form; a planted response is recovered
-  within 15 % on average and 25 % in each of five seeds, for a and for b; dilution by type scales the estimate; draws
-  with an undefined ratio stop the run and the full-sample rule avoids them; bootstrap and label on a clear move; both
-  gate rules; the label order.
-- `uv run --with numpy==2.5.3 --with scipy==1.18.1 --with pytest==9.1.1 pytest -q tools/procurement`.
+- `collect.py` (dumps and manifest), `structure.py` (the E5 pass), `rules.py` (stems), `prepare.py` (§4, with
+  `--totals-to-power`), `bunching.py` (histograms, counterfactual, a and b, contrasts, placebos, calibration, gate,
+  bootstrap with the failure cap, labels through `decide`), `synth_contracts.py` (made-up contracts: rounding with
+  authority habits, price levels and a drift by magnitude, placement at or below a limit, dilution by type),
+  `power.py` (§9), `estimate.py` (§6–§10).
+- `test_procurement.py` checks: a price equal to a limit falls below it; every whole million is in a window; rounding
+  alone moves neither estimand; placement at the limit lands in a and spread below it in b, with missing mass above;
+  more rounding after the change is scaled out of a by the ratio and not by the additive form; a planted response is
+  recovered within 15 % on average and 25 % in each of five seeds, for a and for b; dilution by type scales the
+  estimate; undefined ratio draws stop the run and the full-sample rule avoids them; the failure cap at exactly 1 % and
+  just above it, for every statistic of a label or the gate; non-convergence and a missing IČO stop the run; drifting
+  rounding moves k_low − k_high; the calibration arithmetic; the gate; the label order.
+- `test_pipeline.py` checks, on made-up records and a made-up parquet: deduplication only with a contract number,
+  counted apart at exact millions; versions, flags, dropped records and no party column; `estimate.py` stops without a
+  data-step MDE; `--quick` writes nothing; R-VAT adds the VAT-only records; the sensitivity rule (label flips, failed
+  rows, start-date directions, placebo date); a registered run writes 21 robustness rows.
+- `uv run --with-requirements tools/requirements-tests.txt pytest -q tools/procurement`.
 
 ## References
 
@@ -662,3 +716,21 @@ shares; `estimate.py` stopping without a data-step MDE; the shape, missing-mass 
 recovery test over five seeds; the full log of searches and fetches, prior knowledge and the repository search; a
 choices register; a reading rule for each robustness row and an aggregate sensitivity rule; the stem `dodatk`; the
 quotation of § 16(6). One request was not adopted as written: the per-control gate (§7.1, §9.3).
+
+**12 October 2026 (round-2 independent review of `e3d4f99`; no outcome seen).** The lead reviewer found one blocker:
+`estimate.py` dropped records without a price without VAT before building the R-VAT row, so that row silently equalled
+the primary; it is now built first and tested. The validity gate was redesigned on the lead's recommendation. The
+round-1 version required the mean placebo of the four controls nearest the new limits (4, 5, 8 and 10 million) to have
+its 90 % interval inside ±0.15, and each of the four to have its point inside ±0.15 and its interval not wholly
+outside; the round-1 reviewer's own proposal, each control's interval inside ±0.15, had been rejected because it failed
+under the null in almost every simulation with heavy rounding. The registered version calibrates D by the mean of all
+seven leave-one-out placebos, inflates its standard error by their excess spread, and gates only on a placebo bias or
+a k drift by magnitude wholly outside fixed bounds; the power sweep now runs the registered label and gate code on
+simulated data, including a scenario with rounding that drifts by magnitude. Also applied: deduplication only with a
+contract number, counted apart at exact millions, and a no-deduplication row; the sentences for "detected, below the
+margin" and the 0.15 / s scale; the sensitivity rule as a label flip, with the start-date rows read by direction;
+robustness rows that record their own failure and a results file written after each row; the hand-labelled check
+extended to the call-off, framework and not-a-purchase stems, and the disclosure that the stems were revised after their
+counts were seen; `prepare.py --totals-to-power`; the failure cap on every statistic of a label or the gate, tested at
+the 1 % boundary; the placebo date read by the same rule; loud failure on a non-converging counterfactual or a missing
+IČO; "consistent with" in §6.3; the GDPR basis and a retention rule.
