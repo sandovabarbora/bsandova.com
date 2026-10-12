@@ -16,7 +16,7 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
-COMMIT = "41d61c0"  # sandovabarbora/delayed-all-the-time, PR #2 (engine v2)
+COMMIT = "3ffc561"  # sandovabarbora/delayed-all-the-time, PR #3 (engine v2 with the night-window rule)
 URL = f"https://raw.githubusercontent.com/sandovabarbora/delayed-all-the-time/{COMMIT}/index.html"
 OUT = Path(__file__).resolve().parents[2] / "assets/delayed/v2-states.json"
 
