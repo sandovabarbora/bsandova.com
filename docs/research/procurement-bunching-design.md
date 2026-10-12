@@ -5,7 +5,10 @@ value in the analysis range has been read, counted or plotted.** Registration fo
 and its code are committed on `feature/PROC-1_procurement-bunching`. The study is described as pre-registered only if
 Bára pushes the branch and a signed tag `procurement-bunching-design` to the public remote before the data step
 (editorial standard §6); otherwise the self-timestamped wording of §14 applies. Deviations after registration go,
-dated, into `docs/changelogs/procurement-bunching.html`.
+dated, into `docs/changelogs/procurement-thresholds.html`. The article's slug is `texts/procurement-thresholds`
+(decided 12 October 2026). No tooling ties design or code file names to a slug (`check_standard.py` ties only the
+article and its change log), so the design, the code and the data files keep the name `procurement-bunching`, and so
+does the registration tag.
 
 ## 0. What has already been seen (exposure)
 
@@ -144,9 +147,9 @@ thresholds of the six versions of NV 172/2016.
 | Source | What it records | Covers ZMR? | Access | Verdict |
 |---|---|---|---|---|
 | **Registr smluv**, monthly XML dumps (`data.smlouvy.gov.cz`) | Every contract of an obliged public entity above 50 000 Kč without VAT: conclusion date, publication time, price without VAT (`hodnotaBezDph`) and/or with VAT (`hodnotaVcetneDph`), price withheld (`cenaNeuvedena`), foreign currency, an optional link to another record (`navazanyZaznam`), version id and validity flag, publisher IČO and payer flag, parties, subject (free text), since late 2025 a rarely filled VVZ procurement number | Yes, from 50 000 Kč, whether or not a procedure was run | Open data [D1]; no `robots.txt` (404); the index lists a hash per dump | **Primary** |
-| ISVZ / Věstník veřejných zakázek open data | Notices of procedures (estimated value, type, procedure); from February 2024 the Registr veřejných zakázek, fed by VVZ, NEN, Tender arena and Tendermarket | Only ZMR that an authority records in an e-tool | `isvz.nipez.cz/robots.txt` disallows all paths to all agents | Not used without Bára's decision (§15) |
+| ISVZ / Věstník veřejných zakázek open data | Notices of procedures (estimated value, type, procedure); from February 2024 the Registr veřejných zakázek, fed by VVZ, NEN, Tender arena and Tendermarket | Only ZMR that an authority records in an e-tool | `isvz.nipez.cz/robots.txt` disallows all paths to all agents | **Not used** (decided 12 October 2026): the site's `robots.txt` excludes automated access |
 | NEN | Procedures in the state's e-tool, including some ZMR | Partly | `robots.txt` allows most paths, `Crawl-delay: 10` (the proposal's "blocks" is wrong) | Not used: slow per-contract scraping of a self-selected subset |
-| Hlídač státu API | Re-processed Registr smluv records with a contract classification | As the Registr smluv | Token needed (none in the environment; never printed if added); CC BY 3.0 CZ [D2] | Optional second type classification |
+| Hlídač státu API | Re-processed Registr smluv records with a contract classification | As the Registr smluv | Token in `HLIDAC_STATU_TOKEN` (environment or the gitignored `.env`), never printed, logged or written; CC BY 3.0 CZ [D2] | **Optional, contract type only** (§4.11); skipped, and said so, without a token |
 | Profiles of contracting authorities | Procedures and § 219 contracts | Few | Hundreds of sites | Not used |
 | OpenTender (Digiwhist) | Harmonised notices | No | Cloudflare challenge | Not used |
 
@@ -255,6 +258,15 @@ Fixed now; `prepare.py` reports the count after each step in `docs/research/proc
    random from prices outside BLIND are labelled by hand (supplies, services, works, not a purchase, call-off,
    framework). The report gives the accuracy of the `WORKS` flag and the precision of the `call_off`, `framework` and
    `not_purchase` stems.
+11. **Hlídač státu classification (optional, type only).** `hlidac.py` reads the token from `HLIDAC_STATU_TOKEN`
+   (environment, else the gitignored `.env`); without it, it prints that the classification was skipped and the
+   results record the Hlídač rows as skipped. With it, a random sample of 20 000 primary contracts in the range (drawn
+   by id with a fixed seed) is requested one per second from `api.hlidacstatu.cz/api/v2/smlouvy/{id}`, User-Agent
+   `bsandova.com research`, no e-mail address, the token only in the `Authorization` header; errors are counted by
+   HTTP status only. A contract is works if any classification type names construction (`stav…`). The endpoint and the
+   field names are taken from the public API description; on the first response the script checks the field names
+   only, and any change is logged before the classification is used. The code was tested against mocked responses
+   only; no request to Hlídač státu has been made.
 
 The primary analysis **pools all contract types**. Each limit binds one type, so the other type dilutes the
 estimate by its share at that location; the dilution biases towards zero and creates no excess of its own (§9.2).
@@ -340,7 +352,9 @@ placebo_C = a(C, post) − k₋C·a(C, pre). Their mean P̄ is the bias of the a
 meaning, and their spread s_P beyond their own sampling noise is the error the adjustment adds at a single location.
 The labelled statistics are calibrated: D*_new,a = D_new,a − P̄ and D*_old,a = D_old,a + P̄ (the opposite sign
 convention), with standard error se* = √(se² + max(0, s_P² − mean of the seven placebos' bootstrap se²)), where se is
-D's own bootstrap standard error; the 95 % and 90 % intervals are D* ± 1.960 se* and ± 1.645 se*. With seven
+D's own bootstrap standard error; the 95 % and 90 % intervals are D* ± 2.447 se* and ± 1.943 se*, the t quantiles with six degrees of freedom
+(decided 12 October 2026, after the round-2 sweep showed a false "supported" in 5–8 % of null simulations with normal
+quantiles under heavy rounding). With seven
 placebos the spread is estimated on six degrees of freedom, so it is a rough correction; it is the one the lead
 reviewer recommended (round 2).
 
@@ -392,8 +406,12 @@ not D_new,a). Internal rules may keep 2 and 6 million as category bounds (§2.2)
 4. **Missing mass** above each limit, m(T) over (T, 1.05 T], in both periods. Descriptive.
 5. **Monthly series.** By month of conclusion, January 2020 – June 2026, the share of contracts in the range priced at
    exactly 2, 3, 6 and 9 million and at the pooled controls. Descriptive, shown as a figure.
-6. **Type cross-check (needs §4.10).** Within the works flag, no change is expected at 3 million; within supplies and
-   services, none at 9 million.
+6. **Type cross-check (needs §4.10, and §4.11 for the Hlídač version).** Within works no response is expected at 3
+   million, within supplies and services none at 9 million. Read by the "not supported" rule: the check passes if the
+   90 % interval of D_new,a at 3 million within works and at 9 million within supplies and services both lie inside
+   ±0.15. It is run twice, with the stem flag and, if available, with Hlídač státu's classification (whose agreement
+   with the stem flag is reported); a failure says that the type split or the pooling assumption is unreliable and is
+   reported beside the headline, without relabelling.
 
 All of 1–6 are implemented in `bunching.py` and `estimate.py`.
 
@@ -413,8 +431,8 @@ Applied in this order, to each hypothesis on its own:
 The margin 0.15 is the smallest response the author considers worth an article on the pooled scale: 15 contracts
 at exactly the limit per 100 expected in its band. On the scale of the contracts the limit binds it is 0.15 / s, where
 s is their share at the location (0.30 for s = 0.5). The underpowered bound follows from the margin: "not supported"
-needs a 90 % half-width below 0.15, i.e. a standard error below 0.15 / 1.645 = 0.091, i.e. an MDE (2.80 standard
-errors) below 0.255; the bound is 0.25.
+needs a 90 % half-width below 0.15, i.e. a standard error below 0.15 / 1.943 = 0.077 (t, six degrees of freedom), i.e. an MDE
+(2.447 + 0.906 = 3.35 standard errors) below 0.259; the bound is 0.25, unchanged by the switch to t quantiles.
 
 ### 8.2 Reading H1 and H2 together (pre-written sentences, no further label)
 
@@ -442,7 +460,7 @@ tallies across hypotheses.
 ### 8.4 Inference
 
 Cluster bootstrap by publishing authority (`subjekt/ico`): 999 draws for the primary row, 199 for the others,
-percentile intervals over defined draws (§6.2) for unlabelled statistics and the calibrated normal intervals of
+percentile intervals over defined draws (§6.2) for unlabelled statistics and the calibrated t intervals of
 §6.2 for D*. An authority is drawn with all its contracts in both periods. The Poisson counterfactual must converge
 (steps below 10⁻⁹ within 100 iterations) in the point estimate and in every draw, or the run stops.
 
@@ -462,7 +480,7 @@ two; the retained-share scenarios below span part of that uncertainty.
 shape 0.5); 15 % of prices are rounded up to the next 100 000. The share rounded to a whole million is unknown and is
 swept over 2 %, 10 % and 30 %. The retained share after screening is 0.6 or 0.35, and the post period is 12 months.
 For each scenario the registered estimator runs 150 times under the null for the spread of D, and once with a
-199-draw bootstrap for the calibrated standard error; the MDE is 2.80 times the larger. Labels and the gate are then
+199-draw bootstrap for the calibrated standard error; the MDE is 3.35 times the larger (t quantiles, as the labels use). Labels and the gate are then
 computed by the registered code (`bunching.decide`, which `estimate.py` calls) on 60 simulated datasets under the null
 and 60 with a planted placement at exactly the limits (30 % of the binding-type contracts just above each limit, in
 both periods; half of the contracts are of the binding type), each with a 99-draw bootstrap. A seventh scenario lets
@@ -473,30 +491,30 @@ the scale of affected contracts is MDE / s.
 
 ### 9.3 Results
 
-From `docs/research/procurement-bunching-power.json`. MDE at 80 % power on the pooled scale (D* for a). Label and gate
-rates come from 40 simulated datasets per cell, each run through `bunching.decide`; with 40 datasets a rate of 0.05 is
-2 of 40, so the rates carry a sampling error of several points. The planted alternative gives a calibrated D*_new,a of
-about 0.19–0.20.
+From `docs/research/procurement-bunching-power.json`, with the registered t intervals (6 degrees of freedom). MDE at
+80 % power on the pooled scale (D* for a), 3.35 standard errors. Label and gate rates come from 40 simulated datasets
+per cell, each run through `bunching.decide`; a rate of 0.025 is 1 of 40, so the rates carry a sampling error of
+several points. The planted alternative gives a calibrated D*_new,a of about 0.19–0.20.
 
 | Retained | Rounded to a million | Contracts pre / post | MDE D_new,a (s = 0.3 / 0.5 / 0.7) | MDE D_old,a | MDE D_new,b | Null: gate fails | Null: "supported" | Null: "not supported" | Alternative: "supported" (effective power, gate included) |
 |---|---|---|---|---|---|---|---|---|---|
-| 0.60 | 2 % | 407 612 / 81 522 | 0.04 (0.13 / 0.08 / 0.06) | 0.05 | 0.11 | 0.00 | 0.00 | 1.00 | 1.00 |
-| 0.60 | 10 % | 407 612 / 81 522 | 0.08 (0.25 / 0.15 / 0.11) | 0.10 | 0.11 | 0.00 | 0.00 | 0.98 | 1.00 |
-| 0.60 | 30 % | 407 612 / 81 522 | 0.15 (0.50 / 0.30 / 0.21) | 0.22 | 0.12 | 0.00 | 0.05 | 0.53 | 0.80 |
-| 0.35 | 2 % | 237 774 / 47 554 | 0.06 (0.20 / 0.12 / 0.08) | 0.08 | 0.14 | 0.00 | 0.00 | 1.00 | 1.00 |
-| 0.35 | 10 % | 237 774 / 47 554 | 0.10 (0.33 / 0.20 / 0.14) | 0.15 | 0.16 | 0.00 | 0.03 | 0.88 | 1.00 |
-| 0.35 | 30 % | 237 774 / 47 554 | 0.20 (0.68 / 0.41 / 0.29) | 0.36 | 0.17 | 0.00 | 0.08 | 0.33 | 0.68 |
-| 0.60 | 10 %, drifting by magnitude after the change | 407 612 / 81 522 | 1.20 | 1.22 | 0.12 | 1.00 | 0.00 | 0.00 | 0.00 (gate fails in every dataset) |
+| 0.60 | 2 % | 407 612 / 81 522 | 0.05 (0.16 / 0.09 / 0.07) | 0.06 | 0.13 | 0.00 | 0.00 | 1.00 | 1.00 |
+| 0.60 | 10 % | 407 612 / 81 522 | 0.09 (0.30 / 0.18 / 0.13) | 0.12 | 0.13 | 0.00 | 0.00 | 0.98 | 0.98 |
+| 0.60 | 30 % | 407 612 / 81 522 | 0.18 (0.60 / 0.36 / 0.26) | 0.27 | 0.14 | 0.00 | 0.03 | 0.38 | 0.70 |
+| 0.35 | 2 % | 237 774 / 47 554 | 0.07 (0.24 / 0.14 / 0.10) | 0.10 | 0.17 | 0.00 | 0.00 | 1.00 | 1.00 |
+| 0.35 | 10 % | 237 774 / 47 554 | 0.12 (0.39 / 0.24 / 0.17) | 0.17 | 0.19 | 0.00 | 0.00 | 0.83 | 0.98 |
+| 0.35 | 30 % | 237 774 / 47 554 | 0.24 (0.81 / 0.49 / 0.35) | 0.44 | 0.21 | 0.00 | 0.03 | 0.08 | 0.45 |
+| 0.60 | 10 %, drifting by magnitude after the change | 407 612 / 81 522 | 1.43 | 1.46 | 0.14 | 1.00 | 0.00 | 0.00 | 0.00 (gate fails in every dataset) |
 
-The gate never fails when rounding changes by a common factor, and it fails in every dataset when rounding drifts by
-magnitude. In that scenario the calibrated D*_new,a is −0.37 under the null and −0.18 under the alternative, so
-without the gate the calibration would have produced wrong labels; with it, every label is "inconclusive". With
-heavy rounding (30 %) the rate of a false "supported" under the null is 0.05–0.08 against a nominal 0.025: the
-calibrated normal interval is too narrow when single-location noise is large, because six degrees of freedom
-underestimate the placebos' spread. The MDE of H1 stays below the underpowered bound of 0.25 in all the common-factor
-scenarios; H2 exceeds it with the fewest contracts and the heaviest rounding (0.36), where it would be labelled
-underpowered. On the scale of the contracts a limit binds, the design detects 0.06–0.20 with light rounding and needs
-0.21–0.68 with heavy rounding, depending on s.
+With t quantiles the rate of a false "supported" under the null is at most 1 of 40 in every scenario (0.03), in line
+with the nominal 0.025; with normal quantiles (round 2) it was 0.05–0.08 under heavy rounding. The cost is power under
+heavy rounding: a calibrated response of about 0.19 is labelled "supported" in 70 % (more contracts) and 45 % (fewer)
+of simulations, and more of the null datasets end "inconclusive" instead of "not supported". The gate never fails when
+rounding changes by a common factor and fails in every dataset when it drifts by magnitude, where the calibrated D*
+is −0.37 under the null and −0.18 under the alternative and would otherwise give wrong labels. The MDE of H1 stays
+below the underpowered bound of 0.25 in every common-factor scenario (0.24 in the worst); H2's exceeds it with heavy
+rounding (0.27 and 0.44), where H2 would be labelled underpowered. On the scale of the contracts a limit binds, the
+design detects 0.07–0.24 with light rounding and needs 0.26–0.81 with heavy rounding, depending on s.
 
 ### 9.4 At the data step
 
@@ -535,7 +553,7 @@ start-date rows are not counted; they read by direction.
 | Frameworks and periodic prices † | dropped | as above |
 | Payer flag † | only records whose publisher is flagged as payer (28 %) | a change means sales or income contracts survive the stems |
 | Placebo date | §7.2 | 90 % interval inside ±0.15 |
-| Type split | works and supplies/services separately by stems (and by Hlídač státu's classification if used) | §7.6 |
+| Type split | works and supplies/services separately by stems; and by Hlídač státu's classification on its sample, if a token was present | §7.6; not counted for sensitivity |
 
 ## 11. Choices register
 
@@ -561,6 +579,7 @@ start-date rows are not counted; they read by direction.
 | Calibration | D minus mean placebo, SE inflated by the placebos' excess spread | §6.2; the lead reviewer's recommendation |
 | Gate | mean placebo or k_low − k_high wholly outside ±0.15 / ±0.5 (90 %) | §7.1; ±0.5 is arbitrary, half the scale of k |
 | Bootstrap | by authority, 999 / 199 draws | Contracts of one authority are not independent |
+| Interval for D* | t quantiles, 6 degrees of freedom | §6.2; decided 12 October 2026 |
 | Sensitivity rule | label flip in 3 of 16 † rows | §10; the count of 3 is arbitrary |
 | Deduplication | content key with a contract number | §4.3; no-deduplication row |
 
@@ -590,42 +609,45 @@ this order is logged in the change log with its date and what was seen.
 
 ## 14. Registration workflow
 
-1. **Commit.** This design, `tools/procurement/` and the structure and power files are committed on
-   `feature/PROC-1_procurement-bunching` (one-line messages, no AI attribution).
-2. **Review.** Bára reads the design and resolves §15; changes are committed before step 3.
-3. **Anchor.** Bára pushes the branch and a signed annotated tag on the registration commit:
-   `git tag -s procurement-bunching-design <commit> -m "Registered design: procurement bunching"` and
-   `git push origin feature/PROC-1_procurement-bunching procurement-bunching-design`. A signed tag pushed to the public
-   remote before any outcome is joined is a tamper-evident anchor under §6; the article may then say "pre-registered:
-   signed tag `procurement-bunching-design` (commit `<hash>`), pushed `<date>`".
-4. **If the tag is not pushed before the data step,** the only permitted wording is: "registered analysis plan: design
-   committed at `<hash>` on `<date>`, before the results commit `<hash>`; commit times are self-reported, and the
-   branch was pushed after the analysis." If GitHub's activity log shows the design on the public branch before the
-   results, the last clause is replaced by the recorded push times, with the note that a push is not a tamper-evident
-   anchor.
-5. **Data step** in dated commits (manifest, screening counts, data-step power), then one results commit; deviations
-   in `docs/changelogs/procurement-bunching.html`.
-6. **Disclosure.** §0 is repeated in the article (editorial standard §6, last rule).
+The study is described as **pre-registered only if a signed annotated tag `procurement-bunching-design`, on the
+registration commit, has been pushed to the public remote before any dump beyond the two of §0 is downloaded** (editorial
+standard §6: a signed tag pushed to the public remote is a tamper-evident anchor). The lead creates and pushes the
+tag once Bára's SSH signing is set up. The steps:
 
-## 15. Open decisions for Bára
+1. **Freeze.** The design, `tools/procurement/` and the structure and power files are committed on
+   `feature/PROC-1_procurement-bunching` (one-line messages, no AI attribution); the working tree is clean.
+2. **Tag.** `git tag -s -a procurement-bunching-design <registration commit> -m "Registered design: procurement thresholds"`
+   with SSH signing (`git config gpg.format ssh`, `user.signingkey` set to Bára's key).
+3. **Verify.** `git tag -v procurement-bunching-design` reports a good signature for the key, and
+   `git rev-parse procurement-bunching-design^{commit}` equals the registration commit.
+4. **Push.** `git push origin feature/PROC-1_procurement-bunching` and `git push origin procurement-bunching-design`.
+5. **Record.** The tag's object hash, the commit hash and GitHub's push time go into the change log
+   (`docs/changelogs/procurement-thresholds.html`) in a dated note, before the data step.
+6. **Data step,** only after step 5: `collect.py`, `prepare.py --totals-to-power`, optionally `hlidac.py`, then
+   `estimate.py` once, each in dated commits, then one results commit; deviations go into the change log.
+7. **Article wording.** With steps 2–5 done before step 6: "pre-registered: signed tag `procurement-bunching-design`
+   (commit `<hash>`), pushed `<date>`, before any outcome data were joined." If anything of step 6 ran before the push,
+   the only permitted wording is: "registered analysis plan: design committed at `<hash>` on `<date>`, before the
+   results commit `<hash>`; commit times are self-reported, and the branch was pushed after the analysis" (with the
+   push-time variant of §6 where GitHub's activity log applies).
+8. **Disclosure.** §0 is repeated in the article (editorial standard §6, last rule).
+9. **Retention.** After the results commit the raw dumps are deleted; the manifest's hashes and the minimised parquet
+   are kept (§3.1).
 
-1. **Anchor.** Signed tag before the data step (pre-registered), or the self-timestamped wording.
-2. **Source.** Registr smluv alone, or also ISVZ open data (its `robots.txt` disallows all agents; a one-off manual
-   download of the published files would give estimated values and types for recorded procedures), or a Hlídač státu
-   token for a second classification.
-3. **Post start.** 1 July 2025 (designed) against 3 April 2025.
-4. **Margins.** 0.15 and the derived 0.25, on the pooled scale (0.15 / s on the scale of the contracts a limit binds).
-5. **Gate and calibration.** The registered design (§6.2, §7.1) is the lead reviewer's recommendation from round 2:
-   D calibrated by the seven placebos, and a gate on the placebo bias and on k-stability only. The k-stability bound
-   ±0.5 is a judgement call. Under heavy rounding the calibrated normal interval gives a false "supported" in 5–8 % of
-   null simulations (§9.3); using t quantiles with six degrees of freedom (2.447 and 1.943) instead of 1.960 and 1.645
-   would widen it, at some cost in power. Not adopted without your decision.
-6. **H2.** Labelled, or descriptive only.
-7. **Stems.** `rules.py`, which act on text nobody has read; they were revised once after their hit counts were seen
-   (§0.1, E5′).
-8. **Download, compute and retention.** About 10 GB of dumps, one full run (minutes), and deletion of the raw dumps
-   after the results commit (§3.1).
-9. **Slug** `procurement-bunching`.
+## 15. Decisions taken (Bára, 12 October 2026)
+
+1. **Anchor.** A signed annotated tag `procurement-bunching-design`, pushed before the data step (§14); the lead
+   creates and pushes it.
+2. **Source.** Registr smluv only. ISVZ is not used: its `robots.txt` disallows all agents. Hlídač státu is optional,
+   for contract type only (§4.11).
+3. **Post start.** 1 July 2025 (primary); 3 April and 1 October 2025 as robustness rows.
+4. **Margins.** 0.15 and the derived underpowered bound 0.25, on the pooled scale.
+5. **Gate and intervals.** The calibration design of §6.2 and §7.1, with t quantiles on six degrees of freedom.
+6. **H2.** Its own label.
+7. **Stems.** `rules.py` as it stands, with the disclosure of §0.1 (E5′).
+8. **Download, compute and retention.** About 10 GB of dumps, one full run, deletion of the raw dumps after the
+   results commit.
+9. **Slug.** `texts/procurement-thresholds`; file names stay `procurement-bunching` (see the status note).
 
 ## 16. Code and reproduction
 
@@ -633,7 +655,7 @@ this order is logged in the change log with its date and what was seen.
   `--totals-to-power`), `bunching.py` (histograms, counterfactual, a and b, contrasts, placebos, calibration, gate,
   bootstrap with the failure cap, labels through `decide`), `synth_contracts.py` (made-up contracts: rounding with
   authority habits, price levels and a drift by magnitude, placement at or below a limit, dilution by type),
-  `power.py` (§9), `estimate.py` (§6–§10).
+  `power.py` (§9), `estimate.py` (§6–§10), `hlidac.py` (§4.11).
 - `test_procurement.py` checks: a price equal to a limit falls below it; every whole million is in a window; rounding
   alone moves neither estimand; placement at the limit lands in a and spread below it in b, with missing mass above;
   more rounding after the change is scaled out of a by the ratio and not by the additive form; a planted response is
@@ -645,6 +667,9 @@ this order is logged in the change log with its date and what was seen.
   counted apart at exact millions; versions, flags, dropped records and no party column; `estimate.py` stops without a
   data-step MDE; `--quick` writes nothing; R-VAT adds the VAT-only records; the sensitivity rule (label flips, failed
   rows, start-date directions, placebo date); a registered run writes 21 robustness rows.
+- `test_hlidac.py` checks, against mocked responses only: the token from the environment or `.env`; the
+  User-Agent, no e-mail address, the token only in a header; the classification parsing; the one-second pause; error
+  counting by status; the token never appearing in any output; the skip message without a token.
 - `uv run --with-requirements tools/requirements-tests.txt pytest -q tools/procurement`.
 
 ## References
@@ -734,3 +759,12 @@ extended to the call-off, framework and not-a-purchase stems, and the disclosure
 counts were seen; `prepare.py --totals-to-power`; the failure cap on every statistic of a label or the gate, tested at
 the 1 % boundary; the placebo date read by the same rule; loud failure on a non-converging counterfactual or a missing
 IČO; "consistent with" in §6.3; the GDPR basis and a retention rule.
+
+**12 October 2026 (Bára's decisions on the open items; no outcome seen).** Calibrated intervals use t quantiles
+with six degrees of freedom (2.447 and 1.943) instead of normal ones, and the power sweep was rerun with them. The
+study is pre-registered only through a signed tag pushed before the data step (§14, with the exact steps). Registr smluv
+is the only source; ISVZ is not used because its `robots.txt` excludes automated access; Hlídač státu is an optional
+type classification (`hlidac.py`, tested against mocked responses only, with a cross-check row and its reading rule).
+The post period starts on 1 July 2025; H2 keeps its own label; margins, stems, the download and the retention rule are
+approved; the slug is `texts/procurement-thresholds`, and the change log moves to
+`docs/changelogs/procurement-thresholds.html`.
