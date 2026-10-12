@@ -88,5 +88,38 @@
    "HTTP Error 502: Bad Gateway"
   ],
   "commit": "056832a"
+ },
+ {
+  "date": "2026-10-12",
+  "api": "https://api.bsandova.com",
+  "n": 30,
+  "correct": 0,
+  "by_kind": {
+   "number": {
+    "n": 18,
+    "ok": 0
+   },
+   "text": {
+    "n": 7,
+    "ok": 0
+   },
+   "quote": {
+    "n": 1,
+    "ok": 0
+   },
+   "decline": {
+    "n": 4,
+    "ok": 0
+   }
+  },
+  "protocol_violations": 0,
+  "cost_usd": 0,
+  "median_ms": 0,
+  "model": null,
+  "failed": true,
+  "failed_requests": 30,
+  "errors": [
+   "HTTP Error 502: Bad Gateway"
+  ]
  }
 ]
