@@ -40,7 +40,8 @@ MAX_FAILED_SHARE = 0.01  # bootstrap draws with an undefined statistic; above th
 PRIMARY = ("D_new_a", "D_old_a")
 K_STABILITY = 0.5  # §7.1: gate fails if the 90 % CI of k_low − k_high lies wholly outside ±0.5
 PLACEBO_KEYS = tuple(f"placebo_a_control_{c // 1_000_000}M" for c in CONTROLS)
-Z95, Z90 = 1.959964, 1.644854
+# §6.2: t quantiles on the six degrees of freedom of the seven placebos (decided 12 October 2026)
+T95, T90 = 2.446912, 1.943180
 
 
 def label_keys(adjust: str) -> tuple:
@@ -267,7 +268,7 @@ def calibrate(point: dict, ci: dict, key: str) -> dict:
     est = point[key] - sign * point["placebo_a_mean"]
     excess_var = max(0.0, point["placebo_a_sd"] ** 2 - float(np.mean([ci[k]["se"] ** 2 for k in PLACEBO_KEYS])))
     se = math.sqrt(ci[key]["se"] ** 2 + excess_var)
-    return {"estimate": est, "se": se, "ci95": (est - Z95 * se, est + Z95 * se), "ci90": (est - Z90 * se, est + Z90 * se),
+    return {"estimate": est, "se": se, "ci95": (est - T95 * se, est + T95 * se), "ci90": (est - T90 * se, est + T90 * se),
             "placebo_bias": point["placebo_a_mean"], "placebo_excess_var": excess_var}
 
 

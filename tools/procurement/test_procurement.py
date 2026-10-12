@@ -115,6 +115,9 @@ def test_calibration_subtracts_the_placebo_bias_and_inflates_the_se():
     new, old = bu.calibrate(point, ci, "D_new_a"), bu.calibrate(point, ci, "D_old_a")
     assert new["estimate"] == pytest.approx(0.25) and old["estimate"] == pytest.approx(0.25)
     assert new["se"] == pytest.approx((0.04 ** 2 + 0.10 ** 2 - 0.06 ** 2) ** 0.5)
+    # t quantiles with 6 degrees of freedom (seven placebos), not normal ones
+    assert new["ci95"][1] - new["estimate"] == pytest.approx(2.446912 * new["se"])
+    assert new["ci90"][1] - new["estimate"] == pytest.approx(1.943180 * new["se"])
     quiet = ci | {k: {"se": 0.2} for k in bu.PLACEBO_KEYS}  # placebo spread within its own noise: no inflation
     assert bu.calibrate(point, quiet, "D_new_a")["se"] == pytest.approx(0.04)
 
