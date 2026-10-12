@@ -37,7 +37,7 @@ ASSUME = {
     "alternative": {"move": 0.7, "move_exact": 1.0, "relevant_share": 0.5},  # planted placement at the limits
 }
 MDE_SIMS, BOOT_DRAWS, LABEL_SIMS, LABEL_DRAWS = 150, 199, 40, 99
-Z = 1.959964 + 0.841621
+Z = 2.446912 + 0.905703  # t(6): 95 % interval above 0 with 80 % power, as the labels use (§6.2)
 KEYS = ["D_new_a", "D_old_a", "D_new_b", "D_old_b"]
 
 
@@ -117,7 +117,22 @@ def data_step(n_pre: int, n_post: int, authorities: int) -> None:
     print("ok")
 
 
+def mde_only() -> None:
+    """Recomputes the MDE columns of the saved scenarios (same seeds) after a change of Z; labels are untouched."""
+    path = DOCS / "procurement-bunching-power.json"
+    out = json.loads(path.read_text())
+    for sc in out["scenarios"]:
+        sc["mde_80"] = mde(out["alpha"], sc["n_pre"], sc["n_post"], sc["round_1m"], drift=sc["drift"])
+        sc["mde_80_affected_scale"] = {f"s={s}": sc["mde_80"]["D_new_a"] / s for s in ASSUME["relevant_share"]}
+        path.write_text(json.dumps(out, indent=1))
+    out["mde_multiplier"] = Z
+    path.write_text(json.dumps(out, indent=1))
+    print("ok")
+
+
 def main() -> None:
+    if sys.argv[1:] == ["--mde-only"]:
+        return mde_only()
     alpha, per_month = calibrate(json.loads((DOCS / "procurement-bunching-structure.json").read_text()))
     out = {"assumptions": ASSUME, "alpha": alpha, "records_per_month_in_range_interpolated": per_month,
            "scenarios": []}

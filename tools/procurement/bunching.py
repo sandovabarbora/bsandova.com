@@ -35,7 +35,7 @@ OTHER = (750_000, 1_000_000, 11_000_000)
 VAT_IMAGES = tuple(round(t * 1.21) for t in (*OLD.values(), *NEW.values()))
 
 MARGIN = 0.15
-UNDERPOWERED_MDE = 0.25  # = MARGIN / 1.645 × 2.80, rounded down: above it "not supported" is out of reach (§8.1)
+UNDERPOWERED_MDE = 0.25  # = MARGIN / 1.943 × 3.353 (t, 6 df) = 0.259, rounded down: above it "not supported" is out of reach
 MAX_FAILED_SHARE = 0.01  # bootstrap draws with an undefined statistic; above this the run stops (§8.4)
 PRIMARY = ("D_new_a", "D_old_a")
 K_STABILITY = 0.5  # §7.1: gate fails if the 90 % CI of k_low − k_high lies wholly outside ±0.5
