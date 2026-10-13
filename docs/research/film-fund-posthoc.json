@@ -85,5 +85,138 @@
    "calls": 37,
    "pv": 0.5485
   }
+ },
+ "O3_log_european_admissions": {
+  "coef": 3.9,
+  "lo": -1.8976,
+  "hi": 10.3594,
+  "h": 4.97,
+  "n_left": 81,
+  "n_right": 84,
+  "calls": 34,
+  "pv": 0.176,
+  "label": "underpowered",
+  "missing": 15
+ },
+ "O1_call_fixed_effects": {
+  "coef": 0.4521,
+  "lo": 0.1131,
+  "hi": 0.8965,
+  "h": 4.83,
+  "n_left": 81,
+  "n_right": 83,
+  "calls": 35
+ },
+ "O2_call_fixed_effects": {
+  "coef": 3.9013,
+  "lo": 1.1735,
+  "hi": 7.464,
+  "h": 4.62,
+  "n_left": 73,
+  "n_right": 77,
+  "calls": 33
+ },
+ "O1_feature_length_calls": {
+  "coef": 0.4638,
+  "lo": 0.0098,
+  "hi": 1.0107,
+  "h": 6.76,
+  "n_left": 53,
+  "n_right": 52,
+  "calls": 17,
+  "pv": 0.0457,
+  "definition": "calls whose title names a feature-length film (celovečerní): fiction, debuts, minority co-productions"
+ },
+ "O1_without_animation_and_experimental_calls": {
+  "coef": 0.3513,
+  "lo": -0.2037,
+  "hi": 0.944,
+  "h": 5.48,
+  "n_left": 70,
+  "n_right": 72,
+  "calls": 26,
+  "pv": 0.2061
+ },
+ "O1_2016_2022_release_within_three_years": {
+  "coef": 0.4912,
+  "lo": -0.0019,
+  "hi": 1.1466,
+  "h": 4.5,
+  "n_left": 88,
+  "n_right": 83,
+  "calls": 39,
+  "pv": 0.0508
+ },
+ "O1_zero_admission_links_not_released": {
+  "coef": 0.4116,
+  "lo": -0.1213,
+  "hi": 1.03,
+  "h": 4.99,
+  "n_left": 83,
+  "n_right": 87,
+  "calls": 35,
+  "pv": 0.1219,
+  "links_moved": 5
+ },
+ "balance_prior_funded_in_time": {
+  "coef": -1.0796,
+  "lo": -4.2911,
+  "hi": 2.1197,
+  "h": 5.49,
+  "n_left": 98,
+  "n_right": 101,
+  "calls": 39,
+  "pv": 0.5068
+ },
+ "Q2_by_criterion_first_applications": {
+  "umělecká kvalita projektu": {
+   "rho": -0.191,
+   "lo": -0.321,
+   "hi": -0.054,
+   "n": 195,
+   "calls": 31,
+   "median_admissions": 12235
+  },
+  "personální zajištění projektu": {
+   "rho": -0.057,
+   "lo": -0.209,
+   "hi": 0.097,
+   "n": 195,
+   "calls": 31,
+   "median_admissions": 12235
+  },
+  "přínos a význam pro českou a evropskou kinematografii": {
+   "rho": -0.132,
+   "lo": -0.277,
+   "hi": 0.009,
+   "n": 195,
+   "calls": 31,
+   "median_admissions": 12235
+  },
+  "kredit žadatele": {
+   "rho": 0.023,
+   "lo": -0.181,
+   "hi": 0.206,
+   "n": 195,
+   "calls": 31,
+   "median_admissions": 12235
+  }
+ },
+ "short_film_calls": {
+  "applications": 91,
+  "calls": 7,
+  "funded": 35,
+  "released_share_funded": 0.286,
+  "released_share_unfunded": 0.054,
+  "O1": {
+   "coef": 0.4408,
+   "lo": -0.1623,
+   "hi": 1.3725,
+   "h": 6.53,
+   "n_left": 19,
+   "n_right": 17,
+   "calls": 7,
+   "pv": 0.1223
+  }
  }
 }
