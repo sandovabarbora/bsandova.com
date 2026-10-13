@@ -14,6 +14,9 @@ import pandas as pd
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+# other studies also ship estimate.py / prepare.py; drop their cached modules so these resolve here
+for _name in ("estimate", "prepare", "bunching", "rules", "power", "collect", "synth_contracts"):
+    sys.modules.pop(_name, None)
 import estimate  # noqa: E402
 import prepare  # noqa: E402
 from synth_contracts import World, draw  # noqa: E402
