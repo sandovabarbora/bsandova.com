@@ -1,0 +1,313 @@
+{
+ "assumptions": {
+  "retained_share": [
+   0.6,
+   0.35
+  ],
+  "round_1m": [
+   0.02,
+   0.1,
+   0.3
+  ],
+  "drift": {
+   "retained_share": 0.6,
+   "round_1m": 0.1,
+   "post_exponent": 1.0
+  },
+  "months_pre": 60,
+  "months_post": 12,
+  "authorities": 8000,
+  "size_sigma": 1.5,
+  "tilt_sd": 0.3,
+  "habit_shape": 0.5,
+  "round_100k": 0.15,
+  "relevant_share": [
+   0.3,
+   0.5,
+   0.7
+  ],
+  "alternative": {
+   "move": 0.7,
+   "move_exact": 1.0,
+   "relevant_share": 0.5
+  }
+ },
+ "alpha": 1.6749104549665068,
+ "records_per_month_in_range_interpolated": 11322.573690054533,
+ "scenarios": [
+  {
+   "round_1m": 0.02,
+   "drift": 0.0,
+   "n_pre": 407612,
+   "n_post": 81522,
+   "mde_80": {
+    "D_new_a": 0.046714434893835984,
+    "D_old_a": 0.0647271169653693,
+    "D_new_b": 0.12864538104064996,
+    "D_old_b": 0.1131671994137618
+   },
+   "mde_80_affected_scale": {
+    "s=0.3": 0.1557147829794533,
+    "s=0.5": 0.09342886978767197,
+    "s=0.7": 0.06673490699119426
+   },
+   "null": {
+    "gate_fail_rate": 0.0,
+    "H1 supported": 0.0,
+    "H1 not supported": 1.0,
+    "H1 inconclusive": 0.0,
+    "H1 not supported, detected below the margin": 0.0,
+    "mean_calibrated_D_new_a": 0.002471469087238156
+   },
+   "alternative": {
+    "gate_fail_rate": 0.0,
+    "H1 supported": 1.0,
+    "H1 not supported": 0.0,
+    "H1 inconclusive": 0.0,
+    "H1 not supported, detected below the margin": 0.0,
+    "mean_calibrated_D_new_a": 0.1915238521724944
+   },
+   "effective_power_supported": 1.0,
+   "retained_share": 0.6
+  },
+  {
+   "round_1m": 0.1,
+   "drift": 0.0,
+   "n_pre": 407612,
+   "n_post": 81522,
+   "mde_80": {
+    "D_new_a": 0.09041863245920109,
+    "D_old_a": 0.1241865432567257,
+    "D_new_b": 0.13497943475871366,
+    "D_old_b": 0.1181182552991541
+   },
+   "mde_80_affected_scale": {
+    "s=0.3": 0.3013954415306703,
+    "s=0.5": 0.18083726491840219,
+    "s=0.7": 0.12916947494171585
+   },
+   "null": {
+    "gate_fail_rate": 0.0,
+    "H1 supported": 0.0,
+    "H1 not supported": 0.975,
+    "H1 inconclusive": 0.025,
+    "H1 not supported, detected below the margin": 0.0,
+    "mean_calibrated_D_new_a": 8.376130106588776e-05
+   },
+   "alternative": {
+    "gate_fail_rate": 0.0,
+    "H1 supported": 0.975,
+    "H1 not supported": 0.0,
+    "H1 inconclusive": 0.025,
+    "H1 not supported, detected below the margin": 0.0,
+    "mean_calibrated_D_new_a": 0.1899426074758786
+   },
+   "effective_power_supported": 0.975,
+   "retained_share": 0.6
+  },
+  {
+   "round_1m": 0.3,
+   "drift": 0.0,
+   "n_pre": 407612,
+   "n_post": 81522,
+   "mde_80": {
+    "D_new_a": 0.1799387782799086,
+    "D_old_a": 0.2668359184903131,
+    "D_new_b": 0.14148715315967664,
+    "D_old_b": 0.12330150407079939
+   },
+   "mde_80_affected_scale": {
+    "s=0.3": 0.5997959275996954,
+    "s=0.5": 0.3598775565598172,
+    "s=0.7": 0.25705539754272655
+   },
+   "null": {
+    "gate_fail_rate": 0.0,
+    "H1 supported": 0.025,
+    "H1 not supported": 0.375,
+    "H1 inconclusive": 0.6,
+    "H1 not supported, detected below the margin": 0.0,
+    "mean_calibrated_D_new_a": -0.00013319746207640198
+   },
+   "alternative": {
+    "gate_fail_rate": 0.0,
+    "H1 supported": 0.7,
+    "H1 not supported": 0.025,
+    "H1 inconclusive": 0.275,
+    "H1 not supported, detected below the margin": 0.0,
+    "mean_calibrated_D_new_a": 0.19026044697152905
+   },
+   "effective_power_supported": 0.7,
+   "retained_share": 0.6
+  },
+  {
+   "round_1m": 0.02,
+   "drift": 0.0,
+   "n_pre": 237774,
+   "n_post": 47554,
+   "mde_80": {
+    "D_new_a": 0.0710211907493956,
+    "D_old_a": 0.10044962581947546,
+    "D_new_b": 0.17328251106259882,
+    "D_old_b": 0.16221971251916814
+   },
+   "mde_80_affected_scale": {
+    "s=0.3": 0.23673730249798533,
+    "s=0.5": 0.1420423814987912,
+    "s=0.7": 0.101458843927708
+   },
+   "null": {
+    "gate_fail_rate": 0.0,
+    "H1 supported": 0.0,
+    "H1 not supported": 1.0,
+    "H1 inconclusive": 0.0,
+    "H1 not supported, detected below the margin": 0.0,
+    "mean_calibrated_D_new_a": 0.0015101169294987797
+   },
+   "alternative": {
+    "gate_fail_rate": 0.0,
+    "H1 supported": 1.0,
+    "H1 not supported": 0.0,
+    "H1 inconclusive": 0.0,
+    "H1 not supported, detected below the margin": 0.0,
+    "mean_calibrated_D_new_a": 0.18966301159679863
+   },
+   "effective_power_supported": 1.0,
+   "retained_share": 0.35
+  },
+  {
+   "round_1m": 0.1,
+   "drift": 0.0,
+   "n_pre": 237774,
+   "n_post": 47554,
+   "mde_80": {
+    "D_new_a": 0.11825588550255342,
+    "D_old_a": 0.1744172416257528,
+    "D_new_b": 0.1862109010195099,
+    "D_old_b": 0.1676292231000764
+   },
+   "mde_80_affected_scale": {
+    "s=0.3": 0.39418628500851144,
+    "s=0.5": 0.23651177100510684,
+    "s=0.7": 0.16893697928936205
+   },
+   "null": {
+    "gate_fail_rate": 0.0,
+    "H1 supported": 0.0,
+    "H1 not supported": 0.825,
+    "H1 inconclusive": 0.175,
+    "H1 not supported, detected below the margin": 0.0,
+    "mean_calibrated_D_new_a": 0.008914657862182197
+   },
+   "alternative": {
+    "gate_fail_rate": 0.0,
+    "H1 supported": 0.975,
+    "H1 not supported": 0.0,
+    "H1 inconclusive": 0.025,
+    "H1 not supported, detected below the margin": 0.0,
+    "mean_calibrated_D_new_a": 0.1961413899813482
+   },
+   "effective_power_supported": 0.975,
+   "retained_share": 0.35
+  },
+  {
+   "round_1m": 0.3,
+   "drift": 0.0,
+   "n_pre": 237774,
+   "n_post": 47554,
+   "mde_80": {
+    "D_new_a": 0.24391674932004528,
+    "D_old_a": 0.43643467506545963,
+    "D_new_b": 0.20789013234360115,
+    "D_old_b": 0.19339172476019295
+   },
+   "mde_80_affected_scale": {
+    "s=0.3": 0.8130558310668177,
+    "s=0.5": 0.48783349864009057,
+    "s=0.7": 0.3484524990286361
+   },
+   "null": {
+    "gate_fail_rate": 0.0,
+    "H1 supported": 0.025,
+    "H1 not supported": 0.075,
+    "H1 inconclusive": 0.9,
+    "H1 not supported, detected below the margin": 0.0,
+    "mean_calibrated_D_new_a": 0.012356625369987552
+   },
+   "alternative": {
+    "gate_fail_rate": 0.0,
+    "H1 supported": 0.45,
+    "H1 not supported": 0.025,
+    "H1 inconclusive": 0.525,
+    "H1 not supported, detected below the margin": 0.0,
+    "mean_calibrated_D_new_a": 0.19759138136107984
+   },
+   "effective_power_supported": 0.45,
+   "retained_share": 0.35
+  },
+  {
+   "round_1m": 0.1,
+   "drift": 1.0,
+   "n_pre": 407612,
+   "n_post": 81522,
+   "mde_80": {
+    "D_new_a": 1.4300760007843476,
+    "D_old_a": 1.4589597496134978,
+    "D_new_b": 0.14147156968298488,
+    "D_old_b": 0.11829476013606359
+   },
+   "mde_80_affected_scale": {
+    "s=0.3": 4.7669200026144924,
+    "s=0.5": 2.860152001568695,
+    "s=0.7": 2.042965715406211
+   },
+   "null": {
+    "gate_fail_rate": 1.0,
+    "H1 supported": 0.0,
+    "H1 not supported": 0.0,
+    "H1 inconclusive": 1.0,
+    "H1 not supported, detected below the margin": 0.0,
+    "mean_calibrated_D_new_a": -0.3713377587204311
+   },
+   "alternative": {
+    "gate_fail_rate": 1.0,
+    "H1 supported": 0.0,
+    "H1 not supported": 0.0,
+    "H1 inconclusive": 1.0,
+    "H1 not supported, detected below the margin": 0.0,
+    "mean_calibrated_D_new_a": -0.18319571572828053
+   },
+   "effective_power_supported": 0.0,
+   "retained_share": 0.6
+  }
+ ],
+ "mde_multiplier": 3.352615,
+ "data_step": {
+  "runs": [
+   {
+    "D_new_a": 0.04462242568226718,
+    "D_old_a": 0.057290718356381595,
+    "D_new_b": 0.10909084966596849,
+    "D_old_b": 0.10990018801949503
+   },
+   {
+    "D_new_a": 0.09054825085621072,
+    "D_old_a": 0.11810726976655547,
+    "D_new_b": 0.11338310386637307,
+    "D_old_b": 0.10828657360907198
+   },
+   {
+    "D_new_a": 0.21986190906333358,
+    "D_old_a": 0.2803545810987737,
+    "D_new_b": 0.12713647489398539,
+    "D_old_b": 0.12227248529835155
+   }
+  ]
+ },
+ "data_step_mde": {
+  "D_new_a": 0.21986190906333358,
+  "D_old_a": 0.2803545810987737,
+  "D_new_b": 0.12713647489398539,
+  "D_old_b": 0.12227248529835155
+ }
+}
