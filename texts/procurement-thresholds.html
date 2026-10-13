@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Priced at the limit: Czech public contracts after the small-contract threshold rose in 2025</title>
+<meta name="description" content="A registered study of 5 857 800 Czech contract records, 2020–2026: after the limit for small-scale contracts rose in April 2025, more contracts were priced at exactly the new 3 million Kč limit than round numbers explain.">
+<meta property="og:title" content="Priced at the limit: Czech public contracts after the small-contract threshold rose">
+<meta property="og:description" content="After the small-contract limit rose to 3 million Kč, more Czech public contracts were priced at exactly 3 million than round numbers explain; registered study, 2020–2026.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://bsandova.com/texts/procurement-thresholds">
+<meta property="og:image" content="https://bsandova.com/assets/og/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bsandova.com/assets/og/home.jpg">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://bsandova.com/texts/procurement-thresholds">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../text.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../a24.css">
+<style>
+.text dl.meta{display:block;letter-spacing:normal;text-transform:none;font-size:12px}
+.text dl.meta div{border-right:0;padding-left:0;grid-template-columns:13ch 1fr}
+.text dl.meta dd{overflow-wrap:anywhere}
+@media (max-width:560px){.text dl.meta div{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">research · public spending · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Research · public spending · Czech contracts, 2020–2026</p>
+  <h1>Priced at the limit: <em>Czech public contracts after the small-contract threshold rose in 2025</em></h1>
+  <p class="deck">After Czechia raised its small-contract limits in April 2025, more contracts were priced at exactly the new limits than round numbers explain: +0.16 (95 % CI 0.06 to 0.26), supported.</p>
+  <dl class="facts">
+    <div><dt>mass at the new limits, per expected contract in the band</dt><dd>+0.16 <small>95 % CI 0.06 to 0.26, t with 6 degrees of freedom · supported</small></dd></div>
+    <div><dt>at 3 million alone (supplies and services)</dt><dd>+0.30 <small>95 % CI 0.21 to 0.43, bootstrap by authority · 9 million (works): 0.00</small></dd></div>
+    <div><dt>mass at the old limits, shrink</dt><dd>+0.11 <small>95 % CI 0.00 to 0.22 · underpowered: smallest detectable 0.28, bound 0.25</small></dd></div>
+    <div><dt>contracts analysed, 0.5–13.5 million Kč</dt><dd>445 915 + 106 502 <small>administrative count · before / after · 6 663 authorities</small></dd></div>
+  </dl>
+</header>
+<details class="tldr" open>
+  <summary>Overwhelmed? Here's the short version</summary>
+  <ul>
+    <li>A contract at or below the small-scale limit can be awarded without a tender. On 3 April 2025 the limit rose from 2 to 3 million Kč for supplies and services and from 6 to 9 million for works. In the public register of contracts, the share priced at exactly 3 million rose after the change and the share at exactly 2 million fell.</li>
+    <li>The whole measured response is at 3 million. At 9 million, the works limit, contracts priced exactly at the limit did not change.</li>
+    <li>The test registered in advance holds across most specifications, but 2 of sixteen checks lose it, and whether the old 2 million limit lost its pull could not be tested with enough precision.</li>
+    <li>Prices alone cannot say why authorities price at the limit: the data fit an estimate set to the limit, a narrower scope, a budget the bidder matched, or other choices. Nothing here is about what the contracts cost or who won them, and the smallest municipalities are not in the register.</li>
+  </ul>
+</details>
+<dl class="meta">
+  <div><dt>published</dt><dd>13 October 2026 · <a href="../changelog/#procurement-thresholds">version 1</a></dd></div>
+  <div><dt>work since</dt><dd>October 2026</dd></div>
+</dl>
+<details class="meta-more">
+  <summary>About this study</summary>
+<dl class="meta">
+  <div><dt>status</dt><dd>research, registered study</dd></div>
+  <div><dt>registration</dt><dd>design registered by the signed annotated tag <code>procurement-bunching-design</code> (tag object <code>217169a1</code>, on commit <code>a048950</code>), verified with <code>git tag -v</code> and pushed to the public repository with its branch before any data beyond the two months of structure checks were downloaded. GitHub's activity log records the branch push at 13:41:28 UTC on 12 October 2026; GitHub keeps no server-side time for the tag push, and the tag's own date, 13:41:21 UTC, is set by the tagging machine. The data were downloaded from 14:58 UTC; results commit <code>e4ab590</code>. The registration, the data step and the deletion of the raw files are recorded in <a href="../changelog/#procurement-thresholds-changes">the change log</a>.</dd></div>
+  <div><dt>data</dt><dd>Registr smluv, monthly open-data dumps January 2020 – September 2026, 81 files, 9.0 GiB, accessed 12 October 2026<sup class="cite"><a href="#r11">11</a></sup>; hashes in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/procurement-bunching-manifest.json">procurement-bunching-manifest.json</a>. The price bins behind fig. 1 are in <a href="../assets/procurement/bins.csv">bins.csv</a>; the record-level table is not published.</dd></div>
+  <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/procurement">tools/procurement/</a> at the commit that publishes this page; rebuild: <code>python tools/procurement/estimate.py</code> after <code>collect.py</code> and <code>prepare.py</code></dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Priced at the limit: Czech public contracts after the small-contract threshold rose in 2025</i>. bsandova.com/texts/procurement-thresholds, version 1.</dd></div>
+  <div><dt>licence</dt><dd>code MIT; text, figures and the binned data CC BY 4.0</dd></div>
+</dl>
+</details>
+
+<section>
+<p>Czech public bodies may award a <i>small-scale contract</i> without a tender, as long as they treat suppliers fairly and transparently. Above the limit they must run a procurement procedure, with publication, deadlines and the chance for any supplier to bid. On 3 April 2025 an amendment to the procurement act raised the limit for supplies and services from 2 to 3 million Kč and for works from 6 to 9 million Kč, both without VAT<sup class="cite"><a href="#r1">1</a></sup>. The act counts a contract whose value is equal to the limit as small-scale<sup class="cite"><a href="#r2">2</a></sup>, so a price of exactly 3 000 000 Kč needs no tender after the change and needed one before it.</p>
+<p>A limit like this invites contracts to cluster just under it. Palguta and Pertold found such clustering in Czech procurement when these limits were first introduced<sup class="cite"><a href="#r3">3</a></sup>, and studies of other countries ask what discretion below a limit does to competition and prices<sup class="cite"><a href="#r4">4</a></sup><sup class="cite"><a href="#r5">5</a></sup><sup class="cite"><a href="#r6">6</a></sup>. Reading such clusters is the method of bunching estimation<sup class="cite"><a href="#r7">7</a></sup><sup class="cite"><a href="#r8">8</a></sup><sup class="cite"><a href="#r9">9</a></sup>: the number of cases near a threshold is compared with what a smooth distribution would put there. A single limit leaves one doubt. The old limits were round millions, and contract prices cluster at round numbers anyway. The 2025 change moves the limit to another round million, so the question here is whether contracts priced at the limit moved with it, beyond what happened at round millions that carry no legal meaning. The change in the law is the source of variation; the comparison is the same price before and after.</p>
+</section>
+
+<section>
+<h2>Data</h2>
+<p>Every Czech public body except the smallest municipalities must publish its contracts above 50 000 Kč without VAT in the public register of contracts, the Registr smluv, or the contract does not take effect<sup class="cite"><a href="#r12">12</a></sup>. The register's metadata are open data, published as one file per month<sup class="cite"><a href="#r11">11</a></sup>. The study read the 81 monthly files from January 2020 to September 2026, 7 025 188 records in all. After keeping the latest valid version of each contract, those in Czech crowns with a price, and the dates of the two periods, 5 857 800 remained; 855 187 were left out because their subject marks them as grants, leases, sales or similar agreements that are not purchases, by a list of word stems fixed before the data were read, and 6 401 had no publishing body. 26 483 records that repeat another one's parties, date, contract number and price were flagged and kept out.</p>
+<p>The register records the price in the contract, which for a contract awarded without a tender is the value the law uses<sup class="cite"><a href="#r10">10</a></sup>; for a contract from a tender it is the winning bid, usually below the estimate the tender started from. The price without VAT, the one the limit applies to, was given for 67.7 % of records before the change and 71.3 % after it; records with only a price including VAT are added in a check. The analysis covers prices between 0.5 and 13.5 million Kč: 445 915 contracts concluded in 2020–2024 and 106 502 concluded between July 2025 and June 2026, from 6 663 public bodies. The quarter after the change is left out, because tenders started under the old limit were finished under it and internal rules took months to follow.</p>
+</section>
+
+<section>
+<h2>How this was done</h2>
+<p>For each limit and each period, prices are counted in bins of 10 000 Kč. A smooth curve, with extra terms for the pull of multiples of 50 000, 100 000 and 500 000 Kč, is fitted to the bins away from the limits, from other round millions and from nearby legal thresholds such as the EU tender limits<sup class="cite"><a href="#r13">13</a></sup>. It gives the number of contracts expected in the band from 5 % below a limit up to it. Two quantities are measured against that number. The first, <i>a</i>, is the count of contracts priced at exactly the limit; the second, <i>b</i>, is the excess of contracts strictly inside the band, below the limit. The registered test rests on <i>a</i>: the law makes the limit itself legal, so a price set to stay small-scale can sit exactly on it, while prices from tenders that came in just under the limit spread across the band and land in <i>b</i>.</p>
+<p>A price of exactly 3 million was a round number before it became the limit. The comparison therefore takes each limit against itself, before and after the change, and scales its round-number pull by how the pull changed at seven round millions with no legal meaning (4, 5, 7, 8, 10, 12 and 13 million). The registered estimate for the new limits, D*<sub>new</sub>, is the average over 3 and 9 million of the mass after the change minus the scaled mass before it; for the old limits, D*<sub>old</sub>, it is the scaled mass before minus the mass after, at 2 and 6 million. Each round million is also treated in turn as if it were a new limit; the average of these placebo estimates corrects the result for any bias of the scaling, and their spread widens its interval. Intervals come from resampling whole public bodies (999 draws) and use t quantiles with six degrees of freedom, the number the seven placebos allow.</p>
+<p>The readings were fixed in advance. A hypothesis is <i>underpowered</i> if the effect it could detect, computed from the number of contracts before any estimate, exceeds 0.25; <i>inconclusive</i> if the validity check fails; <i>not supported</i> if its 90 % interval lies inside ±0.15; <i>supported</i> if its 95 % interval lies above zero; and inconclusive otherwise. The validity check fails if the placebos show a bias beyond ±0.15, or if the round-number scaling differs between low and high millions by more than half its size. A response of 0.15 means 15 contracts priced at the limit for every 100 expected in its band.</p>
+<details class="appendix">
+  <summary>Assumptions and method in detail</summary>
+<p>The estimate is consistent with a response of recorded prices to the limit only under five assumptions. A1: without the limit, prices in each band would follow the fitted smooth curve with its sub-million rounding. A2: a change in the taste for round millions scales the mass at every round million by the same factor. A3: nothing else changed at these prices on 3 April 2025; the same amendment moved the threshold for publishing contracts on a body's own website from 500 000 to 1 million Kč, which does not apply to contracts in the register, and from May 2025 recipients of EU funds that are not public bodies have a 6 million limit of their own<sup class="cite"><a href="#r15">15</a></sup>. A4: the set of bodies that publish in the register did not change at the same time; the register's act was last amended with effect from January 2025. A5: the way prices are typed into the register, including prices with VAT entered as without it, did not change differently at the limits.</p>
+<p>Before the data were read, a simulation calibrated on counts far from every threshold set the effect each hypothesis could detect; it was rerun with the real number of contracts before any estimate, which fixed the label of the old-limit test as underpowered. The scaling factor is a ratio because enough contracts sit at exactly a control million; an additive version is one of the checks. Bins are 10 000 Kč wide; the polynomial has degree 7 in the logarithm of price. The full design, with the simulations and the reasons for each choice, is in the repository.</p>
+</details>
+</section>
+
+<section>
+<h2>The tests</h2>
+<div class="ht-wrap">
+<table class="ht">
+  <thead><tr><th>Question</th><th>Registered rule</th><th>Result</th><th>Label</th></tr></thead>
+  <tbody>
+  <tr><td>H1 · more contracts at exactly the new limits (3 and 9 million)</td><td>supported if the 95 % CI lies above 0; not supported if the 90 % CI lies within ±0.15</td><td class="v">+0.16 <small>95 % CI 0.06 to 0.26 · 90 % CI 0.08 to 0.24</small></td><td class="v"><b>supported</b></td></tr>
+  <tr><td>H2 · fewer at exactly the old limits (2 and 6 million)</td><td>the same, unless the detectable effect exceeds 0.25</td><td class="v">+0.11 <small>95 % CI 0.00 to 0.22 · detectable effect 0.28</small></td><td class="v"><b>underpowered</b></td></tr>
+  <tr><td>Validity check · placebo bias and stability of the round-number scaling</td><td>fails if either lies wholly outside its bound</td><td class="v">bias −0.006 <small>scaling 4–5 M 1.08, 10–13 M 0.80; difference 0.28, 90 % CI 0.05 to 0.51</small></td><td class="v"><b>passed</b></td></tr>
+  <tr><td>b · contracts just below the limits</td><td>descriptive, no label</td><td class="v">new +0.31, old +0.40 <small>95 % CI 0.22 to 0.41; 0.25 to 0.54</small></td><td class="v">descriptive</td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<section>
+<h2>Contracts priced at exactly the new limits</h2>
+<p>At the new limits, the mass of contracts priced exactly at the limit rose by 0.16 per expected contract in the band, beyond what the change at round millions predicts (95 % CI 0.06 to 0.26), so by the rule set in advance the hypothesis is supported. In the words fixed before the data: more contracts were priced at exactly the new limits; at the old limits the mass did not measurably shrink, a test that could not be run with enough precision here. The pooled number hides where the response is. At 3 million, the limit for supplies and services, the increase is 0.30 (0.21 to 0.43); at 9 million, the limit for works, it is 0.00 (−0.03 to 0.04). Before the change, 0.18 contracts were priced at exactly 3 million for every one expected in the band below it; after the change, 0.49. At 9 million the figure stayed at 0.08 (fig. 3).</p>
+<p>Fig. 1 shows the prices around 3 million. In 2020–2024 about 15 contracts a month were priced at exactly 3 000 000 Kč, when 3 million was only a round number. From July 2025, about 52 a month were, and the bins just below 3 million sit above the fitted curve, where before the change they sat on it.</p>
+<figure data-chart="../assets/procurement/charts.json#around3m">
+  <p class="ch-head">After the limit rose to 3 million, contracts priced at exactly 3 million went from about 15 to about 52 a month.</p>
+  <img src="../assets/procurement/01-around-3m.svg" alt="Two panels of contracts a month by price between 2.4 and 3.6 million Kč, before and after the change: after it, more contracts sit just under and exactly at 3 million than the dashed counterfactual curve." loading="lazy">
+  <figcaption><b>fig. 1</b> · Contracts a month by price without VAT in bins of 10 000 Kč, 2.4–3.6 million Kč, January 2020 – December 2024 (left, 445 915 contracts in the whole range of 0.5–13.5 million) and July 2025 – June 2026 (right, 106 502); dashed, the registered counterfactual fitted away from the limits; dot, contracts priced at exactly 3 000 000 Kč; shaded, the 5 % band below 3 million. Contracts at exactly a whole million are not in the bins. Data: Registr smluv<sup class="cite"><a href="#r11">11</a></sup>, accessed 12 October 2026.</figcaption>
+</figure>
+<p>By month of conclusion, contracts priced at exactly 3 million made up 1.9 of every 1 000 contracts in the range in 2020–2024 on average and 5.9 from July 2025; at exactly 2 million, 7.6 and 4.6 (fig. 2). Single months vary widely: before the change, one month reached 7.2 at 3 million. The monthly series is descriptive; the registered test compares whole periods.</p>
+<figure data-chart="../assets/procurement/charts.json#monthly">
+  <p class="ch-head">The share of contracts priced at exactly 3 million rises after April 2025; the share at exactly 2 million falls.</p>
+  <img src="../assets/procurement/02-monthly.svg" alt="Monthly share of contracts priced at exactly 2 million and at exactly 3 million Kč, 2020 to mid-2026: the 3 million line rises after April 2025 while the 2 million line falls." loading="lazy">
+  <figcaption><b>fig. 2</b> · Contracts priced at exactly 2 000 000 and 3 000 000 Kč without VAT per 1 000 contracts in the range 0.5–13.5 million Kč, by month of conclusion, January 2020 – June 2026; January to March 2025, around the passing of the amendment, are left out by design; dotted, 3 April 2025. Descriptive. Data: Registr smluv<sup class="cite"><a href="#r11">11</a></sup>, accessed 12 October 2026.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>The old limits, and contracts just below each limit</h2>
+<p>At the old limits, the mass priced exactly at the limit fell by 0.11 (95 % CI 0.00 to 0.22), driven by 2 million, where it went from 0.47 to 0.26 per expected contract; at 6 million it stayed at 0.14. With the number of contracts available, this test could detect only an effect of 0.28 or more, above the bound of 0.25 set in advance, so the hypothesis is underpowered and these numbers are a description. The old limits may also keep some pull of their own: the model directive the ministry offers municipalities uses 2 and 6 million as bounds between categories of small contracts<sup class="cite"><a href="#r14">14</a></sup>.</p>
+<p>Just below the limits, in <i>b</i>, the band below the new limits filled and the band below the old ones emptied: +0.31 (0.22 to 0.41) at the new limits and +0.40 (0.25 to 0.54) at the old ones (fig. 3). Unlike <i>a</i>, <i>b</i> moved at the works limit too, by 0.27 (0.15 to 0.40). That pattern does not need anyone to aim at the limit. A contract estimated just above the limit goes to a tender, and a winning bid below the estimate can land in the band under it; when the limit moves, that band moves with it. <i>b</i> carries no label for this reason.</p>
+<figure data-chart="../assets/procurement/charts.json#ab">
+  <p class="ch-head">At exactly the limit (a), the mass rose at 3 million and fell at 2 million; just below each limit (b), it moved at all four.</p>
+  <img src="../assets/procurement/03-a-b.svg" alt="Arrows from before to after the change for each limit: contracts at exactly the limit rise at 3 million and fall at 2 million, little change at 6 and 9 million; contracts just below the limit fall at both old limits and rise at both new ones." loading="lazy">
+  <figcaption><b>fig. 3</b> · Contracts priced at exactly each limit (a, left) and the excess strictly within 5 % below it (b, right), each per contract the counterfactual expects in that band, from 2020–2024 (circle) to July 2025 – June 2026 (arrow head); point estimates of the registered model, intervals in the text. Data: Registr smluv<sup class="cite"><a href="#r11">11</a></sup>, accessed 12 October 2026.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>Robustness</h2>
+<p>Each check changes one choice and recomputes the calibrated estimate for the new limits. By the rule set in advance, the result would be called sensitive if three or more of sixteen checks changed its label; 2 did. Narrowing the band to 2.5 % below the limit raises the estimate, and widening it to 10 % lowers it to 0.08, which reads as "not supported": a mass at a single price weighs less against a wider band. Keeping only records whose publisher marked itself as the payer, 26 % of them, gives 0.09 (−0.02 to 0.19), inconclusive. The other checks stay between 0.12 and 0.27, all supported.</p>
+<div class="ht-wrap">
+<table class="ht">
+  <thead><tr><th>Check</th><th>D*<sub>new</sub>, 95 % CI</th><th>Label</th></tr></thead>
+  <tbody>
+  <tr><td>registered estimate</td><td class="v">+0.16 <small>0.06 to 0.26</small></td><td class="v">supported</td></tr>
+  <tr><td>band 2.5 % below the limit</td><td class="v">+0.27 <small>0.08 to 0.46</small></td><td class="v">supported</td></tr>
+  <tr><td>band 10 % below the limit</td><td class="v">+0.08 <small>0.03 to 0.13</small></td><td class="v">not supported</td></tr>
+  <tr><td>curve of degree 5 / 9</td><td class="v">+0.16 / +0.15 <small>0.08 to 0.25; 0.04 to 0.25</small></td><td class="v">supported / supported</td></tr>
+  <tr><td>additive round-number scaling</td><td class="v">+0.16 <small>0.06 to 0.26</small></td><td class="v">supported</td></tr>
+  <tr><td>nearest round millions only</td><td class="v">+0.16 <small>0.06 to 0.26</small></td><td class="v">supported</td></tr>
+  <tr><td>prices with VAT typed as without it, excluded from the fit</td><td class="v">+0.16 <small>0.06 to 0.26</small></td><td class="v">supported</td></tr>
+  <tr><td>records with only a price with VAT added</td><td class="v">+0.17 <small>0.08 to 0.26</small></td><td class="v">supported</td></tr>
+  <tr><td>records with equal prices with and without VAT dropped</td><td class="v">+0.17 <small>0.05 to 0.28</small></td><td class="v">supported</td></tr>
+  <tr><td>duplicates kept</td><td class="v">+0.16 <small>0.06 to 0.26</small></td><td class="v">supported</td></tr>
+  <tr><td>after period from 3 April / 1 October 2025</td><td class="v">+0.14 / +0.18 <small>0.07 to 0.22; 0.10 to 0.25</small></td><td class="v">supported / supported</td></tr>
+  <tr><td>before period 2022–2024</td><td class="v">+0.16 <small>0.07 to 0.25</small></td><td class="v">supported</td></tr>
+  <tr><td>largest 1 % of bodies dropped</td><td class="v">+0.18 <small>0.08 to 0.29</small></td><td class="v">supported</td></tr>
+  <tr><td>linked records / orders / framework and periodic prices dropped</td><td class="v">+0.19 / +0.19 / +0.12 <small>0.10 to 0.28; 0.08 to 0.29; 0.03 to 0.21</small></td><td class="v">supported / supported / supported</td></tr>
+  <tr><td>publisher marked as payer only</td><td class="v">+0.09 <small>−0.02 to 0.19</small></td><td class="v">inconclusive</td></tr>
+  <tr><td>placebo: a fake change on 1 January 2023, within 2020–2024</td><td class="v">+0.01 <small>−0.08 to 0.10</small></td><td class="v">not supported</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Three further caveats bear on the reading. The fake change in 2023 finds nothing (90 % CI −0.03 to 0.03), but one of the seven round millions does move when treated as a limit: at 10 million the placebo estimate is −0.07 (90 % CI −0.148 to −0.003), inside the bound but not zero. The round-number scaling is 1.08 at 4–5 million and 0.80 at 10–13 million; the difference passed the validity check, but the assumption that rounding changed by one factor everywhere holds only roughly. And the check that splits contracts by type, using word stems in their subjects, fails its rule: among contracts marked as works, the estimate at 3 million is −0.001, as expected, but its 90 % interval reaches −0.154, just past the bound of −0.15, so the split is too imprecise to confirm that the response comes from supplies and services alone.</p>
+</section>
+
+<section>
+<h2>What this means</h2>
+<p>Measured: after the limit for supplies and services rose to 3 million Kč, more Czech public contracts were priced at exactly 3 million than the change in round-number pricing explains, an increase of 0.30 contracts per expected contract in the band (95 % CI 0.21 to 0.43). At the works limit nothing comparable happened. Whether the old limits lost their pull could not be tested precisely.</p>
+<p>Inferred, under assumptions A1–A5: the pattern is consistent with recorded prices responding to the legal limit. Which choices produce it, a scope trimmed to fit, an estimate set at the limit, a budget the supplier matched, the data cannot tell, and the study passes no judgement on them. For anyone setting the limit, the measured quantity is how much the mass at the limit grows when the limit moves: 0.30 contracts per expected contract in the band at 3 million (0.21 to 0.43), and none detectable at 9 million.</p>
+</section>
+
+<section>
+<h2>What this does not show</h2>
+<p>The study measures prices in the register, not the estimates authorities set before a tender, so a contract priced at the limit after a tender cannot be told from one awarded directly. It does not show whether contracts at the limit cost more, how many suppliers competed, or who won them. The register exempts municipalities without extended powers and the bodies they own<sup class="cite"><a href="#r12">12</a></sup>, so a large part of small-scale purchasing, in small municipalities, is not in the data. A purchase divided into several contracts would place each part far below the limit, outside these bands. Twelve months after the change is a short period, and some bodies adjusted their internal rules months later<sup class="cite"><a href="#r14">14</a></sup>. The pooled estimate dilutes each limit by the other type of contract, and the split by type rests on word stems.</p>
+</section>
+
+<section id="reproduction">
+<h2>Reproduction</h2>
+<p>Every number on this page is filled in from <a href="../assets/procurement/results.json"><code>assets/procurement/results.json</code></a> and the screening, power and manifest files by a script. From the repository root:</p>
+<ol>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/procurement/collect.py"><code>tools/procurement/collect.py</code></a>: the monthly dumps and their hashes.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/procurement/prepare.py"><code>prepare.py --totals-to-power</code></a>: the screening, and the detectable effects from the real counts.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/procurement/estimate.py"><code>estimate.py</code></a>: the registered estimates and checks.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/procurement/article.py"><code>article.py</code></a>: the figures and this page.</li>
+</ol>
+<p>The design is <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/procurement-bunching-design.md"><code>docs/research/procurement-bunching-design.md</code></a>.</p>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">Zákon č. 69/2025 Sb., part three, amending the public procurement act; promulgated 19 March 2025, in effect from 3 April 2025. <a href="https://www.zakonyprolidi.cz/cs/2025-69">zakonyprolidi.cz/cs/2025-69</a>. Accessed 12 October 2026.</li>
+<li id="r2">Zákon č. 134/2016 Sb., o zadávání veřejných zakázek, §§ 16 and 27, consolidated text. <a href="https://www.zakonyprolidi.cz/cs/2016-134">zakonyprolidi.cz/cs/2016-134</a>. Accessed 12 October 2026.</li>
+<li id="r3">Palguta, J., Pertold, F. (2017). Manipulation of procurement contracts: evidence from the introduction of discretionary thresholds. <i>American Economic Journal: Economic Policy</i> 9(2), 293–315. <a href="https://doi.org/10.1257/pol.20150511">doi:10.1257/pol.20150511</a>. Accessed 12 October 2026.</li>
+<li id="r4">Coviello, D., Guglielmo, A., Spagnolo, G. (2018). The effect of discretion on procurement performance. <i>Management Science</i> 64(2), 715–738. <a href="https://doi.org/10.1287/mnsc.2016.2628">doi:10.1287/mnsc.2016.2628</a>. Accessed 12 October 2026.</li>
+<li id="r5">Szucs, F. (2024). Discretion and favoritism in public procurement. <i>Journal of the European Economic Association</i> 22(1), 117–160. <a href="https://doi.org/10.1093/jeea/jvad017">doi:10.1093/jeea/jvad017</a>. Accessed 12 October 2026.</li>
+<li id="r6">Baránek, B., Titl, V. (2024). The cost of favoritism in public procurement. <i>Journal of Law and Economics</i> 67(2), 445–477. <a href="https://doi.org/10.1086/727793">doi:10.1086/727793</a>. Accessed 12 October 2026.</li>
+<li id="r7">Kleven, H. J. (2016). Bunching. <i>Annual Review of Economics</i> 8, 435–464. <a href="https://doi.org/10.1146/annurev-economics-080315-015234">doi:10.1146/annurev-economics-080315-015234</a>. Accessed 12 October 2026.</li>
+<li id="r8">Chetty, R., Friedman, J. N., Olsen, T., Pistaferri, L. (2011). Adjustment costs, firm responses, and micro vs. macro labor supply elasticities: evidence from Danish tax records. <i>Quarterly Journal of Economics</i> 126(2), 749–804. <a href="https://doi.org/10.1093/qje/qjr013">doi:10.1093/qje/qjr013</a>. Accessed 12 October 2026.</li>
+<li id="r9">Kleven, H. J., Waseem, M. (2013). Using notches to uncover optimization frictions and structural elasticities: theory and evidence from Pakistan. <i>Quarterly Journal of Economics</i> 128(2), 669–723. <a href="https://doi.org/10.1093/qje/qjt004">doi:10.1093/qje/qjt004</a>. Accessed 12 October 2026.</li>
+<li id="r10">Ministerstvo pro místní rozvoj (2025). Ke zvýšení limitů pro veřejné zakázky malého rozsahu dojde od 3. dubna 2025. Portál o veřejných zakázkách, 20 March 2025. <a href="https://portal-vz.cz/info-forum-vzdelavani/aktuality/ke-zvyseni-limitu-pro-verejne-zakazky-maleho-rozsahu-dojde-od-3-dubna-2025/">portal-vz.cz</a>. Accessed 12 October 2026.</li>
+<li id="r11">Digitální a informační agentura. Registr smluv, open data: monthly dumps and terms of use. <a href="https://data.smlouvy.gov.cz/">data.smlouvy.gov.cz</a>; <a href="https://smlouvy.gov.cz/stranka/otevrena-data">smlouvy.gov.cz/stranka/otevrena-data</a>. Snapshot 12 October 2026, hashes in the manifest.</li>
+<li id="r12">Zákon č. 340/2015 Sb., o registru smluv, § 3(2), consolidated version from 1 January 2025. <a href="https://www.zakonyprolidi.cz/cs/2015-340">zakonyprolidi.cz/cs/2015-340</a>. Accessed 12 October 2026.</li>
+<li id="r13">Nařízení vlády č. 172/2016 Sb., o stanovení finančních limitů a částek pro účely zákona o zadávání veřejných zakázek, with amendments to 541/2025 Sb. <a href="https://www.zakonyprolidi.cz/cs/2016-172">zakonyprolidi.cz/cs/2016-172</a>. Accessed 12 October 2026.</li>
+<li id="r14">Ministerstvo pro místní rozvoj (2025). Vzorová vnitřní směrnice obce pro zadávání veřejných zakázek malého rozsahu, version 1.0, December 2025; and Liberecký kraj, news item of 4 June 2025 on the amended regional directive. <a href="https://portal-vz.cz/wp-content/uploads/2025/12/Vzorov%C3%A1-vnit%C5%99n%C3%AD-sm%C4%9Brnice-VZMR_verze-1.0-prosinec-2025_final.pdf">portal-vz.cz</a>; <a href="https://www.kraj-lbc.cz/aktuality/case:detailPdf/itemId:581150/cgId:15623">kraj-lbc.cz</a>. Accessed 12 October 2026.</li>
+<li id="r15">Centrum pro regionální rozvoj ČR (2025). Informace Centra ke zvýšení limitů pro VZMR od 3. 4. 2025 a ke zvýšení limitu pro přímý nákup od 1. 5. 2025. <a href="https://crr.gov.cz/wp-content/uploads/2025/05/Informace-Centra-ke-zvyseni-limitu-VZMR-po-novele-3.-4.-2025-a-zvyseni-limitu-pro-primy-nakup_FINAL.pdf">crr.gov.cz</a>. Accessed 12 October 2026.</li>
+</ol>
+</section>
+
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a></p>
+</footer>
+</article>
+
+<script src="../assets/charts.js" defer></script>
+</body>
+</html>
