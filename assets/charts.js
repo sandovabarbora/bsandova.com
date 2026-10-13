@@ -67,7 +67,8 @@
     if (slot >= w(Math.max(...names.map(n => n.length)))) return {parts: names.map(n => [n]), lines: 1, every: 1};
     const split = names.map(splitMid);
     if (slot >= w(Math.max(...split.flat().map(n => n.length)))) return {parts: split, lines: 2, every: 1};
-    const every = Math.ceil(w(Math.max(...names.map(n => n.length))) / slot);
+    // when only every k-th name fits, keep a wider gap so neighbouring names never touch
+    const every = Math.ceil((w(Math.max(...names.map(n => n.length))) + 10) / slot);
     return {parts: names.map(n => [n]), lines: 1, every};
   }
 
@@ -106,7 +107,10 @@
       const Xc = scale(P.x, left, right);
       P.x.domain.forEach((c, i) => {
         if (i % xCats.every) return;
-        const t = el('text', {x: Xc(c), y: bottom + 15, 'text-anchor': 'middle', class: 'ch-cat'}, gx);
+        // when only every k-th name is shown, one that would spill past the panel is anchored at its edge
+        const half = 3.3 * Math.max(...xCats.parts[i].map(q => q.length)), thin = xCats.every > 1;
+        const anchor = thin && Xc(c) - half < box.x ? 'start' : thin && Xc(c) + half > box.x + box.w ? 'end' : 'middle';
+        const t = el('text', {x: Xc(c), y: bottom + 15, 'text-anchor': anchor, class: 'ch-cat'}, gx);
         xCats.parts[i].forEach((line, j) => el('tspan', {x: Xc(c), dy: j ? 12 : 0}, t).textContent = line);
       });
     }
