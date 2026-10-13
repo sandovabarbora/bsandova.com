@@ -1,0 +1,89 @@
+{
+ "note": "post-hoc, added 13 October 2026 after publication; completes registered steps, see the module docstring",
+ "Q2_first_applications": {
+  "rho": -0.139,
+  "lo": -0.288,
+  "hi": 0.009,
+  "n": 195,
+  "calls": 31,
+  "median_admissions": 12235
+ },
+ "Q2_first_applications_linked_to_a_film_already_counted": 20,
+ "O1_linking_bounds": {
+  "bandwidth": 5.08,
+  "audit_recall_95ci": {
+   "funded_3_of_30": [
+    0.02111713702972257,
+    0.2652884504742081
+   ],
+   "unfunded_2_of_30": [
+    0.008178134460656307,
+    0.22073540152296187
+   ],
+   "unfunded_3_of_30": [
+    0.02111713702972257,
+    0.2652884504742081
+   ]
+  },
+  "no_imputation_same_settings": {
+   "coef": 0.3901,
+   "lo": -0.5683,
+   "hi": 1.1172,
+   "h": 5.08,
+   "n_left": 88,
+   "n_right": 94,
+   "calls": 37,
+   "pv": 0.5233
+  },
+  "audit_point": {
+   "coef": 0.3619,
+   "lo": -0.5123,
+   "hi": 1.021,
+   "h": 5.08,
+   "n_left": 88,
+   "n_right": 94,
+   "calls": 37,
+   "pv": 0.5155
+  },
+  "favouring_an_effect": {
+   "coef": 0.4543,
+   "lo": -0.4381,
+   "hi": 1.0682,
+   "h": 5.08,
+   "n_left": 88,
+   "n_right": 94,
+   "calls": 37,
+   "pv": 0.4123
+  },
+  "against_an_effect": {
+   "coef": 0.2225,
+   "lo": -0.5512,
+   "hi": 0.8732,
+   "h": 5.08,
+   "n_left": 88,
+   "n_right": 94,
+   "calls": 37,
+   "pv": 0.6578
+  },
+  "worst_case_favouring": {
+   "coef": 0.6525,
+   "lo": -0.2026,
+   "hi": 1.0846,
+   "h": 5.08,
+   "n_left": 88,
+   "n_right": 94,
+   "calls": 37,
+   "pv": 0.1793
+  },
+  "worst_case_against": {
+   "coef": -0.2624,
+   "lo": -0.7106,
+   "hi": 0.3775,
+   "h": 5.08,
+   "n_left": 88,
+   "n_right": 94,
+   "calls": 37,
+   "pv": 0.5485
+  }
+ }
+}
