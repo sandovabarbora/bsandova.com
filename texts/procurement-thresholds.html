@@ -24,7 +24,20 @@
 .text dl.meta{display:block;letter-spacing:normal;text-transform:none;font-size:12px}
 .text dl.meta div{border-right:0;padding-left:0;grid-template-columns:13ch 1fr}
 .text dl.meta dd{overflow-wrap:anywhere}
-@media (max-width:560px){.text dl.meta div{grid-template-columns:1fr}}
+.ht{width:100%;border-collapse:collapse;font:400 13px/1.4 var(--sans);font-variant-numeric:tabular-nums;margin:.6rem 0 1rem}
+.ht th{font:400 11px var(--mono);color:#666;text-align:left;padding:6px 10px 6px 0;border-bottom:1px solid #000;vertical-align:bottom}
+.ht td{padding:6px 10px 6px 0;border-bottom:1px solid #e6e6e6;vertical-align:top}
+.ht td.v{white-space:nowrap}
+.ht td.v b{font-weight:500;color:#34507c}
+.ht small{color:#666;font:400 11px var(--mono)}
+.ht td.v small{display:block;white-space:normal}
+.ht .n{text-align:right;white-space:nowrap;padding-left:14px}
+.ht .n+td:not(.n),.ht .n+th:not(.n){padding-left:14px}
+.ht tbody.pl th{padding-top:14px;border-top:1px solid #000;border-bottom:1px solid #e6e6e6}
+.ht-wrap + .note{margin-top:-.4rem}
+.ht-wrap{overflow-x:auto;max-width:100%}
+.note{font:400 12px/1.6 var(--mono);color:#666}
+@media (max-width:560px){.text dl.meta div{grid-template-columns:1fr}.ht{font-size:12px}}
 </style>
 </head>
 <body>
@@ -95,10 +108,11 @@
 <table class="ht">
   <thead><tr><th>Question</th><th>Registered rule</th><th>Result</th><th>Label</th></tr></thead>
   <tbody>
-  <tr><td>H1 · more contracts at exactly the new limits (3 and 9 million)</td><td>supported if the 95 % CI lies above 0; not supported if the 90 % CI lies within ±0.15</td><td class="v">+0.16 <small>95 % CI 0.06 to 0.26 · 90 % CI 0.08 to 0.24 · t(6), placebo-corrected · detectable effect 0.22</small></td><td class="v"><b>supported</b></td></tr>
-  <tr><td>H2 · fewer at exactly the old limits (2 and 6 million)</td><td>the same, unless the detectable effect exceeds 0.25</td><td class="v">+0.11 <small>95 % CI 0.00 to 0.22 · t(6), placebo-corrected · detectable effect 0.28</small></td><td class="v"><b>underpowered</b></td></tr>
-  <tr><td>Validity check · placebo bias and stability of the round-number scaling</td><td>fails if the bias has a 90 % CI wholly outside ±0.15, or the scaling difference a 90 % CI wholly outside ±0.5</td><td class="v">bias −0.01 <small>scaling 4–5 M 1.08, 10–13 M 0.80; difference 0.28, 90 % CI 0.05 to 0.51, 95 % CI 0.01 to 0.54</small></td><td class="v"><b>passed</b></td></tr>
-  <tr><td>b · contracts just below the limits</td><td>descriptive, no label</td><td class="v">new +0.31, old +0.40 <small>95 % bootstrap percentile CI 0.22 to 0.41; 0.25 to 0.54</small></td><td class="v">descriptive</td></tr>
+  <tr><td>H1 · more contracts at exactly the new limits (3 and 9 million)</td><td>supported if the 95 % CI lies above 0; not supported if the 90 % CI lies within ±0.15</td><td class="v">+0.16 <small>95 % CI 0.06&nbsp;to&nbsp;0.26 · 90 % CI 0.08&nbsp;to&nbsp;0.24 · t(6), placebo-corrected · detectable effect 0.22</small></td><td class="v"><b>supported</b></td></tr>
+  <tr><td>H2 · fewer at exactly the old limits (2 and 6 million)</td><td>the same, unless the detectable effect exceeds 0.25</td><td class="v">+0.11 <small>95 % CI 0.00&nbsp;to&nbsp;0.22 · t(6), placebo-corrected · detectable effect 0.28</small></td><td class="v"><b>underpowered</b></td></tr>
+  <tr><td>Validity check · placebo bias and stability of the round-number scaling</td><td>fails if the bias has a 90 % CI wholly outside ±0.15, or the scaling difference a 90 % CI wholly outside ±0.5</td><td class="v">bias −0.01 <small>scaling 4–5 M 1.08, 10–13 M 0.80; difference 0.28, 90 % CI 0.05&nbsp;to&nbsp;0.51, 95 % CI 0.01&nbsp;to&nbsp;0.54</small></td><td class="v"><b>passed</b></td></tr>
+  <tr><td rowspan="2">b · contracts just below the limits</td><td rowspan="2">descriptive, no label</td><td class="v">new limits +0.31 <small>95 % bootstrap percentile CI 0.22&nbsp;to&nbsp;0.41</small></td><td class="v" rowspan="2">descriptive</td></tr>
+  <tr><td class="v">old limits +0.40 <small>0.25&nbsp;to&nbsp;0.54</small></td></tr>
   </tbody>
 </table>
 </div>
@@ -137,27 +151,35 @@
 <p>Each check changes one choice and recomputes the calibrated estimate for the new limits. By the rule set in advance, the result would be called sensitive if three or more of sixteen checks changed its label; 2 did. Narrowing the band to 2.5 % below the limit raises the estimate, and widening it to 10 % lowers it to 0.08, which reads as "not supported": a mass at a single price weighs less against a wider band. Keeping only records whose publisher marked itself as the payer, 26 % of kept records, gives 0.09 (−0.02 to 0.19), inconclusive. The other checks stay between 0.12 and 0.27, all supported.</p>
 <div class="ht-wrap">
 <table class="ht">
-  <thead><tr><th>Check</th><th>D*<sub>new</sub>, 95 % CI (t(6), placebo-corrected)</th><th>Label</th></tr></thead>
+  <thead><tr><th scope="col">Check</th><th scope="col" class="n">Estimate</th><th scope="col" class="n">95 % CI</th><th scope="col">Label</th></tr></thead>
   <tbody>
-  <tr><td>registered estimate</td><td class="v">+0.16 <small>0.06 to 0.26</small></td><td class="v">supported</td></tr>
-  <tr><td>band 2.5 % below the limit</td><td class="v">+0.27 <small>0.08 to 0.46</small></td><td class="v">supported</td></tr>
-  <tr><td>band 10 % below the limit</td><td class="v">+0.08 <small>0.03 to 0.13</small></td><td class="v">not supported</td></tr>
-  <tr><td>curve of degree 5 / 9</td><td class="v">+0.16 / +0.15 <small>0.08 to 0.25; 0.04 to 0.25</small></td><td class="v">supported / supported</td></tr>
-  <tr><td>additive round-number scaling</td><td class="v">+0.16 <small>0.06 to 0.26</small></td><td class="v">supported</td></tr>
-  <tr><td>nearest round millions only</td><td class="v">+0.16 <small>0.06 to 0.26</small></td><td class="v">supported</td></tr>
-  <tr><td>prices with VAT typed as without it, excluded from the fit</td><td class="v">+0.16 <small>0.06 to 0.26</small></td><td class="v">supported</td></tr>
-  <tr><td>records with only a price with VAT added</td><td class="v">+0.17 <small>0.08 to 0.26</small></td><td class="v">supported</td></tr>
-  <tr><td>records with equal prices with and without VAT dropped</td><td class="v">+0.17 <small>0.05 to 0.28</small></td><td class="v">supported</td></tr>
-  <tr><td>duplicates kept</td><td class="v">+0.16 <small>0.06 to 0.26</small></td><td class="v">supported</td></tr>
-  <tr><td>after period from 3 April / 1 October 2025</td><td class="v">+0.14 / +0.18 <small>0.07 to 0.22; 0.10 to 0.25</small></td><td class="v">supported / supported</td></tr>
-  <tr><td>before period 2022–2024</td><td class="v">+0.16 <small>0.07 to 0.25</small></td><td class="v">supported</td></tr>
-  <tr><td>largest 1 % of bodies dropped</td><td class="v">+0.18 <small>0.08 to 0.29</small></td><td class="v">supported</td></tr>
-  <tr><td>linked records / orders / framework and periodic prices dropped</td><td class="v">+0.19 / +0.19 / +0.12 <small>0.10 to 0.28; 0.08 to 0.29; 0.03 to 0.21</small></td><td class="v">supported / supported / supported</td></tr>
-  <tr><td>publisher marked as payer only</td><td class="v">+0.09 <small>−0.02 to 0.19</small></td><td class="v">inconclusive</td></tr>
-  <tr><td>placebo: a fake change on 1 January 2023, within 2020–2024 (not counted among the 16)</td><td class="v">+0.01 <small>−0.08 to 0.10, calibrated 95 % CI, t(6)</small></td><td class="v">not supported</td></tr>
+  <tr><td>registered estimate</td><td class="n">+0.16</td><td class="n">0.06&nbsp;to&nbsp;0.26</td><td class="v">supported</td></tr>
+  <tr><td>band 2.5 % below the limit</td><td class="n">+0.27</td><td class="n">0.08&nbsp;to&nbsp;0.46</td><td class="v">supported</td></tr>
+  <tr><td>band 10 % below the limit</td><td class="n">+0.08</td><td class="n">0.03&nbsp;to&nbsp;0.13</td><td class="v"><b>not supported</b></td></tr>
+  <tr><td>curve of degree 5</td><td class="n">+0.16</td><td class="n">0.08&nbsp;to&nbsp;0.25</td><td class="v">supported</td></tr>
+  <tr><td>curve of degree 9</td><td class="n">+0.15</td><td class="n">0.04&nbsp;to&nbsp;0.25</td><td class="v">supported</td></tr>
+  <tr><td>additive round-number scaling</td><td class="n">+0.16</td><td class="n">0.06&nbsp;to&nbsp;0.26</td><td class="v">supported</td></tr>
+  <tr><td>nearest round millions only</td><td class="n">+0.16</td><td class="n">0.06&nbsp;to&nbsp;0.26</td><td class="v">supported</td></tr>
+  <tr><td>prices with VAT typed as without it, excluded from the fit</td><td class="n">+0.16</td><td class="n">0.06&nbsp;to&nbsp;0.26</td><td class="v">supported</td></tr>
+  <tr><td>records with only a price with VAT added</td><td class="n">+0.17</td><td class="n">0.08&nbsp;to&nbsp;0.26</td><td class="v">supported</td></tr>
+  <tr><td>records with equal prices with and without VAT dropped</td><td class="n">+0.17</td><td class="n">0.05&nbsp;to&nbsp;0.28</td><td class="v">supported</td></tr>
+  <tr><td>duplicates kept</td><td class="n">+0.16</td><td class="n">0.06&nbsp;to&nbsp;0.26</td><td class="v">supported</td></tr>
+  <tr><td>after period from 3 April 2025</td><td class="n">+0.14</td><td class="n">0.07&nbsp;to&nbsp;0.22</td><td class="v">supported</td></tr>
+  <tr><td>after period from 1 October 2025</td><td class="n">+0.18</td><td class="n">0.10&nbsp;to&nbsp;0.25</td><td class="v">supported</td></tr>
+  <tr><td>before period 2022–2024</td><td class="n">+0.16</td><td class="n">0.07&nbsp;to&nbsp;0.25</td><td class="v">supported</td></tr>
+  <tr><td>largest 1 % of bodies dropped</td><td class="n">+0.18</td><td class="n">0.08&nbsp;to&nbsp;0.29</td><td class="v">supported</td></tr>
+  <tr><td>linked records dropped</td><td class="n">+0.19</td><td class="n">0.10&nbsp;to&nbsp;0.28</td><td class="v">supported</td></tr>
+  <tr><td>orders dropped</td><td class="n">+0.19</td><td class="n">0.08&nbsp;to&nbsp;0.29</td><td class="v">supported</td></tr>
+  <tr><td>framework and periodic prices dropped</td><td class="n">+0.12</td><td class="n">0.03&nbsp;to&nbsp;0.21</td><td class="v">supported</td></tr>
+  <tr><td>publisher marked as payer only</td><td class="n">+0.09</td><td class="n">−0.02&nbsp;to&nbsp;0.19</td><td class="v"><b>inconclusive</b></td></tr>
+  </tbody>
+  <tbody class="pl">
+  <tr><th scope="rowgroup" colspan="4">Placebo (not counted among the 16)</th></tr>
+  <tr><td>a fake change on 1 January 2023, within 2020–2024</td><td class="n">+0.01</td><td class="n">−0.08&nbsp;to&nbsp;0.10</td><td class="v">not supported</td></tr>
   </tbody>
 </table>
 </div>
+<p class="note">D*<sub>new</sub>, placebo-corrected, t(6) intervals; the placebo row's interval is calibrated the same way, a 95 % CI with t(6).</p>
 <p>The fake change in 2023 passes its registered reading, a raw 90 % percentile interval inside ±0.15 (−0.03 to 0.03), but one of the seven round millions does move when treated as a limit: at 10 million the placebo estimate is −0.07 (90 % CI −0.15 to −0.00), inside the bound but not zero. The round-number scaling is 1.08 at 4–5 million and 0.80 at 10–13 million. The difference, 0.28, passed the validity check narrowly: its 90 % interval ends at 0.51, just inside the bound of 0.5 (95 % CI 0.01 to 0.54), so the assumption that rounding changed by one factor everywhere holds only roughly. The check that splits contracts by type, using word stems in their subjects, fails its rule: among contracts marked as works, the estimate at 3 million is −0.00, as expected, but its 90 % interval runs from −0.15 to 0.09, its lower end just beyond the bound of −0.15; among supplies and services, the estimate at 9 million lies within −0.04 to 0.03. The split is too imprecise to confirm that the response comes from supplies and services alone. The same check with the classification of Hlídač státu was attempted on 13 October 2026, after the results, and could not be run as registered: the classification was empty in all returned records, and half of the sampled contracts were not found. It was not run.</p>
 </section>
 

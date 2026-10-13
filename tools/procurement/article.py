@@ -24,7 +24,7 @@ ROOT = HERE.parents[1]
 sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(ROOT / "tools" / "site"))
 import bunching as bu  # noqa: E402
-from article_kit import GREY, HELD, INK, LIGHT, n, render, use_article_style  # noqa: E402
+from article_kit import GREY, HELD, INK, LIGHT, NB, n, render, use_article_style  # noqa: E402
 
 R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "procurement"
@@ -88,7 +88,7 @@ def figures(res: dict, cf: dict) -> dict:
         return {"title": title, "h": 230,
                 "x": {"kind": "linear", "domain": [2.4, 3.6], "ticks": [2.4, 2.6, 2.8, 3.0, 3.2, 3.4, 3.6],
                       "fmt": {"dp": 3, "unit": " M Kč"}, "tickfmt": {"dp": 1},
-                      "label": "price without VAT, million Kč, bins of 10 000 Kč"},
+                      "label": f"price without VAT, million Kč, bins of 10{NB}000 Kč"},
                 "y": {"kind": "linear", "domain": [0, ymax], "fmt": {"dp": 0}, "label": "contracts a month"},
                 "marks": [{"type": "span", "v0": 2.85, "v1": 3.0, "c": "light", "label": "band below 3 M"},
                           {"type": "line", "pts": cfp, "c": "grey", "dash": "dash", "name": "counterfactual",
@@ -96,7 +96,7 @@ def figures(res: dict, cf: dict) -> dict:
                           {"type": "line", "pts": pts, "c": "held" if p == "post" else "ink", "name": "contracts a month",
                            "fmt": {"dp": 1}},
                           {"type": "vrange", "c": "held", "rows": [{"x": 3.0, "mid": ex[p],
-                           "tip": f"priced at exactly 3 000 000 Kč: {ex[p]:.0f} a month"}]}]}
+                           "tip": f"priced at exactly 3{NB}000{NB}000 Kč: {ex[p]:.0f} a month"}]}]}
     charts = {"around3m": {
         "alt": "Contracts a month by price between 2.4 and 3.6 million Kč without VAT, before and after the limit "
                "rose to 3 million: after the change, more contracts sit just under 3 million than the dashed curve, "
@@ -104,7 +104,7 @@ def figures(res: dict, cf: dict) -> dict:
         "panels": [panel("pre", "2020–2024, limit 2 million"), panel("post", "July 2025 – June 2026, limit 3 million")],
         "legend": [{"label": "contracts, 2020–2024", "c": "ink"}, {"label": "contracts, July 2025 – June 2026", "c": "held"},
                    {"label": "counterfactual", "c": "grey", "dash": "dash"},
-                   {"label": "at exactly 3 000 000 Kč", "c": "held", "shape": "dot"}],
+                   {"label": f"at exactly 3{NB}000{NB}000 Kč", "c": "held", "shape": "dot"}],
         "table": {"cols": ["period", "bin up to, Kč", "contracts", "a month", "counterfactual a month"],
                   "rows": [[r.period, int(r.upper_kc), int(r.contracts), round(float(r.per_month), 1),
                             round(float(r.counterfactual_per_month), 1)] for r in w.itertuples()]},
@@ -167,11 +167,11 @@ def figures(res: dict, cf: dict) -> dict:
                                     "tickLabels": {str(t): str(2020 + k) for k, t in enumerate(ticks)},
                                     "tipLabels": tip_labels, "label": "month of conclusion"},
                     "y": {"kind": "linear", "domain": [0, max(max(v for _, v in series(k)) for k in ("2M", "3M")) * 1.1],
-                          "fmt": {"dp": 1}, "label": "per 1 000 contracts in the range"},
+                          "fmt": {"dp": 1}, "label": f"per 1{NB}000 contracts in the range"},
                     "marks": [{"type": "rule", "axis": "x", "v": change, "c": "grey", "dash": "dot", "label": "3 Apr 2025"},
                               *lines("2M", "at exactly 2 M", "grey"), *lines("3M", "at exactly 3 M", "held")],
                     "padRight": 44}],
-        "table": {"cols": ["month", "at 2 M, per 1 000", "at 3 M, per 1 000"],
+        "table": {"cols": ["month", f"at 2 M, per 1{NB}000", f"at 3 M, per 1{NB}000"],
                   "rows": [[m, round(1000 * ms["2M"][m], 2), round(1000 * ms["3M"][m], 2)] for m in months]},
         "data": ["results.json"]}
     (A / "charts.json").write_text(json.dumps(charts, ensure_ascii=False))
@@ -269,8 +269,11 @@ def values(res: dict, screen: dict, power: dict, manifest: dict, df: pd.DataFram
     v["p10_lo"], v["p10_hi"] = n2(s["placebo_a_control_10M"]["ci90"][0]), n2(s["placebo_a_control_10M"]["ci90"][1])
 
     def row(name, tag):
+        """One robustness row; a label that differs from the registered one is set in <b>, except the placebo's,
+        whose "not supported" is the expected reading, not a departure."""
         c = rob[name]["calibrated_D_new_a"]
-        v[tag], v[tag + "_lo"], v[tag + "_hi"], v[tag + "_lab"] = n(c["estimate"], 2), n(c["ci95"][0], 2), n(c["ci95"][1], 2), c["label"]
+        lab = c["label"] if c["label"] == h1["label"] or tag == "pdt" else f"<b>{c['label']}</b>"
+        v[tag], v[tag + "_lo"], v[tag + "_hi"], v[tag + "_lab"] = n(c["estimate"], 2), n(c["ci95"][0], 2), n(c["ci95"][1], 2), lab
     names = {"window 2.5 % below": "w25", "window 10 % below": "w10", "polynomial degree 5": "d5",
              "polynomial degree 9": "d9", "other adjustment of a": "adj", "neighbouring controls only": "nbr",
              "VAT images excluded from the fit": "vat", "R-VAT: VAT-only prices added, / 1.21": "rvat",
