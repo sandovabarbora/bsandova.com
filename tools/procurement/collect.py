@@ -5,7 +5,7 @@
 
 The index at https://data.smlouvy.gov.cz/ lists each dump with its SHA-1 and generation time. Dumps are regenerated
 (the index shows 2026 generation times for 2017 months), so the manifest keeps the hash of the file actually
-downloaded, its SHA-256, and the index entry seen at download time.
+downloaded, its SHA-256, and the index entry seen at download time; hashed_at is when the file was hashed, after it arrived.
 """
 from __future__ import annotations
 
@@ -84,7 +84,7 @@ def main() -> None:
         sha1 = digest(dest, "sha1")
         manifest[key] = {**entry, "file": dest.name, "bytes": dest.stat().st_size, "sha1": sha1,
                          "sha256": digest(dest, "sha256"), "sha1_matches_index": sha1 == entry["sha1_index"],
-                         "downloaded": datetime.now(timezone.utc).isoformat(timespec="seconds")}
+                         "hashed_at": datetime.now(timezone.utc).isoformat(timespec="seconds")}
         print(key, dest.stat().st_size, sha1[:12], "index match" if sha1 == entry["sha1_index"] else "INDEX DIFFERS")
     manifest_path.write_text(json.dumps(manifest, indent=1, sort_keys=True))
 

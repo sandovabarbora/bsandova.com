@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -34,6 +35,14 @@ TYPE_ROWS = {"stems": ("type split: works by subject stems", "type split: suppli
              "hlidac": ("type split: works by Hlídač classification (sample)",
                         "type split: supplies and services by Hlídač classification (sample)")}
 NOT_COUNTED = {*START_ROWS, "placebo date 1 January 2023 (pre only)", *TYPE_ROWS["stems"], *TYPE_ROWS["hlidac"]}
+
+
+def provenance(root: Path) -> dict:
+    """The commit the run used and whether the working tree was clean (added 13 October 2026, after the registered
+    run, which predates it)."""
+    def git(*args):
+        return subprocess.run(["git", *args], cwd=root, capture_output=True, text=True).stdout.strip()
+    return {"commit": git("rev-parse", "HEAD"), "clean_tree": git("status", "--porcelain", "--untracked-files=no") == ""}
 
 
 def summarise(point: dict, ci: dict, keys: list[str]) -> dict:
@@ -113,7 +122,7 @@ def run(quick: bool, root: Path = ROOT, power_path: Path = POWER) -> dict:
     adjust = point["adjust"]
     decision = bu.decide(point, ci, power.get("data_step_mde"))
     primary_ungated = ungated(point, ci)
-    out = {"adjust": adjust, "decision": decision, "primary_ungated": primary_ungated,
+    out = {"provenance": provenance(root), "adjust": adjust, "decision": decision, "primary_ungated": primary_ungated,
            "secondary": summarise(point, ci, SECONDARY + list(bu.PLACEBO_KEYS)),
            "locations": {k: point[k] for k in point if k.startswith(("a_", "b_", "r_", "m_above_"))},
            "monthly_exact_share": monthly_exact(priced), "robustness": {}}
