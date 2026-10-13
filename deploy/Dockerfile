@@ -17,7 +17,9 @@ COPY assets/library.json ./assets/library.json
 COPY status/jobs.json ./status/jobs.json
 COPY changelog/data.json ./changelog/data.json
 COPY ask/eval.json ./ask/eval.json
-RUN uv pip install --system --no-cache "sitewitness[embed]==0.1.0" && \
+# CPU-only torch first: Fly runs no GPU, and the default CUDA wheels add ~2 GB that made image export fail
+RUN uv pip install --system --no-cache torch --index-url https://download.pytorch.org/whl/cpu && \
+    uv pip install --system --no-cache "sitewitness[embed]==0.1.0" && \
     python -c "import sentence_transformers; sentence_transformers.SentenceTransformer('all-MiniLM-L6-v2')" && \
     sitewitness index --embed
 RUN mkdir -p /data
