@@ -24,7 +24,20 @@
 .text dl.meta{display:block;letter-spacing:normal;text-transform:none;font-size:12px}
 .text dl.meta div{border-right:0;padding-left:0;grid-template-columns:13ch 1fr}
 .text dl.meta dd{overflow-wrap:anywhere}
-@media (max-width:560px){.text dl.meta div{grid-template-columns:1fr}}
+.ht{width:100%;border-collapse:collapse;font:400 13px/1.4 var(--sans);font-variant-numeric:tabular-nums;margin:.6rem 0 1rem}
+.ht th{font:400 11px var(--mono);color:#666;text-align:left;padding:6px 10px 6px 0;border-bottom:1px solid #000;vertical-align:bottom}
+.ht td{padding:6px 10px 6px 0;border-bottom:1px solid #e6e6e6;vertical-align:top}
+.ht td.v{white-space:nowrap}
+.ht td.v b{font-weight:500;color:#34507c}
+.ht small{color:#666;font:400 11px var(--mono)}
+.ht td.v small{display:block;white-space:normal}
+.ht .n{text-align:right;white-space:nowrap;padding-left:14px}
+.ht .n+td:not(.n),.ht .n+th:not(.n){padding-left:14px}
+.ht tbody.pl th{padding-top:14px;border-top:1px solid #000;border-bottom:1px solid #e6e6e6}
+.ht-wrap + .note{margin-top:-.4rem}
+.ht-wrap{overflow-x:auto;max-width:100%}
+.note{font:400 12px/1.6 var(--mono);color:#666}
+@media (max-width:560px){.text dl.meta div{grid-template-columns:1fr}.ht{font-size:12px}}
 </style>
 </head>
 <body>
@@ -95,10 +108,11 @@
 <table class="ht">
   <thead><tr><th>Question</th><th>Registered rule</th><th>Result</th><th>Label</th></tr></thead>
   <tbody>
-  <tr><td>H1 · more contracts at exactly the new limits (3 and 9 million)</td><td>supported if the 95 % CI lies above 0; not supported if the 90 % CI lies within ±0.15</td><td class="v">+{{h1}} <small>95 % CI {{h1_lo}} to {{h1_hi}} · 90 % CI {{h1_lo90}} to {{h1_hi90}} · t(6), placebo-corrected · detectable effect {{mde_h1}}</small></td><td class="v"><b>{{h1_label}}</b></td></tr>
-  <tr><td>H2 · fewer at exactly the old limits (2 and 6 million)</td><td>the same, unless the detectable effect exceeds 0.25</td><td class="v">+{{h2}} <small>95 % CI {{h2_lo}} to {{h2_hi}} · t(6), placebo-corrected · detectable effect {{mde_h2}}</small></td><td class="v"><b>{{h2_label}}</b></td></tr>
-  <tr><td>Validity check · placebo bias and stability of the round-number scaling</td><td>fails if the bias has a 90 % CI wholly outside ±0.15, or the scaling difference a 90 % CI wholly outside ±0.5</td><td class="v">bias {{bias}} <small>scaling 4–5 M {{k_low}}, 10–13 M {{k_high}}; difference {{kd}}, 90 % CI {{kd_lo90}} to {{kd_hi90}}, 95 % CI {{kd_lo95}} to {{kd_hi95}}</small></td><td class="v"><b>{{gate}}</b></td></tr>
-  <tr><td>b · contracts just below the limits</td><td>descriptive, no label</td><td class="v">new +{{nb}}, old +{{ob}} <small>95 % bootstrap percentile CI {{nb_lo}} to {{nb_hi}}; {{ob_lo}} to {{ob_hi}}</small></td><td class="v">descriptive</td></tr>
+  <tr><td>H1 · more contracts at exactly the new limits (3 and 9 million)</td><td>supported if the 95 % CI lies above 0; not supported if the 90 % CI lies within ±0.15</td><td class="v">+{{h1}} <small>95 % CI {{h1_lo}}&nbsp;to&nbsp;{{h1_hi}} · 90 % CI {{h1_lo90}}&nbsp;to&nbsp;{{h1_hi90}} · t(6), placebo-corrected · detectable effect {{mde_h1}}</small></td><td class="v"><b>{{h1_label}}</b></td></tr>
+  <tr><td>H2 · fewer at exactly the old limits (2 and 6 million)</td><td>the same, unless the detectable effect exceeds 0.25</td><td class="v">+{{h2}} <small>95 % CI {{h2_lo}}&nbsp;to&nbsp;{{h2_hi}} · t(6), placebo-corrected · detectable effect {{mde_h2}}</small></td><td class="v"><b>{{h2_label}}</b></td></tr>
+  <tr><td>Validity check · placebo bias and stability of the round-number scaling</td><td>fails if the bias has a 90 % CI wholly outside ±0.15, or the scaling difference a 90 % CI wholly outside ±0.5</td><td class="v">bias {{bias}} <small>scaling 4–5 M {{k_low}}, 10–13 M {{k_high}}; difference {{kd}}, 90 % CI {{kd_lo90}}&nbsp;to&nbsp;{{kd_hi90}}, 95 % CI {{kd_lo95}}&nbsp;to&nbsp;{{kd_hi95}}</small></td><td class="v"><b>{{gate}}</b></td></tr>
+  <tr><td rowspan="2">b · contracts just below the limits</td><td rowspan="2">descriptive, no label</td><td class="v">new limits +{{nb}} <small>95 % bootstrap percentile CI {{nb_lo}}&nbsp;to&nbsp;{{nb_hi}}</small></td><td class="v" rowspan="2">descriptive</td></tr>
+  <tr><td class="v">old limits +{{ob}} <small>{{ob_lo}}&nbsp;to&nbsp;{{ob_hi}}</small></td></tr>
   </tbody>
 </table>
 </div>
@@ -137,27 +151,35 @@
 <p>Each check changes one choice and recomputes the calibrated estimate for the new limits. By the rule set in advance, the result would be called sensitive if three or more of sixteen checks changed its label; {{n_flip}} did. Narrowing the band to 2.5 % below the limit raises the estimate, and widening it to 10 % lowers it to {{w10}}, which reads as "not supported": a mass at a single price weighs less against a wider band. Keeping only records whose publisher marked itself as the payer, {{pay_share}} % of kept records, gives {{pay}} ({{pay_lo}} to {{pay_hi}}), inconclusive. The other checks stay between {{rob_min}} and {{rob_max}}, all supported.</p>
 <div class="ht-wrap">
 <table class="ht">
-  <thead><tr><th>Check</th><th>D*<sub>new</sub>, 95 % CI (t(6), placebo-corrected)</th><th>Label</th></tr></thead>
+  <thead><tr><th scope="col">Check</th><th scope="col" class="n">Estimate</th><th scope="col" class="n">95 % CI</th><th scope="col">Label</th></tr></thead>
   <tbody>
-  <tr><td>registered estimate</td><td class="v">+{{h1}} <small>{{h1_lo}} to {{h1_hi}}</small></td><td class="v">{{h1_label}}</td></tr>
-  <tr><td>band 2.5 % below the limit</td><td class="v">+{{w25}} <small>{{w25_lo}} to {{w25_hi}}</small></td><td class="v">{{w25_lab}}</td></tr>
-  <tr><td>band 10 % below the limit</td><td class="v">+{{w10}} <small>{{w10_lo}} to {{w10_hi}}</small></td><td class="v">{{w10_lab}}</td></tr>
-  <tr><td>curve of degree 5 / 9</td><td class="v">+{{d5}} / +{{d9}} <small>{{d5_lo}} to {{d5_hi}}; {{d9_lo}} to {{d9_hi}}</small></td><td class="v">{{d5_lab}} / {{d9_lab}}</td></tr>
-  <tr><td>additive round-number scaling</td><td class="v">+{{adj}} <small>{{adj_lo}} to {{adj_hi}}</small></td><td class="v">{{adj_lab}}</td></tr>
-  <tr><td>nearest round millions only</td><td class="v">+{{nbr}} <small>{{nbr_lo}} to {{nbr_hi}}</small></td><td class="v">{{nbr_lab}}</td></tr>
-  <tr><td>prices with VAT typed as without it, excluded from the fit</td><td class="v">+{{vat}} <small>{{vat_lo}} to {{vat_hi}}</small></td><td class="v">{{vat_lab}}</td></tr>
-  <tr><td>records with only a price with VAT added</td><td class="v">+{{rvat}} <small>{{rvat_lo}} to {{rvat_hi}}</small></td><td class="v">{{rvat_lab}}</td></tr>
-  <tr><td>records with equal prices with and without VAT dropped</td><td class="v">+{{eq}} <small>{{eq_lo}} to {{eq_hi}}</small></td><td class="v">{{eq_lab}}</td></tr>
-  <tr><td>duplicates kept</td><td class="v">+{{nod}} <small>{{nod_lo}} to {{nod_hi}}</small></td><td class="v">{{nod_lab}}</td></tr>
-  <tr><td>after period from 3 April / 1 October 2025</td><td class="v">+{{apr}} / +{{oct}} <small>{{apr_lo}} to {{apr_hi}}; {{oct_lo}} to {{oct_hi}}</small></td><td class="v">{{apr_lab}} / {{oct_lab}}</td></tr>
-  <tr><td>before period 2022–2024</td><td class="v">+{{p22}} <small>{{p22_lo}} to {{p22_hi}}</small></td><td class="v">{{p22_lab}}</td></tr>
-  <tr><td>largest 1 % of bodies dropped</td><td class="v">+{{big}} <small>{{big_lo}} to {{big_hi}}</small></td><td class="v">{{big_lab}}</td></tr>
-  <tr><td>linked records / orders / framework and periodic prices dropped</td><td class="v">+{{lnk}} / +{{cof}} / +{{frm}} <small>{{lnk_lo}} to {{lnk_hi}}; {{cof_lo}} to {{cof_hi}}; {{frm_lo}} to {{frm_hi}}</small></td><td class="v">{{lnk_lab}} / {{cof_lab}} / {{frm_lab}}</td></tr>
-  <tr><td>publisher marked as payer only</td><td class="v">+{{pay}} <small>{{pay_lo}} to {{pay_hi}}</small></td><td class="v">{{pay_lab}}</td></tr>
-  <tr><td>placebo: a fake change on 1 January 2023, within 2020–2024 (not counted among the 16)</td><td class="v">+{{pdt}} <small>{{pdt_lo}} to {{pdt_hi}}, calibrated 95 % CI, t(6)</small></td><td class="v">{{pdt_lab}}</td></tr>
+  <tr><td>registered estimate</td><td class="n">+{{h1}}</td><td class="n">{{h1_lo}}&nbsp;to&nbsp;{{h1_hi}}</td><td class="v">{{h1_label}}</td></tr>
+  <tr><td>band 2.5 % below the limit</td><td class="n">+{{w25}}</td><td class="n">{{w25_lo}}&nbsp;to&nbsp;{{w25_hi}}</td><td class="v">{{w25_lab}}</td></tr>
+  <tr><td>band 10 % below the limit</td><td class="n">+{{w10}}</td><td class="n">{{w10_lo}}&nbsp;to&nbsp;{{w10_hi}}</td><td class="v">{{w10_lab}}</td></tr>
+  <tr><td>curve of degree 5</td><td class="n">+{{d5}}</td><td class="n">{{d5_lo}}&nbsp;to&nbsp;{{d5_hi}}</td><td class="v">{{d5_lab}}</td></tr>
+  <tr><td>curve of degree 9</td><td class="n">+{{d9}}</td><td class="n">{{d9_lo}}&nbsp;to&nbsp;{{d9_hi}}</td><td class="v">{{d9_lab}}</td></tr>
+  <tr><td>additive round-number scaling</td><td class="n">+{{adj}}</td><td class="n">{{adj_lo}}&nbsp;to&nbsp;{{adj_hi}}</td><td class="v">{{adj_lab}}</td></tr>
+  <tr><td>nearest round millions only</td><td class="n">+{{nbr}}</td><td class="n">{{nbr_lo}}&nbsp;to&nbsp;{{nbr_hi}}</td><td class="v">{{nbr_lab}}</td></tr>
+  <tr><td>prices with VAT typed as without it, excluded from the fit</td><td class="n">+{{vat}}</td><td class="n">{{vat_lo}}&nbsp;to&nbsp;{{vat_hi}}</td><td class="v">{{vat_lab}}</td></tr>
+  <tr><td>records with only a price with VAT added</td><td class="n">+{{rvat}}</td><td class="n">{{rvat_lo}}&nbsp;to&nbsp;{{rvat_hi}}</td><td class="v">{{rvat_lab}}</td></tr>
+  <tr><td>records with equal prices with and without VAT dropped</td><td class="n">+{{eq}}</td><td class="n">{{eq_lo}}&nbsp;to&nbsp;{{eq_hi}}</td><td class="v">{{eq_lab}}</td></tr>
+  <tr><td>duplicates kept</td><td class="n">+{{nod}}</td><td class="n">{{nod_lo}}&nbsp;to&nbsp;{{nod_hi}}</td><td class="v">{{nod_lab}}</td></tr>
+  <tr><td>after period from 3 April 2025</td><td class="n">+{{apr}}</td><td class="n">{{apr_lo}}&nbsp;to&nbsp;{{apr_hi}}</td><td class="v">{{apr_lab}}</td></tr>
+  <tr><td>after period from 1 October 2025</td><td class="n">+{{oct}}</td><td class="n">{{oct_lo}}&nbsp;to&nbsp;{{oct_hi}}</td><td class="v">{{oct_lab}}</td></tr>
+  <tr><td>before period 2022–2024</td><td class="n">+{{p22}}</td><td class="n">{{p22_lo}}&nbsp;to&nbsp;{{p22_hi}}</td><td class="v">{{p22_lab}}</td></tr>
+  <tr><td>largest 1 % of bodies dropped</td><td class="n">+{{big}}</td><td class="n">{{big_lo}}&nbsp;to&nbsp;{{big_hi}}</td><td class="v">{{big_lab}}</td></tr>
+  <tr><td>linked records dropped</td><td class="n">+{{lnk}}</td><td class="n">{{lnk_lo}}&nbsp;to&nbsp;{{lnk_hi}}</td><td class="v">{{lnk_lab}}</td></tr>
+  <tr><td>orders dropped</td><td class="n">+{{cof}}</td><td class="n">{{cof_lo}}&nbsp;to&nbsp;{{cof_hi}}</td><td class="v">{{cof_lab}}</td></tr>
+  <tr><td>framework and periodic prices dropped</td><td class="n">+{{frm}}</td><td class="n">{{frm_lo}}&nbsp;to&nbsp;{{frm_hi}}</td><td class="v">{{frm_lab}}</td></tr>
+  <tr><td>publisher marked as payer only</td><td class="n">+{{pay}}</td><td class="n">{{pay_lo}}&nbsp;to&nbsp;{{pay_hi}}</td><td class="v">{{pay_lab}}</td></tr>
+  </tbody>
+  <tbody class="pl">
+  <tr><th scope="rowgroup" colspan="4">Placebo (not counted among the 16)</th></tr>
+  <tr><td>a fake change on 1 January 2023, within 2020–2024</td><td class="n">+{{pdt}}</td><td class="n">{{pdt_lo}}&nbsp;to&nbsp;{{pdt_hi}}</td><td class="v">{{pdt_lab}}</td></tr>
   </tbody>
 </table>
 </div>
+<p class="note">D*<sub>new</sub>, placebo-corrected, t(6) intervals; the placebo row's interval is calibrated the same way, a 95 % CI with t(6).</p>
 <p>The fake change in 2023 passes its registered reading, a raw 90 % percentile interval inside ±0.15 ({{pdt_lo90}} to {{pdt_hi90}}), but one of the seven round millions does move when treated as a limit: at 10 million the placebo estimate is {{p10}} (90 % CI {{p10_lo}} to {{p10_hi}}), inside the bound but not zero. The round-number scaling is {{k_low}} at 4–5 million and {{k_high}} at 10–13 million. The difference, {{kd}}, passed the validity check narrowly: its 90 % interval ends at {{kd_hi90}}, just inside the bound of 0.5 (95 % CI {{kd_lo95}} to {{kd_hi95}}), so the assumption that rounding changed by one factor everywhere holds only roughly. The check that splits contracts by type, using word stems in their subjects, fails its rule: among contracts marked as works, the estimate at 3 million is {{xw}}, as expected, but its 90 % interval runs from {{xw_lo}} to {{xw_hi}}, its lower end just beyond the bound of −0.15; among supplies and services, the estimate at 9 million lies within {{xs_lo}} to {{xs_hi}}. The split is too imprecise to confirm that the response comes from supplies and services alone. The same check with the classification of Hlídač státu was attempted on 13 October 2026, after the results, and could not be run as registered: the classification was empty in all returned records, and half of the sampled contracts were not found. It was not run.</p>
 </section>
 
