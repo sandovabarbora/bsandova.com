@@ -20,6 +20,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import time
+import urllib.error
 import urllib.request
 from collections import defaultdict
 from datetime import date, datetime, timedelta
@@ -54,9 +56,16 @@ def as_number(v) -> float | None:
         return None
 
 
-def get(url: str) -> dict:
-    with urllib.request.urlopen(url, timeout=120) as r:
-        return json.load(r)
+def get(url: str, tries: int = 3) -> dict:
+    # Open-Meteo sometimes times out a TLS handshake; one bad minute should not lose a day's forecast
+    for i in range(tries):
+        try:
+            with urllib.request.urlopen(url, timeout=120) as r:
+                return json.load(r)
+        except (urllib.error.URLError, TimeoutError):
+            if i == tries - 1:
+                raise
+            time.sleep(20 * (i + 1))
 
 
 def windows(times: list[str], values: list, kind: str) -> dict[str, float | None]:

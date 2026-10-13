@@ -13,6 +13,8 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import time
+import urllib.error
 import urllib.request
 from datetime import date, timedelta
 from pathlib import Path
@@ -33,9 +35,16 @@ WEATHER = "https://api.open-meteo.com/v1/forecast"
 WAVE_VARS = "swell_wave_height,swell_wave_period,swell_wave_direction,wave_height"
 
 
-def get(url: str) -> dict:
-    with urllib.request.urlopen(url, timeout=60) as r:
-        return json.load(r)
+def get(url: str, tries: int = 3) -> dict:
+    # Open-Meteo sometimes times out a TLS handshake; one bad minute should not lose a day's forecast
+    for i in range(tries):
+        try:
+            with urllib.request.urlopen(url, timeout=60) as r:
+                return json.load(r)
+        except (urllib.error.URLError, TimeoutError):
+            if i == tries - 1:
+                raise
+            time.sleep(20 * (i + 1))
 
 
 def circular_mean(degrees: list[float]) -> float | None:
