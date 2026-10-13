@@ -1,4 +1,6 @@
 # bsandova.com
+[![DOI](https://zenodo.org/badge/1370319756.svg)](https://doi.org/10.5281/zenodo.23040133)
+
 
 This repository is the source of [bsandova.com](https://bsandova.com), the site of Barbora Šandová. It holds
 research articles, tools and notes that are built from open data. For each article, the text, the published data,
