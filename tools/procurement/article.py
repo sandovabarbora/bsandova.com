@@ -11,6 +11,7 @@ texts/procurement-thresholds.html from tools/procurement/template.html.
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -31,7 +32,7 @@ DATA = ROOT / "tools" / "data" / "procurement"
 MONTHS = {"pre": 60, "post": 12}  # 1 Jan 2020 – 31 Dec 2024; 1 Jul 2025 – 30 Jun 2026 (design §4.1)
 LOC = {"old_supplies_services": "2 M, old limit", "new_supplies_services": "3 M, new limit",
        "old_works": "6 M, old limit", "new_works": "9 M, new limit"}
-MIN_CELL = 10  # a published bin with fewer contracts would be shown as "fewer than 10"
+MIN_CELL = 30  # publication policy: every published price bin holds at least 30 contracts, or the build stops
 plt = use_article_style()
 
 
@@ -75,7 +76,7 @@ def figures(res: dict, cf: dict) -> dict:
     A.mkdir(parents=True, exist_ok=True)
     shutil.copy(R / "procurement-bunching-results.json", A / "results.json")
     w = window_series(cf, 2_400_000, 3_600_000)
-    assert w["contracts"].min() >= MIN_CELL, "a plotted bin holds fewer than 10 contracts"
+    assert w["contracts"].min() >= MIN_CELL, f"a published bin holds fewer than {MIN_CELL} contracts"
     w.to_csv(A / "bins.csv", index=False)
     ex = {p: cf[p]["exact"][3] / MONTHS[p] for p in ("pre", "post")}
     ymax = float(max(w["per_month"].max(), max(ex.values()))) * 1.1
@@ -95,8 +96,8 @@ def figures(res: dict, cf: dict) -> dict:
                            "tip": f"priced at exactly 3 000 000 Kč: {ex[p]:.0f} a month"}]}]}
     charts = {"around3m": {
         "alt": "Contracts a month by price between 2.4 and 3.6 million Kč without VAT, before and after the limit "
-               "rose to 3 million: after the change, more contracts sit just under and at exactly 3 million than the "
-               "smooth counterfactual predicts.",
+               "rose to 3 million: after the change, more contracts sit just under 3 million than the dashed curve, "
+               "and a marked dot shows a high count exactly at 3 million.",
         "panels": [panel("pre", "2020–2024, limit 2 million"), panel("post", "July 2025 – June 2026, limit 3 million")],
         "legend": [{"label": "contracts, 2020–2024", "c": "ink"}, {"label": "contracts, July 2025 – June 2026", "c": "held"},
                    {"label": "counterfactual", "c": "grey", "dash": "dash"},
@@ -180,12 +181,26 @@ def figures(res: dict, cf: dict) -> dict:
     return {"window": w, "exact3": ex}
 
 
-def lab(x: dict) -> str:
-    return x["label"]
+def n2(v: float) -> str:
+    """Two decimals, keeping the sign of a negative value that rounds to zero (−0.00), so an interval's side shows."""
+    s = n(v, 2)
+    return "−" + s if v < 0 and not s.startswith("−") else s
 
 
-def ci(lo: float, hi: float, dp: int = 2) -> str:
-    return f"{n(lo, dp)} to {n(hi, dp)}"
+def renumber_refs(html: str) -> str:
+    """References numbered by first citation in the page (editorial standard §9): ids, links, labels and order."""
+    order = []
+    for k in re.findall(r'href="#r(\d+)"', html):
+        if k not in order:
+            order.append(k)
+    new = {old: str(i + 1) for i, old in enumerate(order)}
+    items = {num: whole for whole, num in re.findall(r'(<li id="r(\d+)">.*?</li>)', html, re.S)}
+    assert set(items) == set(order), f"uncited or missing references: {set(items) ^ set(order)}"
+    a, b = html.index("<ol>", html.index('id="refs"')), html.index("</ol>", html.index('id="refs"'))
+    body = "\n".join(re.sub(r'id="r\d+"', f'id="r{new[k]}"', items[k]) for k in order)
+    html = html[:a] + "<ol>\n" + body + "\n" + html[b:]
+    html = re.sub(r'<a href="#r(\d+)">\1</a>', lambda m: f'<a href="#rX{new[m.group(1)]}">{new[m.group(1)]}</a>', html)
+    return html.replace('href="#rX', 'href="#r')
 
 
 def values(res: dict, screen: dict, power: dict, manifest: dict, df: pd.DataFrame, fig: dict) -> dict:
@@ -195,7 +210,9 @@ def values(res: dict, screen: dict, power: dict, manifest: dict, df: pd.DataFram
          "h1_lo90": n(h1["ci90"][0], 2), "h1_hi90": n(h1["ci90"][1], 2), "h1_label": h1["label"], "h1_se": n(h1["se"], 3),
          "h2": n(h2["estimate"], 2), "h2_lo": n(h2["ci95"][0], 2), "h2_hi": n(h2["ci95"][1], 2), "h2_label": h2["label"],
          "mde_h1": n(power["data_step_mde"]["D_new_a"], 2), "mde_h2": n(power["data_step_mde"]["D_old_a"], 2),
-         "bias": n(h1["placebo_bias"], 3), "gate": "passed" if not d["gate_failed"] else "failed",
+         "h1_pct": n(100 * h1["estimate"]), "h1_lo_pct": n(100 * h1["ci95"][0]), "h1_hi_pct": n(100 * h1["ci95"][1]),
+         "bias": n2(h1["placebo_bias"]), "kd_lo95": n2(s["k_low_minus_high"]["ci95"][0]),
+         "kd_hi95": n2(s["k_low_minus_high"]["ci95"][1]), "gate": "passed" if not d["gate_failed"] else "failed",
          "k_low": n(s["k_low"]["estimate"], 2), "k_high": n(s["k_high"]["estimate"], 2),
          "kd": n(s["k_low_minus_high"]["estimate"], 2), "kd_lo90": n(s["k_low_minus_high"]["ci90"][0], 2),
          "kd_hi90": n(s["k_low_minus_high"]["ci90"][1], 2), "adjust": res["adjust"]}
@@ -213,7 +230,7 @@ def values(res: dict, screen: dict, power: dict, manifest: dict, df: pd.DataFram
     out_of_zero = [c for c, (lo, hi) in pl if hi < 0 or lo > 0]
     assert out_of_zero == ["10M"], out_of_zero
     v["p10"] = n(s["placebo_a_control_10M"]["estimate"], 2)
-    v["p10_lo"], v["p10_hi"] = n(s["placebo_a_control_10M"]["ci90"][0], 3), n(s["placebo_a_control_10M"]["ci90"][1], 3)
+    v["p10_lo"], v["p10_hi"] = n2(s["placebo_a_control_10M"]["ci90"][0]), n2(s["placebo_a_control_10M"]["ci90"][1])
 
     def row(name, tag):
         c = rob[name]["calibrated_D_new_a"]
@@ -237,7 +254,9 @@ def values(res: dict, screen: dict, power: dict, manifest: dict, df: pd.DataFram
     pd_ = rob["placebo date 1 January 2023 (pre only)"]["D_new_a"]["ci90"]
     v["pdt_lo90"], v["pdt_hi90"] = n(pd_[0], 2), n(pd_[1], 2)
     xw = rob["type split: works by subject stems"]["D_new_a_supplies_services"]
-    v["xw"], v["xw_lo"], v["xw_hi"] = n(xw["estimate"], 3), n(xw["ci90"][0], 3), n(xw["ci90"][1], 3)
+    v["xw"], v["xw_lo"], v["xw_hi"] = n2(xw["estimate"]), n2(xw["ci90"][0]), n2(xw["ci90"][1])
+    xs = rob["type split: supplies and services by subject stems"]["D_new_a_works"]
+    v["xs_lo"], v["xs_hi"] = n2(xs["ci90"][0]), n2(xs["ci90"][1])
     assert res["type_cross_check"] == {"stems": "fails", "hlidac": "skipped"}
     # screening and data
     v["n_records"] = n(screen["records"]); v["n_czk"] = n(screen["CZK with a price"])
@@ -255,6 +274,7 @@ def values(res: dict, screen: dict, power: dict, manifest: dict, df: pd.DataFram
         v[f"{tag}_pre_max"] = n(1000 * max(pre), 1)
     kept = screen["CZK with a price"] - screen["subject excluded as not a purchase (§4.5)"] - screen["no publishing IČO (dropped)"]
     v["pay_share"] = n(100 * screen["flag payer_flag (kept)"] / kept)
+    v["min_cell"] = str(MIN_CELL)
     v["n_dumps"] = str(len(manifest)); v["gib"] = n(sum(m["bytes"] for m in manifest.values()) / 2 ** 30, 1)
     m = df["value"].gt(bu.LO) & df["value"].le(bu.HI)
     v["n_pre"], v["n_post"] = n(int((m & (df.period == "pre")).sum())), n(int((m & (df.period == "post")).sum()))
@@ -268,7 +288,7 @@ def main() -> None:
     df = primary(pd.read_parquet(DATA / "contracts.parquet", columns=["value", "period", "content_duplicate", "authority"]))
     fig = figures(res, counterfactual(df))
     v = values(res, screen, power, manifest, df, fig)
-    out = render(HERE.joinpath("template.html").read_text(encoding="utf-8"), v)
+    out = renumber_refs(render(HERE.joinpath("template.html").read_text(encoding="utf-8"), v))
     (ROOT / "texts" / "procurement-thresholds.html").write_text(out, encoding="utf-8")
     print(f"written texts/procurement-thresholds.html, {len(v)} values")
 
