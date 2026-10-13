@@ -3,7 +3,7 @@
    keys, a table view and a link to the data. No dependencies.
 
    A chart spec: {alt, panels:[{title, h, w, x:axis, y:axis, marks:[...]}], legend:[{label, c, dash, shape: d|box|o|dot}],
-   table:{cols, rows}, data:[paths]}. An axis: {kind:'linear'|'log'|'cat', domain, ticks, fmt, label}. A fmt:
+   table:{cols, rows}, data:[paths]}. An axis: {kind:'linear'|'log'|'cat', domain, ticks, fmt, label, tickLabels, tipLabels}; tickLabels and tipLabels map a value to the text shown on the axis and in the line tooltip. A fmt:
    {dp, unit, pre, sign}. Marks: line, area, dots, hbar, vbar, range, vrange, arrow, rule, span, callout, text (see drawPanel).
    spec.layout: 'rows' stacks the panels vertically at every width. An axis with labels:false draws no category names.
    A line may carry o (opacity) and end (a label at its last point, in ink; give the panel padRight for it); a callout
@@ -278,7 +278,7 @@
         const ys = lines.filter(l => !l.band).map(l => l.m.pts.find(q => q[0] === xv)).filter(Boolean).map(p => ({y: Y(p[1])}));
         targets.push({px: X(xv), py: ys.length ? Math.min(...ys.map(q => q.y)) : top, xonly: true, cross: [top, bottom],
           marks: lines.filter(l => !l.band).map(l => ({p: l.m.pts.find(q => q[0] === xv), c: col(l.m.c)})).filter(q => q.p).map(q => ({x: X(q.p[0]), y: Y(q.p[1]), c: q.c})),
-          tip: [fmt(xv, P.x.fmt || {dp: 0, nogroup: true}), ...rows].join('\n')});
+          tip: [P.x.tipLabels?.[xv] ?? fmt(xv, P.x.fmt || {dp: 0, nogroup: true}), ...rows].join('\n')});
       }
     }
     return targets;

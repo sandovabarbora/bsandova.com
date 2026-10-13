@@ -79,7 +79,7 @@ def figures(res: dict, cf: dict) -> dict:
     assert w["contracts"].min() >= MIN_CELL, f"a published bin holds fewer than {MIN_CELL} contracts"
     w.to_csv(A / "bins.csv", index=False)
     ex = {p: cf[p]["exact"][3] / MONTHS[p] for p in ("pre", "post")}
-    ymax = float(max(w["per_month"].max(), max(ex.values()))) * 1.1
+    ymax = float(max(w["per_month"].max(), max(ex.values()))) * 1.3  # headroom keeps the dot clear of the band label
 
     def panel(p, title):
         s = w[w.period == p]
@@ -87,11 +87,14 @@ def figures(res: dict, cf: dict) -> dict:
         cfp = [[float(r.upper_kc) / 1e6 - 0.005, float(r.counterfactual_per_month)] for r in s.itertuples()]
         return {"title": title, "h": 230,
                 "x": {"kind": "linear", "domain": [2.4, 3.6], "ticks": [2.4, 2.6, 2.8, 3.0, 3.2, 3.4, 3.6],
-                      "fmt": {"dp": 1}, "label": "contract price without VAT, million Kč (bins of 10 000 Kč)"},
+                      "fmt": {"dp": 3, "unit": " M Kč"}, "tickfmt": {"dp": 1},
+                      "label": "price without VAT, million Kč, bins of 10 000 Kč"},
                 "y": {"kind": "linear", "domain": [0, ymax], "fmt": {"dp": 0}, "label": "contracts a month"},
                 "marks": [{"type": "span", "v0": 2.85, "v1": 3.0, "c": "light", "label": "band below 3 M"},
-                          {"type": "line", "pts": cfp, "c": "grey", "dash": "dash"},
-                          {"type": "line", "pts": pts, "c": "held" if p == "post" else "ink"},
+                          {"type": "line", "pts": cfp, "c": "grey", "dash": "dash", "name": "counterfactual",
+                           "fmt": {"dp": 1}},
+                          {"type": "line", "pts": pts, "c": "held" if p == "post" else "ink", "name": "contracts a month",
+                           "fmt": {"dp": 1}},
                           {"type": "vrange", "c": "held", "rows": [{"x": 3.0, "mid": ex[p],
                            "tip": f"priced at exactly 3 000 000 Kč: {ex[p]:.0f} a month"}]}]}
     charts = {"around3m": {
@@ -108,18 +111,23 @@ def figures(res: dict, cf: dict) -> dict:
         "data": ["bins.csv"]}}
     L = res["locations"]
     labels = [LOC[k] for k in LOC]
-    rows_a = [{"y": LOC[k], "from": L[f"a_{k}_pre"], "to": L[f"a_{k}_post"]} for k in LOC]
-    rows_b = [{"y": LOC[k], "from": L[f"b_{k}_pre"], "to": L[f"b_{k}_post"]} for k in LOC]
+    rows_a = [{"y": LOC[k], "from": L[f"a_{k}_pre"], "to": L[f"a_{k}_post"],
+               "tip": f"{LOC[k]}, a: {L[f'a_{k}_pre']:.2f} before, {L[f'a_{k}_post']:.2f} after"} for k in LOC]
+    rows_b = [{"y": LOC[k], "from": L[f"b_{k}_pre"], "to": L[f"b_{k}_post"],
+               "tip": f"{LOC[k]}, b: {L[f'b_{k}_pre']:.2f} before, {L[f'b_{k}_post']:.2f} after"} for k in LOC]
     top = max(max(r["from"], r["to"]) for r in rows_a + rows_b) * 1.1
+    ticks_ab = [round(0.2 * i, 1) for i in range(int(top // 0.2) + 1)]  # the domain starts below 0 so the 0 tick is not clipped
     charts["ab"] = {
         "alt": "Contracts at exactly each limit (a) and just below it (b), per counterfactual contract in the band, "
                "before and after the change: a rises at 3 million and falls at 2 million; b falls at both old limits "
                "and rises at both new ones.",
         "panels": [{"title": f"a · priced at exactly the limit", "h": 170,
-                    "x": {"kind": "linear", "domain": [0, top], "fmt": {"dp": 2}, "label": "per expected contract in the band"},
+                    "x": {"kind": "linear", "domain": [-0.04, top], "ticks": ticks_ab, "fmt": {"dp": 2},
+                          "label": "per expected contract in the band"},
                     "y": {"kind": "cat", "domain": labels}, "marks": [{"type": "arrow", "c": "held", "rows": rows_a}]},
                    {"title": "b · strictly below the limit, within 5 %", "h": 170,
-                    "x": {"kind": "linear", "domain": [0, top], "fmt": {"dp": 2}, "label": "per expected contract in the band"},
+                    "x": {"kind": "linear", "domain": [-0.04, top], "ticks": ticks_ab, "fmt": {"dp": 2},
+                          "label": "per expected contract in the band"},
                     "y": {"kind": "cat", "domain": labels}, "marks": [{"type": "arrow", "c": "grey", "rows": rows_b}]}],
         "legend": [{"label": "from 2020–2024 (circle) to July 2025 – June 2026 (arrow head)", "c": "held"}],
         "table": {"cols": ["location", "a before", "a after", "b before", "b after"],
@@ -133,18 +141,36 @@ def figures(res: dict, cf: dict) -> dict:
 
     def series(key):
         return [[idx[m], 1000 * ms[key][m]] for m in months]
+
+    def segments(key):
+        """The series split wherever a month is missing, so no line is drawn across the gap."""
+        out, cur = [], []
+        for x, y in series(key):
+            if cur and x != cur[-1][0] + 1:
+                out.append(cur)
+                cur = []
+            cur.append([x, y])
+        return out + [cur]
     ticks = [idx[f"{y}-01"] for y in range(2020, 2027)]
+    month_names = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
+    tip_labels = {str(i): f"{month_names[int(m[5:]) - 1]} {m[:4]}" for m, i in idx.items()}
+
+    def lines(key, name, c):
+        segs = segments(key)
+        return [{"type": "line", "pts": seg, "c": c, "name": name, **({"end": key[0] + " M"} if i == len(segs) - 1 else {})}
+                for i, seg in enumerate(segs)]
     charts["monthly"] = {
         "alt": "Share of contracts in the range priced at exactly 2 million and at exactly 3 million Kč, by month of "
                "conclusion, January 2020 to June 2026: the 3 million share rises after April 2025, the 2 million share "
                "falls.",
         "panels": [{"h": 240, "x": {"kind": "linear", "domain": [-1, len(idx)], "ticks": ticks, "fmt": {"dp": 0},
-                                    "label": "month (ticks at January 2020 … January 2026)"},
+                                    "tickLabels": {str(t): str(2020 + k) for k, t in enumerate(ticks)},
+                                    "tipLabels": tip_labels, "label": "month of conclusion"},
                     "y": {"kind": "linear", "domain": [0, max(max(v for _, v in series(k)) for k in ("2M", "3M")) * 1.1],
                           "fmt": {"dp": 1}, "label": "per 1 000 contracts in the range"},
                     "marks": [{"type": "rule", "axis": "x", "v": change, "c": "grey", "dash": "dot", "label": "3 Apr 2025"},
-                              {"type": "line", "pts": series("2M"), "c": "grey", "end": "2 M"},
-                              {"type": "line", "pts": series("3M"), "c": "held", "end": "3 M"}], "padRight": 30}],
+                              *lines("2M", "at exactly 2 M", "grey"), *lines("3M", "at exactly 3 M", "held")],
+                    "padRight": 44}],
         "table": {"cols": ["month", "at 2 M, per 1 000", "at 3 M, per 1 000"],
                   "rows": [[m, round(1000 * ms["2M"][m], 2), round(1000 * ms["3M"][m], 2)] for m in months]},
         "data": ["results.json"]}
@@ -172,8 +198,9 @@ def figures(res: dict, cf: dict) -> dict:
 
     f, ax = plt.subplots(figsize=(7.2, 2.6))
     for key, c in (("2M", GREY), ("3M", HELD)):
-        pts = series(key)
-        ax.plot([p[0] for p in pts], [p[1] for p in pts], color=c, lw=1.2, label=f"at exactly {key[0]} million")
+        for i, seg in enumerate(segments(key)):
+            ax.plot([q[0] for q in seg], [q[1] for q in seg], color=c, lw=1.2,
+                    label=f"at exactly {key[0]} million" if i == 0 else None)
     ax.axvline(change, color=GREY, ls=":", lw=0.8)
     ax.set_xticks(ticks); ax.set_xticklabels([str(y) for y in range(2020, 2027)])
     ax.set_ylabel("per 1 000 contracts"); ax.legend(frameon=False)
@@ -185,6 +212,15 @@ def n2(v: float) -> str:
     """Two decimals, keeping the sign of a negative value that rounds to zero (−0.00), so an interval's side shows."""
     s = n(v, 2)
     return "−" + s if v < 0 and not s.startswith("−") else s
+
+
+GROUP = re.compile(r"(?<=\d) (?=\d{3}(?!\d))")
+
+
+def nbsp_numbers(html: str) -> str:
+    """A thousands separator that cannot break a line: U+00A0 between digit groups, in text and attribute values
+    alike (the page has no URL or code with a digit group)."""
+    return GROUP.sub("\u00a0", html)
 
 
 def renumber_refs(html: str) -> str:
@@ -288,7 +324,7 @@ def main() -> None:
     df = primary(pd.read_parquet(DATA / "contracts.parquet", columns=["value", "period", "content_duplicate", "authority"]))
     fig = figures(res, counterfactual(df))
     v = values(res, screen, power, manifest, df, fig)
-    out = renumber_refs(render(HERE.joinpath("template.html").read_text(encoding="utf-8"), v))
+    out = nbsp_numbers(renumber_refs(render(HERE.joinpath("template.html").read_text(encoding="utf-8"), v)))
     (ROOT / "texts" / "procurement-thresholds.html").write_text(out, encoding="utf-8")
     print(f"written texts/procurement-thresholds.html, {len(v)} values")
 
