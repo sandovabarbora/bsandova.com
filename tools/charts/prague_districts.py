@@ -23,7 +23,7 @@ R = json.loads((DIR / "districts_extended_robust.json").read_text())
 
 HELD = "#3f6b2a"  # the green of the article's photograph, as in the figure scripts
 BIG = 40000
-NB = " "
+NB = "\u00a0"
 
 
 def n(v: float, dp: int = 0, unit: str = "", sign: bool = False) -> str:

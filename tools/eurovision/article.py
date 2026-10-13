@@ -31,7 +31,7 @@ R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "eurovision"
 D = ROOT / "tools" / "data" / "eurovision"
 HELD, INK, GREY, LIGHT, CORAL = "#34507c", "#111111", "#666666", "#b5b5b0", "#b4532a"
-NB = " "
+NB = "\u00a0"
 NAMES = {"AL": "Albania", "AD": "Andorra", "AM": "Armenia", "AU": "Australia", "AT": "Austria", "AZ": "Azerbaijan",
          "BY": "Belarus", "BE": "Belgium", "BA": "Bosnia and Herzegovina", "BG": "Bulgaria", "HR": "Croatia",
          "CY": "Cyprus", "CZ": "Czechia", "DK": "Denmark", "EE": "Estonia", "FI": "Finland", "FR": "France",
