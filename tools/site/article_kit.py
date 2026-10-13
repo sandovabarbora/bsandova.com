@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 RESEARCH = ROOT / "docs" / "research"
-NB = " "
+NB = "\u00a0"
 HELD, INK, GREY, LIGHT = "#34507c", "#111111", "#666666", "#b5b5b0"
 TOKEN = re.compile(r"\{\{(\w+)\}\}")
 
@@ -25,7 +25,7 @@ def use_article_style():
 
 
 def n(v: float, dp: int = 0, *, sign: bool = False, unit: str = "") -> str:
-    """Thin-space thousands and a true minus, shown only when the value does not round to zero."""
+    """No-break-space thousands and a true minus, shown only when the value does not round to zero."""
     s = f"{abs(v):,.{dp}f}".replace(",", NB)
     neg = v < 0 and round(abs(v), dp) != 0
     return ("−" if neg else ("+" if sign and v > 0 else "")) + s + unit

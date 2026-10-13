@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "site"))
 from article_kit import part_item, photo_section, render  # noqa: E402
 
-NB = " "
+NB = "\u00a0"
 
 
 def n(v: float, dp: int = 0) -> str:

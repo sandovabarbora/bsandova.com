@@ -35,7 +35,7 @@ R = ROOT / "docs" / "research"
 A = ROOT / "assets" / "dst"
 D = ROOT / "tools" / "data" / "dst"
 HELD, INK, GREY, LIGHT = "#34507c", "#111111", "#666666", "#b5b5b0"
-NB = " "
+NB = "\u00a0"
 NAMES = {"CZ-PR": "Prague", "CZ-ST": "Central Bohemia", "CZ-JC": "South Bohemia", "CZ-PL": "Plzeň",
          "CZ-US": "Ústí nad Labem", "CZ-KR": "Hradec Králové", "CZ-JM": "South Moravia", "CZ-MO": "Moravia-Silesia",
          "CZ-OL": "Olomouc", "CZ-ZL": "Zlín", "CZ-VY": "Vysočina", "CZ-PA": "Pardubice", "CZ-LI": "Liberec",
