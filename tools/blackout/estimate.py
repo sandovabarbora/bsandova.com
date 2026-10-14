@@ -141,7 +141,7 @@ def restart_order(p, day, ref) -> list[dict]:
                      "lag_min": None if lag is None else round(float(lag), 1),
                      "after_13_01_min": None if t0 is None else round(float(t0 - LAST_SUBSTATION), 1),
                      "baseline_headway_min": None if headway is None else round(float(headway), 1),
-                     "mapped": headway is not None and headway <= MAX_HEADWAY})
+                     "mapped": bool(headway is not None and headway <= MAX_HEADWAY)})
     return sorted(rows, key=lambda r: (r["restart"] is None, r["restart"] or ""))
 
 

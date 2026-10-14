@@ -143,3 +143,6 @@ T₉₀, the stopped share and the restart lag, the exclusion of low-frequency s
 showed that "the first bin from which at least five of six bins" lets a run open on a bin that fails, one bin before
 service came back; the opening bin must now meet the rule itself. This reads the definitions as meant ("from which R
 stays") and was fixed before any value of 4 July was computed.
+
+**14 October 2026 (results).** `blackout-results.json`. The first run stopped on writing the JSON (a NumPy boolean in
+the per-segment rows); `bool()` was added around it, which changes no value.
