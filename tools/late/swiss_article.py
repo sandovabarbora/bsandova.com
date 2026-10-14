@@ -194,7 +194,7 @@ def pct(v: float, dp: int = 1) -> str:
 
 def values(res: dict, scr: dict, drawn: dict) -> dict:
     pr = res["prague"]
-    v = {"pr_s": pct(pr["S"]["est"]), "pr_s0": pct(pr["S0"]["median"]), "pr_e": pct(pr["S"]["est"] - pr["S0"]["median"]),
+    v = {"curve_perms": str(json.loads((A / "cities.json").read_text())["perms"]), "pr_s": pct(pr["S"]["est"]), "pr_s0": pct(pr["S0"]["median"]), "pr_e": pct(pr["S"]["est"] - pr["S0"]["median"]),
          "pr_len": pct(pr["checks"]["length"]["S_length"]), "pr_gini": n(pr["checks"]["gini"], 2),
          "geneva_s": pct(res["forecasts_kept"]["Geneva"]["S"]["est"]),
          "geneva_segs": n(res["forecasts_kept"]["Geneva"]["segments"]),

@@ -104,10 +104,10 @@
 <section>
 <h2>Above chance, less than Prague</h2>
 <p>Chance alone would put 20.7 % of Prague's delay on its top tenth, 20.3 % of Zurich's, 27.6 % of Basel's and 25.4 % of Bern's. Basel is nearly as large as Zurich, so this is not network size; it is how unevenly trams are spread over the segments and how long the tails of the gains are. Above that level, Prague makes 29.9 points more, Zurich 19.6, Basel 23.9 and Bern 22.9. Compared with Prague, the excess is −10.4 points in Zurich, −6.0 in Basel and −7.0 in Bern; by the same rule, all three are unlike Prague, less concentrated. Basel's is the closest call: its interval ends at −5.4 points, and its chance level alone ranges from 26.6 to 28.9 %. The concentration curves show the same order across all segments, not only the top tenth (fig. 2).</p>
-<figure data-chart="../assets/late-swiss/charts.json#curves">
-  <p class="ch-head">Zurich's curve rises least steeply; Basel's and Bern's run close to Prague's.</p>
-  <img src="../assets/late-swiss/02-curves.svg" alt="Concentration curves for Prague, Zurich, Basel and Bern: the share of the delay made by producers against the share of segments, largest first; Zurich's is the lowest curve." loading="lazy">
-  <figcaption><b>fig. 2</b> · The share of the delay made by all producing segments that the largest producers make, against the share of segments, largest first; it reaches one at the last segment that gains delay and falls as the segments that make up time follow; dotted, the top tenth. Data: opentransportdata.swiss<sup class="cite"><a href="#r2">2</a></sup>; Prague from part 1<sup class="cite"><a href="#r1">1</a></sup>.</figcaption>
+<figure class="anim-fig" data-cities="../assets/late-swiss/cities.json">
+  <p class="ch-head">Zurich's curve rises least steeply; every Swiss curve runs closer to its own chance curve than Prague's does.</p>
+  <img class="anim-static" src="../assets/late-swiss/02-curves.svg" alt="Concentration curves for Prague, Zurich, Basel and Bern: the share of the delay made by producers against the share of segments, largest first; Zurich's is the lowest curve." loading="lazy">
+  <figcaption><b>fig. 2</b> · City by city: the share of the delay made by all producing segments that the largest producers make, against the share of segments, largest first (solid; the other cities in light grey), and the same curve with segment labels shuffled among the passes of each date and hour, the mean of 19 shuffles (dashed); shaded, where the city's curve runs above it; dotted, the top tenth. The curve reaches one at the last segment that gains delay and falls as the segments that make up time follow. Beside it, the city's top tenth of segments in coral. Data: opentransportdata.swiss<sup class="cite"><a href="#r2">2</a></sup>; Prague from part 1<sup class="cite"><a href="#r1">1</a></sup>; base © OpenStreetMap contributors.</figcaption>
 </figure>
 <figure class="mp-fig" data-map="../assets/late-swiss/map-zurich.json">
   <img class="mp-static" src="../assets/late-swiss/03-zurich.svg" alt="Map of Zurich's tram network, each segment coloured by the delay gained per pass: coral where trams lose time, teal where they make it up." loading="lazy">
@@ -167,6 +167,7 @@
 <li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/late/swiss_screen.py"><code>swiss_screen.py</code></a>: the screening and the passes.</li>
 <li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/late/swiss_estimate.py"><code>swiss_estimate.py</code></a>: the registered estimates and checks, with tests in <code>test_swiss.py</code>; it stops unless it reproduces part 1's published result.</li>
 <li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/late/swiss_article.py"><code>swiss_article.py</code></a>: the figures, the maps and this page.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/late/swiss_animation.py"><code>swiss_animation.py</code></a>: the data of the animated comparison (fig. 2), drawn by <code>assets/late-swiss/cities.js</code> with d3; the chance curves are a description, not part of the registered analysis.</li>
 </ol>
 <p>The design is <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/swiss-trams-design.md"><code>docs/research/swiss-trams-design.md</code></a>.</p>
 </section>
@@ -187,5 +188,8 @@
 
 <script src="../assets/charts.js" defer></script>
 <script src="../assets/map.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" integrity="sha512-vc58qvvBdrDR4etbxMdlTt4GBQk1qjvyORR2nrsPsFPyrs+/u5c3+1Ct6upOgdZoIl7eq6k3a1UPDSNAQi/32A==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+<script src="../assets/animap.js" defer></script>
+<script src="../assets/late-swiss/cities.js" defer></script>
 </body>
 </html>
