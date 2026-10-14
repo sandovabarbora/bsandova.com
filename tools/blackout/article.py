@@ -26,7 +26,8 @@ plt = use_article_style()
 R, A = ROOT / "docs" / "research", ROOT / "assets" / "blackout"
 CORAL = "#c0503f"
 START = 10 * 60
-MODES = {"tramvaj": ("trams", HELD), "metro": ("metro", CORAL), "autobus": ("buses", GREY)}
+MODES = {"tramvaj": ("trams", HELD), "metro": ("metro", CORAL), "autobus": ("buses", GREY),
+         "trolejbus": ("trolleybuses", LIGHT)}
 
 
 def clock(i: int) -> str:
@@ -222,6 +223,7 @@ def main() -> None:
         "stopped_pct": n(100 * q1["event"]["share"], 0), "stopped_segs": n(q1["event"]["segments_stopped"]),
         "q1_segs": n(q1["event"]["segments"]), "q1_low": n(q1["event"]["low_frequency_excluded"]),
         "stopped_placebo_pct": n(100 * plac("share"), 1),
+        "td_mean_plac": max(x["TD"] for x in res["checks"]["mean_delay"]["placebo"].values()),
         "q1_wide_pct": n(100 * res["checks"]["Q1_12_10_to_12_40"]["event"]["share"], 0),
         "t50": t["event"]["T50"], "t90": t["event"]["T90"], "td": t["event"]["TD"],
         "td_mean": res["checks"]["mean_delay"]["event"]["TD"],
@@ -244,6 +246,19 @@ def main() -> None:
         "off_base_max": n(100 * max(x["baseline_max"] for x in off.values()), 0),
         "baseline": ", ".join(d[-2:].lstrip("0") for d in scr["baseline_days"]),
         "map_drawn": n(drawn),
+        "before_1301": n(sum(x < 0 for x in lags)), "before_1301_pct": n(100 * sum(x < 0 for x in lags) / len(lags), 0),
+        "hour_after_pct": n(100 * sum(0 <= x <= 60 for x in lags) / len(lags), 0),
+        "later_pct": n(100 * sum(x > 60 for x in lags) / len(lags), 0),
+        "sec_hloubetin": max(r["restart"] for r in rows if "Hloubětín" in r["to"] and r["restart"]),
+        "sec_hostivar": max(r["restart"] for r in rows if "Hostivař" in r["from"] + r["to"]
+                            and "Depo" not in r["from"] + r["to"] and r["restart"]),
+        "dip_r": n(min(res["curves"]["tramvaj"]["R"][30:]), 2),
+        "dip_at": clock(min(range(30, 72), key=lambda k: res["curves"]["tramvaj"]["R"][k])),
+        "metro_t50_e": res["modes"]["metro"]["event"]["T50"],
+        "t90_six": res["checks"]["all_six_bins"]["event"]["T90"],
+        "t90_six_plac": max(v["T90"] for v in res["checks"]["all_six_bins"]["placebo"].values()),
+        "t_5": res["checks"]["bins_5_min"]["event"]["T90"], "t_15": res["checks"]["bins_15_min"]["event"]["T90"],
+        "td_5": res["checks"]["bins_5_min"]["event"]["TD"],
     }
     html = render((HERE / "template.html").read_text(encoding="utf-8"), v)
     (ROOT / "texts" / "blackout.html").write_text(html, encoding="utf-8")
