@@ -206,7 +206,19 @@ def values(res: dict, scr: dict, drawn: dict) -> dict:
               f"{k}_rec": pct(r["recoverer_share"], 0), f"{k}_drawn": n(drawn[c]),
               f"{k}_kept_real": pct(1 - scr["low_real_segments"][c]["share_of_passes"], 2)}
     b = res["cities"]["Basel"]["checks"]["basel"]
-    v |= {"basel_bvb": pct(b["BVB_only_S"])}
+    v |= {"basel_bvb": pct(b["BVB_only_S"]), "basel_bvb_p": pct(b["S_BVB_passes"]), "basel_blt_p": pct(b["S_BLT_passes"])}
+    p1 = json.loads((R / "delay-origins-results.json").read_text())["tram"]
+    pc = p1["checks"]
+    v |= {"pr_dates": n(p1["dates"]), "pr_pp": pct(pc["per_pass"]), "pr_t5": pct(pc["top_5"]), "pr_t20": pct(pc["top_20"]),
+          "pr_noterm": pct(pc["without_terminal_segments"]), "pr_300": pct(pc["gain_within_300s"]),
+          "pr_mlo": pct(min(pc["by_month"].values())), "pr_mhi": pct(max(pc["by_month"].values())),
+          "pr_jac": n(pc["peak_midday_jaccard"], 2), "pr_rec": pct(p1["recoverers"] / p1["segments"], 0)}
+    for c in CITIES:
+        v[f"{c.lower()}_kept_formed"] = pct(scr["kept"][c]["passes"] / scr["passes_formed"][c])
+        v[f"{c.lower()}_s0_lo"] = pct(res["cities"][c]["S0"]["range95"][0])
+        v[f"{c.lower()}_s0_hi"] = pct(res["cities"][c]["S0"]["range95"][1])
+        v[f"{c.lower()}_de_hi"] = n(100 * res["cities"][c]["D_E"]["ci95"][1], 1, sign=True)
+    v["bern_d_abs"] = n(-100 * res["cities"]["Bern"]["D"]["est"], 1)
     return v
 
 

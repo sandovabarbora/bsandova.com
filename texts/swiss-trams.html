@@ -42,7 +42,7 @@
 <header class="text-head">
   <p class="kicker">Research · Running late, part 4 · Zurich, Basel and Bern, 2025</p>
   <h1>Is Prague's delay map a law of trams? <em>Zurich, Basel and Bern</em></h1>
-  <p class="deck">In Prague, a tenth of the tram segments make half of the delay. Basel and Bern look much the same; Zurich does not. Measured against what chance alone would give, all three Swiss networks concentrate their delay less than Prague.</p>
+  <p class="deck">In Prague, a tenth of the tram segments make half of the delay. By the registered rule, Basel and Bern are within five points of that and Zurich is not. Other ways of measuring the same thing do not all agree, so the answer is: roughly, not a law.</p>
   <dl class="facts">
     <div><dt>Zurich</dt><dd>39.9 % <small>of delay on the top tenth of 448 segments · −10.7 points from Prague · unlike Prague, less concentrated</small></dd></div>
     <div><dt>Basel</dt><dd>51.6 % <small>of 420 segments · +1.0 points from Prague · like Prague</small></dd></div>
@@ -54,9 +54,9 @@
   <summary>Overwhelmed? Here's the short version</summary>
   <ul>
     <li>Part 1 found that on Prague's trams, the tenth of segments (stretches from one stop to the next) that make the most delay make 50.6 % of it. This part asks the same of Zurich, Basel and Bern over the same 2025 season, with the same code.</li>
-    <li>Basel (51.6 %) and Bern (48.2 %) are within five points of Prague, the margin set in advance; Zurich (39.9 %) is clearly lower. In every city the worst segments are the same from week to week.</li>
-    <li>A smaller network concentrates more by chance alone. Above that chance level, all three Swiss networks concentrate their delay less than Prague: by −10.4, −6.0 and −7.0 points.</li>
-    <li>The author expected the Swiss networks to be less concentrated, because of reserved track and priority at junctions. Zurich fits that, and the excess over chance does in all three; Basel and Bern do not on the raw share. Why they differ is not measured.</li>
+    <li>Basel (51.6 %) and Bern (48.2 %) are within five points of Prague, the margin set in advance (within, not equal); Zurich (39.9 %) is clearly lower. In every city the worst segments are the same from week to week.</li>
+    <li>Part of any concentration is chance; the share chance alone would give is higher in Basel and Bern than in Prague. Above it, all three Swiss networks concentrate less than Prague (−10.4, −6.0 and −7.0 points). But ranked by delay per tram instead of in total, all three concentrate more than Prague: the result depends on the measure.</li>
+    <li>The author expected the Swiss networks to be less concentrated, because of reserved track and priority at junctions. Zurich fits that on the registered share; Basel and Bern do not. Why the cities differ is not measured.</li>
   </ul>
 </details>
 <dl class="meta">
@@ -75,35 +75,35 @@
 </details>
 
 <section>
-<p>Part 1 of this series measured where Prague's trams gain delay<sup class="cite"><a href="#r1">1</a></sup>. Over the 2025 season, the 62 of 618 segments with the largest totals made 50.6 % of all the delay gained, and they were the same segments week after week. Is that a property of Prague, with its old street network and trams sharing junctions with cars, or of tram networks in general? This part runs the same measure, with the same code and over the same 178 days, on the three Swiss tram networks that publish every stop time: Zurich, Basel and Bern. Geneva publishes its times too, but labels none of them as measured, so by the registered rule it enters only a check.</p>
+<p>Part 1 of this series measured where Prague's trams gain delay<sup class="cite"><a href="#r1">1</a></sup>. Over the 2025 season, the 62 of 618 segments with the largest totals made 50.6 % of all the delay gained, and they were the same segments week after week. Is that a property of Prague, with its old street network and trams sharing junctions with cars, or of tram networks in general? This part runs the same estimator, with the same code for the estimates, over the same season (178 days in Switzerland; 170 in Prague after part 1's screening), on the three Swiss tram networks that publish every stop time: Zurich, Basel and Bern. Geneva publishes its times too, but labels none of them as measured, so by the registered rule it enters only a check.</p>
 </section>
 
 <section>
 <h2>Data</h2>
-<p>Switzerland publishes the actual times of every public-transport vehicle at every stop, one file per day for the whole country<sup class="cite"><a href="#r2">2</a></sup>. From 15 March to 8 September 2025, the trams of Zurich's VBZ, of Basel's BVB and BLT (one track network, pooled) and of Bern's Bernmobil were kept. A <i>pass</i> is a tram's run from one stop to the next; its gain is the delay at the next stop minus the delay at the first, as in Prague. A pass is kept only if the times at both stops are marked as measured (99.96 % of Zurich's passes are on segments that qualify, with similar shares elsewhere), its gain is within ten minutes, and its segment has at least 1 000 kept passes. That leaves 448 segments and 15.8 million passes in Zurich, 420 and 11.3 million in Basel, and 148 and 3.8 million in Bern.</p>
-<p>Both Prague's and Switzerland's timetables are to the minute, so the delay is measured against the same kind of schedule in both. The Swiss files give no order of stops within a trip; stops are ordered by their scheduled times, and 212 229 stops scheduled in the same minute as the one before were dropped rather than ordered by their actual times.</p>
+<p>Switzerland publishes the actual times of every public-transport vehicle at every stop, one file per day for the whole country<sup class="cite"><a href="#r2">2</a></sup>. From 15 March to 8 September 2025, the trams of Zurich's VBZ, of Basel's BVB and BLT (one track network, pooled) and of Bern's Bernmobil were kept. A <i>pass</i> is a tram's run from one stop to the next; its gain is the delay at the next stop minus the delay at the first, as in Prague, so it includes the time standing at the first stop. A pass is kept only if the times at both stops are marked as measured, its gain is within ten minutes, and its segment has at least 1 000 kept passes: 96.9 % of the passes formed in Zurich, 97.7 % in Basel and 98.5 % in Bern. The archive's version used here has no stops outside Switzerland, so the ends of Basel's lines into France and Germany are outside the network. That leaves 448 segments and 15.8 million passes in Zurich, 420 and 11.3 million in Basel, and 148 and 3.8 million in Bern.</p>
+<p>Both Prague's and Switzerland's timetables are to the minute, so the delay is measured against the same kind of schedule in both. The Swiss files give no order of stops within a trip; stops are ordered by their scheduled times, and 212 229 stops (in all four networks) scheduled in the same minute as the one before were dropped rather than ordered by their actual times. Screening otherwise followed the Swiss data, not part 1's Prague-specific rules, which leaves differences beyond the estimator.</p>
 </section>
 
 <section>
 <h2>How this was done</h2>
-<p>For each network, <i>S</i> is the share of all delay gained that the tenth of segments with the largest totals make, with a 95 % interval from resampling whole days. Its difference from Prague, <i>D</i>, is labelled by a rule fixed in advance: <i>like Prague</i> if its 90 % interval lies within ±5 points, <i>unlike Prague</i> if its 95 % interval lies wholly outside them. Five points is the smallest difference that would change part 1's sentence, "about half of the delay from a tenth of the segments".</p>
-<p>A tenth of a small network is a handful of segments, and a handful of segments can make a large share of the delay by luck alone. The <i>chance level</i> S₀ is the share the top tenth would make if delay were not tied to place: the segment labels are shuffled among the passes of each day and hour, 199 times, and S recomputed. The excess over chance, S − S₀, is compared between cities in the same way.</p>
+<p>For each network, <i>S</i> is the share of all delay gained that the tenth of segments with the largest totals make, with a 95 % interval from resampling whole days. Its difference from Prague, <i>D</i>, is labelled by a rule fixed in advance: <i>like Prague</i> if its 90 % interval lies within ±5 points, <i>unlike Prague</i> if its 95 % interval lies wholly outside them. Five points is the smallest difference that would change part 1's sentence, "about half of the delay from a tenth of the segments"; it is also about the spread of Prague's monthly shares, which was known when it was chosen. Before registration, one Swiss sample day was read for its counts, not its delays.</p>
+<p>Some concentration arises even if delay has nothing to do with place: segments carry different numbers of trams, and gains have long tails. The <i>chance level</i> S₀ is the share the top tenth would make if delay were not tied to place: the segment labels are shuffled among the passes of each day and hour, 199 times, and S recomputed. The excess over chance, S − S₀, is compared between cities in the same way, with S₀ held fixed, so its intervals leave out S₀'s own small uncertainty.</p>
 </section>
 
 <section>
 <h2>Basel and Bern like Prague, Zurich not</h2>
-<p>In Zurich, the top tenth of segments make 39.9 % of the delay (95 % CI 39.6 to 40.6 %), −10.7 points from Prague (−11.2 to −9.9): unlike Prague, less concentrated. In Basel they make 51.6 % (51.1 to 52.0 %), +1.0 points from Prague: like Prague. In Bern, 48.2 % (47.8 to 48.9 %), −2.4 points: like Prague. By the rule part 1 used, half of the delay on a tenth of the segments is supported in Basel and not supported in Zurich and Bern, where the share is below one half (fig. 1).</p>
+<p>In Zurich, the top tenth of segments make 39.9 % of the delay (95 % CI 39.6 to 40.6 %), −10.7 points from Prague (−11.2 to −9.9): unlike Prague, less concentrated. In Basel they make 51.6 % (51.1 to 52.0 %), +1.0 points from Prague: like Prague. In Bern, 48.2 % (47.8 to 48.9 %), −2.4 points: like Prague. Like Prague means within five points: Basel's and Bern's intervals exclude zero, Bern lower by 2.4 points. By the rule part 1 used, half of the delay on a tenth of the segments is supported in Basel and not supported in Zurich and Bern, where the share is below one half (fig. 1).</p>
 <figure data-chart="../assets/late-swiss/charts.json#s">
   <p class="ch-head">Basel and Bern concentrate their delay about as much as Prague; Zurich less. Every Swiss city stands less far above its chance level.</p>
   <img src="../assets/late-swiss/01-s.svg" alt="The share of delay made by the top tenth of segments, with 95 % intervals, for Prague, Zurich, Basel, Bern and Geneva (forecasts kept): Zurich lowest, Basel and Bern close to Prague; diamonds mark each network's chance level, higher in the smaller Basel and Bern." loading="lazy">
   <figcaption><b>fig. 1</b> · The share of all delay gained that the tenth of segments with the largest totals make, 15 March – 8 September 2025, with 95 % intervals from resampling days; diamonds, the chance level, the median share when segment labels are shuffled among each day-and-hour's passes. Geneva only with times not marked as measured, a check. Data: opentransportdata.swiss<sup class="cite"><a href="#r2">2</a></sup>; Prague from part 1<sup class="cite"><a href="#r1">1</a></sup>.</figcaption>
 </figure>
-<p>The worst segments are the same from week to week everywhere: the rank correlation of each segment's mean gain between odd and even weeks is 0.996 in Zurich, 0.995 in Basel and 0.999 in Bern, as in Prague. With thousands of passes per segment that is close to guaranteed, so it says the pattern belongs to places, not why.</p>
+<p>The worst segments are the same from week to week everywhere: the rank correlation of each segment's mean gain between odd and even weeks is 0.996 in Zurich, 0.995 in Basel and 0.999 in Bern, as in Prague. With thousands of passes per segment that is close to guaranteed, so it says the pattern belongs to places, not why; near one, the resampling intervals of this correlation sit slightly below the estimate, as in part 1.</p>
 </section>
 
 <section>
-<h2>Above chance, all three less than Prague</h2>
-<p>Chance alone would put 20.7 % of Prague's delay on its top tenth, 20.3 % of Zurich's, 27.6 % of Basel's and 25.4 % of Bern's: the two smaller networks concentrate more by luck. Above that level, Prague makes 29.9 points more, Zurich 19.6, Basel 23.9 and Bern 22.9. Compared with Prague, the excess is −10.4 points in Zurich, −6.0 in Basel and −7.0 in Bern; by the same rule, unlike Prague, less concentrated, unlike Prague, less concentrated and unlike Prague, less concentrated. The concentration curves show the same order across all segments, not only the top tenth (fig. 2).</p>
+<h2>Above chance, less than Prague</h2>
+<p>Chance alone would put 20.7 % of Prague's delay on its top tenth, 20.3 % of Zurich's, 27.6 % of Basel's and 25.4 % of Bern's. Basel is nearly as large as Zurich, so this is not network size; it is how unevenly trams are spread over the segments and how long the tails of the gains are. Above that level, Prague makes 29.9 points more, Zurich 19.6, Basel 23.9 and Bern 22.9. Compared with Prague, the excess is −10.4 points in Zurich, −6.0 in Basel and −7.0 in Bern; by the same rule, all three are unlike Prague, less concentrated. Basel's is the closest call: its interval ends at −5.4 points, and its chance level alone ranges from 26.6 to 28.9 %. The concentration curves show the same order across all segments, not only the top tenth (fig. 2).</p>
 <figure data-chart="../assets/late-swiss/charts.json#curves">
   <p class="ch-head">Zurich's curve rises least steeply; Basel's and Bern's run close to Prague's.</p>
   <img src="../assets/late-swiss/02-curves.svg" alt="Concentration curves for Prague, Zurich, Basel and Bern: the share of the delay made by producers against the share of segments, largest first; Zurich's is the lowest curve." loading="lazy">
@@ -125,38 +125,38 @@
 
 <section>
 <h2>Checks</h2>
-<p>Each check changes one choice; none changes a label.</p>
+<p>Checks are reported as registered and not relabelled. Prague's values are part 1's.</p>
 <div class="ht-wrap">
 <table class="ht">
-  <thead><tr><th scope="col">Check</th><th scope="col" class="n">Zurich</th><th scope="col" class="n">Basel</th><th scope="col" class="n">Bern</th></tr></thead>
+  <thead><tr><th scope="col">Check</th><th scope="col" class="n">Prague</th><th scope="col" class="n">Zurich</th><th scope="col" class="n">Basel</th><th scope="col" class="n">Bern</th></tr></thead>
   <tbody>
-  <tr><td>registered S</td><td class="n">39.9 %</td><td class="n">51.6 %</td><td class="n">48.2 %</td></tr>
-  <tr><td>ranked by gain per pass</td><td class="n">46.1 %</td><td class="n">49.4 %</td><td class="n">47.2 %</td></tr>
-  <tr><td>top 5 %</td><td class="n">24.6 %</td><td class="n">33.4 %</td><td class="n">31.8 %</td></tr>
-  <tr><td>top 20 %</td><td class="n">62.8 %</td><td class="n">74.0 %</td><td class="n">73.4 %</td></tr>
-  <tr><td>without the first and last segment of each trip</td><td class="n">42.0 %</td><td class="n">50.1 %</td><td class="n">51.5 %</td></tr>
-  <tr><td>gains within five minutes</td><td class="n">40.1 %</td><td class="n">51.8 %</td><td class="n">48.4 %</td></tr>
-  <tr><td>segments with ≥ 90 % measured times</td><td class="n">40.0 %</td><td class="n">51.9 %</td><td class="n">48.5 %</td></tr>
-  <tr><td>top tenth of network length (Prague 34.8 %)</td><td class="n">23.8 %</td><td class="n">36.4 %</td><td class="n">36.9 %</td></tr>
-  <tr><td>by month, lowest to highest</td><td class="n">40.0–47.2 %</td><td class="n">51.0–56.5 %</td><td class="n">45.5–49.3 %</td></tr>
-  <tr><td>Gini of producers' delay (Prague 0.51)</td><td class="n">0.42</td><td class="n">0.52</td><td class="n">0.49</td></tr>
-  <tr><td>top tenth in peaks and middays, overlap</td><td class="n">0.43</td><td class="n">0.53</td><td class="n">0.36</td></tr>
-  <tr><td>segments that make up time, share</td><td class="n">40 %</td><td class="n">44 %</td><td class="n">46 %</td></tr>
+  <tr><td>registered S</td><td class="n">50.6 %</td><td class="n">39.9 %</td><td class="n">51.6 %</td><td class="n">48.2 %</td></tr>
+  <tr><td>ranked by gain per pass</td><td class="n">42.1 %</td><td class="n">46.1 %</td><td class="n">49.4 %</td><td class="n">47.2 %</td></tr>
+  <tr><td>top 5 %</td><td class="n">33.8 %</td><td class="n">24.6 %</td><td class="n">33.4 %</td><td class="n">31.8 %</td></tr>
+  <tr><td>top 20 %</td><td class="n">72.8 %</td><td class="n">62.8 %</td><td class="n">74.0 %</td><td class="n">73.4 %</td></tr>
+  <tr><td>without the first and last segment of each trip</td><td class="n">51.2 %</td><td class="n">42.0 %</td><td class="n">50.1 %</td><td class="n">51.5 %</td></tr>
+  <tr><td>gains within five minutes</td><td class="n">50.7 %</td><td class="n">40.1 %</td><td class="n">51.8 %</td><td class="n">48.4 %</td></tr>
+  <tr><td>segments with ≥ 90 % measured times</td><td class="n">–</td><td class="n">40.0 %</td><td class="n">51.9 %</td><td class="n">48.5 %</td></tr>
+  <tr><td>top tenth of network length</td><td class="n">34.8 %</td><td class="n">23.8 %</td><td class="n">36.4 %</td><td class="n">36.9 %</td></tr>
+  <tr><td>by month, lowest to highest</td><td class="n">49.0–52.6 %</td><td class="n">40.0–47.2 %</td><td class="n">51.0–56.5 %</td><td class="n">45.5–49.3 %</td></tr>
+  <tr><td>Gini over producing segments</td><td class="n">0.51</td><td class="n">0.42</td><td class="n">0.52</td><td class="n">0.49</td></tr>
+  <tr><td>top tenth in peaks and middays, overlap</td><td class="n">0.85</td><td class="n">0.43</td><td class="n">0.53</td><td class="n">0.36</td></tr>
+  <tr><td>segments that make up time, share</td><td class="n">44 %</td><td class="n">40 %</td><td class="n">44 %</td><td class="n">46 %</td></tr>
   </tbody>
 </table>
 </div>
-<p>Zurich is the least concentrated of the three in every row that measures concentration; by network length, which weighs Zurich's longer segments, it is lower still, 23.8 %. Basel without BLT's passes gives 54.1 %. With times not marked as measured kept, the shares barely move, and Geneva, which enters only here, gives 54.3 % on 183 segments.</p>
+<p>Zurich is the least concentrated of the three Swiss networks in every row that measures concentration. Against Prague the picture is mixed. Ranked by delay per tram instead of in total, all three Swiss networks concentrate more than Prague (46.1, 49.4 and 47.2 % against 42.1 %); by length and in the top 20 %, Basel and Bern reach or pass Prague. On these point estimates, Basel ranked per tram falls just below one half and Bern without first and last segments rises above it, so the "half on a tenth" reading is not robust for either. The worst segments in peaks and in middays overlap far less in Switzerland than in Prague (0.85). The Gini here counts producing segments only; part 1 reported one over all segments. In Basel, BVB's passes alone give 54.1 %, and the top tenth make 66.1 % of the delay of BVB's passes and 78.5 % of BLT's within the pooled network. With times not marked as measured kept, the shares barely move, and Geneva, which enters only here, gives 54.3 % on 183 segments.</p>
 </section>
 
 <section>
 <h2>What this means</h2>
-<p>Measured: on the same season and by the same code, Basel's and Bern's trams make about as large a share of their delay on a tenth of their segments as Prague's, and Zurich's a clearly smaller one. Against what chance alone would give a network of their size, all three concentrate less than Prague. In all four cities the places that make the delay are the same week after week.</p>
-<p>The author expected the Swiss networks to be less concentrated than Prague, because they have more reserved track and priority at junctions. Zurich fits that on the registered share, and all three fit it on the excess over chance, which was registered alongside; Basel and Bern do not fit it on the raw share. Track, junctions, stop spacing and timetables were not measured, so these data cannot say which, if any, explains the difference.</p>
+<p>Measured: on the same season and by the same estimator, Basel's and Bern's trams make a share of their delay on a tenth of their segments within five points of Prague's, and Zurich's a clearly smaller one. Above what chance alone would give, all three concentrate less than Prague; ranked by delay per tram, all three concentrate more. In all four cities the places that make the delay are the same week after week. Delay is concentrated on few places in every network; how concentrated, and compared with Prague, depends on the measure.</p>
+<p>The author expected the Swiss networks to be less concentrated than Prague, because they have more reserved track and priority at junctions. Zurich fits that on the registered share; Basel and Bern do not, Bern being lower than Prague by 2.4 points, within the margin. The excess over chance, registered alongside, fits it in all three, and delay per tram goes the other way. Track, junctions, stop spacing and timetables were not measured, so these data cannot say which, if any, explains the difference.</p>
 </section>
 
 <section>
 <h2>What this does not show</h2>
-<p>Why the cities differ: network shape, stop spacing, street running against reserved track, signal priority, timetable padding and traffic all differ, and with four networks none can be separated from the others. As in part 1, where delay is recorded is not always where it is caused. Other cities, winter and other years are not covered; Stockholm, Helsinki, the Netherlands and Vienna publish no archive of actual times for the season. Seconds per tram, not per passenger.</p>
+<p>Why the cities differ: network shape, stop spacing, street running against reserved track, signal priority, timetable padding and traffic all differ, and with four networks none can be separated from the others. As in part 1, where delay is recorded is not always where it is caused. Other cities, winter and other years are not covered: Stockholm's archive needs a key and a reconstruction from snapshots, and Helsinki, the Netherlands and Vienna have no open archive of actual times for the season. Seconds per tram, not per passenger.</p>
 </section>
 
 <section id="reproduction">
