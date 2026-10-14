@@ -1,0 +1,13 @@
+<h4 id="blackout-changes">Changes after registration</h4>
+<ul>
+<li>14 October 2026, registration: the design (<code>docs/research/blackout-design.md</code>) is registered by the signed annotated tag <code>blackout-design</code>, tag object <code>87ed802623d7d9c5e75f6d71e19f07951a45a92a</code>, on commit <code>d949b3de1348c4aed1c3c8e1a46036c440e4a7bb</code>, pushed with the branch <code>feature/BLACKOUT-1_power-outage</code> before any record of 4 July 2025 was read on its own. Before it, a methods reviewer ran the draft rules on the ordinary Fridays only; those numbers are disclosed in the design.</li>
+<li>14 October 2026, screening (§3.1): trains were wrongly taken as a reference that does not depend on traction power; most Czech lines are electric. The first run, with buses and trains, flagged 29 ten-minute bins of 4 July, three as feed-suspect, and was seen. The rule was applied to buses alone, which flagged none.</li>
+<li>14 October 2026, code frozen: tests on made-up data showed that the "five of six bins" rule could open a run on a bin that fails; the opening bin must now pass. Fixed before any value of 4 July was computed.</li>
+<li>14 October 2026, results: the first run stopped writing its file on a NumPy boolean; <code>bool()</code> was added, which changes no value.</li>
+<li>14 October 2026, after the results, not registered (<code>tools/blackout/posthoc.py</code>): the registered median delay breaks down after the restart, because about half of the tram passes in 13:30–14:10 were matched to timetable trips other than the ones they ran; the share of passes more than five minutes off the timetable is added as a curve. A single time from it failed its own placebo and is not reported.</li>
+</ul>
+<h4>Change log</h4>
+<ul>
+<li>14 October 2026, version 1: first written, as a registered study.</li>
+<li>Checked against editorial standard v1 on 14 October 2026.</li>
+</ul>
