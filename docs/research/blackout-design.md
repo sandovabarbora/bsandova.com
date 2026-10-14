@@ -126,3 +126,12 @@ zpráva k výpadku elektřiny 4. 7. 2025*. Zhang, Hörcher, Bansal and Graham, *
 2310.07514). Further references are verified before publication, in a dated commit.
 
 ## Changes after registration
+
+**14 October 2026 (screening, §3; no ratio, pass count or delay of 4 July summarised beyond the flags).**
+`tools/blackout/screen.py`, output `blackout-screen.json`. The baseline days 11, 18 and 25 July all pass §3.2. §3.1 was
+wrong to take trains as a reference that does not depend on traction power: most Czech lines are electric, and the
+outage stopped trains too. With buses and trains, the first run flagged 29 bins of 4 July (12:00–17:10), three of them
+(12:50–13:10) feed-suspect; that output was seen. The rule is applied to buses alone, as the reference the design
+meant: with them, no bin is flagged, so the feed was alive all day and every bin is read. The bus-and-train flags are
+reported next to the article as a disclosed first run. Rows with delay over an hour on 4 July are counted (§3.3):
+3 910 tram passes, 75 bus passes.
