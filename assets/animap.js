@@ -20,19 +20,50 @@
     return (x < 0 ? '−' : t.sign && x > 0 ? '+' : '') + s + (t.unit || '');
   };
 
+
+  /* Play button, time slider, clock and summary line above a figure's caption; show(i) draws step i. Plays once when
+     the figure comes half into view, unless the reader prefers reduced motion. Shared by the article animations. */
+  function controls(fig, bins, notes, step, show) {
+    const nb = bins.length;
+    const bar = d3.select(fig).insert('div', ':first-child').attr('class', 'anim-bar');
+    fig.insertBefore(bar.node(), fig.querySelector('svg') || fig.querySelector('figcaption'));
+    const play = bar.append('button').attr('type', 'button').attr('class', 'anim-play');
+    const clock = bar.append('span').attr('class', 'anim-clock');
+    const slider = bar.append('input').attr('type', 'range').attr('min', 0).attr('max', nb - 1).attr('step', 1)
+      .attr('class', 'anim-range').attr('aria-label', 'Time');
+    const note = bar.append('span').attr('class', 'anim-note');
+    let k = 0, timer = null;
+    const go = i => {
+      k = i;
+      show(i);
+      clock.text(bins[i]);
+      note.text(notes ? notes[i] : '');
+      slider.property('value', i).attr('aria-valuetext', `${bins[i]}${notes ? ', ' + notes[i] : ''}`);
+    };
+    const stop = () => { if (timer) { timer.stop(); timer = null; } play.text('▶').attr('aria-label', 'Play'); };
+    const start = () => {
+      if (k >= nb - 1) go(0);
+      play.text('❚❚').attr('aria-label', 'Pause');
+      timer = d3.interval(() => { if (k >= nb - 1) return stop(); go(k + 1); }, step || 450);
+    };
+    play.on('click', () => timer ? stop() : start());
+    slider.on('input', e => { stop(); go(+e.target.value); });
+    go(0);
+    stop();
+    if (!still) {
+      const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); start(); } },
+                                          {threshold: 0.5});
+      io.observe(fig);
+    }
+  }
+  window.bsAnim = {controls, still};
+
   async function draw(fig) {
     const S = await (await fetch(new URL(fig.dataset.animap, location.href))).json();
     const B = await (await fetch(new URL(S.base, location.href))).json();
     const nb = S.bins.length;
     const colour = d3.scaleLinear().domain(S.colour.domain).range(S.colour.range).clamp(true);
     fig.querySelector('.anim-static')?.remove();
-
-    const bar = d3.select(fig).insert('div', 'figcaption').attr('class', 'anim-bar');
-    const play = bar.append('button').attr('type', 'button').attr('class', 'anim-play');
-    const clock = bar.append('span').attr('class', 'anim-clock');
-    const slider = bar.append('input').attr('type', 'range').attr('min', 0).attr('max', nb - 1).attr('step', 1)
-      .attr('class', 'anim-range').attr('aria-label', 'Time');
-    const note = bar.append('span').attr('class', 'anim-note');
 
     const W = 720, H = 520;
     const svg = d3.select(fig).insert('svg', 'figcaption').attr('viewBox', `0 0 ${W} ${H}`).attr('class', 'anim-map')
@@ -72,31 +103,11 @@
       .attr('y', ch - 5).attr('text-anchor', 'middle').text(i => S.bins[i]);
     const cursor = spark.append('circle').attr('r', 4.5).attr('fill', INK);
 
-    let k = 0, timer = null;
-    function show(i) {
-      k = i;
+    controls(fig, S.bins, S.notes, S.step, i => {
       segs.attr('stroke', f => f.v[i] == null ? (S.empty || '#e2e2de') : colour(f.v[i]))
         .select('title').text(f => `${f.id}: ${fmt(f.v[i], S.tip)}`);
-      clock.text(S.bins[i]);
-      note.text(S.notes ? S.notes[i] : '');
-      slider.property('value', i).attr('aria-valuetext', `${S.bins[i]}${S.notes ? ', ' + S.notes[i] : ''}`);
       cursor.attr('cx', x(i)).attr('cy', y(S.series.values[i]));
-    }
-    function stop() { if (timer) { timer.stop(); timer = null; } play.text('▶').attr('aria-label', 'Play'); }
-    function start() {
-      if (k >= nb - 1) show(0);
-      play.text('❚❚').attr('aria-label', 'Pause');
-      timer = d3.interval(() => { if (k >= nb - 1) return stop(); show(k + 1); }, S.step || 450);
-    }
-    play.on('click', () => timer ? stop() : start());
-    slider.on('input', e => { stop(); show(+e.target.value); });
-    show(0);
-    stop();
-    if (!still) {
-      const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); start(); } },
-                                          {threshold: 0.5});
-      io.observe(fig);
-    }
+    });
   }
 
   const go = () => document.querySelectorAll('figure[data-animap]').forEach(f => draw(f).catch(() => {}));

@@ -56,7 +56,7 @@
   </ul>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>3 October 2026 · updated 9 October 2026 · <a href="../changelog/#eurovision">version 3</a></dd></div>
+  <div><dt>published</dt><dd>3 October 2026 · updated 14 October 2026 · <a href="../changelog/#eurovision">version 4</a></dd></div>
   <div><dt>work since</dt><dd>April 2025</dd></div>
 </dl>
 <details class="meta-more">
@@ -66,7 +66,7 @@
   <div><dt>registration</dt><dd>registered analysis plan: design committed at <code>f304d8c</code> (tag <code>eurovision-design</code>) on 3 October 2026, before the results commit <code>70f75a9</code> (tag <code>eurovision-results</code>); commit times are self-reported, and the branch was pushed after the analysis. Power at <code>ba65ce5</code>, code at <code>00e8e38</code>, data step at <code>c5ff4c8</code>, a change of fixed effects at <code>d9abe43</code>. On <code>main</code> the design and the results arrive in one squash commit, <code>961638c</code>, so they are not independently timestamped; the tags were added on 9 October 2026. The author has worked with these sources continuously since April 2025, in work that led to this study, so the design was written with knowledge of the sources, not blind to them. Three changes came after the first estimates were printed (a row filter for the two-stage estimator, the finals-only and without-2004 checks, and the Brexit comparison); all are dated in <a href="../changelog/#eurovision-changes">the change log</a>.</dd></div>
   <div><dt>data</dt><dd>Eurovision votes 1975–2023 (Spijkervet)<sup class="cite"><a href="#r3">3</a></sup>, 2016–2022 cross-checked against Mirovision<sup class="cite"><a href="#r4">4</a></sup>; 2024–2025 from Wikipedia<sup class="cite"><a href="#r5">5</a></sup>; UN DESA migrant stock<sup class="cite"><a href="#r6">6</a></sup>; World Bank population<sup class="cite"><a href="#r7">7</a></sup>; UNHCR<sup class="cite"><a href="#r8">8</a></sup>; CEPII<sup class="cite"><a href="#r9">9</a></sup>. Hashes in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/eurovision-data.json">eurovision-data.json</a>; per-pair averages in <a href="../assets/eurovision/pairs.csv">pairs.csv</a>.</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/eurovision">tools/eurovision/</a> at the commit that publishes this page; rebuild: <code>uv run --with pandas --with pyarrow --with pyfixest python tools/eurovision/estimate.py</code> (pyfixest 0.60.0)</dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Diaspora, juries and the EU in Eurovision votes, 1975–2025</i>. bsandova.com/texts/eurovision, version 3.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Diaspora, juries and the EU in Eurovision votes, 1975–2025</i>. bsandova.com/texts/eurovision, version 4.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text and figures CC BY 4.0; vote data as licensed by their sources (MIT, CC BY-SA)</dd></div>
 </dl>
 </details>
@@ -136,6 +136,11 @@
   <img src="../assets/eurovision/04-eu.svg" alt="Event-study estimates of the share of points between two countries around EU accession, relative to comparison pairs: estimates before accession are not flat: 3 of 9 intervals exclude zero, at contest years −10 (+0.19 pp), −5 (−0.87 pp) and −2 (+1.14 pp); after accession they are mostly slightly negative, with wide intervals." loading="lazy">
   <figcaption><b>fig. 4</b> · Difference between joining pairs and comparison pairs in the share of points they give each other, by contest year from the first year both were members, percentage points; an association, not an effect, because the years before joining are not flat; with 95 % intervals clustered by pair; two-stage difference in differences<sup class="cite"><a href="#r13">13</a></sup>; reference year −1, the last contest before both were members, set to zero. Data: Spijkervet<sup class="cite"><a href="#r3">3</a></sup>, Wikipedia<sup class="cite"><a href="#r5">5</a></sup>.</figcaption>
 </figure>
+<figure class="anim-fig" data-network="../assets/eurovision/network.json">
+  <p class="ch-head">Play fifty years of finals: Cyprus and Greece first; the web is densest around 2009–2015, across the Nordics, the Baltics, the Balkans and the former Soviet states, and thins once juries and televoters give separate points from 2016.</p>
+  <img class="anim-static" src="../assets/eurovision/05-network.svg" alt="Map of Europe with arcs between the pairs of countries that gave each other at least three times an even share of their final points over the five contests to 2025." loading="lazy">
+  <figcaption><b>fig. 5</b> · Pairs of countries that gave each other, on average in both directions, at least three times an even share of their points in the final (an even share splits a voter's points equally over the songs it could vote for), over the five contests up to each year, 1979–2025, each direction seen in at least three of them; thicker, stronger. Televote and jury counted together from 2016. A description of the vote table, not a registered test. Data: Spijkervet<sup class="cite"><a href="#r3">3</a></sup>, Wikipedia<sup class="cite"><a href="#r5">5</a></sup>.</figcaption>
+</figure>
 </section>
 
 <section>
@@ -190,5 +195,8 @@
 
 <script src="../assets/charts.js" defer></script>
 <script src="../assets/map.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" integrity="sha512-vc58qvvBdrDR4etbxMdlTt4GBQk1qjvyORR2nrsPsFPyrs+/u5c3+1Ct6upOgdZoIl7eq6k3a1UPDSNAQi/32A==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+<script src="../assets/animap.js" defer></script>
+<script src="../assets/eurovision/network.js" defer></script>
 </body>
 </html>
