@@ -2,7 +2,7 @@
 
 Reads docs/research/swiss-trams-{results,screen}.json, tools/data/late/swiss_segments.parquet, part 1's
 tools/data/late/segments.parquet and the stop positions of swiss_estimate.py; writes assets/late-swiss/ (charts.json,
-map-<city>.json, 01-s.svg, 02-curves.svg, 03-<city>.svg, results.json, segments.json) and texts/swiss-trams.html
+base-<city>.json from tools/site/basemap_swiss.py, map-<city>.json, 01-s.svg, 02-curves.svg, 03-<city>.svg, results.json, segments.json) and texts/swiss-trams.html
 from tools/late/swiss_template.html.
 
     uv run --no-project --with numpy --with pandas --with pyarrow --with scipy --with matplotlib --with duckdb \
@@ -115,6 +115,7 @@ def map_spec(city: str, t: pd.DataFrame, xy: dict, lat0: float) -> tuple[dict, i
                           "v": {"all": round(float(r.per_pass), 1), "hours": round(float(r.hours), 1)}})
     top = t.sort_values("hours").iloc[-1]
     spec = {"held": PROD, "neg": REC, "fit": "features", "lat0": lat0, "features": feats,
+            "base": f"../assets/late-swiss/base-{city.lower()}.json",
             "views": [{"key": "all", "label": "per pass", "fmt": {"dp": 0, "unit": " s", "sign": True}, "scale": "div",
                        "domain": [-60, 60], "note": "seconds per pass · coral lost, teal made up",
                        "mark": {"id": f"{top.seg_from} → {top.seg_to}", "label": "largest total"}},
@@ -132,11 +133,21 @@ def static_map(spec: dict, path: Path, lat0: float) -> None:
     cmap = LinearSegmentedColormap.from_list("late", [REC, "#e2e2de", PROD])
     norm = Normalize(-60, 60)
     f, ax = plt.subplots(figsize=(7.2, 5.0))
+    base = json.loads((ROOT / spec["base"].removeprefix("../")).read_text(encoding="utf-8"))
+    for ring in base["districts"] + base["outline"]:
+        ax.plot([x * k for x, _ in ring], [y for _, y in ring], color="#d9d9d4", lw=0.5)
+    for ring in base.get("lakes", []):
+        ax.fill([x * k for x, _ in ring], [y for _, y in ring], color="#dfe6ec", lw=0)
+    for line in base["water"]:
+        ax.plot([x * k for x, _ in line], [y for _, y in line], color="#a9c4dc", lw=1.0)
     fs = spec["features"]
     ax.add_collection(LineCollection([[(x * k, y) for x, y in ft["l"][0]] for ft in fs],
                                      colors=[cmap(norm(ft["v"]["all"])) for ft in fs], linewidths=1.8,
                                      capstyle="round", rasterized=True))
-    ax.autoscale()
+    xs = [x * k for ft in fs for x, _ in ft["l"][0]]
+    ys = [y for ft in fs for _, y in ft["l"][0]]
+    ax.set_xlim(min(xs) - 0.004, max(xs) + 0.004)
+    ax.set_ylim(min(ys) - 0.004, max(ys) + 0.004)
     ax.set_aspect("equal")
     ax.axis("off")
     f.tight_layout()
