@@ -1,6 +1,6 @@
 """Hub of the series Running late: its parts, every number from the result files.
 
-Reads the results of parts 1–3 in docs/research/; writes texts/running-late.html from tools/late/hub.template.html.
+Reads the results of parts 1–4 in docs/research/; writes texts/running-late.html from tools/late/hub.template.html.
 
     python3 tools/late/hub.py
 """
@@ -27,6 +27,7 @@ def main() -> None:
     bb = json.loads((ROOT / "docs/research/bunching-results-bus.json").read_text())
     tr = json.loads((ROOT / "docs/research/transfers-results.json").read_text())
     ph = json.loads((ROOT / "docs/research/transfers-posthoc.json").read_text())
+    sw = json.loads((ROOT / "docs/research/swiss-trams-results.json").read_text())
     specs = [tr["checks"][k]["est"] for k in ("margin_m_fixed_2min", "margin_m_minus_30s", "margin_m_plus_30s",
                                               "timing_a_plus_30s", "timing_a_minus_30s", "observed_departures",
                                               "peaks_only", "without_exclusions", "school_holidays", "term_time")]
@@ -41,8 +42,10 @@ def main() -> None:
          "dp1": f"{100 * tr['q1_within']['est']:+.1f}".replace("-", "−"),
          "spec_lo": f"{100 * min(specs):+.1f}".replace("-", "−"),
          "spec_hi": f"{100 * max(specs):+.1f}".replace("-", "−"),
-         "cells_shown": n(ph["roulette"]["cells_shown"])}
-    parts = render("\n".join(part_item(*part, label=label) for *part, label in PARTS), v)
+         "cells_shown": n(ph["roulette"]["cells_shown"]),
+         "zs": n(100 * sw["cities"]["Zurich"]["S"]["est"], 1), "bs": n(100 * sw["cities"]["Basel"]["S"]["est"], 1),
+         "ns": n(100 * sw["cities"]["Bern"]["S"]["est"], 1)}
+    parts = render("\n".join(part_item(*p[:5], p[6] if len(p) > 6 else None, label=p[5]) for p in PARTS), v)
     photo = photo_section("running-late", image="delay-origins")
     template = Path(__file__).with_name("hub.template.html").read_text(encoding="utf-8")
     page = render(template, {**v, "parts": parts, "photo": photo})
@@ -50,7 +53,7 @@ def main() -> None:
     print(v)
 
 
-PARTS = [  # slug, part, title, kicker, summary, screen-reader name; {{tokens}} are filled from the results
+PARTS = [  # slug, part, title, kicker, summary, screen-reader name[, photo of another part]; {{tokens}} from the results
     ("delay-origins", 1, "Where is delay born on Prague's trams?",
      "Part 1 · where delay appears · {{segments}} tram segments, 15 March – 8 September 2025",
      "A tenth of the segments record {{S}} % of all delay gained, just over half, the same ones in odd and "
@@ -73,6 +76,12 @@ PARTS = [  # slug, part, title, kicker, summary, screen-reader name; {{tokens}} 
      "specifications), with real differences between pairs of lines and no mechanism identified. A roulette "
      "gives the share made for {{cells_shown}} combinations of stop, lines and time of day.",
      None),
+    ("swiss-trams", 4, "Is Prague's delay map a law of trams? Zurich, Basel and Bern",
+     "Part 4 · four networks · Zurich, Basel and Bern, 15 March – 8 September 2025",
+     "The same measure on Swiss trams: a tenth of the segments make {{zs}} % of the delay in Zurich, {{bs}} % in "
+     "Basel and {{ns}} % in Bern. Basel and Bern are like Prague by the registered rule, Zurich is not; above what "
+     "chance alone would give, all three concentrate less than Prague.",
+     "Is Prague's delay map a law of trams?", "delay-origins"),
 ]
 
 
