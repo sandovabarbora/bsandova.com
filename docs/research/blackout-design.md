@@ -135,3 +135,11 @@ outage stopped trains too. With buses and trains, the first run flagged 29 bins 
 meant: with them, no bin is flagged, so the feed was alive all day and every bin is read. The bus-and-train flags are
 reported next to the article as a disclosed first run. Rows with delay over an hour on 4 July are counted (§3.3):
 3 910 tram passes, 75 bus passes.
+
+**14 October 2026 (code frozen; no value of 4 July summarised).** `tools/blackout/estimate.py` runs §1, §4 and §6;
+`tools/blackout/test_blackout.py` checks it on made-up data: a network stopped 12:00–13:00 restarts at 13:00 and its
+delays come back two hours later, an ordinary day gives 12:00 for every time (the placebo), one thin bin does not move
+T₉₀, the stopped share and the restart lag, the exclusion of low-frequency segments, and the metro control. The tests
+showed that "the first bin from which at least five of six bins" lets a run open on a bin that fails, one bin before
+service came back; the opening bin must now meet the rule itself. This reads the definitions as meant ("from which R
+stays") and was fixed before any value of 4 July was computed.
