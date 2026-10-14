@@ -146,3 +146,12 @@ stays") and was fixed before any value of 4 July was computed.
 
 **14 October 2026 (results).** `blackout-results.json`. The first run stopped on writing the JSON (a NumPy boolean in
 the per-segment rows); `bool()` was added around it, which changes no value.
+
+**14 October 2026 (post-hoc, after the results; not registered).** `tools/blackout/posthoc.py`, output
+`blackout-posthoc.json`. Reading the results showed that the registered delay measure breaks down after the restart:
+51 % of tram passes in 13:30–14:10 are more than two minutes early against the trip they were matched to (quartiles
+−2 444, −397 and +1 034 s; the earliest −25 341 s), so they were matched to timetable trips other than the ones they
+ran, and early and late passes cancel in the median. T_D = 14:10 is therefore not read as delays back to normal. The
+script adds the share of tram passes more than five minutes off the timetable either way, as a curve against the
+highest baseline day. A single time from it by the five-of-six rule failed its own placebo (25 July came out at 19:00)
+and is not reported.
