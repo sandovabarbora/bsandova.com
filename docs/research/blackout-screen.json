@@ -1,0 +1,41 @@
+{
+ "event": "2025-07-04",
+ "baseline_days": [
+  "2025-07-11",
+  "2025-07-18",
+  "2025-07-25"
+ ],
+ "baseline_checks": {
+  "2025-07-11": {
+   "max_daily_deviation": 0.1059,
+   "bins_below_0_7": {
+    "tramvaj": 0,
+    "autobus": 0
+   },
+   "ok": true
+  },
+  "2025-07-18": {
+   "max_daily_deviation": 0.0468,
+   "bins_below_0_7": {
+    "tramvaj": 0,
+    "autobus": 0
+   },
+   "ok": true
+  },
+  "2025-07-25": {
+   "max_daily_deviation": 0.0591,
+   "bins_below_0_7": {
+    "tramvaj": 0,
+    "autobus": 0
+   },
+   "ok": true
+  }
+ },
+ "feed_flags": {},
+ "feed_bins_ok": 72,
+ "event_passes_delay_over_1h": {
+  "tramvaj": 3910,
+  "autobus": 75,
+  "vlak": 1774
+ }
+}

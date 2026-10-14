@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>When the power went out: how Prague's trams stopped and came back on 4 July 2025</title>
+<meta name="description" content="A registered case study of the 4 July 2025 blackout in Prague: {{stopped_pct}} % of tram service stopped at noon, half came back by {{t50}} and nine tenths by {{t90}}, and trams ran off their timetable into the evening.">
+<meta property="og:title" content="When the power went out: Prague's trams on 4 July 2025">
+<meta property="og:description" content="{{stopped_pct}} % of Prague's tram service stopped when the grid failed at noon; most came back within three hours, the timetable only by evening. A registered case study.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://bsandova.com/texts/blackout">
+<meta property="og:image" content="https://bsandova.com/assets/og/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bsandova.com/assets/og/home.jpg">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://bsandova.com/texts/blackout">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../text.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../a24.css">
+<style>
+.text dl.meta{display:block;letter-spacing:normal;text-transform:none;font-size:12px}
+.text dl.meta div{border-right:0;padding-left:0;grid-template-columns:13ch 1fr}
+.text dl.meta dd{overflow-wrap:anywhere}
+.ht{width:100%;border-collapse:collapse;font:400 13px/1.4 var(--sans);font-variant-numeric:tabular-nums;margin:.6rem 0 1rem}
+.ht th{font:400 11px var(--mono);color:#666;text-align:left;padding:6px 10px 6px 0;border-bottom:1px solid #000;vertical-align:bottom}
+.ht td{padding:6px 10px 6px 0;border-bottom:1px solid #e6e6e6;vertical-align:top}
+.ht td.v{white-space:nowrap}
+.ht td.v b{font-weight:500;color:#34507c}
+.ht small{color:#666;font:400 11px var(--mono)}
+.ht td.v small{display:block;white-space:normal}
+.ht-wrap{overflow-x:auto;max-width:100%}
+.note{font:400 12px/1.6 var(--mono);color:#666}
+@media (max-width:560px){.text dl.meta div{grid-template-columns:1fr}.ht{font-size:12px}}
+</style>
+</head>
+<body>
+<div class="top"><b><a href="../" aria-label="bŠ, bsandova.com, home">bŠ</a></b><nav><a href="../#work">Work</a><a href="../#works">All work</a><a href="../#about">About</a><a href="../ask/" class="ask-link">Ask</a><a href="../#contact">Contact</a></nav><span class="tr">research · transit · en</span></div>
+
+<article class="text">
+<header class="text-head">
+  <p class="kicker">Research · transit · Prague, 4 July 2025</p>
+  <h1>When the power went out: <em>how Prague's trams stopped and came back on 4 July 2025</em></h1>
+  <p class="deck">When the Czech grid split at noon, {{stopped_pct}} % of Prague's tram service stopped. Half of it ran again by {{t50}} and nine tenths by {{t90}}; trams kept running far from their matched trips until about seven in the evening.</p>
+  <dl class="facts">
+    <div><dt>stopped at noon</dt><dd>{{stopped_pct}} % <small>of usual tram service in 12:10–12:30, on segments where no tram passed · ordinary Fridays: under 1 %</small></dd></div>
+    <div><dt>half back</dt><dd>{{t50}} <small>tram passes stay at half of an ordinary Friday from then on · ordinary Fridays: 12:00</small></dd></div>
+    <div><dt>nine tenths back</dt><dd>{{t90}} <small>news reports said "back to normal" at 15:16</small></dd></div>
+    <div><dt>delay, registered</dt><dd>{{td}} <small>median delay back in its ordinary range · not read as recovery: early and late trips cancel (see below)</small></dd></div>
+    <div><dt>off the matched trip</dt><dd>{{off_1410}} % <small>of tram passes more than 5 minutes from the trip the data matched them to at 14:10, at most {{off_base_1410}} % on ordinary Fridays · {{off_1810}} % at 18:10 · described after the results</small></dd></div>
+  </dl>
+</header>
+<details class="tldr" open>
+  <summary>Overwhelmed? Here's the short version</summary>
+  <ul>
+    <li>At 11:59 on Friday 4 July 2025 28 % of the Czech grid's load was cut off, including part of Prague. On {{stopped_segs}} of {{q1_segs}} frequent tram segments (a segment is the stretch from one stop to the next), no tram passed for twenty minutes; buses ran on.</li>
+    <li>Service came back in about three hours: half of the usual trams by {{t50}}, nine tenths by {{t90}}. Measured against 13:01, when the second of the two substations feeding Prague was back, a quarter of the stopped segments saw a tram again before it and the median {{lag_median}} minutes after it.</li>
+    <li>The registered delay measure, the median delay, was back in its ordinary range at {{td}}, before service was. It cannot be read as recovery: after the restart, half of the trams were recorded as running early, some by hours, against the trips the data matched them to, and early and late cancel in a median. Described after the results: at 14:10, {{off_1410}} % of tram passes were more than five minutes from their matched trip, and at 18:10 still {{off_1810}} %. Whether the trams ran off the timetable or the data matched them to the wrong trips, the data cannot tell.</li>
+    <li>One day in one city: a description of how this network came back, not a rule for others. Every comparison is with the same rule run on ordinary Fridays (a placebo). The metro check missed by up to {{metro_worst}} minutes, so every restart time here is uncertain by about that much.</li>
+  </ul>
+</details>
+<dl class="meta">
+  <div><dt>published</dt><dd>14 October 2026 · not yet updated · <a href="../changelog/#blackout">version 1</a></dd></div>
+</dl>
+<details class="meta-more">
+  <summary>About this study</summary>
+<dl class="meta">
+  <div><dt>status</dt><dd>research, registered study (self-timestamped), a descriptive case study</dd></div>
+  <div><dt>registration</dt><dd>design registered by the signed annotated tag <code>blackout-design</code>, tag object <code>87ed802623d7d9c5e75f6d71e19f07951a45a92a</code>, on commit <code>d949b3de1348c4aed1c3c8e1a46036c440e4a7bb</code>, pushed to the public repository with its branch on 14 October 2026 before any record of 4 July 2025 was read on its own. The registration is the author's own signed git tag, not an entry in an independent registry, and it came on the same day as the analysis, a few hours before it. Commit times are self-reported; deviations are in <a href="../changelog/#blackout-changes">the change log</a>.</dd></div>
+  <div><dt>data</dt><dd>PID stop-time history via Golemio, the data of the author's master's thesis<sup class="cite"><a href="#r4">4</a></sup><sup class="cite"><a href="#r5">5</a></sup>; Friday 4 July 2025 and the ordinary Fridays {{baseline}} July 2025. The aggregated curves are in <a href="../assets/blackout/results.json">results.json</a> and <a href="../assets/blackout/posthoc.json">posthoc.json</a>.</dd></div>
+  <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/blackout">tools/blackout/</a> at the commit that publishes this page</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>When the power went out: how Prague's trams stopped and came back on 4 July 2025</i>. bsandova.com/texts/blackout, version 1.</dd></div>
+  <div><dt>licence</dt><dd>code MIT; text, figures and the aggregated data CC BY 4.0</dd></div>
+</dl>
+</details>
+
+<section>
+<p>At 11:51 on Friday 4 July 2025, the 400 kV line between Hradec and Výškov in north-west Bohemia tripped. Eight minutes later, just before noon, the affected part of the Czech grid separated and collapsed, cutting off about 2 300 MW, 28 % of the country's load at that moment, in four regions and part of Prague<sup class="cite"><a href="#r1">1</a></sup>. Dispatchers gave priority to the two substations feeding Prague: Malešice was back at 12:30 and Chodov at 13:01. All 400 and 220 kV substations were energised by 14:09, and all the load was back at 17:35<sup class="cite"><a href="#r1">1</a></sup>. The energy regulator's working group named Prague as the main region where a power cut quickly leads to a collapse of transport<sup class="cite"><a href="#r2">2</a></sup>.</p>
+<p>The rough story was told live: trams on the right bank of the Vltava stopped, those on the left bank kept going, the metro ran again from 12:15 and 12:35, and at 15:16 "tram service returned to normal"<sup class="cite"><a href="#r3">3</a></sup>. This study measures the same afternoon from the record of every tram passing every stop, to say how much stopped, how fast it came back, and how long the timetable took to follow. The questions and their rules were registered before that day's records were read on their own.</p>
+</section>
+
+<section>
+<h2>Data</h2>
+<p>The stop-time history of Prague Integrated Transport, collected from Golemio for the author's master's thesis, holds one row for each trip from one stop to the next, with the scheduled and the observed time to the second<sup class="cite"><a href="#r4">4</a></sup><sup class="cite"><a href="#r5">5</a></sup>. A <i>pass</i> is a row with an observed arrival at the next stop; a <i>segment</i> is an ordered pair of stops, so each direction is its own segment. Each pass is matched to a trip of the timetable, and its delay is measured against that trip. Earlier studies on this site used these data with 4 July as one of about 170 days in season-wide sums; none showed that day on its own, and the author had not looked at it.</p>
+<p>The day is compared with the three following Fridays, {{baseline}} July, which run the same summer timetable. Every number is set against a placebo: the same rule applied to each of those Fridays against the other two. For the headline rules the placebo gives 12:00 on every ordinary Friday; a value of 4 July inside the placebo range is not read as an effect of the outage. Buses do not run on traction power, so they show whether the data feed itself was alive. It was: bus passes stayed above four fifths of an ordinary Friday in every ten minutes of the day.</p>
+</section>
+
+<section>
+<h2>How this was done</h2>
+<p>For every ten minutes from 10:00 to 22:00, the number of passes of each mode on 4 July is divided by the mean of the ordinary Fridays in the same ten minutes. <i>Half back</i> is the first ten minutes from noon that is itself at or above 0.5 and opens an hour in which at most one ten-minute bin dips below it; <i>nine tenths back</i>, the same at 0.9. A segment <i>stopped</i> if no tram passed it between 12:10 and 12:30, among segments with at least three trams in those twenty minutes on ordinary Fridays; its estimated restart is its first tram after 12:10, less half its usual interval between trams. Delay was registered as the median delay of passes in each ten minutes, back to normal when it stays inside the range of the ordinary Fridays, widened by 30 seconds or a quarter of their mean, whichever is larger.</p>
+<details class="appendix">
+  <summary>Rules in detail, checks, and what changed</summary>
+<p>All questions are descriptive: one event cannot show what makes a network recover faster, and no result carries a label. Screening had a rule that a ten-minute bin is suspect if buses or trains fall below half of their ordinary level. Trains were the wrong reference, since most Czech lines are electric and the outage stopped them too; with them, 29 bins of 4 July were flagged, and that output was seen. The rule was then applied to buses alone, as meant, and flagged none. That change was made after seeing those flags, so it depends on the data, but before any ratio, pass count or delay of the day was summarised. Tests on made-up data showed that "the first ten minutes from which five of the next six pass" lets a run open on a bin that fails; the opening bin must now pass itself, a change made before any value of 4 July was computed. Both are dated in the change log.</p>
+<p>The metro was registered as a positive control: the median over each line's segments of the first pass after noon, against the reported restarts. Lines A and C came out at {{metro_a}} and {{metro_c}} (reported 12:15), line B at {{metro_b}} (reported 12:35). Line B misses by more than ten minutes, so by the rule set in advance every restart time on this page is uncertain by about {{metro_worst}} minutes; why line B shows passes so soon after noon is not known. The metro also ran at only {{metro_pre}} of an ordinary Friday's passes at 11:40, before the outage, so its curves are drawn but its times are not read. Buses came out at 12:00 on every rule, as on an ordinary day; trolleybuses, registered as curves only, are drawn in fig. 1.</p>
+<p>Checks of the tram times: with a threshold of 0.85, nine tenths back is {{t90_085}}; counted from departures, {{t90_dep}}; requiring all six bins in the hour, {{t90_six}} (placebo up to {{t90_six_plac}}); with bins of 5 and 15 minutes, {{t_5}} and {{t_15}}. Over 12:10–12:40 the stopped share is {{q1_wide_pct}} %. The mean delay, instead of the median, is back in range at {{td_mean}} (placebo 12:00). Two checks could not be made as registered: the archived PID disruption pages hold no page about the outage, and the two sections reported still without power at 14:38<sup class="cite"><a href="#r3">3</a></sup> disagree with the data, which record trams near Starý Hloubětín by {{sec_hloubetin}} and around Nádraží Hostivař by {{sec_hostivar}}. Either the report was out of date or those passes belong to trips the data matched wrongly; the data cannot tell. The June Fridays, registered as a second reference for the curves, are in the results file.</p>
+</details>
+</section>
+
+<section>
+<h2>What stopped</h2>
+<p>Between 12:10 and 12:30, no tram passed {{stopped_segs}} of {{q1_segs}} segments that ordinarily see at least three in that time: {{stopped_pct}} % of the usual tram service then, weighting each segment by how many trams it carries on ordinary Fridays. On those Fridays the same count gives under 1 %. {{q1_low}} segments with fewer trams were left out, because twenty minutes without a tram is ordinary there. Buses ran on at about their usual number (fig. 1). The stopped segments lie mostly east of the river (fig. 2), as the live reports said.</p>
+<figure data-chart="../assets/blackout/charts.json#service">
+  <p class="ch-head">Tram passes fell to about a quarter of an ordinary Friday at noon and climbed back over three hours; buses barely moved.</p>
+  <img src="../assets/blackout/01-service.svg" alt="Passes per ten minutes on 4 July 2025 as a share of ordinary Fridays for trams, metro, buses and trolleybuses, 10:00 to 22:00: trams drop to about a quarter just after noon and return to about one by 15:00; buses stay near one; metro dips and recovers to about three quarters." loading="lazy">
+  <figcaption><b>fig. 1</b> · Passes per ten minutes on 4 July 2025 divided by the mean of the Fridays {{baseline}} July 2025, for trams, metro, buses and trolleybuses; dotted, the grid's collapse just before noon and Chodov, the second substation feeding Prague, back at 13:01. The metro was below its ordinary level before the outage too. Data: PID via Golemio<sup class="cite"><a href="#r4">4</a></sup>.</figcaption>
+</figure>
+<figure class="mp-fig" data-map="../assets/blackout/map.json">
+  <img class="mp-static" src="../assets/blackout/04-map.svg" alt="Map of Prague's tram network: segments where no tram passed between 12:10 and 12:30 in coral, most of the network east of the river; segments where trams kept running in grey, mostly west of it." loading="lazy">
+  <figcaption><b>fig. 2</b> · Each tram segment between the stops it joins, each direction on its right: coral, no tram between 12:10 and 12:30 on 4 July 2025; grey, trams ran or the segment is too infrequent to tell. A second view colours the stopped segments by their estimated restart. All {{map_drawn}} segments that trams used on the ordinary Fridays and that could be placed from the stop positions in the PID timetable<sup class="cite"><a href="#r5">5</a></sup>, including infrequent ones. Data: PID via Golemio<sup class="cite"><a href="#r4">4</a></sup>.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>How fast trams came back</h2>
+<p>Tram passes stayed above half of an ordinary Friday from {{t50}} and above nine tenths from {{t90}}; on the ordinary Fridays both rules give 12:00. Nine tenths at {{t90}} is close to the reported "back to normal" at 15:16<sup class="cite"><a href="#r3">3</a></sup>. The rule allows one dip, and there was one later: at {{dip_at}} tram passes fell to {{dip_r}} of an ordinary Friday for ten minutes.</p>
+<p>Of the {{restart_all}} segments that stopped, {{restart_n}} saw a tram again before 22:00 and {{restart_never}} did not. Measured from 13:01, when Chodov, the second of the two substations dispatchers restored first for Prague, was back: {{before_1301}} segments ({{before_1301_pct}} %) had an estimated restart before it, {{hour_after_pct}} % within the hour after it and {{later_pct}} % later; the median was {{lag_median}} minutes after it, the range {{lag_min}} to {{lag_max}} minutes (fig. 3). 13:01 is a reference point, not a cause: which substation fed which tram section is not known.</p>
+<figure data-chart="../assets/blackout/charts.json#restart">
+  <p class="ch-head">A quarter of the stopped segments ran again before 13:01; most of the rest within the hour after it.</p>
+  <img src="../assets/blackout/03-restart.svg" alt="Histogram of stopped tram segments by estimated restart, in minutes after 13:01: a group before 13:01, most between zero and sixty minutes after it, a few up to 150." loading="lazy">
+  <figcaption><b>fig. 3</b> · Tram segments that stopped at 12:10–12:30 by estimated restart, their first tram afterwards less half their usual interval between trams, in minutes after 13:01, in ten-minute bins; uncertain by about {{metro_worst}} minutes (the metro check). Data: PID via Golemio<sup class="cite"><a href="#r4">4</a></sup>.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>How long the timetable took</h2>
+<p>The registered delay measure came back fast: the median delay of tram passes was inside the ordinary range from {{td}}, before nine tenths of the service was back. It should not be read as recovery. Between 13:30 and 14:10, {{early_pct}} % of {{early_n}} tram passes were more than two minutes <i>early</i> on the trip the data matched them to; a quarter were more than about {{early_q1}} minutes early, and the earliest by about {{early_most_h}} hours. This is consistent with trams back in service being matched to timetable trips other than the ones they ran, and early and late passes then cancel in the median (fig. 4, first panel). The mean delay, a registered check, came back to the ordinary range only at {{td_mean}}. On 4 July, {{late_1h}} tram passes were more than an hour off their matched trip, early or late.</p>
+<p>A measure that does not cancel, added after the results and not registered, is the share of passes more than five minutes from their matched trip, early or late (fig. 4, second panel). It was {{off_1310}} % at 13:10 and {{off_1410}} % at 14:10, when on ordinary Fridays it is at most {{off_base_1410}} % at those times; {{off_1610}} % at 16:10, {{off_1810}} % at 18:10 and {{off_1910}} % at 19:10, inside the ordinary range. It mixes trams running off the timetable with trams matched to the wrong trip, and the data cannot separate the two. A single "back to normal" time from this share, by the same rule, failed its own placebo, one ordinary Friday coming out at 19:00, so none is given.</p>
+<figure data-chart="../assets/blackout/charts.json#delay">
+  <p class="ch-head">The median delay swung both ways after the restart; passes stayed far from their matched trips until about seven in the evening.</p>
+  <img src="../assets/blackout/02-delay.svg" alt="Share of tram passes more than five minutes from their matched trip on 4 July 2025 against the highest ordinary Friday: about four in five from 13:00 to 14:30, falling through the afternoon, back near the ordinary level around 19:00." loading="lazy">
+  <figcaption><b>fig. 4</b> · Trams on 4 July 2025. First panel, registered: the median delay of passes per ten minutes, cut at ±600 seconds, against the range of the Fridays {{baseline}} July. Second panel, described after the results: the share of passes more than five minutes early or late against the trip they were matched to, against the highest of those Fridays. Data: PID via Golemio<sup class="cite"><a href="#r4">4</a></sup>.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>What this means</h2>
+<p>Measured: when the grid failed at noon, {{stopped_pct}} % of Prague's usual tram service stopped and buses did not; trams came back to half of their usual number by {{t50}} and to nine tenths by {{t90}}. After the restart, for most of the afternoon a large share of tram passes were far from the trips the data matched them to, and only around 19:00 did that share fall to an ordinary level.</p>
+<p>The author expected trams to start running soon after the power came back and delays to last hours longer. The registered measure did not support this: the median delay was back in range at {{td}}, before the service was. The mean delay and the share far from the matched trip are consistent with it, but the first is a check and the second was chosen after seeing the results, and both may count wrongly matched trips as delay.</p>
+<p>Possible, not shown: a tram network needs more than power at the substation to restart, since overhead lines, signals and stranded vehicles all have to come back. Elsewhere, in Britain in 2019, 22 trains locked out by a dip in the grid's frequency could not be restarted without a technician on site<sup class="cite"><a href="#r6">6</a></sup>. Studies of metro disruptions trace degradation and recovery over time and place, as fig. 1 and 3 do here for one day<sup class="cite"><a href="#r7">7</a></sup>.</p>
+</section>
+
+<section>
+<h2>What this does not show</h2>
+<p>It does not show why segments restarted in the order they did: which substation fed which section, how dispatchers sent trams out and where vehicles were stranded are not in the data, and the order is tied to geography. A tram standing between stops, a trip cancelled midway and a short turn that matches no trip in the timetable all leave no pass, so "stopped" means no recorded tram. After the restart, delay depends on which trip a tram was matched to, so how late passengers were is not known. It says nothing about passengers, how many were stranded or for how long. It is one event, in one city, in summer, at noon.</p>
+</section>
+
+<section id="reproduction">
+<h2>Reproduction</h2>
+<p>Every number on this page is filled in from <a href="../assets/blackout/results.json"><code>results.json</code></a>, the screening file and <a href="../assets/blackout/posthoc.json"><code>posthoc.json</code></a> by a script. From the repository root, with the transit database of the thesis:</p>
+<ol>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/blackout/screen.py"><code>tools/blackout/screen.py</code></a>: the baseline days and the feed flags.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/blackout/estimate.py"><code>estimate.py</code></a>: the registered estimates and checks, with tests in <code>test_blackout.py</code>.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/blackout/posthoc.py"><code>posthoc.py</code></a>: the descriptions after the results.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/blackout/article.py"><code>article.py</code></a>: the figures, the map and this page.</li>
+</ol>
+<p>The design is <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/blackout-design.md"><code>docs/research/blackout-design.md</code></a>.</p>
+</section>
+
+<section class="refs" id="refs">
+<h2>References</h2>
+<ol>
+<li id="r1">ENTSO-E (2025). 4 July grid incident in the Czech Republic: expert panel releases factual report, 19 December 2025. <a href="https://www.entsoe.eu/news/2025/12/19/4-july-grid-incident-in-the-czech-republic-expert-panel-releases-factual-report/">entsoe.eu</a>. Accessed 14 October 2026.</li>
+<li id="r2">Energetický regulační úřad (2026). Pracovní skupina k vyhodnocení výpadku elektřiny ze dne 04.07.2025: závěrečná zpráva. <a href="https://eru.gov.cz/sites/default/files/obsah/prilohy/zaverecna-zprava-vypadek-elektrinyfinal23062026.pdf">eru.gov.cz</a>. Accessed 14 October 2026.</li>
+<li id="r3">Zdopravy.cz (2025). On-line: Česko postihl částečný blackout. Výpadek proudu paralyzoval dopravu, stály vlaky, tramvaje i metro. Live report, 4 July 2025. <a href="https://zdopravy.cz/cesko-postihl-castecny-blackout-kvuli-vypadku-proudu-nejedou-tramvaje-ani-metro-na-vetsine-prahy-250389/">zdopravy.cz</a>. Accessed 14 October 2026.</li>
+<li id="r4">Operátor ICT. Golemio, Prague's open-data platform: Prague Integrated Transport stop-time history, collected 15 March – 8 September 2025. <a href="https://golemio.cz">golemio.cz</a>. Accessed 14 October 2026.</li>
+<li id="r5">ROPID. Prague Integrated Transport open data: timetable in GTFS (stops, trips and routes). <a href="https://pid.cz/o-systemu/opendata/">pid.cz/o-systemu/opendata</a>. Accessed 14 October 2026.</li>
+<li id="r6">Office of Rail and Road (2020). Report following railway power disruption on 9th August 2019, 3 January 2020. <a href="https://www.orr.gov.uk/media/10752/download">orr.gov.uk</a>. Accessed 14 October 2026.</li>
+<li id="r7">Zhang, N., Hörcher, D., Bansal, P., Graham, D. J. (2023). Causal resilience curves: a data-driven framework for quantifying the spatiotemporal impacts of metro service disruptions. <a href="https://arxiv.org/abs/2310.07514">arXiv:2310.07514</a>. Accessed 14 October 2026.</li>
+</ol>
+</section>
+
+
+<footer class="text-foot">
+  <p class="back"><a href="../#works">← projects</a></p>
+</footer>
+</article>
+
+<script src="../assets/charts.js" defer></script>
+<script src="../assets/map.js" defer></script>
+</body>
+</html>
