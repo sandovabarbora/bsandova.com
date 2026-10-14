@@ -158,3 +158,17 @@ opentransportdata.swiss, *Ist-Daten* and its cookbook (`opentransportdata.swiss/
 references are verified before publication, in a dated commit.
 
 ## Changes after registration
+
+**14 October 2026 (screening, §3; counts and shares only, no segment's delay summarised).** `tools/late/swiss_fetch.py`
+downloaded the version 1 archive for all 178 dates and kept the tram rows; `tools/late/swiss_screen.py` writes
+`swiss-trams-screen.json`. Three things the screening found:
+- The operator abbreviation carries a suffix in the archive ("VBZ Fpl", "SVB Auto"), so the first run matched only
+  Basel and Geneva. Its first word now names the operator, as §1 meant; only counts were printed by that run.
+- Geneva's operator TPG labels every actual time PROGNOSE, never REAL, although 98 % of its times have seconds. By
+  §3.3 no Geneva pass is kept, so Geneva has no primary estimate; it appears only in the check with forecasts kept
+  (§6), which relaxes all of §3.3, the per-segment REAL share included, and applies §3.6 to its own passes.
+- The check "without stop-order ties" (§6) is the primary rule already: §3.2 drops tied stops and forms no pass across
+  them. It is reported as the count of stops dropped (212 229), not as a separate estimate.
+No feed-gap dates. Kept: Zurich 448 segments and 15.8 million passes, Basel 420 and 11.3 million, Bern 148 and 3.8
+million, all 178 dates. Prague's planned travel times are whole minutes in all 27.5 million tram passes of the window
+(§3.7), so §6's minute-schedule check reports only that.

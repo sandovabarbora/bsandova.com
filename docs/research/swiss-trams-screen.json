@@ -1,0 +1,163 @@
+{
+ "window": [
+  "2025-03-15",
+  "2025-09-08"
+ ],
+ "dates_read": 178,
+ "trips_by_operator": {
+  "VBZ    Fpl": 763655,
+  "BVB": 398034,
+  "TPG": 286530,
+  "SVB Auto": 252138,
+  "BLT": 160066,
+  "FB": 28333,
+  "AVA-ltb": 28286
+ },
+ "rows_four_networks": 40177726,
+ "rows_cancelled_or_passed_through": 503214,
+ "stops_dropped_as_ties": 212229,
+ "real_arrivals_with_nonzero_seconds": {
+  "VBZ": 0.9767,
+  "BVB": 0.9818,
+  "BLT": 0.9814,
+  "SVB": 0.9831
+ },
+ "passes_formed": {
+  "Basel": 11583154,
+  "Bern": 3822761,
+  "Geneva": 5924344,
+  "Zurich": 16279112
+ },
+ "real_share_by_city_month": {
+  "('Basel', 3)": 0.9774,
+  "('Basel', 4)": 0.9737,
+  "('Basel', 5)": 0.9709,
+  "('Basel', 6)": 0.9776,
+  "('Basel', 7)": 0.9818,
+  "('Basel', 8)": 0.9831,
+  "('Basel', 9)": 0.9836,
+  "('Bern', 3)": 0.9903,
+  "('Bern', 4)": 0.9881,
+  "('Bern', 5)": 0.9847,
+  "('Bern', 6)": 0.982,
+  "('Bern', 7)": 0.9892,
+  "('Bern', 8)": 0.9876,
+  "('Bern', 9)": 0.994,
+  "('Geneva', 3)": 0.0,
+  "('Geneva', 4)": 0.0,
+  "('Geneva', 5)": 0.0,
+  "('Geneva', 6)": 0.0,
+  "('Geneva', 7)": 0.0,
+  "('Geneva', 8)": 0.0,
+  "('Geneva', 9)": 0.0,
+  "('Zurich', 3)": 0.9608,
+  "('Zurich', 4)": 0.969,
+  "('Zurich', 5)": 0.9605,
+  "('Zurich', 6)": 0.9736,
+  "('Zurich', 7)": 0.9782,
+  "('Zurich', 8)": 0.9722,
+  "('Zurich', 9)": 0.9728
+ },
+ "low_real_segments": {
+  "Basel": {
+   "segments": 351,
+   "share_of_passes": 0.0001
+  },
+  "Bern": {
+   "segments": 125,
+   "share_of_passes": 0.0002
+  },
+  "Geneva": {
+   "segments": 280,
+   "share_of_passes": 1.0
+  },
+  "Zurich": {
+   "segments": 1478,
+   "share_of_passes": 0.0004
+  }
+ },
+ "feed_gap_dates": [],
+ "implausible_share_by_city_month": {
+  "('Basel', 3)": 0.0003,
+  "('Basel', 4)": 0.0001,
+  "('Basel', 5)": 0.0004,
+  "('Basel', 6)": 0.0002,
+  "('Basel', 7)": 0.0002,
+  "('Basel', 8)": 0.0001,
+  "('Basel', 9)": 0.0001,
+  "('Bern', 3)": 0.0002,
+  "('Bern', 4)": 0.0001,
+  "('Bern', 5)": 0.0002,
+  "('Bern', 6)": 0.0002,
+  "('Bern', 7)": 0.0002,
+  "('Bern', 8)": 0.0002,
+  "('Bern', 9)": 0.0002,
+  "('Geneva', 3)": 0.0008,
+  "('Geneva', 4)": 0.0012,
+  "('Geneva', 5)": 0.002,
+  "('Geneva', 6)": 0.0014,
+  "('Geneva', 7)": 0.0017,
+  "('Geneva', 8)": 0.0021,
+  "('Geneva', 9)": 0.0019,
+  "('Zurich', 3)": 0.0001,
+  "('Zurich', 4)": 0.0001,
+  "('Zurich', 5)": 0.0002,
+  "('Zurich', 6)": 0.0001,
+  "('Zurich', 7)": 0.0002,
+  "('Zurich', 8)": 0.0001,
+  "('Zurich', 9)": 0.0001
+ },
+ "rare_segments": {
+  "Basel": {
+   "segments": 146,
+   "passes": 7321
+  },
+  "Bern": {
+   "segments": 35,
+   "passes": 6400
+  },
+  "Zurich": {
+   "segments": 1066,
+   "passes": 8996
+  }
+ },
+ "kept": {
+  "Basel": {
+   "segments": 420,
+   "passes": 11316458,
+   "dates": 178
+  },
+  "Bern": {
+   "segments": 148,
+   "passes": 3766353,
+   "dates": 178
+  },
+  "Zurich": {
+   "segments": 448,
+   "passes": 15776915,
+   "dates": 178
+  }
+ },
+ "kept_with_forecasts": {
+  "Basel": {
+   "segments": 420,
+   "passes": 11493356
+  },
+  "Bern": {
+   "segments": 148,
+   "passes": 3800335
+  },
+  "Geneva": {
+   "segments": 183,
+   "passes": 5907435
+  },
+  "Zurich": {
+   "segments": 448,
+   "passes": 16060441
+  }
+ },
+ "prague_schedule": {
+  "tram_passes_with_planned_time": 27521963,
+  "share_not_whole_minutes": 0.0
+ }
+}
