@@ -27,6 +27,7 @@ WINDOW, MIN_SEEN, RATIO = 5, 3, 3.0  # contests per window; contests a direction
 PLACE = {"AU": (-18.0, 33.0), "YU": (20.5, 44.0), "CS": (20.5, 44.0), "MA": (-6.5, 33.0),  # off-map or former states
          "RU": (37.6, 55.8)}  # Moscow: the centre of Russia lies far outside the map
 ISO = {"GB": "GB", "YU": "RS", "CS": "RS"}
+FORMER = {"YU": "Yugoslavia", "CS": "Serbia and Montenegro"}
 
 
 def positions() -> tuple[dict, list]:
@@ -95,14 +96,15 @@ def main() -> None:
     for c in codes:
         p = PLACE.get(c) or pos.get(ISO.get(c, c))
         if p:
-            nodes[c] = {"name": NAMES.get(c, c), "x": p[0], "y": p[1]}
+            nodes[c] = {"name": {**NAMES, **FORMER}.get(c, c), "x": p[0], "y": p[1]}
     years = sorted(ws)
+    years = years[next(i for i, y in enumerate(years) if len(ws[y])):]  # from the first window with a pair
     frames, notes = [], []
     for y in years:
         links = [[r.i, r.j, round(float(r.mutual), 2)] for r in ws[y].itertuples() if r.i in nodes and r.j in nodes]
         frames.append(links)
         top = max(links, key=lambda l: l[2]) if links else None
-        notes.append(f"{len(links)} pairs over {RATIO:g}× an even share, five contests to {y}"
+        notes.append(f"{len(links)} pair{'' if len(links) == 1 else 's'} over {RATIO:g}× an even share, five contests to {y}"
                      + (f" · strongest: {nodes[top[0]]['name']} and {nodes[top[1]]['name']}, {top[2]:.1f}×" if top else ""))
     active = [sorted({c for l in fr for c in l[:2]}) for fr in frames]
     static(nodes, base, frames[-1], OUT.with_name("05-network.svg"))

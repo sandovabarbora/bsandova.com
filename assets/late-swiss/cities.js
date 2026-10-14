@@ -88,7 +88,7 @@
       labS.transition(t).attr('y', y(c.S) - 6).text(`S ${pct(c.S)}`);
       lab0.transition(t).attr('y', y(c.S0) + 14).text(`chance ${pct(c.S0)}`);
       maps.forEach((gm, k) => gm.transition(t).attr('opacity', k === i ? 1 : 0));
-    });
+    }, 'City');
   }
 
   const go = () => document.querySelectorAll('figure[data-cities]').forEach(f => draw(f).catch(() => {}));

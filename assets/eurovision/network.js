@@ -44,7 +44,7 @@
         update => update.call(u => u.transition().duration(dur).attr('stroke-width', l => width(l[2]))),
         exit => exit.call(x => x.transition().duration(dur).attr('opacity', 0).remove()))
         .select('title').text(l => `${S.nodes[l[0]].name} and ${S.nodes[l[1]].name}: ${l[2].toFixed(1)}× an even share`);
-    });
+    }, 'Year');
   }
 
   const go = () => document.querySelectorAll('figure[data-network]').forEach(f => draw(f).catch(() => {}));

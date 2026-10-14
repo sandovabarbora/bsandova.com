@@ -2,8 +2,9 @@
 against the ordinary Fridays, 11:00–17:00. A description drawn from the registered study's passes, not an estimate.
 
 Reads tools/data/blackout/passes.parquet (estimate.py's cache) and the baseline days from blackout-screen.json; writes
-assets/blackout/restart.json in the spec of assets/animap.js, v the ratio over the half hour ending with each bin (null
-where the segment has no trams on ordinary Fridays then).
+assets/blackout/restart.json in the spec of assets/animap.js, v the ratio over the half hour ending at each label, for
+the map and the network line alike (null where the segment has no trams on ordinary Fridays then); the first full half
+hour ends at 11:30.
 
     uv run --no-project --with pandas --with pyarrow --with duckdb python tools/blackout/animation.py
 """
@@ -44,16 +45,21 @@ def main() -> None:
         if a in xy and b in xy and a != b and usual[(a, b)] >= 3:
             feats.append({"id": f"{a} → {b}", "l": offset_line(xy[a], xy[b]),
                           "v": [None if np.isnan(v) else round(float(min(v, 2.0)), 2) for v in row.to_numpy(float)]})
-    tot = p.groupby(["date", "bin"]).size().unstack("date", fill_value=0).reindex(range(nb), fill_value=0)
+    tot = p.groupby(["date", "bin"]).size().unstack("date", fill_value=0).reindex(range(nb), fill_value=0).rolling(3).sum()
     network = (tot[EVENT] / tot[base].mean(axis=1)).round(3).tolist()
-    bins = [f"{(START + WIDTH * i) // 60:02d}:{(START + WIDTH * i) % 60:02d}" for i in range(nb)]
+    bins = [f"{(START + WIDTH * (i + 1)) // 60:02d}:{(START + WIDTH * (i + 1)) % 60:02d}" for i in range(nb)]
+    keep = range(2, nb)  # a full half hour behind every label
+    bins, network = [bins[i] for i in keep], [network[i] for i in keep]
+    for f in feats:
+        f["v"] = [f["v"][i] for i in keep]
+    nb = len(bins)
     notes = [f"{sum(f['v'][i] == 0 for f in feats)} of {len(feats)} segments without a tram · network "
              f"{round(100 * network[i])} % of usual" for i in range(nb)]
     spec = {"bins": bins, "base": "../assets/praha-base.json", "features": feats,
             "colour": {"domain": [0, 0.5, 0.9], "range": ["#c0503f", "#e7b3a6", "#bdbdb6"]},
             "tip": {"mult": 100, "dp": 0, "unit": " % of usual trams", "empty": "no trams on ordinary Fridays"},
             "notes": notes, "series": {"values": network, "domain": [0, 1.2], "ref": 1, "refLabel": "1.0"},
-            "ticks": [0, 6, 12, 18, 24, 30],
+            "ticks": [i for i, b in enumerate(bins) if b.endswith(":00")],
             "events": [{"at": "12:00", "label": "11:59 grid collapses"}, {"at": "13:00", "label": "13:01 Chodov back"}],
             "aria": "Prague tram segments coloured by the share of their usual trams, 4 July 2025, 11:00 to 17:00"}
     OUT.write_text(json.dumps(spec, ensure_ascii=False, separators=(",", ":")))

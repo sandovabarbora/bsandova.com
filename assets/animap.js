@@ -23,14 +23,14 @@
 
   /* Play button, time slider, clock and summary line above a figure's caption; show(i) draws step i. Plays once when
      the figure comes half into view, unless the reader prefers reduced motion. Shared by the article animations. */
-  function controls(fig, bins, notes, step, show) {
+  function controls(fig, bins, notes, step, show, label = 'Time') {
     const nb = bins.length;
     const bar = d3.select(fig).insert('div', ':first-child').attr('class', 'anim-bar');
     fig.insertBefore(bar.node(), fig.querySelector('svg') || fig.querySelector('figcaption'));
     const play = bar.append('button').attr('type', 'button').attr('class', 'anim-play');
     const clock = bar.append('span').attr('class', 'anim-clock');
     const slider = bar.append('input').attr('type', 'range').attr('min', 0).attr('max', nb - 1).attr('step', 1)
-      .attr('class', 'anim-range').attr('aria-label', 'Time');
+      .attr('class', 'anim-range').attr('aria-label', label);
     const note = bar.append('span').attr('class', 'anim-note');
     let k = 0, timer = null;
     const go = i => {
