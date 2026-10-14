@@ -34,13 +34,6 @@
 .ht-wrap{overflow-x:auto;max-width:100%}
 .note{font:400 12px/1.6 var(--mono);color:#666}
 @media (max-width:560px){.text dl.meta div{grid-template-columns:1fr}.ht{font-size:12px}}
-.anim-fig .anim-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:.4rem 0;font:400 12px var(--mono);color:#666}
-.anim-play{font:500 14px var(--sans);width:36px;height:30px;border:1px solid #111;background:#fff;color:#111;cursor:pointer}
-.anim-clock{font:500 22px var(--sans);color:#111;min-width:4.2ch;font-variant-numeric:tabular-nums}
-.anim-range{flex:1;min-width:160px;accent-color:#34507c}
-.anim-note{flex-basis:100%}
-.anim-map{width:100%;height:auto;display:block}
-.anim-spark{width:100%;height:auto;display:block;font:400 10px var(--mono);fill:#666}
 </style>
 </head>
 <body>
@@ -121,7 +114,7 @@
 
 <section>
 <h2>How fast trams came back</h2>
-<figure class="anim-fig" data-restart="../assets/blackout/restart.json">
+<figure class="anim-fig" data-animap="../assets/blackout/restart.json">
   <p class="ch-head">Play the afternoon: the east of the network goes dark at noon and comes back section by section.</p>
   <img class="anim-static" src="../assets/blackout/04-map.svg" alt="Map of Prague's tram network at 12:10–12:30 on 4 July 2025: segments without a tram in coral, most of the network east of the river." loading="lazy">
   <figcaption><b>fig. 3</b> · Each tram segment's passes in the half hour up to each ten minutes on 4 July 2025 as a share of the mean of the Fridays {{baseline}} July, 11:00–17:00: coral, no tram; grey, the usual number; light, no trams on those Fridays at that time. Below, the whole network's share, with the grid's collapse and Chodov back at 13:01 dotted. Segments with at least three trams in the window on ordinary Fridays. A description drawn after the results, not a registered estimate. Data: PID via Golemio<sup class="cite"><a href="#r4">4</a></sup>.</figcaption>
@@ -166,7 +159,7 @@
 <li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/blackout/screen.py"><code>tools/blackout/screen.py</code></a>: the baseline days and the feed flags.</li>
 <li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/blackout/estimate.py"><code>estimate.py</code></a>: the registered estimates and checks, with tests in <code>test_blackout.py</code>.</li>
 <li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/blackout/posthoc.py"><code>posthoc.py</code></a>: the descriptions after the results.</li>
-<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/blackout/animation.py"><code>animation.py</code></a>: the data of the animated map (fig. 3), drawn by <code>assets/blackout/restart.js</code> with d3.</li>
+<li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/blackout/animation.py"><code>animation.py</code></a>: the data of the animated map (fig. 3), drawn by <code>assets/animap.js</code> with d3.</li>
 <li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/blackout/article.py"><code>article.py</code></a>: the figures, the map and this page.</li>
 </ol>
 <p>The design is <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/blackout-design.md"><code>docs/research/blackout-design.md</code></a>.</p>
@@ -194,6 +187,6 @@
 <script src="../assets/charts.js" defer></script>
 <script src="../assets/map.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" integrity="sha512-vc58qvvBdrDR4etbxMdlTt4GBQk1qjvyORR2nrsPsFPyrs+/u5c3+1Ct6upOgdZoIl7eq6k3a1UPDSNAQi/32A==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
-<script src="../assets/blackout/restart.js" defer></script>
+<script src="../assets/animap.js" defer></script>
 </body>
 </html>

@@ -301,3 +301,12 @@ figure.mp-live>img[hidden]{display:none}
 :root:has(link[rel="canonical"][href*="/texts/"]) .text>section:has(>ol.parts) ol.parts{max-width:none;padding-left:0;margin:0 0 clamp(40px,5vw,72px)}
 :root:has(link[rel="canonical"][href*="/texts/"]) .text>section:has(>ol.parts)>h2{position:static;max-width:none;margin-bottom:clamp(20px,2.4vw,32px)}
 @media (max-width:760px){.text section .parts>li{grid-template-columns:1fr}}
+
+/* animated segment maps (assets/animap.js) */
+.anim-fig .anim-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:.4rem 0;font:400 12px var(--mono);color:#666}
+.anim-play{font:500 14px var(--sans);width:36px;height:30px;border:1px solid #111;background:#fff;color:#111;cursor:pointer}
+.anim-clock{font:500 22px var(--sans);color:#111;min-width:4.2ch;font-variant-numeric:tabular-nums}
+.anim-range{flex:1;min-width:160px;accent-color:#34507c}
+.anim-note{flex-basis:100%}
+.anim-map{width:100%;height:auto;display:block}
+.anim-spark{width:100%;height:auto;display:block;font:400 10px var(--mono);fill:#666}
