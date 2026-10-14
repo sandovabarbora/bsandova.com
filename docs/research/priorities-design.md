@@ -196,3 +196,14 @@ European Politics*. ParlaMint 5.0 (CLARIN.SI, hdl:11356/2004); ParlaCAP (CROSSDA
 verified before publication, in a dated commit.
 
 ## Changes after registration
+
+**14 October 2026 (data step, §3; counts only).** `tools/priorities/fetch.py` and `prepare.py`; files and hashes in
+`priorities-manifest.json`, counts in `priorities-data.json`. All 43 waves EB62–EB104 have a Czech column in Volume A;
+EB105 is not yet published. Volume A gives shares as whole percentages and its Czech "Total" is a weighted base, not
+the unweighted N; the half-respondent floor (§2.1) uses that base. Volume A has no Czech fieldwork dates, only the
+survey's, and EB62–EB74 give months only; windows (§4) use the survey dates, the first day of a month-only start and
+the last day of a month-only end. ParlaCAP-CZ: 196 182 speeches, 25 November 2013 – 26 July 2023; 64 258 kept after
+dropping the chair, Mix and Other. COFOG: all codes, 1995–2024. **A blinding slip:** while the parser was debugged, a
+diagnostic printed whether each Czech weighted-count cell was at most 1, without values; for the study's items it
+showed that Terrorism was named by about no one in EB94 and EB96. No share, attention or spending value was printed or
+computed.
