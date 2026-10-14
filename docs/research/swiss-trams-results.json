@@ -1,0 +1,467 @@
+{
+ "top_share": 0.1,
+ "margin": 0.05,
+ "prague": {
+  "S": {
+   "est": 0.5059,
+   "ci95": [
+    0.5029,
+    0.5091
+   ],
+   "ci90": [
+    0.5033,
+    0.5086
+   ],
+   "label": "supported",
+   "imprecise": false
+  },
+  "rho": {
+   "est": 0.9994,
+   "ci95": [
+    0.9962,
+    0.999
+   ],
+   "ci90": [
+    0.9967,
+    0.999
+   ],
+   "label": "supported",
+   "imprecise": false
+  },
+  "S0": {
+   "median": 0.2066,
+   "range95": [
+    0.2045,
+    0.2088
+   ]
+  },
+  "checks": {
+   "gini": 0.5117,
+   "length": {
+    "reported": true,
+    "share_of_passes_placed": 0.9877,
+    "network_km": 153.8,
+    "S_length": 0.3485,
+    "segments_taken": 32
+   }
+  }
+ },
+ "cities": {
+  "Zurich": {
+   "segments": 448,
+   "dates": 178,
+   "passes": 15776915,
+   "S": {
+    "est": 0.3989,
+    "ci95": [
+     0.3955,
+     0.4063
+    ],
+    "ci90": [
+     0.396,
+     0.4054
+    ],
+    "label": "not supported",
+    "imprecise": false
+   },
+   "rho": {
+    "est": 0.9955,
+    "ci95": [
+     0.979,
+     0.9951
+    ],
+    "ci90": [
+     0.9814,
+     0.9946
+    ],
+    "label": "supported",
+    "imprecise": false
+   },
+   "producers": 269,
+   "recoverers": 179,
+   "recoverer_share": 0.3996,
+   "S0": {
+    "median": 0.2032,
+    "range95": [
+     0.2006,
+     0.206
+    ]
+   },
+   "D": {
+    "est": -0.107,
+    "ci95": [
+     -0.1117,
+     -0.0987
+    ],
+    "ci90": [
+     -0.1106,
+     -0.0999
+    ],
+    "label": "unlike Prague, less concentrated"
+   },
+   "E": 0.1957,
+   "D_E": {
+    "est": -0.1036,
+    "ci95": [
+     -0.1083,
+     -0.0953
+    ],
+    "ci90": [
+     -0.1072,
+     -0.0965
+    ],
+    "label": "unlike Prague, less concentrated"
+   },
+   "checks": {
+    "per_pass": 0.4614,
+    "top_5": 0.2461,
+    "top_20": 0.6285,
+    "without_terminal_segments": 0.4203,
+    "gain_within_300s": 0.4009,
+    "by_month": {
+     "3": 0.4202,
+     "4": 0.4133,
+     "5": 0.4026,
+     "6": 0.4002,
+     "7": 0.4716,
+     "8": 0.4198,
+     "9": 0.4342
+    },
+    "gini": 0.4198,
+    "peak_midday_jaccard": 0.4286,
+    "length": {
+     "reported": true,
+     "share_of_passes_placed": 1.0,
+     "network_km": 87.2,
+     "S_length": 0.2382,
+     "segments_taken": 22
+    },
+    "well_measured_segments": {
+     "segments": 437,
+     "S": 0.3999
+    }
+   }
+  },
+  "Basel": {
+   "segments": 420,
+   "dates": 178,
+   "passes": 11316458,
+   "S": {
+    "est": 0.5156,
+    "ci95": [
+     0.5111,
+     0.5205
+    ],
+    "ci90": [
+     0.5118,
+     0.52
+    ],
+    "label": "supported",
+    "imprecise": false
+   },
+   "rho": {
+    "est": 0.9951,
+    "ci95": [
+     0.979,
+     0.9949
+    ],
+    "ci90": [
+     0.982,
+     0.9944
+    ],
+    "label": "supported",
+    "imprecise": false
+   },
+   "producers": 237,
+   "recoverers": 183,
+   "recoverer_share": 0.4357,
+   "S0": {
+    "median": 0.2762,
+    "range95": [
+     0.2662,
+     0.2894
+    ]
+   },
+   "D": {
+    "est": 0.0097,
+    "ci95": [
+     0.0044,
+     0.0156
+    ],
+    "ci90": [
+     0.0051,
+     0.0149
+    ],
+    "label": "like Prague"
+   },
+   "E": 0.2394,
+   "D_E": {
+    "est": -0.0599,
+    "ci95": [
+     -0.0652,
+     -0.054
+    ],
+    "ci90": [
+     -0.0645,
+     -0.0547
+    ],
+    "label": "unlike Prague, less concentrated"
+   },
+   "checks": {
+    "per_pass": 0.4938,
+    "top_5": 0.334,
+    "top_20": 0.7399,
+    "without_terminal_segments": 0.5014,
+    "gain_within_300s": 0.5179,
+    "by_month": {
+     "3": 0.5213,
+     "4": 0.5395,
+     "5": 0.5101,
+     "6": 0.5109,
+     "7": 0.5329,
+     "8": 0.5554,
+     "9": 0.5655
+    },
+    "gini": 0.5241,
+    "peak_midday_jaccard": 0.5273,
+    "length": {
+     "reported": true,
+     "share_of_passes_placed": 1.0,
+     "network_km": 103.6,
+     "S_length": 0.3639,
+     "segments_taken": 24
+    },
+    "well_measured_segments": {
+     "segments": 414,
+     "S": 0.519
+    },
+    "basel": {
+     "BVB_only_S": 0.5413,
+     "S_BVB_passes": 0.6606,
+     "S_BLT_passes": 0.7849
+    }
+   }
+  },
+  "Bern": {
+   "segments": 148,
+   "dates": 178,
+   "passes": 3766353,
+   "S": {
+    "est": 0.4823,
+    "ci95": [
+     0.4779,
+     0.489
+    ],
+    "ci90": [
+     0.4784,
+     0.4878
+    ],
+    "label": "not supported",
+    "imprecise": false
+   },
+   "rho": {
+    "est": 0.9993,
+    "ci95": [
+     0.9909,
+     0.9989
+    ],
+    "ci90": [
+     0.9924,
+     0.9987
+    ],
+    "label": "supported",
+    "imprecise": false
+   },
+   "producers": 80,
+   "recoverers": 68,
+   "recoverer_share": 0.4595,
+   "S0": {
+    "median": 0.2535,
+    "range95": [
+     0.2461,
+     0.2615
+    ]
+   },
+   "D": {
+    "est": -0.0236,
+    "ci95": [
+     -0.0291,
+     -0.0159
+    ],
+    "ci90": [
+     -0.0283,
+     -0.0174
+    ],
+    "label": "like Prague"
+   },
+   "E": 0.2288,
+   "D_E": {
+    "est": -0.0705,
+    "ci95": [
+     -0.076,
+     -0.0628
+    ],
+    "ci90": [
+     -0.0752,
+     -0.0643
+    ],
+    "label": "unlike Prague, less concentrated"
+   },
+   "checks": {
+    "per_pass": 0.4718,
+    "top_5": 0.3175,
+    "top_20": 0.7339,
+    "without_terminal_segments": 0.5154,
+    "gain_within_300s": 0.4845,
+    "by_month": {
+     "3": 0.4884,
+     "4": 0.4931,
+     "5": 0.4774,
+     "6": 0.49,
+     "7": 0.4908,
+     "8": 0.4767,
+     "9": 0.4551
+    },
+    "gini": 0.4909,
+    "peak_midday_jaccard": 0.3636,
+    "length": {
+     "reported": true,
+     "share_of_passes_placed": 1.0,
+     "network_km": 38.3,
+     "S_length": 0.3689,
+     "segments_taken": 10
+    },
+    "well_measured_segments": {
+     "segments": 147,
+     "S": 0.4847
+    }
+   }
+  }
+ },
+ "forecasts_kept": {
+  "Zurich": {
+   "segments": 448,
+   "passes": 16060441,
+   "S": {
+    "est": 0.3991,
+    "ci95": [
+     0.3959,
+     0.4069
+    ],
+    "ci90": [
+     0.3963,
+     0.4053
+    ],
+    "label": "not supported",
+    "imprecise": false
+   },
+   "rho": {
+    "est": 0.9958,
+    "ci95": [
+     0.9785,
+     0.9953
+    ],
+    "ci90": [
+     0.9811,
+     0.9947
+    ],
+    "label": "supported",
+    "imprecise": false
+   }
+  },
+  "Basel": {
+   "segments": 420,
+   "passes": 11493356,
+   "S": {
+    "est": 0.5082,
+    "ci95": [
+     0.5036,
+     0.5138
+    ],
+    "ci90": [
+     0.5047,
+     0.5129
+    ],
+    "label": "supported",
+    "imprecise": false
+   },
+   "rho": {
+    "est": 0.995,
+    "ci95": [
+     0.9781,
+     0.9943
+    ],
+    "ci90": [
+     0.9808,
+     0.9938
+    ],
+    "label": "supported",
+    "imprecise": false
+   }
+  },
+  "Bern": {
+   "segments": 148,
+   "passes": 3800335,
+   "S": {
+    "est": 0.4742,
+    "ci95": [
+     0.4701,
+     0.4804
+    ],
+    "ci90": [
+     0.4705,
+     0.4793
+    ],
+    "label": "not supported",
+    "imprecise": false
+   },
+   "rho": {
+    "est": 0.9993,
+    "ci95": [
+     0.9909,
+     0.9989
+    ],
+    "ci90": [
+     0.9926,
+     0.9988
+    ],
+    "label": "supported",
+    "imprecise": false
+   }
+  },
+  "Geneva": {
+   "segments": 183,
+   "passes": 5907435,
+   "S": {
+    "est": 0.543,
+    "ci95": [
+     0.5375,
+     0.5492
+    ],
+    "ci90": [
+     0.5384,
+     0.548
+    ],
+    "label": "supported",
+    "imprecise": false
+   },
+   "rho": {
+    "est": 0.9979,
+    "ci95": [
+     0.9885,
+     0.9968
+    ],
+    "ci90": [
+     0.9898,
+     0.9964
+    ],
+    "label": "supported",
+    "imprecise": false
+   }
+  }
+ },
+ "minute_schedules": {
+  "prague_share_not_whole_minutes": 0.0,
+  "check": "both timetables are to the minute; nothing recomputed (§6)"
+ }
+}

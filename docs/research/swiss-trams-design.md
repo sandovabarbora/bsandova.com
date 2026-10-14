@@ -181,3 +181,7 @@ draws come from part 1's generator in part 1's order, and the script stops unles
 and its interval. Prague's chance level permutes its kept passes, rebuilt with part 1's screening. Stop positions for
 the length check: the Swiss GTFS of 2 June 2025 from the same archive (`stops.txt`), joined by BPUIC, since the
 service-point register's download link returned an error page; Prague's from the PID timetable as in part 1.
+
+**14 October 2026 (results).** `swiss-trams-results.json`, one run of the frozen code (about two hours, most of it
+the chance-level permutations). Part 1's S and interval were reproduced exactly from its generator before anything
+else was computed.
