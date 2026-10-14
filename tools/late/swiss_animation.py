@@ -25,9 +25,8 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(ROOT / "tools" / "site"))
-from estimate import TOP  # noqa: E402
 from swiss_article import curve, totals  # noqa: E402
-from swiss_estimate import SEED_CH, codes, prague_passes, swiss_xy  # noqa: E402
+from swiss_estimate import SEED_CH, TOP, codes, prague_passes, swiss_xy  # noqa: E402
 from tram_geo import offset_line, tram_stops  # noqa: E402
 
 CURVE_PERMS, POINTS = 19, 101

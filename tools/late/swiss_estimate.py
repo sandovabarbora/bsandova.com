@@ -11,6 +11,7 @@ database for the chance level. Writes docs/research/swiss-trams-results.json.
 """
 from __future__ import annotations
 
+import importlib.util
 import json
 import math
 import sys
@@ -21,7 +22,13 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "site"))
-from estimate import MIDDAY, PEAK, REPS, SEED, TOP, concentration, jaccard, label, matrix, per_pass, stability, top_set  # noqa: E402
+# part 1's estimate.py by path: other studies in tools/ have an estimate module too, and pytest collects them together
+_spec = importlib.util.spec_from_file_location("late_estimate", Path(__file__).resolve().parent / "estimate.py")
+_part1 = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_part1)
+MIDDAY, PEAK, REPS, SEED, TOP = _part1.MIDDAY, _part1.PEAK, _part1.REPS, _part1.SEED, _part1.TOP
+concentration, jaccard, label, matrix = _part1.concentration, _part1.jaccard, _part1.label, _part1.matrix
+per_pass, stability, top_set = _part1.per_pass, _part1.stability, _part1.top_set
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "tools/data/late"
