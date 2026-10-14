@@ -172,3 +172,12 @@ downloaded the version 1 archive for all 178 dates and kept the tram rows; `tool
 No feed-gap dates. Kept: Zurich 448 segments and 15.8 million passes, Basel 420 and 11.3 million, Bern 148 and 3.8
 million, all 178 dates. Prague's planned travel times are whole minutes in all 27.5 million tram passes of the window
 (§3.7), so §6's minute-schedule check reports only that.
+
+**14 October 2026 (code frozen; no Swiss segment's delay summarised).** `tools/late/swiss_estimate.py` runs §4–§6 with
+part 1's functions; `tools/late/test_swiss.py` checks it on made-up data: the Q3 labels (like, unlike either way,
+underpowered for equivalence, inconclusive), the chance level well below S with a place effect and around S without
+one, the Gini, and the length share counting each stop pair once and reporting nothing below 90 % placed. Prague's
+draws come from part 1's generator in part 1's order, and the script stops unless they reproduce part 1's published S
+and its interval. Prague's chance level permutes its kept passes, rebuilt with part 1's screening. Stop positions for
+the length check: the Swiss GTFS of 2 June 2025 from the same archive (`stops.txt`), joined by BPUIC, since the
+service-point register's download link returned an error page; Prague's from the PID timetable as in part 1.
