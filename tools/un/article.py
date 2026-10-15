@@ -12,6 +12,7 @@ from __future__ import annotations
 import datetime as dt
 import html
 import json
+import re
 import shutil
 import statistics
 from collections import Counter
@@ -322,6 +323,19 @@ def positions_table(pos: dict) -> str:
     return "\n".join(out)
 
 
+def number_refs(page: str) -> str:
+    """[[key]] markers become citations numbered by first appearance; the list is built from refs.html in that order,
+    so every reference is cited and numbered r1..rN."""
+    entries = dict(re.findall(r'<li data-key="([\w-]+)">(.*?)</li>', (HERE / "refs.html").read_text(encoding="utf-8")))
+    order = list(dict.fromkeys(re.findall(r"\[\[([\w-]+)\]\]", page)))
+    assert set(order) <= set(entries), set(order) - set(entries)
+    assert set(entries) <= set(order), f"uncited: {set(entries) - set(order)}"
+    num = {k: i for i, k in enumerate(order, 1)}
+    page = re.sub(r"\[\[([\w-]+)\]\]", lambda m: f'<sup class="cite"><a href="#r{num[m.group(1)]}">{num[m.group(1)]}</a></sup>', page)
+    items = "\n".join(f'<li id="r{num[k]}">{entries[k]}</li>' for k in order)
+    return page.replace("{{refs}}", items)
+
+
 def word(k: int) -> str:
     return "none" if k == 0 else str(k)
 
@@ -500,6 +514,8 @@ def main() -> None:
         "med_se_lo": pts(min(med_se), False), "med_se_hi": pts(max(med_se), False),
         "proj_w_lo": pts(q1w * min(ratios), False), "proj_w_hi": pts(q1w * max(ratios), False),
         "yr_gap_lo": pts(min(gaps), False), "yr_gap_hi": pts(max(gaps), False),
+        "cz_mean": pct(statistics.mean([a["EU"]["czechia_before"], a["EU"]["czechia_after"], b["EU"]["czechia_after"]]), 0),
+        "ip_dep_sobotka": word(dp["sobotka"]["by_topic"]["israel_palestine"]),
         "tw_sobotka_ip": word(dp["sobotka"]["by_topic"]["israel_palestine"]),
         "o_sobotka_w": word(pos["sobotka"]["pairs"].get("czechia N, majority Y", 0)),
         **{f"ip_{k}_{x}": n(pp[k]["ip_czechia"][x]) for k in pp for x in ("Y", "A", "N")},
@@ -508,7 +524,7 @@ def main() -> None:
         **{f"ipo_{k}": pct(pp[k]["ip_others_shares"]["Y"], 0) for k in pp},
         **{f"ipm_{k}": pct(pp[k]["ip_majority"]["Y"] / pp[k]["ip_votes"], 0) for k in pp},
     }
-    page = render((HERE / "template.html").read_text(encoding="utf-8"), v)
+    page = number_refs(render((HERE / "template.html").read_text(encoding="utf-8"), v | {"refs": "{{refs}}"}))
     (ROOT / "texts" / "un-votes.html").write_text(page, encoding="utf-8")
     print(json.dumps({k: x for k, x in v.items() if not k.endswith("table")}, ensure_ascii=False, indent=1))
 
