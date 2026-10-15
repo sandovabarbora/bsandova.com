@@ -128,10 +128,9 @@ def test_halves_even_and_odd():
     even = E.halves(np.repeat(np.arange(6), 2), True)
     assert [c for c, _ in even] == [2.0, -0.5, -0.5]
     assert even[1][1].sum() == 6 and even[2][1].sum() == 6
-    odd = E.halves(np.arange(5), True)
-    assert [c for c, _ in odd] == [2.0, -0.25, -0.25, -0.25, -0.25]
-    assert [m.sum() for _, m in odd[1:]] == [2, 3, 3, 2]
-    assert sum(c for c, _ in odd) == pytest.approx(1.0)
+    odd = E.halves(np.arange(5), True)                   # Dhaene–Jochmans: halves overlap in the middle period
+    assert [c for c, _ in odd] == [2.0, -0.5, -0.5]
+    assert [list(np.flatnonzero(m)) for _, m in odd[1:]] == [[0, 1, 2], [2, 3, 4]]
 
 
 # ---- spells (§2.4)
@@ -176,13 +175,11 @@ def test_no_lag_across_a_spell_change():
     pairs = lambda t: set(zip(t.eqs[0][1].spec.cluster, t.eqs[0][1].spec.time))
     health = E.TOPICS.index("Health")
     assert (health, 65) in pairs(q1["static"])
-    assert (health, 65) not in pairs(q1["dynamic"])      # its lag would be the window paired with EB64
-    assert (health, 66) in pairs(q1["dynamic"])
+    assert pairs(q1["dynamic"]) == pairs(q1["static"])   # A(k, t−) is a calendar window: no item list to cross
     q1r = E.q1r_targets(panel, v)
     assert (health, 64) in pairs(q1r["static"])
     assert (health, 64) not in pairs(q1r["dynamic"])     # C(EB64) as the lag of C(EB65)
-    economy = E.TOPICS.index("Economy")
-    assert (economy, 64) in pairs(q1["dynamic"])
+    assert (E.TOPICS.index("Economy"), 64) in pairs(q1r["dynamic"])   # wording change only: same spell
 
 
 def test_yearly_mean_stays_within_one_spell():
@@ -264,11 +261,35 @@ def test_label_rules(ci90, ci95, expected):
     assert E.label(ci90, ci95) == expected
 
 
-def test_static_and_dynamic_must_agree_and_wider_interval_is_used():
+def test_static_and_dynamic_must_agree_and_the_hull_is_used():
     assert E.combined("supported", "supported") == "supported"
     assert E.combined("supported", "inconclusive") == "model-dependent"
-    assert E.wider((0.1, 0.2), (0.0, 0.3)) == (0.0, 0.3)
-    assert E.wider((0.1, math.inf), (0.0, 0.3)) == (0.1, math.inf)
+    assert E.hull((0.12, 0.25), (0.0, 0.2)) == (0.0, 0.25)
+    assert E.hull((0.1, math.inf), (0.0, 0.3)) == (0.0, math.inf)
+    assert all(math.isnan(v) for v in E.hull((math.nan, math.nan), (0.0, 0.3)))
+    assert E.label((math.nan, math.nan), (math.nan, math.nan)) == "underpowered"
+
+
+def test_invert_when_the_estimate_is_rejected_or_p_fails():
+    def p_shifted(t):   # accepts only 0.5 ± 0.05, while the "estimate" is 0
+        return 0.5 if abs(t - 0.5) < 0.05 else 0.0
+    lo, hi = E.invert(p_shifted, 0.0, 0.10)
+    assert lo == pytest.approx(0.46, abs=0.011) and hi == pytest.approx(0.54, abs=0.011)
+    lo, hi = E.invert(lambda t: 0.0, 0.0, 0.10)
+    assert math.isnan(lo) and math.isnan(hi)
+    lo, hi = E.invert(lambda t: 0.5 if t < 0.3 else math.nan, 0.0, 0.10)   # failing fits above 0.3
+    assert lo == -math.inf and hi == math.inf
+    lo, hi = E.invert(lambda t: 1.0 - min(abs(t), 1.0), 0.0, 0.10)
+    assert lo == pytest.approx(-0.9, abs=1e-3) and hi == pytest.approx(0.9, abs=1e-3)
+
+
+def test_randomisation_grid_is_centred_within_spells():
+    rng = np.random.default_rng(16)
+    spells = lambda k, t: int(t >= 6) if k == 0 else 0
+    panel = simulate_panel(rng, waves=12, spells=spells)
+    grid = E.q1_targets(panel, E.Variant())["static"].eqs[0][1].spec.xgrid
+    assert abs(grid.loc[0, 100:105].mean()) < 1e-12 and abs(grid.loc[0, 106:111].mean()) < 1e-12
+    assert abs(grid.loc[1].mean()) < 1e-12
 
 
 # ---- inference
@@ -328,8 +349,10 @@ def test_full_inference_record_on_made_up_data():
         assert lo < out["estimate"] < hi
         assert out[kind]["95"][0] <= lo and out[kind]["95"][1] >= hi
     for lvl in ("90", "95"):
-        assert E.width(out["used"][lvl]) == max(E.width(out["wild"][lvl]), E.width(out["randomisation"][lvl]))
+        assert tuple(out["used"][lvl]) == E.hull(out["wild"][lvl], out["randomisation"][lvl])
     assert out["label"] == E.label(out["used"]["90"], out["used"]["95"])
+    assert out["label_wild"] == E.label(out["wild"]["90"], out["wild"]["95"])
+    assert out["label_randomisation"] == E.label(out["randomisation"]["90"], out["randomisation"]["95"])
 
 
 def test_webb_weights_six_points():
@@ -462,3 +485,36 @@ def test_whole_study_runs_on_fake_tables(tmp_path, monkeypatch):
             for k, v in o.items():
                 yield from errors(v, f"{path}/{k}")
     assert list(errors(res)) == []
+
+
+# ---- S4: size of the wild bootstrap when the noise scale differs by topic (slow; RUN_SLOW=1 to run)
+
+def hetero_panel(rng, beta, waves):
+    k = 10
+    alpha = rng.normal(np.log(0.05), 1.0, k)
+    sig = np.exp(rng.uniform(np.log(0.05), np.log(0.8), k))
+    gamma, mu, e, rows = rng.normal(0, 0.1, waves), rng.uniform(np.log(0.02), np.log(0.4), k), np.zeros(k), []
+    for t in range(waves):
+        e = 0.7 * e + rng.normal(0, 0.3, k)
+        lc = mu + e
+        la = alpha + gamma[t] + beta * lc + rng.normal(-sig ** 2 / 2, sig)
+        for i in range(k):
+            rows.append({"topic": E.TOPICS[i], "code": i, "time": t, "spell": f"T{i}", "half": t % 2,
+                         "topic_half": f"{i}|{t % 2}", "first_of_spell": False, "c": math.exp(lc[i]), "c_floor": 1e-4,
+                         "a_post": math.exp(la[i]), "a_post_floor": 1e-6, "a_pre": 1.0, "a_pre_floor": 1e-6,
+                         "c_next": np.nan, "c_next_floor": 1e-4, "spell_next": None})
+    return pd.DataFrame(rows)
+
+
+@pytest.mark.skipif(not __import__("os").environ.get("RUN_SLOW"), reason="slow: set RUN_SLOW=1")
+def test_wild_bootstrap_size_with_heterogeneous_scales():
+    """Recorded on 15 October 2026, 400 replications per seed, nominal 10 %. With the plain residualised scores:
+    0.118 / 0.143 / 0.153 (18 waves), 0.140 / 0.100 (42 waves). With the leave-one-cluster-out scaling now in
+    estimate.py: 0.155 / 0.115 (18 waves), 0.133 / 0.140 (42 waves); equal scales 0.093 / 0.143; dynamic 0.127.
+    The wild bootstrap alone over-rejects by a few points with ten clusters; the label uses the hull with the
+    randomisation interval, whose size is exact here. This test guards against a gross failure only."""
+    rng = np.random.default_rng(1)
+    W = E.webb_weights(999, seed=2)
+    rej = [E.boot_pvalue(E.q1_targets(hetero_panel(rng, 0.3, 18), E.Variant())["static"], 0.3, W) <= 0.10
+           for _ in range(400)]
+    assert np.mean(rej) <= 0.20

@@ -122,7 +122,7 @@ PANDEMIC_YEARS = frozenset((2020, 2021, 2022))
 # Q4 governments (§1). A wave belongs to the government in office on most days of its window after.
 GOVERNMENTS = (("Sobotka", date(2014, 1, 29), date(2017, 12, 12)),
                ("Babiš", date(2017, 12, 13), date(2021, 12, 16)),
-               ("Fiala", date(2021, 12, 17), date(2025, 12, 8)))
+               ("Fiala", date(2021, 12, 17), date(2025, 12, 14)))
 PARTY_GROUPS = ("Coalition", "Opposition")
 
 
@@ -530,6 +530,7 @@ class Spec:
     family: str = "poisson"
     w: np.ndarray | None = None
     xgrid: pd.DataFrame | None = None  # regressor by topic code × time, for the randomisation
+    floored: dict = field(default_factory=dict)  # zero cells set to the half-unit floor before the log, per column
 
     def __post_init__(self):
         self.controls = np.asarray(self.controls, dtype=float).reshape(len(self.y), -1)
@@ -601,6 +602,9 @@ def fit(y, X, offset, w, family, start=None, maxit=200, tol=1e-11):
     return _ppml(y, X, offset, w, None, maxit, tol)
 
 
+IRLS_NOT_CONVERGED = [0]
+
+
 def _ppml(y, X, offset, w, start, maxit, tol):
     top = math.log(max(float(y.max()), 1e-300)) + 30
     if start is not None:
@@ -616,6 +620,7 @@ def _ppml(y, X, offset, w, start, maxit, tol):
         return 2 * np.sum(w * (xlogy(y, y) - xlogy(y, m) - (y - m)))
 
     d_old = dev(mu) if b is not None else np.inf
+    converged = False
     with np.errstate(all="ignore"):
         for _ in range(maxit):
             z = eta - offset + (y - mu) / mu
@@ -639,11 +644,15 @@ def _ppml(y, X, offset, w, start, maxit, tol):
             if not found:
                 if b is None:
                     raise FloatingPointError("IRLS made no progress")
-                break  # no decrease within 50 halvings: at the optimum to working precision
+                converged = True  # no decrease within 50 halvings: at the optimum to working precision
+                break
             b, eta, mu = b_new, eta_new, mu_new
             if abs(d_new - d_old) <= tol * (abs(d_new) + 1e-8):
+                converged = True
                 break
             d_old = d_new
+    if not converged:
+        IRLS_NOT_CONVERGED[0] += 1
     return b, mu
 
 
@@ -677,8 +686,9 @@ class Piece:
     def one_step(self, b0: float) -> tuple[np.ndarray, np.ndarray]:
         """From the null fit: ψ, the clusters' contributions to the one-step update of β (s̃_g ÷ D, s̃ the efficient
         score of β), and C, with C·w the clusters' scores of the re-estimated (one-step) residuals when cluster h's
-        null residuals are multiplied by w_h. With w = 1, ψ·1 ÷ ‖C·1‖ is the cluster-robust t of β̂ − b0; with Webb
-        draws it is the wild cluster restricted bootstrap's t (the PPML analogue of Roodman et al.'s fast WCR)."""
+        null residuals are multiplied by w_h. With w = 1, ψ·1 ÷ ‖C·1‖ is the cluster-robust (CR3-type) t of β̂ − b0;
+        with Webb draws it is the wild cluster restricted bootstrap's t (the PPML analogue of Roodman et al.'s fast
+        WCR)."""
         mu, e = self.null_fit(b0)
         om = self.omega(mu)
         X, Z, x = self.X, self.X[:, 1:], self.X[:, 0]
@@ -691,24 +701,25 @@ class Piece:
         H = X.T @ (X * om[:, None])
         U = E_ - dmu[:, None] * (X @ np.linalg.solve(H, X.T @ (self.w[:, None] * E_)))
         C = onehot.T @ ((self.w * xt)[:, None] * U) / D
+        # Leave-one-cluster-out (CR3-type) scaling of the residualised scores: cluster g's score is divided by
+        # (D − D_g) instead of D, D_g its own information on β after partialling out the nuisance. Adopted after the
+        # size simulation with topic-specific noise scales rejected 0.15 at a nominal 0.10 (test_estimate.py).
+        Dg = np.bincount(self.cluster, om * xt ** 2, minlength=NT)
+        C = C * (D / np.maximum(D - Dg, 1e-3 * D))[:, None]
         return psi, C
 
 
 def halves(time: np.ndarray, jackknife: bool) -> list[tuple[float, np.ndarray]]:
-    """Split-panel jackknife (Dhaene and Jochmans 2015): 2·β̂ − mean of the halves' β̂; with an odd number of
-    periods, the average over the two ways of halving (the middle period in the first, then in the second half)."""
+    """Split-panel jackknife of Dhaene and Jochmans (2015, Review of Economic Studies 82(3), section 3):
+    β̃ = 2·β̂ − ½(β̂₁ + β̂₂), with the halves {1..T/2} and {T/2+1..T}; for odd T the halves overlap in the middle
+    period, {1..⌈T/2⌉} and {⌊T/2⌋+1..T}."""
     every = np.ones(len(time), bool)
     if not jackknife:
         return [(1.0, every)]
     ts = np.sort(np.unique(time))
     n = len(ts)
-    if n % 2 == 0:
-        h = n // 2
-        return [(2.0, every), (-0.5, np.isin(time, ts[:h])), (-0.5, np.isin(time, ts[h:]))]
-    out = [(2.0, every)]
-    for h in (n // 2, n // 2 + 1):
-        out += [(-0.25, np.isin(time, ts[:h])), (-0.25, np.isin(time, ts[h:]))]
-    return out
+    first, second = ts[:(n + 1) // 2], ts[n // 2:]
+    return [(2.0, every), (-0.5, np.isin(time, first)), (-0.5, np.isin(time, second))]
 
 
 class Equation:
@@ -742,7 +753,8 @@ class Equation:
     def describe(self) -> dict:
         self.estimate()
         out = {"estimate": self._est, "n": int(len(self.spec.y)), "topics": int(len(np.unique(self.spec.cluster))),
-               "periods": [int(t) for t in np.unique(self.spec.time)]}
+               "periods": [int(t) for t in np.unique(self.spec.time)], "floored_cells": dict(self.spec.floored),
+               "x_mean": float(np.mean(self.spec.x)), "y_mean": float(np.mean(self.spec.y))}
         if self.jackknife:
             out["uncorrected"] = self._parts[0]
             out["halves"] = self._parts[1:]
@@ -865,44 +877,66 @@ class Randomisation:
 # ---- intervals by test inversion and the labels (§5)
 
 def invert(pfun, est: float, alpha: float, start: tuple[float, float] | None = None) -> tuple[float, float]:
-    """{θ0 : p(θ0) > α}, found outward from the estimate (steps doubling from 0.01, then bisection)."""
+    """{θ0 : p(θ0) > α}, searched outward from the estimate: steps doubling from 0.01, then bisection. A p-value
+    that cannot be computed (a failed fit) makes that side unbounded. If the estimate itself is rejected, a grid of
+    est ± 2 in steps of 0.01 is scanned and the interval spans the accepted points; with none accepted the
+    interval is degenerate (nan, nan), which the labels read as underpowered."""
     cache = {}
 
     def p(t):
         if t not in cache:
             try:
-                cache[t] = pfun(t)
+                cache[t] = float(pfun(t))
             except (np.linalg.LinAlgError, FloatingPointError, ValueError):
                 cache[t] = np.nan
         return cache[t]
 
+    if start is None or any(np.isnan(b) for b in start):
+        start = None
+        p0 = p(est)
+        if not p0 > alpha:
+            grid = est + np.round(np.arange(-200, 201) * 0.01, 2)
+            ps = np.array([p(t) for t in grid])
+            if np.isnan(ps).any():
+                return -math.inf, math.inf
+            ok = grid[ps > alpha]
+            if not len(ok):
+                return math.nan, math.nan
+            lo = -math.inf if ok.min() == grid[0] else float(ok.min())
+            hi = math.inf if ok.max() == grid[-1] else float(ok.max())
+            return lo, hi
+
     bounds = []
     for side in (-1, 1):
         inner = est if start is None else start[(side + 1) // 2]
-        if start is not None and not np.isfinite(inner):
+        if not np.isfinite(inner):
             bounds.append(side * math.inf)
             continue
-        step, outer = 0.01, None
+        step, outer, unbounded = 0.01, None, False
         while abs(inner + side * step - est) <= SEARCH_LIMIT:
             t = inner + side * step
             pv = p(t)
             if np.isnan(pv):
+                unbounded = True
                 break
             if pv <= alpha:
                 outer = t
                 break
             inner, step = t, step * 2
-        if outer is None:
+        if outer is None or unbounded:
             bounds.append(side * math.inf)
             continue
         while abs(outer - inner) > SEARCH_TOL:
             mid = (inner + outer) / 2
             pv = p(mid)
-            if np.isnan(pv) or pv <= alpha:
+            if np.isnan(pv):
+                unbounded = True
+                break
+            if pv <= alpha:
                 outer = mid
             else:
                 inner = mid
-        bounds.append((inner + outer) / 2)
+        bounds.append(side * math.inf if unbounded else (inner + outer) / 2)
     return bounds[0], bounds[1]
 
 
@@ -910,15 +944,19 @@ def width(ci) -> float:
     return ci[1] - ci[0]
 
 
-def wider(a, b):
-    return a if width(a) >= width(b) else b
+def hull(a, b) -> tuple[float, float]:
+    """The registered "wider" interval: the hull of the two methods' intervals; a degenerate (nan) interval makes
+    the hull degenerate."""
+    if any(np.isnan(v) for v in (*a, *b)):
+        return math.nan, math.nan
+    return min(a[0], b[0]), max(a[1], b[1])
 
 
 def label(ci90, ci95) -> str:
     """§5, in the registered order."""
     lo90, hi90 = ci90
     lo95, _ = ci95
-    if not width(ci90) <= MAX_WIDTH_90:
+    if not width(ci90) <= MAX_WIDTH_90 or np.isnan(lo95):
         return "underpowered"
     if lo90 >= -SESOI and hi90 <= SESOI:
         return "not supported"
@@ -938,31 +976,33 @@ def intervals(target: Target, W: np.ndarray, randomisation: bool = True, n_perms
     pb = lambda t: boot_pvalue(target, t, W)
     b90 = invert(pb, est, 0.10)
     b95 = invert(pb, est, 0.05, start=b90)
-    out = {"estimate": est, "wild": {"90": list(b90), "95": list(b95)}}
+    out = {"estimate": est, "wild": {"90": list(b90), "95": list(b95)}, "label_wild": label(b90, b95)}
     if len(target.eqs) == 1:
         out.update(target.eqs[0][1].describe())
     else:
         out["components"] = [e.describe() for _, e in target.eqs]
     if not randomisation:
         return out
-    eqs, times = [], None
-    for s, e in target.eqs:
-        sub, times = ri_subset(e.spec)
-        eqs.append((s, Equation(sub, e.jackknife)))
-    rt = Target(eqs)
-    perms, exact = permutations(len(np.unique(eqs[0][1].spec.cluster)), n_perms)
-    ri = Randomisation(rt, perms, exact)
-    rest = rt.estimate()
-    r90 = invert(ri.pvalue, rest, 0.10)
-    r95 = invert(ri.pvalue, rest, 0.05, start=r90)
+    try:
+        eqs, times = [], None
+        for s, e in target.eqs:
+            sub, times = ri_subset(e.spec)
+            eqs.append((s, Equation(sub, e.jackknife)))
+        rt = Target(eqs)
+        perms, exact = permutations(len(np.unique(eqs[0][1].spec.cluster)), n_perms)
+        ri = Randomisation(rt, perms, exact)
+        rest = rt.estimate()
+        r90 = invert(ri.pvalue, rest, 0.10)
+        r95 = invert(ri.pvalue, rest, 0.05, start=r90)
+    except (ValueError, KeyError, np.linalg.LinAlgError, FloatingPointError) as err:
+        out["randomisation"] = {"error": f"{type(err).__name__}: {err}"}
+        out["label"] = "not estimable (randomisation interval failed)"
+        return out
     out["randomisation"] = {"90": list(r90), "95": list(r95), "estimate": rest, "periods": times,
                             "permutations": int(len(perms)), "all_permutations": exact}
-    used, source = {}, {}
-    for lvl, b, r in (("90", b90, r90), ("95", b95, r95)):
-        used[lvl] = wider(b, r)
-        source[lvl] = "wild" if used[lvl] is b else "randomisation"
+    out["label_randomisation"] = label(r90, r95)
+    used = {"90": hull(b90, r90), "95": hull(b95, r95)}
     out["used"] = {k: list(v) for k, v in used.items()}
-    out["used_from"] = source
     out["label"] = label(used["90"], used["95"])
     return out
 
@@ -983,10 +1023,19 @@ class Variant:
     change_in_share: bool = False
 
 
-def make_spec(df: pd.DataFrame, y: str, x: str, lag: str | None, fe: tuple, form: str, weights=None) -> Spec:
+def make_spec(df: pd.DataFrame, y: str, x: str, lag: str | None, fe: tuple, form: str, weights=None,
+              centre_by: str | None = None) -> Spec:
+    """centre_by: the randomisation grid holds each topic's regressor centred within that topic's spells, so that a
+    series given to another topic does not carry its own spells' level shifts (the model's spell effects absorb the
+    centring for the topic's own series)."""
+    floored = {}
+
     def val(col, logged):
         v = df[col].to_numpy(dtype=float)
-        return flog(v, df[col + "_floor"].to_numpy(dtype=float)) if logged else v
+        if not logged:
+            return v
+        floored[col] = int(np.sum(~(v > 0)))
+        return flog(v, df[col + "_floor"].to_numpy(dtype=float))
 
     if form == "ppml":
         yy, xx, ll, fam = val(y, False), val(x, True), (val(lag, True) if lag else None), "poisson"
@@ -995,10 +1044,13 @@ def make_spec(df: pd.DataFrame, y: str, x: str, lag: str | None, fe: tuple, form
     else:
         yy, xx, ll, fam = val(y, False), val(x, False), (val(lag, False) if lag else None), "gaussian"
     ctl = np.zeros((len(df), 0)) if ll is None else ll[:, None]
-    grid = pd.DataFrame({"code": df.code, "time": df.time, "x": xx}).pivot_table(index="code", columns="time",
+    gx = xx
+    if centre_by is not None:
+        gx = xx - pd.Series(xx).groupby([df.code.to_numpy(), df[centre_by].astype(str).to_numpy()]).transform("mean").to_numpy()
+    grid = pd.DataFrame({"code": df.code, "time": df.time, "x": gx}).pivot_table(index="code", columns="time",
                                                                                   values="x", aggfunc="first")
     return Spec(yy, xx, ctl, tuple(df[f].astype(str).to_numpy() for f in fe), df.code.to_numpy(),
-                df.time.to_numpy(), fam, None if weights is None else np.asarray(weights, float), grid)
+                df.time.to_numpy(), fam, None if weights is None else np.asarray(weights, float), grid, floored)
 
 
 def topic_weights(df: pd.DataFrame, col: str) -> np.ndarray:
@@ -1009,11 +1061,10 @@ def q1_targets(panel: pd.DataFrame, v: Variant) -> dict:
     df = panel[panel.topic.isin(v.topics) & ~panel.time.isin(v.drop_waves)].dropna(subset=["a_post", "a_pre"])
     fe = ("spell", "time", "topic_half")
     w = topic_weights(df, "c") if v.weighted else None
-    static = make_spec(df, "a_post", "c", None, fe, v.form, w)
-    dyn = df[~df.first_of_spell]
-    wd = topic_weights(dyn, "c") if v.weighted else None
-    dynamic = make_spec(dyn, "a_post", "c", "a_pre", fe, v.form, wd)
-    dynamic.xgrid = static.xgrid
+    # The lag A(k, t−) is a calendar window, not a concern item list, so it never crosses a spell change and the
+    # dynamic model keeps the static model's rows.
+    static = make_spec(df, "a_post", "c", None, fe, v.form, w, centre_by="spell")
+    dynamic = make_spec(df, "a_post", "c", "a_pre", fe, v.form, w, centre_by="spell")
     return {"static": Target([(1.0, Equation(static, False))]), "dynamic": Target([(1.0, Equation(dynamic, True))])}
 
 
@@ -1046,8 +1097,8 @@ def q2_targets(yp: pd.DataFrame, v: Variant, controls: dict | None = None) -> di
         spec = make_spec(df, "ds", "cbar", None, fe, "log", w)
         spec.y = df.ds.to_numpy()
         return {"static": Target([(1.0, Equation(spec, False))])}
-    static = make_spec(df, "s_next", "cbar", None, fe, v.form, w)
-    dynamic = make_spec(df, "s_next", "cbar", "s", fe, v.form, w)
+    static = make_spec(df, "s_next", "cbar", None, fe, v.form, w, centre_by="spell")
+    dynamic = make_spec(df, "s_next", "cbar", "s", fe, v.form, w, centre_by="spell")
     if controls is not None:
         extra = np.column_stack([
             np.where(df.topic == "Unemployment", np.log(df.time.map(controls["unemployment"])), 0.0),
@@ -1061,8 +1112,8 @@ def q3_target(yp: pd.DataFrame, v: Variant) -> dict:
     df = yearly_rows(yp, v, ["cbar", "s", "s_next", "a", "a_next"])
     fe = ("spell", "time")
     w = topic_weights(df, "cbar") if v.weighted else None
-    att = make_spec(df, "a_next", "cbar", "a", fe, v.form, w)
-    spe = make_spec(df, "s_next", "cbar", "s", fe, v.form, w)
+    att = make_spec(df, "a_next", "cbar", "a", fe, v.form, w, centre_by="spell")
+    spe = make_spec(df, "s_next", "cbar", "s", fe, v.form, w, centre_by="spell")
     return {"dynamic": Target([(1.0, Equation(att, True)), (-1.0, Equation(spe, True))])}
 
 
@@ -1075,8 +1126,9 @@ class Study:
         self.spend = load_spending()
         pc = pd.read_parquet(D / "attention.parquet", columns=["date"]).date
         self.pc_span = (pc.min().date(), pc.max().date())
-        first_psp = pd.read_parquet(D / "psp_speeches.parquet", columns=["date"]).date.min().date()
-        self.spans = {"parlacap": self.pc_span, "whole": (first_psp, WHOLE_END)}
+        psp_dates = pd.read_parquet(D / "psp_speeches.parquet", columns=["date"]).date
+        self.spans = {"parlacap": self.pc_span,
+                      "whole": (psp_dates.min().date(), min(WHOLE_END, psp_dates.max().date()))}
         self.validation = json.loads(VALIDATION.read_text())
         self.W = webb_weights()
         self._speeches, self._corpora, self._q = {}, {}, None
@@ -1177,14 +1229,15 @@ def leave_out(build, frame: pd.DataFrame, by: str) -> dict:
     return {"estimates": out, "range": {m: [min(ok(m)), max(ok(m))] if ok(m) else None for m in models}}
 
 
-def at_means(res: dict, x_mean: float, y_mean: float) -> dict:
-    """Levels models: the coefficient as an elasticity at the sample means, interval bounds scaled alike."""
-    f = x_mean / y_mean
+def at_means(res: dict) -> dict:
+    """Levels models: the coefficient as an elasticity at the estimation sample's means, bounds scaled alike."""
+    f = res["x_mean"] / res["y_mean"]
     return {"factor": f, "estimate": res["estimate"] * f,
             "wild": {k: [b * f for b in v] for k, v in res["wild"].items()}}
 
 
 def run() -> dict:
+    IRLS_NOT_CONVERGED[0] = 0
     st = Study()
     W = st.W
     base = Variant()
@@ -1218,8 +1271,8 @@ def run() -> dict:
     q4 = {"party_status": {}, "government": {}}
     wins = st.wins("A", "half")
     for g in PARTY_GROUPS:
-        p = st.wave_panel("parlacap", base, party=g)
-        q4["party_status"][g] = attempt(lambda: intervals(q1_targets(p, base)["static"], W))
+        q4["party_status"][g] = attempt(
+            lambda: intervals(q1_targets(st.wave_panel("parlacap", base, party=g), base)["static"], W))
     for s in ("parlacap", "whole"):
         q4["government"][s] = {}
         for name, _, _ in GOVERNMENTS:
@@ -1235,7 +1288,9 @@ def run() -> dict:
     res["q4"] = q4
 
     # §6 checks: point estimates and wild bootstrap intervals; none relabels a primary result
-    years_pandemic = frozenset(w for w in con.dates if con.year(w) in PANDEMIC_YEARS)
+    pandemic = (date(min(PANDEMIC_YEARS), 1, 1), date(max(PANDEMIC_YEARS), 12, 31))
+    years_pandemic = frozenset(w for w, v in wins.items()
+                               if coverage(v["before"], pandemic) > 0 or coverage(v["after"], pandemic) > 0)
     variants = {
         "speeches_instead_of_words": Variant(corpus="speeches"),
         "chair_kept": Variant(corpus="chair"),
@@ -1256,44 +1311,54 @@ def run() -> dict:
         cs = checks[s] = {}
         f1v = Variant(topics=st.f1_topics(s))
         for name, v in {**variants, "f1_at_least_0_60": f1v}.items():
-            wp = panels[s] if v in (base, f1v) else st.wave_panel(s, v)
+            wp = panels[s] if v in (base, f1v) else attempt(st.wave_panel, s, v)
+            if isinstance(wp, dict):
+                cs[name] = wp
+                continue
             out = {"Q1": check(lambda: q1_targets(wp, v), W), "Q1r": check(lambda: q1r_targets(wp, v), W)}
             if v.window == "half":
-                yp = ypanels[s] if v in (base, f1v) else st.year_panel(s, v)
-                out["Q3"] = check(lambda: q3_target(yp, v), W)
+                yp = ypanels[s] if v in (base, f1v) else attempt(st.year_panel, s, v)
+                out["Q3"] = yp if isinstance(yp, dict) else check(lambda: q3_target(yp, v), W)
             if v.form == "levels":
-                for q, xm, ym, frame in (("Q1", "c", "a_post", wp), ("Q1r", "a_post", "c_next", wp)):
+                for q in ("Q1", "Q1r"):
                     for m, r in out[q].items():
                         if isinstance(r, dict) and "wild" in r:
-                            r["elasticity_at_means"] = at_means(r, frame[xm].mean(), frame[ym].mean())
+                            r["elasticity_at_means"] = at_means(r)
             cs[name] = out
-        cs["leave_one_topic_out"] = {"Q1": leave_out(lambda d: q1_targets(d, base), panels[s], "topic"),
-                                     "Q1r": leave_out(lambda d: q1r_targets(d, base), panels[s], "topic"),
-                                     "Q3": leave_out(lambda d: q3_target(d, base), ypanels[s], "topic")}
-        cs["leave_one_wave_out"] = {"Q1": leave_out(lambda d: q1_targets(d, base), panels[s], "time"),
-                                    "Q1r": leave_out(lambda d: q1r_targets(d, base), panels[s], "time"),
-                                    "Q3_year": leave_out(lambda d: q3_target(d, base), ypanels[s], "time")}
+        cs["leave_one_topic_out"] = {"Q1": attempt(leave_out, lambda d: q1_targets(d, base), panels[s], "topic"),
+                                     "Q1r": attempt(leave_out, lambda d: q1r_targets(d, base), panels[s], "topic"),
+                                     "Q3": attempt(leave_out, lambda d: q3_target(d, base), ypanels[s], "topic")}
+        cs["leave_one_wave_out"] = {"Q1": attempt(leave_out, lambda d: q1_targets(d, base), panels[s], "time"),
+                                    "Q1r": attempt(leave_out, lambda d: q1r_targets(d, base), panels[s], "time"),
+                                    "Q3_year": attempt(leave_out, lambda d: q3_target(d, base), ypanels[s], "time")}
     cq2 = checks["spending"] = {}
     for name, v in variants.items():
         if name in attention_only:
             continue
-        yp = yp2 if v == base else st.year_panel(None, v)
+        yp = yp2 if v == base else attempt(st.year_panel, None, v)
+        if isinstance(yp, dict):
+            cq2[name] = yp
+            continue
         cq2[name] = check(lambda: q2_targets(yp, v), W)
         if v.form == "levels":
             for m, r in cq2[name].items():
                 if isinstance(r, dict) and "wild" in r:
-                    r["elasticity_at_means"] = at_means(r, yp.cbar.mean(), yp.s_next.mean())
+                    r["elasticity_at_means"] = at_means(r)
     cq2["discretionary_topics"] = check(lambda: q2_targets(yp2, Variant(topics=DISCRETIONARY)), W)
     ctl = st.controls()
     cq2["unemployment_and_old_age_dependency_controls"] = (
         check(lambda: q2_targets(yp2, base, ctl), W) if ctl else "not run: control series not fetched")
     ch = check(lambda: q2_targets(yp2, Variant(change_in_share=True)), W)
     if "estimate" in ch.get("static", {}):
-        ch["static"]["per_mean_share"] = ch["static"]["estimate"] / yp2.dropna(subset=["s", "s_next"]).s.mean()
+        sample = yearly_rows(yp2, Variant(change_in_share=True), ["cbar", "s", "s_next"])
+        ch["static"]["per_mean_share"] = ch["static"]["estimate"] / sample.s.mean()
     cq2["spending_change_in_share"] = ch
-    cq2["leave_one_topic_out"] = leave_out(lambda d: q2_targets(d, base), yp2, "topic")
-    cq2["leave_one_year_out"] = leave_out(lambda d: q2_targets(d, base), yp2, "time")
+    cq2["leave_one_topic_out"] = attempt(leave_out, lambda d: q2_targets(d, base), yp2, "topic")
+    cq2["leave_one_year_out"] = attempt(leave_out, lambda d: q2_targets(d, base), yp2, "time")
     res["checks"] = checks
+    res["diagnostics"] = {"irls_not_converged": IRLS_NOT_CONVERGED[0],
+                          "note": "floored cells (zeros set to the half-unit floor before the log) are counted per "
+                                  "estimate under floored_cells"}
     return res
 
 
