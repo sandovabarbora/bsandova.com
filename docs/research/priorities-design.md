@@ -235,3 +235,41 @@ above the registered bound of 0.50, so no result is reported as classifier-limit
 recall 0.24, on ParlaCAP) and Pensions (recall 0.47 and 0.41, word share 3.0 and 3.5 points too low). On the 9 speeches
 the author decided herself, the classifier's label matched hers on 3. The coding is fixed from here; §4 runs after the
 estimation code is frozen.
+
+**15 October 2026 (estimation code frozen, tag `priorities-code`).** `tools/priorities/estimate.py` with worked
+examples on made-up data (`test_estimate.py`, 34 tests and a slow size simulation), reviewed by an independent
+reviewer before the freeze. Choices the design left open, as implemented: (1) the wild cluster bootstrap is a score
+bootstrap with the null imposed, Webb weights, 9 999 draws, one-step re-estimation and a cluster-robust t with a
+leave-one-cluster-out (CR3-type) scaling; for jackknifed models and Q3 the statistic is the same linear combination of
+the pieces' scores; (2) Q3's null is imposed by a minimum-distance projection of the two equations; (3) the
+randomisation permutes the regressor's topic series, centred within its spells, with a score statistic on
+y·exp(−β₀x), spells and fixed effects staying with the outcome topic; Q1r permutes the attention series; only periods
+where every topic has the regressor are used (EB103 drops out of the whole-series Q1 randomisation); (4) all 8! = 40 320
+permutations for eight topics, 100 000 drawn for ten; (5) seeds 20261014 (bootstrap) and 20261015 (permutations);
+(6) intervals by test inversion (outward steps to ±10, bisection to 10⁻⁴; a rejected estimate triggers a grid scan;
+no accepted value gives a degenerate interval, labelled underpowered); **(7) "the wider of the two intervals" is
+implemented as their hull at each level (lowest lower bound, highest upper bound), so a label needs both methods; each
+method's own interval and label are stored**; (8) "wider than 0.20" strict, "within ±0.10" inclusive, "wholly above"
+strict; (9) split-panel jackknife of Dhaene and Jochmans (2015), overlapping halves for odd T; (10) after-window = the
+182 days after fieldwork ends, cut at the day before the next wave's fieldwork, before-window of the same length;
+(11) coverage = share of window calendar days inside the corpus span (ParlaCAP EB81–98; whole series EB62–103, to the
+earlier of 31 December 2025 and the last date in the data); (12) half-year by wave parity; (13) dynamic Q1 uses all
+rows (its lag is a calendar window), dynamic Q1r drops pairs across a spell change; (14) Q1r on Q1's waves; (15) yearly
+C̄ uses the waves of the spell of the year's last wave, floored before averaging, a wave's year being its fieldwork
+start; (16) zero attention floored at half a word, spending not floored; (17) Q2 static and dynamic, Q3 dynamic only
+in Q2's form; (18) Q4: party status only in ParlaCAP; a wave belongs to the government in office on most days of its
+after-window; Sobotka 29 January 2014 – 12 December 2017, Babiš 13 December 2017 – 16 December 2021, Fiala 17 December
+2021 – 14 December 2025; **on ParlaCAP alone Fiala has 3 waves, not the six to eight the design expected** (8 on the
+whole series); (19) checks get point estimates and bootstrap intervals only; (20) the Mix-kept check uses our run of
+the classifier throughout; (21) one-year window = 365 days uncut; (22) "without 2020–2022" drops waves whose before- or
+after-window overlaps those years; list-change waves 66, 71, 72, 77, 83, 93, 97, 103, 104; (23) arm B in EB65, 71,
+74–76, 92; items only in arm B unused; (24) levels by OLS at the sample means; spending as change in share by OLS;
+(25) weights = mean C; (26) F1 ≥ 0.60 and classifier-limited by the frame(s) of the corpus used; (27) confusion
+correction spreads labelled words over reference topics with inverse-probability word weights, by frame; (28) Q2
+controls by topic (log unemployment × Unemployment, log old-age dependency × Pensions; Eurostat une_rt_a and
+demo_pjanind added); (29) a randomisation failure gives "not estimable"; (30) a failed check is recorded, not fatal.
+The size simulation found the wild bootstrap alone rejecting 11.5–15.5 % at a nominal 10 % with ten clusters, CR3
+scaling included; the randomisation interval's size was 4.6 / 9.8 / 19.3 % at 5 / 10 / 20 %, and the hull makes every
+label need both. A blinding note: while reading the validation code, the code agent printed the committed validation
+file, which holds the weighted validation sample's word shares per topic (about 600 speeches), not the attention
+series.
