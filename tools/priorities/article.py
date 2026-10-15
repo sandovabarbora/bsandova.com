@@ -11,6 +11,7 @@ texts/czech-priorities.html from tools/priorities/template.html. Run tools/prior
 from __future__ import annotations
 
 import datetime as dt
+from decimal import ROUND_HALF_UP, Decimal
 import json
 import math
 import re
@@ -50,6 +51,11 @@ def iv(ci, dp: int = 2) -> str:
 
 def between(ci, dp: int = 2) -> str:
     return f"{e(ci[0], dp)} and {e(ci[1], dp)}"
+
+
+def half_up(v: float, dp: int = 1) -> str:
+    """Rounds the printed decimal half up (3.55 → 3.6), where binary floats would round it down."""
+    return n(float(Decimal(repr(v)).quantize(Decimal(1).scaleb(-dp), rounding=ROUND_HALF_UP)), dp)
 
 
 def pct(v: float, dp: int = 0) -> str:
@@ -205,6 +211,19 @@ def described_topics(desc: dict) -> tuple[str, ...]:
     return tuple(top)
 
 
+def attention_alt(desc: dict) -> str:
+    ws, yr = desc["wave_series"], {w: v["start"][:4] for w, v in desc["waves"].items()}
+    parts = []
+    for k in DESCRIBED:
+        s = ws[k]
+        parts.append(f"{k}: concern from {pct(s[0][1])} % ({yr[str(s[0][0])]}) to {pct(s[-1][1])} % ({yr[str(s[-1][0])]}), "
+                     f"between {pct(min(c for _, c, _ in s))} and {pct(max(c for _, c, _ in s))} %; attention from "
+                     f"{pct(s[0][2], 1)} to {pct(s[-1][2], 1)} %, between {pct(min(a for _, _, a in s), 1)} and "
+                     f"{pct(max(a for _, _, a in s), 1)} %")
+    return ("Four panels per Eurobarometer wave, 2004–2025, with concern (share of respondents naming the topic) and "
+            "attention (share of plenary words in the half year after the wave). " + ". ".join(parts) + ".")
+
+
 def attention_chart(desc: dict) -> dict:
     when = {w: year_of(v["start"]) for w, v in desc["waves"].items()}
     top = max(max(c, a) for k in DESCRIBED for _, c, a in desc["wave_series"][k])
@@ -223,10 +242,7 @@ def attention_chart(desc: dict) -> dict:
                                   "name": "attention", "fmt": {"dp": 1, "unit": " %"}}]})
     table = [[k, f"EB{w}", desc["waves"][str(w)]["start"], round(100 * c, 1), round(100 * a, 2)]
              for k, s in desc["wave_series"].items() for w, c, a in s]
-    return {"alt": "Four panels, unemployment, immigration, crime and pensions, per Eurobarometer wave 2004–2025: the "
-                   "share of respondents naming the topic and the topic's share of plenary words in the half year "
-                   "after the wave. Concern about unemployment and crime falls from about half and two-fifths to a "
-                   "few per cent; attention moves within a narrower band.",
+    return {"alt": attention_alt(desc),
             "layout": "rows", "panels": panels,
             "legend": [{"label": "concern: share of respondents naming the topic", "c": HELD},
                        {"label": "attention: share of plenary words in the half year after the wave", "c": CORAL}],
@@ -323,7 +339,7 @@ def tests_table(res: dict) -> str:
         out.append(f'  <tr><td>Q4 · {name}<br><small>ParlaCAP-CZ, 2013–2023</small></td>'
                    f'<td class="v">{e(x["estimate"])} <small>{nb("90 % " + iv(x["used"]["90"]))}<br>'
                    f'{nb(x["label_wild"])}</small></td><td class="v">–</td>'
-                   f'<td class="v"><b>{x["label_wild"]}</b> <small>descriptive in the design</small></td></tr>')
+                   f'<td class="v">{x["label_wild"]} by the code\'s rule <small>no registered label</small></td></tr>')
     return "\n".join(out)
 
 
@@ -410,7 +426,8 @@ def other_way(res: dict) -> dict:
             for q in ("Q1r", "Q3"):
                 for m, x in c.get(q, {}).items():
                     if isinstance(x, dict) and x.get("label_wild") not in (None, "underpowered") and key != "levels":
-                        out.append(f"{q} {m}, {span}, {names[key]}: {e(x['estimate'])}, {x['label_wild']}")
+                        out.append(f"{'reverse' if q == 'Q1r' else 'difference'}, {m}, {span}, "
+                                   f"{short(names[key])} ({e(x['estimate'])}, {x['label_wild']})")
     return out
 
 
@@ -426,7 +443,10 @@ def join(xs: list[str]) -> str:
 
 def number_refs(page: str) -> str:
     """[[key]] markers become citations numbered by first appearance; every reference in refs.html must be cited."""
-    entries = dict(re.findall(r'<li data-key="([\w-]+)">(.*?)</li>', (HERE / "refs.html").read_text(encoding="utf-8")))
+    eb = json.loads((R / "priorities-eb-datasets.json").read_text(encoding="utf-8"))
+    links = ", ".join(f'<a href="{eb["base"]}{i}">EB{w}</a>' for w, i in eb["datasets"].items())
+    refs = render((HERE / "refs.html").read_text(encoding="utf-8"), {"eb_links": links})
+    entries = dict(re.findall(r'<li data-key="([\w-]+)">(.*?)</li>', refs, flags=re.S))
     order = list(dict.fromkeys(re.findall(r"\[\[([\w-]+)\]\]", page)))
     assert set(order) <= set(entries), set(order) - set(entries)
     assert set(entries) <= set(order), f"uncited: {set(entries) - set(order)}"
@@ -505,6 +525,19 @@ def main() -> None:
     assert all(c[m]["label_wild"] == sp["label"] for c in (disc, ctrl) for m in ("static", "dynamic"))
     q4c, q4o = q4["Coalition"], q4["Opposition"]
     wo = check_entry(res, "parlacap", "Q1", "static", "without_2020_2022")
+    wwo = check_entry(res, "whole", "Q1", "static", "without_2020_2022")
+    wo_n = len(res["checks"]["parlacap"]["without_2020_2022"]["Q1"]["static"]["periods"])
+    wwo_n = len(res["checks"]["whole"]["without_2020_2022"]["Q1"]["static"]["periods"])
+    assert wo["ci90"][0] < 0 and wwo["ci90"][0] < 0 and wwo["label"] == "underpowered"  # "cannot be told apart from zero"
+    q2wo = check_entry(res, "spending", "Q2", "static", "without_2020_2022")
+    assert q2wo["ci90"][1] > sesoi  # "can no longer exclude 0.10"
+    design = (R / "priorities-design.md").read_text(encoding="utf-8")
+    size = re.search(r"wild bootstrap alone rejecting ([\d.]+)–([\d.]+) % at a nominal 10 %", design)
+    un, cr = ws["Unemployment"], ws["Crime"]
+    nref_q = [b["n_reference"] for b in vq.values()]
+    assert un[-1][2] < un[0][2] and cr[-1][2] > cr[0][2] and vq["Crime"]["word_share_error"] > 0  # "fell", "rose", "over-counts"
+    assert vq["Crime"]["f1"] < vq["Pensions"]["f1"]
+    lo_topic = max(desc["year_series"], key=lambda k: rg[k]["cbar"][1] / rg[k]["cbar"][0])
 
     v = {
         "sesoi": n(sesoi, 2), "sesoi1": n(sesoi, 1), "maxw": n(maxw, 2), "draws": n(st["bootstrap_draws"]),
@@ -533,7 +566,8 @@ def main() -> None:
         "f1_unemp_q": n(vq["Unemployment"]["f1"], 2),
         "f1_pens": n(vp["Pensions"]["f1"], 2), "rec_pens": n(vp["Pensions"]["recall"], 2),
         "rec_pens_q": n(vq["Pensions"]["recall"], 2),
-        "ws_pens": n(-100 * vp["Pensions"]["word_share_error"], 1), "ws_pens_q": n(-100 * vq["Pensions"]["word_share_error"], 1),
+        "ws_pens": half_up(-round(100 * vp["Pensions"]["word_share_error"], 6)),
+        "ws_pens_q": half_up(-round(100 * vq["Pensions"]["word_share_error"], 6)),
         "n_ok_pc": sum(b["f1"] >= 0.60 for b in vp.values()), "n_topics": len(vp),
         "low_q": join(low_q), "n_low_q": len(low_q),
         # power
@@ -585,7 +619,7 @@ def main() -> None:
         "diff_wh": join(diff_wh) if diff_wh else "none",
         "diff_q1d": join(diff_q1d) if diff_q1d else "none",
         "diff_q1_lo": e(min(x["est"] for x in d1)), "diff_q1_hi": e(max(x["est"] for x in d1)),
-        "other_way": "; ".join(other_way(res)) or "none",
+        "other_way": join(other_way(res)) or "none",
         "checks_table": checks_table(res), "tests_table": tests_table(res),
         # descriptive
         "un_c0": pct(ws["Unemployment"][0][1]), "un_c1": pct(ws["Unemployment"][-1][1]),
@@ -598,6 +632,19 @@ def main() -> None:
         "ws_last": ws["Unemployment"][-1][0], "ws_first": ws["Unemployment"][0][0],
         "econ_cmax": pct(rg["Economy"]["c"][1]),
         "im_year": desc["waves"][str(next(w for w, c, _ in ws["Immigration"] if c == rg["Immigration"]["c"][1]))]["start"][:4],
+        "wo_n": wo_n, "wwo_n": wwo_n, "wwo_est": e(wwo["est"]), "wwo_90": iv(wwo["ci90"]),
+        "q2_wo": e(q2wo["est"]), "q2_wo_hi": e(q2wo["ci90"][1]),
+        "n_q2_inc": sum(x["label"] == "inconclusive" for x in s_checks),
+        "n_q2_inc_w": ["none", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"][
+            sum(x["label"] == "inconclusive" for x in s_checks)],
+        "size_lo": size.group(1), "size_hi": size.group(2),
+        "pw_sims": pw["settings"]["sims"], "pw_boot": pw["settings"]["boot"],
+        "fac_c_low": pct(rg[lo_topic]["cbar"][0]),
+        "un_ach": pct(abs(un[-1][2] / un[0][2] - 1)), "cr_ach": pct(cr[-1][2] / cr[0][2] - 1),
+        "cr_cfac": n(cr[0][1] / cr[-1][1], 0),
+        "cr_ws_q": n(100 * vq["Crime"]["word_share_error"], 1), "cr_f1_q": n(vq["Crime"]["f1"], 2),
+        "cr_nref_q": vq["Crime"]["n_reference"], "q_nref_lo": min(nref_q), "q_nref_hi": max(nref_q),
+        "pens_f1_q": n(vq["Pensions"]["f1"], 2), "alt3": attention_alt(desc),
         "q2_chk_lo": e(min(x["est"] for x in s_checks)), "q2_chk_hi": e(max(x["est"] for x in s_checks)),
     }
     page = number_refs(render((HERE / "template.html").read_text(encoding="utf-8"), v | {"refs": "{{refs}}"}))
