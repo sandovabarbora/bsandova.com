@@ -480,8 +480,9 @@ def test_corrupt_member_is_counted_not_fatal(tmp_path, toy):
         tf.addfile(info, io.BytesIO(b"\x1f\x8bxx"))
     p = tmp_path / "c.tar"
     p.write_bytes(bio.getvalue())
-    n = C.count_day([p], tmp_path / "d", "2024-01-03", toy, workers=1)
-    assert n["bad_files"] == 1 and n["trace_files"] == 1
+    with pytest.raises(C.SchemaDrift):  # one bad file of one: the format changed, the run stops
+        C.count_day([p], tmp_path / "d", "2024-01-03", toy, workers=1)
+    assert not (tmp_path / "d").exists()
 
 
 @needs_ne
@@ -711,3 +712,194 @@ def test_download_retries_and_resumes(tmp_path, monkeypatch):
         srv.shutdown()
     assert dest.read_bytes() == body
     assert seen[0][1] == "bsandova.com research" and seen[2][0] == f"bytes={len(body) // 2}-"
+
+
+# --- review round: schema drift, time order, NIC on the primary points, transient failures, preflight ------------
+
+def test_schema_drift_threshold():
+    ok = {"trace_files": 1001, "tilde": 1, "aircraft": 995, "bad_files": 5}
+    C.check_schema(ok, "2024-01-03")  # 5 of 1 000 is 0.5 %: not above it
+    with pytest.raises(C.SchemaDrift, match="6 bad of 1000"):
+        C.check_schema({**ok, "bad_files": 6}, "2024-01-03")
+    with pytest.raises(C.SchemaDrift):
+        C.check_schema({**ok, "aircraft": 0, "bad_files": 0}, "2024-01-03")
+    assert issubclass(C.SchemaDrift, C.StopRun) and not issubclass(C.SchemaDrift, C.Unreadable)
+
+
+def test_schema_drift_stops_resolve_day():
+    def f(d):
+        raise C.SchemaDrift("format changed")
+    with pytest.raises(C.SchemaDrift):
+        F.resolve_day(dt.date(2024, 1, 3), f)
+
+
+def test_bad_files_counted_below_threshold(tmp_path, toy):
+    fleet = {k: v for k, v in _fleet(40).items() if not k.startswith("~")}
+    paths = _tar(tmp_path, fleet)
+    n = C.count_day(paths, tmp_path / "d", "2024-01-03", toy, workers=1)
+    assert n["bad_files"] == 0 and n["aircraft"] == 40 and n["unsorted_aircraft"] == 0
+
+
+def test_shuffled_trace_counts_like_sorted(toy):
+    lat, lon = IN_CZ
+    pts = ([pt(0, OUT, det=False)] + [pt(t, nacp=5 if t % 40 == 0 else 9) for t in range(20, 700, 10)]
+           + [pt(700, (lat, lon + _east(20)))] + [pt(t, flags=2 if t == 1500 else 0) for t in range(1500, 1800, 20)]
+           + [pt(t, IN_PL) for t in range(1800, 2100, 20)])
+    rng = np.random.default_rng(3)
+    shuffled = [pts[i] for i in rng.permutation(len(pts))]
+    a, b = run(pts, toy), run(shuffled, toy)
+    assert not a.unsorted and b.unsorted
+    assert (a.usable == b.usable).all() and (a.degraded == b.degraded).all()
+    assert (a.crossings == b.crossings).all() and a.crossings[:, 5].any()
+    assert (a.west_usable, a.west_degraded) == (b.west_usable, b.west_degraded)
+    assert (a.stats == b.stats).all() and (a.mix == b.mix).all()
+
+
+def test_unsorted_aircraft_counted_per_day(tmp_path, toy):
+    fleet = {k: v for k, v in _fleet(4).items() if not k.startswith("~")}
+    first = next(iter(fleet.values()))
+    first["trace"] = first["trace"][::-1]
+    n = C.count_day(_tar(tmp_path, fleet), tmp_path / "d", "2024-01-03", toy, workers=1)
+    assert n["unsorted_aircraft"] == 1
+
+
+def test_check1_nic_on_primary_points(toy):
+    pts = lead_in(200) + [pt(200, nic=6), pt(210, nic=7), pt(220, nic=MISSING), pt(230, nic=None, nacp=3),
+                          pt(240, nic=2, alt=10_000)]
+    a = run(pts, toy)
+    assert U(a) == 4  # the point below FL250 is not primary usable
+    assert U(a, "c1_nic_same") == 2 and D(a, "c1_nic_same") == 1  # 220 and 230 carry no numeric NIC
+    assert U(a, "c1_nic") == 2 and D(a, "c1_nic") == 1
+
+
+def test_probe_persistent_non_404_stops_run(monkeypatch):
+    import urllib.error
+
+    monkeypatch.setattr(F, "BACKOFF_S", 0)
+    for exc in (urllib.error.HTTPError("u", 503, "busy", {}, None), urllib.error.HTTPError("u", 429, "slow", {}, None),
+                urllib.error.HTTPError("u", 403, "no", {}, None), TimeoutError("t")):
+        def boom(*a, exc=exc, **k):
+            raise exc
+        monkeypatch.setattr(F, "_request", boom)
+        with pytest.raises(F.NetworkDown):
+            F.exists("https://example.invalid/x")
+        with pytest.raises(F.NetworkDown):
+            F.resolve_day(dt.date(2024, 1, 3), lambda d: F.fetch_and_count(d, Path("/nonexistent"), None, None))
+
+    def missing(*a, **k):
+        raise urllib.error.HTTPError("u", 404, "missing", {}, None)
+    monkeypatch.setattr(F, "_request", missing)
+    assert F.exists("https://example.invalid/x") is False
+    m = F.resolve_day(dt.date(2024, 1, 3), lambda d: F.fetch_and_count(d, Path("/nonexistent"), None, None))
+    assert m["status"] == "lost" and set(m["unreadable"].values()) == {"release missing"}
+
+
+def test_download_retries_incomplete_read(tmp_path, monkeypatch):
+    import http.client
+
+    calls = []
+
+    class Resp(io.BytesIO):
+        status = 200
+        headers = {"Content-Length": "4"}
+
+    def flaky(*a, **k):
+        calls.append(1)
+        if len(calls) == 1:
+            raise http.client.IncompleteRead(b"ab", 2)
+        return Resp(b"abcd")
+    monkeypatch.setattr(F, "BACKOFF_S", 0)
+    monkeypatch.setattr(F, "_request", flaky)
+    F.download("https://example.invalid/x", tmp_path / "x")
+    assert (tmp_path / "x").read_bytes() == b"abcd" and len(calls) == 2
+
+
+def test_download_persistent_5xx_stops_run(tmp_path, monkeypatch):
+    import urllib.error
+
+    def busy(*a, **k):
+        raise urllib.error.HTTPError("u", 502, "bad gateway", {}, None)
+    monkeypatch.setattr(F, "BACKOFF_S", 0)
+    monkeypatch.setattr(F, "_request", busy)
+    with pytest.raises(F.NetworkDown):
+        F.download("https://example.invalid/x", tmp_path / "x")
+
+
+def test_postpass_resumes_after_stop(tmp_path, monkeypatch):
+    monkeypatch.setattr(F, "DAYS", tmp_path)
+    days = F.sample_days()
+    for d in days:
+        F.write_manifest(d, {"wednesday": str(d), "status": "counted", "study_year": F.study_year(d),
+                             "date_used": str(d), "trace_files": 40 if d == days[7] else 100, "unreadable": {}})
+
+    def down(d, day_dir):
+        raise F.NetworkDown("gone")
+    with pytest.raises(F.NetworkDown):
+        F.postpass(down)
+    m = F.read_manifest(days[7])
+    assert m["status"] == "pending-thursday" and m["low_median"] == 100
+    assert (tmp_path / f"{days[7]}.low-{days[7]}").exists()
+
+    def ok(d, day_dir):
+        day_dir.mkdir(parents=True, exist_ok=True)
+        return {"date_used": str(d), "trace_files": 90}
+    F.postpass(ok)
+    m = F.read_manifest(days[7])
+    assert m["status"] == "replaced" and m["date_used"] == str(days[7] + dt.timedelta(days=1))
+
+
+def test_screen_counts_pending_status(tmp_path):
+    d = F.sample_days()[0]
+    (tmp_path / str(d)).mkdir()
+    (tmp_path / str(d) / "manifest.json").write_text(json.dumps({
+        "wednesday": str(d), "status": "pending-thursday", "study_year": 1, "unreadable": {}, "low_median": 1}))
+    rep = S.build(tmp_path, {})
+    assert rep["days"]["by_study_year"]["1"]["pending-thursday"] == 1
+
+
+def test_fetch_kp_keeps_old_file_on_failure(tmp_path, monkeypatch):
+    monkeypatch.setattr(F, "DATA", tmp_path)
+    monkeypatch.setattr(F, "KP_DIR", tmp_path / "kp")
+    (tmp_path / "kp").mkdir()
+    (tmp_path / "kp" / F.KP_NAME).write_text("old")
+
+    def fail(url, dest):
+        raise F.NetworkDown("gone")
+    monkeypatch.setattr(F, "download", fail)
+    with pytest.raises(F.NetworkDown):
+        F.fetch_kp()
+    assert (tmp_path / "kp" / F.KP_NAME).read_text() == "old"
+
+
+def test_preflight_reports_structure_only(tmp_path):
+    fleet = {k: v for k, v in _fleet(5).items()}
+    odd = fleet["4b0001"]
+    odd.pop("timestamp")
+    odd["trace"] = odd["trace"][::-1]
+    odd["trace"][0] = odd["trace"][0][:10]
+    odd["trace"][1][8] = {"type": "adsb_icao", "nic": 3}  # no version, no nac_p key
+    fleet["4b0002"]["trace"][4][9] = "adsr_icao"
+    paths = _tar(tmp_path, fleet)
+    raw = paths[0].read_bytes()
+    rep = C.preflight(paths)
+    assert rep["files"] == 6 and rep["tilde_files"] == 1 and rep["share_files_parsed"] == 1.0
+    assert rep["share_parsed_with_timestamp_key"] == round(5 / 6, 6)
+    assert rep["share_traces_time_monotone"] == round(5 / 6, 6)
+    assert rep["type_strings"] == ["adsb_icao", "adsr_icao"]
+    assert rep["points"] == 5 * 40 + 1
+    assert rep["share_points_14plus_elements"] == round((rep["points"] - 1) / rep["points"], 6)
+    assert rep["share_details_with_version_key"] < 1 and rep["share_details_with_nac_p_key"] < 1
+    # nothing in the report is, or is derived from, a nac_p or nic value
+    assert set(rep) == {"files", "tilde_files", "share_files_parsed", "share_parsed_with_timestamp_key",
+                        "share_parsed_without_trace_list", "share_traces_time_monotone", "points",
+                        "share_points_14plus_elements", "share_points_with_details",
+                        "share_details_with_version_key", "share_details_with_nac_p_key", "type_strings"}
+    assert paths[0].read_bytes() == raw
+
+
+def test_preflight_code_never_reads_quality_values():
+    import inspect
+    src = inspect.getsource(C.structure) + inspect.getsource(C.preflight)
+    assert '"nac_p" in p[8]' in src
+    for banned in ('["nac_p"]', ".get(\"nac_p", '["nic"]', ".get(\"nic"):
+        assert banned not in src

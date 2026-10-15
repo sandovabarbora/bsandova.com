@@ -4,7 +4,7 @@ Reads tools/data/gnss/days/*/manifest.json and days/*/screening/*.parquet (never
 writes docs/research/gnss-screen.json: days fetched, replaced and lost, holiday Wednesdays, coverage per region and
 day, screenable aircraft per region and year, version and source shares per year, Kp_max per sampled day.
 
-    nice -n 20 uv run --no-project --with pandas --with pyarrow python -I tools/gnss/screen.py
+    nice -n 20 uv run --no-project --with shapely --with numpy --with pandas --with pyarrow python -I tools/gnss/screen.py
 """
 from __future__ import annotations
 
@@ -71,7 +71,7 @@ def build(days_dir: Path, kp: dict[str, float | None]) -> dict:
         y = by_year.setdefault(str(F.study_year(d)), {"sampled": 0, "counted": 0, "replaced": 0, "lost": 0,
                                                       "not_fetched": 0})
         y["sampled"] += 1
-        y[status[d]] += 1
+        y[status[d]] = y.get(status[d], 0) + 1
     days = {
         "sampled": len(sample),
         "counted_wednesday": sum(s == "counted" for s in status.values()),
@@ -137,7 +137,8 @@ def build(days_dir: Path, kp: dict[str, float | None]) -> dict:
             }
         coverage.append({"wednesday": str(d), "date_used": du, "study_year": F.study_year(d),
                          "trace_files": m["trace_files"], "tilde_files": m["tilde"], "aircraft": m["aircraft"],
-                         "bad_files": m["bad_files"], "regions": regions})
+                         "bad_files": m["bad_files"], "unsorted_aircraft": m.get("unsorted_aircraft"),
+                         "regions": regions})
 
     date_year = {used[d]: F.study_year(d) for d in used}
     per_ac["year"] = per_ac["date"].map(date_year)

@@ -53,7 +53,9 @@ EARTH_KM = 6_371.0088
 NR, NB = len(R.REGIONS), len(BANDS)
 # Variant name -> design reference. Each has its own usable-point definition; the airframe screen (west of 5° E)
 # always uses the primary one.
-VARIANTS = ("primary", "c1_nic", "c2_anyalt", "c3_v12", "c8_nobuf", "c10_nacp7", "c12_cap40")
+# c1_nic_same: the primary usable points that also carry a numeric NIC, degraded if NIC < 7, so that check 1 can be
+# read on the same points as the primary share.
+VARIANTS = ("primary", "c1_nic", "c2_anyalt", "c3_v12", "c8_nobuf", "c10_nacp7", "c1_nic_same", "c12_cap40")
 VI = {v: i for i, v in enumerate(VARIANTS)}
 
 TYPES = ("adsb_icao", "adsb_icao_nt", "adsr_icao", "tisb_icao", "adsc", "mlat", "other", "mode_s", "adsb_other",
@@ -103,6 +105,7 @@ class Aircraft:
     stats: np.ndarray = field(default_factory=lambda: np.zeros((NR, len(STATS)), np.int64))
     mix: np.ndarray = field(default_factory=lambda: np.zeros(MIX_SIZE, np.int64))
     points: int = 0
+    unsorted: bool = False
 
 
 def count_aircraft(d: dict, idx: R.RegionIndex) -> Aircraft | None:
@@ -119,6 +122,12 @@ def count_aircraft(d: dict, idx: R.RegionIndex) -> Aircraft | None:
         raise ValueError("trace points shorter than 10 elements")
     a.points = n
     t = float(d["timestamp"]) + np.asarray(cols[0], float)
+    if (np.diff(t) < 0).any():  # crossings, buffer, cap, legs and jumps all assume time order
+        a.unsorted = True
+        order = np.argsort(t, kind="stable")
+        tr = [tr[i] for i in order]
+        cols = list(zip(*tr))
+        t = t[order]
     lat = np.asarray(cols[1], float)
     lon = np.asarray(cols[2], float)
     flags = np.nan_to_num(np.asarray(cols[6], float)).astype(np.int64)
@@ -206,6 +215,7 @@ def count_aircraft(d: dict, idx: R.RegionIndex) -> Aircraft | None:
         (adsb & v12 & has_nacp & fl, deg8, True),
         (u_prim, deg8, False),
         (u_prim, deg7, True),
+        (u_prim & has_nic, degnic, True),
     )
     rows = []
     for L in (P, C):
@@ -267,11 +277,12 @@ class DayAcc:
         self.west: list[tuple[str, int, int]] = []
         self.stats = np.zeros((NR, len(STATS)), np.int64)
         self.mix = np.zeros(MIX_SIZE, np.int64)
-        self.n = {"trace_files": 0, "tilde": 0, "aircraft": 0, "bad_files": 0, "points": 0}
+        self.n = {"trace_files": 0, "tilde": 0, "aircraft": 0, "bad_files": 0, "points": 0, "unsorted_aircraft": 0}
 
     def add(self, a: Aircraft) -> None:
         self.n["aircraft"] += 1
         self.n["points"] += a.points
+        self.n["unsorted_aircraft"] += a.unsorted
         if a.usable.any() or a.degraded.any():
             self.icao.append(a.icao)
             self.usable.append(a.usable)
@@ -304,7 +315,8 @@ class DayAcc:
         try:
             data = gzip.decompress(raw) if raw[:2] == b"\x1f\x8b" else raw
             a = count_aircraft(_loads(data), idx)
-        except (ValueError, KeyError, TypeError, IndexError, EOFError, OSError, zlib.error):
+        except (ValueError, KeyError, TypeError, IndexError, AttributeError, OverflowError, EOFError, OSError,
+                zlib.error):
             self.n["bad_files"] += 1
             return
         if a is not None:
@@ -408,7 +420,25 @@ class _Concat(io.RawIOBase):
 
 
 class Unreadable(Exception):
+    """The day is unreadable by §2 and is replaced by its Thursday."""
+
+
+class StopRun(Exception):
+    """Not a property of the day: the run stops so that no day is lost or miscounted for it."""
+
+
+class SchemaDrift(StopRun):
     pass
+
+
+BAD_SHARE_MAX = 0.005
+
+
+def check_schema(n: dict, date: str) -> None:
+    """Too many files that fail to parse, or no aircraft, means the format changed, not that the day is bad."""
+    ok_files = n["trace_files"] - n["tilde"]
+    if n["aircraft"] == 0 or (ok_files and n["bad_files"] / ok_files > BAD_SHARE_MAX):
+        raise SchemaDrift(f"{date}: {n['bad_files']} bad of {ok_files} non-~ trace files, {n['aircraft']} aircraft")
 
 
 def iter_traces(paths: list[Path]):
@@ -467,6 +497,7 @@ def count_day(paths: list[Path], out_dir: Path, date: str, idx: R.RegionIndex, i
             pool.shutdown(cancel_futures=True)
     if acc.n["trace_files"] == 0:
         raise Unreadable("no trace_full files in the archive")
+    check_schema(acc.n, date)
     write_day(acc, out_dir, date)
     return {**acc.n, "count_seconds": round(time.time() - t0, 1)}
 
@@ -476,3 +507,65 @@ def write_day(acc: DayAcc, out_dir: Path, date: str) -> None:
         (out_dir / sub).mkdir(parents=True, exist_ok=True)
     for name, df in acc.frames(date).items():
         df.to_parquet(out_dir / f"{name}.parquet", index=False)
+
+
+def structure(d: dict, acc: dict) -> None:
+    """Structure of one parsed trace for the preflight; looks at key presence and types only, never at a value of
+    nac_p, nic or any other quality field."""
+    acc["timestamp_key"] += "timestamp" in d
+    tr = d.get("trace")
+    if not isinstance(tr, list):
+        acc["no_trace_list"] += 1
+        return
+    prev, mono = None, True
+    for p in tr:
+        acc["points"] += 1
+        if not isinstance(p, list):
+            continue
+        acc["points_14plus"] += len(p) >= 14
+        if len(p) > 9:
+            acc["types"].add(p[9] if isinstance(p[9], str) else repr(type(p[9]).__name__))
+        if len(p) > 8 and isinstance(p[8], dict):
+            acc["details"] += 1
+            acc["details_version_key"] += "version" in p[8]
+            acc["details_nac_p_key"] += "nac_p" in p[8]
+        if p and _num(p[0]):
+            mono &= prev is None or p[0] >= prev
+            prev = p[0]
+    acc["traces_monotone"] += mono
+
+
+def preflight(paths: list[Path]) -> dict:
+    acc = {"files": 0, "tilde": 0, "parsed": 0, "no_trace_list": 0, "timestamp_key": 0, "traces_monotone": 0,
+           "points": 0, "points_14plus": 0, "details": 0, "details_version_key": 0, "details_nac_p_key": 0,
+           "types": set()}
+    for name, raw in iter_traces(paths):
+        acc["files"] += 1
+        if TRACE_RE.search(name).group(1).startswith("~"):
+            acc["tilde"] += 1
+        try:
+            d = _loads(gzip.decompress(raw) if raw[:2] == b"\x1f\x8b" else raw)
+        except (ValueError, EOFError, OSError, zlib.error):
+            continue
+        if not isinstance(d, dict):
+            continue
+        acc["parsed"] += 1
+        structure(d, acc)
+    f, p, det = acc["files"], acc["points"], acc["details"]
+    return {
+        "files": f, "tilde_files": acc["tilde"],
+        "share_files_parsed": share_or_none(acc["parsed"], f),
+        "share_parsed_with_timestamp_key": share_or_none(acc["timestamp_key"], acc["parsed"]),
+        "share_parsed_without_trace_list": share_or_none(acc["no_trace_list"], acc["parsed"]),
+        "share_traces_time_monotone": share_or_none(acc["traces_monotone"], acc["parsed"] - acc["no_trace_list"]),
+        "points": p,
+        "share_points_14plus_elements": share_or_none(acc["points_14plus"], p),
+        "share_points_with_details": share_or_none(det, p),
+        "share_details_with_version_key": share_or_none(acc["details_version_key"], det),
+        "share_details_with_nac_p_key": share_or_none(acc["details_nac_p_key"], det),
+        "type_strings": sorted(acc["types"]),
+    }
+
+
+def share_or_none(a, b):
+    return round(a / b, 6) if b else None

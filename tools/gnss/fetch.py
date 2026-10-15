@@ -9,11 +9,13 @@ Resumes: a day with a manifest is not fetched again. Progress goes to tools/data
     nice -n 20 uv run --no-project --with shapely --with numpy --with pandas --with pyarrow --with orjson \
         python -I tools/gnss/fetch.py --days all
     ... python -I tools/gnss/fetch.py --kp      # GFZ Potsdam Kp file only
+    ... python -I tools/gnss/fetch.py --preflight   # structure of one Wednesday per study year, no quality values
 """
 from __future__ import annotations
 
 import argparse
 import datetime as dt
+import http.client
 import json
 import logging
 import shutil
@@ -28,6 +30,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # -I leaves the script's own directory off the path
 
+import count
 import regions as R
 
 DATA = R.DATA
@@ -43,6 +46,8 @@ BACKOFF_S = 30
 KP_URL = "https://kp.gfz.de/app/files/Kp_ap_Ap_SN_F107_since_1932.txt"
 KP_NAME = "Kp_ap_Ap_SN_F107_since_1932.txt"
 KP_DIR = DATA / "kp"
+PREFLIGHT_DAYS = (dt.date(2023, 3, 15), dt.date(2024, 3, 6), dt.date(2025, 3, 5), dt.date(2026, 3, 4))
+PREFLIGHT_OUT = R.ROOT / "docs/research/gnss-preflight.json"
 
 log = logging.getLogger("gnss")
 
@@ -97,8 +102,11 @@ def part_suffixes():
             yield f"tar.{a}{b}"
 
 
-class NetworkDown(Exception):
-    """Our side cannot reach the host; the run stops so that no day is lost for it."""
+class NetworkDown(count.StopRun):
+    """A failure that is not a property of the day (no connection, 403/429/5xx or timeouts after every retry)."""
+
+
+TRANSIENT = (urllib.error.URLError, TimeoutError, ConnectionError, http.client.HTTPException, OSError)
 
 
 def _request(url: str, method: str = "GET", headers: dict | None = None):
@@ -114,13 +122,12 @@ def exists(url: str) -> bool:
         except urllib.error.HTTPError as e:
             if e.code == 404:
                 return False
-            err = e
-        except (urllib.error.URLError, TimeoutError, ConnectionError) as e:
-            err = e
+            err = f"HTTP {e.code}"
+        except TRANSIENT as e:
+            err = f"{type(e).__name__}: {e}"
+        log.warning("HEAD %s: %s (attempt %d)", url, err, attempt + 1)
         time.sleep(BACKOFF_S * 2 ** attempt)
-    if isinstance(err, urllib.error.HTTPError):
-        raise OSError(f"HEAD {url}: HTTP {err.code}")
-    raise NetworkDown(f"HEAD {url}: {err}")
+    raise NetworkDown(f"HEAD {url}: {err} after {RETRIES} attempts")
 
 
 def find_parts(d: dt.date) -> list[str]:
@@ -138,9 +145,10 @@ def find_parts(d: dt.date) -> list[str]:
 
 
 def download(url: str, dest: Path) -> int:
-    """Streams url to dest, resuming a partial file by Range; raises IOError after RETRIES failed attempts."""
+    """Streams url to dest, resuming a partial file by Range. HTTP 404 raises OSError (the part is missing: the day is
+    unreadable); any other failure that outlasts the retries raises NetworkDown and stops the run."""
     part = dest.with_suffix(dest.suffix + ".part")
-    http_seen = False
+    err = None
     for attempt in range(RETRIES):
         have = part.stat().st_size if part.exists() else 0
         try:
@@ -158,33 +166,18 @@ def download(url: str, dest: Path) -> int:
                 part.rename(dest)
                 return dest.stat().st_size
             if e.code == 404:
-                raise OSError(f"{url}: HTTP 404")
-            http_seen = True
-            log.warning("download %s: HTTP %s (attempt %d)", url, e.code, attempt + 1)
-        except (urllib.error.URLError, TimeoutError, ConnectionError, OSError) as e:
-            log.warning("download %s: %s (attempt %d)", url, e, attempt + 1)
+                raise FileNotFoundError(f"{url}: HTTP 404") from e
+            err = f"HTTP {e.code}"
+        except TRANSIENT as e:
+            err = f"{type(e).__name__}: {e}"
+        log.warning("download %s: %s (attempt %d)", url, err, attempt + 1)
         time.sleep(BACKOFF_S * 2 ** attempt)
-    if not http_seen and not _reachable():
-        raise NetworkDown(f"{url}: no connection")
-    raise OSError(f"{url}: failed after {RETRIES} attempts")
-
-
-def _reachable() -> bool:
-    try:
-        with _request("https://github.com/", "HEAD"):
-            return True
-    except Exception:
-        return False
+    raise NetworkDown(f"{url}: {err} after {RETRIES} attempts")
 
 
 def fetch_and_count(d: dt.date, out_dir: Path, idx, index_path: Path) -> dict:
     """Counts one calendar day into out_dir; raises count.Unreadable if the day is unreadable by §2."""
-    import count
-
-    try:
-        urls = find_parts(d)
-    except OSError as e:
-        raise count.Unreadable(f"probe: {e}") from e
+    urls = find_parts(d)
     if not urls:
         raise count.Unreadable("release missing")
     scratch = SCRATCH / f"{d}"
@@ -197,7 +190,7 @@ def fetch_and_count(d: dt.date, out_dir: Path, idx, index_path: Path) -> dict:
         try:
             with ThreadPoolExecutor(2) as ex:
                 sizes = list(ex.map(download, urls, dests))
-        except OSError as e:  # only a failed download makes the day unreadable, not a local error while counting
+        except FileNotFoundError as e:  # a part that 404s; a local error while counting is not caught here
             raise count.Unreadable(f"download: {e}") from e
         t1 = time.time()
         log.info("%s: %d part(s), %.2f GB in %.0f s", d, len(urls), sum(sizes) / 1e9, t1 - t0)
@@ -216,8 +209,6 @@ def fetch_and_count(d: dt.date, out_dir: Path, idx, index_path: Path) -> dict:
 
 def resolve_day(wed: dt.date, attempt: Callable[[dt.date], dict]) -> dict:
     """§2 replacement: the Wednesday, else the Thursday after it, else lost. `attempt` raises Unreadable."""
-    import count
-
     reasons = {}
     for d, status in ((wed, "counted"), (wed + dt.timedelta(days=1), "replaced")):
         try:
@@ -281,23 +272,32 @@ def postpass(attempt: Callable[[dt.date, Path], dict]) -> None:
         day_dir.rename(aside)
         reasons = {**m.get("unreadable", {}), m["date_used"]: f"low count {m['trace_files']} < 70 % of median {med}"}
         log.info("%s: %s flagged low (%d files, median %.0f)", wed, m["date_used"], m["trace_files"], med)
-        new = {"wednesday": str(wed), "status": "lost", "study_year": m["study_year"], "unreadable": reasons,
-               "low_checked": True, "low_median": med}
-        thu = wed + dt.timedelta(days=1)
-        if m["status"] == "counted":
-            try:
-                r = attempt(thu, day_dir)
-                if r["trace_files"] < LOW_SHARE * med:
-                    reasons[str(thu)] = f"low count {r['trace_files']} < 70 % of median {med}"
-                    shutil.rmtree(day_dir, ignore_errors=True)
-                else:
-                    new = {**new, "status": "replaced", **r}
-            except Exception as e:  # count.Unreadable or a download failure: the Thursday is unreadable
-                if isinstance(e, NetworkDown):
-                    raise
-                reasons[str(thu)] = str(e)
-                shutil.rmtree(day_dir, ignore_errors=True)
-        write_manifest(wed, new)
+        # Written before the Thursday is tried, so a run stopped half way resumes here and loses nothing.
+        man[wed] = {"wednesday": str(wed), "status": "pending-thursday" if m["status"] == "counted" else "lost",
+                    "study_year": m["study_year"], "unreadable": reasons, "low_checked": True, "low_median": med}
+        write_manifest(wed, man[wed])
+    for wed in sorted(d for d, m in man.items() if m["status"] == "pending-thursday"):
+        try_thursday(wed, man[wed], attempt)
+
+
+def try_thursday(wed: dt.date, m: dict, attempt: Callable[[dt.date, Path], dict]) -> None:
+    day_dir = DAYS / str(wed)
+    thu = wed + dt.timedelta(days=1)
+    med = m["low_median"]
+    reasons = dict(m["unreadable"])
+    new = {**m, "status": "lost", "unreadable": reasons}
+    try:
+        r = attempt(thu, day_dir)
+    except count.Unreadable as e:
+        reasons[str(thu)] = str(e)
+        shutil.rmtree(day_dir, ignore_errors=True)
+    else:
+        if r["trace_files"] < LOW_SHARE * med:
+            reasons[str(thu)] = f"low count {r['trace_files']} < 70 % of median {med}"
+            shutil.rmtree(day_dir, ignore_errors=True)
+        else:
+            new = {**new, "status": "replaced", **r}
+    write_manifest(wed, new)
 
 
 def parse_kp(text: str) -> dict[str, float | None]:
@@ -313,14 +313,44 @@ def parse_kp(text: str) -> dict[str, float | None]:
 
 
 def fetch_kp() -> Path:
+    new = DATA / "kp.new"  # a fresh empty directory; the previous file stays until the new one is complete
+    if new.exists():
+        shutil.rmtree(new)
+    new.mkdir(parents=True)
+    download(KP_URL, new / KP_NAME)
     if KP_DIR.exists():
         shutil.rmtree(KP_DIR)
-    KP_DIR.mkdir(parents=True)
+    new.rename(KP_DIR)
     dest = KP_DIR / KP_NAME
-    download(KP_URL, dest)
     R.record_hash(KP_NAME, R.sha256(dest))
     log.info("Kp file %s, sha256 %s", dest.name, R.sha256(dest))
     return dest
+
+
+def run_preflight(days=PREFLIGHT_DAYS, out: Path = PREFLIGHT_OUT) -> dict:
+    """Structure of one Wednesday per study year, streamed and deleted; no quality value is read (count.structure)."""
+    report = {}
+    for d in days:
+        urls = find_parts(d)
+        if not urls:
+            report[str(d)] = {"error": "release missing"}
+            continue
+        scratch = SCRATCH / f"preflight-{d}"
+        if scratch.exists():
+            shutil.rmtree(scratch)
+        scratch.mkdir(parents=True)
+        try:
+            dests = [scratch / u.rsplit("/", 1)[1] for u in urls]
+            with ThreadPoolExecutor(2) as ex:
+                list(ex.map(download, urls, dests))
+            report[str(d)] = {"parts": [p.name for p in dests], **count.preflight(dests)}
+        except (count.Unreadable, FileNotFoundError) as e:
+            report[str(d)] = {"error": str(e)}
+        finally:
+            shutil.rmtree(scratch, ignore_errors=True)
+        log.info("preflight %s done", d)
+        out.write_text(json.dumps(report, indent=1) + "\n")
+    return report
 
 
 def select(spec: str) -> list[dt.date]:
@@ -341,6 +371,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--days", help="all | YYYY-MM-DD[,YYYY-MM-DD...] | YYYY-MM-DD:YYYY-MM-DD")
     ap.add_argument("--kp", action="store_true", help="download the GFZ Kp file")
+    ap.add_argument("--preflight", action="store_true", help="structure-only check of one Wednesday per study year")
     ap.add_argument("--no-postpass", action="store_true")
     ap.add_argument("--retry-lost", action="store_true", help="fetch again days whose manifest says lost")
     args = ap.parse_args()
@@ -349,6 +380,8 @@ def main() -> None:
     logging.getLogger().addHandler(logging.StreamHandler())
     if args.kp:
         fetch_kp()
+    if args.preflight:
+        run_preflight()
     if not args.days:
         return
     idx = R.load_index()
