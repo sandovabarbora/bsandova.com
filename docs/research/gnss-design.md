@@ -1,0 +1,207 @@
+# Do aircraft over Czechia broadcast degraded GNSS positions? — research design
+
+**Status: pre-specified analysis, design committed 15 October 2026, before any aircraft's position quality was
+summarised.** A descriptive measurement with registered rules. The steps follow in dated commits: design → data-step
+code (tagged before it runs) → data and screening → estimation code (tagged) → results. Commit times are
+self-reported; the signed tag `gnss-design` fixes this text. Deviations are listed, dated, in the change log.
+
+## 0. What has already been seen
+
+- **The author** has not looked at gpsjam.org or any other map or report of GNSS interference over Czechia (stated 15
+  October 2026). She and the drafting assistant know, as general public background, that interference has been
+  reported around the Baltic Sea and Kaliningrad, the Black Sea and the eastern Mediterranean.
+- **Feasibility check (14 October 2026).** A separate agent read the schema of the adsb.lol daily archives (a 5 %
+  slice of 13 October 2026: field names, field presence, aircraft counts in four boxes), one ADS-B Exchange snapshot of
+  1 March 2022 (field presence only), and the header line and row count of one gpsjam.org daily file (12 October 2026);
+  the row count says roughly how many map cells had any degraded aircraft that day, a mild exposure to the extent of the
+  footprint, not to any region's level. The slices it kept hold NACp values; none was summarised. It also collected
+  public statements: the Czech air navigation service (ŘLP, 25 September 2024: "units of cases" of crews at higher
+  flight levels reporting GNSS problems) and the Civil Aviation Authority (ÚCL, 6 May 2026: a marked increase since
+  February 2022 and a gradual spread into Central Europe); EASA's Safety Information Bulletin 2022-02 names the Baltic
+  Sea region among the affected areas. These statements are the claims Q3 checks.
+- **Review (15 October 2026), three rounds.** An independent methods reviewer read the draft and the trace structure (array layout,
+  field presence) of the same slice, and counted aircraft per region from position, altitude and source type only; it
+  read no quality value. A second round read readsb's source and the spacing of points that carry quality fields (one
+  in four stored points; at cruise about one usable point a minute), from structure only; the unit of measurement is
+  therefore the position report, not the aircraft-day (§2). These looks used a slice of 13 October 2026, inside study
+  year 4. A third round counted, from structure only (positions, altitude, source, the stale flag, the ADS-B version
+  and whether a `nac_p` key exists), usable points per aircraft and region and west of 5° E in the same slice. The
+  version below takes in all three rounds.
+- **Prior expectation.** Stated by the author on 15 October 2026: interference does not reach over Czechia ("podle
+  mě to rušení nezasahuje").
+
+## 1. Questions
+
+All are descriptions of what aircraft broadcast. A degraded position here means only that the aircraft's own estimate
+of its position uncertainty was poor (NACp below 8), whatever the cause; jamming is one cause, not the only one, and
+nothing here says who or what caused it. The control region (Austria and Switzerland) lies farther from the Baltic
+and Kaliningrad area than Czechia, though its traffic also comes from the Black Sea and eastern Mediterranean.
+
+- **Q1, over Czechia (headline; the confirmatory estimates are Q1 and Q3).** E_CZ: the share of degraded position
+  reports over Czechia minus the share over the control, pooled over the sample (§2), with its interval. It describes
+  ADS-B version 2 aircraft at cruise over Czechia, not all traffic.
+- **Q2, the gradient (descriptive).** E_PL and E_BALT (Estonia, Latvia and Lithuania together) the same way; E per
+  band of distance from Kaliningrad (§2); and G = E_CZ / E_BALT, Czechia's position between control and the Baltic
+  states, per year and pooled (rules in §4).
+- **Q3, the official statements (planned second estimate).** The change in E_CZ from 1 March – 14 October 2024 to
+  1 March – 14 October 2026, against the ÚCL statement of an increase; the ŘLP statement of September 2024 is set
+  against the level of study year 2. The "since 2022" part of the ÚCL statement lies before the data and is not tested.
+- **Q4, position jumps (descriptive).** The share of aircraft crossings of a region with a position jump (§2); spoofing
+  can leave NACp good, so Q1–Q3 would miss it.
+
+## 2. Data and definitions
+
+- **Source.** adsb.lol `globe_history_<year>` archives (ODbL 1.0, attributed as the licence requires), the release
+  tagged `v<YYYY.MM.DD>-planes-readsb-prod-0` of each day, in one or more parts (`.tar`, or `.tar.aa`, `.ab`, … in
+  order). Only `prod-0` is used. Files are fetched by their direct release URLs, at most two at a time, with the
+  User-Agent "bsandova.com research".
+- **Sample of days.** Every Wednesday from 1 March 2023 to 14 October 2026 (190 days), fixed now. A day is
+  **unreadable** if its release is missing, any part fails to download or extract, or it holds fewer than 70 % of the
+  aircraft files of the median of the four nearest sampled days. An unreadable Wednesday is replaced by the Thursday
+  after it, which counts in the study year of the Wednesday; if the Thursday is also unreadable or not yet published,
+  the day is lost and counted. Public-holiday Wednesdays are kept and counted.
+- **Study years.** Year 1: March 2023 – February 2024; year 2: March 2024 – February 2025; year 3: March 2025 –
+  February 2026; year 4: March – October 2026.
+- **Usable point.** A point of an aircraft's trace (`trace_full`; a 14-element array) with source `type` (index 9)
+  `adsb_icao`; the stale flag (bit 0 of `flags`, index 6) unset; a details object (index 8) with ADS-B `version` 2 and
+  a `nac_p` key; and numeric pressure altitude (`alt_baro`, index 3) at or above 25 000 ft (FL250). The top-level
+  `version` (the receiver software) is not used. Addresses starting with `~` (non-ICAO) are dropped. readsb stores the
+  details object on every fourth stored point by position in the trace, not by content, so usable points are a thinned
+  but unselected sample: at cruise, roughly one a minute.
+- **Regions.** Natural Earth 1:10 m admin 0 countries, version 5.1.2 (its file hash recorded in the data step):
+  Czechia (CZ); Poland (PL); Estonia, Latvia and Lithuania (BALT, land plus a 22 km band of sea off their coasts not
+  over another country's land); Austria and Switzerland (CTRL). A point on a boundary belongs to the first region in
+  the order CZ, PL, BALT, CTRL. Kaliningrad and Belarus are not regions.
+- **Entry buffer.** The usable points within the first 2 minutes after an aircraft enters a region (its first point in
+  the region after a stored point outside it, or its first point of the day) are not used in the primary analysis, so that
+  quality carried over from elsewhere is not counted there (the full-region version is check 8). Two minutes at cruise
+  is about 28 km, a sixth to a third of a typical Czech crossing.
+- **Degraded point.** A usable point with NACp below 8 (estimated position uncertainty of 0.05 NM, about 93 m, or
+  more).
+- **Persistently degraded airframes.** Over the whole sample, an aircraft (ICAO address) with at least 30 usable points
+  west of 5° E on at least two sampled days (away from the Baltic, Black Sea and eastern Mediterranean areas named in
+  public reports), at least half of them degraded, is dropped everywhere; this is treated as a property of its
+  equipment. Aircraft with fewer than 30 such points
+  cannot be screened and are kept; the share of usable points from screenable aircraft is reported per region and
+  year (§3), and check 4 keeps only screenable aircraft.
+- **Share.** D_r for a set of days: degraded points over usable points in region r, after the entry buffer and
+  without persistently degraded airframes. **E_r = D_r − D_CTRL.** A margin of one point (§6) is one position report
+  in a hundred.
+- **Crossing.** One aircraft's consecutive stored points in one region on one day, from entry to exit. Entry and exit
+  are judged on all stored non-stale points of the aircraft, whatever their source. A crossing also ends when two
+  consecutive stored points are more than 10 minutes apart; the next one is a new crossing with its own entry buffer.
+- **Regions for check 6.** Austria and Switzerland separately, and Germany west of 10° E (Natural Earth admin 0,
+  clipped at 10° E).
+- **Distance bands (Q2).** By each usable point's distance from Kaliningrad city (54.71° N, 20.51° E): 0–300,
+  300–600, 600–900 and over 900 km, over the four regions' points. Czechia spans about 650–950 km, so bands partly
+  stand in for regions and are read with them, not as a separate gradient.
+- **Position jump (Q4).** Two consecutive stored non-stale points of one aircraft (source `adsb_icao`, with or
+  without details), both inside the region, at most 60 s apart, not across a leg marker (bit 1 of `flags`), with an
+  implied ground speed above 1 200 kt and a displacement of at least 2 NM; a crossing with at least one jump counts
+  once.
+- **Space weather.** The daily maximum of the planetary Kp index from GFZ Potsdam for each sampled day, read in the
+  data step; it is not an outcome.
+
+## 3. Data step and screening
+
+The data-step code (the definitions of §2) is committed, with tests on made-up traces, and tagged before it runs on any
+sampled day. It keeps one day on disk at a time, deletes it after counting, and writes per day only counts: (a) per
+region (including the regions of check 6), aircraft and distance band: usable points, degraded points, crossings and
+crossings with a jump (bands by the points in them); (b) per aircraft: usable and degraded points west of 5° E, and the
+counts of (a) for the variants of checks 1, 2, 3, 8 and 10, each variant with its own usable-point definition except the
+airframe screen, which always uses the primary one; (c) per crossing: aircraft, region, usable points after the buffer
+and degraded points (check 11); and the screening counts. The degraded and jump counts are not opened until the screening
+report is committed and the estimation code is tagged; the persistently degraded airframes are counted with the
+estimation, not in screening. Screening reports:
+
+1. Days fetched, replaced by Thursday and lost; the holiday Wednesdays.
+2. Per region and day: crossings, usable points, usable points per crossing, the share of points with a details
+   object, and the share of usable points from aircraft with at least 30 usable points west of 5° E (coverage, no
+   quality value).
+3. The number of aircraft that can be screened (§2), per region and year; not how many are dropped.
+4. The share of points by ADS-B version and source type, per year.
+5. Kp_max per sampled day and the number of days with Kp_max ≥ 5.
+
+## 4. Estimation
+
+- **Pooled and per year.** D_r over the usable points of the period (busy years and long crossings weigh more, as
+  intended; equal day weights are check 7, crossing-level shares check 11).
+- **Intervals.** A two-way bootstrap, 2 000 draws, seed 20261015: sampled days resampled in moving blocks within each
+  study year (blocks of 4 consecutive sampled days, circular within the year, all regions of a day moving together),
+  and, independently, aircraft (ICAO addresses) resampled with replacement, each draw weighting every point by the
+  product of its day's and its aircraft's draw counts. The same airframes return on many Wednesdays, so days alone
+  would understate the uncertainty. 90 % and 95 % percentile intervals for each E_r and for the change in E_CZ in Q3;
+  for Q3 the blocks are circular within the 1 March – 14 October window of each year, and the two windows are resampled
+  independently. The day-block interval alone is reported as well.
+- **G.** Computed only if E_BALT's label (§6) is a higher degraded share than control; then per bootstrap draw only where that draw's E_BALT exceeds
+  0.01, with the share of draws where it is undefined reported. Otherwise G is not reported and E_CZ and E_PL are
+  shown against E_BALT as differences.
+- **Degraded-position days (descriptive).** A region-day with at least 300 usable points in the region and in control
+  counts as a degraded-position day if its day share is at least 2 % and at least 2 percentage points above control's
+  share that day;
+  per region and year.
+- **Repeat airframes (descriptive).** Per region, after the persistent-airframe drop, the share of degraded points that
+  come from the ten airframes with the most of them.
+
+## 5. Power
+
+Not computed: any number would need the quality values, which stay unread until the estimation code is tagged. The
+margin of §6 is fixed in absolute share points from what the question needs and was not chosen from data: one point
+is one position report in a hundred at cruise.
+
+## 6. Labels
+
+Confirmatory: pooled E_CZ (Q1) and the change in Q3. Every other label (per year, PL, BALT, bands) is descriptive and
+read with the others, without a correction for multiplicity.
+
+- E (in order): **higher degraded share than control** — the 95 % interval lies above +0.01; **no excess larger than one
+  point** — the 90 % interval lies below +0.01 (it may include values below 0); **inconclusive** — anything else.
+  Where the label of a check (§7), computed by the same rules, differs from the primary label, both are reported and
+  the text does not choose.
+- Q3 change (in order): **increase** — the 95 % interval lies above 0; **no increase larger than one point** — the
+  90 % interval lies below +0.01; **inconclusive**.
+
+"No excess" means no excess among aircraft still broadcasting a position (§8); it is not "no interference".
+
+## 7. Checks (reported; none relabels a primary result)
+
+1. **NIC instead of NACp**: a point is degraded if its NIC is below 7.
+2. **Any altitude**: without the FL250 floor.
+3. **ADS-B version 1 and 2.**
+4. **Screenable aircraft only**: only aircraft with at least 30 usable points west of 5° E over the sample, in every
+   region, so that every region is screened the same way.
+5. **Paired within aircraft**: for screenable aircraft, the degraded share of an aircraft's usable points in region r
+   minus its share west of 5° E, averaged over aircraft, minus the same for control.
+6. **Control variants**: Austria alone; Germany west of 10° E.
+7. **Equal day weights**: each region-day carrying equal weight.
+8. **No entry buffer.**
+9. **Without days of Kp_max ≥ 5**, and E_CZ separately for days with Kp_max below 5 and at or above 5.
+10. **NACp below 7** instead of below 8.
+11. **Crossings**: a crossing with at least 3 usable points after the buffer is degraded if at least 2 of them are;
+    the share of degraded crossings, by the same rules.
+12. **Airframe cap**: each aircraft-region-day contributes at most its first 40 usable points after the buffer.
+
+## 8. Limits stated now
+
+- An aircraft that loses its position altogether stops broadcasting one and leaves no usable point; the shares are a
+  lower bound on affected aircraft.
+- Where an aircraft reports degraded positions is not where the cause is: at cruise an aircraft sees a transmitter
+  hundreds of kilometres away, and quality carried over from elsewhere is only partly removed by the entry buffer. A
+  positive E_CZ means aircraft over Czechia broadcast a higher share of degraded positions than over the control, not
+  that a source was on Czech ground.
+- The whole-sample screen cannot remove equipment that became degraded late in the sample, which tilts the Q3 change
+  upwards; check 5 limits it.
+- Degraded NACp has other causes: faults, the aircraft's own equipment, ionospheric disturbance. Disturbance rises
+  with latitude and was strong in the solar maximum of 2024–2025; it cannot be fully separated from the Baltic
+  gradient (check 9 limits it), and it can mask a Q3 increase from 2024 to 2026.
+- Receiver coverage grew over the period; the FL250 floor and the comparison with control limit, but do not remove,
+  its effect. Aircraft that never fly far west cannot be screened for their own equipment, and they are more common in
+  the east; checks 4 and 5 show how much that matters. Stale points, excluded everywhere, are more common at the edge of
+  coverage.
+- One day a week: short episodes can fall between sampled days. The sample estimates levels and trends, not every
+  episode. No data before March 2023.
+- readsb discards implausible positions before they reach the trace, so Q4 is a lower bound on jumps.
+
+## Change log
+
+- 15 October 2026: design committed.
