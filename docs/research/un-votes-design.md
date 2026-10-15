@@ -194,3 +194,13 @@ descriptive; Q4 is a list.
 ## Change log
 
 - 15 October 2026: design committed.
+- 15 October 2026, screening (`tools/un/screen.py` → `docs/research/un-votes-screen.json`, Czech positions not read;
+  one count of the votes listing Czechia per period): version 5 confirmed by its sha256; no duplicate rows; no vote
+  outside its session's span. Votes per period (split among the EU members other than Czechia): Sobotka 295 (104),
+  2017 buffer 38 (6), Babiš 377 (127), 2021 buffer 16 (2), Fiala 381 (127), 15–30 December 2025 83 (11).
+- 15 October 2026, code frozen: `tools/un/estimate.py` (every β, placebo rank, label, the checks of §7, absences, Q4)
+  and `tools/un/votes.py`, with worked examples on made-up votes in `tools/un/test_un.py` (9 tests). Additions to the
+  shared code before the freeze, not changing any definition: the partial-credit switch for §7.2, the comparison
+  members dropped for §7.4, and an end date in `load()` so that stage A never reads a row after 14 December 2025. In
+  §7.10 members are matched between the two sources by name, as UNGA-DM has no ISO codes; the matched share is
+  reported.

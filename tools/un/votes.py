@@ -21,22 +21,24 @@ BUFFER_DAYS = 30
 SEED, DRAWS, MIN_AFTER = 20261015, 2000, 20
 
 
-def load(path: Path = FILE, drop: tuple[str, ...] = ()) -> pd.DataFrame:
-    """Rows from START on; members in `drop` are removed in the query, never read."""
+def load(path: Path = FILE, drop: tuple[str, ...] = (), end: str = "2099-12-31") -> pd.DataFrame:
+    """Rows from START to `end`; members in `drop` and later rows are removed in the query, never read."""
     import duckdb
     skip = ", ".join(f"'{c}'" for c in drop) or "''"
     df = duckdb.sql(f"""
-        SELECT undl_id, ms_code, ms_vote, CAST(date AS DATE) AS date, session, resolution, title, agenda_title
+        SELECT undl_id, ms_code, ms_name, ms_vote, CAST(date AS DATE) AS date, session, resolution, title, agenda_title
         FROM read_csv('{path}', header = true, all_varchar = true)
-        WHERE CAST(date AS DATE) >= DATE '{START}' AND ms_code NOT IN ({skip})
+        WHERE CAST(date AS DATE) BETWEEN DATE '{START}' AND DATE '{end}' AND ms_code NOT IN ({skip})
     """).df()
     df["date"] = pd.to_datetime(df["date"])
     return df
 
 
-def score(a: np.ndarray, b: np.ndarray) -> np.ndarray:
-    """1 equal, 0.5 when one abstains and the other does not, 0 for yes against no; NaN when either is missing."""
-    out = np.where(a == b, 1.0, np.where((a == POS["A"]) | (b == POS["A"]), 0.5, 0.0))
+def score(a: np.ndarray, b: np.ndarray, partial: bool = True) -> np.ndarray:
+    """1 equal, 0.5 when one abstains and the other does not (0 without partial credit, §7.2), 0 for yes against no;
+    NaN when either is missing."""
+    half = 0.5 if partial else 0.0
+    out = np.where(a == b, 1.0, np.where((a == POS["A"]) | (b == POS["A"]), half, 0.0))
     return np.where((a < 0) | (b < 0), np.nan, out)
 
 
@@ -52,7 +54,7 @@ def positions(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, int]:
     return m, info.reindex(m.index), dup
 
 
-def agreement_eu(m: pd.DataFrame, member: str, exclude: tuple[str, ...] = ()) -> pd.Series:
+def agreement_eu(m: pd.DataFrame, member: str, exclude: tuple[str, ...] = (), partial: bool = True) -> pd.Series:
     """`member`'s agreement with the most common position of the EU-27 members other than it and `exclude` that voted
     (a tie drops the vote)."""
     others = [c for c in EU27 if c in m.columns and c != member and c not in exclude]
@@ -60,23 +62,24 @@ def agreement_eu(m: pd.DataFrame, member: str, exclude: tuple[str, ...] = ()) ->
     counts = np.stack([(vals == k).sum(1) for k in range(3)], 1)
     top = counts.max(1)
     maj = np.where(((counts == top[:, None]).sum(1) == 1) & (top > 0), counts.argmax(1), -1)
-    return pd.Series(score(m[member].to_numpy(), maj), index=m.index)
+    return pd.Series(score(m[member].to_numpy(), maj, partial), index=m.index)
 
 
-def agreement_partner(m: pd.DataFrame, member: str, partner: str) -> pd.Series:
-    return pd.Series(score(m[member].to_numpy(), m[partner].to_numpy()), index=m.index)
+def agreement_partner(m: pd.DataFrame, member: str, partner: str, partial: bool = True) -> pd.Series:
+    return pd.Series(score(m[member].to_numpy(), m[partner].to_numpy(), partial), index=m.index)
 
 
-def agreements(m: pd.DataFrame, focal: str, partner: str | None) -> tuple[pd.Series, pd.DataFrame]:
+def agreements(m: pd.DataFrame, focal: str, partner: str | None, partial: bool = True,
+               drop: tuple[str, ...] = ()) -> tuple[pd.Series, pd.DataFrame]:
     """§4: the focal member's agreement, and each comparison member's, scored without the focal member (and without
     the partner, who is neither focal nor a comparison member)."""
-    comp = [c for c in EU27 if c in m.columns and c not in (focal, partner)]
+    comp = [c for c in EU27 if c in m.columns and c not in (focal, partner, *drop)]
     if partner is None:
-        a_f = agreement_eu(m, focal)
-        a_c = pd.DataFrame({c: agreement_eu(m, c, exclude=(focal,)) for c in comp})
+        a_f = agreement_eu(m, focal, partial=partial)
+        a_c = pd.DataFrame({c: agreement_eu(m, c, exclude=(focal,), partial=partial) for c in comp})
     else:
-        a_f = agreement_partner(m, focal, partner)
-        a_c = pd.DataFrame({c: agreement_partner(m, c, partner) for c in comp})
+        a_f = agreement_partner(m, focal, partner, partial)
+        a_c = pd.DataFrame({c: agreement_partner(m, c, partner, partial) for c in comp})
     return a_f, a_c
 
 
