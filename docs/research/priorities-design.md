@@ -207,3 +207,14 @@ dropping the chair, Mix and Other. COFOG: all codes, 1995–2024. **A blinding s
 diagnostic printed whether each Czech weighted-count cell was at most 1, without values; for the study's items it
 showed that Terrorism was named by about no one in EB94 and EB96. No share, attention or spending value was printed or
 computed.
+
+**15 October 2026 (reproducibility check and validation sample, before any attention share).** The full classification
+of the psp.cz records (379 034 speeches) agrees with ParlaCAP-CZ's label on 99.48 % of the 185 659 matched speeches of
+2013–2023 (99.79 % without the chair), above the registered 90 %, so the extension is estimated
+(`tools/priorities/overlap.py`, `priorities-overlap.json`). The validation sample (`validation_sample.py`) settles three
+points the design left open: the strata are the ten harmonised topics, **the other CAP topics together**, Mix and Other
+(13, equal expected numbers); chair speeches are outside the frame, as they are outside the analysis; and the coders
+see an anonymous key and the text **cut at 1 500 words** (111 of the 600 speeches are longer; the classifier itself
+reads only the beginning of a speech). Inclusion probabilities are kept for the weighting. The coding instructions
+(`coding_instructions.md`) give the CAP major topics with short definitions and "Other" for speeches without a policy
+topic.
