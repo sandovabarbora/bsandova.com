@@ -1,0 +1,13 @@
+<h4 id="un-votes-changes">Changes after registration</h4>
+<ul>
+<li>15 October 2026, registration: the design (<code>docs/research/un-votes-design.md</code>) is registered by the signed annotated tag <code>un-votes-design</code>, tag object <code>d7a60458b9799dcd0554a72081e1e082949a44ac</code>, on commit <code>0c1366c83a2151b90f56a8dd22e007bf7d889e99</code>, pushed with the branch <code>feature/UN-1_czech-un-votes</code> before any Czech vote in the data was read. Before it, a feasibility check and a methods reviewer worked on the other members only; what reached them about Czechia is disclosed in the design (§0).</li>
+<li>15 October 2026, screening (<code>tools/un/screen.py</code>, Czech positions not read): version 5 of the file confirmed by its sha256; no duplicate rows; no vote outside its session's span. Votes per period, with the votes on which the EU members other than Czechia split: Sobotka 295 (104), 2017 buffer 38 (6), Babiš 377 (127), 2021 buffer 16 (2), Fiala 381 (127), 15–30 December 2025 83 (11).</li>
+<li>15 October 2026, code frozen (<code>tools/un/estimate.py</code>, <code>tools/un/votes.py</code>, 9 tests on made-up votes in <code>tools/un/test_un.py</code>). Added to the shared code before the freeze, without changing any definition: the switch that drops the half point for an abstention (§7.2), the comparison members dropped for §7.4, and an end date in <code>load()</code> so that stage A never reads a row after 14 December 2025. In the UNGA-DM cross-check (§7.10), members are matched between the two sources by name, as UNGA-DM has no ISO codes; the matched share is reported.</li>
+<li>15 October 2026, stage A results (<code>tools/un/estimate.py --stage A</code>, frozen code, first reading of Czech positions, up to 14 December 2025): with the EU majority, β for 2017 −0.010, inconclusive, and for 2021 −0.014, underpowered; no β in Q2 or Q3 meets the rule for a shift. The UNGA-DM cross-check matched 122 236 of 157 295 pairs, 99.96 % with the same position.</li>
+<li>15 October 2026, after the results, not registered: the votes on which Czechia left the EU majority are grouped into four topics by words in their agenda item and title (<code>tools/un/departures.py</code>, reading only the stage A results), and Czechia's position on them and the yearly agreement of every EU member with the majority of the others are described (<code>tools/un/describe.py</code>, Czech positions up to 14 December 2025). Neither enters a label.</li>
+</ul>
+<h4>Change log</h4>
+<ul>
+<li>15 October 2026, version 1: first written, as a registered study, stage A; the headline question on the third Babiš government is pending.</li>
+<li>Checked against editorial standard v1 on 15 October 2026.</li>
+</ul>
