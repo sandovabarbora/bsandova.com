@@ -205,3 +205,31 @@ read with the others, without a correction for multiplicity.
 ## Change log
 
 - 15 October 2026: design committed.
+- 15 October 2026, data-step code (`tools/gnss/`, tested on made-up traces only; to be tagged `gnss-data-step` before
+  it runs). Choices the design left open, fixed here before any real day is counted: (1) the 10-minute crossing split is
+  measured between consecutive non-stale stored points; (2) a point is in the entry buffer if it comes less than 120 s
+  after entry; (3) band edges 0–300, 300–600, 600–900 km and 900 km or more (a boundary distance goes to the higher
+  band), great-circle on a sphere of 6 371.0088 km; a crossing counts in every band where it has a point; (4) crossings
+  are formed from points at any altitude and source; the Q4 denominator is the crossings with at least one usable point
+  after the buffer; (5) a jump pair is consecutive among non-stale points, both `adsb_icao`, 0–60 s apart, and a leg
+  marker on any stored point between them blocks it; (6) for check 6, Austria takes the Austria–Switzerland border and
+  Germany west of 10° E only points outside the primary regions; each check-6 region has its own crossings and buffer;
+  (7) a non-numeric `nac_p` makes a point unusable (counted); the ADS-B version must be the integer 2; (8) check 1 needs
+  a numeric `nic`; check 2 keeps points on the ground or without altitude; (9) west of 5° E means longitude below 5
+  anywhere, primary definition, no buffer; (10) **an airframe can be screened if it has at least 30 usable points west
+  of 5° E in total over the sample, from at least two sampled days**; (11) the low-count rule counts every `trace_full`
+  file, uses the four nearest sampled days with a count (ties to the earlier), is applied once after all days are in,
+  and a Thursday is judged against the same median; (12) a corrupt single file is counted and the day kept; a broken
+  archive, a missing release or a download failing five times makes the day unreadable, and a network outage stops the
+  run instead; (13) Kp_max ≥ 5 is numeric (5− does not count), a day with a missing three-hour value has none, and Kp is
+  taken for the day actually used; (14) holidays are Czech public holidays; (15) per-crossing rows are kept for crossings
+  with at least one usable point after the buffer; (16) a day's archive is used as published, without a date filter;
+  (17) only day folders whose status is counted or replaced are read. The archive starts in mid-March 2023: the releases
+  of 1 and 8 March 2023 and their Thursdays do not exist, so by §2 both days are lost (188 days remain at most).
+  After a code review (still before any real day): a day whose files fail to parse in more than 0.5 % of cases, or
+  with no aircraft, stops the run (a schema change would be systematic, not a lost day); traces are put in time order
+  before anything is counted, and the number that needed it is recorded; only an HTTP 404 makes a release or part
+  missing (§2's "any part fails to download" is narrowed to that and to a broken archive), while any other persistent
+  failure stops the run so that no day is lost for a transient reason; check 1 also gets a variant on the primary usable
+  points (`c1_nic_same`). A structure-only preflight on one Wednesday per study year (key presence, no values) runs
+  after the tag and before the full run.
