@@ -1,4 +1,5 @@
-"""Downloads of the priorities design (§2): Eurobarometer Volume A, ParlaCAP-CZ speeches, Eurostat gov_10a_exp.
+"""Downloads of the priorities design (§2): Eurobarometer Volume A, ParlaCAP-CZ speeches, Eurostat gov_10a_exp, and
+for the Q2 check of §6 the Czech unemployment rate (une_rt_a) and old-age dependency ratio (demo_pjanind).
 
 Writes the raw files under tools/data/priorities/ (eb/, parlacap/, eurostat/) and their URL, size and SHA-256 to
 docs/research/priorities-manifest.json. Files already present are kept, not fetched again; nothing in them is read
@@ -58,6 +59,13 @@ PARLACAP_FILE = "ParlaCAP-CZ_speeches.tsv.zip"
 
 EUROSTAT = ("https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/gov_10a_exp"
             "?format=JSON&lang=EN&geo=CZ&sector=S13&na_item=TE&unit=MIO_NAC")
+EUROSTAT_API = "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/"
+CONTROLS = {  # §6: Q2 with the unemployment rate and the old-age dependency ratio as controls
+    "eurostat_une_rt_a_cz": (EUROSTAT_API + "une_rt_a?format=JSON&lang=EN&geo=CZ&age=Y15-74&sex=T&unit=PC_ACT",
+                             "eurostat/une_rt_a_CZ.json"),
+    "eurostat_demo_pjanind_cz": (EUROSTAT_API + "demo_pjanind?format=JSON&lang=EN&geo=CZ&indic_de=OLDDEP1",
+                                 "eurostat/demo_pjanind_CZ.json"),
+}
 
 
 def get(url: str, tries: int = 4) -> bytes:
@@ -112,6 +120,7 @@ def main() -> None:
     url, md5 = parlacap_file()
     jobs.append(("parlacap_cz", url, RAW / "parlacap" / PARLACAP_FILE, md5))
     jobs.append(("eurostat_gov_10a_exp_cz", EUROSTAT, RAW / "eurostat/gov_10a_exp_CZ.json", None))
+    jobs += [(name, url, RAW / rel, None) for name, (url, rel) in CONTROLS.items()]
 
     files, failed = [], []
     for name, url, path, md5 in jobs:
