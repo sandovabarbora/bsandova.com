@@ -8,7 +8,7 @@
           views:[{key, label, fmt:{dp, unit, pct, sign}, scale:'seq'|'div', domain:[lo,hi], note,
                   cats:[{v, label}] for a yes/no or categorical view, mark:{id, label} to draw one feature in ink}],
           overlay:{lines:[[[lon,lat],...]], points:[[lon,lat]], labels:[{at:[lon,lat], s}]},
-          note, hint, fit:'features' (frame the features, not the basemap's outline), lat0 (projection latitude, default Prague's), base (a basemap JSON {outline, districts, water}
+          note, hint, fit:'features' (frame the features, not the basemap's outline), lat0 (projection latitude, default Prague's), base (a basemap JSON {outline, districts, lakes?, water}
           drawn under the features, path as for data), data:[paths]} */
 (() => {
   const NS = 'http://www.w3.org/2000/svg';
@@ -59,6 +59,7 @@
       const gB = el('g', {'pointer-events': 'none', class: 'mp-base'}, svg);
       const line = (pts, closed) => 'M' + pts.map(([x, y]) => X(x) + ',' + Y(y)).join('L') + (closed ? 'Z' : '');
       el('path', {d: B.districts.map(r => line(r, true)).join(''), fill: '#f2f2ef', stroke: '#fff', 'stroke-width': 1, 'vector-effect': 'non-scaling-stroke'}, gB);
+      if (B.lakes) el('path', {d: B.lakes.map(r => line(r, true)).join(''), fill: '#dfe6ec', stroke: 'none'}, gB);
       el('path', {d: B.outline.map(r => line(r, true)).join(''), fill: 'none', stroke: '#c9c9c4', 'stroke-width': 1, 'vector-effect': 'non-scaling-stroke'}, gB);
       el('path', {d: (B.water || []).map(l => line(l, false)).join(''), fill: 'none', stroke: '#c5d2de', 'stroke-width': 4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'vector-effect': 'non-scaling-stroke'}, gB);
     }
