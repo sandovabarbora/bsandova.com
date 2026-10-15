@@ -204,3 +204,8 @@ descriptive; Q4 is a list.
   members dropped for §7.4, and an end date in `load()` so that stage A never reads a row after 14 December 2025. In
   §7.10 members are matched between the two sources by name, as UNGA-DM has no ISO codes; the matched share is
   reported.
+- 15 October 2026, stage A results (`tools/un/estimate.py --stage A` → `docs/research/un-votes-results-a.json`,
+  frozen code, first reading of Czech positions, up to 14 December 2025). With the EU majority: β₂a −0.010 (90 %
+  −0.032 to +0.014, p 0.22 of 27), inconclusive; β₂b −0.014 (90 % −0.047 to +0.016, p 0.26 of 27), underpowered
+  (interval 0.063 wide, wider than §5's median of 0.042 for these periods). No β in Q2 or Q3 meets rule 1. The UNGA-DM
+  cross-check matched 122 236 of 157 295 (member, resolution) pairs, 99.96 % with the same position.
