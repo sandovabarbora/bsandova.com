@@ -273,3 +273,11 @@ scaling included; the randomisation interval's size was 4.6 / 9.8 / 19.3 % at 5 
 label need both. A blinding note: while reading the validation code, the code agent printed the committed validation
 file, which holds the weighted validation sample's word shares per topic (about 600 speeches), not the attention
 series.
+
+**15 October 2026 (results, frozen code at `priorities-code`).** `priorities-results.json`, no estimate failed. Q1 on
+ParlaCAP: static elasticity +0.13 (hull 95 % +0.04 to +0.24), "positive, possibly small"; dynamic +0.12 (90 % −0.10
+to +0.22), underpowered; combined **model-dependent**. Q1 on the whole series 2004–2025: static +0.18 (90 % +0.07 to
++0.31, wider than 0.20) and dynamic +0.03, both **underpowered**. Q1r and Q3: **underpowered** on both corpora. Q2
+(spending): static +0.03 (90 % −0.02 to +0.08) and dynamic −0.01 (90 % −0.06 to +0.02), **not supported**. Q4: coalition
++0.14 and opposition +0.12, both "positive, possibly small"; each government alone underpowered. No result is
+classifier-limited. Checks are in the results file and are read in the article, not here.
