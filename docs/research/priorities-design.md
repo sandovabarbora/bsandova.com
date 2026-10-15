@@ -224,3 +224,14 @@ without the classifier's label) agree on 544 of the 600 speeches (90.7 %, unweig
 author (`adjudicate.py`). A process slip: the coding agents wrote temporary files to a shared scratch folder, and two
 reported reading another batch's text there before re-extracting their own; each output file's keys match its batch
 in order, and the coders' agreement is 43–47 of 50 in every batch, with no batch out of line.
+
+**15 October 2026 (adjudication and validation results).** The author adjudicated 9 of the 56 disagreements and asked
+the assistant to decide the other 47 by her rule ("mostly borderline, so Other or whichever seemed more reasonable"),
+with her 9 as examples and without the classifier's label. That departs from §2.2 (the author adjudicates); the
+assistant is the same model family as both coders, so the reference topic of those 47 is less independent. Results
+(`validation.py`, `priorities-validation.json`), weighted back by inverse inclusion probability: coders' agreement 86.4 %
+weighted (90.7 % raw); weighted macro-F1 over the harmonised topics 0.69 on ParlaCAP-CZ and 0.77 on psp.cz 2004–2013,
+above the registered bound of 0.50, so no result is reported as classifier-limited. Weakest: Unemployment (F1 0.33,
+recall 0.24, on ParlaCAP) and Pensions (recall 0.47 and 0.41, word share 3.0 and 3.5 points too low). On the 9 speeches
+the author decided herself, the classifier's label matched hers on 3. The coding is fixed from here; §4 runs after the
+estimation code is frozen.
