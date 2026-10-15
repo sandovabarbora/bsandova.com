@@ -218,3 +218,9 @@ see an anonymous key and the text **cut at 1 500 words** (111 of the 600 speeche
 reads only the beginning of a speech). Inclusion probabilities are kept for the weighting. The coding instructions
 (`coding_instructions.md`) give the CAP major topics with short definitions and "Other" for speeches without a policy
 topic.
+
+**15 October 2026 (validation coding).** The two coders (Claude Sonnet and Claude Opus, each in twelve batches of 50,
+without the classifier's label) agree on 544 of the 600 speeches (90.7 %, unweighted); the 56 disagreements go to the
+author (`adjudicate.py`). A process slip: the coding agents wrote temporary files to a shared scratch folder, and two
+reported reading another batch's text there before re-extracting their own; each output file's keys match its batch
+in order, and the coders' agreement is 43–47 of 50 in every batch, with no batch out of line.
