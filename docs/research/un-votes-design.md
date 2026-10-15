@@ -209,3 +209,14 @@ descriptive; Q4 is a list.
   −0.032 to +0.014, p 0.22 of 27), inconclusive; β₂b −0.014 (90 % −0.047 to +0.016, p 0.26 of 27), underpowered
   (interval 0.063 wide, wider than §5's median of 0.042 for these periods). No β in Q2 or Q3 meets rule 1. The UNGA-DM
   cross-check matched 122 236 of 157 295 (member, resolution) pairs, 99.96 % with the same position.
+- 15 October 2026, after the stage A results, descriptive and not registered (none enters a label): the votes on which
+  Czechia left the EU majority are grouped into four topics (nuclear weapons and disarmament; Israel and Palestine;
+  racism, the Durban follow-up; other) by words in their agenda item and title, a rule written after the results were
+  read (`tools/un/departures.py`, reading only `un-votes-results-a.json`); Czechia's position against the majority's on
+  those votes and every EU-27 member's yearly agreement with the majority of the others are described
+  (`tools/un/describe.py`); on the votes of the Israel and Palestine topic, per period, Czechia's yes, abstain and no
+  counts, the other members' shares, and the votes of the emergency special sessions among all votes and among the
+  Czech departures (`tools/un/positions.py`). `describe.py` and `positions.py` read Czech positions only through
+  `load(end="2025-12-14")`.
+  The registered checks are also shown with the label the §6 rule would give their intervals (using the primary
+  estimate's rank p), as a report, not a relabelling (§7).

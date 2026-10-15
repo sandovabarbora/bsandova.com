@@ -1,9 +1,9 @@
 """The UN votes study, stage A: figures and the article, every number from the result files.
 
-Reads docs/research/un-votes-{results-a,screen,power,departures,describe}.json and the registered constants of the
+Reads docs/research/un-votes-{results-a,screen,power,departures,describe,positions}.json and the registered constants of the
 frozen code (votes.py, estimate.py; nothing there is run), writes assets/un-votes/ (charts.json, 01-beta.svg,
-02-yearly.svg, 03-departures.svg, results.json, departures.json, describe.json) and texts/un-votes.html from
-tools/un/template.html. Run tools/un/departures.py and tools/un/describe.py first.
+02-yearly.svg, 03-departures.svg, results.json, departures.json, describe.json, positions.json) and texts/un-votes.html from
+tools/un/template.html. Run tools/un/departures.py, describe.py and positions.py first.
 
     uv run --no-project --with numpy --with pandas --with duckdb --with matplotlib python tools/un/article.py
 """
@@ -272,16 +272,58 @@ def tests_table(res: dict) -> str:
     return "\n".join(out)
 
 
+def check_label(res: dict, q: str, key: str) -> tuple[str, str]:
+    """The §6 rule applied to a check's interval, with the primary estimate's rank p (checks have no placebo rank);
+    reported beside the primary label, never replacing it (§7)."""
+    partner = "USA" if key == "usa_before_us_change" else "EU"
+    prim = res["questions"][q]["by_partner"][partner]
+    return label(res["questions"][q]["checks"][key], prim["p"]), prim["label"]
+
+
 def checks_table(res: dict) -> str:
     out = []
     prim = {q: res["questions"][q]["by_partner"]["EU"] for q in CHANGE}
-    cell = lambda b: (f'<td class="v">{pts(b["est"])} <small>{nb(iv(b["ci90"]))}<br>'  # noqa: E731
-                      f'{nb(str(b["n_before"]) + " / " + str(b["n_after"]) + " votes")}</small></td>') if b else '<td class="v">–</td>'
-    out.append(f"  <tr><td>registered estimate, EU majority</td>{cell(prim['q2a'])}{cell(prim['q2b'])}</tr>")
+
+    def cell(q, k=None):
+        b = prim[q] if k is None else res["questions"][q]["checks"].get(k)
+        if not b:
+            return '<td class="v">–</td>'
+        lab = b["label"] if k is None else check_label(res, q, k)[0]
+        return (f'<td class="v">{pts(b["est"])} <small>{nb(iv(b["ci90"]))}<br>'
+                f'{nb(str(b["n_before"]) + " / " + str(b["n_after"]) + " votes")}<br>{nb(lab)}</small></td>')
+    out.append(f"  <tr><td>registered estimate, EU majority</td>{cell('q2a')}{cell('q2b')}</tr>")
     for k, lab in CHECKS.items():
-        out.append(f"  <tr><td>{lab}</td>{cell(res['questions']['q2a']['checks'].get(k))}"
-                   f"{cell(res['questions']['q2b']['checks'].get(k))}</tr>")
+        out.append(f"  <tr><td>{lab}</td>{cell('q2a', k)}{cell('q2b', k)}</tr>")
     return "\n".join(out)
+
+
+def relabelled(res: dict) -> list[str]:
+    out = []
+    assert not any(check_label(res, q, k)[0].startswith(("lower", "higher")) for q in CHANGE for k in CHECKS
+                   if k in res["questions"][q]["checks"])  # the text says no check would meet the rule for a shift
+    for q in CHANGE:
+        for k, lab in CHECKS.items():
+            if k in res["questions"][q]["checks"]:
+                new, old = check_label(res, q, k)
+                if new != old:
+                    out.append(f"the {CHANGE[q]} change on {lab.split(' (§')[0]} would be {new} (registered: {old})")
+    return out
+
+
+def positions_table(pos: dict) -> str:
+    out = []
+    for key, name in (("sobotka", "Sobotka"), ("babis", "Babiš"), ("fiala", "Fiala")):
+        p = pos["periods"][key]
+        c, o, mj = p["ip_czechia"], p["ip_others_shares"], p["ip_majority"]
+        out.append(f'  <tr><td>{name}</td><td class="v">{p["ip_votes"]} <small>of {p["votes"]}</small></td>'
+                   f'<td class="v">{c["Y"]} / {c["A"]} / {c["N"]}<small>{pct(c["Y"] / p["ip_votes"], 0)} % yes</small></td>'
+                   f'<td class="v">{pct(o["Y"], 0)} / {pct(o["A"], 0)} / {pct(o["N"], 0)} %</td>'
+                   f'<td class="v">{mj["Y"]} / {mj["A"]} / {mj["N"]}</td></tr>')
+    return "\n".join(out)
+
+
+def word(k: int) -> str:
+    return "none" if k == 0 else str(k)
 
 
 def opposite_table(dep: dict) -> str:
@@ -295,8 +337,10 @@ def opposite_table(dep: dict) -> str:
 def main() -> None:
     j = results_reader("un-votes")
     res, scr, pw, dep, desc = j("results-a"), j("screen"), j("power"), j("departures"), j("describe")
+    posj = j("positions")
     A.mkdir(parents=True, exist_ok=True)
-    for src, dst in (("results-a", "results"), ("departures", "departures"), ("describe", "describe")):
+    for src, dst in (("results-a", "results"), ("departures", "departures"), ("describe", "describe"),
+                     ("positions", "positions")):
         shutil.copy(R / f"un-votes-{src}.json", A / f"{dst}.json")
 
     charts = {}
@@ -334,6 +378,23 @@ def main() -> None:
     q1pw = [pw["pseudo"]["q1_like_2022"], pw["pseudo"]["q1_like_2023"]]
     absn = res["absences"]
     labels = [res["questions"][q]["by_partner"][p]["label"] for q in CHANGE for p in PARTNERS]
+    pp = posj["periods"]
+    assert pp["fiala"]["departures_by_session"] == {"10emsp": pp["fiala"]["departures_emergency"]}  # the text says so
+    assert absn["q2b"] == 0 and absn["q1"] == 0  # the text says Czechia voted on every vote of these periods
+
+    def nearest(x: dict) -> float:
+        return min(abs(v["est"] - x["est"]) for v in x["placebo"].values())
+    # a rough projection for Q1, not registered: the median member's 90 % width in the Q1-like pseudo changes, scaled
+    # by how much wider Czechia's standard error was than the median member's in the two stage A changes
+    cz_se = [res["questions"][q]["by_partner"]["EU"]["se"] for q in CHANGE]
+    med_se = [statistics.median(v["se"] for v in res["questions"][q]["by_partner"]["EU"]["placebo"].values())
+              for q in CHANGE]
+    ratios = [c / m_ for c, m_ in zip(cz_se, med_se)]
+    q1w = statistics.mean(x["width90_median"] for x in q1pw)
+    yrs_ = sorted(desc["years"])
+    gaps = [desc["years"][y]["others_median"] - desc["years"][y]["czechia"] for y in yrs_
+            if y >= next(z for z in yrs_ if all(desc["years"][w]["czechia"] < desc["years"][w]["others_median"]
+                                                for w in yrs_ if w >= z))]
 
     v = {
         # registered constants of the frozen code
@@ -424,7 +485,28 @@ def main() -> None:
         "chk_dev": pts(max(abs(c[k]["est"] - c0["est"]) for c, c0 in ((qa["checks"], a["EU"]), (qb["checks"], b["EU"]))
                            for k in ("no_partial_credit", "without_hungary_slovakia", "no_buffer", "confidence_dates",
                                      *(("regular_sessions_only",) if c is qa["checks"] else ()))), False),
-        "tests_table": tests_table(res), "checks_table": checks_table(res),
+        "tests_table": tests_table(res), "checks_table": checks_table(res), "pos_table": positions_table(posj),
+        "relabelled": "; ".join(relabelled(res)) or "none would",
+        "adm_date": day(next(x["date"] for x in opp if short(x["title"]).startswith("Admission of new Members"))),
+        "co_lo": pct(min(a["EU"]["comparison_before"], a["EU"]["comparison_after"], b["EU"]["comparison_after"])),
+        "co_hi": pct(max(a["EU"]["comparison_before"], a["EU"]["comparison_after"], b["EU"]["comparison_after"])),
+        "es_dep_fia": n(pp["fiala"]["departures_emergency"]),
+        "es10_fia": n(pp["fiala"]["emergency_by_session"].get("10emsp", 0)),
+        "es11_fia": n(pp["fiala"]["emergency_by_session"].get("11emsp", 0)),
+        "es_share": pct((b["EU"]["est"] - qb["checks"]["regular_sessions_only"]["est"]) / b["EU"]["est"], 0),
+        "gap_b_eu": pts(nearest(b["EU"]), False), "gap_b_rus": pts(nearest(b["RUS"]), False),
+        "proj_ratio_lo": n(min(ratios), 1), "proj_ratio_hi": n(max(ratios), 1),
+        "cz_se_lo": pts(min(cz_se), False), "cz_se_hi": pts(max(cz_se), False),
+        "med_se_lo": pts(min(med_se), False), "med_se_hi": pts(max(med_se), False),
+        "proj_w_lo": pts(q1w * min(ratios), False), "proj_w_hi": pts(q1w * max(ratios), False),
+        "yr_gap_lo": pts(min(gaps), False), "yr_gap_hi": pts(max(gaps), False),
+        "tw_sobotka_ip": word(dp["sobotka"]["by_topic"]["israel_palestine"]),
+        "o_sobotka_w": word(pos["sobotka"]["pairs"].get("czechia N, majority Y", 0)),
+        **{f"ip_{k}_{x}": n(pp[k]["ip_czechia"][x]) for k in pp for x in ("Y", "A", "N")},
+        **{f"ipv_{k}": n(pp[k]["ip_votes"]) for k in pp},
+        **{f"ipy_{k}": pct(pp[k]["ip_czechia"]["Y"] / pp[k]["ip_votes"], 0) for k in pp},
+        **{f"ipo_{k}": pct(pp[k]["ip_others_shares"]["Y"], 0) for k in pp},
+        **{f"ipm_{k}": pct(pp[k]["ip_majority"]["Y"] / pp[k]["ip_votes"], 0) for k in pp},
     }
     page = render((HERE / "template.html").read_text(encoding="utf-8"), v)
     (ROOT / "texts" / "un-votes.html").write_text(page, encoding="utf-8")
