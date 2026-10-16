@@ -228,3 +228,31 @@ opposite sign to the primary, the article says so next to the label; the label s
   2006–2015 for now. Under §2 the headline stage is therefore **stage A**, fixed today rather than on 31 March 2027,
   and stage B is not run as part of this study. If the records are obtained later, any analysis on them is reported as
   added after registration, not as the registered headline.
+- 16 October 2026, data step and code, before any accident count by place was computed. Police record-level files
+  exist in the same form from **2016** (2014 and 2015 have only yearbooks), so stage A takes works started from 2018.
+  After the exclusions of §2 the screening gives 35 treated towns (31 bypasses; 13 class I, 22 class II) and 50
+  comparison towns; comparison towns serving per year never fall below 15. Choices made in the code where the design
+  was silent or loose, after an independent code review:
+  - Coordinates: S-JTSK values accepted within the national range widened by 20 km; outside it a record counts as
+    without coordinates (0–0.02 % of records a year).
+  - Boundary changes (§2): measured by whole cadastral areas moving between municipalities; one town (Valdice, 3.7 %)
+    is excluded. Parcel moves across a cadastral boundary are not seen.
+  - Staged openings: an earlier `partial` row on the same road and town that carries the through traffic is the first
+    stage and sets opening and start year (only Opočno, BYP-194 and BYP-219).
+  - "Two `full` bypasses in the period": `full` rows of any class opened 2008–2025; planned rows never count as other
+    works.
+  - Zero-accident rule (§4): a town with no injury accident anywhere in its municipality in any year is dropped from
+    Q1, Q2 and the outside change alike, so the inside and outside changes add up to Q2; a town with no accident of a
+    given outcome stays in the cell weights with a change of zero.
+  - Lead rule: towns with lead −3 or −2 are counted; under stage A the test is uninformative by rule (§6); Q2 reuses
+    Q1's lead test.
+  - Separation in bootstrap draws is checked only on the post, construction and lead indicators used.
+  - Check 4: cohort-by-event-time indicators with the year before opening as the reference. Check 8: in the opening
+    year, the opening month's share of the year goes to post year 1 and the rest to the last construction year; a
+    year-only date gets 0.5. Check 10 and Q3: the road number the bypass took over is taken to be the bypass's own
+    number. The placebo interval is cluster-robust by bypass, not bootstrapped.
+  - Q3: bypass length from the list's `length_km` (OpenStreetMap lists both carriageways of dual roads); geometry from
+    the 1 020 OpenStreetMap ways listed, a straight line between the end points where none are listed; the old road's
+    rate is per year, not per km, as its length is not in the list.
+  - Records without coordinates in 2023–2025 name their municipality only in text and are matched to a unique RÚIAN
+    name.
