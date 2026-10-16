@@ -224,3 +224,7 @@ opposite sign to the primary, the article says so next to the label; the label s
 ## Change log
 
 - 16 October 2026: design committed.
+- 16 October 2026, before any accident count was computed: the author decided not to request the CDV records of
+  2006–2015 for now. Under §2 the headline stage is therefore **stage A**, fixed today rather than on 31 March 2027,
+  and stage B is not run as part of this study. If the records are obtained later, any analysis on them is reported as
+  added after registration, not as the registered headline.
