@@ -7,7 +7,8 @@ runs only with `--stage A --headline-fixed` (stage A is the registered headline,
 stage B is not part of the study and is refused. Writes docs/research/bypass-results-a.json.
 
     nice -n 20 env OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 uv run --no-project --with pandas --with numpy \
-        --with pyarrow --with statsmodels --with scipy python -I tools/bypass/estimate.py --stage A --headline-fixed
+        --with pyarrow --with statsmodels --with scipy --with shapely --with pyproj \
+        python -I tools/bypass/estimate.py --stage A --headline-fixed
 """
 from __future__ import annotations
 
@@ -612,8 +613,11 @@ def main() -> None:
     wide = town_table(T.select(b, change, classes=("I", "II", "III")))
     counts = real_counts(pd.concat([towns, planned, wide]).drop_duplicates("town"), b)
     extra = {"7_comparison_planned_only": planned, "12_class_III_added": wide}
+    import q3 as Q
+    acc = pd.read_parquet(ACCIDENTS, columns=["year", "injury", "built_up", "road", "junction", "x", "y", "muni_polygon"])
+    q3 = Q.q3(Q.rows_for(towns, b), acc, T.FIRST_YEAR, T.LAST_YEAR)
     log = DRAWS_LOG.with_name(f"{DRAWS_LOG.stem}-{pd.Timestamp.now():%Y%m%dT%H%M%S}.jsonl")
-    res = analyse(towns, counts, years, stage="A", draws=args.draws, extra_sets=extra, log=log)
+    res = analyse(towns, counts, years, stage="A", draws=args.draws, extra_sets=extra, log=log, q3=q3)
     res["versions"] = versions()
     OUT.write_text(json.dumps(clean(res), indent=1, ensure_ascii=False, default=str))
     for q in ("q1", "q2"):

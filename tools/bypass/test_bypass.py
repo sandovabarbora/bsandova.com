@@ -354,3 +354,60 @@ def test_real_counts_on_made_up_records(tmp_path, monkeypatch):
     # the record without coordinates counts in Q2 only; the record in municipality 2 is not a town of the table
     assert c.loc[(1, 2019), ["q1", "q2", "q1_oldroad"]].tolist() == [1, 2, 0]
     assert c.loc[(1, 2016), "q2"] == 0
+
+
+def test_q3_on_made_up_line_and_accidents():
+    import q3 as Q
+    from shapely.geometry import LineString
+    x0, y0 = -700_000.0, -1_100_000.0
+    geom = LineString([(x0, y0), (x0 + 2000, y0)])  # 2 km
+    acc = pd.DataFrame([
+        # on the bypass after opening: counted, one at a junction
+        dict(year=2023, injury=True, built_up=False, road="I/1", junction=True, x=x0 + 500, y=y0 + 30, muni_polygon=1),
+        dict(year=2024, injury=True, built_up=False, road="I/1", junction=False, x=x0 + 1500, y=y0 - 40, muni_polygon=1),
+        # outside the 50 m buffer, inside the built-up area, another road, damage only, opening year: not counted
+        dict(year=2023, injury=True, built_up=False, road="I/1", junction=False, x=x0 + 500, y=y0 + 80, muni_polygon=1),
+        dict(year=2023, injury=True, built_up=True, road="I/1", junction=False, x=x0 + 500, y=y0, muni_polygon=1),
+        dict(year=2023, injury=True, built_up=False, road="II/9", junction=False, x=x0 + 500, y=y0, muni_polygon=1),
+        dict(year=2023, injury=False, built_up=False, road="I/1", junction=False, x=x0 + 500, y=y0, muni_polygon=1),
+        dict(year=2021, injury=True, built_up=False, road="I/1", junction=False, x=x0 + 500, y=y0, muni_polygon=1),
+        # old through road before construction (2019): built-up, same road number, the town's municipality
+        dict(year=2016, injury=True, built_up=True, road="I/1", junction=False, x=x0, y=y0 + 900, muni_polygon=1),
+        dict(year=2018, injury=True, built_up=True, road="I/1", junction=False, x=x0, y=y0 + 900, muni_polygon=1),
+        dict(year=2019, injury=True, built_up=True, road="I/1", junction=False, x=x0, y=y0 + 900, muni_polygon=1),
+        dict(year=2017, injury=True, built_up=True, road="I/1", junction=False, x=x0, y=y0 + 900, muni_polygon=2),
+    ]).astype({"built_up": "boolean"})
+    on = Q.on_bypass(acc, geom, {"I/1"}, 2022, 2025)
+    assert len(on) == 2
+    assert len(Q.old_road(acc, [1], {"I/1"}, 2016, 2019)) == 2
+    rows = pd.DataFrame([dict(id="BYP-X", road="I/1", codes=[1], open_year=2021, start_year=2019, length_km=2.0,
+                              osm_ways=None, start_lon=None, start_lat=None, end_lon=None, end_lat=None)])
+    import unittest.mock as um
+    with um.patch.object(Q, "line", return_value=(geom, "test")):
+        r = Q.q3(rows, acc, 2016, 2025, ways={})
+    p = r["pooled"]
+    assert p["bypass_accidents"] == 2 and p["per_km_year"] == pytest.approx(2 / (2.0 * 4))
+    assert p["junction_share"] == pytest.approx(0.5) and p["old_road_per_town_year"] == pytest.approx(2 / 3)
+    assert r["label"] is None
+
+
+def test_q3_line_from_osm_ways_and_fallback():
+    import q3 as Q
+    ways = {"1": {"lonlat": [[15.0, 50.0], [15.01, 50.0]]}}
+    geom, how = Q.line(pd.Series({"osm_ways": "1;2", "start_lon": None}), ways)
+    assert how == "osm_ways" and 650 < geom.length < 780  # 0.01° of longitude at 50° N is about 715 m
+    assert geom.bounds[0] < 0 and geom.bounds[1] < 0  # S-JTSK, negative axes
+    geom, how = Q.line(pd.Series({"osm_ways": None, "start_lon": 15.0, "start_lat": 50.0, "end_lon": 15.0,
+                                  "end_lat": 50.01}), ways)
+    assert how == "start_end_straight_line" and geom.length == pytest.approx(1112, abs=15)
+    assert Q.line(pd.Series({"osm_ways": None, "start_lon": None, "start_lat": None, "end_lon": None,
+                             "end_lat": None}), ways)[0] is None
+
+
+def test_q3_rows_for_made_up_list(tmp_path):
+    import q3 as Q
+    b = made_up_list(tmp_path)
+    towns = T.select(b).towns.rename(columns={"code": "town"})
+    rows = Q.rows_for(towns, b).set_index("id")
+    assert set(rows.index) == {"BYP-1", "BYP-5"}
+    assert rows.loc["BYP-5", "codes"] == [100004] and rows.loc["BYP-5", "open_year"] == 2021
