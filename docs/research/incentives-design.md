@@ -1,7 +1,7 @@
 # After a large investment incentive is promised: does unemployment in the district fall? — research design
 
 **Status: pre-specified analysis, design committed 16 October 2026, before any
-unemployment figure for a district or a period was read. The steps follow in dated commits: design → data and
+unemployment figure for a district or a period was read.** The steps follow in dated commits: design → data and
 screening → code (frozen with tests on made-up data) → results. Commit times are self-reported; the signed tag
 `incentives-design` fixes this text and the hashes of the project list in `docs/research/incentives-files.sha256`.
 Deviations are listed, dated, in the change log.
