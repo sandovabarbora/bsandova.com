@@ -1,0 +1,2737 @@
+{
+ "list_sha256": "485055ed073df50827a9443ae90f6cc33ec7b1b886a8e98cc1c8427909106033",
+ "stage": "A",
+ "police_files": {
+  "first_year_in_record_form": 2016,
+  "last_year": 2025,
+  "years_2014_2015": "no record-level file on the archive page (yearbooks and PDF summaries only); see docs/research/bypass-files.sha256",
+  "stage_a_construction_start_from": 2018
+ },
+ "accidents_national": {
+  "2016": {
+   "format": "csv",
+   "rows_in_files": 98863,
+   "exact_duplicates_dropped": 0,
+   "records": 98863,
+   "date_outside_file_year": 0,
+   "with_coordinates": 0.991,
+   "joined_to_municipality_by_polygon": 0.991,
+   "without_coordinates_named_municipality": 0.0,
+   "without_coordinates_dropped": 0.009,
+   "with_p5a": 1.0,
+   "with_severity_code": 1.0,
+   "injury_flag_agrees_with_p9": 1.0,
+   "with_junction_code": 1.0,
+   "with_road_number": 0.4482,
+   "codes": {
+    "p5a": [
+     1,
+     2
+    ],
+    "p9": [
+     1,
+     2
+    ],
+    "p35": [
+     0,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     22,
+     23,
+     24,
+     27,
+     28,
+     29
+    ],
+    "road_class": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "p28": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "killed": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "serious": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     8
+    ],
+    "slight": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     15,
+     17,
+     18,
+     19,
+     24,
+     28
+    ]
+   },
+   "record_code_agrees_with_polygon": 0.9877,
+   "missing_coordinates_flag": false
+  },
+  "2017": {
+   "format": "csv",
+   "rows_in_files": 103825,
+   "exact_duplicates_dropped": 4,
+   "records": 103821,
+   "date_outside_file_year": 0,
+   "with_coordinates": 0.9986,
+   "joined_to_municipality_by_polygon": 0.9986,
+   "without_coordinates_named_municipality": 0.0,
+   "without_coordinates_dropped": 0.0014,
+   "with_p5a": 1.0,
+   "with_severity_code": 1.0,
+   "injury_flag_agrees_with_p9": 1.0,
+   "with_junction_code": 1.0,
+   "with_road_number": 0.4534,
+   "codes": {
+    "p5a": [
+     1,
+     2
+    ],
+    "p9": [
+     1,
+     2
+    ],
+    "p35": [
+     0,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     22,
+     23,
+     24,
+     28,
+     29
+    ],
+    "road_class": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "p28": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "killed": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "serious": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "slight": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     13,
+     16
+    ]
+   },
+   "record_code_agrees_with_polygon": 0.989,
+   "missing_coordinates_flag": false
+  },
+  "2018": {
+   "format": "csv",
+   "rows_in_files": 104764,
+   "exact_duplicates_dropped": 0,
+   "records": 104764,
+   "date_outside_file_year": 0,
+   "with_coordinates": 0.9977,
+   "joined_to_municipality_by_polygon": 0.9977,
+   "without_coordinates_named_municipality": 0.0,
+   "without_coordinates_dropped": 0.0023,
+   "with_p5a": 1.0,
+   "with_severity_code": 1.0,
+   "injury_flag_agrees_with_p9": 1.0,
+   "with_junction_code": 1.0,
+   "with_road_number": 0.4519,
+   "codes": {
+    "p5a": [
+     1,
+     2
+    ],
+    "p9": [
+     1,
+     2
+    ],
+    "p35": [
+     0,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     22,
+     23,
+     24,
+     25,
+     26,
+     27,
+     29
+    ],
+    "road_class": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "p28": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "killed": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "serious": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     16
+    ],
+    "slight": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     13,
+     16,
+     20,
+     29,
+     35
+    ]
+   },
+   "record_code_agrees_with_polygon": 0.9899,
+   "missing_coordinates_flag": false
+  },
+  "2019": {
+   "format": "csv",
+   "rows_in_files": 107572,
+   "exact_duplicates_dropped": 0,
+   "records": 107572,
+   "date_outside_file_year": 0,
+   "with_coordinates": 0.9985,
+   "joined_to_municipality_by_polygon": 0.9985,
+   "without_coordinates_named_municipality": 0.0,
+   "without_coordinates_dropped": 0.0015,
+   "with_p5a": 1.0,
+   "with_severity_code": 1.0,
+   "injury_flag_agrees_with_p9": 1.0,
+   "with_junction_code": 1.0,
+   "with_road_number": 0.4644,
+   "codes": {
+    "p5a": [
+     1,
+     2
+    ],
+    "p9": [
+     1,
+     2
+    ],
+    "p35": [
+     0,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     22,
+     23,
+     24,
+     28,
+     29
+    ],
+    "road_class": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "p28": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "killed": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "serious": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     7,
+     14
+    ],
+    "slight": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     13,
+     14,
+     15,
+     18,
+     19,
+     29
+    ]
+   },
+   "record_code_agrees_with_polygon": 0.9891,
+   "missing_coordinates_flag": false
+  },
+  "2020": {
+   "format": "csv",
+   "rows_in_files": 94794,
+   "exact_duplicates_dropped": 0,
+   "records": 94794,
+   "date_outside_file_year": 0,
+   "with_coordinates": 0.9981,
+   "joined_to_municipality_by_polygon": 0.9981,
+   "without_coordinates_named_municipality": 0.0,
+   "without_coordinates_dropped": 0.0019,
+   "with_p5a": 1.0,
+   "with_severity_code": 1.0,
+   "injury_flag_agrees_with_p9": 1.0,
+   "with_junction_code": 1.0,
+   "with_road_number": 0.4797,
+   "codes": {
+    "p5a": [
+     1,
+     2
+    ],
+    "p9": [
+     1,
+     2
+    ],
+    "p35": [
+     0,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     22,
+     23,
+     24,
+     25,
+     26,
+     28,
+     29
+    ],
+    "road_class": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "p28": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "killed": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "serious": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     6,
+     7
+    ],
+    "slight": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     13,
+     19,
+     23
+    ]
+   },
+   "record_code_agrees_with_polygon": 0.9892,
+   "missing_coordinates_flag": false
+  },
+  "2021": {
+   "format": "csv",
+   "rows_in_files": 99332,
+   "exact_duplicates_dropped": 0,
+   "records": 99332,
+   "date_outside_file_year": 0,
+   "with_coordinates": 0.9983,
+   "joined_to_municipality_by_polygon": 0.9982,
+   "without_coordinates_named_municipality": 0.0,
+   "without_coordinates_dropped": 0.0018,
+   "with_p5a": 1.0,
+   "with_severity_code": 1.0,
+   "injury_flag_agrees_with_p9": 1.0,
+   "with_junction_code": 1.0,
+   "with_road_number": 0.477,
+   "codes": {
+    "p5a": [
+     1,
+     2
+    ],
+    "p9": [
+     1,
+     2
+    ],
+    "p35": [
+     0,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     22,
+     23,
+     24,
+     29
+    ],
+    "road_class": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "p28": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "killed": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "serious": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "slight": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ]
+   },
+   "record_code_agrees_with_polygon": 0.9898,
+   "missing_coordinates_flag": false
+  },
+  "2022": {
+   "format": "csv",
+   "rows_in_files": 97877,
+   "exact_duplicates_dropped": 0,
+   "records": 97877,
+   "date_outside_file_year": 0,
+   "with_coordinates": 0.9983,
+   "joined_to_municipality_by_polygon": 0.9983,
+   "without_coordinates_named_municipality": 0.0001,
+   "without_coordinates_dropped": 0.0016,
+   "with_p5a": 1.0,
+   "with_severity_code": 1.0,
+   "injury_flag_agrees_with_p9": 1.0,
+   "with_junction_code": 1.0,
+   "with_road_number": 0.4795,
+   "codes": {
+    "p5a": [
+     1,
+     2
+    ],
+    "p9": [
+     1,
+     2
+    ],
+    "p35": [
+     0,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     22,
+     23,
+     24,
+     25,
+     26,
+     27,
+     29
+    ],
+    "road_class": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "p28": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "killed": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "serious": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     7
+    ],
+    "slight": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     15,
+     16
+    ]
+   },
+   "record_code_agrees_with_polygon": 0.992,
+   "missing_coordinates_flag": false
+  },
+  "2023": {
+   "format": "html",
+   "rows_in_files": 94945,
+   "exact_duplicates_dropped": 0,
+   "records": 94945,
+   "date_outside_file_year": 0,
+   "with_coordinates": 0.9998,
+   "joined_to_municipality_by_polygon": 0.9998,
+   "without_coordinates_named_municipality": 0.0,
+   "without_coordinates_dropped": 0.0002,
+   "with_p5a": 1.0,
+   "with_severity_code": 1.0,
+   "injury_flag_agrees_with_p9": 0.9999,
+   "with_junction_code": 1.0,
+   "with_road_number": 0.4804,
+   "codes": {
+    "p5a": [
+     1,
+     2
+    ],
+    "p9": [
+     1,
+     2
+    ],
+    "p35": [
+     0,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     22,
+     23,
+     24,
+     25,
+     26,
+     27,
+     28,
+     29
+    ],
+    "road_class": [
+     0,
+     1,
+     2,
+     3,
+     6,
+     7,
+     8
+    ],
+    "p28": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "killed": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "serious": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     15
+    ],
+    "slight": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     14,
+     15,
+     18,
+     20,
+     21,
+     32,
+     60
+    ]
+   },
+   "missing_coordinates_flag": false
+  },
+  "2024": {
+   "format": "html",
+   "rows_in_files": 92217,
+   "exact_duplicates_dropped": 0,
+   "records": 92217,
+   "date_outside_file_year": 0,
+   "with_coordinates": 0.9998,
+   "joined_to_municipality_by_polygon": 0.9998,
+   "without_coordinates_named_municipality": 0.0,
+   "without_coordinates_dropped": 0.0002,
+   "with_p5a": 1.0,
+   "with_severity_code": 1.0,
+   "injury_flag_agrees_with_p9": 1.0,
+   "with_junction_code": 1.0,
+   "with_road_number": 0.468,
+   "codes": {
+    "p5a": [
+     1,
+     2
+    ],
+    "p9": [
+     1,
+     2
+    ],
+    "p35": [
+     0,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     22,
+     23,
+     24,
+     25,
+     26,
+     27,
+     28,
+     29
+    ],
+    "road_class": [
+     0,
+     1,
+     2,
+     3,
+     6,
+     7,
+     8
+    ],
+    "p28": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "killed": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "serious": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "slight": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     13,
+     16,
+     17
+    ]
+   },
+   "missing_coordinates_flag": false
+  },
+  "2025": {
+   "format": "html",
+   "rows_in_files": 85518,
+   "exact_duplicates_dropped": 0,
+   "records": 85518,
+   "date_outside_file_year": 0,
+   "with_coordinates": 1.0,
+   "joined_to_municipality_by_polygon": 1.0,
+   "without_coordinates_named_municipality": 0.0,
+   "without_coordinates_dropped": 0.0,
+   "with_p5a": 1.0,
+   "with_severity_code": 1.0,
+   "injury_flag_agrees_with_p9": 1.0,
+   "with_junction_code": 1.0,
+   "with_road_number": 0.4333,
+   "codes": {
+    "p5a": [
+     1,
+     2
+    ],
+    "p9": [
+     1,
+     2
+    ],
+    "p35": [
+     0,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     22,
+     23,
+     24,
+     25,
+     26,
+     27,
+     28,
+     29
+    ],
+    "road_class": [
+     0,
+     1,
+     2,
+     3,
+     6,
+     7,
+     8
+    ],
+    "p28": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "killed": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "serious": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "slight": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     22,
+     25,
+     30,
+     32
+    ]
+   },
+   "missing_coordinates_flag": false
+  }
+ },
+ "towns": {
+  "treated_towns": 35,
+  "treated_bypasses": 31,
+  "comparison_towns": 50,
+  "comparison_bypasses": 46,
+  "treated_by_open_year": {
+   "2020.0": 6,
+   "2021.0": 7,
+   "2022.0": 5,
+   "2023.0": 10,
+   "2024.0": 7
+  },
+  "treated_by_start_year": {
+   "2018.0": 3,
+   "2019.0": 7,
+   "2020.0": 7,
+   "2021.0": 8,
+   "2022.0": 9,
+   "2023.0": 1
+  },
+  "treated_by_cohort": {
+   "2020-2022": 18,
+   "2023-2024": 17
+  },
+  "treated_by_class": {
+   "I": 13,
+   "II": 22
+  },
+  "comparison_by_status_stage": {
+   "opened / stage 2 of 2 (stage 1 opened 2014)": 1,
+   "opened / nan": 7,
+   "planned / SP": 6,
+   "planned / in construction": 16,
+   "planned / tender": 4,
+   "planned / ÚR": 16
+  },
+  "comparison_by_class": {
+   "I": 30,
+   "II": 20
+  },
+  "comparison_by_last_year": {
+   "2021.0": 2,
+   "2022.0": 4,
+   "2023.0": 5,
+   "2024.0": 8,
+   "2025.0": 31
+  },
+  "treated": [
+   {
+    "code": 548103,
+    "town_names": "Kámen",
+    "row": "BYP-014",
+    "cluster": "BYP-014",
+    "road": "I/19",
+    "road_class": "I",
+    "start_year": 2018.0,
+    "open_year": 2020.0,
+    "cohort": "2020-2022",
+    "staged": false,
+    "group_ids": [
+     "BYP-014"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 596345,
+    "town_names": "Osová Bítýška",
+    "row": "BYP-020",
+    "cluster": "BYP-020",
+    "road": "I/37",
+    "road_class": "I",
+    "start_year": 2019.0,
+    "open_year": 2021.0,
+    "cohort": "2020-2022",
+    "staged": false,
+    "group_ids": [
+     "BYP-020"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 571164,
+    "town_names": "Chrudim; Slatiňany",
+    "row": "BYP-023",
+    "cluster": "BYP-023",
+    "road": "I/37",
+    "road_class": "I",
+    "start_year": 2019.0,
+    "open_year": 2021.0,
+    "cohort": "2020-2022",
+    "staged": false,
+    "group_ids": [
+     "BYP-023"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 572268,
+    "town_names": "Chrudim; Slatiňany",
+    "row": "BYP-023",
+    "cluster": "BYP-023",
+    "road": "I/37",
+    "road_class": "I",
+    "start_year": 2019.0,
+    "open_year": 2021.0,
+    "cohort": "2020-2022",
+    "staged": false,
+    "group_ids": [
+     "BYP-023"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 530344,
+    "town_names": "Olbramovice",
+    "row": "BYP-026",
+    "cluster": "BYP-026",
+    "road": "I/3",
+    "road_class": "I",
+    "start_year": 2021.0,
+    "open_year": 2022.0,
+    "cohort": "2020-2022",
+    "staged": false,
+    "group_ids": [
+     "BYP-026"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 552496,
+    "town_names": "Chýnov",
+    "row": "BYP-027",
+    "cluster": "BYP-027",
+    "road": "I/19",
+    "road_class": "I",
+    "start_year": 2020.0,
+    "open_year": 2022.0,
+    "cohort": "2020-2022",
+    "staged": false,
+    "group_ids": [
+     "BYP-027"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 533998,
+    "town_names": "Církvice",
+    "row": "BYP-028",
+    "cluster": "BYP-028",
+    "road": "I/38",
+    "road_class": "I",
+    "start_year": 2020.0,
+    "open_year": 2022.0,
+    "cohort": "2020-2022",
+    "staged": false,
+    "group_ids": [
+     "BYP-028"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 576301,
+    "town_names": "Doudleby nad Orlicí",
+    "row": "BYP-030",
+    "cluster": "BYP-030",
+    "road": "I/11",
+    "road_class": "I",
+    "start_year": 2021.0,
+    "open_year": 2023.0,
+    "cohort": "2023-2024",
+    "staged": false,
+    "group_ids": [
+     "BYP-030"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 598917,
+    "town_names": "Karviná",
+    "row": "BYP-032",
+    "cluster": "BYP-032",
+    "road": "I/67",
+    "road_class": "I",
+    "start_year": 2020.0,
+    "open_year": 2023.0,
+    "cohort": "2023-2024",
+    "staged": false,
+    "group_ids": [
+     "BYP-032"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 577731,
+    "town_names": "Svitavy",
+    "row": "BYP-037",
+    "cluster": "BYP-037",
+    "road": "I/43",
+    "road_class": "I",
+    "start_year": 2022.0,
+    "open_year": 2023.0,
+    "cohort": "2023-2024",
+    "staged": false,
+    "group_ids": [
+     "BYP-037"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 525588,
+    "town_names": "Bludov",
+    "row": "BYP-038",
+    "cluster": "BYP-038",
+    "road": "I/44",
+    "road_class": "I",
+    "start_year": 2021.0,
+    "open_year": 2023.0,
+    "cohort": "2023-2024",
+    "staged": false,
+    "group_ids": [
+     "BYP-038"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 568686,
+    "town_names": "Mošnov",
+    "row": "BYP-040",
+    "cluster": "BYP-040",
+    "road": "I/58",
+    "road_class": "I",
+    "start_year": 2022.0,
+    "open_year": 2024.0,
+    "cohort": "2023-2024",
+    "staged": false,
+    "group_ids": [
+     "BYP-040"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 574121,
+    "town_names": "Jaroměř",
+    "row": "BYP-042",
+    "cluster": "BYP-042",
+    "road": "I/33",
+    "road_class": "I",
+    "start_year": 2022.0,
+    "open_year": 2024.0,
+    "cohort": "2023-2024",
+    "staged": false,
+    "group_ids": [
+     "BYP-042"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 596256,
+    "town_names": "Nové Veselí; Budeč",
+    "row": "BYP-196",
+    "cluster": "BYP-196",
+    "road": "II/353",
+    "road_class": "II",
+    "start_year": 2019.0,
+    "open_year": 2020.0,
+    "cohort": "2020-2022",
+    "staged": false,
+    "group_ids": [
+     "BYP-196"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 595390,
+    "town_names": "Nové Veselí; Budeč",
+    "row": "BYP-196",
+    "cluster": "BYP-196",
+    "road": "II/353",
+    "road_class": "II",
+    "start_year": 2019.0,
+    "open_year": 2020.0,
+    "cohort": "2020-2022",
+    "staged": false,
+    "group_ids": [
+     "BYP-196"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 588113,
+    "town_names": "Velký Beranov",
+    "row": "BYP-197",
+    "cluster": "BYP-197",
+    "road": "II/353",
+    "road_class": "II",
+    "start_year": 2019.0,
+    "open_year": 2020.0,
+    "cohort": "2020-2022",
+    "staged": false,
+    "group_ids": [
+     "BYP-197"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 554642,
+    "town_names": "Mariánské Lázně",
+    "row": "BYP-198",
+    "cluster": "BYP-198",
+    "road": "II/230",
+    "road_class": "II",
+    "start_year": 2018.0,
+    "open_year": 2020.0,
+    "cohort": "2020-2022",
+    "staged": false,
+    "group_ids": [
+     "BYP-198"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 573701,
+    "town_names": "Jičín; Valdice",
+    "row": "BYP-199",
+    "cluster": "BYP-199",
+    "road": "II/286",
+    "road_class": "II",
+    "start_year": 2018.0,
+    "open_year": 2021.0,
+    "cohort": "2020-2022",
+    "staged": false,
+    "group_ids": [
+     "BYP-199"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 548731,
+    "town_names": "Salačova Lhota",
+    "row": "BYP-200",
+    "cluster": "BYP-200",
+    "road": "II/128",
+    "road_class": "II",
+    "start_year": 2020.0,
+    "open_year": 2021.0,
+    "cohort": "2020-2022",
+    "staged": false,
+    "group_ids": [
+     "BYP-200"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 562262,
+    "town_names": "Zákupy",
+    "row": "BYP-201",
+    "cluster": "BYP-201",
+    "road": NaN,
+    "road_class": "II",
+    "start_year": 2020.0,
+    "open_year": 2021.0,
+    "cohort": "2020-2022",
+    "staged": false,
+    "group_ids": [
+     "BYP-201"
+    ],
+    "date_precision": "month"
+   },
+   {
+    "code": 545082,
+    "town_names": "Strážkovice",
+    "row": "BYP-205",
+    "cluster": "BYP-205",
+    "road": "II/156",
+    "road_class": "II",
+    "start_year": 2021.0,
+    "open_year": 2021.0,
+    "cohort": "2020-2022",
+    "staged": false,
+    "group_ids": [
+     "BYP-205"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 582239,
+    "town_names": "Rájec-Jestřebí",
+    "row": "BYP-207",
+    "cluster": "BYP-207",
+    "road": "II/374",
+    "road_class": "II",
+    "start_year": 2020.0,
+    "open_year": 2022.0,
+    "cohort": "2020-2022",
+    "staged": false,
+    "group_ids": [
+     "BYP-207"
+    ],
+    "date_precision": "year"
+   },
+   {
+    "code": 548332,
+    "town_names": "Lukavec",
+    "row": "BYP-209",
+    "cluster": "BYP-209",
+    "road": "II/128",
+    "road_class": "II",
+    "start_year": 2021.0,
+    "open_year": 2022.0,
+    "cohort": "2020-2022",
+    "staged": false,
+    "group_ids": [
+     "BYP-209"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 575194,
+    "town_names": "Kojice",
+    "row": "BYP-213",
+    "cluster": "BYP-213",
+    "road": "II/322",
+    "road_class": "II",
+    "start_year": 2021.0,
+    "open_year": 2023.0,
+    "cohort": "2023-2024",
+    "staged": false,
+    "group_ids": [
+     "BYP-213"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 505781,
+    "town_names": "Zápy",
+    "row": "BYP-214",
+    "cluster": "BYP-214",
+    "road": "II/101",
+    "road_class": "II",
+    "start_year": 2020.0,
+    "open_year": 2023.0,
+    "cohort": "2023-2024",
+    "staged": false,
+    "group_ids": [
+     "BYP-214"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 538094,
+    "town_names": "Brandýs nad Labem-Stará Boleslav",
+    "row": "BYP-215",
+    "cluster": "BYP-215",
+    "road": "II/331",
+    "road_class": "II",
+    "start_year": 2021.0,
+    "open_year": 2023.0,
+    "cohort": "2023-2024",
+    "staged": false,
+    "group_ids": [
+     "BYP-215"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 582913,
+    "town_names": "Čebín",
+    "row": "BYP-216",
+    "cluster": "BYP-216",
+    "road": "II/385",
+    "road_class": "II",
+    "start_year": 2022.0,
+    "open_year": 2023.0,
+    "cohort": "2023-2024",
+    "staged": false,
+    "group_ids": [
+     "BYP-216"
+    ],
+    "date_precision": "month"
+   },
+   {
+    "code": 550663,
+    "town_names": "Vlachovo Březí",
+    "row": "BYP-217",
+    "cluster": "BYP-217",
+    "road": "II/144",
+    "road_class": "II",
+    "start_year": 2022.0,
+    "open_year": 2023.0,
+    "cohort": "2023-2024",
+    "staged": false,
+    "group_ids": [
+     "BYP-217"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 539333,
+    "town_names": "Jílové u Prahy",
+    "row": "BYP-218",
+    "cluster": "BYP-218",
+    "road": "II/105",
+    "road_class": "II",
+    "start_year": 2021.0,
+    "open_year": 2023.0,
+    "cohort": "2023-2024",
+    "staged": false,
+    "group_ids": [
+     "BYP-218"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 576590,
+    "town_names": "Opočno",
+    "row": "BYP-219",
+    "cluster": "BYP-219",
+    "road": "II/298",
+    "road_class": "II",
+    "start_year": 2019.0,
+    "open_year": 2020.0,
+    "cohort": "2020-2022",
+    "staged": true,
+    "group_ids": [
+     "BYP-219",
+     "BYP-194"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 575577,
+    "town_names": "Rokytno; Chvojenec; Býšť",
+    "row": "BYP-220",
+    "cluster": "BYP-220",
+    "road": "II/298",
+    "road_class": "II",
+    "start_year": 2022.0,
+    "open_year": 2024.0,
+    "cohort": "2023-2024",
+    "staged": false,
+    "group_ids": [
+     "BYP-220"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 575089,
+    "town_names": "Rokytno; Chvojenec; Býšť",
+    "row": "BYP-220",
+    "cluster": "BYP-220",
+    "road": "II/298",
+    "road_class": "II",
+    "start_year": 2022.0,
+    "open_year": 2024.0,
+    "cohort": "2023-2024",
+    "staged": false,
+    "group_ids": [
+     "BYP-220"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 574848,
+    "town_names": "Rokytno; Chvojenec; Býšť",
+    "row": "BYP-220",
+    "cluster": "BYP-220",
+    "road": "II/298",
+    "road_class": "II",
+    "start_year": 2022.0,
+    "open_year": 2024.0,
+    "cohort": "2023-2024",
+    "staged": false,
+    "group_ids": [
+     "BYP-220"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 545376,
+    "town_names": "Žár",
+    "row": "BYP-221",
+    "cluster": "BYP-221",
+    "road": "II/156",
+    "road_class": "II",
+    "start_year": 2023.0,
+    "open_year": 2024.0,
+    "cohort": "2023-2024",
+    "staged": false,
+    "group_ids": [
+     "BYP-221"
+    ],
+    "date_precision": "day"
+   },
+   {
+    "code": 574899,
+    "town_names": "Dašice",
+    "row": "BYP-222",
+    "cluster": "BYP-222",
+    "road": "II/322",
+    "road_class": "II",
+    "start_year": 2022.0,
+    "open_year": 2024.0,
+    "cohort": "2023-2024",
+    "staged": false,
+    "group_ids": [
+     "BYP-222"
+    ],
+    "date_precision": "day"
+   }
+  ],
+  "comparison": [
+   {
+    "code": 544779,
+    "town_names": "Lišov; Štěpánovice",
+    "row": "BYP-046",
+    "cluster": "BYP-046",
+    "road": "I/34",
+    "road_class": "I",
+    "start_year": 2023.0,
+    "open_year": 2025.0,
+    "status": "opened",
+    "stage": NaN,
+    "last_year": 2022.0
+   },
+   {
+    "code": 545139,
+    "town_names": "Lišov; Štěpánovice",
+    "row": "BYP-046",
+    "cluster": "BYP-046",
+    "road": "I/34",
+    "road_class": "I",
+    "start_year": 2023.0,
+    "open_year": 2025.0,
+    "status": "opened",
+    "stage": NaN,
+    "last_year": 2022.0
+   },
+   {
+    "code": 573248,
+    "town_names": "Nová Paka",
+    "row": "BYP-047",
+    "cluster": "BYP-047",
+    "road": "I/16",
+    "road_class": "I",
+    "start_year": 2022.0,
+    "open_year": 2025.0,
+    "status": "opened",
+    "stage": NaN,
+    "last_year": 2021.0
+   },
+   {
+    "code": 567019,
+    "town_names": "Žiželice",
+    "row": "BYP-052",
+    "cluster": "BYP-052",
+    "road": "I/27",
+    "road_class": "I",
+    "start_year": 2022.0,
+    "open_year": 2025.0,
+    "status": "opened",
+    "stage": NaN,
+    "last_year": 2021.0
+   },
+   {
+    "code": 538957,
+    "town_names": "Úvaly; Praha",
+    "row": "BYP-057",
+    "cluster": "BYP-057",
+    "road": "I/12",
+    "road_class": "I",
+    "start_year": 2025.0,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "in construction",
+    "last_year": 2024.0
+   },
+   {
+    "code": 554782,
+    "town_names": "Úvaly; Praha",
+    "row": "BYP-057",
+    "cluster": "BYP-057",
+    "road": "I/12",
+    "road_class": "I",
+    "start_year": 2025.0,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "in construction",
+    "last_year": 2024.0
+   },
+   {
+    "code": 566039,
+    "town_names": "Jizerní Vtelno",
+    "row": "BYP-059",
+    "cluster": "BYP-059",
+    "road": "I/16",
+    "road_class": "I",
+    "start_year": 2025.0,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "in construction",
+    "last_year": 2024.0
+   },
+   {
+    "code": 551716,
+    "town_names": "Hněvkov; Sedlice",
+    "row": "BYP-060",
+    "cluster": "BYP-060",
+    "road": "I/20",
+    "road_class": "I",
+    "start_year": 2026.0,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "in construction",
+    "last_year": 2025.0
+   },
+   {
+    "code": 559351,
+    "town_names": "Plasy",
+    "row": "BYP-061",
+    "cluster": "BYP-061",
+    "road": "I/27",
+    "road_class": "I",
+    "start_year": 2026.0,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "in construction",
+    "last_year": 2025.0
+   },
+   {
+    "code": 558249,
+    "town_names": "Přeštice",
+    "row": "BYP-062",
+    "cluster": "BYP-062",
+    "road": "I/27",
+    "road_class": "I",
+    "start_year": 2025.0,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "in construction",
+    "last_year": 2024.0
+   },
+   {
+    "code": 573868,
+    "town_names": "Náchod",
+    "row": "BYP-063",
+    "cluster": "BYP-063",
+    "road": "I/33",
+    "road_class": "I",
+    "start_year": 2025.0,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "in construction",
+    "last_year": 2024.0
+   },
+   {
+    "code": 575640,
+    "town_names": "Sezemice",
+    "row": "BYP-064",
+    "cluster": "BYP-064",
+    "road": "I/36",
+    "road_class": "I",
+    "start_year": 2024.0,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "in construction",
+    "last_year": 2023.0
+   },
+   {
+    "code": 562131,
+    "town_names": "Svor",
+    "row": "BYP-067",
+    "cluster": "BYP-067",
+    "road": "I/9",
+    "road_class": "I",
+    "start_year": 2024.0,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "in construction",
+    "last_year": 2023.0
+   },
+   {
+    "code": 547492,
+    "town_names": "Pelhřimov",
+    "row": "BYP-068",
+    "cluster": "BYP-068",
+    "road": "I/19, I/34",
+    "road_class": "I",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "tender",
+    "last_year": 2025.0
+   },
+   {
+    "code": 592943,
+    "town_names": "Bučovice",
+    "row": "BYP-072",
+    "cluster": "BYP-072",
+    "road": "I/50",
+    "road_class": "I",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "tender",
+    "last_year": 2025.0
+   },
+   {
+    "code": 584291,
+    "town_names": "Břeclav",
+    "row": "BYP-073",
+    "cluster": "BYP-073",
+    "road": "I/55",
+    "road_class": "I",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "tender",
+    "last_year": 2025.0
+   },
+   {
+    "code": 535478,
+    "town_names": "Bezno",
+    "row": "BYP-075",
+    "cluster": "BYP-075",
+    "road": "I/16",
+    "road_class": "I",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "SP",
+    "last_year": 2025.0
+   },
+   {
+    "code": 553433,
+    "town_names": "Babylon",
+    "row": "BYP-077",
+    "cluster": "BYP-077",
+    "road": "I/26",
+    "road_class": "I",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "SP",
+    "last_year": 2025.0
+   },
+   {
+    "code": 534722,
+    "town_names": "Byšice",
+    "row": "BYP-081",
+    "cluster": "BYP-081",
+    "road": "I/16",
+    "road_class": "I",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "ÚR",
+    "last_year": 2025.0
+   },
+   {
+    "code": 591904,
+    "town_names": "Vladislav",
+    "row": "BYP-084",
+    "cluster": "BYP-084",
+    "road": "I/23",
+    "road_class": "I",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "ÚR",
+    "last_year": 2025.0
+   },
+   {
+    "code": 559008,
+    "town_names": "Kaznějov; Rybnice",
+    "row": "BYP-085",
+    "cluster": "BYP-085",
+    "road": "I/27",
+    "road_class": "I",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "ÚR",
+    "last_year": 2025.0
+   },
+   {
+    "code": 559431,
+    "town_names": "Kaznějov; Rybnice",
+    "row": "BYP-085",
+    "cluster": "BYP-085",
+    "road": "I/27",
+    "road_class": "I",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "ÚR",
+    "last_year": 2025.0
+   },
+   {
+    "code": 541354,
+    "town_names": "Zábřeh",
+    "row": "BYP-087",
+    "cluster": "BYP-087",
+    "road": "I/44",
+    "road_class": "I",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "ÚR",
+    "last_year": 2025.0
+   },
+   {
+    "code": 505188,
+    "town_names": "Šternberk",
+    "row": "BYP-088",
+    "cluster": "BYP-088",
+    "road": "I/46",
+    "road_class": "I",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "ÚR",
+    "last_year": 2025.0
+   },
+   {
+    "code": 545058,
+    "town_names": "Valašské Meziříčí",
+    "row": "BYP-089",
+    "cluster": "BYP-089",
+    "road": "I/57",
+    "road_class": "I",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "ÚR",
+    "last_year": 2025.0
+   },
+   {
+    "code": 532053,
+    "town_names": "Kladno",
+    "row": "BYP-090",
+    "cluster": "BYP-090",
+    "road": "I/61",
+    "road_class": "I",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "ÚR",
+    "last_year": 2025.0
+   },
+   {
+    "code": 560057,
+    "town_names": "Osek; Litohlavy",
+    "row": "BYP-224",
+    "cluster": "BYP-224",
+    "road": "II/232",
+    "road_class": "II",
+    "start_year": 2023.0,
+    "open_year": 2025.0,
+    "status": "opened",
+    "stage": NaN,
+    "last_year": 2022.0
+   },
+   {
+    "code": 553611,
+    "town_names": "Osek; Litohlavy",
+    "row": "BYP-224",
+    "cluster": "BYP-224",
+    "road": "II/232",
+    "road_class": "II",
+    "start_year": 2023.0,
+    "open_year": 2025.0,
+    "status": "opened",
+    "stage": NaN,
+    "last_year": 2022.0
+   },
+   {
+    "code": 545562,
+    "town_names": "Kaplice",
+    "row": "BYP-227",
+    "cluster": "BYP-227",
+    "road": "II/154",
+    "road_class": "II",
+    "start_year": 2024.0,
+    "open_year": 2025.0,
+    "status": "opened",
+    "stage": "stage 2 of 2 (stage 1 opened 2014)",
+    "last_year": 2023.0
+   },
+   {
+    "code": 531189,
+    "town_names": "Hořovice",
+    "row": "BYP-229",
+    "cluster": "BYP-229",
+    "road": "II/114, II/117",
+    "road_class": "II",
+    "start_year": 2024.0,
+    "open_year": 2026.0,
+    "status": "opened",
+    "stage": NaN,
+    "last_year": 2023.0
+   },
+   {
+    "code": 531146,
+    "town_names": "Drahelčice",
+    "row": "BYP-232",
+    "cluster": "BYP-232",
+    "road": "II/101",
+    "road_class": "II",
+    "start_year": 2025.0,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "in construction",
+    "last_year": 2024.0
+   },
+   {
+    "code": 591688,
+    "town_names": "Slavětice",
+    "row": "BYP-234",
+    "cluster": "BYP-234",
+    "road": "II/152",
+    "road_class": "II",
+    "start_year": 2026.0,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "in construction",
+    "last_year": 2025.0
+   },
+   {
+    "code": 514055,
+    "town_names": "Kojetín",
+    "row": "BYP-240",
+    "cluster": "BYP-240",
+    "road": "II/367",
+    "road_class": "II",
+    "start_year": 2025.0,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "in construction",
+    "last_year": 2024.0
+   },
+   {
+    "code": 586943,
+    "town_names": "Brtnice",
+    "row": "BYP-241",
+    "cluster": "BYP-241",
+    "road": "II/405",
+    "road_class": "II",
+    "start_year": 2024.0,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "in construction",
+    "last_year": 2023.0
+   },
+   {
+    "code": 591963,
+    "town_names": "Zašovice",
+    "row": "BYP-242",
+    "cluster": "BYP-242",
+    "road": "II/405",
+    "road_class": "II",
+    "start_year": 2025.0,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "in construction",
+    "last_year": 2024.0
+   },
+   {
+    "code": 582859,
+    "town_names": "Blučina",
+    "row": "BYP-243",
+    "cluster": "BYP-243",
+    "road": "II/416",
+    "road_class": "II",
+    "start_year": 2026.0,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "in construction",
+    "last_year": 2025.0
+   },
+   {
+    "code": 509612,
+    "town_names": "Otice",
+    "row": "BYP-244",
+    "cluster": "BYP-244",
+    "road": "II/443",
+    "road_class": "II",
+    "start_year": 2026.0,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "in construction",
+    "last_year": 2025.0
+   },
+   {
+    "code": 538540,
+    "town_names": "Nehvizdy",
+    "row": "BYP-246",
+    "cluster": "BYP-246",
+    "road": "II/611",
+    "road_class": "II",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "tender",
+    "last_year": 2025.0
+   },
+   {
+    "code": 529974,
+    "town_names": "Krňany",
+    "row": "BYP-249",
+    "cluster": "BYP-249",
+    "road": "II/106",
+    "road_class": "II",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "SP",
+    "last_year": 2025.0
+   },
+   {
+    "code": 550230,
+    "town_names": "Husinec",
+    "row": "BYP-250",
+    "cluster": "BYP-250",
+    "road": "II/145",
+    "road_class": "II",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "SP",
+    "last_year": 2025.0
+   },
+   {
+    "code": 534951,
+    "town_names": "Kralupy nad Vltavou",
+    "row": "BYP-252",
+    "cluster": "BYP-252",
+    "road": "II/240, II/101",
+    "road_class": "II",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "SP",
+    "last_year": 2025.0
+   },
+   {
+    "code": 510491,
+    "town_names": "Štítina",
+    "row": "BYP-255",
+    "cluster": "BYP-255",
+    "road": "II/467",
+    "road_class": "II",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "SP",
+    "last_year": 2025.0
+   },
+   {
+    "code": 558001,
+    "town_names": "Losiná",
+    "row": "BYP-259",
+    "cluster": "BYP-259",
+    "road": "I/20",
+    "road_class": "I",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "ÚR",
+    "last_year": 2025.0
+   },
+   {
+    "code": 546674,
+    "town_names": "Lomnice nad Lužnicí",
+    "row": "BYP-260",
+    "cluster": "BYP-260",
+    "road": "I/24",
+    "road_class": "I",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "ÚR",
+    "last_year": 2025.0
+   },
+   {
+    "code": 545511,
+    "town_names": "Horní Planá",
+    "row": "BYP-261",
+    "cluster": "BYP-261",
+    "road": "I/39",
+    "road_class": "I",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "ÚR",
+    "last_year": 2025.0
+   },
+   {
+    "code": 545732,
+    "town_names": "Přísečná",
+    "row": "BYP-262",
+    "cluster": "BYP-262",
+    "road": "I/39",
+    "road_class": "I",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "ÚR",
+    "last_year": 2025.0
+   },
+   {
+    "code": 599042,
+    "town_names": "Slapy",
+    "row": "BYP-264",
+    "cluster": "BYP-264",
+    "road": "II/137",
+    "road_class": "II",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "ÚR",
+    "last_year": 2025.0
+   },
+   {
+    "code": 589802,
+    "town_names": "Ohrozim",
+    "row": "BYP-265",
+    "cluster": "BYP-265",
+    "road": "II/150",
+    "road_class": "II",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "ÚR",
+    "last_year": 2025.0
+   },
+   {
+    "code": 545171,
+    "town_names": "Trhové Sviny",
+    "row": "BYP-266",
+    "cluster": "BYP-266",
+    "road": "II/156",
+    "road_class": "II",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "ÚR",
+    "last_year": 2025.0
+   },
+   {
+    "code": 545066,
+    "town_names": "Srubec",
+    "row": "BYP-267",
+    "cluster": "BYP-267",
+    "road": "II/157",
+    "road_class": "II",
+    "start_year": NaN,
+    "open_year": NaN,
+    "status": "planned",
+    "stage": "ÚR",
+    "last_year": 2025.0
+   }
+  ],
+  "comparisons_serving_per_year": {
+   "2016": 85,
+   "2017": 85,
+   "2018": 82,
+   "2019": 75,
+   "2020": 68,
+   "2021": 60,
+   "2022": 49,
+   "2023": 44,
+   "2024": 39,
+   "2025": 31
+  },
+  "years_below_15_comparisons": [],
+  "rows_excluded": [
+   {
+    "role": "treated",
+    "id": "BYP-001",
+    "town": "Lhotsko",
+    "reason": "no construction start"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-003",
+    "town": "Staňkov",
+    "reason": "no construction start"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-004",
+    "town": "Velemyšleves",
+    "reason": "no construction start"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-005",
+    "town": "Dubá",
+    "reason": "no construction start"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-006",
+    "town": "Ondřejov; Ústrašín; Myslotín",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-008",
+    "town": "Sklené nad Oslavou",
+    "reason": "no construction start"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-009",
+    "town": "Lechovice",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-012",
+    "town": "Kravaře",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-013",
+    "town": "Slaný",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-017",
+    "town": "Skotnice",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-031",
+    "town": "Dolní Lhota",
+    "reason": "no municipality code"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-123",
+    "town": "Rájec",
+    "reason": "no construction start"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-124",
+    "town": "Český Těšín",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-125",
+    "town": "Jihlava",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-128",
+    "town": "Jablunkov; Návsí",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-129",
+    "town": "Holice",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-131",
+    "town": "Bohdalov",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-133",
+    "town": "Oslavička",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-134",
+    "town": "Opatov",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-136",
+    "town": "Česká Skalice",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-137",
+    "town": "Hladké Životice; Fulnek",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-138",
+    "town": "Poběžovice",
+    "reason": "no construction start"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-143",
+    "town": "Chvaletice",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-144",
+    "town": "Česká Bělá",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-145",
+    "town": "Nymburk",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-146",
+    "town": "Moravské Budějovice",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-147",
+    "town": "Bánov",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-148",
+    "town": "Hranice",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-149",
+    "town": "Vamberk",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-154",
+    "town": "Třemošná",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-155",
+    "town": "Kočov",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-156",
+    "town": "Velká Hleďsebe",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-157",
+    "town": "Líbeznice",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-160",
+    "town": "Příbor",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-161",
+    "town": "Nová Hospoda (Plzeň)",
+    "reason": "no municipality code"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-162",
+    "town": "Hájek",
+    "reason": "no municipality code"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-163",
+    "town": "Bohumín",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-166",
+    "town": "Javorník",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-167",
+    "town": "Kolín",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-169",
+    "town": "Opatovice nad Labem",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-170",
+    "town": "Stráž nad Nisou",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-172",
+    "town": "Čechy; Domaželice",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-175",
+    "town": "Jamné",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-176",
+    "town": "Bílý Kostel nad Nisou",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-177",
+    "town": "Zvole",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-178",
+    "town": "Svatava",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-179",
+    "town": "Cheb",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-181",
+    "town": "Příseka",
+    "reason": "no municipality code"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-182",
+    "town": "Hroznětín",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-187",
+    "town": "Němčice",
+    "reason": "no construction start"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-188",
+    "town": "Plaňany",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-189",
+    "town": "Chrášťany",
+    "reason": "no construction start"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-191",
+    "town": "Sokolov",
+    "reason": "works started before 2018 (fewer than 2 pre-construction years in the police files)"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-192",
+    "town": "Starý Vestec",
+    "reason": "no construction start"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-204",
+    "town": "Domašín",
+    "reason": "no municipality code"
+   },
+   {
+    "role": "treated",
+    "id": "BYP-206",
+    "town": "Brod",
+    "reason": "no municipality code"
+   },
+   {
+    "role": "comparison",
+    "id": "BYP-058",
+    "town": "Lvová",
+    "reason": "no municipality code"
+   },
+   {
+    "role": "comparison",
+    "id": "BYP-078",
+    "town": "Skrochovice",
+    "reason": "no municipality code"
+   },
+   {
+    "role": "comparison",
+    "id": "BYP-082",
+    "town": "Vavřineč",
+    "reason": "no municipality code"
+   },
+   {
+    "role": "comparison",
+    "id": "BYP-086",
+    "town": "Podlesí",
+    "reason": "no municipality code"
+   },
+   {
+    "role": "comparison",
+    "id": "BYP-226",
+    "town": "Rytířsko",
+    "reason": "no municipality code"
+   },
+   {
+    "role": "comparison",
+    "id": "BYP-236",
+    "town": "Veselov",
+    "reason": "no municipality code"
+   },
+   {
+    "role": "comparison",
+    "id": "BYP-238",
+    "town": "Zminný",
+    "reason": "no municipality code"
+   }
+  ],
+  "towns_excluded": [
+   {
+    "code": 572659,
+    "town_names": "Jičín; Valdice",
+    "role": "treated",
+    "row": "BYP-199",
+    "excluded": "RÚIAN territory changed by 3.7%"
+   }
+  ],
+  "minimum_30_met": true
+ },
+ "ruian": {
+  "files": [
+   "20260930_ST_UZSZ.xml",
+   "20260930_ST_UZHZ.xml"
+  ],
+  "ku_versions": 13230,
+  "dates": [
+   "2016-01-01",
+   "2017-01-01",
+   "2018-01-01",
+   "2019-01-01",
+   "2020-01-01",
+   "2021-01-01",
+   "2022-01-01",
+   "2023-01-01",
+   "2024-01-01",
+   "2025-01-01",
+   "2026-01-01"
+  ],
+  "method": "area = current polygon area of the KÚs belonging to the municipality on each 1 January; whole-KÚ transfers, mergers and splits are seen, parcel moves across KÚ boundaries are not",
+  "abolished_kus_without_polygon": [
+   716456,
+   726478,
+   726486,
+   798347,
+   798487,
+   799068,
+   929981,
+   929999,
+   930008,
+   930016,
+   930024,
+   930067,
+   930377,
+   930385,
+   930393,
+   930407,
+   930415,
+   930504,
+   930580,
+   930598,
+   930601,
+   930610,
+   930628,
+   930636,
+   990019,
+   990205,
+   990591,
+   990621,
+   990710,
+   990736
+  ],
+  "listed_municipalities_touching_abolished_kus": [
+   536148
+  ],
+  "municipalities_now": 6258,
+  "municipalities_changed_over_2pct_nationally": 9,
+  "listed_municipalities_changed_over_2pct": {
+   "539911": 0.0792,
+   "572659": 0.0372
+  },
+  "listed_municipalities_not_found": []
+ },
+ "check_7_comparison_planned_only": 42,
+ "check_12_class_III_added": {
+  "treated_towns": 39,
+  "comparison_towns": 50
+ }
+}
