@@ -20,9 +20,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-import projects as P  # noqa: E402
-from common import MPSV_DIR, RAW, ROOT  # noqa: E402
-from fetch import months, mpsv_name  # noqa: E402
+import projects as P
+from common import MPSV_DIR, RAW, ROOT
+from fetch import months, mpsv_name
 
 OUT = ROOT / "docs/research/incentives-screening.json"
 JOBSEEKERS = "dosazitelniUchazeci15_64"

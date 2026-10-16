@@ -21,7 +21,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from common import MANIFEST, PROJECTS_CSV, RAW, UA, sha256  # noqa: E402
+from common import MANIFEST, PROJECTS_CSV, RAW, UA, sha256
 
 HOST = "https://wabi-north-europe-api.analysis.windows.net/public/reports/querydata?synchronous=true"
 RESOURCE_KEY = "bef24953-47fe-4f39-a628-9d969c61d68f"  # public embed key from the czechinvest.org page

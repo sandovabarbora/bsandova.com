@@ -22,7 +22,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from common import CODES_DIR, MPSV_DIR, ROOT, UA, sha256  # noqa: E402
+from common import CODES_DIR, MPSV_DIR, ROOT, UA, sha256
 
 MPSV_BASE = "https://data.mpsv.cz/od/soubory/nezamestnanost-mesicni/"
 FIRST, LAST = (2004, 7), (2024, 12)

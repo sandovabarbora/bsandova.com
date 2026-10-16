@@ -24,7 +24,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from common import CODES_DIR, PROJECTS_CSV, RAW  # noqa: E402
+from common import CODES_DIR, PROJECTS_CSV, RAW
 
 HERE = Path(__file__).resolve().parent
 PLACES_CSV = HERE / "places.csv"
@@ -188,7 +188,7 @@ def candidates(name: str, geo: Geo, kraj: str | None, broad: bool = False) -> Ca
     if not n:
         return set(), set(), "empty"
     in_kraj = geo.kraj_districts(kraj) if kraj else set()
-    local = lambda pool: {c for c in pool.get(n, set()) if geo.muni_district[c] in in_kraj}  # noqa: E731
+    local = lambda pool: {c for c in pool.get(n, set()) if geo.muni_district[c] in in_kraj}
     if broad and (local(geo.names) | local(geo.parts)):
         return found(local(geo.names) | local(geo.parts), "municipality or part in region", geo, seat=False)
     if local(geo.names):
