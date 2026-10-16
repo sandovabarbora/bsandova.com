@@ -23,11 +23,14 @@ Deviations are listed, dated, in the change log.
   Hornbeck and Moretti 2010; Criscuolo et al. 2019); their results were not given to the author before her prior.
 - **Event counts (16 October 2026).** A methods reviewer and the assistant counted events on the project list alone,
   matching places by name string (no outcome read): with at least 500 promised jobs and a clean window, about 19 events
-  (2007–2018); with at least 300, about 48. On these counts the threshold was set at 300 (§2) and 500 became check 1.
+  (2007–2018); with at least 300, about 48. On these counts the threshold was set at 300 (§2) and 500 became check 1. After the
+  second review widened the clean window (−48 to +47 months), the same string count gives 41 events in 38 places.
 - **Nothing of the outcome.** No MPSV unemployment file has been downloaded; only the schemas.
 - **Review.** A first draft was read by an independent methods reviewer (outcome unopened); the version below takes in
   the review: the threshold above, blockers that cannot be placed, a fixed outcome fallback, explicit weights, a
-  two-year reference, randomisation inference beside the bootstrap, rules for missing months and boundary changes.
+  two-year reference, randomisation inference beside the bootstrap, rules for missing months and boundary changes. A
+  second round aligned the decision window and the clean window with the event years, defined the permutation and
+  bootstrap pools, Q3 and the placebo, and narrowed label 3.
 
 ## 1. Questions
 
@@ -39,8 +42,9 @@ treated districts are not a random draw; §4 and §7 say what is done about it, 
   in percentage points, averaged over years 1–3 after a large incentive was promised there (year 0, the first 12
   months, is not in it), relative to the mean of the two years before, and relative to districts with no large promise in the same window.
 - **Q2 (path).** The same change year by year, from the year of the promise (year 0) to year 3.
-- **Q3 (size).** Q1 per 1 000 promised jobs per 100 000 inhabitants aged 15–64 — to compare with the arithmetic upper
-  bound of every promised job going to a registered job seeker of the district. Descriptive; it carries no label.
+- **Q3 (size).** Q1 divided by the event-weighted mean of 100 × promised jobs / population aged 15–64 of the treated
+  district (in year −1): the share of the arithmetic upper bound — every promised job going to a registered job seeker
+  of the district — that Q1 amounts to. Descriptive; it carries no label.
 
 This is the effect of a **promise**: the list records promised jobs and investment, not what was built, and
 cancelled projects stay in (intention to treat).
@@ -55,16 +59,19 @@ cancelled projects stay in (intention to treat).
   committed and every unmatched or ambiguous name is listed. A project naming more than one place is not an event (92 of
   568 place strings name several).
 - **Large promise (event).** An incentive decision with at least **300** promised jobs (`pracovni_mista`), in one
-  district outside Prague, with the decision date between 1 July 2006 and 31 December 2021 (two years of data before,
-  three after). Cancelled (`ipo_zruseni` "ANO") and to-be-verified rows count as events. The date is `rozhodnuti_datum`, the
+  district outside Prague, with the decision date between 1 July 2006 and 31 January 2021 (years −2 to 3 inside the data, July 2004 – December
+  2024). The 300 and 200 thresholds apply to the project's total promised jobs. Cancelled (`ipo_zruseni` "ANO") and to-be-verified rows count as events. The date is `rozhodnuti_datum`, the
   decision; a project can be announced months earlier, so some response may come before it (§8).
 - **Clean window.** An event is used only if no other incentive decision with at least 200 promised jobs falls in the
-  same district from 24 months before to 36 months after its decision month; events failing this are listed. Of two
-  events that block each other, both drop. A project of at least 200 jobs that is unmatched, ambiguous or names several
-  places blocks **every** district it could be in. The clean window and comparison status are evaluated on the
+  same district from 48 months before to 47 months after its decision month (an earlier project's response would reach
+  the reference years; a later one would fall inside years 1–3); events failing this are listed. Of two
+  events that block each other, both drop. A project of at least 200 jobs that names several places blocks the district of each place that can be matched;
+  a place string that matches no municipality, or several in different districts, blocks every district it could be
+  in, and their number is reported. The clean window and comparison status are evaluated on the
   matched districts.
 - **Comparison districts (per event).** Districts other than Prague with no incentive decision of at least 200 promised
-  jobs in the event's window (24 months before to 36 after), under the same blocking rule. They are not matched on
+  jobs in the event's window (48 months before to 47 after), under the same blocking rule. Events with fewer than 10
+  comparison districts are dropped and listed. They are not matched on
   unemployment before the event: matching a difference-in-differences design on pre-period levels can itself create a
   spurious change when levels revert to the mean; reweighting and a same-region comparison are checks 3 and 4.
 - **Outcome.** For each district and month, registered available job seekers aged 15–64 (`dosazitelniUchazeci15_64`)
@@ -72,17 +79,17 @@ cancelled projects stay in (intention to treat).
   (July 2004 – December 2024; file names, download date and sha256 entered in the change log before any value is read).
   Computing it from the two fields keeps one definition across the 2013 change of the published rate. Before any value
   is read, the screening checks per month that both fields are present and that the district set is the same; a month
-  without them is dropped and listed. **Fallback, fixed now:** if `dosazitelniUchazeci15_64` is missing before 2013
+  without them is dropped and listed, after the outcome rule below is fixed. **Fallback, fixed now:** if `dosazitelniUchazeci15_64` is missing before 2013
   but `uchazeciOZamestnaniUoZ` (all registered job seekers) and the population field exist throughout, the outcome is
-  `uchazeciOZamestnaniUoZ` / `celkemObyvatelstvo15_64` × 100 in **every** month; if the population field is missing
-  before 2013, the panel starts in January 2013, the window becomes 1 January 2015 – 31 December 2021, and the study is
+  `uchazeciOZamestnaniUoZ` / `celkemObyvatelstvo15_64` × 100 in **every** month; if the population field, or both job-seeker fields, are missing before 2013, the panel starts in January 2013, the window becomes 1 January 2015 – 31 December 2021, and the study is
   reported as descriptive, without labels. The screening records which applies before any value is read, and whether
   the population field changes monthly or once a year (an annual figure repeated over the months makes a January
   step, absorbed by the event-year fixed effects only nationally).
-- **Missing months.** A district-year with fewer than 10 of its 12 months is missing. An event whose treated district
-  misses any year from −2 to 3 is dropped; a comparison district missing a year is dropped for that event only.
-- **Event time.** Year k after the decision is months 12k+1 to 12k+12 after the decision month (year 0: the decision
-  month and the 11 after it; years −1, −2: the 24 months before). The outcome per district and event year is the mean
+- **Missing months.** Within an event, a calendar month missing for any of its districts is dropped for all of them, so
+  treated and comparison means use the same months; an event-year with fewer than 10 months left is missing. An event
+  missing any year from −2 to 3 for its treated district is dropped.
+- **Event time.** Year k is months 12k to 12k+11 counted from the decision month (month 0): year 0 is the decision
+  month and the 11 after it; years −1 and −2 are the 24 months before it; year 3 ends 47 months after it. The outcome per district and event year is the mean
   of its months.
 - **District boundaries.** MPSV publishes districts as they were in each month; events are placed in districts as of
   2024. A district that gained or lost municipalities on 1 January 2007 (Vyhláška 513/2006) or 1 January 2016 (Brdy) is
@@ -114,13 +121,17 @@ None of it reads an unemployment value.
 - **Pre-trend.** The difference between years −1 and −2, with its interval. With two pre-years this says little and
   passing it does not show parallel trends; it does not change any label (§6), and the article says the design cannot
   test trends before the promise properly.
-- **Intervals.** A bootstrap of whole districts (a district drawn once enters every sub-panel it belongs to, as treated
-  or as comparison), 2 000 draws, seed 20261016: 90 % and 95 % percentile intervals. Draws with no treated event are
-  redrawn and counted. The number of events and of distinct treated districts is reported with every interval.
-- **Randomisation inference.** In each of 2 000 permutations (seed 20261017), every event's treated district is
-  replaced by one drawn at random from its own comparison districts, and Q1 is re-estimated; the p-value is the share
-  of permutations with |Q1| at least the observed |Q1|. Labels 1 and 2 need this p-value to be at most 0.05 as well as
-  the bootstrap interval.
+- **Intervals.** A bootstrap of whole districts, 2 000 draws, seed 20261016: 90 % and 95 % percentile intervals. A
+  district drawn k times enters every sub-panel it belongs to as k copies with their own fixed effects; n_e is counted
+  on the drawn comparison copies; an event with no treated copy or no comparison copy is absent from that draw. Draws
+  with no event are redrawn and counted. The number of events and of distinct treated districts is reported with every interval.
+- **Randomisation inference.** In each of 2 000 permutations (seed 20261017), for every event one district is drawn at
+  random from its pool — its comparison districts plus the true treated district — to stand as treated, the other n_e
+  stand as comparisons with weight 1/n_e, and Q1 is re-estimated; the p-value is the share
+  of permutations with |Q1| at least the observed |Q1|. Labels 1 and 2 need this p-value to be at most 0.05 as well as the bootstrap interval. The
+  permutation treats districts in a pool as exchangeable; treated districts were chosen by firms and, before 2019,
+  favoured by the rules where unemployment was high, so the test can reject on selection as well as on an effect
+  (§8).
 - **Minimum.** If fewer than 20 events or fewer than 15 distinct treated districts remain after the exclusions of §2
   (counted in the screening, before any outcome), Q1 is reported without labels 1–3.
 - Python, statsmodels or pyfixest; versions recorded.
@@ -141,8 +152,9 @@ For Q1, the first that holds:
    the randomisation p-value is at most 0.05.
 2. **higher unemployment after the promise** — the 95 % interval lies above 0, the estimate is at least +0.10 points and
    the randomisation p-value is at most 0.05.
-3. **any change within 0.30 points** — the 90 % interval lies within −0.30 and +0.30.
-4. **underpowered** — the 90 % interval is wider than 0.60 points.
+3. **no change larger than 0.20 points** — the 90 % interval lies within −0.20 and +0.20 (about half the arithmetic
+   upper bound of the smallest event, §5).
+4. **underpowered** — the 90 % interval is wider than 0.40 points.
 5. **inconclusive** — anything else.
 
 If the 95 % interval of year −1 minus year −2 excludes zero, the label is followed by "with differing paths in the two
@@ -153,17 +165,20 @@ years before the promise"; the label itself stands.
 1. Thresholds of 500 and 1 000 promised jobs (blockers unchanged); without the largest event.
 2. Cancelled and to-be-verified projects left out.
 3. Comparison districts in the same region only.
-4. Comparison districts reweighted to the treated district's tercile of the mean outcome in years −2 and −1 (among all
-   districts that month), against selection on high unemployment.
-5. Without events whose window covers 2009 (the crisis) or 2020–21 (covid).
+4. Comparison districts restricted to the treated district's tercile of the mean outcome in years −2 and −1 (tercile
+   cut-offs from that mean over all districts outside Prague), against selection on high unemployment; the
+   permutation pools restricted the same way.
+5. Without events whose years −2 to 3 cover 2009 (the crisis) or 2020–21 (covid); few events remain, so it is
+   reported without labels.
 6. Without districts that lost or gained municipalities in 2007 or 2016.
 7. Years 1–5 where the data allow (decisions to December 2019).
 8. Only decisions under the statutory incentive regime (`ipo_rezim`), without framework and programme schemes.
-9. The decision month moved two years earlier, pre-years only (placebo); events whose shifted window starts before July
-   2004 are left out, and their number is reported.
+9. Placebo: the decision month moved two years earlier; the placebo estimate is the mean of shifted years 0 and 1
+   minus the mean of shifted years −2 and −1 (all before the real decision). Events whose shifted year −2 starts
+   before July 2004 are left out, and their number is reported.
 10. Q1 with year −1 alone as the reference.
-11. The 24-month change in the outcome before the event added as a control interacted with event year, against
-    selection on a recent rise.
+11. The change from year −3 to year −2 added as a control interacted with event year, against selection on a recent
+    rise; only events with year −3 in the data.
 
 ## 8. Limits stated now
 
@@ -171,7 +186,7 @@ years before the promise"; the label itself stands.
   the estimate is of a promise.
 - Anticipation: a project announced before its decision could move hiring or registration earlier; a reference made of
   the two pre-years would then understate the change.
-- Few events: the clean-window rule keeps districts that got one large promise and no other in five years, which may
+- Few events: the clean-window rule keeps districts that got one large promise and no other in eight years, which may
   differ from districts that attract many; the estimate is about those.
 - Firms choose districts with available labour; before 5 September 2019 the minimum investment was lower in districts
   with unemployment at least 50 % above the national mean. Treated districts may have been on a different path;
