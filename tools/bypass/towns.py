@@ -96,7 +96,7 @@ def treated_rows(b: pd.DataFrame, classes=CLASSES) -> tuple[pd.DataFrame, list[d
 
 
 def comparison_rows(b: pd.DataFrame, classes=CLASSES, planned_only: bool = False) -> tuple[pd.DataFrame, list[dict]]:
-    late = (b["status"] == "opened") & (b["opened_date"] >= f"{OPENED[1] + 1}-01-01")
+    late = (b["status"] == "opened") & (b["open_year"] >= OPENED[1] + 1)
     planned = (b["status"] == "planned") & b["stage"].isin(COMPARISON_STAGES)
     rows = b[is_full(b, classes) & ((planned) if planned_only else (late | planned))]
     out, dropped = [], []
