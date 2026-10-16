@@ -1,6 +1,6 @@
 # After a large investment incentive is promised: does unemployment in the district fall? — research design
 
-**Status: DRAFT, not registered.** When registered: pre-specified analysis, design committed {{DATE}} 2026, before any
+**Status: pre-specified analysis, design committed 16 October 2026, before any
 unemployment figure for a district or a period was read. The steps follow in dated commits: design → data and
 screening → code (frozen with tests on made-up data) → results. Commit times are self-reported; the signed tag
 `incentives-design` fixes this text and the hashes of the project list in `docs/research/incentives-files.sha256`.
@@ -195,8 +195,8 @@ years before the promise"; the label itself stands.
   the local labour market and spreads some of it to the comparison districts.
 - Registered unemployment counts people registered with the labour office; it moves with registration rules and
   benefits, which year effects absorb only nationally.
-- The project list is a dashboard snapshot of {{DATE}}; earlier versions may differ, and the dashboard can change.
+- The project list is a dashboard snapshot of 16 October 2026; earlier versions may differ, and the dashboard can change.
 
 ## Change log
 
-- {{DATE}} 2026: design committed.
+- 16 October 2026: design committed.
