@@ -51,7 +51,8 @@ MAPPING = {
 }
 DATE_FORMAT = {"csv": "%Y-%m-%d", "html": "%d.%m.%Y"}
 ROAD_CLASS = {0: "D", 1: "I", 2: "II", 3: "III"}
-X_RANGE, Y_RANGE = (-905_000, -430_000), (-1_230_000, -935_000)
+MARGIN = 20_000  # the ranges below widened by 20 km on every side, so border records are not lost
+X_RANGE, Y_RANGE = (-905_000 - MARGIN, -430_000 + MARGIN), (-1_230_000 - MARGIN, -935_000 + MARGIN)
 JUNCTION = (10, 28)  # p35: 10 at a junction, 11–19 inside its zones, 22–28 grade-separated ramps; 0 and 29 are outside
 
 
@@ -111,12 +112,15 @@ def number(s: pd.Series) -> pd.Series:
                          errors="coerce")
 
 
-def xy(d: pd.Series, e: pd.Series) -> tuple[pd.Series, pd.Series]:
-    """x is the larger of d and e on each row; both inside their Czech ranges, else missing."""
+def xy(d: pd.Series, e: pd.Series) -> tuple[pd.Series, pd.Series, pd.Series]:
+    """x is the larger of d and e on each row; kept when both are negative numbers inside the (widened) Czech ranges.
+    The status says why a pair was not kept: missing (not two numbers) or out_of_range."""
     d, e = number(d), number(e)
     x, y = np.fmax(d, e), np.fmin(d, e)
-    ok = x.between(*X_RANGE) & y.between(*Y_RANGE)
-    return x.where(ok), y.where(ok)
+    numeric = d.notna() & e.notna()
+    ok = numeric & (d < 0) & (e < 0) & x.between(*X_RANGE) & y.between(*Y_RANGE)
+    status = pd.Series(np.select([ok, numeric], ["ok", "out_of_range"], "missing"), index=d.index)
+    return x.where(ok), y.where(ok), status
 
 
 def normalise(df: pd.DataFrame, fmt: str, year: int) -> pd.DataFrame:
@@ -133,7 +137,7 @@ def normalise(df: pd.DataFrame, fmt: str, year: int) -> pd.DataFrame:
     out["junction"] = out["p35"].between(*JUNCTION).where(out["p35"].notna()).astype("boolean")
     out["road"] = [f"{ROAD_CLASS[c]}/{n}" if pd.notna(c) and c in ROAD_CLASS and pd.notna(n) and n > 0 else None
                    for c, n in zip(out["road_class"], out["road_no"])]
-    out["x"], out["y"] = xy(df["d"], df["e"])
+    out["x"], out["y"], out["xy_status"] = xy(df["d"], df["e"])
     out["muni_record"] = (number(df["muni_record"]).astype("Int64") if "muni_record" in df else pd.NA)
     out["muni_name_record"] = df["muni_name_record"].astype(str).str.strip()
     return out
