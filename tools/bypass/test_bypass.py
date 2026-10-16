@@ -101,11 +101,66 @@ def test_thin_years_kept_out_of_q1():
     assert all(not c.startswith("x|") for c in f.weights)
 
 
-def test_zero_towns_dropped_and_listed():
+def test_zero_towns_dropped_and_listed_on_q2_for_every_outcome():
     towns, counts = made_up(seed=6)
-    counts.loc[counts["town"] == "C5", "q1"] = 0
+    counts.loc[counts["town"] == "C5", ["q1", "outside", "q2"]] = 0
+    counts.loc[counts["town"] == "C6", "q1"] = 0  # accidents only outside the built-up area: kept
+    counts.loc[counts["town"] == "C6", "q2"] = counts.loc[counts["town"] == "C6", "outside"]
+    f1 = E.fit(towns, counts, YEARS, E.Spec("q1"))
+    f2 = E.fit(towns, counts, YEARS, E.Spec("q2"))
+    assert f1.dropped_zero == f2.dropped_zero == ["C5"]
+    assert f1.weights == f2.weights
+
+
+def test_inside_and_outside_add_up_to_q2():
+    towns, counts = made_up(effect=0.7, outside=1.2, seed=14)
+    late = towns.loc[towns["role"] == "treated", "town"].iloc[:3]
+    counts.loc[counts["town"].isin(late), "q1"] = 0  # treated towns with no accident inside the built-up area
+    counts["q2"] = counts["q1"] + counts["outside"]
+    f1, f2, fo = (E.fit(towns, counts, YEARS, E.Spec(o)) for o in ("q1", "q2", "outside"))
+    assert f1.dropped_zero == f2.dropped_zero == fo.dropped_zero
+    # the reported outside change is Q2 − Q1 by construction; the separate outside fit lands near it
+    assert f2.delta - f1.delta == pytest.approx(fo.delta, abs=0.15 * abs(fo.delta) + 0.05)
+
+
+def test_missing_town_years_are_an_error():
+    towns, counts = made_up(seed=15)
+    with pytest.raises(AssertionError, match="missing"):
+        E.fit(towns, counts[~((counts["town"] == "T0") & (counts["year"] == 2016))], YEARS, E.Spec("q1"))
+
+
+def test_plain_event_study_reference_is_year_before_opening():
+    towns, counts = made_up(effect=0.7, seed=16)
+    p = E.event_rows(towns, YEARS, E.Spec(event_study=True))
+    X, _ = E.indicators(p, E.Spec(event_study=True))
+    assert not any(c.endswith("|-1") for c in X.columns if c.startswith("e|"))
+    assert any(c.startswith("e|") and c.endswith("|-2") for c in X.columns)
+    assert not any(c.startswith("c|") for c in X.columns)
+    f = E.fit(towns, counts, YEARS, E.Spec("q1", event_study=True))
+    assert f.est == pytest.approx(-0.30, abs=0.06)
+
+
+def test_separation_ignores_unreported_cells():
+    towns, counts = made_up(n_treated=8, n_comp=30, seed=17)
+    # post year 4 and later of one cohort all zero: not a reported cell, so not a separation
+    late = towns.loc[(towns["role"] == "treated") & (towns["open_year"] == 2020), "town"]
+    counts.loc[counts["town"].isin(late) & (counts["year"] >= 2024), "q1"] = 0
     f = E.fit(towns, counts, YEARS, E.Spec("q1"))
-    assert f.dropped_zero == ["C5"]
+    assert not f.separated and f.ok and np.isfinite(f.est)
+
+
+def test_bootstrap_writes_draws_as_it_goes(tmp_path):
+    towns, counts = made_up(n_treated=12, n_comp=20, seed=18)
+    log = tmp_path / "draws.jsonl"
+    E.bootstrap(towns, counts, YEARS, {"q1": E.Spec("q1")}, draws=3, gate=("q1",), log=log, name="t")
+    lines = log.read_text().splitlines()
+    assert len(lines) == 3 and '"set": "t"' in lines[0]
+
+
+def test_label_not_estimated_without_finite_numbers():
+    kw = {"differing_trends": False, "minimum_met": True, "stage": "test"}
+    assert E.label(np.nan, [-0.1, 0.1], [-0.1, 0.1], **kw) == "not estimated"
+    assert E.label(0.0, None, [-0.1, 0.1], **kw) == "not estimated"
 
 
 def test_separated_cell_flagged_and_redrawn():

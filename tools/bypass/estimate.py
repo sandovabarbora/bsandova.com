@@ -28,6 +28,7 @@ ROOT = T.ROOT
 DESIGN = ROOT / "docs/research/bypass-design.md"
 ACCIDENTS = ROOT / "tools/data/bypass/accidents.parquet"
 OUT = ROOT / "docs/research/bypass-results-a.json"
+DRAWS_LOG = ROOT / "tools/data/bypass/bootstrap-draws.jsonl"
 SEED, DRAWS = 20261015, 2000
 POST = (1, 2, 3)
 MIN_COMPARISONS = 15
@@ -43,7 +44,7 @@ class Spec:
     """One fit: the outcome column and how the panel is built (§4 primary; §7 checks change one field)."""
     outcome: str = "q1"
     post: tuple[int, ...] = POST
-    keep_construction: bool = True
+    event_study: bool = False
     drop_years: tuple[int, ...] = ()
     opening_dose: bool = False
     trends: bool = False
@@ -92,7 +93,7 @@ def event_rows(towns: pd.DataFrame, years: range, spec: Spec) -> pd.DataFrame:
             else:
                 rows.append((t.town, y, "post", y - t.open_year, 0.0))
     p = pd.DataFrame(rows, columns=["town", "year", "phase", "k", "dose"])
-    return p.merge(towns[["town", "cluster", "role", "cohort"]], on="town", how="left")
+    return p.merge(towns[["town", "cluster", "role", "cohort", "open_year"]], on="town", how="left")
 
 
 def comparisons_by_year(p: pd.DataFrame) -> dict[int, int]:
@@ -102,12 +103,17 @@ def comparisons_by_year(p: pd.DataFrame) -> dict[int, int]:
 
 def indicators(p: pd.DataFrame, spec: Spec) -> tuple[pd.DataFrame, dict]:
     """Cohort × construction-year and cohort × post-year columns; post cells in a year with fewer than 15 comparison
-    towns get their own column and are left out of Q1/Q2 (§2)."""
+    towns get their own column and are left out of Q1/Q2 (§2). Check 4 (`event_study`) instead gives every pre- and
+    construction year its own cohort × event-time column, with the year before opening as the reference."""
     cols, thin = {}, {}
     serving = comparisons_by_year(p)
     for i, r in enumerate(p.itertuples()):
         k = int(r.k) if pd.notna(r.k) else None
-        if r.phase == "construction" and spec.keep_construction:
+        if spec.event_study and r.phase in ("pre", "construction"):
+            e = int(r.year) - int(r.open_year)
+            if e != -1:
+                cols.setdefault(f"e|{r.cohort}|{e}", {})[i] = 1.0
+        elif r.phase == "construction":
             cols.setdefault(f"c|{r.cohort}|{k}", {})[i] = 1.0
         elif r.phase == "post":
             if serving.get(r.year, 0) < MIN_COMPARISONS:
@@ -118,8 +124,7 @@ def indicators(p: pd.DataFrame, spec: Spec) -> tuple[pd.DataFrame, dict]:
             cols.setdefault(name, {})[i] = 1.0
         elif r.phase == "opening":
             cols.setdefault(f"p|{r.cohort}|1", {})[i] = r.dose
-            if spec.keep_construction:
-                cols.setdefault(f"c|{r.cohort}|1", {})[i] = 1 - r.dose
+            cols.setdefault(f"c|{r.cohort}|1", {})[i] = 1 - r.dose
         elif r.phase == "pre" and spec.leads:
             name = "lead|-3" if k == -3 else "lead|-2" if k == -2 else "lead|<=-4" if k <= -4 else None
             if name:
@@ -134,11 +139,9 @@ def design(p: pd.DataFrame, X: pd.DataFrame) -> np.ndarray:
     return np.hstack([town, year, X.to_numpy()])
 
 
-def separated(p: pd.DataFrame, y: np.ndarray, X: pd.DataFrame) -> list[str]:
-    """Indicator columns or years whose observations are all zero: their coefficient runs to minus infinity."""
-    out = [c for c in X.columns if not c.startswith("lead|<=") and y[X[c].to_numpy() != 0].sum() == 0]
-    out += [f"year {yr}" for yr, s in pd.Series(y).groupby(p["year"].to_numpy()).sum().items() if s == 0]
-    return out
+def separated(y: np.ndarray, X: pd.DataFrame, columns: list[str]) -> list[str]:
+    """Columns among `columns` whose observations are all zero: their coefficient runs to minus infinity."""
+    return [c for c in columns if c in X.columns and y[X[c].to_numpy() != 0].sum() == 0]
 
 
 def poisson(y: np.ndarray, D: np.ndarray, offset: np.ndarray | None = None, groups: np.ndarray | None = None):
@@ -166,45 +169,62 @@ def trend_offset(p: pd.DataFrame, y: np.ndarray, X: pd.DataFrame) -> np.ndarray:
 
 
 def fit(towns: pd.DataFrame, counts: pd.DataFrame, years: range, spec: Spec, *, clustered: bool = False) -> Fit:
-    """One Poisson ETWFE fit (§4) and its Q1/Q2-type summary over the post years in `spec.post`."""
+    """One Poisson ETWFE fit (§4) and its Q1/Q2-type summary over the post years in `spec.post`.
+
+    The town sample is the same for every outcome: towns with no injury accident anywhere in the municipality (q2)
+    in their model years are dropped and listed (§4). A kept town with no accident of the outcome itself carries no
+    information and is left out of the likelihood, which is the limit its town effect would reach; it still counts in
+    the cell weights and, with a predicted change of zero, in the change per town and year, so that the changes inside
+    and outside the built-up area add up to the Q2 change."""
     p = event_rows(towns, years, spec)
-    p = p.merge(counts[["town", "year", spec.outcome]], on=["town", "year"], how="left")
-    p[spec.outcome] = p[spec.outcome].fillna(0)
-    total = p.groupby("town")[spec.outcome].sum()
+    need = list(dict.fromkeys([spec.outcome, "q2"]))
+    p = p.merge(counts[["town", "year", *need]], on=["town", "year"], how="left")
+    missing = p[need].isna().any(axis=1)
+    assert not missing.any(), f"town-years missing from the count table: {p.loc[missing, ['town', 'year']].head(3).values.tolist()}"
+    total = p.groupby("town")["q2"].sum()
     out = Fit(dropped_zero=sorted(total[total == 0].index.tolist(), key=str))
     p = p[~p["town"].isin(out.dropped_zero)].reset_index(drop=True)
     out.n_treated = int(p.loc[p["role"] == "treated", "town"].nunique())
     out.n_obs = len(p)
     if p.empty or out.n_treated == 0:
         return out
-    y = p[spec.outcome].to_numpy(float)
     X, out.thin_cells = indicators(p, spec)
-    out.separated = separated(p, y, X)
     post_cols = [c for c in X.columns if c.startswith("p|") and int(c.split("|")[2]) in spec.post]
     out.post_towns = {k: int(p.loc[(p["phase"] == "post") & (p["k"] == k), "town"].nunique()) for k in spec.post}
-    offset = trend_offset(p, y, X) if spec.trends else None
-    D = design(p, X)
+    out.weights = {c: float(X[c].sum()) for c in post_cols}
+    used_rows = X[post_cols].sum(axis=1).to_numpy() > 0 if post_cols else np.zeros(len(p), bool)
+
+    y_all = p[spec.outcome].to_numpy(float)
+    informative = (p.groupby("town")[spec.outcome].transform("sum") > 0).to_numpy()
+    checked = post_cols + [c for c in X.columns if c.startswith(("c|", "e|", "lead|"))]
+    out.separated = separated(y_all[informative], X[informative], checked)
+    # rows of a separated cell that is not reported (thin years, post years outside spec.post) carry no information
+    idle = [c for c in X.columns if c not in checked and y_all[informative & (X[c].to_numpy() != 0)].sum() == 0]
+    keep = informative & ~(X[idle].to_numpy().sum(axis=1) > 0) if idle else informative
+    q, Xq, y = p[keep].reset_index(drop=True), X[keep].reset_index(drop=True), y_all[keep]
+    Xq = Xq.loc[:, Xq.abs().sum() > 0]
+    offset = trend_offset(q, y, Xq) if spec.trends else None
+    D = design(q, Xq)
     try:
-        res = poisson(y, D, offset, p["cluster"].to_numpy() if clustered else None)
+        res = poisson(y, D, offset, q["cluster"].to_numpy() if clustered else None)
     except (np.linalg.LinAlgError, ValueError):
         return out
-    out.converged = bool(res.converged) and np.all(np.isfinite(res.params))
-    k = D.shape[1] - X.shape[1]
-    beta = dict(zip(X.columns, res.params[k:]))
+    out.converged = bool(res.converged) and bool(np.all(np.isfinite(res.params)))
+    k = D.shape[1] - Xq.shape[1]
+    beta = dict(zip(Xq.columns, res.params[k:]))
     out.beta = {c: float(b) for c, b in beta.items()}
-    w = {c: float(X[c].sum()) for c in post_cols}
-    out.weights = w
-    if not post_cols or sum(w.values()) == 0:
-        return out
-    avg = sum(w[c] * beta[c] for c in post_cols) / sum(w.values())
-    out.est = float(np.exp(avg) - 1)
-    mu = np.asarray(res.fittedvalues)
-    used = X[post_cols].sum(axis=1).to_numpy() > 0
-    eff = (X[post_cols].to_numpy() * np.array([beta[c] for c in post_cols])).sum(axis=1)
-    out.delta = float((mu[used] * (1 - np.exp(-eff[used]))).mean())
     if spec.leads:
-        out.leads = lead_test(res, X, k, p)
+        out.leads = lead_test(res, Xq, k, q)
     out.ok = out.converged and not out.separated
+    w = out.weights
+    if not post_cols or sum(w.values()) == 0 or any(c not in beta for c in post_cols):
+        return out
+    out.est = float(np.exp(sum(w[c] * beta[c] for c in post_cols) / sum(w.values())) - 1)
+    mu = np.asarray(res.fittedvalues)
+    cols_q = [c for c in post_cols if c in Xq.columns]
+    eff = (Xq[cols_q].to_numpy() * np.array([beta[c] for c in cols_q])).sum(axis=1)
+    hit = Xq[cols_q].sum(axis=1).to_numpy() > 0
+    out.delta = float((mu[hit] * (1 - np.exp(-eff[hit]))).sum() / used_rows.sum())
     return out
 
 
@@ -272,36 +292,52 @@ def resample(towns: pd.DataFrame, counts: pd.DataFrame, rng: np.random.Generator
 
 
 def bootstrap(towns, counts, years, specs: dict[str, Spec], draws: int = DRAWS, seed: int = SEED,
-              gate: tuple[str, ...] = ("q1", "q2"), extra=None) -> dict:
+              gate: tuple[str, ...] = ("q1", "q2"), extra=None, log: Path | None = None, name: str = "") -> dict:
     """Draws of every spec; a draw is redrawn when a gate spec (Q1, Q2) has a post year 1–3 without a treated town,
-    does not converge, or has a separated cell. Other specs that fail in an accepted draw are left missing."""
+    has a separated cell, or does not converge, tallied in that order. Other specs that fail in an accepted draw are
+    left missing. Each accepted draw is appended to `log` as it is made, so a crash keeps the draws so far."""
     rng = np.random.default_rng(seed)
     got = {k: {"est": [], "delta": []} for k in specs}
     extras = []
-    redrawn = {"no_treated_post_year": 0, "not_converged": 0, "separated": 0}
-    while len(got[next(iter(specs))]["est"]) < draws:
-        tw, ct = resample(towns, counts, rng)
-        fits, bad = {}, None
-        for k in gate:
-            f = fit(tw, ct, years, specs[k])
-            fits[k] = f
-            if any(f.post_towns.get(p, 0) == 0 for p in specs[k].post):
-                bad = "no_treated_post_year"
-            elif not f.converged:
-                bad = "not_converged"
-            elif not f.ok:
-                bad = "separated"
+    redrawn = {"no_treated_post_year": 0, "separated": 0, "not_converged": 0}
+    sink = log.open("a") if log else None
+    try:
+        while len(got[next(iter(specs))]["est"]) < draws:
+            tw, ct = resample(towns, counts, rng)
+            fits, bad = {}, None
+            for k in gate:
+                f = fit(tw, ct, years, specs[k])
+                fits[k] = f
+                if any(f.post_towns.get(p, 0) == 0 for p in specs[k].post):
+                    bad = "no_treated_post_year"
+                elif f.separated:
+                    bad = "separated"
+                elif not f.converged:
+                    bad = "not_converged"
+                if bad:
+                    break
             if bad:
-                break
-        if bad:
-            redrawn[bad] += 1
-            continue
-        for k, s in specs.items():
-            f = fits.get(k) or fit(tw, ct, years, s)
-            got[k]["est"].append(f.est if f.ok else np.nan)
-            got[k]["delta"].append(f.delta if f.ok else np.nan)
-        if extra is not None:
-            extras.append(extra(tw, ct))
+                redrawn[bad] += 1
+                continue
+            row = {}
+            for k, s in specs.items():
+                f = fits.get(k) or fit(tw, ct, years, s)
+                row[k] = (f.est if f.ok else np.nan, f.delta if f.ok else np.nan)
+                got[k]["est"].append(row[k][0])
+                got[k]["delta"].append(row[k][1])
+            if extra is not None:
+                extras.append(extra(tw, ct))
+            n = len(got[next(iter(specs))]["est"])
+            if sink:
+                sink.write(json.dumps({"set": name, "draw": n, "redrawn": redrawn,
+                                       **{k: [None if not np.isfinite(v) else v for v in vals] for k, vals in row.items()},
+                                       **({"extra": extras[-1]} if extra is not None else {})}) + "\n")
+                sink.flush()
+            if n % 100 == 0:
+                print(f"{name or 'bootstrap'}: {n}/{draws} draws, redrawn {redrawn}", file=sys.stderr, flush=True)
+    finally:
+        if sink:
+            sink.close()
     return {"draws": got, "redrawn": redrawn, "extra": extras}
 
 
@@ -347,6 +383,8 @@ def power(r: dict) -> dict:
 def label(est: float, ci95, ci90, *, differing_trends: bool, minimum_met: bool, stage: str) -> str:
     """§6, in order. Under stage A the pre-trend test is taken as uninformative: labels 1 and 2 carry the caveat and
     label 3 cannot be issued. Below the minimum of treated towns, labels 1–3 are not given."""
+    if not (np.isfinite(est) and ci95 and ci90 and np.all(np.isfinite(ci95)) and np.all(np.isfinite(ci90))):
+        return "not estimated"
     differing = differing_trends or stage == "A"
     lo95, hi95 = ci95
     lo90, hi90 = ci90
@@ -405,11 +443,11 @@ def callaway_santanna(towns: pd.DataFrame, counts: pd.DataFrame, years: range, o
 
 def check_specs() -> dict[str, Spec]:
     return {
-        "q1": Spec("q1"), "q2": Spec("q2"), "outside": Spec("outside"),
+        "q1": Spec("q1"), "q2": Spec("q2"),
         "1_all_accidents_q1": Spec("q1_all"), "1_all_accidents_q2": Spec("q2_all"),
         "2_killed_seriously_injured_q1": Spec("q1_ksi"), "2_killed_seriously_injured_q2": Spec("q2_ksi"),
         "3_without_2020_2021_q1": Spec("q1", drop_years=(2020, 2021)),
-        "4_construction_not_apart_q1": Spec("q1", keep_construction=False),
+        "4_plain_event_study_q1": Spec("q1", event_study=True),
         "6_post_1_2_q1": Spec("q1", post=(1, 2)), "6_post_1_5_q1": Spec("q1", post=(1, 2, 3, 4, 5)),
         "8_opening_year_dose_q1": Spec("q1", opening_dose=True),
         "9_town_trends_q1": Spec("q1", trends=True),
@@ -439,7 +477,8 @@ def stage_b_only() -> dict:
 # ---------------------------------------------------------------- the whole analysis
 
 def analyse(towns: pd.DataFrame, counts: pd.DataFrame, years: range, *, stage: str = "A", draws: int = DRAWS,
-            seed: int = SEED, extra_sets: dict[str, pd.DataFrame] | None = None, minimum_towns: int | None = None) -> dict:
+            seed: int = SEED, extra_sets: dict[str, pd.DataFrame] | None = None, minimum_towns: int | None = None,
+            log: Path | None = None, q3: dict | None = None) -> dict:
     """§4–§7 on a town table (town, role, cluster, cohort, start_year, open_year, open_month, last_year, road_class)
     and a count table (town, year, outcome columns)."""
     specs = check_specs()
@@ -447,11 +486,13 @@ def analyse(towns: pd.DataFrame, counts: pd.DataFrame, years: range, *, stage: s
     primary = {k: fit(towns, counts, years, s) for k, s in specs.items()}
     leads = fit(towns, counts, years, Spec("q1", leads=True), clustered=True).leads
     boot = bootstrap(towns, counts, years, specs, draws, seed,
-                     extra=lambda tw, ct: callaway_santanna(tw, ct, years))
+                     extra=lambda tw, ct: callaway_santanna(tw, ct, years), log=log, name="primary")
     res = {k: summary(primary[k], boot["draws"][k]) for k in specs}
     n_before_zero = int((towns["role"] == "treated").sum()) if minimum_towns is None else minimum_towns
     minimum_met = n_before_zero >= MIN_TREATED
-    differing = bool(leads.get("uninformative") or leads.get("rejects_5pct"))
+    leads["uninformative_by_rule"] = stage == "A" or bool(leads.get("uninformative"))
+    leads["note"] = "one lead test, on Q1; Q2 reuses it"
+    differing = bool(leads["uninformative_by_rule"] or leads.get("rejects_5pct"))
 
     sub = {}
     for name, tw in {**subset_checks(towns, counts, years), **(extra_sets or {})}.items():
@@ -459,29 +500,31 @@ def analyse(towns: pd.DataFrame, counts: pd.DataFrame, years: range, *, stage: s
             sub[name] = {"run": False, "reason": "no treated town"}
             continue
         f = fit(tw, counts, years, Spec("q1"))
-        b = bootstrap(tw, counts, years, {"q1": Spec("q1")}, draws, seed, gate=("q1",))
+        b = bootstrap(tw, counts, years, {"q1": Spec("q1")}, draws, seed, gate=("q1",), log=log, name=name)
         sub[name] = {**summary(f, b["draws"]["q1"]), "redrawn": b["redrawn"]}
 
     out = {"stage": stage, "years": [years.start, years.stop - 1], "seed": seed, "draws": draws,
            "redrawn": boot["redrawn"], "treated_towns_before_zero_drop": n_before_zero, "minimum_met": minimum_met,
-           "pre_trends": leads, "differing_trends": differing or stage == "A",
+           "pre_trends": leads, "differing_trends": differing,
            "placebo": placebo(towns, counts, years), "questions": {}, "checks": {}}
     for q in ("q1", "q2"):
         r = res[q]
         f = primary[q]
         r.update({"label": label(r["est"], r["ci95"], r["ci90"], differing_trends=differing, minimum_met=minimum_met,
-                                 stage=stage) if r["ci95"] and r["ci90"] else "inconclusive",
+                                 stage=stage),
                   "power": power(r), "cells": {c: {"beta": f.beta[c], "weight": f.weights[c]} for c in f.weights},
                   "treated_towns_per_post_year": f.post_towns, "dropped_no_injury_accident": f.dropped_zero,
                   "thin_year_cells": f.thin_cells, "separated": f.separated, "converged": f.converged})
         out["questions"][q] = r
     out["questions"]["q2"]["change_inside_built_up_per_town_year"] = res["q1"]["delta_per_town_year"]
-    out["questions"]["q2"]["change_outside_built_up_per_town_year"] = res.get("outside", {}).get("delta_per_town_year")
-    out["questions"]["q2"]["change_outside_ci95"] = res.get("outside", {}).get("delta_ci95")
+    outside = np.asarray(boot["draws"]["q2"]["delta"], float) - np.asarray(boot["draws"]["q1"]["delta"], float)
+    out["questions"]["q2"]["change_outside_built_up_per_town_year"] = res["q2"]["delta_per_town_year"] - res["q1"]["delta_per_town_year"]
+    out["questions"]["q2"]["change_outside_ci95"] = interval(outside, 0.95)
+    out["questions"]["q2"]["same_towns_as_q1"] = primary["q1"].dropped_zero == primary["q2"].dropped_zero
     out["offset_share"] = offset_share(res["q1"], res["q2"], boot["draws"]["q1"]["delta"], boot["draws"]["q2"]["delta"])
-    out["questions"]["q3"] = {"run": False, "reason": "needs the OpenStreetMap geometry of each bypass, not fetched"}
+    out["questions"]["q3"] = q3 or {"run": False, "reason": "no bypass geometry passed"}
 
-    checks = {k: v for k, v in res.items() if k not in ("q1", "q2", "outside")}
+    checks = {k: v for k, v in res.items() if k not in ("q1", "q2")}
     if "9_town_trends_q1" in checks:
         checks["9_town_trends_q1"]["shift_against_primary"] = checks["9_town_trends_q1"]["est"] - res["q1"]["est"]
     checks["5_callaway_santanna_q1"] = {"est": callaway_santanna(towns, counts, years),
@@ -567,9 +610,10 @@ def main() -> None:
     years = range(T.FIRST_YEAR, T.LAST_YEAR + 1)
     planned = town_table(T.select(b, change, planned_only=True))
     wide = town_table(T.select(b, change, classes=("I", "II", "III")))
-    counts = real_counts(pd.concat([towns, wide]).drop_duplicates("town"), b)
+    counts = real_counts(pd.concat([towns, planned, wide]).drop_duplicates("town"), b)
     extra = {"7_comparison_planned_only": planned, "12_class_III_added": wide}
-    res = analyse(towns, counts, years, stage="A", draws=args.draws, extra_sets=extra)
+    log = DRAWS_LOG.with_name(f"{DRAWS_LOG.stem}-{pd.Timestamp.now():%Y%m%dT%H%M%S}.jsonl")
+    res = analyse(towns, counts, years, stage="A", draws=args.draws, extra_sets=extra, log=log)
     res["versions"] = versions()
     OUT.write_text(json.dumps(clean(res), indent=1, ensure_ascii=False, default=str))
     for q in ("q1", "q2"):
