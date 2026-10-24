@@ -19,8 +19,10 @@ in `docs/research/visa-files.sha256`, created at the data step. Deviations are l
   none of it checked against a source in this session:
   - before 2024: a large outflow of asylum seekers from Kosovo in the winter of 2014–15; the asylum rise after the
     2009–10 liberalisations of the other five countries; Germany's Western Balkans regulation (a labour route for the
-    six countries from 2016, capped at 25 000 approvals a year from 2021); Kosovo residents holding Croatian
-    passports, or Serbian passports issued by Serbia's Coordination Directorate under separate visa rules;
+    six countries from 2016, capped at 25 000 approvals a year from 2021); a rise in asylum applications from the
+    Western Balkans in autumn 2012; Kosovo residents holding Croatian passports, or Serbian passports issued by
+    Serbia's Coordination Directorate under separate visa rules; the dates of the earlier liberalisations in Q5 and
+    the number and adoption month of Regulation (EU) 2023/850;
   - after 2023: the German cap doubled to 50 000 from June 2024; Bulgaria and Romania joined Schengen (air and sea
     borders in March 2024, land borders in January 2025); the Entry/Exit System started in October 2025; Kosovo held
     a population census in 2024.
@@ -61,7 +63,10 @@ in `docs/research/visa-files.sha256`, created at the data step. Deviations are l
 - **Review.** Two independent reviews of the first draft (a data review and a methods review, outcome unopened) were
   taken in on 24 October 2026. In one line: Q3 moved to annual counts with the Q1 interval; the interval now rests on
   the 2013–2019 changes; a Germany condition, a drift condition, a fat-tail rule and ratio-scale thresholds were added
-  to the labels; reporter coverage, the snapshot date, missing values and every check were defined exactly.
+  to the labels; reporter coverage, the snapshot date, missing values and every check were defined exactly. A second
+  round (24 October 2026) found every point resolved or partly resolved and the arithmetic re-derived; it added the
+  cases where Germany or Switzerland cannot be fixed, exemptions from the six-change minimum, first-stage fallbacks, a
+  Q3 check without the 2013 change, a local-level fit on 2012–2019 with a failure rule, and exact label wording.
 
 ## 1. Questions
 
@@ -117,19 +122,25 @@ change in asylum and in irregular stay can come directly.
   2. If step 1 would drop Germany or Switzerland, the first used year moves to the first year from which both are
      complete for all six origins, provided at least six yearly changes (§4) remain; step 1 is then **recomputed**
      with the new first year (a reporter dropped only for an earlier year comes back). If fewer than six changes
-     would remain, Q1–Q4 are reported without labels.
+     would remain, or if Germany or Switzerland lacks 2022 or 2023 for any origin (no change of first year can fix
+     that), Q1–Q4 are reported without labels.
   3. **Coverage.** The kept reporters must hold at least 90 % of all first permits issued to non-EU citizens
      (citizen `TOTAL`, not Kosovo-specific) by the 31 reporters in 2022 and 2023 together. Otherwise Q1–Q4 are
      reported without labels.
   4. **2024 and 2025.** A kept reporter that lacks 2024 for any origin is dropped and listed, and step 3 is checked
-     again. 2025 is a post year only if the kept reporters that have 2025 for all six origins hold at least 95 % of
-     the same 2022–2023 all-citizens total; the reporters without 2025 are then dropped for all years. Otherwise the
-     post year is 2024 alone and 2025 is reported in check 14 only.
+     again; if it is Germany or Switzerland, Q1–Q4 are reported without labels. 2025 is a post year only if the
+     kept reporters that have 2025 for all six origins hold at least 95 % of the same 2022–2023 all-citizens total;
+     the reporters without 2025 are then dropped for all years. Otherwise the post year is 2024 alone and 2025 is
+     reported in check 14 only.
   5. Q2 uses the Q1 reporter set; a reporter lacking a reason cell in a used year is dropped from that reason only.
-     Q4 applies steps 1–4 to each table, with that table's all-citizens total (citizen `TOTAL`).
+     If Germany is dropped from `EMP` this way, the Germany condition of §6 cannot be computed and a directional
+     label on Q2 `EMP` is withheld (inconclusive). Q4 applies steps 1–4 to each table, with that table's
+     all-citizens total (citizen `TOTAL`).
 - **Reporter rule, asylum (Q3).** The same steps on calendar years: a reporter-year counts as present only if all 12
-  months are non-missing for all six origins; the coverage totals are first-time applicants of all citizenships
-  (citizen `TOTAL`) in 2022–2023; step 4 applies to 2025, the last complete year.
+  months are non-missing for all six origins; the coverage totals are first-time applicants who are non-EU citizens
+  (citizen `EXT_EU27_2020`) in 2022–2023; step 4 applies to 2025, the last complete year. The coverage codes
+  (`TOTAL` for permits and enforcement, `EXT_EU27_2020` for asylum) are confirmed against the snapshot at the data
+  step, before any value is read.
 - **Outcomes.**
   - Q1: `migr_resfirst`, reason `TOTAL`, duration `TOTAL`, unit `PER`, annual. Q2: the same with reason `FAM`,
     `EDUC`, `EMP`, `OTH`. First permits count permits issued to a person for the first time, or after a gap of at
@@ -151,14 +162,14 @@ change in asylum and in irregular stay can come directly.
   "country where consulate is located" column, lower-cased and stripped of "*" and spaces, equals "kosovo", summed
   over Schengen states and consulates. The data step reads headers and the list of consulate countries only and
   records, in the change log and before any count is read, the column and rows matched in each file. If a file has no
-  such column or no such row, that year is reported as "structure differs" and the sanity check uses the other years.
-  These files count consulate location, not nationality.
+  such column or no such row, that year is reported as "structure differs"; if that year is 2023, 2024 or 2025, the
+  consulate part of the sanity check is not assessed (§4). These files count consulate location, not nationality.
 - **Q5 benchmark data.** First permits (`migr_resfirst`, `TOTAL`) and first-time asylum applicants summed to calendar
   years (`migr_asyappctzm`) of each earlier liberalised country, and the same for all non-EU citizens (`TOTAL` in
   permits; `EXT_EU27_2020` in asylum). Per country, the reporters kept are those with non-missing cells (all 12 months
   for asylum) for that country and for the all-citizens total in each of its four years. Years −2 and −1, and years 1
   and 2: 2008–09 and 2010–11 for the December 2009 group, 2009–10 and 2011–12 for the December 2010 group (a
-  liberalisation in the last two weeks of December counts from the next year), 2012–13 and 2015–16 for Moldova,
+  liberalisation on or after 15 December counts from the next year), 2012–13 and 2015–16 for Moldova,
   2015–16 and 2018–19 for Georgia and Ukraine (the year of liberalisation is dropped). Data start in 2008, so the 2009
   group has nothing earlier; the monthly series before 2008 (`migr_asyctzm`) is a different collection and is not
   joined.
@@ -195,15 +206,17 @@ that reads values is frozen, with tests on made-up data (seed 20261025), before 
   it enters D. σ̂ is the sample standard deviation of the n changes (n − 1 degrees of freedom). Under the model
   D = Δ(2024) + Δ(2025)/2 + Δ(2023)/2, so se = σ̂ × √1.5; with 2024 alone, D = Δ(2024) + Δ(2023)/2 and
   se = σ̂ × √1.25. Intervals: D ± t × se, t the Student quantile on n − 1 degrees of freedom (table in §5);
-  p = 2 × (1 − F(|D| / se)). A random walk is the cautious choice: if the gap is in fact stationary around a level it
-  overstates the variance of D (by up to three times), and a level-stationary gap is not credible over a pre-period
-  that contains the 2016 German labour route.
+  p = 2 × (1 − F(|D| / se)), F the Student cdf on the same degrees of freedom. A random walk is the cautious choice:
+  if the gap is in fact stationary around a level it overstates the variance of D (by up to three times), and a
+  level-stationary gap is not credible over a pre-period that contains the 2016 German labour route.
 - **Fat tails (binding).** Two further intervals, same centre D, same confidence levels:
   (a) σ̂ from the n − 1 changes left after dropping the one with the largest |Δ| (n − 2 degrees of freedom);
-  (b) a **local-level** model, g(t) = μ(t) + ε(t), μ(t) = μ(t − 1) + η(t), fitted by maximum likelihood to the used
-  pre-years with 2020–2021 as missing (statsmodels `UnobservedComponents`, level `llevel`); under it
-  var(D) = 1.5 σ²_η + σ²_ε (1.25 σ²_η + 1.5 σ²_ε with 2024 alone), quantiles on n − 1 degrees of freedom.
-  All three are reported. **For labels, at each confidence level the widest of the three intervals is used.**
+  (b) a **local-level** model, g(t) = μ(t) + ε(t), μ(t) = μ(t − 1) + η(t), fitted by maximum likelihood to the
+  used pre-years up to 2019 only (2022–2023 not used; statsmodels `UnobservedComponents`, level `llevel`); under it
+  var(D) = 1.5 σ²_η + σ²_ε (1.25 σ²_η + 1.5 σ²_ε with 2024 alone), quantiles on n − 1 degrees of freedom. If the
+  fit does not converge, or either variance ends at its lower bound (zero, or below 10⁻⁸), the failure is reported
+  and interval (b) is not used.
+  All are reported. **For labels, at each confidence level the widest of the intervals available is used.**
   Keeping the 2014 and 2015 changes in σ̂ is conservative if the 2014–15 outflow was an exceptional jump; check 13
   drops them.
 - **Q3** uses exactly this, on the annual asylum gap. The **monthly path** (January 2024 to the last month of §3,
@@ -213,17 +226,24 @@ that reads values is frozen, with tests on made-up data (seed 20261025), before 
   t ≥ 2023 (0.25 for 2022 and 2023, 1.25 for 2024, 2.25 for 2025); before 2022 the covid years are counted like the
   others. Descriptive.
 - **Shift before 2024 (descriptive).** D_pre = mean(g(2022), g(2023)) − mean(g(2018), g(2019)), se = σ̂ × √3.5 under
-  the model (three changes over covid plus two halves). Reported; it changes no label.
-- **Without Germany (label condition, §6).** §2 and §4 rerun with Germany removed from the kept reporters (no other
-  reporter re-admitted, the coverage step not applied), interval by the same widest-of-three rule. **Germany alone**
+  the model (three changes over covid plus two halves). Δ(2019) enters both D_pre and σ̂, so the two are not
+  independent. Reported; it changes no label.
+- **Without Germany (label condition, §6).** §2 and §4 rerun with Germany removed from the kept reporters (same
+  first year, no other reporter re-admitted, the coverage step not applied), interval by the same widest-interval
+  rule. **Germany alone**
   is reported as a separate descriptive estimate, with its random-walk interval.
 - **Drift (label condition, §6).** D_drift = D − c × Δ̄, Δ̄ the mean of the n changes, c = 2 with two post years and
   1.5 with 2024 alone; se = σ̂ × √(k + c² / n), k = 1.5 or 1.25; n − 1 degrees of freedom.
 - **Minimum.** If fewer than six changes are available for a series, it is reported without labels (Q1–Q3) or
-  without an interval (Q4).
-- **First stage (sanity check; does not relabel).** It holds if applications at consulates in Kosovo in 2024 and in
-  2025 are each below 10 % of 2023, and if D for `VISA_RPRM_NV` refusals (Kosovo relative to the five) is below
-  ln(0.5). If it does not hold, the article says so next to every label.
+  without an interval (Q4). Fat-tail interval (a) and check 13, which drop changes by construction, are exempt; they
+  are computed whenever at least three changes remain.
+- **First stage (sanity check; does not relabel).** Two parts: (i) applications at consulates in Kosovo in 2024 and
+  in 2025 are each below 10 % of 2023; (ii) D for `VISA_RPRM_NV` refusals (Kosovo relative to the five) is below
+  ln(0.5), on the point estimate only, no interval. The code also covers refusals for a missing residence permit,
+  which liberalisation does not remove, so (ii) need not reach zero. Part (i) is not assessed if a consulate file of
+  2023, 2024 or 2025 has a different structure (§2); part (ii) is not assessed if the series starts after 2022 or
+  fails the reporter rule. The first stage is then judged on the other part, or not at all if neither can be
+  assessed. If it does not hold, or is judged on one part or not at all, the article says so next to every label.
 - **Q5.** For each earlier liberalised country: the mean of ln max(Y, 1) over years 1 and 2 minus the mean over years
   −2 and −1, for first permits and first-time asylum; the same for all non-EU citizens; and the difference of the
   two. For Moldova, Georgia and Ukraine also without Poland (break in 2018). No interval, no label.
@@ -244,7 +264,7 @@ Not computed: it would need the pre-period gap, which is the outcome. From the r
 
 - With n = 7, the smallest change Q1 can label for σ̂ = 0.05, 0.10, 0.20 is 0.15, 0.30, 0.60 log points (ratio 1.16,
   1.35, 1.82 up; 0.86, 0.74, 0.55 down).
-- "No change larger than 20 %" needs |D| + 2.38 σ̂ ≤ ln(1.2) = 0.182 (n = 7), so σ̂ below 0.077 and D near zero.
+- "No change beyond ±20 %" needs |D| + 2.38 σ̂ ≤ ln(1.2) = 0.182 (n = 7), so σ̂ below 0.077 and D near zero.
 - For Q3 (margin ln(1.3)), "underpowered" holds if σ̂ > 0.110 (n = 7) or 0.106 (n = 6).
 
 Country-level counts of first permits for one citizenship move a lot from year to year, and the pre-period contains
@@ -261,23 +281,22 @@ margins are 1.15 and 1.3.
 
 ## 6. Labels
 
-For Q1, **every** label of 1–4 that holds is reported; 5 if none does. Intervals are the binding (widest-of-three)
+For Q1, **every** label of 1–4 that holds is reported; 5 if none does. Intervals are the binding (widest available)
 intervals of §4.
 
-1. **more Kosovars got first permits** — the 95 % interval lies above 0 and D ≥ ln(1.1) (at least 10 % more).
-2. **fewer Kosovars got first permits** — the 95 % interval lies below 0 and D ≤ −ln(1.1) (a ratio of at most 1/1.1,
-   −9.1 %).
-3. **no change larger than 20 %** — the 90 % interval lies within −ln(1.2) and +ln(1.2): the ratio is within 1/1.2
-   and 1.2. This is a two one-sided test (TOST, Schuirmann 1987) at 5 % on each side.
+1. **more Kosovars got first permits (ratio at least 1.1)** — the 95 % interval lies above 0 and D ≥ ln(1.1).
+2. **fewer Kosovars got first permits (ratio at most 1/1.1)** — the 95 % interval lies below 0 and D ≤ −ln(1.1).
+3. **no change beyond ±20 % (ratio between 1/1.2 and 1.2)** — the 90 % interval lies within −ln(1.2) and +ln(1.2).
+   This is a two one-sided test (TOST, Schuirmann 1987) at 5 % on each side.
 4. **underpowered** — the 90 % interval is wider than 2 ln(1.2) = 0.365.
 5. **inconclusive** — none of 1–4.
 
 **Q2**, per reason: the same, with the 98.75 % interval in labels 1 and 2 (Bonferroni over four reasons) and the 90 %
 interval in labels 3 and 4.
 
-**Q3**: the same with "first-time asylum applications" in labels 1 and 2, D ≥ ln(1.15) or D ≤ −ln(1.15); label 3 is
-"no change larger than 30 %" (90 % interval within ±ln(1.3)); label 4 holds when the 90 % interval is wider than
-2 ln(1.3) = 0.525.
+**Q3**: the same with "first-time asylum applications (ratio at least 1.15)" and "(ratio at most 1/1.15)" in labels
+1 and 2, D ≥ ln(1.15) or D ≤ −ln(1.15); label 3 is "no change beyond ±30 % (ratio between 1/1.3 and 1.3)" (90 %
+interval within ±ln(1.3)); label 4 holds when the 90 % interval is wider than 2 ln(1.3) = 0.525.
 
 **Conditions on labels 1 and 2.** A directional label on Q1, Q3 or Q2 `EMP` stands only if the estimate without
 Germany (§4) has the same sign and its 90 % interval excludes 0. A directional label on Q1, Q2 or Q3 stands only if
@@ -293,25 +312,28 @@ says so next to every label. Q4 and Q5 carry no label.
    most.
 4. Comparison as the equal-weight mean of the five ln max(Y, 1) instead of the log of their sum.
 5. Leaving out each comparison country in turn, Albania first (passport switching, §8).
-6. Demeaned synthetic control: non-negative weights on the five summing to one, minimising the squared distance
-   between demeaned ln Y of Kosovo and of the weighted five over the used pre-years; D and the random-walk interval on
-   its gap; the weights reported.
+6. Demeaned synthetic control (descriptive): non-negative weights on the five summing to one, minimising the squared
+   distance between demeaned ln Y of Kosovo and of the weighted five over the used pre-years up to 2019 only; D and
+   the random-walk interval on its gap; the weights reported.
 7. Placebo in space: each comparison country j as treated, gap ln max(Y(j), 1) − ln max(Σ of the other four, 1)
    (Kosovo left out), D_j and its random-walk se_j with its own σ̂; r = |D| / se; Kosovo's p is the share of the six
    (Kosovo included, with its random-walk se) with r at least Kosovo's (at best 1/6).
-8. Placebo in time, annual: D(b) = mean(g(b), g(b + 1)) − mean(g(b − 2), g(b − 1)) for break years b = 2014–2018 (all
-   inside 2012–2019); the share of the six values (five placebos and the real D) with |D| at least the real |D|
-   (at best 1/6).
+8. Placebo in time, annual: D(b) = mean(g(b), g(b + 1)) − mean(g(b − 2), g(b − 1)) for break years b from the first
+   used year + 2 to 2018 (2014–2018 when the first year is 2012, all inside the used years up to 2019); the share of
+   all values (the placebos and the real D) with |D| at least the real |D| (at best 1/6).
 9. Wider pool: Moldova and Georgia added to the comparison. Both were visa-free in every month only from 2018, so the
-   pre-years are 2018, 2019, 2022 and 2023; σ̂ would rest on one change (2019), so only D is reported, without
-   interval.
+   pre-years are 2018, 2019, 2022 and 2023. The reporter rule of §2 is applied afresh with eight origins in place of
+   six and these pre-years (steps 1, 3 and 4; step 2 does not apply). σ̂ would rest on one change (2019), so only D
+   is reported, without interval.
 10. Kosovo and Serbia together against the other four: ln max(Y(XK) + Y(RS), 1) − ln max(Σ of AL, BA, ME, MK, 1),
     against Kosovars counted as Serbs.
 11. Stationary model: se = s × √(1/|P| + 1/2), s the sample standard deviation of g over the used pre-years, |P| the
     number of post years; quantiles on (number of used pre-years − 1) degrees of freedom.
 12. Reference years 2018–2019 instead of 2022–2023 (before covid and before the regulation was adopted):
-    D = mean of g over the post years − mean(g(2018), g(2019)), se = σ̂ × √5.5 (√5.25 with 2024 alone). Descriptive.
-13. σ̂ without the 2014 and 2015 changes (n − 2 changes, n − 3 degrees of freedom).
+    D = mean of g over the post years − mean(g(2018), g(2019)), se = σ̂ × √5.5 (√5.25 with 2024 alone). Descriptive;
+    Δ(2019) enters both this D and σ̂.
+13. (a) σ̂ without the 2014 and 2015 changes (n − 2 changes, n − 3 degrees of freedom). (b) Q3 only: σ̂ without
+    Δ(2013), which may carry the Western Balkan asylum rise of autumn 2012 (n − 1 changes, n − 2 degrees of freedom).
 14. Each post year alone: D(2024) = g(2024) − mean(g(2022), g(2023)), se = σ̂ × √1.25; D(2025) = g(2025) −
     mean(g(2022), g(2023)), se = σ̂ × √2.25. If 2025 is not a post year (§2), D(2025) uses the reporters that have it.
 15. First permits valid for 12 months or more (`M_GE12`) only, closer to settling.
@@ -383,3 +405,9 @@ says so next to every label. Q4 and Q5 carry no label.
   added; snapshot fixed to 9 November 2026; coverage rules for reporters and for 2025; missing, zero and flags
   defined; the Q4 quarterly path dropped; first stage defined as a sanity check with its columns; checks renumbered
   and extended (leave one reporter out, Kosovo and Serbia together, 2014–15 dropped from σ̂, asylum constant).
+- 24 October 2026, before any outcome value was read: second review round taken in (§0). Germany or Switzerland
+  missing in 2022, 2023 or 2024 means no labels; Germany missing from `EMP` withholds that directional label; the
+  six-change minimum exempts fat-tail interval (a) and check 13; the local-level model is fitted on 2012–2019 with a
+  failure rule; first-stage fallbacks; check 8 break years from the first year + 2; check 9 reporter rule on eight
+  origins; check 6 fitted on 2012–2019 and descriptive; check 13(b) for Q3 without Δ(2013); asylum coverage on
+  `EXT_EU27_2020`; exact ratio wording in the labels; the Q5 cut-off "on or after 15 December".
