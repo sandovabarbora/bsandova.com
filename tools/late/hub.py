@@ -60,7 +60,7 @@ PARTS = [  # slug, part, title, kicker, summary, screen-reader name[, photo of a
      "even weeks. Described afterwards, not registered: many of them leave large stops, and part of what they "
      "record is early trams waiting for their time.",
      None),
-    ("bunching", 2, "Why do two trams of a line arrive together?",
+    ("bunching", 2, "How often do two trams of a line arrive together?",
      "Part 2 · bunching · {{pairs}} pairs of trams, 15 March – 8 September 2025",
      "The spacing between two trams of a line shows practically no amplification from stop to stop ({{g}} per "
      "stop, {{g_label}} by the registered rule, corrected in its version 2), and bunches build gradually "
@@ -76,7 +76,7 @@ PARTS = [  # slug, part, title, kicker, summary, screen-reader name[, photo of a
      "specifications), with real differences between pairs of lines and no mechanism identified. A roulette "
      "gives the share made for {{cells_shown}} combinations of stop, lines and time of day.",
      None),
-    ("swiss-trams", 4, "Do Swiss trams lose time in the same places?",
+    ("swiss-trams", 4, "Do Swiss trams pile up delay like Prague's?",
      "Part 4 · four networks · Zurich, Basel and Bern, 15 March – 8 September 2025",
      "The same measure on Swiss trams: a tenth of the segments make {{zs}} % of the delay in Zurich, {{bs}} % in "
      "Basel and {{ns}} % in Bern. Basel and Bern are like Prague by the registered rule, Zurich is not; above what "

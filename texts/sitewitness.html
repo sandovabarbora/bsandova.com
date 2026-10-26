@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Can rules in code keep an AI assistant honest?</title>
+<title>What do five rules in code catch?</title>
 <meta name="description" content="sitewitness is the package behind the Ask page: five answer rules checked in code, run-time limits and an evaluation runner, with an engineering log of the runs of 21 and 22 September 2026.">
-<meta property="og:title" content="Can rules in code keep an AI assistant honest?">
+<meta property="og:title" content="What do five rules in code catch?">
 <meta property="og:description" content="sitewitness is the package behind the Ask page: five answer rules checked in code, run-time limits and an evaluation runner, with an engineering log of the runs of 21 and 22 September 2026.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://bsandova.com/assets/og/sitewitness.jpg">
@@ -49,8 +49,8 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 <article class="text">
 <header class="text-head">
   <p class="kicker">Tool · sitewitness 0.1.0 · the agent behind Ask the site</p>
-  <h1>Can rules in code keep <em>an AI assistant honest?</em></h1>
-  <p class="deck">The assistant behind the <a href="../ask/">Ask page</a> checks its answers against five rules in code and refuses when one fails, and its last test scored the same as the version it replaced.</p>
+  <h1>What do five rules <em>in code catch?</em></h1>
+  <p class="deck">The assistant behind the <a href="../ask/">Ask page</a> refuses when an answer breaks one of five rules in code, and in its last scored run a rule fired once, wrongly, and caught no wrong answer.</p>
   <dl class="facts">
     <div><dt>rules enforced in code</dt><dd>5 <small>tool use · numbers · code · quotations · sources · administrative count</small></dd></div>
     <div><dt>tests</dt><dd>47 <small>passing on 29 September 2026, none touch the network · administrative count</small></dd></div>
@@ -80,7 +80,7 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
   <div><dt>status</dt><dd>tool v0.1.0</dd></div>
   <div><dt>data</dt><dd>golden questions <a href="https://github.com/sandovabarbora/bsandova.com/blob/f91a0b1/ask/golden.json">ask/golden.json as of the saved run</a> (the file has changed since: question 28 was replaced on the hockey atlas rebuild, and on 9 October 2026 the quotation question and one decline question were replaced); saved evaluation of 22 September 2026 pinned as <a href="../ask/eval-2026-09-22.json">ask/eval-2026-09-22.json</a> (identical to <a href="https://github.com/sandovabarbora/bsandova.com/blob/f91a0b1/ask/eval.json">ask/eval.json at commit f91a0b1</a> except one answer redacted at the author's request; the live <code>ask/eval.json</code> was overwritten on 5 October 2026 by a run in which all 30 requests failed with HTTP 502, commit 056832a, and has been restored); <a href="../ask/eval-history.json">ask/eval-history.json</a> (17 and 22 September 2026, and the failed run of 5 October 2026 marked as failed, not scored); model claude-sonnet-5; earlier run scores are from terminal output and were not saved</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/sitewitness">sandovabarbora/sitewitness</a>, tag v0.1.0 (commit 364957e); instance config <code>sitewitness.toml</code> and the weekly job <code>.github/workflows/ask-eval.yml</code> with <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/ask/eval_guard.py">ask/eval_guard.py</a> in the site repository, which publishes a run only when at most a quarter of its requests failed or returned an agent error; rerun with <code>sitewitness eval ask/golden.json --api https://api.bsandova.com</code>, which uses the current golden set, not the one of 22 September</dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Can rules in code keep an AI assistant honest?</i> bsandova.com/texts/sitewitness, version 3.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>What do five rules in code catch?</i> bsandova.com/texts/sitewitness, version 3.</dd></div>
   <div><dt>licence</dt><dd>package code Apache-2.0; text and data CC BY 4.0</dd></div>
 </dl>
 </details>
