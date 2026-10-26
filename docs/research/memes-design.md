@@ -670,4 +670,6 @@ Commands, the verified API facts and their dates are in `tools/memes/README.md`.
   - `f1cea67` the power runs rerun with Kevin James at shared-factor shares of 0, 0.5 and 1 and the injected uplift.
   - `bd5a801` §5 numbers and the minimum-detectable-uplift tables copied into the design, and the README: **§5 was
     written after the code and the simulations**.
-
+  After the `memes-design` tag:
+  - 26 October 2026, before any pageview number was downloaded: the author confirmed the 10 % threshold of the
+    "uninformative" label and registration with the low power for her prior stated in §5. No text above changed.
