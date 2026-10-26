@@ -273,19 +273,43 @@ None of it compares attention across events or after day −4.
 
 ## 5. Power
 
-Computed on **made-up panels only** (a common AR(1) factor with φ 0.8 and innovation sd 0.1 shared by all articles, a
-second such factor for each group of articles, idiosyncratic noise sd 0.1, target beta 1), with the registered
-geometry: 9 cast controls, the 36-actor reference pool and the blocked days for Stonestreet; 2 controls and the same
-pool for Kevin James; 300 placebo dates; the 4-year range; 300 simulated panels per cell. A shock *s* adds s·exp(−t/5)
-to the target's attention from day 0 (so *s* = 0.3 is +35 % on day 0 and about +5 % on average over the window; the
-CAR is about 5.5·*s*). **The numbers come from `tools/memes/simulate.py` and `docs/research/memes-power.json`,
-committed after this design and before the registration tag, and are copied into this section by a later commit.**
-What is registered now is what they measure: the share of panels with p < 0.05 and p < 0.025 (the Holm level for the
-smaller of two p-values) at *s* = 0, 0.3, 0.5 and 1.0, for H1 of both events; the false-positive rate of the external
-falsification and of the leave-one-out check without a jump; and their detection rates when 3, 5 or all of the cast
-controls jump by 0.5 and by 1.0. Real attention series carry spikes and news that these panels lack, so **real power
-is lower**, and a "no detectable jump" will be read as "none larger than the size the table says would have been
-seen".
+Computed on **made-up panels only** (an AR(1) factor with φ 0.8 and innovation sd 0.1 shared by all articles, a second
+such factor for each group of articles, idiosyncratic noise sd 0.1, target beta 1), with the registered geometry: 9
+cast controls, the 36-actor reference pool and the blocked days for Stonestreet; 2 controls and the same pool for
+Kevin James; 300 placebo dates; the 4-year range; 300 simulated panels per cell. A shock *s* adds s·exp(−t/5) to the
+target's attention from day 0 (so *s* = 0.3 is +35 % on day 0 and about +5 % on average over the window; the CAR is
+about 5.5·*s*). The numbers below come from `tools/memes/simulate.py` (`docs/research/memes-power.json`), run once
+niced on 26 October 2026.
+
+| | no shock (false positives) | s = 0.3 | s = 0.5 | s = 1.0 |
+|---|---|---|---|---|
+| Stonestreet H1, share with p < 0.05 | 5.7 % | 56 % | 87 % | 100 % |
+| Stonestreet H1, share with p < 0.025 | | 46 % | 83 % | 100 % |
+| Kevin James H1, share with p < 0.05 | 5.0 % | 57 % | 95 % | 100 % |
+| Kevin James H1, share with p < 0.025 | | 43 % | 86 % | 100 % |
+
+False positives of the falsification statistics without any jump, at the 5 % level: external 7.3 % (Stonestreet) and
+7.0 % (Kevin James); leave-one-out 7.7 % and 6.0 %. Detection of a jump of the cast controls, share of panels with
+p < 0.05 (Stonestreet, nine controls; Kevin James has two):
+
+| Cast controls that jump | external, s = 0.5 | external, s = 1.0 | leave-one-out, s = 0.5 | leave-one-out, s = 1.0 |
+|---|---|---|---|---|
+| 3 of 9 | 11 % | 14 % | 4 % | 0 % |
+| 5 of 9 (a majority) | 13 % | 20 % | 40 % | 89 % |
+| 9 of 9 (all) | 20 % | 42 % | 14 % | 24 % |
+| Kevin James, 2 of 2 | 20 % | 42 % | 17 % | 32 % |
+
+The prototype's one-off figures were 4.3 % false positives and power 67, 97 and 100 % for 0.3, 0.5 and 1.0. Here the
+estimation window is shorter (82 days with the exclusion), and the test goes through Holm. At the Holm level 0.025 the
+power of H1 is about 83 to 86 % for a shock of 0.5 (a CAR of about 2.7, which is about +9 % on average over the 34
+days) and under half for 0.3, so the smallest jump the design can tell from chance is about **0.5**. The H1 false-
+positive rates are close to 5 %. **The falsification is much weaker than H1**: with these made-up panels the external
+index sees a jump of all nine cast controls in 20 % of panels at s = 0.5 and in 42 % at s = 1.0, and a majority jump
+in 13 % and 20 %, because the cast's own factor, which the external index does not explain, is noisy. Leave-one-out
+sees a majority jump much better and a unanimous one worse, which is why it is kept as a check. A quiet falsification
+is therefore weak evidence that the cast did not move. Real attention series carry spikes and news that these panels
+lack, so **real power is lower**, and a "no detectable jump" will be read as "none larger than about 0.5 would have
+been seen".
 
 ## 6. Labels
 
@@ -370,4 +394,5 @@ Commands, the verified API facts and their dates are in `tools/memes/README.md`.
   Found while applying them: `Rico_Rodriguez` is a disambiguation page and is replaced by the infobox's
   `Rico_Rodriguez_(actor)` (deviation N, awaiting the author's confirmation). The power numbers of §5 come from the
   simulation committed after this design.
+
 
