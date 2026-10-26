@@ -233,3 +233,51 @@ read with the others, without a correction for multiplicity.
   failure stops the run so that no day is lost for a transient reason; check 1 also gets a variant on the primary usable
   points (`c1_nic_same`). A structure-only preflight on one Wednesday per study year (key presence, no values) runs
   after the tag and before the full run.
+- 26 October 2026, estimation code (`tools/gnss/estimate.py`, tested on made-up days only; to be tagged
+  `gnss-estimation` before it opens `sealed/`), written before any degraded or jump count was opened. The data step has
+  finished: 183 of the 190 sampled days are used (181 Wednesdays and the Thursdays 26 December 2024 and 12 June 2025),
+  and 7 are lost, not 4: 1 and 8 March 2023 and 28 May and 4 June 2025 (no release for the Wednesday or the Thursday),
+  24 December 2025 (Wednesday and Thursday both under 70 % of the median), 31 December 2025 and 6 May 2026 (no release
+  for the Wednesday, the Thursday under 70 %). §2 sets no minimum number of days per year or region, so no rule is
+  triggered: the years keep 51, 52, 48 and 32 days of 53, 52, 52 and 33, and the Q3 windows lose one day (6 May 2026).
+  Choices made in the code where the design was silent or loose:
+  - Opening the counts: only `merged_day` reads `sealed/`, and `main` calls it only with `--unblind`, on a tree whose
+    HEAD carries the tag `gnss-estimation` and whose `tools/gnss` is unchanged since; a day whose sealed rows do not
+    line up key by key with its screening rows stops the run.
+  - Gate and failures: the gate is the pooled E_CZ of the primary estimate. A draw where it is undefined is redrawn and
+    tallied (the run stops after 20 000 redraws). Any other estimate that fails or is undefined in a draw, whatever the
+    error, is left missing for that draw and the missing draws are reported; nothing else stops a draw. Each accepted
+    draw is appended to `tools/data/gnss/bootstrap-draws-<time>.jsonl` as it is made, and `--from-log` finishes the
+    summary from a log without drawing again.
+  - Seed: 20261015 for the main bootstrap and, as a separate stream, for the Q3 bootstrap; 2 000 accepted draws each.
+  - Persistent airframes: the data step's choice 10 (at least 30 usable points west of 5° E in total, from at least
+    two sampled days), "at least half" meaning 50 % or more. The set is fixed from the whole sample and not re-estimated
+    inside bootstrap draws; Q3, Q4 and every check use the same set. The aircraft resampled are the kept aircraft with
+    at least one point or crossing in the sample (in a Q3 window: in that window).
+  - Day blocks: lost days are absent, so "consecutive" means consecutive among the days used (a replacement Thursday
+    stands in its Wednesday's place); a year gets ceil(n / 4) blocks of 4, circular, cut to its n days. The day-block-only
+    interval keeps every kept aircraft at weight 1.
+  - Q3: windows by Wednesday, 1 March – 14 October inclusive (2024: 6 March – 9 October; 2026: 4 March – 14 October).
+    "Resampled independently" is read to cover the aircraft too: each window has its own blocks and its own aircraft
+    draw, which widens the interval for a change between windows that share airframes. The change is E_CZ pooled in the
+    2026 window minus the same in the 2024 window, and is also computed for every check.
+  - Intervals and labels: percentile intervals; "above" and "below" are strict; an interval is not computed from fewer
+    than 20 finite draws and its label is then inconclusive. A share with no usable point in the period is undefined,
+    not zero.
+  - Q2: E per distance band is the degraded share of the four regions' points in the band (control's included) minus
+    control's pooled share. G is decided period by period: pooled and each year on that period's own E_BALT label; where
+    it is not computed, E_CZ − E_BALT and E_PL − E_BALT are given with intervals instead; G's interval is over the draws
+    where E_BALT exceeds 0.01.
+  - Checks: each gives E_CZ, E_PL and E_BALT with the §6 label, beside the primary label of the same quantity. Check 4
+    uses the data step's screenable rule. Check 5 takes screenable, kept aircraft with a usable point in the region and
+    west of 5° E, one weight per aircraft (times its draw count), shares pooled over days; control the same, E the
+    difference. Check 7 takes each region's share per day, E per day as region minus control on days where both exist,
+    averaged with equal weight per day (bootstrap day counts as weights). Check 9 uses the Kp of the day used; a day
+    without Kp stays in "without storm days" and in neither split. Check 11 takes crossings with at least 3 usable
+    points after the buffer, degraded if at least 2 of them are.
+  - Q4: crossings with a jump over crossings with a usable point after the buffer, per region (pooled and per year), per
+    distance band over the four regions, and the difference from control; same airframe drop and bootstrap draws,
+    intervals but no label.
+  - Descriptive counts without intervals: a degraded-position day is judged on the day used, on primary usable points
+    after the airframe drop, both limits inclusive, with the eligible days reported beside the counts; the repeat-airframe
+    share is pooled over the sample per region.
