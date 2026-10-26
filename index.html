@@ -76,32 +76,63 @@ img{display:block;max-width:100%}
 .band .in{position:absolute;z-index:1;left:var(--pad);right:var(--pad);bottom:clamp(28px,6vh,64px);display:grid;grid-template-columns:repeat(12,1fr);gap:var(--pad);align-items:end}
 .band .big{grid-column:1/9}
 .band p{grid-column:9/13;font:400 16px/1.55 var(--display);color:#eee;text-shadow:0 1px 10px rgba(0,0,0,.6)}
+.band .how{display:block;margin-top:14px;font:400 13px/1.5 var(--display);text-transform:uppercase;letter-spacing:.02em;color:#fff;text-decoration:underline;text-underline-offset:.25em;text-decoration-thickness:1px}
 .band .lbl{color:#ddd;text-shadow:0 1px 8px rgba(0,0,0,.6)}
 
-/* the index: every piece of work, like a film catalogue */
+/* the index: Latest as cards, then every piece of work by topic, like a film catalogue */
 .idx{padding:clamp(80px,10vw,140px) var(--pad) 0}
 .idx-h{display:flex;justify-content:space-between;align-items:end;gap:var(--pad);margin-bottom:34px;flex-wrap:wrap}
-.groups{display:flex;gap:22px;flex-wrap:wrap}
-.groups a{font:400 14px var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--grey-ink);padding:4px 0}
-.groups a:hover{color:var(--ink);box-shadow:inset 0 -1.5px 0 var(--ink)}
-.grp{margin-top:clamp(40px,5vw,64px);scroll-margin-top:96px}
-.grp:first-of-type{margin-top:0}
-.grp-h{display:flex;justify-content:space-between;align-items:baseline;gap:var(--pad);flex-wrap:wrap;margin-bottom:12px}
+.groups{display:flex;gap:6px 22px;flex-wrap:wrap}
+.groups a,.jump{font:400 14px var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--grey-ink);padding:4px 0}
+.groups a:hover,.jump:hover{color:var(--ink);box-shadow:inset 0 -1.5px 0 var(--ink)}
+.cards{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(40px,4vw,56px) var(--pad)}
+.cards a{display:flex;flex-direction:column;height:100%;border-top:1px solid var(--ink);padding-top:18px}
+.cards .t{font:500 clamp(21px,1.8vw,27px)/1.12 var(--display);letter-spacing:-.03em;transition:color .2s}
+.cards .f{margin-top:14px;font:400 15px/1.5 var(--display);color:var(--grey-ink);max-width:48ch}
+.cards .m{margin-top:auto;padding-top:22px;display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+@media (hover:hover){.cards:hover .t{color:#b5b5b0}.cards a:hover .t{color:var(--ink)}}
+.grp{margin-top:clamp(48px,6vw,80px);scroll-margin-top:96px}
+.grp-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px var(--pad);flex-wrap:wrap;margin-bottom:14px}
 .grp-h h3{font:500 clamp(26px,2.8vw,40px)/1.05 var(--display);letter-spacing:-.04em}
-.grp-h p{font:400 13px/1.5 var(--display);color:var(--grey-ink);max-width:60ch}
+.grp-h .note{font:400 13px/1.5 var(--display);color:var(--grey-ink);max-width:60ch}
+.all{margin-top:16px;font:400 14px var(--display);text-transform:uppercase;letter-spacing:.02em}
+.all a{padding:4px 0}
+.all a:hover{box-shadow:inset 0 -1.5px 0 var(--ink)}
+details.grp>summary{cursor:pointer;list-style:none}
+details.grp>summary::-webkit-details-marker{display:none}
+details.grp>summary h3::after{content:"+";margin-left:.35em;color:var(--grey);font-weight:400}
+details.grp[open]>summary h3::after{content:"\2212"}
+details.grp:not([open])>summary{border-bottom:1px solid var(--ink);padding-bottom:18px;margin-bottom:0}
+/* catalogue */
 .rows{list-style:none;border-top:1px solid var(--ink)}
 .rows li{border-bottom:1px solid var(--line)}
-.rows li>a,.rows li>.r{display:grid;grid-template-columns:minmax(0,1fr) 190px 150px 110px;gap:var(--pad);align-items:baseline;padding:18px 0}
-.rows .t{transition:color .2s}
-@media (hover:hover){.rows:hover .t{color:#b5b5b0}.rows li>a:hover .t,.rows li>.r:hover .t{color:var(--ink)}}
-.rows .t{font:500 clamp(22px,2.4vw,34px)/1.1 var(--display);letter-spacing:-.035em}
-.rows .sub .t{font-size:clamp(17px,1.6vw,22px);letter-spacing:-.02em;padding-left:clamp(18px,3vw,48px)}
-.rows .sub>a{padding:12px 0}
-.rows .t .w{display:block;margin-top:6px;font:400 13px var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--grey-ink)}
-.rows .t .w a{text-decoration:underline;text-underline-offset:.2em}
-.rows .t .w a:hover{color:var(--ink)}
-.rows .c,.rows .s{font:400 13px var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--grey-ink)}
-.rows .y{font:400 13px var(--mono);color:var(--grey-ink);text-align:right}
+.rows li>a{display:grid;grid-template-columns:minmax(0,1fr) 200px 96px;gap:var(--pad);align-items:baseline;padding:18px 0}
+.rows .t{font:500 clamp(22px,2.4vw,34px)/1.1 var(--display);letter-spacing:-.035em;transition:color .2s}
+@media (hover:hover){.rows:hover .t{color:#b5b5b0}.rows li>a:hover .t{color:var(--ink)}}
+.rows .c,.cards .c{font:400 13px/1.4 var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--grey-ink)}
+.rows .wip,.cards .wip{display:block;font:400 11px/1.6 var(--mono);font-style:normal;text-transform:none;letter-spacing:0;color:var(--grey-ink)}
+.rows .wip::before,.cards .wip::before{content:"";display:inline-block;width:6px;height:6px;margin-right:6px;border-radius:50%;border:1px solid currentColor;vertical-align:1px}
+.rows .y,.cards .y{font:400 13px var(--mono);color:var(--grey-ink);text-align:right;white-space:nowrap}
+.rows .ser>a{padding-bottom:8px}
+.sp{padding:0 0 16px}
+.sp>summary{cursor:pointer;list-style:none;width:max-content;font:400 13px var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--grey-ink);padding:4px 0}
+.sp>summary::-webkit-details-marker{display:none}
+.sp>summary::before{content:"+ "}
+.sp[open]>summary::before{content:"\2212  "}
+.sp>summary:hover{color:var(--ink)}
+.sp>ul{list-style:none;margin-top:8px;border-top:1px solid var(--line)}
+.sp li:last-child{border-bottom:0}
+.sp li>a{padding:12px 0}
+.sp .t{font-size:clamp(17px,1.6vw,22px);letter-spacing:-.02em;padding-left:clamp(18px,3vw,48px)}
+@media (max-width:820px){
+  .rows li>a{grid-template-columns:minmax(0,1fr) auto;gap:6px 16px}
+  .rows .c{grid-row:2;grid-column:1/-1}
+  .rows .c .wip{display:inline;margin-left:10px}
+  .sp .c{padding-left:clamp(18px,3vw,48px)}
+}
+/* /catalogue */
+@media (max-width:1000px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.cards{grid-template-columns:1fr}}
 
 /* footer */
 .ft{margin-top:clamp(100px,12vw,180px);background:#000;color:#fff;padding:clamp(56px,7vw,96px) var(--pad) 28px}
@@ -187,8 +218,6 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
   .clock{display:none}
   .band .in{grid-template-columns:1fr}
   .band .big,.band p{grid-column:1/-1}
-  .rows li>a,.rows li>.r{grid-template-columns:minmax(0,1fr) auto}
-  .rows .c,.rows .s{display:none}
   .nav{grid-template-columns:1fr}
   .ask span{display:none}
   .menu-btn span{display:none}
@@ -269,100 +298,116 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
     <img src="assets/photo/about.jpg" style="object-position:50% 8%" alt="Barbora Šandová holding her dog outdoors under a clear sky" loading="lazy" decoding="async" width="960" height="1280">
     <div class="in">
       <div><p class="lbl">About</p><h2 class="big">Data and cloud engineer, Prague</h2></div>
-      <p>Barbora Šandová is a data and cloud engineer at Alma Career in Prague, where she works on a cross-cloud data platform and on LLM assistants over its warehouse. Her research interests are the applied econometrics of urban systems and the evaluation of LLM systems that answer questions over data. Her master's thesis on the persistence of public transport delays in Prague received the IES Director's Award for Distinguished Theses at Charles University in 2026.</p>
+      <p>Barbora Šandová is a data and cloud engineer at Alma Career in Prague, where she works on a cross-cloud data platform and on LLM assistants over its warehouse. Her research interests are the applied econometrics of urban systems and the evaluation of LLM systems that answer questions over data. Her master's thesis on the persistence of public transport delays in Prague received the IES Director's Award for Distinguished Theses at Charles University in 2026.<a class="how" href="texts/registered">How the studies here are planned: what “pre-specified” means</a></p>
     </div>
   </section>
 
   <!-- works -->
-  <section class="idx" id="works" aria-label="All work"><span id="texts"></span>
+  <section class="idx" id="works" aria-labelledby="latest-h"><span id="texts"></span>
     <div class="idx-h">
-      <h2 class="big">All work</h2>
-      <nav class="groups" aria-label="Topics"><a href="#transit">Getting around</a><a href="#prague">Prague</a><a href="#culture">Culture</a><a href="#sport">Sport</a><a href="#ai">AI and data</a><a href="#other">Everything else</a></nav>
+      <h2 class="big" id="latest-h">Latest</h2>
+      <a class="jump" href="#topics">By topic <span aria-hidden="true">↓</span></a>
+    </div>
+    <ol class="cards">
+      <li><a href="texts/gnss-interference"><span class="t">Do aircraft over Czechia broadcast degraded GNSS positions? About as often as over Austria and Switzerland</span><span class="f">Over Czechia, aircraft at cruise broadcast degraded GNSS positions about as often as over Austria and Switzerland (no excess larger than one point); over Poland and the Baltic states, more often.</span><span class="m"><span class="c">Registered study</span><span class="y" title="published 26 Oct 2026">Oct 2026</span></span></a></li>
+      <li><a href="texts/bypass-accidents"><span class="t">Injury accidents in Czech towns after a bypass opened: −19 %, underpowered</span><span class="f">In 35 Czech towns, injury accidents inside the town changed by −19 % in the three years after a bypass opened, against towns still waiting: underpowered.</span><span class="m"><span class="c">Registered study</span><span class="y" title="published 26 Oct 2026">Oct 2026</span></span></a></li>
+      <li><a href="texts/investment-incentives"><span class="t">Unemployment after large Czech investment incentives: +0.10 points, underpowered</span><span class="f">After 34 promises of at least 300 jobs, the district&#x27;s unemployment share moved by +0.10 pp relative to districts without one: underpowered.</span><span class="m"><span class="c">Registered study</span><span class="y" title="published 26 Oct 2026">Oct 2026</span></span></a></li>
+      <li><a href="texts/czech-priorities"><span class="t">Spending did not move with Czech public concern; the Chamber&#x27;s speeches moved a little</span><span class="f">The share of spending on a topic did not move with Czech public concern about it (not supported); the Chamber&#x27;s speeches moved a little, depending on the model.</span><span class="m"><span class="c">Registered study</span><span class="y" title="published 15 Oct 2026">Oct 2026</span></span></a></li>
+      <li><a href="texts/un-votes"><span class="t">Czech votes at the UN changed little between governments, except on Israel and Palestine</span><span class="f">Czechia voted with the EU majority on about 96 % of UN votes under three governments, with no registered shift; its yes votes on Israel and Palestine fell from 76 to 40 %, described after the results.</span><span class="m"><span class="c" title="stage B, the third Babiš government, due around February 2027">Registered study<i class="wip">in progress</i></span><span class="y" title="published 15 Oct 2026">Oct 2026</span></span></a></li>
+      <li><a href="texts/blackout"><span class="t">When the power went out: how Prague&#x27;s trams stopped and came back on 4 July 2025</span><span class="f">When the Czech grid split at noon, 56 % of Prague&#x27;s tram service stopped; half of it ran again by 13:30 and nine tenths by 15:00.</span><span class="m"><span class="c">Registered study</span><span class="y" title="published 14 Oct 2026">Oct 2026</span></span></a></li>
+    </ol>
+  </section>
+  <section class="idx" id="topics" aria-labelledby="topics-h">
+    <div class="idx-h">
+      <h2 class="big" id="topics-h">By topic</h2>
+      <nav class="groups" aria-label="Topics"><a href="#transit">Getting around</a><a href="#prague">Prague</a><a href="#money">State and money</a><a href="#culture">Culture</a><a href="#sport">Sport</a><a href="#ai">AI and data</a><a href="#theses">Theses</a></nav>
     </div>
     <div class="grp" id="transit">
-      <div class="grp-h"><h3>Getting around</h3><p>Trams, buses, streets and the air: delays, weather, fares, darkness, road accidents after new bypasses and the position quality aircraft broadcast.</p></div>
+      <div class="grp-h"><h3>Getting around</h3><p class="note">Trams, buses, roads and the air over Czechia, and how forecasts for them are checked.</p></div>
       <ul class="rows">
-        <li><a href="texts/running-late"><span class="t">Running late</span><span class="c">Hub · series of three</span><span class="s">published</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
-        <li class="sub"><a href="texts/delay-origins"><span class="t">Part 1 · Where is delay born on Prague&#x27;s trams?</span><span class="c">Research</span><span class="s">pre-specified</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
-        <li class="sub"><a href="texts/bunching"><span class="t">Part 2 · How often do two 22s come at once? Tram bunching in Prague, 2025</span><span class="c">Research</span><span class="s">pre-specified</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
-        <li class="sub"><a href="texts/transfers"><span class="t">Part 3 · Will you make your connection?</span><span class="c">Research</span><span class="s">pre-specified</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
-        <li class="sub"><a href="texts/swiss-trams"><span class="t">Part 4 · Is Prague&#x27;s delay map a law of trams?</span><span class="c">Research</span><span class="s">registered study</span><span class="y" title="published 14 Oct 2026">Oct 2026</span></a></li>
-        <li><a href="texts/weather-rails"><span class="t">Weather on the rails</span><span class="c">Hub · series of three</span><span class="s">published</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
-        <li class="sub"><a href="texts/rain-delays"><span class="t">Part 1 · Are Prague&#x27;s trams later in rain hours?</span><span class="c">Research</span><span class="s">pre-specified</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
-        <li class="sub"><a href="texts/heat-delays"><span class="t">Part 2 · Are Prague&#x27;s trams more delayed in hot hours?</span><span class="c">Research</span><span class="s">pre-specified</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
-        <li class="sub"><a href="texts/rain-dwell"><span class="t">Part 3 · Are tram stops shorter in rain?</span><span class="c">Research</span><span class="s">pre-specified</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
-        <li><a href="texts/gnss-interference"><span class="t">Do aircraft over Czechia broadcast degraded GNSS positions? About as often as over Austria and Switzerland</span><span class="c">Research</span><span class="s">registered study</span><span class="y" title="published 26 Oct 2026">Oct 2026</span></a></li>
-        <li><a href="texts/bypass-accidents"><span class="t">Injury accidents in Czech towns after a bypass opened: −19 %, underpowered</span><span class="c">Research</span><span class="s">registered study</span><span class="y" title="published 26 Oct 2026">Oct 2026</span></a></li>
-        <li><a href="texts/blackout"><span class="t">When the power went out: how Prague&#x27;s trams stopped and came back on 4 July 2025</span><span class="c">Research</span><span class="s">registered study</span><span class="y" title="published 14 Oct 2026">Oct 2026</span></a></li>
-        <li><a href="texts/annual-pass"><span class="t">How did passenger counts move around cheaper annual passes in Vienna and Prague?</span><span class="c">Note</span><span class="s">note, descriptive</span><span class="y" title="published 6 Oct 2026">Oct 2026</span></a></li>
-        <li><a href="texts/dst-darkness"><span class="t">When the clocks go back: evening darkness and pedestrian crashes in Czechia</span><span class="c">Research</span><span class="s">pre-specified</span><span class="y" title="published 3 Oct 2026">Oct 2026</span></a></li>
-        <li><a href="texts/delayed"><span class="t">Delayed All the Time: Prague public transport as sound</span><span class="c">Note · sonification</span><span class="s">note</span><span class="y" title="published 14 Sep 2026">Sep 2026</span></a></li>
-        <li><a href="texts/thesis"><span class="t">Persistence Dynamics and Welfare Costs of Urban Public Transport Delays</span><span class="c">Master&#x27;s thesis · Charles University</span><span class="s">exploratory</span><span class="y">Jul 2026</span></a></li>
+        <li><a href="texts/gnss-interference"><span class="t">Do aircraft over Czechia broadcast degraded GNSS positions? About as often as over Austria and Switzerland</span><span class="c">Registered study</span><span class="y" title="published 26 Oct 2026">Oct 2026</span></a></li>
+        <li><a href="texts/bypass-accidents"><span class="t">Injury accidents in Czech towns after a bypass opened: −19 %, underpowered</span><span class="c">Registered study</span><span class="y" title="published 26 Oct 2026">Oct 2026</span></a></li>
+        <li><a href="texts/blackout"><span class="t">When the power went out: how Prague&#x27;s trams stopped and came back on 4 July 2025</span><span class="c">Registered study</span><span class="y" title="published 14 Oct 2026">Oct 2026</span></a></li>
+        <li class="ser"><a href="texts/running-late"><span class="t">Running late</span><span class="c" title="four parts">Series</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a>
+          <details class="sp"><summary>4 parts</summary><ul>
+            <li><a href="texts/delay-origins"><span class="t">Part 1 · Where is delay born on Prague&#x27;s trams?</span><span class="c">Pre-specified</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
+            <li><a href="texts/bunching"><span class="t">Part 2 · How often do two 22s come at once? Tram bunching in Prague, 2025</span><span class="c">Pre-specified</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
+            <li><a href="texts/transfers"><span class="t">Part 3 · Will you make your connection?</span><span class="c">Pre-specified</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
+            <li><a href="texts/swiss-trams"><span class="t">Part 4 · Is Prague&#x27;s delay map a law of trams?</span><span class="c">Registered study</span><span class="y" title="published 14 Oct 2026">Oct 2026</span></a></li>
+          </ul></details></li>
       </ul>
+      <p class="all"><a href="topics/transit">All 16 in Getting around<span aria-hidden="true"> →</span></a></p>
     </div>
     <div class="grp" id="prague">
-      <div class="grp-h"><h3>Prague</h3><p>One city, from the data it publishes about itself.</p></div>
+      <div class="grp-h"><h3>Prague</h3><p class="note">One city, from the data it publishes about itself.</p></div>
       <ul class="rows">
-        <li><a href="texts/prague-measured"><span class="t">Prague, measured</span><span class="c">Hub · series of five</span><span class="s">published</span><span class="y" title="published 29 Sep 2026">Sep 2026</span></a></li>
-        <li class="sub"><a href="texts/prague-council"><span class="t">Part 1 · Do Prague&#x27;s councillors vote against less, term after term?</span><span class="c">Research</span><span class="s">pre-specified</span><span class="y" title="published 28 Sep 2026">Sep 2026</span></a></li>
-        <li class="sub"><a href="texts/prague-rings"><span class="t">Part 2 · How much of ANO&#x27;s housing-estate vote goes with who lives there?</span><span class="c">Research</span><span class="s">exploratory, design before modelling</span><span class="y" title="published 28 Sep 2026">Sep 2026</span></a></li>
-        <li class="sub"><a href="texts/prague-districts"><span class="t">Part 3 · Do districts whose mayor&#x27;s party is in City Hall&#x27;s coalition receive more city grants?</span><span class="c">Research</span><span class="s">pre-specified</span><span class="y" title="published 28 Sep 2026">Sep 2026</span></a></li>
-        <li class="sub"><a href="texts/prague-housing"><span class="t">Part 4 · Do completions follow permits later in Prague than in the rest of Czechia?</span><span class="c">Research</span><span class="s">pre-specified</span><span class="y" title="published 28 Sep 2026">Sep 2026</span></a></li>
-        <li class="sub"><a href="texts/prague-parking"><span class="t">Part 5 · How many more cars would Prague&#x27;s paid kerb hold with 2012&#x27;s car lengths?</span><span class="c">Research</span><span class="s">pre-specified</span><span class="y" title="published 29 Sep 2026">Sep 2026</span></a></li>
-        <li><a href="texts/prague-programmes-2026"><span class="t">What can Prague&#x27;s 2026 programmes deliver in one term?</span><span class="c">Note</span><span class="s">note</span><span class="y" title="published 1 Oct 2026">Oct 2026</span></a></li>
+        <li><a href="texts/prague-programmes-2026"><span class="t">What can Prague&#x27;s 2026 programmes deliver in one term?</span><span class="c">Note</span><span class="y" title="published 1 Oct 2026">Oct 2026</span></a></li>
+        <li class="ser"><a href="texts/prague-measured"><span class="t">Prague, measured</span><span class="c" title="five parts">Series</span><span class="y" title="published 29 Sep 2026">Sep 2026</span></a>
+          <details class="sp"><summary>5 parts</summary><ul>
+            <li><a href="texts/prague-council"><span class="t">Part 1 · Do Prague&#x27;s councillors vote against less, term after term?</span><span class="c">Pre-specified</span><span class="y" title="published 28 Sep 2026">Sep 2026</span></a></li>
+            <li><a href="texts/prague-rings"><span class="t">Part 2 · How much of ANO&#x27;s housing-estate vote goes with who lives there?</span><span class="c" title="design before modelling">Exploratory</span><span class="y" title="published 28 Sep 2026">Sep 2026</span></a></li>
+            <li><a href="texts/prague-districts"><span class="t">Part 3 · Do districts whose mayor&#x27;s party is in City Hall&#x27;s coalition receive more city grants?</span><span class="c">Pre-specified</span><span class="y" title="published 28 Sep 2026">Sep 2026</span></a></li>
+            <li><a href="texts/prague-housing"><span class="t">Part 4 · Do completions follow permits later in Prague than in the rest of Czechia?</span><span class="c">Pre-specified</span><span class="y" title="published 28 Sep 2026">Sep 2026</span></a></li>
+            <li><a href="texts/prague-parking"><span class="t">Part 5 · How many more cars would Prague&#x27;s paid kerb hold with 2012&#x27;s car lengths?</span><span class="c">Pre-specified</span><span class="y" title="published 29 Sep 2026">Sep 2026</span></a></li>
+          </ul></details></li>
       </ul>
+      <p class="all"><a href="topics/prague">All 7 in Prague<span aria-hidden="true"> →</span></a></p>
+    </div>
+    <div class="grp" id="money"><span id="other"></span>
+      <div class="grp-h"><h3>State and money</h3><p class="note">What the Czech state subsidises, buys, spends and votes for, and what a lottery pays back.</p></div>
+      <ul class="rows">
+        <li><a href="texts/investment-incentives"><span class="t">Unemployment after large Czech investment incentives: +0.10 points, underpowered</span><span class="c">Registered study</span><span class="y" title="published 26 Oct 2026">Oct 2026</span></a></li>
+        <li><a href="texts/czech-priorities"><span class="t">Spending did not move with Czech public concern; the Chamber&#x27;s speeches moved a little</span><span class="c">Registered study</span><span class="y" title="published 15 Oct 2026">Oct 2026</span></a></li>
+        <li><a href="texts/un-votes"><span class="t">Czech votes at the UN changed little between governments, except on Israel and Palestine</span><span class="c" title="stage B, the third Babiš government, due around February 2027">Registered study<i class="wip">in progress</i></span><span class="y" title="published 15 Oct 2026">Oct 2026</span></a></li>
+        <li><a href="texts/procurement-thresholds"><span class="t">Priced at the limit: Czech public contracts after the small-contract threshold rose in 2025</span><span class="c">Registered study</span><span class="y" title="published 13 Oct 2026">Oct 2026</span></a></li>
+      </ul>
+      <p class="all"><a href="topics/money">All 5 in State and money<span aria-hidden="true"> →</span></a></p>
     </div>
     <div class="grp" id="culture">
-      <div class="grp-h"><h3>Culture</h3><p>Music charts and tours, song contests, film grants, adverts, and data turned into sound.</p></div>
+      <div class="grp-h"><h3>Culture</h3><p class="note">Music charts and tours, song contests, film grants, adverts and data turned into sound.</p></div>
       <ul class="rows">
-        <li><a href="texts/pop-measured"><span class="t">Pop, measured</span><span class="c">Hub · series of six</span><span class="s">published</span><span class="y" title="published 2 Oct 2026">Oct 2026</span></a></li>
-        <li class="sub"><a href="texts/pop-harry-styles"><span class="t">Part 1 · Harry Styles: how long a hit lasts, where, and what a ticket costs</span><span class="c">Research</span><span class="s">pre-specified</span><span class="y" title="published 2 Oct 2026">Oct 2026</span></a></li>
-        <li class="sub"><a href="texts/pop-taylor-swift"><span class="t">Part 2 · Taylor Swift: chart runs, tour attendance and prices around the Eras Tour</span><span class="c">Research</span><span class="s">pre-specified</span><span class="y" title="published 2 Oct 2026">Oct 2026</span></a></li>
-        <li class="sub"><a href="texts/pop-bts"><span class="t">Part 3 · BTS: Dynamite, and streams spread over hundreds of songs</span><span class="c">Research</span><span class="s">pre-specified</span><span class="y" title="published 2 Oct 2026">Oct 2026</span></a></li>
-        <li class="sub"><a href="texts/pop-bad-bunny"><span class="t">Part 4 · Bad Bunny: a long-running hit, and tickets in days of income</span><span class="c">Research</span><span class="s">pre-specified</span><span class="y" title="published 2 Oct 2026">Oct 2026</span></a></li>
-        <li class="sub"><a href="texts/pop-billie-eilish"><span class="t">Part 5 · Billie Eilish: two long hits, five years apart</span><span class="c">Research</span><span class="s">pre-specified</span><span class="y" title="published 2 Oct 2026">Oct 2026</span></a></li>
-        <li class="sub"><a href="texts/pop-together"><span class="t">Part 6 · Together: songs lasted longer in their artist&#x27;s language market, and ticket prices varied little with income</span><span class="c">Research</span><span class="s">exploratory</span><span class="y" title="published 2 Oct 2026">Oct 2026</span></a></li>
-        <li><a href="texts/eurovision"><span class="t">Diaspora, juries and the EU in Eurovision votes, 1975–2025</span><span class="c">Research</span><span class="s">pre-specified</span><span class="y" title="published 3 Oct 2026">Oct 2026</span></a></li>
-        <li><a href="texts/concert-effect"><span class="t">Did Harry Styles&#x27;s chart share rise around his first shows? Visited against not-yet-visited countries, 2017–2018</span><span class="c">Research</span><span class="s">pre-specified</span><span class="y" title="published 2 Oct 2026">Oct 2026</span></a></li>
-        <li><a href="texts/film-fund"><span class="t">Are projects just above the Czech film fund&#x27;s funding line more often released in cinemas?</span><span class="c">Research</span><span class="s">pre-specified</span><span class="y" title="published 1 Oct 2026">Oct 2026</span></a></li>
-        <li><a href="atlantic/"><span class="t">The Atlantic, played</span><span class="c">Note · sonification</span><span class="s">note</span><span class="y" title="published 15 Sep 2026">Sep 2026</span></a></li>
-        <li><a href="texts/brand-reflection"><span class="t">Colour and sound in 47 Czech YouTube ad spots, and the language of 23 brand homepages</span><span class="c">Note</span><span class="s">note</span><span class="y" title="published 14 Sep 2026">Sep 2026</span></a></li>
-        <li><a href="texts/filmrunner"><span class="t">FilmRunner, an offline call sheet</span><span class="c">Note</span><span class="s">note</span><span class="y" title="published 14 Sep 2026">Sep 2026</span></a></li>
+        <li><a href="texts/eurovision"><span class="t">Diaspora, juries and the EU in Eurovision votes, 1975–2025</span><span class="c">Pre-specified</span><span class="y" title="published 3 Oct 2026">Oct 2026</span></a></li>
+        <li class="ser"><a href="texts/pop-measured"><span class="t">Pop, measured</span><span class="c" title="six parts">Series</span><span class="y" title="published 2 Oct 2026">Oct 2026</span></a>
+          <details class="sp"><summary>6 parts</summary><ul>
+            <li><a href="texts/pop-harry-styles"><span class="t">Part 1 · Harry Styles: how long a hit lasts, where, and what a ticket costs</span><span class="c" title="descriptive">Pre-specified</span><span class="y" title="published 2 Oct 2026">Oct 2026</span></a></li>
+            <li><a href="texts/pop-taylor-swift"><span class="t">Part 2 · Taylor Swift: chart runs, tour attendance and prices around the Eras Tour</span><span class="c">Pre-specified</span><span class="y" title="published 2 Oct 2026">Oct 2026</span></a></li>
+            <li><a href="texts/pop-bts"><span class="t">Part 3 · BTS: Dynamite, and streams spread over hundreds of songs</span><span class="c" title="descriptive">Pre-specified</span><span class="y" title="published 2 Oct 2026">Oct 2026</span></a></li>
+            <li><a href="texts/pop-bad-bunny"><span class="t">Part 4 · Bad Bunny: a long-running hit, and tickets in days of income</span><span class="c" title="descriptive">Pre-specified</span><span class="y" title="published 2 Oct 2026">Oct 2026</span></a></li>
+            <li><a href="texts/pop-billie-eilish"><span class="t">Part 5 · Billie Eilish: two long hits, five years apart</span><span class="c" title="descriptive">Pre-specified</span><span class="y" title="published 2 Oct 2026">Oct 2026</span></a></li>
+            <li><a href="texts/pop-together"><span class="t">Part 6 · Together: songs lasted longer in their artist&#x27;s language market, and ticket prices varied little with income</span><span class="c">Exploratory</span><span class="y" title="published 2 Oct 2026">Oct 2026</span></a></li>
+          </ul></details></li>
+        <li><a href="texts/concert-effect"><span class="t">Did Harry Styles&#x27;s chart share rise around his first shows? Visited against not-yet-visited countries, 2017–2018</span><span class="c">Pre-specified</span><span class="y" title="published 2 Oct 2026">Oct 2026</span></a></li>
+        <li><a href="texts/film-fund"><span class="t">Are projects just above the Czech film fund&#x27;s funding line more often released in cinemas?</span><span class="c">Pre-specified</span><span class="y" title="published 1 Oct 2026">Oct 2026</span></a></li>
       </ul>
+      <p class="all"><a href="topics/culture">All 13 in Culture<span aria-hidden="true"> →</span></a></p>
     </div>
     <div class="grp" id="sport">
-      <div class="grp-h"><h3>Sport</h3><p>How many of a country&#x27;s players are in the highest-ranked leagues by UEFA coefficient, per capita, compared with its peers.</p></div>
+      <div class="grp-h"><h3>Sport</h3><p class="note">How many of a country&#x27;s players reach the strongest leagues, per head, against its peers.</p></div>
       <ul class="rows">
-        <li><a href="texts/hockey"><span class="t">Player Pool Atlas: Czech ice hockey players, 1995/96–2025/26</span><span class="c">Tool · Player Pool Atlas</span><span class="s">atlas</span><span class="y" title="published 14 Sep 2026">Sep 2026</span></a></li>
-        <li><a href="texts/football"><span class="t">Player Pool Atlas: Czech footballers in Europe, 1995/96–2025/26</span><span class="c">Tool · Player Pool Atlas</span><span class="s">atlas</span><span class="y" title="published 14 Sep 2026">Sep 2026</span></a></li>
+        <li><a href="texts/hockey"><span class="t">Player Pool Atlas: Czech ice hockey players, 1995/96–2025/26</span><span class="c" title="Player Pool Atlas">Tool</span><span class="y" title="published 14 Sep 2026">Sep 2026</span></a></li>
+        <li><a href="texts/football"><span class="t">Player Pool Atlas: Czech footballers in Europe, 1995/96–2025/26</span><span class="c" title="Player Pool Atlas">Tool</span><span class="y" title="published 14 Sep 2026">Sep 2026</span></a></li>
       </ul>
+      <p class="all"><a href="topics/sport">All 2 in Sport<span aria-hidden="true"> →</span></a></p>
     </div>
     <div class="grp" id="ai">
-      <div class="grp-h"><h3>AI and data</h3><p>Assistants over warehouses, and the tools that check them.</p></div>
+      <div class="grp-h"><h3>AI and data</h3><p class="note">Assistants over warehouses, and the tools that check them.</p></div>
       <ul class="rows">
-        <li><a href="texts/sitewitness"><span class="t">sitewitness: rules enforced in code</span><span class="c">Tool · sitewitness</span><span class="s">tool v0.1.0</span><span class="y" title="published 22 Sep 2026">Sep 2026</span></a></li>
-        <li><a href="texts/ai-over-data"><span class="t">An LLM assistant over a data warehouse: design notes</span><span class="c">Note</span><span class="s">note</span><span class="y" title="published 17 Sep 2026">Sep 2026</span></a></li>
-        <li><a href="texts/silent-detector"><span class="t">Can a wrong number be seen coming?</span><span class="c">Research · Quaesitor</span><span class="s">exploratory</span><span class="y" title="published 15 Sep 2026">Sep 2026</span></a></li>
-        <li><a href="texts/quotecheck"><span class="t">quotecheck: a quotation check</span><span class="c">Tool · quotecheck</span><span class="s">tool v0.1.0</span><span class="y" title="published 15 Sep 2026">Sep 2026</span></a></li>
-        <li><a href="texts/quaesitor/"><span class="t">Quaesitor</span><span class="c">Research · AI over data</span><span class="s">retired</span><span class="y" title="published 14 Sep 2026">Sep 2026</span></a></li>
-        <li><a href="texts/cutover"><span class="t">cutover: a table migration check</span><span class="c">Tool · cutover</span><span class="s">tool v0.1.0</span><span class="y" title="published 14 Sep 2026">Sep 2026</span></a></li>
-        <li><a href="texts/second-brain"><span class="t">A wiki that an agent keeps</span><span class="c">Note</span><span class="s">note</span><span class="y" title="published 14 Sep 2026">Sep 2026</span></a></li>
-        <li><a href="texts/thesis-logs"><span class="t">Patterns in a university&#x27;s logs</span><span class="c">Master&#x27;s thesis · VŠE</span><span class="s">note</span><span class="y">May 2025</span></a></li>
+        <li><a href="texts/sitewitness"><span class="t">sitewitness: rules enforced in code</span><span class="c" title="v0.1.0">Tool</span><span class="y" title="published 22 Sep 2026">Sep 2026</span></a></li>
+        <li><a href="texts/ai-over-data"><span class="t">An LLM assistant over a data warehouse: design notes</span><span class="c">Note</span><span class="y" title="published 17 Sep 2026">Sep 2026</span></a></li>
+        <li><a href="texts/silent-detector"><span class="t">Can a wrong number be seen coming?</span><span class="c" title="companion to Quaesitor">Exploratory</span><span class="y" title="published 15 Sep 2026">Sep 2026</span></a></li>
+        <li><a href="texts/quotecheck"><span class="t">quotecheck: a quotation check</span><span class="c" title="v0.1.0">Tool</span><span class="y" title="published 15 Sep 2026">Sep 2026</span></a></li>
       </ul>
+      <p class="all"><a href="topics/ai">All 7 in AI and data<span aria-hidden="true"> →</span></a></p>
     </div>
-    <div class="grp" id="other">
-      <div class="grp-h"><h3>Everything else</h3><p>Lotteries, a forecast check, Czech votes at the UN, what worries Czechs against what the Chamber says and the state spends, unemployment after investment incentives, a thesis on EU votes and how the studies here are planned.</p></div>
+    <details class="grp" id="theses">
+      <summary class="grp-h"><h3>Theses</h3><span class="note">Three university theses, on transit delays, a university&#x27;s logs and EU votes.</span></summary>
       <ul class="rows">
-        <li><a href="texts/investment-incentives"><span class="t">Unemployment after large Czech investment incentives: +0.10 points, underpowered</span><span class="c">Research</span><span class="s">registered study</span><span class="y" title="published 26 Oct 2026">Oct 2026</span></a></li>
-        <li><a href="texts/czech-priorities"><span class="t">Spending did not move with Czech public concern; the Chamber&#x27;s speeches moved a little</span><span class="c">Research</span><span class="s">published, registered study</span><span class="y" title="published 15 Oct 2026">Oct 2026</span></a></li>
-        <li><a href="texts/un-votes"><span class="t">Czech votes at the UN changed little between governments, except on Israel and Palestine</span><span class="c">Research</span><span class="s">in progress, registered study, stage B in 2027</span><span class="y" title="published 15 Oct 2026">Oct 2026</span></a></li>
-        <li><a href="texts/procurement-thresholds"><span class="t">Priced at the limit: Czech public contracts after the small-contract threshold rose in 2025</span><span class="c">Research</span><span class="s">registered study</span><span class="y" title="published 13 Oct 2026">Oct 2026</span></a></li>
-        <li><a href="texts/registered"><span class="t">What &quot;pre-specified&quot; means on this site</span><span class="c">Note · method</span><span class="s">note</span><span class="y" title="published 5 Oct 2026">Oct 2026</span></a></li>
-        <li><a href="texts/lottery"><span class="t">Can a lottery player choose better?</span><span class="c">Research</span><span class="s">exploratory</span><span class="y" title="published 29 Sep 2026">Sep 2026</span></a></li>
-        <li><a href="texts/forecast-verification"><span class="t">Forecast verification: protocol</span><span class="c">Note</span><span class="s">in progress, first readings 9 and 16 Nov 2026</span><span class="y" title="published 29 Sep 2026">Sep 2026</span></a></li>
-        <li><a href="texts/thesis-eu"><span class="t">Franco-German voting after the Treaty of Aachen</span><span class="c">Bachelor&#x27;s thesis · VŠE</span><span class="s">note</span><span class="y">Apr 2021</span></a></li>
+        <li><a href="texts/thesis"><span class="t">Persistence Dynamics and Welfare Costs of Urban Public Transport Delays</span><span class="c" title="Master&#x27;s thesis · Charles University · exploratory">Thesis</span><span class="y">Jul 2026</span></a></li>
+        <li><a href="texts/thesis-logs"><span class="t">Patterns in a university&#x27;s logs</span><span class="c" title="Master&#x27;s thesis · VŠE">Thesis</span><span class="y">May 2025</span></a></li>
+        <li><a href="texts/thesis-eu"><span class="t">Franco-German voting after the Treaty of Aachen</span><span class="c" title="Bachelor&#x27;s thesis · VŠE">Thesis</span><span class="y">Apr 2021</span></a></li>
       </ul>
-    </div>
+      <p class="all"><a href="topics/theses">All 3 in Theses<span aria-hidden="true"> →</span></a></p>
+    </details>
   </section>
   <!-- /works -->
 </main>
@@ -371,7 +416,7 @@ main :focus-visible,.ft :focus-visible{outline-color:currentColor}
   <h2 class="big"><a href="mailto:hello@bsandova.com">hello@<br>bsandova.com</a></h2>
   <div class="row">
     <span>Barbora Šandová · Prague 50.08° N 14.43° E</span>
-    <nav><a href="https://github.com/sandovabarbora" rel="me">github</a><a href="https://www.linkedin.com/in/barbora-sandova" rel="me">linkedin</a><a href="changelog/">changelog</a><a href="feed.xml" type="application/atom+xml">feed</a></nav>
+    <nav><a href="https://github.com/sandovabarbora" rel="me">github</a><a href="https://www.linkedin.com/in/barbora-sandova" rel="me">linkedin</a><a href="texts/registered">method</a><a href="changelog/">changelog</a><a href="feed.xml" type="application/atom+xml">feed</a></nav>
   </div>
   <div class="row side">
     <span>Also running here, for fun:</span>
