@@ -169,3 +169,36 @@ def test_title_check_asks_in_chunks_of_fifty(monkeypatch, calls):
     script(monkeypatch, calls, [pages(*({"title": n} for n in names[i:i + 50])) for i in (0, 50, 100)])
     assert len(F.verify_titles(names)) == 120
     assert sum(c[0] == "get" for c in calls) == 3
+
+
+@pytest.mark.parametrize("err", [urllib.error.URLError("dns"), TimeoutError("slow"), ConnectionResetError("reset")])
+def test_network_errors_are_retried_with_backoff_like_a_503(monkeypatch, calls, err):
+    script(monkeypatch, calls, [err, body({"20230101": 5})])
+    assert F.fetch_pageviews("A", "2023-01-01", "2023-01-01").tolist() == [5]
+    assert [c[1] for c in calls if c[0] == "sleep"] == [1.0]
+
+
+def test_a_network_error_gives_up_after_three_attempts_with_a_clear_message(monkeypatch, calls):
+    script(monkeypatch, calls, [TimeoutError(), ConnectionResetError(), urllib.error.URLError("x")])
+    with pytest.raises(RuntimeError, match="network error for 'A' after 3 attempts"):
+        F.fetch_pageviews("A", "2023-01-01", "2023-01-01")
+    assert sum(c[0] == "get" for c in calls) == 3
+    assert [c[1] for c in calls if c[0] == "sleep"] == [1.0, 2.0]
+
+
+def test_the_attempt_count_of_a_non_retried_status_is_one(monkeypatch, calls):
+    script(monkeypatch, calls, [http_error(403)])
+    with pytest.raises(RuntimeError, match=r"HTTP 403 for 'A' after 1 attempt$"):
+        F.fetch_pageviews("A", "2023-01-01", "2023-01-01")
+
+
+def test_the_title_check_retries_a_dropped_connection(monkeypatch, calls):
+    script(monkeypatch, calls, [ConnectionResetError(), pages({"title": "A b"}, normalized=[("A_b", "A b")])])
+    assert F.verify_titles(["A_b"]) == {"A_b": "A b"}
+
+
+def test_title_check_stops_when_the_returned_title_is_another_article(monkeypatch, calls):
+    script(monkeypatch, calls, [pages({"title": "Rico Rodriguez (musician)", "pageid": 5},
+                                      normalized=[("Rico_Rodriguez_(actor)", "Rico Rodriguez (musician)")])])
+    with pytest.raises(F.ArticleNotFound, match=r"Rico_Rodriguez_\(actor\): the API returned 'Rico Rodriguez \(musician\)'"):
+        F.verify_titles(["Rico_Rodriguez_(actor)"])

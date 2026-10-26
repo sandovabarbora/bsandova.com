@@ -34,6 +34,14 @@ class ArticleNotFound(LookupError):
     """A title is missing, or points to another page. Never replaced by a guess (design §2)."""
 
 
+class _Failed(Exception):
+    """A request that stays failed: the HTTP status (None for a network error) and the attempts made."""
+
+    def __init__(self, code: int | None, attempts: int):
+        super().__init__(code, attempts)
+        self.code, self.attempts = code, attempts
+
+
 def _stamp(day: str) -> str:
     return pd.Timestamp(day).strftime("%Y%m%d")
 
@@ -46,10 +54,17 @@ def _get(url: str, retries: int) -> bytes:
                 return resp.read()
         except urllib.error.HTTPError as err:
             if err.code not in RETRY_STATUS or attempt == retries:
-                raise
+                raise _Failed(err.code, attempt) from err
             retry_after = err.headers.get("Retry-After") if err.headers else None
             wait = min(float(retry_after), MAX_WAIT) if retry_after and retry_after.isdigit() else 2.0 ** (attempt - 1)
             log.warning("HTTP %s, attempt %d of %d, waiting %.1f s", err.code, attempt, retries, wait)
+            time.sleep(wait)
+        except (urllib.error.URLError, TimeoutError, ConnectionError) as err:
+            # a dropped connection is transient like a 5xx; HTTPError (a URLError) is caught above
+            if attempt == retries:
+                raise _Failed(None, attempt) from err
+            wait = 2.0 ** (attempt - 1)
+            log.warning("%s, attempt %d of %d, waiting %.1f s", type(err).__name__, attempt, retries, wait)
             time.sleep(wait)
     raise AssertionError("unreachable")
 
@@ -62,11 +77,12 @@ def fetch_pageviews(article: str, start: str, end: str, project: str = "en.wikip
            f"{_stamp(start)}/{_stamp(end)}")
     try:
         body = _get(url, retries)
-    except urllib.error.HTTPError as err:
+    except _Failed as err:
         if err.code == 404:
             raise ArticleNotFound(f"404 for {article!r} on {project} for {start}..{end}: the title does not exist, or the "
-                                  "API holds no views for it. Do not guess a replacement.") from err
-        raise RuntimeError(f"HTTP {err.code} for {article!r} after {retries} attempts") from err
+                                  "API holds no views for it. Do not guess a replacement.") from err.__cause__
+        what = "network error" if err.code is None else f"HTTP {err.code}"
+        raise RuntimeError(f"{what} for {article!r} after {err.attempts} attempt{'s' * (err.attempts != 1)}") from err.__cause__
     items = json.loads(body)["items"]
     got = pd.Series({pd.Timestamp(i["timestamp"][:8]): i["views"] for i in items}, dtype="float64")
     days = pd.date_range(pd.Timestamp(start), pd.Timestamp(end), freq="D")
@@ -96,7 +112,11 @@ def verify_titles(articles: Sequence[str]) -> dict[str, str]:
         chunk = articles[i:i + 50]
         params = urllib.parse.urlencode({"action": "query", "titles": "|".join(chunk), "prop": "info|pageprops",
                                          "ppprop": "disambiguation", "format": "json", "formatversion": "2"})
-        data = json.loads(_get(f"{MEDIAWIKI}?{params}", 3))["query"]
+        try:
+            data = json.loads(_get(f"{MEDIAWIKI}?{params}", 3))["query"]
+        except _Failed as err:
+            what = "network error" if err.code is None else f"HTTP {err.code}"
+            raise RuntimeError(f"title check: {what} after {err.attempts} attempt{'s' * (err.attempts != 1)}") from err.__cause__
         normalised = {n["from"]: n["to"] for n in data.get("normalized", [])}
         pages = {p["title"]: p for p in data["pages"]}
         for art in chunk:
@@ -108,6 +128,8 @@ def verify_titles(articles: Sequence[str]) -> dict[str, str]:
                 bad.append(f"{art}: is a redirect to another page")
             elif "disambiguation" in page.get("pageprops", {}):
                 bad.append(f"{art}: is a disambiguation page")
+            elif title != art.replace("_", " "):
+                bad.append(f"{art}: the API returned {title!r}, not the same article (a normalisation or a move)")
             out[art] = title
     if bad:
         raise ArticleNotFound("title check failed, nothing is replaced by a guess: " + "; ".join(bad))
