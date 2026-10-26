@@ -1,0 +1,5150 @@
+{
+ "note": "added after the results, not registered: per-day shares of degraded position reports (NACp below 8) on primary usable points after the entry buffer and the persistent-airframe drop, from the frozen estimation code's own day sums (tools/gnss/describe.py); descriptive, no interval, no label",
+ "rule": "a degraded-position day: at least 300 usable points in the region and in control, a day share of at least 2 % and at least 2 percentage points above control's share that day (design §4)",
+ "reproduces_registered_day_counts": true,
+ "pooled_points": {
+  "CZ": {
+   "usable": 4202775,
+   "degraded": 23467
+  },
+  "PL": {
+   "usable": 5579492,
+   "degraded": 132061
+  },
+  "BALT": {
+   "usable": 1106186,
+   "degraded": 82959
+  },
+  "CTRL": {
+   "usable": 10412704,
+   "degraded": 53071
+  }
+ },
+ "days": [
+  {
+   "wednesday": "2023-03-15",
+   "date_used": "2023-03-15",
+   "study_year": 1,
+   "CZ": {
+    "usable": 6425,
+    "degraded": 8,
+    "share": 0.001245136186770428,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 546,
+    "degraded": 1,
+    "share": 0.0018315018315018315,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 723,
+    "degraded": 1,
+    "share": 0.0013831258644536654,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 19298,
+    "degraded": 8,
+    "share": 0.00041455073064566275
+   }
+  },
+  {
+   "wednesday": "2023-03-22",
+   "date_used": "2023-03-22",
+   "study_year": 1,
+   "CZ": {
+    "usable": 6909,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 193,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 885,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 20222,
+    "degraded": 1,
+    "share": 4.945109286915241e-05
+   }
+  },
+  {
+   "wednesday": "2023-03-29",
+   "date_used": "2023-03-29",
+   "study_year": 1,
+   "CZ": {
+    "usable": 8162,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 655,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 1093,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 19774,
+    "degraded": 1,
+    "share": 5.057145746940427e-05
+   }
+  },
+  {
+   "wednesday": "2023-04-05",
+   "date_used": "2023-04-05",
+   "study_year": 1,
+   "CZ": {
+    "usable": 6170,
+    "degraded": 7,
+    "share": 0.00113452188006483,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 397,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 483,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 16802,
+    "degraded": 0,
+    "share": 0.0
+   }
+  },
+  {
+   "wednesday": "2023-04-12",
+   "date_used": "2023-04-12",
+   "study_year": 1,
+   "CZ": {
+    "usable": 11865,
+    "degraded": 23,
+    "share": 0.0019384745048461863,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 885,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 793,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 27759,
+    "degraded": 62,
+    "share": 0.0022335098526603983
+   }
+  },
+  {
+   "wednesday": "2023-04-19",
+   "date_used": "2023-04-19",
+   "study_year": 1,
+   "CZ": {
+    "usable": 10498,
+    "degraded": 60,
+    "share": 0.005715374357020385,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 557,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 763,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 27007,
+    "degraded": 35,
+    "share": 0.001295960306587181
+   }
+  },
+  {
+   "wednesday": "2023-04-26",
+   "date_used": "2023-04-26",
+   "study_year": 1,
+   "CZ": {
+    "usable": 10520,
+    "degraded": 32,
+    "share": 0.003041825095057034,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 602,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 889,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 26314,
+    "degraded": 9,
+    "share": 0.0003420232575815155
+   }
+  },
+  {
+   "wednesday": "2023-05-03",
+   "date_used": "2023-05-03",
+   "study_year": 1,
+   "CZ": {
+    "usable": 10394,
+    "degraded": 39,
+    "share": 0.0037521647104098517,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 704,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 2278,
+    "degraded": 3,
+    "share": 0.0013169446883230904,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 29260,
+    "degraded": 19,
+    "share": 0.0006493506493506494
+   }
+  },
+  {
+   "wednesday": "2023-05-10",
+   "date_used": "2023-05-10",
+   "study_year": 1,
+   "CZ": {
+    "usable": 10523,
+    "degraded": 12,
+    "share": 0.001140359213152143,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 653,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 2543,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 29600,
+    "degraded": 12,
+    "share": 0.0004054054054054054
+   }
+  },
+  {
+   "wednesday": "2023-05-17",
+   "date_used": "2023-05-17",
+   "study_year": 1,
+   "CZ": {
+    "usable": 12428,
+    "degraded": 43,
+    "share": 0.0034599291921467656,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 758,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 3133,
+    "degraded": 1,
+    "share": 0.0003191828917969997,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 30915,
+    "degraded": 19,
+    "share": 0.0006145883875141517
+   }
+  },
+  {
+   "wednesday": "2023-05-24",
+   "date_used": "2023-05-24",
+   "study_year": 1,
+   "CZ": {
+    "usable": 11055,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 4675,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 5485,
+    "degraded": 17,
+    "share": 0.003099361896080219,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 30951,
+    "degraded": 0,
+    "share": 0.0
+   }
+  },
+  {
+   "wednesday": "2023-05-31",
+   "date_used": "2023-05-31",
+   "study_year": 1,
+   "CZ": {
+    "usable": 11602,
+    "degraded": 23,
+    "share": 0.0019824168246853993,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 4771,
+    "degraded": 16,
+    "share": 0.003353594634248585,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 5649,
+    "degraded": 3,
+    "share": 0.0005310674455655868,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 34614,
+    "degraded": 41,
+    "share": 0.001184491824117409
+   }
+  },
+  {
+   "wednesday": "2023-06-07",
+   "date_used": "2023-06-07",
+   "study_year": 1,
+   "CZ": {
+    "usable": 14349,
+    "degraded": 21,
+    "share": 0.0014635166213673428,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 6517,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 6184,
+    "degraded": 16,
+    "share": 0.00258732212160414,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 42910,
+    "degraded": 15,
+    "share": 0.0003495688650664181
+   }
+  },
+  {
+   "wednesday": "2023-06-14",
+   "date_used": "2023-06-14",
+   "study_year": 1,
+   "CZ": {
+    "usable": 12194,
+    "degraded": 55,
+    "share": 0.004510414958176152,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 6088,
+    "degraded": 7,
+    "share": 0.0011498028909329829,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 6245,
+    "degraded": 49,
+    "share": 0.007846277021617293,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 39237,
+    "degraded": 43,
+    "share": 0.0010959043759716594
+   }
+  },
+  {
+   "wednesday": "2023-06-21",
+   "date_used": "2023-06-21",
+   "study_year": 1,
+   "CZ": {
+    "usable": 14605,
+    "degraded": 16,
+    "share": 0.00109551523450873,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 7752,
+    "degraded": 19,
+    "share": 0.0024509803921568627,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 6004,
+    "degraded": 103,
+    "share": 0.01715522984676882,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 49158,
+    "degraded": 41,
+    "share": 0.0008340453232434192
+   }
+  },
+  {
+   "wednesday": "2023-06-28",
+   "date_used": "2023-06-28",
+   "study_year": 1,
+   "CZ": {
+    "usable": 15127,
+    "degraded": 1,
+    "share": 6.610696106299993e-05,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 19674,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 6114,
+    "degraded": 43,
+    "share": 0.007033038927052666,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 42230,
+    "degraded": 96,
+    "share": 0.002273265451101113
+   }
+  },
+  {
+   "wednesday": "2023-07-05",
+   "date_used": "2023-07-05",
+   "study_year": 1,
+   "CZ": {
+    "usable": 16267,
+    "degraded": 1,
+    "share": 6.14741501198746e-05,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 20754,
+    "degraded": 62,
+    "share": 0.002987375927532042,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 6646,
+    "degraded": 46,
+    "share": 0.006921456515197111,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 45786,
+    "degraded": 1,
+    "share": 2.184073734329271e-05
+   }
+  },
+  {
+   "wednesday": "2023-07-12",
+   "date_used": "2023-07-12",
+   "study_year": 1,
+   "CZ": {
+    "usable": 20217,
+    "degraded": 12,
+    "share": 0.0005935598753524262,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 21800,
+    "degraded": 33,
+    "share": 0.0015137614678899082,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 8530,
+    "degraded": 29,
+    "share": 0.003399765533411489,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 51059,
+    "degraded": 30,
+    "share": 0.0005875555729646096
+   }
+  },
+  {
+   "wednesday": "2023-07-19",
+   "date_used": "2023-07-19",
+   "study_year": 1,
+   "CZ": {
+    "usable": 15291,
+    "degraded": 46,
+    "share": 0.003008305539206069,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 21218,
+    "degraded": 39,
+    "share": 0.001838062022810821,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 5957,
+    "degraded": 53,
+    "share": 0.008897095853617592,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 49098,
+    "degraded": 21,
+    "share": 0.000427715996578272
+   }
+  },
+  {
+   "wednesday": "2023-07-26",
+   "date_used": "2023-07-26",
+   "study_year": 1,
+   "CZ": {
+    "usable": 15545,
+    "degraded": 44,
+    "share": 0.0028304921196526216,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 21132,
+    "degraded": 55,
+    "share": 0.0026026878667423812,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 6221,
+    "degraded": 47,
+    "share": 0.007555055457321974,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 44203,
+    "degraded": 47,
+    "share": 0.0010632762482184468
+   }
+  },
+  {
+   "wednesday": "2023-08-02",
+   "date_used": "2023-08-02",
+   "study_year": 1,
+   "CZ": {
+    "usable": 20446,
+    "degraded": 54,
+    "share": 0.002641103394306955,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 33069,
+    "degraded": 45,
+    "share": 0.0013607910732105597,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 7867,
+    "degraded": 2,
+    "share": 0.00025422651582560063,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 55182,
+    "degraded": 49,
+    "share": 0.0008879707150882534
+   }
+  },
+  {
+   "wednesday": "2023-08-09",
+   "date_used": "2023-08-09",
+   "study_year": 1,
+   "CZ": {
+    "usable": 24229,
+    "degraded": 84,
+    "share": 0.003466919806843039,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 18230,
+    "degraded": 23,
+    "share": 0.0012616566099835436,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 8383,
+    "degraded": 49,
+    "share": 0.005845162829535966,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 57959,
+    "degraded": 55,
+    "share": 0.0009489466691971911
+   }
+  },
+  {
+   "wednesday": "2023-08-16",
+   "date_used": "2023-08-16",
+   "study_year": 1,
+   "CZ": {
+    "usable": 24589,
+    "degraded": 12,
+    "share": 0.00048802309976005533,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 32689,
+    "degraded": 112,
+    "share": 0.0034262290066995015,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 8854,
+    "degraded": 119,
+    "share": 0.013440252992997516,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 59321,
+    "degraded": 96,
+    "share": 0.0016183139191854486
+   }
+  },
+  {
+   "wednesday": "2023-08-23",
+   "date_used": "2023-08-23",
+   "study_year": 1,
+   "CZ": {
+    "usable": 22104,
+    "degraded": 50,
+    "share": 0.002262034020991676,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 29660,
+    "degraded": 58,
+    "share": 0.0019554956169925827,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 3097,
+    "degraded": 76,
+    "share": 0.024539877300613498,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 58904,
+    "degraded": 65,
+    "share": 0.0011034904250984653
+   }
+  },
+  {
+   "wednesday": "2023-08-30",
+   "date_used": "2023-08-30",
+   "study_year": 1,
+   "CZ": {
+    "usable": 21278,
+    "degraded": 41,
+    "share": 0.001926872826393458,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 29544,
+    "degraded": 52,
+    "share": 0.001760086650419713,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 3070,
+    "degraded": 147,
+    "share": 0.047882736156351795,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 58341,
+    "degraded": 153,
+    "share": 0.0026225124697896846
+   }
+  },
+  {
+   "wednesday": "2023-09-06",
+   "date_used": "2023-09-06",
+   "study_year": 1,
+   "CZ": {
+    "usable": 18726,
+    "degraded": 92,
+    "share": 0.004912955249385881,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 29482,
+    "degraded": 83,
+    "share": 0.002815277118241639,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 3554,
+    "degraded": 69,
+    "share": 0.019414743950478333,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 55373,
+    "degraded": 158,
+    "share": 0.002853376194174056
+   }
+  },
+  {
+   "wednesday": "2023-09-13",
+   "date_used": "2023-09-13",
+   "study_year": 1,
+   "CZ": {
+    "usable": 21698,
+    "degraded": 55,
+    "share": 0.002534795833717393,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 30016,
+    "degraded": 999,
+    "share": 0.03328224946695096,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 8890,
+    "degraded": 141,
+    "share": 0.015860517435320586,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 56701,
+    "degraded": 112,
+    "share": 0.0019752738046948026
+   }
+  },
+  {
+   "wednesday": "2023-09-20",
+   "date_used": "2023-09-20",
+   "study_year": 1,
+   "CZ": {
+    "usable": 16809,
+    "degraded": 46,
+    "share": 0.002736629186745196,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 28463,
+    "degraded": 146,
+    "share": 0.005129466324702245,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 3516,
+    "degraded": 24,
+    "share": 0.006825938566552901,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 58043,
+    "degraded": 188,
+    "share": 0.0032389779990696552
+   }
+  },
+  {
+   "wednesday": "2023-09-27",
+   "date_used": "2023-09-27",
+   "study_year": 1,
+   "CZ": {
+    "usable": 20278,
+    "degraded": 37,
+    "share": 0.0018246375382187593,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 31646,
+    "degraded": 39,
+    "share": 0.0012323832395879416,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 10147,
+    "degraded": 63,
+    "share": 0.006208731644821129,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 56169,
+    "degraded": 64,
+    "share": 0.0011394185404760633
+   }
+  },
+  {
+   "wednesday": "2023-10-04",
+   "date_used": "2023-10-04",
+   "study_year": 1,
+   "CZ": {
+    "usable": 20979,
+    "degraded": 19,
+    "share": 0.000905667572334239,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 32980,
+    "degraded": 111,
+    "share": 0.0033656761673741663,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 9178,
+    "degraded": 224,
+    "share": 0.02440618871213772,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 57218,
+    "degraded": 103,
+    "share": 0.0018001328253346848
+   }
+  },
+  {
+   "wednesday": "2023-10-11",
+   "date_used": "2023-10-11",
+   "study_year": 1,
+   "CZ": {
+    "usable": 17641,
+    "degraded": 59,
+    "share": 0.0033444816053511705,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 29181,
+    "degraded": 100,
+    "share": 0.0034268873582125356,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 9564,
+    "degraded": 183,
+    "share": 0.019134253450439148,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 51939,
+    "degraded": 125,
+    "share": 0.0024066693621363523
+   }
+  },
+  {
+   "wednesday": "2023-10-18",
+   "date_used": "2023-10-18",
+   "study_year": 1,
+   "CZ": {
+    "usable": 20587,
+    "degraded": 0,
+    "share": 0.0,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 29783,
+    "degraded": 113,
+    "share": 0.00379411073431152,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 8001,
+    "degraded": 235,
+    "share": 0.02937132858392701,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 52897,
+    "degraded": 121,
+    "share": 0.002287464317447114
+   }
+  },
+  {
+   "wednesday": "2023-10-25",
+   "date_used": "2023-10-25",
+   "study_year": 1,
+   "CZ": {
+    "usable": 20399,
+    "degraded": 24,
+    "share": 0.001176528261189274,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 30247,
+    "degraded": 149,
+    "share": 0.0049261083743842365,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 8386,
+    "degraded": 199,
+    "share": 0.023730026234199855,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 51564,
+    "degraded": 109,
+    "share": 0.0021138778993095957
+   }
+  },
+  {
+   "wednesday": "2023-11-01",
+   "date_used": "2023-11-01",
+   "study_year": 1,
+   "CZ": {
+    "usable": 15865,
+    "degraded": 24,
+    "share": 0.0015127639457926253,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 25507,
+    "degraded": 79,
+    "share": 0.0030971890069392714,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 7194,
+    "degraded": 105,
+    "share": 0.014595496246872394,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 39442,
+    "degraded": 87,
+    "share": 0.0022057704984534254
+   }
+  },
+  {
+   "wednesday": "2023-11-08",
+   "date_used": "2023-11-08",
+   "study_year": 1,
+   "CZ": {
+    "usable": 13511,
+    "degraded": 35,
+    "share": 0.0025904818296203095,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 22864,
+    "degraded": 138,
+    "share": 0.006035689293212037,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 7352,
+    "degraded": 115,
+    "share": 0.015642002176278563,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 34164,
+    "degraded": 149,
+    "share": 0.004361316005151622
+   }
+  },
+  {
+   "wednesday": "2023-11-15",
+   "date_used": "2023-11-15",
+   "study_year": 1,
+   "CZ": {
+    "usable": 16040,
+    "degraded": 70,
+    "share": 0.004364089775561097,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 23841,
+    "degraded": 140,
+    "share": 0.005872236902814479,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 7430,
+    "degraded": 88,
+    "share": 0.011843876177658143,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 40401,
+    "degraded": 199,
+    "share": 0.004925620652954135
+   }
+  },
+  {
+   "wednesday": "2023-11-22",
+   "date_used": "2023-11-22",
+   "study_year": 1,
+   "CZ": {
+    "usable": 18250,
+    "degraded": 72,
+    "share": 0.003945205479452055,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 25317,
+    "degraded": 102,
+    "share": 0.004028913378362365,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 7807,
+    "degraded": 91,
+    "share": 0.011656205969002178,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 42334,
+    "degraded": 194,
+    "share": 0.004582604998346482
+   }
+  },
+  {
+   "wednesday": "2023-11-29",
+   "date_used": "2023-11-29",
+   "study_year": 1,
+   "CZ": {
+    "usable": 16552,
+    "degraded": 87,
+    "share": 0.005256162397293379,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 24174,
+    "degraded": 120,
+    "share": 0.004964010920824026,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 6260,
+    "degraded": 61,
+    "share": 0.009744408945686902,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 36935,
+    "degraded": 164,
+    "share": 0.004440232841478273
+   }
+  },
+  {
+   "wednesday": "2023-12-06",
+   "date_used": "2023-12-06",
+   "study_year": 1,
+   "CZ": {
+    "usable": 15281,
+    "degraded": 55,
+    "share": 0.0035992408873764805,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 23389,
+    "degraded": 101,
+    "share": 0.0043182692718799435,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 6106,
+    "degraded": 141,
+    "share": 0.02309204061578775,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 35635,
+    "degraded": 234,
+    "share": 0.006566577802722043
+   }
+  },
+  {
+   "wednesday": "2023-12-13",
+   "date_used": "2023-12-13",
+   "study_year": 1,
+   "CZ": {
+    "usable": 16801,
+    "degraded": 126,
+    "share": 0.007499553598000119,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 25184,
+    "degraded": 162,
+    "share": 0.006432655654383735,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 5983,
+    "degraded": 149,
+    "share": 0.024903894367374228,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 39147,
+    "degraded": 171,
+    "share": 0.004368150816154495
+   }
+  },
+  {
+   "wednesday": "2023-12-20",
+   "date_used": "2023-12-20",
+   "study_year": 1,
+   "CZ": {
+    "usable": 18545,
+    "degraded": 44,
+    "share": 0.0023726071717444057,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 29036,
+    "degraded": 171,
+    "share": 0.005889240942278551,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 7669,
+    "degraded": 160,
+    "share": 0.02086321554309558,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 48263,
+    "degraded": 212,
+    "share": 0.004392598885274434
+   }
+  },
+  {
+   "wednesday": "2023-12-27",
+   "date_used": "2023-12-27",
+   "study_year": 1,
+   "CZ": {
+    "usable": 17042,
+    "degraded": 35,
+    "share": 0.002053749559910809,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 26603,
+    "degraded": 335,
+    "share": 0.012592564748336654,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 7342,
+    "degraded": 54,
+    "share": 0.007354944156905475,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 40793,
+    "degraded": 337,
+    "share": 0.008261221287966072
+   }
+  },
+  {
+   "wednesday": "2024-01-03",
+   "date_used": "2024-01-03",
+   "study_year": 1,
+   "CZ": {
+    "usable": 18326,
+    "degraded": 100,
+    "share": 0.005456728145803776,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 26659,
+    "degraded": 306,
+    "share": 0.011478300011253235,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 7247,
+    "degraded": 28,
+    "share": 0.0038636677245756867,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 41844,
+    "degraded": 141,
+    "share": 0.0033696587324347576
+   }
+  },
+  {
+   "wednesday": "2024-01-10",
+   "date_used": "2024-01-10",
+   "study_year": 1,
+   "CZ": {
+    "usable": 16352,
+    "degraded": 36,
+    "share": 0.002201565557729941,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 20601,
+    "degraded": 1049,
+    "share": 0.0509198582593078,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 6374,
+    "degraded": 267,
+    "share": 0.04188892375274553,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 35481,
+    "degraded": 54,
+    "share": 0.001521941320706857
+   }
+  },
+  {
+   "wednesday": "2024-01-17",
+   "date_used": "2024-01-17",
+   "study_year": 1,
+   "CZ": {
+    "usable": 15131,
+    "degraded": 39,
+    "share": 0.0025774899213535127,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 22994,
+    "degraded": 142,
+    "share": 0.0061755240497521095,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 6805,
+    "degraded": 64,
+    "share": 0.00940484937545922,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 34162,
+    "degraded": 59,
+    "share": 0.001727065160119431
+   }
+  },
+  {
+   "wednesday": "2024-01-24",
+   "date_used": "2024-01-24",
+   "study_year": 1,
+   "CZ": {
+    "usable": 15311,
+    "degraded": 72,
+    "share": 0.004702501469531709,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 25116,
+    "degraded": 276,
+    "share": 0.01098901098901099,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 5994,
+    "degraded": 283,
+    "share": 0.04721388054721388,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 36132,
+    "degraded": 97,
+    "share": 0.002684600907782575
+   }
+  },
+  {
+   "wednesday": "2024-01-31",
+   "date_used": "2024-01-31",
+   "study_year": 1,
+   "CZ": {
+    "usable": 15666,
+    "degraded": 40,
+    "share": 0.0025533001404315077,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 22489,
+    "degraded": 95,
+    "share": 0.004224287429409934,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 4898,
+    "degraded": 230,
+    "share": 0.04695794201714986,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 34970,
+    "degraded": 58,
+    "share": 0.0016585644838432942
+   }
+  },
+  {
+   "wednesday": "2024-02-07",
+   "date_used": "2024-02-07",
+   "study_year": 1,
+   "CZ": {
+    "usable": 14792,
+    "degraded": 47,
+    "share": 0.0031773931855056787,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 23124,
+    "degraded": 156,
+    "share": 0.006746237675142709,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 5665,
+    "degraded": 184,
+    "share": 0.0324801412180053,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 35299,
+    "degraded": 137,
+    "share": 0.0038811297770475085
+   }
+  },
+  {
+   "wednesday": "2024-02-14",
+   "date_used": "2024-02-14",
+   "study_year": 1,
+   "CZ": {
+    "usable": 15216,
+    "degraded": 23,
+    "share": 0.0015115667718191377,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 20791,
+    "degraded": 1202,
+    "share": 0.057813476985233994,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 5372,
+    "degraded": 233,
+    "share": 0.043373045420699925,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 39057,
+    "degraded": 121,
+    "share": 0.0030980362034974526
+   }
+  },
+  {
+   "wednesday": "2024-02-21",
+   "date_used": "2024-02-21",
+   "study_year": 1,
+   "CZ": {
+    "usable": 17612,
+    "degraded": 62,
+    "share": 0.0035203270497388144,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 26912,
+    "degraded": 133,
+    "share": 0.0049420332936979785,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 5766,
+    "degraded": 163,
+    "share": 0.02826916406520985,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 38791,
+    "degraded": 75,
+    "share": 0.0019334381686473667
+   }
+  },
+  {
+   "wednesday": "2024-02-28",
+   "date_used": "2024-02-28",
+   "study_year": 1,
+   "CZ": {
+    "usable": 17511,
+    "degraded": 38,
+    "share": 0.0021700645308663125,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 25289,
+    "degraded": 262,
+    "share": 0.010360235675590178,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 5589,
+    "degraded": 181,
+    "share": 0.032385042046877796,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 41437,
+    "degraded": 113,
+    "share": 0.002727031397060598
+   }
+  },
+  {
+   "wednesday": "2024-03-06",
+   "date_used": "2024-03-06",
+   "study_year": 2,
+   "CZ": {
+    "usable": 16348,
+    "degraded": 41,
+    "share": 0.002507952043063372,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 24347,
+    "degraded": 160,
+    "share": 0.006571651538177188,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 5963,
+    "degraded": 142,
+    "share": 0.023813516686231762,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 37891,
+    "degraded": 122,
+    "share": 0.003219761948747724
+   }
+  },
+  {
+   "wednesday": "2024-03-13",
+   "date_used": "2024-03-13",
+   "study_year": 2,
+   "CZ": {
+    "usable": 16050,
+    "degraded": 40,
+    "share": 0.0024922118380062306,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 20451,
+    "degraded": 909,
+    "share": 0.04444770426873992,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4694,
+    "degraded": 124,
+    "share": 0.026416702172986792,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 36306,
+    "degraded": 74,
+    "share": 0.0020382305954938576
+   }
+  },
+  {
+   "wednesday": "2024-03-20",
+   "date_used": "2024-03-20",
+   "study_year": 2,
+   "CZ": {
+    "usable": 17513,
+    "degraded": 76,
+    "share": 0.004339633415177297,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 26481,
+    "degraded": 318,
+    "share": 0.012008609946754277,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 5698,
+    "degraded": 399,
+    "share": 0.07002457002457002,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 39734,
+    "degraded": 68,
+    "share": 0.001711380681532189
+   }
+  },
+  {
+   "wednesday": "2024-03-27",
+   "date_used": "2024-03-27",
+   "study_year": 2,
+   "CZ": {
+    "usable": 22969,
+    "degraded": 76,
+    "share": 0.003308807523183421,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 26157,
+    "degraded": 509,
+    "share": 0.019459418128990328,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 5509,
+    "degraded": 202,
+    "share": 0.03666727173715738,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 48978,
+    "degraded": 147,
+    "share": 0.0030013475437951735
+   }
+  },
+  {
+   "wednesday": "2024-04-03",
+   "date_used": "2024-04-03",
+   "study_year": 2,
+   "CZ": {
+    "usable": 19995,
+    "degraded": 61,
+    "share": 0.003050762690672668,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 27976,
+    "degraded": 116,
+    "share": 0.004146411209608235,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 5820,
+    "degraded": 194,
+    "share": 0.03333333333333333,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 45202,
+    "degraded": 175,
+    "share": 0.003871510110172116
+   }
+  },
+  {
+   "wednesday": "2024-04-10",
+   "date_used": "2024-04-10",
+   "study_year": 2,
+   "CZ": {
+    "usable": 20006,
+    "degraded": 134,
+    "share": 0.006697990602819154,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 30738,
+    "degraded": 139,
+    "share": 0.004522089921270089,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 7276,
+    "degraded": 307,
+    "share": 0.04219351291918637,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 52269,
+    "degraded": 256,
+    "share": 0.004897740534542463
+   }
+  },
+  {
+   "wednesday": "2024-04-17",
+   "date_used": "2024-04-17",
+   "study_year": 2,
+   "CZ": {
+    "usable": 21180,
+    "degraded": 213,
+    "share": 0.010056657223796034,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 27848,
+    "degraded": 640,
+    "share": 0.02298190175237001,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 7370,
+    "degraded": 298,
+    "share": 0.040434192672998644,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 49663,
+    "degraded": 316,
+    "share": 0.006362885850633268
+   }
+  },
+  {
+   "wednesday": "2024-04-24",
+   "date_used": "2024-04-24",
+   "study_year": 2,
+   "CZ": {
+    "usable": 21842,
+    "degraded": 127,
+    "share": 0.0058144858529438695,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 31586,
+    "degraded": 105,
+    "share": 0.0033242575824732478,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 8186,
+    "degraded": 253,
+    "share": 0.030906425604690937,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 50665,
+    "degraded": 351,
+    "share": 0.006927859469061482
+   }
+  },
+  {
+   "wednesday": "2024-05-01",
+   "date_used": "2024-05-01",
+   "study_year": 2,
+   "CZ": {
+    "usable": 22709,
+    "degraded": 135,
+    "share": 0.005944779602800652,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 33227,
+    "degraded": 224,
+    "share": 0.006741505402233124,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 8278,
+    "degraded": 309,
+    "share": 0.03732785697028268,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 53946,
+    "degraded": 415,
+    "share": 0.007692878063248434
+   }
+  },
+  {
+   "wednesday": "2024-05-08",
+   "date_used": "2024-05-08",
+   "study_year": 2,
+   "CZ": {
+    "usable": 22691,
+    "degraded": 199,
+    "share": 0.008769996915076461,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 34039,
+    "degraded": 182,
+    "share": 0.005346808073092629,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 9011,
+    "degraded": 174,
+    "share": 0.01930973254910665,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 56223,
+    "degraded": 298,
+    "share": 0.005300321932305284
+   }
+  },
+  {
+   "wednesday": "2024-05-15",
+   "date_used": "2024-05-15",
+   "study_year": 2,
+   "CZ": {
+    "usable": 24269,
+    "degraded": 281,
+    "share": 0.011578557006881207,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 35118,
+    "degraded": 169,
+    "share": 0.004812346944586821,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 8205,
+    "degraded": 226,
+    "share": 0.027544180377818403,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 58949,
+    "degraded": 260,
+    "share": 0.004410592206822847
+   }
+  },
+  {
+   "wednesday": "2024-05-22",
+   "date_used": "2024-05-22",
+   "study_year": 2,
+   "CZ": {
+    "usable": 23637,
+    "degraded": 92,
+    "share": 0.0038922029022295554,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 38555,
+    "degraded": 211,
+    "share": 0.005472701335754117,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 9612,
+    "degraded": 206,
+    "share": 0.021431543903454017,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 58013,
+    "degraded": 188,
+    "share": 0.0032406529570958233
+   }
+  },
+  {
+   "wednesday": "2024-05-29",
+   "date_used": "2024-05-29",
+   "study_year": 2,
+   "CZ": {
+    "usable": 24629,
+    "degraded": 118,
+    "share": 0.004791099922855171,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 39288,
+    "degraded": 240,
+    "share": 0.006108735491753207,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 9727,
+    "degraded": 329,
+    "share": 0.033823378225557726,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 59516,
+    "degraded": 361,
+    "share": 0.00606559580616977
+   }
+  },
+  {
+   "wednesday": "2024-06-05",
+   "date_used": "2024-06-05",
+   "study_year": 2,
+   "CZ": {
+    "usable": 25078,
+    "degraded": 161,
+    "share": 0.006419969694552994,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 40327,
+    "degraded": 494,
+    "share": 0.012249857415627247,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 8681,
+    "degraded": 611,
+    "share": 0.07038359635986638,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 60322,
+    "degraded": 245,
+    "share": 0.004061536421206193
+   }
+  },
+  {
+   "wednesday": "2024-06-12",
+   "date_used": "2024-06-12",
+   "study_year": 2,
+   "CZ": {
+    "usable": 24930,
+    "degraded": 180,
+    "share": 0.007220216606498195,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 40563,
+    "degraded": 370,
+    "share": 0.0091216132929024,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 10719,
+    "degraded": 175,
+    "share": 0.016326149827409275,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 61163,
+    "degraded": 373,
+    "share": 0.006098458218203816
+   }
+  },
+  {
+   "wednesday": "2024-06-19",
+   "date_used": "2024-06-19",
+   "study_year": 2,
+   "CZ": {
+    "usable": 25255,
+    "degraded": 126,
+    "share": 0.004989111067115423,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 42171,
+    "degraded": 504,
+    "share": 0.011951340968912285,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 10497,
+    "degraded": 211,
+    "share": 0.020100981232733163,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 63008,
+    "degraded": 322,
+    "share": 0.0051104621635347895
+   }
+  },
+  {
+   "wednesday": "2024-06-26",
+   "date_used": "2024-06-26",
+   "study_year": 2,
+   "CZ": {
+    "usable": 27970,
+    "degraded": 201,
+    "share": 0.007186271004647837,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 42915,
+    "degraded": 256,
+    "share": 0.005965280205056507,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 8789,
+    "degraded": 205,
+    "share": 0.02332461030833997,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 65633,
+    "degraded": 279,
+    "share": 0.0042509103652126215
+   }
+  },
+  {
+   "wednesday": "2024-07-03",
+   "date_used": "2024-07-03",
+   "study_year": 2,
+   "CZ": {
+    "usable": 26892,
+    "degraded": 156,
+    "share": 0.005800981704596163,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 41854,
+    "degraded": 540,
+    "share": 0.012901992641085679,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 10489,
+    "degraded": 246,
+    "share": 0.02345314138621413,
+    "degraded_position_day": false
+   },
+   "CTRL": {
+    "usable": 64578,
+    "degraded": 340,
+    "share": 0.00526495091207532
+   }
+  },
+  {
+   "wednesday": "2024-07-10",
+   "date_used": "2024-07-10",
+   "study_year": 2,
+   "CZ": {
+    "usable": 32404,
+    "degraded": 205,
+    "share": 0.0063263794593260095,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 45154,
+    "degraded": 566,
+    "share": 0.01253488063073039,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 10139,
+    "degraded": 357,
+    "share": 0.035210573034816055,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 67119,
+    "degraded": 376,
+    "share": 0.0056019904944948525
+   }
+  },
+  {
+   "wednesday": "2024-07-17",
+   "date_used": "2024-07-17",
+   "study_year": 2,
+   "CZ": {
+    "usable": 27108,
+    "degraded": 164,
+    "share": 0.00604987457577099,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 45127,
+    "degraded": 541,
+    "share": 0.011988388326279168,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 8592,
+    "degraded": 385,
+    "share": 0.044809124767225324,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 67120,
+    "degraded": 448,
+    "share": 0.0066746126340882
+   }
+  },
+  {
+   "wednesday": "2024-07-24",
+   "date_used": "2024-07-24",
+   "study_year": 2,
+   "CZ": {
+    "usable": 26946,
+    "degraded": 333,
+    "share": 0.012358049432197728,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 41929,
+    "degraded": 626,
+    "share": 0.014930000715495242,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 9109,
+    "degraded": 428,
+    "share": 0.04698649687122626,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 63998,
+    "degraded": 482,
+    "share": 0.007531485358917466
+   }
+  },
+  {
+   "wednesday": "2024-07-31",
+   "date_used": "2024-07-31",
+   "study_year": 2,
+   "CZ": {
+    "usable": 27873,
+    "degraded": 162,
+    "share": 0.005812076202776881,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 41442,
+    "degraded": 369,
+    "share": 0.008904010424207326,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 9880,
+    "degraded": 391,
+    "share": 0.039574898785425104,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 63842,
+    "degraded": 420,
+    "share": 0.006578741267504151
+   }
+  },
+  {
+   "wednesday": "2024-08-07",
+   "date_used": "2024-08-07",
+   "study_year": 2,
+   "CZ": {
+    "usable": 26162,
+    "degraded": 77,
+    "share": 0.0029432000611574038,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 41532,
+    "degraded": 228,
+    "share": 0.005489742848887605,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 8147,
+    "degraded": 310,
+    "share": 0.038050816251380876,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 68939,
+    "degraded": 286,
+    "share": 0.004148595134829342
+   }
+  },
+  {
+   "wednesday": "2024-08-14",
+   "date_used": "2024-08-14",
+   "study_year": 2,
+   "CZ": {
+    "usable": 29593,
+    "degraded": 103,
+    "share": 0.0034805528334403407,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 41302,
+    "degraded": 211,
+    "share": 0.005108711442545155,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 9094,
+    "degraded": 341,
+    "share": 0.03749725093468221,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 62749,
+    "degraded": 129,
+    "share": 0.002055809654337121
+   }
+  },
+  {
+   "wednesday": "2024-08-21",
+   "date_used": "2024-08-21",
+   "study_year": 2,
+   "CZ": {
+    "usable": 28656,
+    "degraded": 104,
+    "share": 0.0036292573981016193,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 42431,
+    "degraded": 403,
+    "share": 0.009497772854752421,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 9830,
+    "degraded": 466,
+    "share": 0.0474059003051882,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 66280,
+    "degraded": 243,
+    "share": 0.0036662643331321666
+   }
+  },
+  {
+   "wednesday": "2024-08-28",
+   "date_used": "2024-08-28",
+   "study_year": 2,
+   "CZ": {
+    "usable": 25899,
+    "degraded": 81,
+    "share": 0.0031275338816170507,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 41281,
+    "degraded": 342,
+    "share": 0.008284683026089484,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 9300,
+    "degraded": 321,
+    "share": 0.034516129032258064,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 65074,
+    "degraded": 284,
+    "share": 0.004364262224544365
+   }
+  },
+  {
+   "wednesday": "2024-09-04",
+   "date_used": "2024-09-04",
+   "study_year": 2,
+   "CZ": {
+    "usable": 25007,
+    "degraded": 120,
+    "share": 0.00479865637621466,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 40703,
+    "degraded": 612,
+    "share": 0.015035746750853745,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 8289,
+    "degraded": 346,
+    "share": 0.04174206780069972,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 64254,
+    "degraded": 271,
+    "share": 0.0042176362561085695
+   }
+  },
+  {
+   "wednesday": "2024-09-11",
+   "date_used": "2024-09-11",
+   "study_year": 2,
+   "CZ": {
+    "usable": 27457,
+    "degraded": 117,
+    "share": 0.0042612084350074665,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 44377,
+    "degraded": 436,
+    "share": 0.00982490929986254,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 9634,
+    "degraded": 429,
+    "share": 0.044529790325929,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 67382,
+    "degraded": 170,
+    "share": 0.0025229289721290554
+   }
+  },
+  {
+   "wednesday": "2024-09-18",
+   "date_used": "2024-09-18",
+   "study_year": 2,
+   "CZ": {
+    "usable": 25899,
+    "degraded": 112,
+    "share": 0.0043244912931001194,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 40329,
+    "degraded": 382,
+    "share": 0.009472092042946762,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 9122,
+    "degraded": 487,
+    "share": 0.05338741504056128,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 62447,
+    "degraded": 142,
+    "share": 0.00227392829119093
+   }
+  },
+  {
+   "wednesday": "2024-09-25",
+   "date_used": "2024-09-25",
+   "study_year": 2,
+   "CZ": {
+    "usable": 27341,
+    "degraded": 35,
+    "share": 0.0012801287443765773,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 41873,
+    "degraded": 687,
+    "share": 0.016406753755403243,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 9732,
+    "degraded": 453,
+    "share": 0.04654747225647349,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 63799,
+    "degraded": 290,
+    "share": 0.004545525791940313
+   }
+  },
+  {
+   "wednesday": "2024-10-02",
+   "date_used": "2024-10-02",
+   "study_year": 2,
+   "CZ": {
+    "usable": 24866,
+    "degraded": 84,
+    "share": 0.0033781066516528594,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 40970,
+    "degraded": 408,
+    "share": 0.00995850622406639,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 9634,
+    "degraded": 340,
+    "share": 0.035291675316587084,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 62271,
+    "degraded": 317,
+    "share": 0.0050906521494756786
+   }
+  },
+  {
+   "wednesday": "2024-10-09",
+   "date_used": "2024-10-09",
+   "study_year": 2,
+   "CZ": {
+    "usable": 25230,
+    "degraded": 195,
+    "share": 0.0077288941736028535,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 44489,
+    "degraded": 624,
+    "share": 0.014025938996156354,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 10226,
+    "degraded": 375,
+    "share": 0.036671230197535695,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 63105,
+    "degraded": 271,
+    "share": 0.004294429918389985
+   }
+  },
+  {
+   "wednesday": "2024-10-16",
+   "date_used": "2024-10-16",
+   "study_year": 2,
+   "CZ": {
+    "usable": 23546,
+    "degraded": 80,
+    "share": 0.00339760468869447,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 36882,
+    "degraded": 898,
+    "share": 0.02434792039477252,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 9354,
+    "degraded": 464,
+    "share": 0.04960444729527475,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 62989,
+    "degraded": 242,
+    "share": 0.003841940656305069
+   }
+  },
+  {
+   "wednesday": "2024-10-23",
+   "date_used": "2024-10-23",
+   "study_year": 2,
+   "CZ": {
+    "usable": 23597,
+    "degraded": 85,
+    "share": 0.0036021528160359367,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 36718,
+    "degraded": 498,
+    "share": 0.013562830219510866,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 9385,
+    "degraded": 387,
+    "share": 0.04123601491742142,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 57598,
+    "degraded": 179,
+    "share": 0.0031077467967637767
+   }
+  },
+  {
+   "wednesday": "2024-10-30",
+   "date_used": "2024-10-30",
+   "study_year": 2,
+   "CZ": {
+    "usable": 20823,
+    "degraded": 196,
+    "share": 0.0094126686836671,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 32521,
+    "degraded": 587,
+    "share": 0.0180498754650841,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 8030,
+    "degraded": 407,
+    "share": 0.050684931506849315,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 53890,
+    "degraded": 277,
+    "share": 0.005140100204119502
+   }
+  },
+  {
+   "wednesday": "2024-11-06",
+   "date_used": "2024-11-06",
+   "study_year": 2,
+   "CZ": {
+    "usable": 17836,
+    "degraded": 79,
+    "share": 0.004429244225162592,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 27574,
+    "degraded": 239,
+    "share": 0.008667585406542395,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 6930,
+    "degraded": 240,
+    "share": 0.03463203463203463,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 40828,
+    "degraded": 299,
+    "share": 0.007323405506025277
+   }
+  },
+  {
+   "wednesday": "2024-11-13",
+   "date_used": "2024-11-13",
+   "study_year": 2,
+   "CZ": {
+    "usable": 18470,
+    "degraded": 193,
+    "share": 0.01044937736870601,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 23450,
+    "degraded": 625,
+    "share": 0.026652452025586353,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 5118,
+    "degraded": 442,
+    "share": 0.08636186010160218,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 38895,
+    "degraded": 476,
+    "share": 0.012238076873634143
+   }
+  },
+  {
+   "wednesday": "2024-11-20",
+   "date_used": "2024-11-20",
+   "study_year": 2,
+   "CZ": {
+    "usable": 19546,
+    "degraded": 120,
+    "share": 0.006139363552645043,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 25175,
+    "degraded": 941,
+    "share": 0.037378351539225425,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 3475,
+    "degraded": 512,
+    "share": 0.14733812949640288,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 41401,
+    "degraded": 289,
+    "share": 0.006980507717204898
+   }
+  },
+  {
+   "wednesday": "2024-11-27",
+   "date_used": "2024-11-27",
+   "study_year": 2,
+   "CZ": {
+    "usable": 17355,
+    "degraded": 126,
+    "share": 0.007260155574762317,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 23165,
+    "degraded": 979,
+    "share": 0.042262033239801426,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4741,
+    "degraded": 411,
+    "share": 0.08669057160936511,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 40318,
+    "degraded": 178,
+    "share": 0.004414901532814128
+   }
+  },
+  {
+   "wednesday": "2024-12-04",
+   "date_used": "2024-12-04",
+   "study_year": 2,
+   "CZ": {
+    "usable": 17365,
+    "degraded": 220,
+    "share": 0.012669162107687877,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 22120,
+    "degraded": 947,
+    "share": 0.0428119349005425,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4074,
+    "degraded": 511,
+    "share": 0.1254295532646048,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 38192,
+    "degraded": 380,
+    "share": 0.009949727691663175
+   }
+  },
+  {
+   "wednesday": "2024-12-11",
+   "date_used": "2024-12-11",
+   "study_year": 2,
+   "CZ": {
+    "usable": 19113,
+    "degraded": 306,
+    "share": 0.016010045518756868,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 20856,
+    "degraded": 965,
+    "share": 0.046269658611430765,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 3587,
+    "degraded": 561,
+    "share": 0.15639810426540285,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 40305,
+    "degraded": 291,
+    "share": 0.007219947897283216
+   }
+  },
+  {
+   "wednesday": "2024-12-18",
+   "date_used": "2024-12-18",
+   "study_year": 2,
+   "CZ": {
+    "usable": 19638,
+    "degraded": 149,
+    "share": 0.0075873306854058456,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 24132,
+    "degraded": 1019,
+    "share": 0.042226089839217634,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 5571,
+    "degraded": 506,
+    "share": 0.09082749955124753,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 42476,
+    "degraded": 205,
+    "share": 0.004826254826254826
+   }
+  },
+  {
+   "wednesday": "2024-12-25",
+   "date_used": "2024-12-26",
+   "study_year": 2,
+   "CZ": {
+    "usable": 18305,
+    "degraded": 200,
+    "share": 0.010925976509150505,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 23586,
+    "degraded": 1073,
+    "share": 0.0454930891206648,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 3442,
+    "degraded": 709,
+    "share": 0.20598489250435792,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 40994,
+    "degraded": 328,
+    "share": 0.008001170903058984
+   }
+  },
+  {
+   "wednesday": "2025-01-01",
+   "date_used": "2025-01-01",
+   "study_year": 2,
+   "CZ": {
+    "usable": 18843,
+    "degraded": 80,
+    "share": 0.004245608448760813,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 20634,
+    "degraded": 993,
+    "share": 0.04812445478336726,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4417,
+    "degraded": 608,
+    "share": 0.13764998868009962,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 40250,
+    "degraded": 343,
+    "share": 0.008521739130434783
+   }
+  },
+  {
+   "wednesday": "2025-01-08",
+   "date_used": "2025-01-08",
+   "study_year": 2,
+   "CZ": {
+    "usable": 18694,
+    "degraded": 165,
+    "share": 0.00882636139937948,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 24519,
+    "degraded": 1180,
+    "share": 0.04812594314613157,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4284,
+    "degraded": 596,
+    "share": 0.13912231559290383,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 45111,
+    "degraded": 348,
+    "share": 0.007714304715036244
+   }
+  },
+  {
+   "wednesday": "2025-01-15",
+   "date_used": "2025-01-15",
+   "study_year": 2,
+   "CZ": {
+    "usable": 16240,
+    "degraded": 190,
+    "share": 0.011699507389162561,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 20335,
+    "degraded": 835,
+    "share": 0.041062208015736415,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 3628,
+    "degraded": 684,
+    "share": 0.18853362734288864,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 37600,
+    "degraded": 258,
+    "share": 0.006861702127659575
+   }
+  },
+  {
+   "wednesday": "2025-01-22",
+   "date_used": "2025-01-22",
+   "study_year": 2,
+   "CZ": {
+    "usable": 15969,
+    "degraded": 138,
+    "share": 0.008641743377794477,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 21590,
+    "degraded": 862,
+    "share": 0.039925891616489115,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4261,
+    "degraded": 612,
+    "share": 0.14362825627786904,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 37543,
+    "degraded": 393,
+    "share": 0.010467996697120636
+   }
+  },
+  {
+   "wednesday": "2025-01-29",
+   "date_used": "2025-01-29",
+   "study_year": 2,
+   "CZ": {
+    "usable": 16163,
+    "degraded": 134,
+    "share": 0.008290540122502011,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 24058,
+    "degraded": 663,
+    "share": 0.027558400532047552,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4837,
+    "degraded": 599,
+    "share": 0.12383708910481704,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 40392,
+    "degraded": 246,
+    "share": 0.006090314913844325
+   }
+  },
+  {
+   "wednesday": "2025-02-05",
+   "date_used": "2025-02-05",
+   "study_year": 2,
+   "CZ": {
+    "usable": 15684,
+    "degraded": 145,
+    "share": 0.00924509053812803,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 20316,
+    "degraded": 615,
+    "share": 0.030271707028942704,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 5034,
+    "degraded": 489,
+    "share": 0.09713945172824791,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 38396,
+    "degraded": 208,
+    "share": 0.0054172309615584955
+   }
+  },
+  {
+   "wednesday": "2025-02-12",
+   "date_used": "2025-02-12",
+   "study_year": 2,
+   "CZ": {
+    "usable": 15539,
+    "degraded": 73,
+    "share": 0.004697857004955274,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 20333,
+    "degraded": 766,
+    "share": 0.037672748733585795,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4751,
+    "degraded": 501,
+    "share": 0.10545148389812671,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 39339,
+    "degraded": 262,
+    "share": 0.006660057449350517
+   }
+  },
+  {
+   "wednesday": "2025-02-19",
+   "date_used": "2025-02-19",
+   "study_year": 2,
+   "CZ": {
+    "usable": 19288,
+    "degraded": 84,
+    "share": 0.004355039402737453,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 21580,
+    "degraded": 638,
+    "share": 0.029564411492122335,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 3980,
+    "degraded": 419,
+    "share": 0.10527638190954774,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 43261,
+    "degraded": 255,
+    "share": 0.005894454589584152
+   }
+  },
+  {
+   "wednesday": "2025-02-26",
+   "date_used": "2025-02-26",
+   "study_year": 2,
+   "CZ": {
+    "usable": 17402,
+    "degraded": 128,
+    "share": 0.0073554763820250545,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 23108,
+    "degraded": 846,
+    "share": 0.03661069759390687,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4575,
+    "degraded": 387,
+    "share": 0.08459016393442623,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 41529,
+    "degraded": 415,
+    "share": 0.009993016927929881
+   }
+  },
+  {
+   "wednesday": "2025-03-05",
+   "date_used": "2025-03-05",
+   "study_year": 3,
+   "CZ": {
+    "usable": 18961,
+    "degraded": 128,
+    "share": 0.006750698802805759,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 26597,
+    "degraded": 825,
+    "share": 0.031018535925104337,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4555,
+    "degraded": 436,
+    "share": 0.09571899012074643,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 43480,
+    "degraded": 371,
+    "share": 0.008532658693652254
+   }
+  },
+  {
+   "wednesday": "2025-03-12",
+   "date_used": "2025-03-12",
+   "study_year": 3,
+   "CZ": {
+    "usable": 18742,
+    "degraded": 99,
+    "share": 0.005282253761604952,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 23127,
+    "degraded": 725,
+    "share": 0.03134864011761145,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4714,
+    "degraded": 517,
+    "share": 0.10967331353415359,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 47958,
+    "degraded": 424,
+    "share": 0.008841069268943659
+   }
+  },
+  {
+   "wednesday": "2025-03-19",
+   "date_used": "2025-03-19",
+   "study_year": 3,
+   "CZ": {
+    "usable": 16935,
+    "degraded": 169,
+    "share": 0.009979332742840272,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 23266,
+    "degraded": 846,
+    "share": 0.036362073411845615,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4732,
+    "degraded": 588,
+    "share": 0.1242603550295858,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 42234,
+    "degraded": 426,
+    "share": 0.010086660036937065
+   }
+  },
+  {
+   "wednesday": "2025-03-26",
+   "date_used": "2025-03-26",
+   "study_year": 3,
+   "CZ": {
+    "usable": 18692,
+    "degraded": 123,
+    "share": 0.0065803552321848915,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 27543,
+    "degraded": 467,
+    "share": 0.016955306248411576,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 7492,
+    "degraded": 346,
+    "share": 0.04618259476775227,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 43353,
+    "degraded": 292,
+    "share": 0.006735404700943418
+   }
+  },
+  {
+   "wednesday": "2025-04-02",
+   "date_used": "2025-04-02",
+   "study_year": 3,
+   "CZ": {
+    "usable": 21914,
+    "degraded": 185,
+    "share": 0.008442091813452587,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 28230,
+    "degraded": 854,
+    "share": 0.030251505490612823,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 6972,
+    "degraded": 490,
+    "share": 0.07028112449799197,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 50593,
+    "degraded": 548,
+    "share": 0.01083153795979681
+   }
+  },
+  {
+   "wednesday": "2025-04-09",
+   "date_used": "2025-04-09",
+   "study_year": 3,
+   "CZ": {
+    "usable": 21941,
+    "degraded": 146,
+    "share": 0.006654209015085912,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 27549,
+    "degraded": 973,
+    "share": 0.03531888634796181,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 6635,
+    "degraded": 654,
+    "share": 0.0985681989449887,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 51738,
+    "degraded": 375,
+    "share": 0.007248057520584483
+   }
+  },
+  {
+   "wednesday": "2025-04-16",
+   "date_used": "2025-04-16",
+   "study_year": 3,
+   "CZ": {
+    "usable": 25952,
+    "degraded": 118,
+    "share": 0.004546855733662146,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 29953,
+    "degraded": 1188,
+    "share": 0.03966213734851267,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 6245,
+    "degraded": 668,
+    "share": 0.10696557245796637,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 65734,
+    "degraded": 311,
+    "share": 0.004731189338850519
+   }
+  },
+  {
+   "wednesday": "2025-04-23",
+   "date_used": "2025-04-23",
+   "study_year": 3,
+   "CZ": {
+    "usable": 22866,
+    "degraded": 107,
+    "share": 0.00467943671827167,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 25906,
+    "degraded": 1161,
+    "share": 0.04481587277078669,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 5399,
+    "degraded": 935,
+    "share": 0.1731802185589924,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 58121,
+    "degraded": 383,
+    "share": 0.00658970079661396
+   }
+  },
+  {
+   "wednesday": "2025-04-30",
+   "date_used": "2025-04-30",
+   "study_year": 3,
+   "CZ": {
+    "usable": 26900,
+    "degraded": 141,
+    "share": 0.005241635687732342,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 30154,
+    "degraded": 1556,
+    "share": 0.05160177754195132,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 6125,
+    "degraded": 949,
+    "share": 0.15493877551020407,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 65537,
+    "degraded": 495,
+    "share": 0.007552985336527458
+   }
+  },
+  {
+   "wednesday": "2025-05-07",
+   "date_used": "2025-05-07",
+   "study_year": 3,
+   "CZ": {
+    "usable": 26243,
+    "degraded": 50,
+    "share": 0.0019052699767557063,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 36409,
+    "degraded": 1087,
+    "share": 0.029855255568678074,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 8869,
+    "degraded": 856,
+    "share": 0.09651595444807758,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 69947,
+    "degraded": 250,
+    "share": 0.0035741347019886487
+   }
+  },
+  {
+   "wednesday": "2025-05-14",
+   "date_used": "2025-05-14",
+   "study_year": 3,
+   "CZ": {
+    "usable": 28287,
+    "degraded": 97,
+    "share": 0.0034291370594265918,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 35280,
+    "degraded": 1378,
+    "share": 0.03905895691609977,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 9659,
+    "degraded": 790,
+    "share": 0.08178900507298892,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 75977,
+    "degraded": 312,
+    "share": 0.004106505916264132
+   }
+  },
+  {
+   "wednesday": "2025-05-21",
+   "date_used": "2025-05-21",
+   "study_year": 3,
+   "CZ": {
+    "usable": 31214,
+    "degraded": 120,
+    "share": 0.0038444287819568144,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 34230,
+    "degraded": 1443,
+    "share": 0.04215600350569676,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 6298,
+    "degraded": 954,
+    "share": 0.15147665925690695,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 72896,
+    "degraded": 291,
+    "share": 0.003991988586479368
+   }
+  },
+  {
+   "wednesday": "2025-06-11",
+   "date_used": "2025-06-12",
+   "study_year": 3,
+   "CZ": {
+    "usable": 29248,
+    "degraded": 203,
+    "share": 0.006940645514223195,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 26303,
+    "degraded": 2154,
+    "share": 0.08189179941451545,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 2049,
+    "degraded": 665,
+    "share": 0.32454856027330403,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 82061,
+    "degraded": 379,
+    "share": 0.004618515494571112
+   }
+  },
+  {
+   "wednesday": "2025-06-18",
+   "date_used": "2025-06-18",
+   "study_year": 3,
+   "CZ": {
+    "usable": 31366,
+    "degraded": 100,
+    "share": 0.0031881655295542943,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 33545,
+    "degraded": 2027,
+    "share": 0.06042629303920107,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 3430,
+    "degraded": 914,
+    "share": 0.2664723032069971,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 79009,
+    "degraded": 458,
+    "share": 0.005796807958586996
+   }
+  },
+  {
+   "wednesday": "2025-06-25",
+   "date_used": "2025-06-25",
+   "study_year": 3,
+   "CZ": {
+    "usable": 30186,
+    "degraded": 219,
+    "share": 0.007255018882925859,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 34001,
+    "degraded": 2221,
+    "share": 0.06532160818799447,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 3857,
+    "degraded": 1085,
+    "share": 0.2813067150635209,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 77081,
+    "degraded": 563,
+    "share": 0.007304004877985496
+   }
+  },
+  {
+   "wednesday": "2025-07-02",
+   "date_used": "2025-07-02",
+   "study_year": 3,
+   "CZ": {
+    "usable": 32790,
+    "degraded": 134,
+    "share": 0.004086611771881671,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 36101,
+    "degraded": 1766,
+    "share": 0.048918312512118776,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4296,
+    "degraded": 982,
+    "share": 0.22858472998137802,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 77180,
+    "degraded": 395,
+    "share": 0.00511790619331433
+   }
+  },
+  {
+   "wednesday": "2025-07-09",
+   "date_used": "2025-07-09",
+   "study_year": 3,
+   "CZ": {
+    "usable": 34805,
+    "degraded": 112,
+    "share": 0.0032179284585548053,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 45107,
+    "degraded": 1281,
+    "share": 0.028399139823087324,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 6058,
+    "degraded": 992,
+    "share": 0.1637504126774513,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 79259,
+    "degraded": 269,
+    "share": 0.00339393633530577
+   }
+  },
+  {
+   "wednesday": "2025-07-16",
+   "date_used": "2025-07-16",
+   "study_year": 3,
+   "CZ": {
+    "usable": 35274,
+    "degraded": 209,
+    "share": 0.005925043941713443,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 45019,
+    "degraded": 1537,
+    "share": 0.03414114040738355,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4181,
+    "degraded": 881,
+    "share": 0.21071513991867974,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 83538,
+    "degraded": 495,
+    "share": 0.00592544710191769
+   }
+  },
+  {
+   "wednesday": "2025-07-23",
+   "date_used": "2025-07-23",
+   "study_year": 3,
+   "CZ": {
+    "usable": 34514,
+    "degraded": 163,
+    "share": 0.004722721214579591,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 46888,
+    "degraded": 1526,
+    "share": 0.03254564067565262,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 7060,
+    "degraded": 1090,
+    "share": 0.15439093484419264,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 84795,
+    "degraded": 361,
+    "share": 0.0042573264933073885
+   }
+  },
+  {
+   "wednesday": "2025-07-30",
+   "date_used": "2025-07-30",
+   "study_year": 3,
+   "CZ": {
+    "usable": 34791,
+    "degraded": 256,
+    "share": 0.007358224828260182,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 36018,
+    "degraded": 2164,
+    "share": 0.0600810705758232,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 2445,
+    "degraded": 1147,
+    "share": 0.469120654396728,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 77713,
+    "degraded": 425,
+    "share": 0.005468840477140247
+   }
+  },
+  {
+   "wednesday": "2025-08-06",
+   "date_used": "2025-08-06",
+   "study_year": 3,
+   "CZ": {
+    "usable": 33040,
+    "degraded": 235,
+    "share": 0.007112590799031477,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 41753,
+    "degraded": 2155,
+    "share": 0.0516130577443537,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4125,
+    "degraded": 980,
+    "share": 0.23757575757575758,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 80726,
+    "degraded": 348,
+    "share": 0.004310878775115824
+   }
+  },
+  {
+   "wednesday": "2025-08-13",
+   "date_used": "2025-08-13",
+   "study_year": 3,
+   "CZ": {
+    "usable": 33166,
+    "degraded": 53,
+    "share": 0.001598022070795393,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 42230,
+    "degraded": 1041,
+    "share": 0.024650722235377693,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 6431,
+    "degraded": 914,
+    "share": 0.14212408645622765,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 80800,
+    "degraded": 447,
+    "share": 0.005532178217821782
+   }
+  },
+  {
+   "wednesday": "2025-08-20",
+   "date_used": "2025-08-20",
+   "study_year": 3,
+   "CZ": {
+    "usable": 39777,
+    "degraded": 146,
+    "share": 0.0036704628302788042,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 33878,
+    "degraded": 1939,
+    "share": 0.0572347836353976,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 3852,
+    "degraded": 1112,
+    "share": 0.28868120456905505,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 98120,
+    "degraded": 450,
+    "share": 0.004586220953933958
+   }
+  },
+  {
+   "wednesday": "2025-08-27",
+   "date_used": "2025-08-27",
+   "study_year": 3,
+   "CZ": {
+    "usable": 35417,
+    "degraded": 179,
+    "share": 0.00505407007934043,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 43012,
+    "degraded": 1990,
+    "share": 0.04626615828140984,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 3822,
+    "degraded": 926,
+    "share": 0.2422815279958137,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 80508,
+    "degraded": 490,
+    "share": 0.006086351666915089
+   }
+  },
+  {
+   "wednesday": "2025-09-03",
+   "date_used": "2025-09-03",
+   "study_year": 3,
+   "CZ": {
+    "usable": 35442,
+    "degraded": 205,
+    "share": 0.005784097962868912,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 41705,
+    "degraded": 1665,
+    "share": 0.03992327059105623,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 3853,
+    "degraded": 898,
+    "share": 0.2330651440436024,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 85027,
+    "degraded": 581,
+    "share": 0.006833123596034201
+   }
+  },
+  {
+   "wednesday": "2025-09-10",
+   "date_used": "2025-09-10",
+   "study_year": 3,
+   "CZ": {
+    "usable": 39960,
+    "degraded": 158,
+    "share": 0.003953953953953954,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 50328,
+    "degraded": 1199,
+    "share": 0.023823716420282946,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 7242,
+    "degraded": 931,
+    "share": 0.12855564761115715,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 91802,
+    "degraded": 604,
+    "share": 0.006579377355613167
+   }
+  },
+  {
+   "wednesday": "2025-09-17",
+   "date_used": "2025-09-17",
+   "study_year": 3,
+   "CZ": {
+    "usable": 32861,
+    "degraded": 200,
+    "share": 0.006086242049846323,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 45323,
+    "degraded": 1056,
+    "share": 0.02329942854621274,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 6758,
+    "degraded": 747,
+    "share": 0.11053566143829535,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 79120,
+    "degraded": 392,
+    "share": 0.004954499494438827
+   }
+  },
+  {
+   "wednesday": "2025-09-24",
+   "date_used": "2025-09-24",
+   "study_year": 3,
+   "CZ": {
+    "usable": 35339,
+    "degraded": 345,
+    "share": 0.009762585245762472,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 46385,
+    "degraded": 1512,
+    "share": 0.03259674463727498,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 7425,
+    "degraded": 717,
+    "share": 0.09656565656565656,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 84724,
+    "degraded": 274,
+    "share": 0.0032340304990321513
+   }
+  },
+  {
+   "wednesday": "2025-10-01",
+   "date_used": "2025-10-01",
+   "study_year": 3,
+   "CZ": {
+    "usable": 30425,
+    "degraded": 200,
+    "share": 0.00657354149548069,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 44021,
+    "degraded": 1224,
+    "share": 0.02780491129233775,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 8038,
+    "degraded": 990,
+    "share": 0.12316496640955461,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 74749,
+    "degraded": 366,
+    "share": 0.004896386573733428
+   }
+  },
+  {
+   "wednesday": "2025-10-08",
+   "date_used": "2025-10-08",
+   "study_year": 3,
+   "CZ": {
+    "usable": 30402,
+    "degraded": 158,
+    "share": 0.0051970265114137226,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 46620,
+    "degraded": 702,
+    "share": 0.015057915057915058,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 8171,
+    "degraded": 725,
+    "share": 0.08872842981275242,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 72175,
+    "degraded": 419,
+    "share": 0.005805334257014201
+   }
+  },
+  {
+   "wednesday": "2025-10-15",
+   "date_used": "2025-10-15",
+   "study_year": 3,
+   "CZ": {
+    "usable": 22145,
+    "degraded": 40,
+    "share": 0.001806276811921427,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 28269,
+    "degraded": 664,
+    "share": 0.023488627118044503,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 5709,
+    "degraded": 572,
+    "share": 0.1001926782273603,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 53812,
+    "degraded": 401,
+    "share": 0.007451869471493347
+   }
+  },
+  {
+   "wednesday": "2025-10-22",
+   "date_used": "2025-10-22",
+   "study_year": 3,
+   "CZ": {
+    "usable": 34072,
+    "degraded": 148,
+    "share": 0.0043437426625968535,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 40605,
+    "degraded": 1195,
+    "share": 0.029429873168329023,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 5035,
+    "degraded": 1009,
+    "share": 0.20039721946375372,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 80634,
+    "degraded": 499,
+    "share": 0.006188456482377161
+   }
+  },
+  {
+   "wednesday": "2025-10-29",
+   "date_used": "2025-10-29",
+   "study_year": 3,
+   "CZ": {
+    "usable": 27716,
+    "degraded": 220,
+    "share": 0.007937653341030452,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 40145,
+    "degraded": 1095,
+    "share": 0.0272761240503176,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 6769,
+    "degraded": 780,
+    "share": 0.11523120106367263,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 69699,
+    "degraded": 414,
+    "share": 0.005939826970257823
+   }
+  },
+  {
+   "wednesday": "2025-11-05",
+   "date_used": "2025-11-05",
+   "study_year": 3,
+   "CZ": {
+    "usable": 23045,
+    "degraded": 194,
+    "share": 0.008418311998264266,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 35470,
+    "degraded": 958,
+    "share": 0.027008739780095856,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 8721,
+    "degraded": 591,
+    "share": 0.06776745786033712,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 55954,
+    "degraded": 503,
+    "share": 0.008989527111555921
+   }
+  },
+  {
+   "wednesday": "2025-11-12",
+   "date_used": "2025-11-12",
+   "study_year": 3,
+   "CZ": {
+    "usable": 25442,
+    "degraded": 165,
+    "share": 0.006485339202892854,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 41450,
+    "degraded": 952,
+    "share": 0.022967430639324486,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 8140,
+    "degraded": 567,
+    "share": 0.06965601965601965,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 68249,
+    "degraded": 423,
+    "share": 0.006197893009421383
+   }
+  },
+  {
+   "wednesday": "2025-11-19",
+   "date_used": "2025-11-19",
+   "study_year": 3,
+   "CZ": {
+    "usable": 20444,
+    "degraded": 251,
+    "share": 0.012277440813930738,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 31900,
+    "degraded": 540,
+    "share": 0.016927899686520375,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 6343,
+    "degraded": 585,
+    "share": 0.09222765253034841,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 54384,
+    "degraded": 355,
+    "share": 0.006527655192703736
+   }
+  },
+  {
+   "wednesday": "2025-11-26",
+   "date_used": "2025-11-26",
+   "study_year": 3,
+   "CZ": {
+    "usable": 22096,
+    "degraded": 234,
+    "share": 0.010590152063721941,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 37274,
+    "degraded": 734,
+    "share": 0.019692010516714063,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 6488,
+    "degraded": 513,
+    "share": 0.07906905055487053,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 53177,
+    "degraded": 519,
+    "share": 0.009759858585478684
+   }
+  },
+  {
+   "wednesday": "2025-12-03",
+   "date_used": "2025-12-03",
+   "study_year": 3,
+   "CZ": {
+    "usable": 23882,
+    "degraded": 62,
+    "share": 0.002596097479273093,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 36088,
+    "degraded": 747,
+    "share": 0.020699401463090225,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 5936,
+    "degraded": 525,
+    "share": 0.08844339622641509,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 56790,
+    "degraded": 383,
+    "share": 0.0067441450959676
+   }
+  },
+  {
+   "wednesday": "2025-12-10",
+   "date_used": "2025-12-10",
+   "study_year": 3,
+   "CZ": {
+    "usable": 25323,
+    "degraded": 141,
+    "share": 0.0055680606563203415,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 35467,
+    "degraded": 828,
+    "share": 0.02334564524769504,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 6591,
+    "degraded": 837,
+    "share": 0.12699135184342286,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 57943,
+    "degraded": 454,
+    "share": 0.00783528640215384
+   }
+  },
+  {
+   "wednesday": "2025-12-17",
+   "date_used": "2025-12-17",
+   "study_year": 3,
+   "CZ": {
+    "usable": 24150,
+    "degraded": 197,
+    "share": 0.00815734989648033,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 37799,
+    "degraded": 973,
+    "share": 0.025741421730733616,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 4798,
+    "degraded": 607,
+    "share": 0.12651104626927887,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 59133,
+    "degraded": 607,
+    "share": 0.010264995856797389
+   }
+  },
+  {
+   "wednesday": "2026-01-07",
+   "date_used": "2026-01-07",
+   "study_year": 3,
+   "CZ": {
+    "usable": 21649,
+    "degraded": 157,
+    "share": 0.007252067070072521,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 23128,
+    "degraded": 1755,
+    "share": 0.07588204773434798,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 2693,
+    "degraded": 800,
+    "share": 0.29706646862235425,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 58643,
+    "degraded": 501,
+    "share": 0.008543219139539246
+   }
+  },
+  {
+   "wednesday": "2026-01-14",
+   "date_used": "2026-01-14",
+   "study_year": 3,
+   "CZ": {
+    "usable": 20751,
+    "degraded": 184,
+    "share": 0.00886704255216616,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 28360,
+    "degraded": 732,
+    "share": 0.025811001410437236,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 6373,
+    "degraded": 767,
+    "share": 0.12035148281813902,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 50422,
+    "degraded": 433,
+    "share": 0.008587521320058704
+   }
+  },
+  {
+   "wednesday": "2026-01-21",
+   "date_used": "2026-01-21",
+   "study_year": 3,
+   "CZ": {
+    "usable": 19476,
+    "degraded": 171,
+    "share": 0.00878003696857671,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 31199,
+    "degraded": 1080,
+    "share": 0.03461649411840123,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 5259,
+    "degraded": 628,
+    "share": 0.11941433732648793,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 50730,
+    "degraded": 408,
+    "share": 0.008042578356002365
+   }
+  },
+  {
+   "wednesday": "2026-01-28",
+   "date_used": "2026-01-28",
+   "study_year": 3,
+   "CZ": {
+    "usable": 20493,
+    "degraded": 114,
+    "share": 0.005562875128092519,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 31825,
+    "degraded": 586,
+    "share": 0.018413197172034563,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 5768,
+    "degraded": 712,
+    "share": 0.12343966712898752,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 52600,
+    "degraded": 444,
+    "share": 0.00844106463878327
+   }
+  },
+  {
+   "wednesday": "2026-02-04",
+   "date_used": "2026-02-04",
+   "study_year": 3,
+   "CZ": {
+    "usable": 24678,
+    "degraded": 150,
+    "share": 0.006078288353999514,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 35726,
+    "degraded": 1008,
+    "share": 0.028214745563455188,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 5940,
+    "degraded": 802,
+    "share": 0.135016835016835,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 56197,
+    "degraded": 492,
+    "share": 0.008754915742833247
+   }
+  },
+  {
+   "wednesday": "2026-02-11",
+   "date_used": "2026-02-11",
+   "study_year": 3,
+   "CZ": {
+    "usable": 19045,
+    "degraded": 209,
+    "share": 0.010974008926227356,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 27879,
+    "degraded": 897,
+    "share": 0.03217475519208006,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 5117,
+    "degraded": 883,
+    "share": 0.17256204807504397,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 53288,
+    "degraded": 557,
+    "share": 0.010452634739528599
+   }
+  },
+  {
+   "wednesday": "2026-02-18",
+   "date_used": "2026-02-18",
+   "study_year": 3,
+   "CZ": {
+    "usable": 21057,
+    "degraded": 213,
+    "share": 0.010115401054281237,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 32863,
+    "degraded": 1074,
+    "share": 0.03268113075495238,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4635,
+    "degraded": 762,
+    "share": 0.16440129449838187,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 55989,
+    "degraded": 348,
+    "share": 0.0062155066173712695
+   }
+  },
+  {
+   "wednesday": "2026-02-25",
+   "date_used": "2026-02-25",
+   "study_year": 3,
+   "CZ": {
+    "usable": 22341,
+    "degraded": 167,
+    "share": 0.0074750458797726155,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 26668,
+    "degraded": 1252,
+    "share": 0.046947652617369134,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4699,
+    "degraded": 565,
+    "share": 0.12023834858480528,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 57110,
+    "degraded": 368,
+    "share": 0.0064437051304500085
+   }
+  },
+  {
+   "wednesday": "2026-03-04",
+   "date_used": "2026-03-04",
+   "study_year": 4,
+   "CZ": {
+    "usable": 19359,
+    "degraded": 110,
+    "share": 0.005682111679322279,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 31117,
+    "degraded": 571,
+    "share": 0.01835009801716104,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 7832,
+    "degraded": 693,
+    "share": 0.08848314606741572,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 45041,
+    "degraded": 496,
+    "share": 0.011012188894562732
+   }
+  },
+  {
+   "wednesday": "2026-03-11",
+   "date_used": "2026-03-11",
+   "study_year": 4,
+   "CZ": {
+    "usable": 19044,
+    "degraded": 161,
+    "share": 0.008454106280193236,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 26104,
+    "degraded": 1018,
+    "share": 0.03899785473490653,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 5641,
+    "degraded": 600,
+    "share": 0.10636411983690836,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 50449,
+    "degraded": 340,
+    "share": 0.006739479474320601
+   }
+  },
+  {
+   "wednesday": "2026-03-18",
+   "date_used": "2026-03-18",
+   "study_year": 4,
+   "CZ": {
+    "usable": 19514,
+    "degraded": 161,
+    "share": 0.008250486829968227,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 27856,
+    "degraded": 599,
+    "share": 0.021503446295232626,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 5797,
+    "degraded": 564,
+    "share": 0.09729170260479558,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 52783,
+    "degraded": 382,
+    "share": 0.007237178637061175
+   }
+  },
+  {
+   "wednesday": "2026-03-25",
+   "date_used": "2026-03-25",
+   "study_year": 4,
+   "CZ": {
+    "usable": 17996,
+    "degraded": 153,
+    "share": 0.008501889308735274,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 28644,
+    "degraded": 861,
+    "share": 0.030058651026392963,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 4631,
+    "degraded": 656,
+    "share": 0.14165407039516303,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 49747,
+    "degraded": 557,
+    "share": 0.01119665507467787
+   }
+  },
+  {
+   "wednesday": "2026-04-01",
+   "date_used": "2026-04-01",
+   "study_year": 4,
+   "CZ": {
+    "usable": 16548,
+    "degraded": 116,
+    "share": 0.007009910563210055,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 21633,
+    "degraded": 405,
+    "share": 0.018721397864373872,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 5730,
+    "degraded": 490,
+    "share": 0.08551483420593368,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 41161,
+    "degraded": 237,
+    "share": 0.005757877602584971
+   }
+  },
+  {
+   "wednesday": "2026-04-08",
+   "date_used": "2026-04-08",
+   "study_year": 4,
+   "CZ": {
+    "usable": 25048,
+    "degraded": 175,
+    "share": 0.006986585755349728,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 37341,
+    "degraded": 774,
+    "share": 0.020727886237647625,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 6414,
+    "degraded": 644,
+    "share": 0.10040536326785157,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 62999,
+    "degraded": 258,
+    "share": 0.004095303100049207
+   }
+  },
+  {
+   "wednesday": "2026-04-15",
+   "date_used": "2026-04-15",
+   "study_year": 4,
+   "CZ": {
+    "usable": 24363,
+    "degraded": 160,
+    "share": 0.00656733571399253,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 35041,
+    "degraded": 1118,
+    "share": 0.03190548214948204,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 7181,
+    "degraded": 630,
+    "share": 0.08773151371675254,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 62451,
+    "degraded": 356,
+    "share": 0.005700469167827577
+   }
+  },
+  {
+   "wednesday": "2026-04-22",
+   "date_used": "2026-04-22",
+   "study_year": 4,
+   "CZ": {
+    "usable": 26207,
+    "degraded": 133,
+    "share": 0.00507497996718434,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 34650,
+    "degraded": 1075,
+    "share": 0.031024531024531024,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 7223,
+    "degraded": 780,
+    "share": 0.10798837048317873,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 62971,
+    "degraded": 328,
+    "share": 0.005208746883486049
+   }
+  },
+  {
+   "wednesday": "2026-04-29",
+   "date_used": "2026-04-29",
+   "study_year": 4,
+   "CZ": {
+    "usable": 27793,
+    "degraded": 143,
+    "share": 0.005145180441118267,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 33371,
+    "degraded": 1726,
+    "share": 0.05172155464325313,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 6652,
+    "degraded": 817,
+    "share": 0.12282020444978954,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 66806,
+    "degraded": 267,
+    "share": 0.003996647007753795
+   }
+  },
+  {
+   "wednesday": "2026-05-13",
+   "date_used": "2026-05-13",
+   "study_year": 4,
+   "CZ": {
+    "usable": 28665,
+    "degraded": 376,
+    "share": 0.01311704168847026,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 34859,
+    "degraded": 1422,
+    "share": 0.04079290857454316,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 2988,
+    "degraded": 991,
+    "share": 0.3316599732262383,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 75440,
+    "degraded": 823,
+    "share": 0.010909331919406151
+   }
+  },
+  {
+   "wednesday": "2026-05-20",
+   "date_used": "2026-05-20",
+   "study_year": 4,
+   "CZ": {
+    "usable": 29042,
+    "degraded": 290,
+    "share": 0.00998553818607534,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 40762,
+    "degraded": 1184,
+    "share": 0.029046661105931997,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 6521,
+    "degraded": 914,
+    "share": 0.14016255175586567,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 73741,
+    "degraded": 499,
+    "share": 0.006766927489456341
+   }
+  },
+  {
+   "wednesday": "2026-05-27",
+   "date_used": "2026-05-27",
+   "study_year": 4,
+   "CZ": {
+    "usable": 28961,
+    "degraded": 214,
+    "share": 0.007389247608853285,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 38543,
+    "degraded": 1052,
+    "share": 0.027294190903666034,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 8145,
+    "degraded": 938,
+    "share": 0.11516267648864334,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 79175,
+    "degraded": 520,
+    "share": 0.006567729712661825
+   }
+  },
+  {
+   "wednesday": "2026-06-03",
+   "date_used": "2026-06-03",
+   "study_year": 4,
+   "CZ": {
+    "usable": 33973,
+    "degraded": 207,
+    "share": 0.0060930739116357106,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 50252,
+    "degraded": 1206,
+    "share": 0.02399904481413675,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 5724,
+    "degraded": 683,
+    "share": 0.11932215234102027,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 86180,
+    "degraded": 479,
+    "share": 0.005558134137851009
+   }
+  },
+  {
+   "wednesday": "2026-06-10",
+   "date_used": "2026-06-10",
+   "study_year": 4,
+   "CZ": {
+    "usable": 33143,
+    "degraded": 220,
+    "share": 0.006637902422834384,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 46954,
+    "degraded": 1376,
+    "share": 0.029305277505643823,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 6590,
+    "degraded": 984,
+    "share": 0.14931714719271624,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 87437,
+    "degraded": 401,
+    "share": 0.004586159177464918
+   }
+  },
+  {
+   "wednesday": "2026-06-17",
+   "date_used": "2026-06-17",
+   "study_year": 4,
+   "CZ": {
+    "usable": 30184,
+    "degraded": 151,
+    "share": 0.0050026504108136765,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 42926,
+    "degraded": 1107,
+    "share": 0.02578856637003215,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 6340,
+    "degraded": 679,
+    "share": 0.10709779179810726,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 77229,
+    "degraded": 379,
+    "share": 0.004907482940346243
+   }
+  },
+  {
+   "wednesday": "2026-06-24",
+   "date_used": "2026-06-24",
+   "study_year": 4,
+   "CZ": {
+    "usable": 35167,
+    "degraded": 185,
+    "share": 0.005260613643472574,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 39607,
+    "degraded": 1294,
+    "share": 0.032670992501325526,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4516,
+    "degraded": 809,
+    "share": 0.17914083259521701,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 79151,
+    "degraded": 374,
+    "share": 0.004725145607762379
+   }
+  },
+  {
+   "wednesday": "2026-07-01",
+   "date_used": "2026-07-01",
+   "study_year": 4,
+   "CZ": {
+    "usable": 43575,
+    "degraded": 190,
+    "share": 0.00436029833620195,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 54554,
+    "degraded": 1506,
+    "share": 0.027605675110899293,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 5405,
+    "degraded": 788,
+    "share": 0.145790934320074,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 94802,
+    "degraded": 328,
+    "share": 0.003459842619354022
+   }
+  },
+  {
+   "wednesday": "2026-07-08",
+   "date_used": "2026-07-08",
+   "study_year": 4,
+   "CZ": {
+    "usable": 35152,
+    "degraded": 317,
+    "share": 0.00901797906235776,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 41605,
+    "degraded": 1375,
+    "share": 0.0330489123903377,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4018,
+    "degraded": 780,
+    "share": 0.19412643106022898,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 82360,
+    "degraded": 537,
+    "share": 0.006520155415250121
+   }
+  },
+  {
+   "wednesday": "2026-07-15",
+   "date_used": "2026-07-15",
+   "study_year": 4,
+   "CZ": {
+    "usable": 37908,
+    "degraded": 239,
+    "share": 0.006304737786219268,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 48292,
+    "degraded": 1449,
+    "share": 0.030004969767249232,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 3840,
+    "degraded": 753,
+    "share": 0.19609375,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 89323,
+    "degraded": 465,
+    "share": 0.005205826047042755
+   }
+  },
+  {
+   "wednesday": "2026-07-22",
+   "date_used": "2026-07-22",
+   "study_year": 4,
+   "CZ": {
+    "usable": 32901,
+    "degraded": 325,
+    "share": 0.009878119206103158,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 39414,
+    "degraded": 1304,
+    "share": 0.033084690719033846,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 3184,
+    "degraded": 535,
+    "share": 0.1680276381909548,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 81929,
+    "degraded": 365,
+    "share": 0.004455076956877296
+   }
+  },
+  {
+   "wednesday": "2026-07-29",
+   "date_used": "2026-07-29",
+   "study_year": 4,
+   "CZ": {
+    "usable": 30258,
+    "degraded": 240,
+    "share": 0.00793178663493952,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 43087,
+    "degraded": 2588,
+    "share": 0.060064520621069,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4685,
+    "degraded": 676,
+    "share": 0.14429028815368197,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 82399,
+    "degraded": 455,
+    "share": 0.00552191167368536
+   }
+  },
+  {
+   "wednesday": "2026-08-05",
+   "date_used": "2026-08-05",
+   "study_year": 4,
+   "CZ": {
+    "usable": 36438,
+    "degraded": 232,
+    "share": 0.006366979526867556,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 49452,
+    "degraded": 1363,
+    "share": 0.02756208040119712,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 5903,
+    "degraded": 741,
+    "share": 0.12552939183466033,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 89714,
+    "degraded": 422,
+    "share": 0.004703836636422409
+   }
+  },
+  {
+   "wednesday": "2026-08-12",
+   "date_used": "2026-08-12",
+   "study_year": 4,
+   "CZ": {
+    "usable": 24573,
+    "degraded": 190,
+    "share": 0.007732063647092337,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 35946,
+    "degraded": 1072,
+    "share": 0.02982251154509542,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4734,
+    "degraded": 623,
+    "share": 0.13160118293198142,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 63833,
+    "degraded": 424,
+    "share": 0.006642332335939091
+   }
+  },
+  {
+   "wednesday": "2026-08-19",
+   "date_used": "2026-08-19",
+   "study_year": 4,
+   "CZ": {
+    "usable": 28795,
+    "degraded": 128,
+    "share": 0.004445216183365168,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 38347,
+    "degraded": 1064,
+    "share": 0.027746629462539443,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 3218,
+    "degraded": 564,
+    "share": 0.1752641392169049,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 72225,
+    "degraded": 365,
+    "share": 0.0050536517826237455
+   }
+  },
+  {
+   "wednesday": "2026-08-26",
+   "date_used": "2026-08-26",
+   "study_year": 4,
+   "CZ": {
+    "usable": 33629,
+    "degraded": 353,
+    "share": 0.010496892562966487,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 44852,
+    "degraded": 1345,
+    "share": 0.029987514492107376,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 2953,
+    "degraded": 484,
+    "share": 0.16390111750761938,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 83257,
+    "degraded": 728,
+    "share": 0.008744009512713646
+   }
+  },
+  {
+   "wednesday": "2026-09-02",
+   "date_used": "2026-09-02",
+   "study_year": 4,
+   "CZ": {
+    "usable": 30375,
+    "degraded": 206,
+    "share": 0.006781893004115226,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 41701,
+    "degraded": 1060,
+    "share": 0.025419054698928082,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 3998,
+    "degraded": 581,
+    "share": 0.14532266133066532,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 85887,
+    "degraded": 410,
+    "share": 0.0047737142990208065
+   }
+  },
+  {
+   "wednesday": "2026-09-09",
+   "date_used": "2026-09-09",
+   "study_year": 4,
+   "CZ": {
+    "usable": 35748,
+    "degraded": 195,
+    "share": 0.005454850621013763,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 45690,
+    "degraded": 1179,
+    "share": 0.025804333552199608,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4112,
+    "degraded": 361,
+    "share": 0.08779182879377431,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 95591,
+    "degraded": 428,
+    "share": 0.0044774089610946635
+   }
+  },
+  {
+   "wednesday": "2026-09-16",
+   "date_used": "2026-09-16",
+   "study_year": 4,
+   "CZ": {
+    "usable": 30404,
+    "degraded": 247,
+    "share": 0.008123931061702408,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 36838,
+    "degraded": 1019,
+    "share": 0.027661653727129594,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4226,
+    "degraded": 394,
+    "share": 0.09323237103644108,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 78254,
+    "degraded": 428,
+    "share": 0.00546936897794362
+   }
+  },
+  {
+   "wednesday": "2026-09-23",
+   "date_used": "2026-09-23",
+   "study_year": 4,
+   "CZ": {
+    "usable": 30964,
+    "degraded": 211,
+    "share": 0.006814365069112518,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 38083,
+    "degraded": 1086,
+    "share": 0.02851666097733897,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 3772,
+    "degraded": 386,
+    "share": 0.10233297985153765,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 76024,
+    "degraded": 468,
+    "share": 0.006155950752393981
+   }
+  },
+  {
+   "wednesday": "2026-09-30",
+   "date_used": "2026-09-30",
+   "study_year": 4,
+   "CZ": {
+    "usable": 30534,
+    "degraded": 196,
+    "share": 0.006419073819348923,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 33743,
+    "degraded": 1197,
+    "share": 0.03547402424206502,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4606,
+    "degraded": 444,
+    "share": 0.09639600521059488,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 79319,
+    "degraded": 370,
+    "share": 0.004664708329656198
+   }
+  },
+  {
+   "wednesday": "2026-10-07",
+   "date_used": "2026-10-07",
+   "study_year": 4,
+   "CZ": {
+    "usable": 31715,
+    "degraded": 105,
+    "share": 0.003310736244679174,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 39025,
+    "degraded": 1129,
+    "share": 0.028930172966047406,
+    "degraded_position_day": true
+   },
+   "BALT": {
+    "usable": 4144,
+    "degraded": 488,
+    "share": 0.11776061776061776,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 89857,
+    "degraded": 281,
+    "share": 0.0031271909812257254
+   }
+  },
+  {
+   "wednesday": "2026-10-14",
+   "date_used": "2026-10-14",
+   "study_year": 4,
+   "CZ": {
+    "usable": 32011,
+    "degraded": 142,
+    "share": 0.004435975133547843,
+    "degraded_position_day": false
+   },
+   "PL": {
+    "usable": 36164,
+    "degraded": 884,
+    "share": 0.024444198650591747,
+    "degraded_position_day": false
+   },
+   "BALT": {
+    "usable": 4957,
+    "degraded": 481,
+    "share": 0.09703449667137382,
+    "degraded_position_day": true
+   },
+   "CTRL": {
+    "usable": 82620,
+    "degraded": 506,
+    "share": 0.006124425078673445
+   }
+  }
+ ],
+ "generated": "2026-10-26T11:01:48Z"
+}
