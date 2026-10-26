@@ -646,4 +646,28 @@ Commands, the verified API facts and their dates are in `tools/memes/README.md`.
   near the Holm level is read, the Monday reference day, the falsification sentence for both events and the "no
   positive peak" wording written out. Power for Kevin James is rerun at shared-factor shares of 0, 0.5 and 1, with the
   (−3, +14) minimum detectable uplift beside the primary one. The commits follow below.
+- 26 October 2026, commits of the branch, one line each (the commit that adds this list is not in it). First round:
+  - `70dc8cf` design registered (first version, before the code).
+  - `c88a98a` first version of the code, with the external falsification and the `--unblind` guard.
+  - `7dbb87a` tests of that code on made-up data.
+  - `18e5703` first runs of false positives, power and falsification detection on made-up panels.
+  - `8d712b6` first power numbers in the design, and the README.
+  - `8b9524c` the memes tests run in CI, matplotlib pinned.
+  - `ab24398` design revised after the first review and the author's decisions D1 to D5.
+  - `3ebc5d9` code: weekday terms, equal-day placebos, the omitted-day rule, the first-billed pool, the diagnostic
+    falsification, the smoothed half-life, the checks and the page.
+  - `3c74a59` tests: the first review fixes, and the spec's §7 tests restored where possible.
+  - `2a3f2db` the runs of power and falsification detection on made-up panels, rerun.
+  - `c9c891e` §5 numbers copied into the design: **§5 was written after the code and the simulations**.
+  - `ec2f751` change log with one line per commit.
+  Second round:
+  - `6f63826` design: the second-round fixes registered (the two stages, the empirical uplift and the labels, the
+    baseline choice, the pool rule, the later-wave blocks, the exact placebo mechanics, the listed deviations X to AD).
+  - `96060e3` tests: the stage gate, the injection check, the uninformative label, the baseline choice, the tightened
+    null test.
+  - `e1c8186` code: the two-stage run, the empirical minimum detectable uplift, Kevin James's baseline choice, the
+    later-wave blocks, the new page sentences, the pandas name fixes.
+  - `f1cea67` the power runs rerun with Kevin James at shared-factor shares of 0, 0.5 and 1 and the injected uplift.
+  - `bd5a801` §5 numbers and the minimum-detectable-uplift tables copied into the design, and the README: **§5 was
+    written after the code and the simulations**.
 
