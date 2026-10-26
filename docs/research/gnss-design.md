@@ -281,3 +281,26 @@ read with the others, without a correction for multiplicity.
   - Descriptive counts without intervals: a degraded-position day is judged on the day used, on primary usable points
     after the airframe drop, both limits inclusive, with the eligible days reported beside the counts; the repeat-airframe
     share is pooled over the sample per region.
+- 26 October 2026, after an independent review of the estimation code, still before any degraded or jump count was
+  opened. The guard tag is `gnss-code` (not `gnss-estimation` as written above), as for the other studies. Changes:
+  - Q3 reading: blocks of days are resampled independently in each window, but one aircraft draw is shared by the two
+    windows (paired). The same airframes fly in both windows, which is why aircraft are resampled at all; independent
+    aircraft draws would count that shared variation as noise in the change. This replaces the independent reading
+    recorded in the previous entry. The independent reading (aircraft redrawn per window) is reported beside it as a
+    check, with its own label; the primary label is the paired one.
+  - Q3 gate: a Q3 draw is redrawn if E_CZ is undefined in either window (counted, with the same 20 000-redraw limit).
+  - Persistent airframes: the loose reading (at least 30 usable points west of 5° E in total, from at least two sampled
+    days) stays primary. The strict reading (at least 30 on each of at least two sampled days, and half of all such
+    points degraded) is registered as check 13, with the same bootstrap draws; aircraft kept under either reading are in
+    the draw pool.
+  - Q2 bands: E per band is unchanged and is not a regional contrast (control's points sit in the band and its
+    reference is control's pooled share). The results also give each region's own share per band.
+  - Gate: the pooled E_CZ is computed in its own guarded step; the rest of the primary estimate is a non-gate estimate,
+    so a failure there leaves its keys missing instead of redrawing. If the primary estimate fails on the full data, the
+    run stops before any draw.
+  - Intervals: where an interval cannot be computed (fewer than 20 finite draws) the label is "not computed", not
+    "inconclusive", and it does not count as differing from the primary label.
+  - Draw log: `--from-log` continues a crashed run to 2 000 draws by running the generator forward through the same
+    gate, so a resumed run equals an uninterrupted one; a log whose redraw count does not match is refused. If the main
+    set is complete and the log holds no Q3 draws the run stops instead of drawing them. The first exception class of
+    each estimator is reported once.
