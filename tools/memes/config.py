@@ -31,6 +31,7 @@ NULL_SHA = ROOT / "docs/research/memes-null-files.sha256"
 NULL_SVG = ROOT / "docs/research/memes-estimation-windows.svg"
 NULL_GAP = ROOT / "docs/research/memes-estimation-gap-by-month.csv"
 NULL_TAG = "memes-null"
+CODE_TAG = "memes-code"  # freezes tools/memes and the design before stage 1
 LEBLANC = "Matt_LeBlanc"  # Friends actor in the pool; Matthew Perry died 28 Oct 2023 (design §8)
 
 MF_CAST = ("Ed_O'Neill", "Sofía_Vergara", "Julie_Bowen", "Ty_Burrell", "Jesse_Tyler_Ferguson", "Sarah_Hyland",

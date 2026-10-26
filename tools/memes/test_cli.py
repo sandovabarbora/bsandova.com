@@ -123,7 +123,15 @@ def test_the_null_summary_is_written_before_any_estimate(no_network, tmp_path):
         cli.main(["--synthetic", "--out", str(tmp_path), "--n-placebo", "120"])
     finally:
         cli.M.null_distribution, cli.M.run_event = orig_null, orig_run
-    assert "run" in order and order.index("run") > max(i for i, o in enumerate(order) if o == "null")
+    stage1_nulls = []
+    orig_null = cli.M.null_distribution
+    cli.M.null_distribution = lambda *a, **k: stage1_nulls.append(1) or orig_null(*a, **k)
+    try:
+        cli.null_payload(cli._synthetic_panel(), 120)
+    finally:
+        cli.M.null_distribution = orig_null
+    # every null call of stage 1 precedes the first estimate (stage 2 recomputes the null afterwards, as a check)
+    assert "run" in order and order[:len(stage1_nulls)] == ["null"] * len(stage1_nulls)
 
 
 # ---------------------------------------------------------------- the gate between the stages
@@ -138,9 +146,10 @@ def staged(tmp_path, monkeypatch):
     panel = cli._synthetic_panel()
     path = tmp_path / "pageviews.csv"
     F.save_panel(panel, path)
-    state = {"tags": "memes-null\n", "dirty": ""}
+    state = {"tags": "memes-null\n", "dirty": "", "fail": set()}
     monkeypatch.setattr(cli, "_git", lambda *a: state["dirty"] if a[0] == "status" else state["tags"])
-    cli.run_null_stage(panel, path, 150)
+    monkeypatch.setattr(cli, "_git_ok", lambda *a: a[0] not in state["fail"])
+    cli.run_null_stage(panel, path)
     return path, state, panel
 
 
@@ -194,13 +203,13 @@ def test_the_sha_file_hashes_what_was_written(staged):
 def test_stage_two_estimates_on_the_checked_panel_and_labels_from_the_null_file(staged):
     path, _, panel = staged
     null = cli.verify_null_stage(path)
-    summary, _ = cli.study(panel, null, 150)
+    summary, _ = cli.study(panel, null, None)
     assert [e["name"] for e in summary["events"]] == ["Stonestreet (Cam)", "Kevin James"]
     assert summary["events"][1]["second_regressor"] == null["events"]["Kevin James"]["baseline"]["second_regressor"]
     panel2 = panel.copy()
     panel2.loc[panel2.index[50], "Kat_Dennings"] = float("nan")          # a pool actor gains a hole after stage 1
     with pytest.raises(SystemExit, match="pool actors dropped now differ"):
-        cli.study(panel2, null, 150)
+        cli.study(panel2, null, None)
 
 
 def test_h2_makes_no_ordering_claim_when_a_half_life_is_censored(no_network, tmp_path):
@@ -253,3 +262,140 @@ def test_kevin_jamess_later_waves_and_second_regressor_are_registered():
     assert C.KEVIN_JAMES.placebo_blocked == (("2024-01-01", "2024-02-29"),)
     assert C.KEVIN_JAMES.second_regressor == "Victor_Williams" and C.STONESTREET.second_regressor is None
     assert C.STONESTREET.placebo_blocked == () and C.NULL_TAG == "memes-null"
+
+
+# ---------------------------------------------------------------- the freeze, the tags and the null file's settings
+
+def git(repo, *args):
+    import subprocess
+    return subprocess.run(["git", "-C", str(repo), *args], capture_output=True, text=True, check=True).stdout
+
+
+@pytest.fixture
+def repo(tmp_path, monkeypatch):
+    r = tmp_path / "repo"
+    (r / "tools/memes").mkdir(parents=True)
+    (r / "docs/research").mkdir(parents=True)
+    (r / "tools/memes/code.py").write_text("x = 1\n")
+    (r / "docs/research/memes-design.md").write_text("design\n")
+    git(r.parent, "init", "-q", str(r))
+    git(r, "config", "user.email", "t@example.com")
+    git(r, "config", "user.name", "t")
+    git(r, "add", "-A")
+    git(r, "commit", "-qm", "code")
+    git(r, "tag", "memes-code")
+    monkeypatch.setattr(C, "ROOT", r)
+    return r
+
+
+def test_the_freeze_passes_on_the_tagged_clean_code(repo):
+    cli.check_code_frozen()
+
+
+def test_the_freeze_refuses_without_the_code_tag(repo):
+    git(repo, "tag", "-d", "memes-code")
+    with pytest.raises(SystemExit, match="memes-code does not exist"):
+        cli.check_code_frozen()
+
+
+def test_the_freeze_refuses_code_committed_after_the_tag(repo):
+    (repo / "tools/memes/code.py").write_text("x = 2\n")
+    git(repo, "commit", "-qam", "change")
+    with pytest.raises(SystemExit, match="differs from the tag memes-code"):
+        cli.check_code_frozen()
+
+
+def test_the_freeze_refuses_uncommitted_code_and_design_changes_but_not_other_files(repo):
+    (repo / "docs/research/other.json").write_text("{}")
+    cli.check_code_frozen()
+    for name in ("tools/memes/code.py", "docs/research/memes-design.md", "tools/memes/new.py"):
+        p = repo / name
+        old = p.read_text() if p.exists() else None
+        p.write_text("changed\n")
+        with pytest.raises(SystemExit, match="uncommitted"):
+            cli.check_code_frozen()
+        if old is None:
+            p.unlink()
+        else:
+            p.write_text(old)
+    cli.check_code_frozen()
+
+
+def test_both_stages_refuse_an_unfrozen_code_base_before_touching_the_network(repo, no_network):
+    git(repo, "tag", "-d", "memes-code")
+    for argv in (["--null-stage", "--unblind"], ["--panel-csv", "x.csv", "--unblind"]):
+        with pytest.raises(SystemExit, match="refusing"):
+            cli.main(argv)
+
+
+def test_stage_one_refuses_when_the_null_tag_exists(repo, no_network):
+    cli.check_null_tag_free()
+    git(repo, "tag", "memes-null")
+    with pytest.raises(SystemExit, match="memes-null already exists"):
+        cli.main(["--null-stage", "--unblind"])
+
+
+def test_stage_two_requires_memes_code_to_be_an_ancestor_of_memes_null(staged):
+    path, state, _ = staged
+    state["fail"].add("merge-base")
+    with pytest.raises(SystemExit, match="not an ancestor"):
+        cli.verify_null_stage(path)
+    state["fail"] = {"diff"}
+    with pytest.raises(SystemExit, match="differs from the tag"):
+        cli.verify_null_stage(path)
+
+
+def test_the_ancestry_check_on_a_real_repo(repo):
+    git(repo, "commit", "-q", "--allow-empty", "-m", "null")
+    git(repo, "tag", "memes-null")
+    assert cli._git_ok("merge-base", "--is-ancestor", "memes-code", "memes-null")
+    git(repo, "tag", "-f", "memes-code", "HEAD")
+    git(repo, "checkout", "-q", "--orphan", "other")
+    git(repo, "commit", "-q", "--allow-empty", "-m", "unrelated")
+    git(repo, "tag", "-f", "memes-null", "HEAD")
+    assert not cli._git_ok("merge-base", "--is-ancestor", "memes-code", "memes-null")
+
+
+def test_stage_two_refuses_a_null_file_of_a_subset_or_another_seed(staged):
+    path, _, _ = staged
+    for kw, text in (({"n_placebo": 150}, "n_placebo=150"), ({"seed": 7}, "seed=7")):
+        payload = json.loads(C.NULL_JSON.read_text())
+        payload.update(kw)
+        C.NULL_JSON.write_text(json.dumps(payload))
+        lines = [ln for ln in C.NULL_SHA.read_text().splitlines() if not ln.endswith("null.json")]
+        C.NULL_SHA.write_text("\n".join([f"{cli._sha(C.NULL_JSON)}  null.json", *lines]) + "\n")
+        with pytest.raises(SystemExit, match=text):
+            cli.verify_null_stage(path)
+
+
+def test_n_placebo_is_refused_on_real_data_runs(no_network, tmp_path):
+    for argv in (["--null-stage", "--unblind", "--n-placebo", "100"],
+                 ["--panel-csv", str(tmp_path / "p.csv"), "--unblind", "--n-placebo", "100"]):
+        with pytest.raises(SystemExit, match="every admissible placebo date"):
+            cli.main(argv)
+
+
+def test_stage_two_stops_when_any_stored_null_value_is_not_reproduced(staged):
+    path, _, panel = staged
+    null = cli.verify_null_stage(path)
+    for edit, text in ((lambda w: w.update(null_sd=w["null_sd"] * 1.001), "the null the estimate used"),
+                       (lambda w: w.update(n=w["n"] + 1), "window"),
+                       (lambda w: w.update(null_q20=w["null_q20"] + 1e-6), "the null the estimate used")):
+        bad = json.loads(json.dumps(null))
+        edit(bad["events"]["Stonestreet (Cam)"]["windows"]["window_-3_30"])
+        with pytest.raises(SystemExit, match=text):
+            cli.study(panel, bad, None)
+    bad = json.loads(json.dumps(null))
+    bad["events"]["Stonestreet (Cam)"]["windows"]["window_-3_14"]["null_p95"] *= 1.01
+    with pytest.raises(SystemExit, match=r"the null of window \(-3, 14\)"):
+        cli.study(panel, bad, None)
+
+
+def test_stage_two_stops_when_the_recorded_baseline_choice_is_not_reproduced(staged):
+    path, _, panel = staged
+    null = cli.verify_null_stage(path)
+    base = null["events"]["Kevin James"]["baseline"]
+    other = "pool" if base["chosen"] == "pool+second" else "pool+second"
+    base.update(chosen=other, second_regressor=None if other == "pool" else C.KEVIN_JAMES.second_regressor)
+    with pytest.raises(SystemExit, match="the baseline choice"):
+        cli.study(panel, null, None)

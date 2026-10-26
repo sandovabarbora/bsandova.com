@@ -54,7 +54,7 @@ def variant_plan(spec: M.EventSpec) -> list[tuple[str, dict]]:
             ("exclusion_90", {"exclusion_days": C.STRICT_EXCLUSION_DAYS, "falsify": False}),
             ("pre_event_only", {"pre_only": True, "falsify": False})]
     w60 = {"event_window": C.SENSITIVITY_WINDOWS[1], "falsify": False}
-    if spec is C.STONESTREET:
+    if spec.name == C.STONESTREET.name:
         out += [("drop_Sofía_Vergara", {"drop": ("Sofía_Vergara",)}),
                 (f"day0_{C.SENSITIVITY_DAY0[spec.name]}", {"event_date": C.SENSITIVITY_DAY0[spec.name]}),
                 ("external_index", {"controls": spec.reference, "falsify": False}),
@@ -155,6 +155,29 @@ def _git(*args: str) -> str:
     return subprocess.run(["git", "-C", str(C.ROOT), *args], capture_output=True, text=True, check=True).stdout
 
 
+def _git_ok(*args: str) -> bool:
+    return subprocess.run(["git", "-C", str(C.ROOT), *args], capture_output=True, check=False).returncode == 0
+
+
+DESIGN = "docs/research/memes-design.md"
+
+
+def check_code_frozen() -> None:
+    """Both stages refuse unless the code is the tagged one: the tag `memes-code` exists, tools/memes at HEAD equals it,
+    and neither tools/memes nor the design text has uncommitted changes."""
+    if not _git_ok("rev-parse", "--verify", "--quiet", f"refs/tags/{C.CODE_TAG}"):
+        sys.exit(f"refusing to run: the code is not frozen, the tag {C.CODE_TAG} does not exist")
+    if not _git_ok("diff", "--quiet", C.CODE_TAG, "HEAD", "--", "tools/memes"):
+        sys.exit(f"refusing to run: tools/memes at HEAD differs from the tag {C.CODE_TAG}")
+    if _git("status", "--porcelain", "--", "tools/memes", DESIGN).strip():
+        sys.exit("refusing to run: tools/memes or the design text has uncommitted changes")
+
+
+def check_null_tag_free() -> None:
+    if _git_ok("rev-parse", "--verify", "--quiet", f"refs/tags/{C.NULL_TAG}"):
+        sys.exit(f"refusing --null-stage: the tag {C.NULL_TAG} already exists, stage 1 is run once")
+
+
 def verify_null_stage(panel_path: Path) -> dict:
     """Stage 2 refuses to run unless the committed null files match their recorded hashes, the panel matches the hash
     recorded in stage 1, the files are committed and unmodified, and the tag `memes-null` is on HEAD."""
@@ -172,10 +195,41 @@ def verify_null_stage(panel_path: Path) -> dict:
         sys.exit("refusing to estimate: the stage 1 files are not committed or have changed since")
     if C.NULL_TAG not in _git("tag", "--points-at", "HEAD").split():
         sys.exit(f"refusing to estimate: the tag {C.NULL_TAG} is not on HEAD (commit the stage 1 files, then tag)")
-    return json.loads(C.NULL_JSON.read_text())
+    check_code_frozen()
+    if not _git_ok("merge-base", "--is-ancestor", C.CODE_TAG, C.NULL_TAG):
+        sys.exit(f"refusing to estimate: {C.CODE_TAG} is not an ancestor of {C.NULL_TAG}, stage 1 ran on other code")
+    null = json.loads(C.NULL_JSON.read_text())
+    if null.get("n_placebo") is not None or null.get("seed") != C.SEED:
+        sys.exit(f"refusing to estimate: the null file must use every admissible date (n_placebo null) and seed {C.SEED}, "
+                 f"not n_placebo={null.get('n_placebo')} and seed={null.get('seed')}")
+    return null
 
 
 # ---------------------------------------------------------------- stage 2: the estimates
+
+def _recheck_null(panel: pd.DataFrame, spec: M.EventSpec, info: dict, res: M.EventResult, null: dict) -> None:
+    """Recompute what stage 1 stored, exactly as stage 1 did, and stop on any difference: both windows' nulls (every
+    field, including the number of placebo dates), the null the run itself used, and the baseline choice."""
+    kw = {"n_placebo": null["n_placebo"], "seed": null["seed"]}
+    second = info.get("baseline", {}).get("second_regressor")
+    stage1 = info["windows"]["window_-3_30"]
+    problems = []
+    if not (np.isclose(res.mdu80_q975_pct, stage1["mdu80_q975_pct"], rtol=1e-9)
+            and np.isclose(res.null_sd, stage1["null_sd"], rtol=1e-9)
+            and np.isclose(res.null_q20, stage1["null_q20"], rtol=1e-9)):
+        problems.append("the null the estimate used")
+    for w, key in WINDOW_KEYS.items():
+        now = M.null_distribution(panel, spec, event_window=w, second=second, **kw)
+        old = info["windows"][key]
+        if now.keys() != old.keys() or not all(np.isclose(now[k], old[k], rtol=1e-9, atol=0) for k in now):
+            problems.append(f"the null of window {w}")
+    if spec.second_regressor:
+        base = M.choose_baseline(panel, spec, **kw)
+        if (base["chosen"], base["second_regressor"]) != (info["baseline"]["chosen"], info["baseline"]["second_regressor"]):
+            problems.append("the baseline choice")
+    if problems:
+        sys.exit(f"refusing to estimate: {', '.join(problems)} of {spec.name} differ from stage 1 (data or code changed)")
+
 
 def study(panel: pd.DataFrame, null: dict, n_placebo: int | None = C.N_PLACEBO, seed: int = C.SEED
           ) -> tuple[dict, dict[str, pd.Series]]:
@@ -192,9 +246,7 @@ def study(panel: pd.DataFrame, null: dict, n_placebo: int | None = C.N_PLACEBO, 
         except M.EventDropped as err:
             dropped_events.append({"name": spec.name, "reason": str(err)})
             continue
-        stage1 = info["windows"]["window_-3_30"]
-        if not np.isclose(res.mdu80_q975_pct, stage1["mdu80_q975_pct"], rtol=1e-9):
-            sys.exit(f"refusing to estimate: the null of {spec.name} differs from stage 1 (data or code changed)")
+        _recheck_null(panel, spec, info, res, null)
         results.append(res)
         specs.append(spec)
         seconds[spec.name] = second
@@ -269,15 +321,25 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = ap.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
     n_placebo = args.n_placebo or C.N_PLACEBO
+    if args.n_placebo is not None and not args.synthetic:
+        sys.exit("refusing --n-placebo on real data: the registered run uses every admissible placebo date")
 
     if args.verify_titles:
-        print(json.dumps(F.verify_titles(list(C.ARTICLES)), ensure_ascii=False, indent=1))
+        try:
+            print(json.dumps(F.verify_titles(list(C.ARTICLES)), ensure_ascii=False, indent=1))
+        except F.ArticleNotFound as err:
+            sys.exit(str(err))
         return 0
     if (args.null_stage or args.panel_csv is not None) and not args.unblind:
         sys.exit("refusing to read real pageview numbers: the design is blinded until the code is frozen. "
                  "Pass --unblind to run the registered analysis.")
     if args.null_stage:
-        F.verify_titles(list(C.ARTICLES))
+        check_code_frozen()
+        check_null_tag_free()
+        try:
+            F.verify_titles(list(C.ARTICLES))
+        except F.ArticleNotFound as err:
+            sys.exit(str(err))
         panel = F.fetch_panel(list(C.ARTICLES), C.START, C.END)
         digest = F.save_panel(panel, C.RAW)
         F.write_manifest(C.MANIFEST, digest, C.RAW, C.START, C.END)
