@@ -200,3 +200,47 @@ years before the promise"; the label itself stands.
 ## Change log
 
 - 16 October 2026: design committed.
+- 26 October 2026: **deviation from the registered design, approved by the author before any outcome was read.** The
+  data step (screening in `docs/research/incentives-screening.json`, files and hashes in
+  `docs/research/incentives-mpsv-files.sha256`) found two problems, from field presence and event counts alone:
+  (a) the field `celkemObyvatelstvo15_64` is missing in all 246 MPSV monthly files (July 2004 – December 2024), so the
+  outcome of §2 cannot be computed, and neither can its fallback (which divides by the same field) or the
+  descriptive rule (same); the rule of §2 gives "none". (b) With the rules as registered, the event list is 12
+  events in 11 districts, below the minimum of §4 (20 events, 15 districts). No unemployment value, and no number
+  derived from one, had been read, printed or computed by anyone when the author approved the changes; the only MPSV
+  content looked at is which fields exist and that each is present (not null) in every district of every month.
+  Changes, all binding from this entry:
+  1. **Outcome (§1, §2).** MPSV's own `podilNezamestnanychOsobPNO`, the share of unemployed persons, as published, in
+     every month; present in all 246 files and all districts. It replaces the outcome of §2 and the rule for
+     missing fields (the fixed fallback and the descriptive panel fall away, as the amended outcome exists in every month).
+     Its unit is percentage points, so the thresholds of §6 (0.10, 0.20, 0.40) keep their values. Months without it, or
+     with a different district set, are dropped and listed by the screening (none are). §1's wording "share of
+     registered unemployed among the population aged 15–64" now reads "MPSV's rate of unemployed persons".
+  2. **Clean window (§2).** From 24 months before to 47 months after the decision month, instead of 48 before. It is
+     used both for the event's own district and for the comparison districts of the event (one rule, one function), the
+     reading under which the approved count is reproduced.
+  3. **Blockers (§2).** A project blocks only with at least 300 promised jobs, instead of 200: for the clean window, for
+     the comparison pools, for multi-place projects and for place strings that cannot be matched. The two thresholds
+     are now both 300. Check 1 ("blockers unchanged") means blockers at 300.
+  4. **Boundary changes (§2, §7).** Districts with a boundary change on 1 January 2007 or 2016 stay in the headline,
+     as treated and as comparison. Check 6 now removes them, as before only for events whose years −2 to 3 cover the
+     date: an event whose treated district moved drops out, and moved districts leave the comparison pools. The
+     screening lists, per event, the districts moved inside its years −2 to 3.
+  5. **Q3 (§1).** Q3 divides by the population aged 15–64 of the treated district, which is in no MPSV file. It is
+     reported as "not computable" in the results. It is not recovered from MPSV fields (job seekers divided by the
+     rate would be a computation on outcome values, which the blinding forbids). The narrowest fix, which the author
+     has not yet decided: the population aged 15–64 by district, for the year before each event, from the public ČSÚ
+     table (structure and coverage checked first, no outcome), used only in the denominator of Q3 and entered in a
+     further dated entry before it is used. Until then Q3 stays "not computable". It carries no label either way.
+  **Event counts, as the same code run on the project list alone:** as registered (≥ 200 blockers, window −48/+47,
+  boundary districts excluded as treated) 12 events in 11 districts, minimum not met; as amended 34 events in 28
+  districts, minimum met (20 and 15), 6 of them with a treated district on the boundary list and 23 with at least one boundary
+  district inside years −2 to 3. Dropped as amended: 114 outside the decision window, 48 by the clean window, 8 naming
+  several places, 5 in Prague; the 300-job projects that name several places or cannot be placed number 9 and 0.
+  **Consequences stated now, not part of the approval.** (i) The window is no longer symmetric in effect: of two
+  events 25 to 47 months apart only the earlier one drops, and the later one keeps an earlier project whose years 1–3
+  (months 12–47 after it) can reach the later one's reference years −2 and −1, which the window of −48 mostly
+  prevented. (ii) The published rate of MPSV changed its definition in 2013 (the design's reason for computing the
+  outcome from two fields); a level break in January 2013 can differ between districts and is absorbed only by the
+  event-year effects, which are shared within an event; it has not been looked at, and no check is added here.
+  (iii) Placebo check 9 reads years −2 to 1 shifted two years back, which now lie partly outside the clean window.
