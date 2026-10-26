@@ -118,8 +118,7 @@ def outcome_rule(per_month: dict) -> dict:
             "months_dropped": dropped if needed else "n/a"}
 
 
-def project_counts(p, geo, events, dropped) -> dict:
-    ipo = p
+def project_counts(ipo) -> dict:
     by_year = collections.Counter(d.year for d in ipo["date"])
     return {
         "rows_ipo": len(ipo),
@@ -150,7 +149,7 @@ def main() -> None:
     rule = outcome_rule(mpsv["months"])
     out = {
         "design": "docs/research/incentives-design.md §3",
-        "projects": {"rows": all_rows} | project_counts(p, geo, events, dropped),
+        "projects": {"rows": all_rows} | project_counts(p),
         "place_strings": {"total": len(places), "by_status": dict(collections.Counter(places["status"])),
                           "unmatched_or_ambiguous": places.loc[places["status"].isin(["unmatched", "ambiguous"]),
                                                                ["lokalita_kraj", "lokalita_mesto", "status"]].to_dict("records")},

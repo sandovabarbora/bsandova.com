@@ -599,7 +599,7 @@ def test_check_that_cannot_be_estimated_is_reported_and_the_others_still_run(mon
     regions = {u: ("R1" if int(u[1:]) % 2 else "R2") for u in wide.columns}
     out = E.checks(wide, events, ps, draws=10, perms=10, all_districts=list(wide.columns), regions=regions)
     assert "LinAlgError" in out["3_same_region"]["error"]
-    assert out["4_same_tercile"].get("n_events", 0) >= 0 and "error" not in out["10_reference_year_minus1"]
+    assert "error" not in out["4_same_tercile"] and "error" not in out["10_reference_year_minus1"]
 
 
 # ---------- the draw log ----------
@@ -679,3 +679,93 @@ def test_events_from_the_project_step_load_into_the_estimator():
     assert (ev.id, ev.treated, ev.jobs, ev.cancelled, ev.regime, ev.moved) == ("1", "3201", 450.0, "ANO",
                                                                              "Zákonná pobídka", ("3201",))
     assert ev.month == M(2009, 1) and len(ev.comparisons) == kept[0]["n_comparisons"]
+
+
+def test_permutation_p_is_missing_when_the_observed_value_is_missing():
+    ps = small_panels()
+    assert np.isnan(E.permutation_p(ps, float("nan"), perms=5)["p"])  # not 0
+
+
+def test_label_not_computable_when_the_pre_interval_is_missing():
+    nan = float("nan")
+    assert E.label(0.0, [-0.1, 0.1], [-0.15, 0.15], 0.5, [nan, nan]) == "not computable"
+
+
+def test_run_label_not_computable_when_too_many_draws_are_missing(monkeypatch):
+    ps = small_panels()
+    real = E.fit
+    state = {"n": 0}
+
+    def fit(*a, **k):
+        state["n"] += 1
+        if state["n"] > 1 and state["n"] % 2 == 0:
+            raise np.linalg.LinAlgError("Singular matrix")
+        return real(*a, **k)
+    monkeypatch.setattr(E, "fit", fit)
+    assert E.run(ps, draws=20, perms=20)["label"] == "not computable"
+
+
+def test_bootstrap_that_never_holds_an_event_stops_and_is_logged(monkeypatch, tmp_path):
+    ps = small_panels()
+    monkeypatch.setattr(E, "MAX_REDRAWS", 5)
+    monkeypatch.setattr(E, "design_of", lambda *a, **k: None)
+    log = E.DrawLog(tmp_path / "d.jsonl")
+    with pytest.raises(RuntimeError, match="no draw holds an event"):
+        E.bootstrap(ps, draws=3, seed=1, log=log)
+    assert [json.loads(x)["kind"] for x in (tmp_path / "d.jsonl").read_text().splitlines()] == ["boot_redraw"] * 6
+
+
+def test_log_rows_carry_a_run_stamp(tmp_path):
+    log = E.DrawLog(tmp_path / "d.jsonl")
+    E.permutation_p(small_panels(), 0.0, perms=2, log=log)
+    rows = [json.loads(x) for x in (tmp_path / "d.jsonl").read_text().splitlines()]
+    assert len({r["stamp"] for r in rows}) == 1 and rows[0]["stamp"]
+
+
+def test_unblind_refuses_other_draw_counts_and_unavailable_rules(monkeypatch, tmp_path):
+    monkeypatch.setattr(sys, "argv", ["estimate.py", "--unblind", "--draws", "10"])
+    with pytest.raises(SystemExit, match="registered run uses"):
+        E.main()
+    f = tmp_path / "screening.json"
+    f.write_text(json.dumps({"mpsv": {"outcome_rule": {"rule": "none: x", "months_dropped": "n/a"}}}))
+    monkeypatch.setattr(E, "SCREENING", f)
+    with pytest.raises(SystemExit, match="refused"):
+        E.real(1, 1)
+
+
+def test_main_prints_only_the_path(monkeypatch, tmp_path, capsys):
+    monkeypatch.setattr(sys, "argv", ["estimate.py", "--unblind"])
+    monkeypatch.setattr(E, "real", lambda *a, **k: {"primary": {"estimate": -0.123456}})
+    monkeypatch.setattr(E, "OUT", tmp_path / "r.json")
+    monkeypatch.setattr(E, "DRAW_LOG", tmp_path / "d.jsonl")
+    E.main()
+    assert capsys.readouterr().out == f"written {tmp_path / 'r.json'}\n"
+
+
+def test_checks_2_5_8_select_the_right_events():
+    wide, events = clean_panel(n_events=22, n_comp=12, effect=-0.5, noise=0.1, seed=6)
+    events = [replace(ev, cancelled=("ANO" if i % 4 == 0 else "ověřit" if i == 1 else ""),
+                      regime="Zákonná pobídka" if i % 2 else "Program PM") for i, ev in enumerate(events)]
+    ps = panels_of(wide, events)
+    regions = {u: "R" for u in wide.columns}
+    out = E.checks(wide, events, ps, draws=5, perms=5, all_districts=list(wide.columns), regions=regions)
+    assert out["2_without_cancelled_or_unverified"]["n_events"] == sum(i % 4 != 0 and i != 1 for i in range(22))
+    assert out["8_statutory_regime_only"]["n_events"] == 11
+    n5 = sum(not E.covers(ev, *E.CRISIS) and not E.covers(ev, *E.COVID) for ev in events)
+    assert out["5_without_2009_2020_21"].get("n_events", 0) == n5
+
+
+def test_check_11_recovers_effect_when_a_rise_precedes_the_promise():
+    """Districts with a recent rise (year -3 to -2) get a later effect only through the control interaction."""
+    wide, events = clean_panel(n_events=22, n_comp=12, effect=-0.5, noise=0.05, seed=7)
+    regions = {u: "R" for u in wide.columns}
+    out = E.checks(wide, events, panels_of(wide, events), draws=5, perms=5, all_districts=list(wide.columns),
+                   regions=regions)
+    assert out["11_control_change_minus3_to_minus2"]["estimate"] == pytest.approx(-0.5, abs=0.1)
+
+
+def test_tercile_pool_keeps_comparisons_in_the_treated_tercile():
+    wide, events = clean_panel(n_events=1, n_comp=6, noise=0.0, effect=0.0, seed=3)
+    sp = E.sub_panel(wide, events[0])
+    base = pd.Series({u: float(i) for i, u in enumerate(sp.units)})  # 0..6, terciles by rank
+    assert E.tercile_pool(sp, base) == {sp.units[1]}  # cut-offs 2 and 4: values 0 and 1 share a tercile

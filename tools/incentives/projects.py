@@ -33,7 +33,6 @@ PLACES_CSV = HERE / "places.csv"
 EVENT_JOBS = 300
 BLOCK_JOBS = 300  # amended 26 October 2026 (registered: 200)
 WIN_BEFORE, WIN_AFTER = 24, 47  # clean window in months around the decision month (amended; registered: 48 and 47)
-YEARS = (-2, -1, 0, 1, 2, 3)
 FIRST_DECISION, LAST_DECISION = dt.date(2006, 7, 1), dt.date(2021, 1, 31)
 MIN_COMPARISONS = 10
 PRAGUE = "3100"
@@ -418,7 +417,8 @@ def blockers_near(projects: pd.DataFrame, district: str, m0: int, skip: int | No
 
 
 def years_cover(m0: int, y: int, m: int) -> bool:
-    """Whether event years −2 to 3 (months m0−24 to m0+47) contain the given calendar month."""
+    """Whether event years −2 to 3 (months m0−24 to m0+47) contain the given calendar month. A span that starts in
+    that month counts as covering it: conservative, so check 6 removes slightly more."""
     return m0 - 24 <= ym_of(y, m) <= m0 + 47
 
 
