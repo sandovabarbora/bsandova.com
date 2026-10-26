@@ -1,0 +1,918 @@
+{
+ "stage": "A",
+ "years": [
+  2016,
+  2025
+ ],
+ "seed": 20261015,
+ "draws": 2000,
+ "redrawn": {
+  "no_treated_post_year": 0,
+  "separated": 2,
+  "not_converged": 0
+ },
+ "treated_towns_before_zero_drop": 35,
+ "minimum_met": true,
+ "pre_trends": {
+  "towns_per_lead": {
+   "lead|-3": 30,
+   "lead|-2": 32
+  },
+  "towns_any_lead": 32,
+  "coefficients": {
+   "lead|-3": 0.1057979525407351,
+   "lead|-2": -0.012322945656385142
+  },
+  "wald": 1.7082407996923255,
+  "df": 2,
+  "p": 0.42565743481086604,
+  "uninformative": false,
+  "rejects_5pct": false,
+  "uninformative_by_rule": true,
+  "note": "one lead test, on Q1; Q2 reuses it"
+ },
+ "differing_trends": true,
+ "placebo": {
+  "run": true,
+  "est": -0.019424003096041975,
+  "ci95": [
+   -0.13672187006710435,
+   0.11381170490086756
+  ],
+  "treated_towns_with_earlier_years": 30,
+  "interval": "cluster-robust by bypass"
+ },
+ "questions": {
+  "q1": {
+   "est": -0.18778892906638378,
+   "ci90": [
+    -0.44158646507106813,
+    -0.00027791227813571775
+   ],
+   "ci95": [
+    -0.5342292912306602,
+    0.034301580078261396
+   ],
+   "delta_per_town_year": -1.3715871555565278,
+   "delta_ci95": [
+    -3.0737194544496576,
+    0.04751037774189363
+   ],
+   "treated_towns": 35,
+   "draws_missing": 0,
+   "label": "underpowered",
+   "power": {
+    "ci90_width": 0.4413085527929324,
+    "smallest_detectable_change": 0.28426543565446083
+   },
+   "cells": {
+    "p|2020-2022|1": {
+     "beta": -0.19075874360631206,
+     "weight": 18.0
+    },
+    "p|2020-2022|2": {
+     "beta": -0.05385941260057758,
+     "weight": 18.0
+    },
+    "p|2020-2022|3": {
+     "beta": -0.18696789026605387,
+     "weight": 18.0
+    },
+    "p|2023-2024|1": {
+     "beta": -0.410390153868597,
+     "weight": 17.0
+    },
+    "p|2023-2024|2": {
+     "beta": -0.21024162227845467,
+     "weight": 10.0
+    }
+   },
+   "treated_towns_per_post_year": {
+    "1": 35,
+    "2": 28,
+    "3": 18
+   },
+   "dropped_no_injury_accident": [],
+   "thin_year_cells": {},
+   "separated": [],
+   "converged": true,
+   "sign_sentence": null
+  },
+  "q2": {
+   "est": 0.023254332936599065,
+   "ci90": [
+    -0.11627190513030057,
+    0.23477274217333793
+   ],
+   "ci95": [
+    -0.14398414053109446,
+    0.2806381700770074
+   ],
+   "delta_per_town_year": -0.41090765463363743,
+   "delta_ci95": [
+    -2.2925529316945923,
+    1.474210974574647
+   ],
+   "treated_towns": 35,
+   "draws_missing": 0,
+   "label": "underpowered",
+   "power": {
+    "ci90_width": 0.3510446473036385,
+    "smallest_detectable_change": 0.21231115530405092
+   },
+   "cells": {
+    "p|2020-2022|1": {
+     "beta": 0.08983057140186212,
+     "weight": 18.0
+    },
+    "p|2020-2022|2": {
+     "beta": 0.25179107228060627,
+     "weight": 18.0
+    },
+    "p|2020-2022|3": {
+     "beta": 0.21628689866417017,
+     "weight": 18.0
+    },
+    "p|2023-2024|1": {
+     "beta": -0.3770924482605471,
+     "weight": 17.0
+    },
+    "p|2023-2024|2": {
+     "beta": -0.17697484016450082,
+     "weight": 10.0
+    }
+   },
+   "treated_towns_per_post_year": {
+    "1": 35,
+    "2": 28,
+    "3": 18
+   },
+   "dropped_no_injury_accident": [],
+   "thin_year_cells": {},
+   "separated": [],
+   "converged": true,
+   "change_inside_built_up_per_town_year": -1.3715871555565278,
+   "change_outside_built_up_per_town_year": 0.9606795009228903,
+   "change_outside_ci95": [
+    -0.07162417474068594,
+    2.130235064439695
+   ],
+   "same_towns_as_q1": true
+  },
+  "q3": {
+   "run": true,
+   "label": null,
+   "buffer_m": 50,
+   "pooled": {
+    "per_km_year": 0.7964577877372498,
+    "junction_share": 0.5677966101694916,
+    "old_road_per_town_year": 2.1231884057971016,
+    "bypass_accidents": 118,
+    "km_years": 148.156,
+    "at_junction": 67,
+    "old_accidents": 293,
+    "old_town_years": 138
+   },
+   "bypasses": [
+    {
+     "id": "BYP-014",
+     "road": "I/19",
+     "geometry": "osm_ways",
+     "old_road_accidents": 0,
+     "old_road_years": 2,
+     "old_road_per_year": 0.0,
+     "km": 2.41,
+     "years": 5,
+     "bypass_accidents": 7,
+     "per_km_year": 0.5809128630705394,
+     "at_junction": 2,
+     "junction_share": 0.2857142857142857
+    },
+    {
+     "id": "BYP-020",
+     "road": "I/37",
+     "geometry": "osm_ways",
+     "old_road_accidents": 7,
+     "old_road_years": 3,
+     "old_road_per_year": 2.3333333333333335,
+     "km": 2.83,
+     "years": 4,
+     "bypass_accidents": 13,
+     "per_km_year": 1.1484098939929328,
+     "at_junction": 9,
+     "junction_share": 0.6923076923076923
+    },
+    {
+     "id": "BYP-023",
+     "road": "I/37",
+     "geometry": "osm_ways",
+     "old_road_accidents": 10,
+     "old_road_years": 3,
+     "old_road_per_year": 3.3333333333333335,
+     "km": 4.56,
+     "years": 4,
+     "bypass_accidents": 19,
+     "per_km_year": 1.0416666666666667,
+     "at_junction": 9,
+     "junction_share": 0.47368421052631576
+    },
+    {
+     "id": "BYP-026",
+     "road": "I/3",
+     "geometry": "osm_ways",
+     "old_road_accidents": 15,
+     "old_road_years": 5,
+     "old_road_per_year": 3.0,
+     "km": 3.42,
+     "years": 3,
+     "bypass_accidents": 10,
+     "per_km_year": 0.9746588693957116,
+     "at_junction": 3,
+     "junction_share": 0.3
+    },
+    {
+     "id": "BYP-027",
+     "road": "I/19",
+     "geometry": "osm_ways",
+     "old_road_accidents": 9,
+     "old_road_years": 4,
+     "old_road_per_year": 2.25,
+     "km": 3.6,
+     "years": 3,
+     "bypass_accidents": 13,
+     "per_km_year": 1.2037037037037037,
+     "at_junction": 13,
+     "junction_share": 1.0
+    },
+    {
+     "id": "BYP-028",
+     "road": "I/38",
+     "geometry": "osm_ways",
+     "old_road_accidents": 7,
+     "old_road_years": 4,
+     "old_road_per_year": 1.75,
+     "km": 4.2,
+     "years": 3,
+     "bypass_accidents": 17,
+     "per_km_year": 1.349206349206349,
+     "at_junction": 11,
+     "junction_share": 0.6470588235294118
+    },
+    {
+     "id": "BYP-030",
+     "road": "I/11",
+     "geometry": "osm_ways",
+     "old_road_accidents": 3,
+     "old_road_years": 5,
+     "old_road_per_year": 0.6,
+     "km": 2.8,
+     "years": 2,
+     "bypass_accidents": 1,
+     "per_km_year": 0.17857142857142858,
+     "at_junction": 1,
+     "junction_share": 1.0
+    },
+    {
+     "id": "BYP-032",
+     "road": "I/67",
+     "geometry": "osm_ways",
+     "old_road_accidents": 68,
+     "old_road_years": 4,
+     "old_road_per_year": 17.0,
+     "km": 2.98,
+     "years": 2,
+     "bypass_accidents": 5,
+     "per_km_year": 0.8389261744966443,
+     "at_junction": 4,
+     "junction_share": 0.8
+    },
+    {
+     "id": "BYP-037",
+     "road": "I/43",
+     "geometry": "osm_ways",
+     "old_road_accidents": 52,
+     "old_road_years": 6,
+     "old_road_per_year": 8.666666666666666,
+     "km": 9.5,
+     "years": 2,
+     "bypass_accidents": 13,
+     "per_km_year": 0.6842105263157895,
+     "at_junction": 6,
+     "junction_share": 0.46153846153846156
+    },
+    {
+     "id": "BYP-038",
+     "road": "I/44",
+     "geometry": "osm_ways",
+     "old_road_accidents": 6,
+     "old_road_years": 5,
+     "old_road_per_year": 1.2,
+     "km": 5.64,
+     "years": 2,
+     "bypass_accidents": 3,
+     "per_km_year": 0.26595744680851063,
+     "at_junction": 0,
+     "junction_share": 0.0
+    },
+    {
+     "id": "BYP-040",
+     "road": "I/58",
+     "geometry": "osm_ways",
+     "old_road_accidents": 7,
+     "old_road_years": 6,
+     "old_road_per_year": 1.1666666666666667,
+     "km": 3.33,
+     "years": 1,
+     "bypass_accidents": 2,
+     "per_km_year": 0.6006006006006006,
+     "at_junction": 0,
+     "junction_share": 0.0
+    },
+    {
+     "id": "BYP-042",
+     "road": "I/33",
+     "geometry": "osm_ways",
+     "old_road_accidents": 26,
+     "old_road_years": 6,
+     "old_road_per_year": 4.333333333333333,
+     "km": 6.55,
+     "years": 1,
+     "bypass_accidents": 2,
+     "per_km_year": 0.3053435114503817,
+     "at_junction": 0,
+     "junction_share": 0.0
+    },
+    {
+     "id": "BYP-196",
+     "road": "II/353",
+     "geometry": "no_geometry",
+     "old_road_accidents": 3,
+     "old_road_years": 3,
+     "old_road_per_year": 1.0,
+     "bypass_accidents": null
+    },
+    {
+     "id": "BYP-197",
+     "road": "II/353",
+     "geometry": "no_geometry",
+     "old_road_accidents": 0,
+     "old_road_years": 3,
+     "old_road_per_year": 0.0,
+     "bypass_accidents": null
+    },
+    {
+     "id": "BYP-198",
+     "road": "II/230",
+     "geometry": "no_geometry",
+     "old_road_accidents": 0,
+     "old_road_years": 2,
+     "old_road_per_year": 0.0,
+     "bypass_accidents": null
+    },
+    {
+     "id": "BYP-199",
+     "road": "II/286",
+     "geometry": "no_geometry",
+     "old_road_accidents": 0,
+     "old_road_years": 2,
+     "old_road_per_year": 0.0,
+     "bypass_accidents": null
+    },
+    {
+     "id": "BYP-200",
+     "road": "II/128",
+     "geometry": "no_geometry",
+     "old_road_accidents": 0,
+     "old_road_years": 4,
+     "old_road_per_year": 0.0,
+     "bypass_accidents": null
+    },
+    {
+     "id": "BYP-201",
+     "road": null,
+     "geometry": "no_geometry",
+     "old_road_accidents": 0,
+     "old_road_years": 4,
+     "old_road_per_year": 0.0,
+     "bypass_accidents": null
+    },
+    {
+     "id": "BYP-205",
+     "road": "II/156",
+     "geometry": "no_geometry",
+     "old_road_accidents": 4,
+     "old_road_years": 5,
+     "old_road_per_year": 0.8,
+     "bypass_accidents": null
+    },
+    {
+     "id": "BYP-207",
+     "road": "II/374",
+     "geometry": "no_geometry",
+     "old_road_accidents": 7,
+     "old_road_years": 4,
+     "old_road_per_year": 1.75,
+     "bypass_accidents": null
+    },
+    {
+     "id": "BYP-209",
+     "road": "II/128",
+     "geometry": "no_geometry",
+     "old_road_accidents": 1,
+     "old_road_years": 5,
+     "old_road_per_year": 0.2,
+     "bypass_accidents": null
+    },
+    {
+     "id": "BYP-213",
+     "road": "II/322",
+     "geometry": "osm_ways",
+     "old_road_accidents": 3,
+     "old_road_years": 5,
+     "old_road_per_year": 0.6,
+     "km": 2.955,
+     "years": 2,
+     "bypass_accidents": 1,
+     "per_km_year": 0.1692047377326565,
+     "at_junction": 0,
+     "junction_share": 0.0
+    },
+    {
+     "id": "BYP-214",
+     "road": "II/101",
+     "geometry": "no_geometry",
+     "old_road_accidents": 6,
+     "old_road_years": 4,
+     "old_road_per_year": 1.5,
+     "bypass_accidents": null
+    },
+    {
+     "id": "BYP-215",
+     "road": "II/331",
+     "geometry": "no_geometry",
+     "old_road_accidents": 0,
+     "old_road_years": 5,
+     "old_road_per_year": 0.0,
+     "bypass_accidents": null
+    },
+    {
+     "id": "BYP-216",
+     "road": "II/385",
+     "geometry": "osm_ways",
+     "old_road_accidents": 19,
+     "old_road_years": 6,
+     "old_road_per_year": 3.1666666666666665,
+     "km": 3.9,
+     "years": 2,
+     "bypass_accidents": 10,
+     "per_km_year": 1.2820512820512822,
+     "at_junction": 8,
+     "junction_share": 0.8
+    },
+    {
+     "id": "BYP-217",
+     "road": "II/144",
+     "geometry": "osm_ways",
+     "old_road_accidents": 2,
+     "old_road_years": 6,
+     "old_road_per_year": 0.3333333333333333,
+     "km": 1.13,
+     "years": 2,
+     "bypass_accidents": 1,
+     "per_km_year": 0.4424778761061947,
+     "at_junction": 1,
+     "junction_share": 1.0
+    },
+    {
+     "id": "BYP-218",
+     "road": "II/105",
+     "geometry": "no_geometry",
+     "old_road_accidents": 17,
+     "old_road_years": 5,
+     "old_road_per_year": 3.4,
+     "bypass_accidents": null
+    },
+    {
+     "id": "BYP-219",
+     "road": "II/298",
+     "geometry": "no_geometry",
+     "old_road_accidents": 8,
+     "old_road_years": 3,
+     "old_road_per_year": 2.6666666666666665,
+     "bypass_accidents": null
+    },
+    {
+     "id": "BYP-220",
+     "road": "II/298",
+     "geometry": "no_geometry",
+     "old_road_accidents": 4,
+     "old_road_years": 6,
+     "old_road_per_year": 0.6666666666666666,
+     "bypass_accidents": null
+    },
+    {
+     "id": "BYP-221",
+     "road": "II/156",
+     "geometry": "osm_ways",
+     "old_road_accidents": 0,
+     "old_road_years": 7,
+     "old_road_per_year": 0.0,
+     "km": 2.196,
+     "years": 1,
+     "bypass_accidents": 1,
+     "per_km_year": 0.4553734061930783,
+     "at_junction": 0,
+     "junction_share": 0.0
+    },
+    {
+     "id": "BYP-222",
+     "road": "II/322",
+     "geometry": "osm_ways",
+     "old_road_accidents": 9,
+     "old_road_years": 6,
+     "old_road_per_year": 1.5,
+     "km": 3.0,
+     "years": 1,
+     "bypass_accidents": 0,
+     "per_km_year": 0.0,
+     "at_junction": 0,
+     "junction_share": null
+    }
+   ],
+   "geometry_methods": {
+    "osm_ways": 17,
+    "no_geometry": 14
+   },
+   "note": "different roads, length and traffic: not comparable with Q1 and carries no label (design §1)"
+  }
+ },
+ "checks": {
+  "1_all_accidents_q1": {
+   "est": 0.4969921901461507,
+   "ci90": [
+    -0.22294484387585095,
+    0.6379718991783155
+   ],
+   "ci95": [
+    -0.285226828048428,
+    0.6655084466888014
+   ],
+   "delta_per_town_year": 9.435771657288136,
+   "delta_ci95": [
+    -6.5971371779183015,
+    17.390400450930844
+   ],
+   "treated_towns": 35,
+   "draws_missing": 0
+  },
+  "1_all_accidents_q2": {
+   "est": 0.6551349381488938,
+   "ci90": [
+    -0.00710326424868079,
+    0.7679810315420537
+   ],
+   "ci95": [
+    -0.03671511248474303,
+    0.785712214418165
+   ],
+   "delta_per_town_year": 16.26825002981379,
+   "delta_ci95": [
+    -1.7172856431188779,
+    26.021151020415342
+   ],
+   "treated_towns": 35,
+   "draws_missing": 0
+  },
+  "2_killed_seriously_injured_q1": {
+   "est": -0.5561492115568951,
+   "ci90": [
+    -0.7075705807346303,
+    -0.19156381760377184
+   ],
+   "ci95": [
+    -0.717564222754212,
+    -0.11966610925647184
+   ],
+   "delta_per_town_year": -0.36497475122998807,
+   "delta_ci95": [
+    -0.9240421000628418,
+    -0.050745677237915426
+   ],
+   "treated_towns": 35,
+   "draws_missing": 1589
+  },
+  "2_killed_seriously_injured_q2": {
+   "est": -0.04388693863021331,
+   "ci90": [
+    -0.34029534038062625,
+    0.6701855594027029
+   ],
+   "ci95": [
+    -0.4023238445561614,
+    0.8572821623789824
+   ],
+   "delta_per_town_year": -0.13549754711001932,
+   "delta_ci95": [
+    -0.6684310524832788,
+    0.36937845170329386
+   ],
+   "treated_towns": 35,
+   "draws_missing": 1280
+  },
+  "3_without_2020_2021_q1": {
+   "est": -0.19419939805443143,
+   "ci90": [
+    -0.4303116148942679,
+    -0.013242653901557015
+   ],
+   "ci95": [
+    -0.5212474727701198,
+    0.023954465742786424
+   ],
+   "delta_per_town_year": -1.4989439643096092,
+   "delta_ci95": [
+    -3.2159785995231593,
+    0.007627159818493159
+   ],
+   "treated_towns": 35,
+   "draws_missing": 95
+  },
+  "4_plain_event_study_q1": {
+   "est": -0.19460440363816656,
+   "ci90": [
+    -0.44169838464691863,
+    0.1448572452793482
+   ],
+   "ci95": [
+    -0.5157393539480287,
+    0.2375095645140748
+   ],
+   "delta_per_town_year": -1.0225040791573967,
+   "delta_ci95": [
+    -2.6647190043649305,
+    0.6583450709246463
+   ],
+   "treated_towns": 35,
+   "draws_missing": 102
+  },
+  "6_post_1_2_q1": {
+   "est": -0.1926538659418887,
+   "ci90": [
+    -0.423682337163375,
+    -0.006857134011204107
+   ],
+   "ci95": [
+    -0.504180979002078,
+    0.02992334664660092
+   ],
+   "delta_per_town_year": -1.5578806267011727,
+   "delta_ci95": [
+    -3.5863371243140003,
+    -0.0029431280411963147
+   ],
+   "treated_towns": 35,
+   "draws_missing": 0
+  },
+  "6_post_1_5_q1": {
+   "est": -0.14461168531360158,
+   "ci90": [
+    -0.42554101713300724,
+    0.0659496750259776
+   ],
+   "ci95": [
+    -0.5267328102641894,
+    0.12204662503720254
+   ],
+   "delta_per_town_year": -1.0718926352996112,
+   "delta_ci95": [
+    -2.6283430315884218,
+    0.4591374794587182
+   ],
+   "treated_towns": 35,
+   "draws_missing": 239
+  },
+  "8_opening_year_dose_q1": {
+   "est": -0.20135904354602951,
+   "ci90": [
+    -0.4537474790314475,
+    -0.024943106156382736
+   ],
+   "ci95": [
+    -0.5430461020614544,
+    0.005490474133989743
+   ],
+   "delta_per_town_year": -1.1572977795688273,
+   "delta_ci95": [
+    -2.43197541136165,
+    -0.08483331671099102
+   ],
+   "treated_towns": 35,
+   "draws_missing": 1
+  },
+  "9_town_trends_q1": {
+   "est": -0.3563951764877715,
+   "ci90": [
+    -0.626635293324872,
+    -0.034096354724840496
+   ],
+   "ci95": [
+    -0.6764579042808125,
+    0.0537781725475578
+   ],
+   "delta_per_town_year": -2.601609534145479,
+   "delta_ci95": [
+    -8.074021311747206,
+    -0.4000404381562424
+   ],
+   "treated_towns": 35,
+   "draws_missing": 1,
+   "shift_against_primary": -0.16860624742138774
+  },
+  "10_old_through_road_q1": {
+   "est": -0.5730826406285914,
+   "ci90": [
+    -0.8281311095660824,
+    -0.2703137127197848
+   ],
+   "ci95": [
+    -0.8478760764427822,
+    -0.21219389592395338
+   ],
+   "delta_per_town_year": -0.9497889528209544,
+   "delta_ci95": [
+    -1.8464611196035732,
+    -0.3045155544986052
+   ],
+   "treated_towns": 35,
+   "draws_missing": 298
+  },
+  "5_callaway_santanna_q1": {
+   "est": -0.39140130203805973,
+   "ci90": [
+    -1.0160138685982445,
+    -0.022221010180485425
+   ],
+   "ci95": [
+    -1.2431839893692083,
+    0.03626604458444325
+   ],
+   "scale": "share of the treated towns' pre-construction mean"
+  },
+  "11_smaller_towns": {
+   "est": -0.525066464658048,
+   "ci90": [
+    -0.662227185723405,
+    -0.19067832227498913
+   ],
+   "ci95": [
+    -0.6904480275351675,
+    -0.1346962547778021
+   ],
+   "delta_per_town_year": -0.365363686645868,
+   "delta_ci95": [
+    -0.6624784501652374,
+    -0.024032137791190584
+   ],
+   "treated_towns": 18,
+   "draws_missing": 0,
+   "redrawn": {
+    "no_treated_post_year": 0,
+    "separated": 1989,
+    "not_converged": 0
+   }
+  },
+  "11_larger_towns": {
+   "est": -0.15903506371188347,
+   "ci90": [
+    -0.4064599803231905,
+    0.03871839020360596
+   ],
+   "ci95": [
+    -0.4674919972551275,
+    0.08963759885351641
+   ],
+   "delta_per_town_year": -2.305751772599535,
+   "delta_ci95": [
+    -5.452781738299836,
+    0.2732870276871129
+   ],
+   "treated_towns": 17,
+   "draws_missing": 0,
+   "redrawn": {
+    "no_treated_post_year": 0,
+    "separated": 5,
+    "not_converged": 0
+   }
+  },
+  "13_class_I": {
+   "est": -0.28611490741882917,
+   "ci90": [
+    -0.7132723351265968,
+    -0.1347489358302526
+   ],
+   "ci95": [
+    -0.7436783413924047,
+    -0.10399193429326119
+   ],
+   "delta_per_town_year": -3.423486711202083,
+   "delta_ci95": [
+    -6.9647786049730005,
+    -1.0408206544750607
+   ],
+   "treated_towns": 13,
+   "draws_missing": 0,
+   "redrawn": {
+    "no_treated_post_year": 2,
+    "separated": 139,
+    "not_converged": 0
+   }
+  },
+  "13_class_II": {
+   "est": -0.028343243579040278,
+   "ci90": [
+    -0.4089507438987725,
+    0.30574905772585054
+   ],
+   "ci95": [
+    -0.4894823056729003,
+    0.36254232392297403
+   ],
+   "delta_per_town_year": -0.12701508494775127,
+   "delta_ci95": [
+    -1.2053472718476146,
+    1.2930339797163348
+   ],
+   "treated_towns": 22,
+   "draws_missing": 0,
+   "redrawn": {
+    "no_treated_post_year": 0,
+    "separated": 44,
+    "not_converged": 0
+   }
+  },
+  "7_comparison_planned_only": {
+   "est": -0.18648809816993128,
+   "ci90": [
+    -0.4336613502222431,
+    0.0075639982112466414
+   ],
+   "ci95": [
+    -0.5126134045762494,
+    0.05323501354299457
+   ],
+   "delta_per_town_year": -1.3635124152551743,
+   "delta_ci95": [
+    -2.8344484562865886,
+    0.03842546153699117
+   ],
+   "treated_towns": 35,
+   "draws_missing": 0,
+   "redrawn": {
+    "no_treated_post_year": 0,
+    "separated": 2,
+    "not_converged": 0
+   }
+  },
+  "12_class_III_added": {
+   "est": -0.18024124534509023,
+   "ci90": [
+    -0.40292035058086767,
+    -0.013619780086544677
+   ],
+   "ci95": [
+    -0.46583474748631243,
+    0.02848038762505127
+   ],
+   "delta_per_town_year": -1.6061353335124386,
+   "delta_ci95": [
+    -3.34638850065856,
+    -0.08862423196880798
+   ],
+   "treated_towns": 39,
+   "draws_missing": 0,
+   "redrawn": {
+    "no_treated_post_year": 0,
+    "separated": 2,
+    "not_converged": 0
+   }
+  },
+  "14_by_opening_period": {
+   "run": false,
+   "reason": "stage B is not part of the study (change log, 16 October 2026)"
+  },
+  "15_without_2015_2016": {
+   "run": false,
+   "reason": "stage B is not part of the study (change log, 16 October 2026)"
+  }
+ },
+ "offset_share": {
+  "reported": false,
+  "reason": "Q1's 95 % interval includes zero"
+ },
+ "versions": {
+  "numpy": "2.5.4",
+  "pandas": "3.1.0",
+  "statsmodels": "0.15.0",
+  "scipy": "1.18.1"
+ }
+}
