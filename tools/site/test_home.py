@@ -67,16 +67,16 @@ def test_a_part_needs_a_series_hub_in_its_topic():
 @pytest.mark.parametrize("title, why", [
     ("Injury accidents after a bypass: −19 %, underpowered", "':'"),
     ("Unemployment +0.10 points", "number other than a year"),
-    ("Are trams later in rain?", "'?'"),
     ("A fall of 19 %", "'%'"),
-    ("A very long title that keeps going well past the limit set", "longer than 48"),
+    ("A very long title that keeps going well past the limit set for every title", "longer than 60"),
 ])
 def test_titles_that_carry_a_result_are_rejected(title, why):
     with pytest.raises(ValueError, match=why):
         home.validate(cfg(title=title))
 
 
-@pytest.mark.parametrize("title", ["Prague's 2026 election programmes", "Czech votes at the UN", 'What "pre-specified" means'])
+@pytest.mark.parametrize("title", ["What can Prague's next council actually deliver?", "Do bypasses make towns safer?",
+                                   "Prague's 2026 election programmes", 'What "pre-specified" means'])
 def test_short_names_and_years_pass(title):
     home.validate(cfg(title=title))
 

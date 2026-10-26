@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rain and dwell at Prague's tram stops</title>
+<title>Do fewer people take the tram on a rainy Saturday?</title>
 <meta name="description" content="A pre-specified analysis of Prague tram stops in 2025: in rain hours a tram stood at a stop about 0.25 seconds less than in dry hours, with no clear difference between weekday mornings and weekend days, so Jan Gehl's split between necessary and optional trips does not show in dwell; hot hours show no shorter stops.">
-<meta property="og:title" content="Rain and dwell at Prague's tram stops">
+<meta property="og:title" content="Do fewer people take the tram on a rainy Saturday?">
 <meta property="og:description" content="In rain hours a Prague tram's stop was about 0.25 seconds shorter, with no clear difference between weekday mornings and weekend days; hot hours show no shorter stops. Part 3 of Weather on the rails.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://bsandova.com/texts/rain-dwell">
@@ -33,8 +33,8 @@
 <article class="text">
 <header class="text-head">
   <p class="kicker">Research · Weather on the rails, part 3 · Prague trams, spring and summer 2025</p>
-  <h1>Rain and dwell <em>at Prague's tram stops</em></h1>
-  <p class="deck">Jan Gehl's split between necessary and optional trips predicts that rain shortens weekend tram stops more than weekday-morning ones; Prague's dwell times show no such difference (+0.04 s, −0.29 to 0.37), not supported.</p>
+  <h1>Do fewer people take the tram <em>on a rainy Saturday?</em></h1>
+  <p class="deck">If rain kept leisure riders at home, it should shorten weekend stops more than weekday-morning ones, and it did not (+0.04 s), so the idea is not supported here.</p>
   <dl class="facts">
     <div><dt>weekend against weekday morning, in rain</dt><dd>+0.04 s <small>difference in the rain contrast in dwell · 95 % confidence interval (CI) −0.29 to 0.37 · not supported</small></dd></div>
     <div><dt>rain, weekday mornings</dt><dd>−0.25 s <small>per stop, 95 % CI −0.44 to −0.04 (wild bootstrap by date, 10 rain dates), of an average 39.9 s</small></dd></div>
@@ -60,11 +60,11 @@
   <summary>About this study</summary>
 <dl class="meta">
   <div><dt>status</dt><dd>research, pre-specified analysis (self-timestamped)</dd></div>
-  <div><dt>series</dt><dd><a href="weather-rails">Weather on the rails</a>, part 3; part 1 is <a href="rain-delays">Rain and Prague's tram delays</a>, part 2 <a href="heat-delays">Heat and Prague's tram delays</a></dd></div>
+  <div><dt>series</dt><dd><a href="weather-rails">Weather on the rails</a>, part 3; part 1 is <a href="rain-delays">Are Prague's trams later when it rains?</a>, part 2 <a href="heat-delays">Do Prague's trams slow down in the heat?</a></dd></div>
   <div><dt>registration</dt><dd>registered analysis plan: design committed at <code>dbcb36e</code> on 8 October 2026, before the results commit <code>610eb6b</code>; commit times are self-reported. GitHub's activity log shows the design on the public branch from 14:18 UTC on 8 October 2026 and the results pushed at 14:42 UTC; a push is not a tamper-evident anchor. The design was committed before any dwell time was read; screening of dwell alone at <code>de47824</code>; power from the weather at <code>47fd277</code>; the change of windows, decided before dwell met the weather, at <code>d2d0eea</code> and its power at <code>3b74c72</code>; code frozen with tests at <code>59fbdd3</code> (tag <code>gehl-trams-v1</code>); results at <code>610eb6b</code>. The weather and the delays had been read for parts 1 and 2, dwell never. The registered "delay held" check was not run before publication; it was run on 9 October 2026 and is reported below. Changes after registration, each dated, are in <a href="../changelog/#rain-dwell-changes">the change log</a>.</dd></div>
   <div><dt>data</dt><dd>Prague Integrated Transport stop-time history via Golemio, 15 March – 8 September 2025, as used in the author's master's thesis<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup>; ČHMÚ hourly precipitation and ten-minute air temperature, four Prague stations, CC BY 4.0<sup class="cite"><a href="#r3">3</a></sup>. The stop passes are not redistributed; the estimates are in <a href="../assets/rain-dwell/results.json">results.json</a>.</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/gehl">tools/gehl/</a>, built on <a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/rain">tools/rain/</a> and <a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/heat">tools/heat/</a>; rebuild: <code>uv run --with pandas --with pyarrow --with duckdb --with pyfixest python tools/gehl/estimate.py</code> (pyfixest 0.60.0)</dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Rain and dwell at Prague's tram stops</i>. bsandova.com/texts/rain-dwell, version 2.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Do fewer people take the tram on a rainy Saturday?</i> bsandova.com/texts/rain-dwell, version 2.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text and figures CC BY 4.0; weather data ČHMÚ, CC BY 4.0</dd></div>
 </dl>
 </details>
@@ -145,7 +145,7 @@
 <h2>Reproduction</h2>
 <p>Every number on this page is filled in from the result files by a script, from the repository root:</p>
 <ol>
-<li>The rain study's steps, which provide the weather and the screening: <a href="rain-delays">Rain and Prague's tram delays</a>, Reproduction.</li>
+<li>The rain study's steps, which provide the weather and the screening: <a href="rain-delays">Are Prague's trams later when it rains?</a>, Reproduction.</li>
 <li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/gehl/screen.py"><code>tools/gehl/screen.py</code></a> and <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/gehl/coverage.py"><code>coverage.py</code></a>: the dwell units and the coverage check.</li>
 <li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/gehl/power.py"><code>power.py</code></a>: the windows and the power calculation, as registered and as changed.</li>
 <li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/gehl/estimate.py"><code>estimate.py</code></a>, checked by <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/gehl/test_gehl.py"><code>test_gehl.py</code></a>: the registered estimates and checks.</li>

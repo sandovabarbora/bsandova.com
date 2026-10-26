@@ -17,7 +17,7 @@ from topbar import bar
 
 CONFIG, INDEX, TOPICS = ROOT / "docs/works.toml", ROOT / "index.html", ROOT / "topics"
 LABELS = ("Registered study", "Pre-specified", "Exploratory", "Note", "Tool", "Series", "Thesis")
-LATEST, PER_TOPIC, TITLE_MAX = 6, 4, 48
+LATEST, PER_TOPIC, TITLE_MAX = 6, 4, 60
 ARROW = ('<svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3">'
          '<path d="M0 7h54M48 1l6 6-6 6"/></svg>')
 e = html.escape
@@ -28,9 +28,9 @@ def load() -> dict:
 
 
 def title_problems(title: str) -> list[str]:
-    """A title names the subject; the result belongs in the finding (years may stay, they are part of a name)."""
+    """A title invites; the result and its numbers belong in the finding (a year may stay, it is part of a name)."""
     out = [f"is longer than {TITLE_MAX} characters"] if len(title) > TITLE_MAX else []
-    out += [f"contains {c!r}" for c in ":%?" if c in title]
+    out += [f"contains {c!r}" for c in ":%" if c in title]
     if re.search(r"\d", re.sub(r"\b(19|20)\d\d\b", "", title)):
         out.append("contains a number other than a year")
     return out

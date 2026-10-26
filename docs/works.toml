@@ -6,14 +6,15 @@
 #
 # Per work:
 #   href, published (YYYY-MM-DD; the row shows its month)
-#   title     the article's own title, as in its <h1>: a short name of the subject, at most 48 characters, no result,
-#             no number but a year, no ":", "%" or "?"; parts are shown as "Part n · <title>" in the order listed here
+#   title     the article's own title, as in its <h1>: short and inviting, a question or a plain vivid phrase that says
+#             why a reader would care, at most 60 characters, no number but a year, no ":" or "%"; parts are shown as
+#             "Part n · <title>" in the order listed here
 #   label     one of: Registered study · Pre-specified · Exploratory · Note · Tool · Series · Thesis
 #   detail    optional; shown on hover over the label (e.g. "stage B in 2027", "v0.1.0")
 #   progress  optional; true adds a small "in progress" marker to the label
-#   finding   optional; one plain sentence stating the result, never stronger than the study's own label (a registered
-#             study keeps its label word, e.g. "underpowered") and not repeating the title; shown under the title on the
-#             Latest cards and in every row
+#   finding   optional; the article's deck: one plain sentence of what came out, never stronger than the study's label
+#             (in plain words, e.g. "too few towns to rule out no change" for underpowered) and not repeating the title;
+#             shown under the title on the Latest cards and in every row
 #   topic     a key of [topics]; leave it out for a page that is listed nowhere in the catalogue (the method note)
 #   series    optional; href of the hub this is a part of (parts sit under their hub, which has label = "Series")
 #   date      optional; shown instead of published (theses)
@@ -35,24 +36,24 @@ theses = { title = "Theses", note = "Three university theses, on transit delays,
 
 [[works]]
 href = "texts/gnss-interference"
-title = "Degraded GNSS positions over Czechia"
-finding = "Aircraft at cruise reported degraded positions about as often as over Austria and Switzerland, with no excess larger than one point; over Poland and the Baltic states, more often."
+title = "Is GPS interference reaching Czech skies?"
+finding = "Aircraft cruising over Czechia reported degraded satellite positions about as often as over Austria and Switzerland, at most a point more, while over Poland and the Baltic states they reported them more often."
 label = "Registered study"
 published = "2026-10-26"
 topic = "transit"
 
 [[works]]
 href = "texts/bypass-accidents"
-title = "Czech bypasses and road accidents"
-finding = "In 35 towns, injury accidents inside the town changed by −19 % in the three years after the bypass opened, against towns still waiting: underpowered."
+title = "Do bypasses make towns safer?"
+finding = "After a bypass opened, injury crashes inside 35 Czech towns fell by about a fifth against towns still waiting for theirs, but there were too few towns to rule out no change at all."
 label = "Registered study"
 published = "2026-10-26"
 topic = "transit"
 
 [[works]]
 href = "texts/blackout"
-title = "Prague's trams in the 2025 blackout"
-finding = "When the grid split at noon on 4 July 2025, 56 % of tram service stopped; half of it ran again by 13:30 and nine tenths by 15:00."
+title = "The day Prague's trams stopped"
+finding = "When the Czech grid split at noon on 4 July 2025, 56 % of Prague's tram service stood still, half of it was moving again by 13:30 and nine tenths by 15:00."
 label = "Registered study"
 published = "2026-10-14"
 topic = "transit"
@@ -60,7 +61,7 @@ topic = "transit"
 [[works]]
 href = "texts/weather-rails"
 title = "Weather on the rails"
-finding = "Trams gained about 9.7 seconds more delay in rain hours, an adjusted association; in hot hours they gained less (inconclusive), and rain did not shorten weekend stops more (not supported)."
+finding = "In rain hours Prague's trams fell about ten seconds further behind, not all of it the rain, in hot hours a little less, against expectations, and rain did not shorten weekend stops."
 label = "Series"
 detail = "three parts"
 published = "2026-10-08"
@@ -80,8 +81,8 @@ ctas = [["Read the series", "texts/weather-rails"], ["Start with Part 1", "texts
 
 [[works]]
 href = "texts/rain-delays"
-title = "Rain and Prague's tram delays"
-finding = "Trams gained about 9.7 seconds more delay in rain hours than in comparable dry hours: supported, but the placebo failed, so an adjusted association."
+title = "Are Prague's trams later when it rains?"
+finding = "In rain hours a tram gained about 9.7 seconds more delay than in a similar dry hour, but a check failed, so part of that comes with the rain rather than from it."
 label = "Pre-specified"
 published = "2026-10-08"
 topic = "transit"
@@ -89,8 +90,8 @@ series = "texts/weather-rails"
 
 [[works]]
 href = "texts/heat-delays"
-title = "Heat and Prague's tram delays"
-finding = "In dry hours at 30 °C or more, trams gained about 14.9 seconds less delay than in mild hours, the opposite of the expectation: inconclusive."
+title = "Do Prague's trams slow down in the heat?"
+finding = "In dry hours of 30 °C or more, trams gained about 14.9 seconds less delay than in mild hours, the opposite of what was expected, so the answer is inconclusive."
 label = "Pre-specified"
 published = "2026-10-08"
 topic = "transit"
@@ -98,8 +99,8 @@ series = "texts/weather-rails"
 
 [[works]]
 href = "texts/rain-dwell"
-title = "Rain and dwell at Prague's tram stops"
-finding = "Rain did not shorten weekend stops more than weekday-morning ones (+0.04 s), so Jan Gehl's split is not supported here."
+title = "Do fewer people take the tram on a rainy Saturday?"
+finding = "If rain kept leisure riders at home, it should shorten weekend stops more than weekday-morning ones, and it did not (+0.04 s), so the idea is not supported here."
 label = "Pre-specified"
 published = "2026-10-08"
 topic = "transit"
@@ -108,7 +109,7 @@ series = "texts/weather-rails"
 [[works]]
 href = "texts/running-late"
 title = "Running late"
-finding = "A tenth of Prague's tram segments record half of all delay gained (supported, narrowly); the other parts ask about bunching, transfers and three Swiss cities."
+finding = "Half of the delay on Prague's trams builds up on a tenth of the track, trams of a line barely close in on each other, and connecting lines share their delays only slightly."
 label = "Series"
 detail = "four parts"
 published = "2026-10-08"
@@ -116,8 +117,8 @@ topic = "transit"
 
 [[works]]
 href = "texts/delay-origins"
-title = "Where delay is born on Prague's trams"
-finding = "Half of all delay gained is recorded on a tenth of the segments, the same ones week after week: supported, narrowly."
+title = "Where do Prague's trams fall behind?"
+finding = "Half of all delay is picked up on a tenth of the stretches between stops, just over the bar set in advance, and on the same stretches week after week."
 label = "Pre-specified"
 published = "2026-10-08"
 topic = "transit"
@@ -125,8 +126,8 @@ series = "texts/running-late"
 
 [[works]]
 href = "texts/bunching"
-title = "Tram bunching in Prague"
-finding = "The spacing between two trams of the same line shows practically no amplification from stop to stop: inconclusive."
+title = "Why do two trams of a line arrive together?"
+finding = "Followed stop by stop, the gap between two trams of a line barely shrinks, so the test is inconclusive, and the bunches build slowly towards the end of the line."
 label = "Pre-specified"
 published = "2026-10-08"
 topic = "transit"
@@ -134,8 +135,8 @@ series = "texts/running-late"
 
 [[works]]
 href = "texts/transfers"
-title = "Tram transfers in Prague"
-finding = "At connections planned 2–4 minutes apart, the two lines' delays moved together only slightly, about +0.6 pp: not supported."
+title = "Will you make your tram connection?"
+finding = "At connections planned two to four minutes apart, the delays of the two lines moved together only slightly, about +0.6 percentage points, which does not support the expectation."
 label = "Pre-specified"
 published = "2026-10-08"
 topic = "transit"
@@ -143,8 +144,8 @@ series = "texts/running-late"
 
 [[works]]
 href = "texts/swiss-trams"
-title = "Prague's delay map in three Swiss cities"
-finding = "Basel and Bern concentrate delay within five points of Prague and Zurich does not: roughly, not a law."
+title = "Do Swiss trams lose time in the same places?"
+finding = "Basel and Bern pile their delay onto a few stretches much as Prague does and Zurich does not, so the pattern holds roughly, not as a law of trams."
 label = "Registered study"
 published = "2026-10-14"
 topic = "transit"
@@ -152,8 +153,8 @@ series = "texts/running-late"
 
 [[works]]
 href = "texts/annual-pass"
-title = "Cheaper annual passes in Vienna and Prague"
-finding = "Published passenger counts cannot say what the price cuts in Vienna (2012) and Prague (2015) did."
+title = "Did cheaper annual passes fill the trams?"
+finding = "Vienna and Prague made the yearly pass cheaper, but the published counts cannot say what followed: too few cities count alike every year, and Prague changed its count a year before."
 label = "Note"
 detail = "descriptive"
 published = "2026-10-06"
@@ -161,15 +162,16 @@ topic = "transit"
 
 [[works]]
 href = "texts/dst-darkness"
-title = "The clock change and pedestrian crashes"
-finding = "In ten autumns, the evening-to-midday ratio of pedestrian crashes was 1.75 times as high after the clocks went back: supported, while the originally registered model is inconclusive."
+title = "When the clocks go back, do more pedestrians get hit?"
+finding = "In ten autumns, evening pedestrian crashes against midday ones ran 1.75 times as high in the fortnight after the clocks went back, though the model first registered could not tell."
 label = "Pre-specified"
 published = "2026-10-03"
 topic = "transit"
 
 [[works]]
 href = "texts/delayed"
-title = "Delayed All the Time"
+title = "What does a late day in Prague sound like?"
+finding = "A browser player turns five days of Prague's buses and trams in 2025 into techno, and the music gets busier the further a moment runs from an ordinary day."
 label = "Note"
 detail = "sonification"
 published = "2026-09-14"
@@ -177,8 +179,8 @@ topic = "transit"
 
 [[works]]
 href = "texts/forecast-verification"
-title = "Forecast verification protocol"
-finding = "No results yet: seven-day surf and Prague weather forecasts scored by lead day, first readings on 9 and 16 November 2026."
+title = "How good is a seven-day forecast?"
+finding = "A plan, with no results yet, for scoring surf forecasts in Portugal and Prague's weather forecasts by days ahead, with the first readings due on 9 and 16 November 2026."
 label = "Note"
 detail = "protocol; first readings 9 and 16 Nov 2026"
 progress = true
@@ -190,7 +192,7 @@ topic = "transit"
 [[works]]
 href = "texts/prague-measured"
 title = "Prague, measured"
-finding = "The same councillors voted against less term after term and completions followed permits later than elsewhere (both supported); no grant premium for aligned districts was detected."
+finding = "The same councillors vote against less than they used to, new flats are finished later after the permit than elsewhere in Czechia, and allied districts get no grant bonus large enough to see."
 label = "Series"
 detail = "five parts"
 published = "2026-09-29"
@@ -209,8 +211,8 @@ ctas = [["Read the series", "texts/prague-measured"], ["Start with Part 1", "tex
 
 [[works]]
 href = "texts/prague-council"
-title = "How Prague's councillors vote"
-finding = "On final votes since 2010, the same councillors voted against less in each later term (× 0.49 pooled): supported."
+title = "Do Prague's councillors still say no?"
+finding = "The same councillors voted against adopted resolutions about half as often in each later term (× 0.49), and more than half of that fall came early, from 2010–14 to 2014–18."
 label = "Pre-specified"
 published = "2026-09-28"
 topic = "prague"
@@ -218,8 +220,8 @@ series = "texts/prague-measured"
 
 [[works]]
 href = "texts/prague-rings"
-title = "ANO's vote on Prague's housing estates"
-finding = "Census education and citizenship go with 43 % of ANO's 2025 estate gradient (underpowered); in matched precincts the gradient steepened since 2017 (supported)."
+title = "Is ANO's housing-estate vote about who lives there?"
+finding = "Education and citizenship go with 43 % of ANO's 2025 lead on the panel estates, a share too entangled to pin down, and in matched precincts that lead grew from 2017 to 2025."
 label = "Exploratory"
 detail = "design before modelling"
 published = "2026-09-28"
@@ -228,8 +230,8 @@ series = "texts/prague-measured"
 
 [[works]]
 href = "texts/prague-districts"
-title = "City grants to Prague's districts"
-finding = "Districts whose mayor's party joined the city coalition did not receive detectably more: inconclusive."
+title = "Does City Hall favour friendly districts?"
+finding = "Districts whose mayor's party joined the city coalition got no detectably bigger grants, but only a doubling could have been seen, so a smaller bonus may be there unseen."
 label = "Pre-specified"
 published = "2026-09-28"
 topic = "prague"
@@ -237,8 +239,8 @@ series = "texts/prague-measured"
 
 [[works]]
 href = "texts/prague-housing"
-title = "Housing permits and completions in Prague"
-finding = "Completions of flats in new apartment buildings follow permits later than elsewhere in Czechia, about 11 months in the best fit (6 to over 30): supported."
+title = "How long from permit to front door in Prague?"
+finding = "Flats in new Prague apartment buildings are finished later after the permit than elsewhere in Czechia, about 11 months later in the best fit, though anything from 6 to over 30 fits."
 label = "Pre-specified"
 published = "2026-09-28"
 topic = "prague"
@@ -246,8 +248,8 @@ series = "texts/prague-measured"
 
 [[works]]
 href = "texts/prague-parking"
-title = "Car length and Prague's paid kerb"
-finding = "On a fleet model, today's paid kerb would hold about 1.6 % more cars of 2012's lengths."
+title = "Have longer cars squeezed Prague's parking?"
+finding = "On a model of the fleet, today's paid kerb would hold about 1.6 % more cars if they were as long as in 2012."
 label = "Pre-specified"
 published = "2026-09-29"
 topic = "prague"
@@ -255,8 +257,8 @@ series = "texts/prague-measured"
 
 [[works]]
 href = "texts/prague-programmes-2026"
-title = "Prague's 2026 election programmes"
-finding = "No large transport project in the six programmes can be finished in one term, and the largest housing numbers cannot be completed in four years."
+title = "What can Prague's next council actually deliver?"
+finding = "Measured against what City Hall can do alone in four years, three of six programmes promise more flats than one term can finish, and none of their large transport projects can be finished in it."
 label = "Note"
 published = "2026-10-01"
 topic = "prague"
@@ -265,24 +267,24 @@ topic = "prague"
 
 [[works]]
 href = "texts/investment-incentives"
-title = "Investment incentives and unemployment"
-finding = "After 34 promises of at least 300 jobs, the district's unemployment share moved by +0.10 pp relative to districts without one: underpowered."
+title = "Do big factories bring jobs to the jobless?"
+finding = "After 34 promises of 300 or more jobs, the district's unemployment barely moved, and there was too little data to tell a small fall from a small rise."
 label = "Registered study"
 published = "2026-10-26"
 topic = "money"
 
 [[works]]
 href = "texts/czech-priorities"
-title = "Public concern, the Chamber and the budget"
-finding = "Spending on a topic did not move with how many Czechs named it a top issue (not supported); the Chamber's speeches moved a little, depending on the model."
+title = "Does Czech spending follow what worries people?"
+finding = "When more Czechs named a topic among the country's two biggest problems, its share of spending did not follow, and the Chamber talked about it only a little more, in one model."
 label = "Registered study"
 published = "2026-10-15"
 topic = "money"
 
 [[works]]
 href = "texts/un-votes"
-title = "Czech votes at the UN"
-finding = "Czechia voted with the EU majority on about 96 % of votes under three governments, with no registered shift; its yes votes on Israel and Palestine fell from 76 to 40 %, described after the results."
+title = "Did Czechia change its UN votes with each government?"
+finding = "Czechia voted with the EU majority on about 96 % of UN votes under three governments, with no registered shift, except a falling share of yes votes on Israel and Palestine, seen afterwards."
 label = "Registered study"
 detail = "stage B, the third Babiš government, due around February 2027"
 progress = true
@@ -291,16 +293,16 @@ topic = "money"
 
 [[works]]
 href = "texts/procurement-thresholds"
-title = "Czech public contracts at the threshold"
-finding = "After the limits rose in April 2025, about 16 more contracts per 100 expected were priced exactly at the new small-contract limits: supported."
+title = "Do Czech contracts hug the no-tender limit?"
+finding = "After the limits for buying without a tender rose in April 2025, about 16 more contracts per 100 expected were priced at exactly the new limits, supported by the test set in advance."
 label = "Registered study"
 published = "2026-10-13"
 topic = "money"
 
 [[works]]
 href = "texts/lottery"
-title = "Choosing lottery numbers"
-finding = "7 550 Sportka draws show no large favoured number, and a less-picked Eurojackpot combination would add a few cents a column at most, on assumed popularities."
+title = "Can a lottery player choose better numbers?"
+finding = "Hardly: 7 550 Sportka draws show no clear favourite number, and picking numbers others avoid would add a few cents to a Eurojackpot column at most, on popularities assumed, not measured."
 label = "Exploratory"
 published = "2026-09-29"
 topic = "money"
@@ -310,7 +312,7 @@ topic = "money"
 [[works]]
 href = "texts/pop-measured"
 title = "Pop, measured"
-finding = "Songs lasted longer where their artist's market language is spoken, and ticket prices varied little with local incomes: exploratory."
+finding = "Across five pop stars, songs stayed longer in the charts where their artist's market language is spoken, and a ticket's price barely followed local incomes, both exploratory."
 label = "Series"
 detail = "six parts"
 published = "2026-10-02"
@@ -329,8 +331,8 @@ ctas = [["Read the series", "texts/pop-measured"], ["Start with the five togethe
 
 [[works]]
 href = "texts/pop-harry-styles"
-title = "Harry Styles, measured"
-finding = "As It Was outlasted all but 4.6 % of global number ones since 2017; an average ticket cost 10.4 days of GDP per capita in the Philippines, 0.29 in Norway."
+title = "How long does a Harry Styles hit last?"
+finding = "As It Was outlasted all but 4.6 % of Spotify's global number ones since 2017, and an average ticket cost 10.4 days of GDP per head in the Philippines against 0.29 in Norway."
 label = "Pre-specified"
 detail = "descriptive"
 published = "2026-10-02"
@@ -339,8 +341,8 @@ series = "texts/pop-measured"
 
 [[works]]
 href = "texts/pop-taylor-swift"
-title = "Taylor Swift, measured"
-finding = "Whether hotel prices rose differently where the Eras Tour played in Europe is inconclusive; the rest is descriptive."
+title = "Were hotels dearer where the Eras Tour played?"
+finding = "Whether hotel prices rose differently where and when the Eras Tour played in Europe could not be told (0.79 points, inconclusive), and the rest is description."
 label = "Pre-specified"
 published = "2026-10-02"
 topic = "culture"
@@ -348,8 +350,8 @@ series = "texts/pop-measured"
 
 [[works]]
 href = "texts/pop-bts"
-title = "BTS, measured"
-finding = "Dynamite outlasted 77 % of Spotify's global number ones since 2017 yet is 4 % of BTS's streams."
+title = "Is BTS more than Dynamite?"
+finding = "Dynamite outlasted 77 % of Spotify's global number ones since 2017, yet it is only 4 % of BTS's streams, which spread over hundreds of songs."
 label = "Pre-specified"
 detail = "descriptive"
 published = "2026-10-02"
@@ -358,8 +360,8 @@ series = "texts/pop-measured"
 
 [[works]]
 href = "texts/pop-bad-bunny"
-title = "Bad Bunny, measured"
-finding = "DtMF has outlasted 72 % of global number ones; his tickets cost fewer dollars in Latin America than in the United States, but more days of income."
+title = "What does a Bad Bunny ticket really cost?"
+finding = "DtMF has outlasted 72 % of global number ones, and his tickets cost fewer dollars in Latin America than in the United States but more days of GDP per head."
 label = "Pre-specified"
 detail = "descriptive"
 published = "2026-10-02"
@@ -368,8 +370,8 @@ series = "texts/pop-measured"
 
 [[works]]
 href = "texts/pop-billie-eilish"
-title = "Billie Eilish, measured"
-finding = "BIRDS OF A FEATHER and bad guy each outlasted about five in six global number ones since 2017."
+title = "Two Billie Eilish hits, five years apart"
+finding = "BIRDS OF A FEATHER and bad guy each outlasted about five in six global number ones since 2017, and at her one show in the Philippines a ticket cost 15.3 days of GDP per head."
 label = "Pre-specified"
 detail = "descriptive"
 published = "2026-10-02"
@@ -378,8 +380,8 @@ series = "texts/pop-measured"
 
 [[works]]
 href = "texts/pop-together"
-title = "Pop, measured, together"
-finding = "Songs lasted 2.9 times as long where their artist's market language is spoken, and tickets were 0.22 % higher per 1 % higher host-country income."
+title = "Do songs last longer in their own language?"
+finding = "Across five artists, songs stayed 2.9 times as long in the charts where their artist's market language is spoken, and tickets were 0.22 % dearer per 1 % more local income, both exploratory."
 label = "Exploratory"
 published = "2026-10-02"
 topic = "culture"
@@ -387,24 +389,24 @@ series = "texts/pop-measured"
 
 [[works]]
 href = "texts/eurovision"
-title = "Diaspora, juries and the EU in Eurovision"
-finding = "The public favours a song over the jury about twice as much where the performer's diaspora is large (supported); EU pairs show no rise in mutual points (inconclusive)."
+title = "Do Eurovision viewers vote for their diaspora?"
+finding = "Where many of a performer's compatriots live, the public favours the song over the jury about 1.98 times as much as where none live (supported), and EU members give each other no more points (inconclusive)."
 label = "Pre-specified"
 published = "2026-10-03"
 topic = "culture"
 
 [[works]]
 href = "texts/concert-effect"
-title = "Harry Styles's concerts and chart share"
-finding = "His share in just-visited countries differed from not-yet-visited ones by +0.034 pp: inconclusive, and the pre-trend check failed."
+title = "Did Harry Styles's streams rise where he played?"
+finding = "In the five weeks from a first show, his chart share in visited countries differed from not-yet-visited ones by +0.034 percentage points, too uncertain to call (inconclusive), and a check before the shows failed."
 label = "Pre-specified"
 published = "2026-10-02"
 topic = "culture"
 
 [[works]]
 href = "texts/film-fund"
-title = "The Czech film fund's funding line"
-finding = "Projects just above the line reached cinemas 39 pp more often, with zero inside the interval: underpowered."
+title = "Do funded films reach cinemas more often?"
+finding = "Projects just above the Czech film fund's funding line reached cinemas 39 percentage points more often than those just below, but there were too few to rule out no difference."
 label = "Pre-specified"
 published = "2026-10-01"
 topic = "culture"
@@ -419,8 +421,8 @@ topic = "culture"
 
 [[works]]
 href = "texts/brand-reflection"
-title = "Colour and sound in Czech adverts"
-finding = "16 of 47 YouTube spots keep their brand's anchor colour within 20°, and speech fills more than half the runtime in 44 of them."
+title = "Do Czech adverts look and sound like their brand?"
+finding = "Only 16 of 47 YouTube spots keep close to their brand's own colour, and in 44 of them someone is talking for more than half the time, counted on one set of spots."
 label = "Note"
 detail = "four exploratory studies"
 published = "2026-09-14"
@@ -428,7 +430,8 @@ topic = "culture"
 
 [[works]]
 href = "texts/filmrunner"
-title = "FilmRunner, an offline call sheet"
+title = "A call sheet that works without signal"
+finding = "A call-sheet web app that film crews can open without signal, with every revision in order, though no pilot on a real shoot has run yet."
 label = "Note"
 published = "2026-09-14"
 topic = "culture"
@@ -437,8 +440,8 @@ topic = "culture"
 
 [[works]]
 href = "texts/hockey"
-title = "Player Pool Atlas, hockey"
-finding = "Per head, Czechia ranks 4th of ten in the NHL; Czech NHL regulars fell from 58 in 2001/02 to 20, with no single clear break."
+title = "How deep is the Czech hockey pool?"
+finding = "Per head, Czechia is fourth of ten nations in the NHL, and its NHL regulars fell from 58 in 2001/02 to 20 in 2025/26, slowly, with no single season of decline."
 label = "Tool"
 detail = "Player Pool Atlas"
 published = "2026-09-14"
@@ -457,8 +460,8 @@ ctas = [["Football", "texts/football"], ["Hockey", "texts/hockey"]]
 
 [[works]]
 href = "texts/football"
-title = "Player Pool Atlas, football"
-finding = "Czechia ranks seventh of nine per head in Europe's nine highest-ranked leagues, and its Big-5 count fell from 26 to 6 and stands at 10."
+title = "How many Czech footballers make Europe's top leagues?"
+finding = "Per head, Czechia ranks seventh of nine countries in Europe's nine strongest leagues, and its players in the big five fell from 26 in 2007/08 to 6 in 2015/16 and stand at 10."
 label = "Tool"
 detail = "Player Pool Atlas"
 published = "2026-09-14"
@@ -468,8 +471,8 @@ topic = "sport"
 
 [[works]]
 href = "texts/quaesitor/"
-title = "Quaesitor"
-finding = "Two models with about the same share of correct answers differed sharply in how often they declined, and about a third of planted failures gave errors under 10 %."
+title = "How often does AI get a number quietly wrong?"
+finding = "On questions with known answers over five data warehouses, two AI models of similar accuracy differed sharply in how often they declined, and a third of planted traps gave plausible-looking errors (exploratory)."
 label = "Exploratory"
 detail = "retired service, three texts"
 published = "2026-09-14"
@@ -477,8 +480,8 @@ topic = "ai"
 
 [[works]]
 href = "texts/silent-detector"
-title = "Spotting an AI's silently wrong numbers"
-finding = "Run-time signals barely separate wrong numbers from correct ones; the best model, chosen after the fact, reaches an AUC of 0.64."
+title = "Can you see a wrong answer coming?"
+finding = "Barely: signals from the run tell an AI assistant's silently wrong numbers from correct ones little better than chance, an AUC of 0.64 for the best model, picked after the fact."
 label = "Exploratory"
 detail = "companion to Quaesitor"
 published = "2026-09-15"
@@ -486,15 +489,16 @@ topic = "ai"
 
 [[works]]
 href = "texts/ai-over-data"
-title = "An LLM assistant over a data warehouse"
+title = "An AI assistant you can check"
+finding = "An assistant that answers business questions from an employer's warehouse, rebuilt so it checks its figures against certified dashboards and can no longer write, described from the author's records."
 label = "Note"
 published = "2026-09-17"
 topic = "ai"
 
 [[works]]
 href = "texts/sitewitness"
-title = "sitewitness, rules enforced in code"
-finding = "Its last scored evaluation, 29 of 30, matched rather than improved on the version it replaced."
+title = "Can rules in code keep an AI assistant honest?"
+finding = "The assistant behind the Ask page checks its answers against five rules in code and refuses when one fails, and its last test scored the same as the version it replaced."
 label = "Tool"
 detail = "v0.1.0"
 published = "2026-09-22"
@@ -502,7 +506,8 @@ topic = "ai"
 
 [[works]]
 href = "texts/quotecheck"
-title = "quotecheck, a quotation check"
+title = "Is that quotation really in the source?"
+finding = "A small Python tool that checks whether a quotation is really in its source, and it caught a fabricated ISACA quotation, though its accuracy has not been measured on a labelled set."
 label = "Tool"
 detail = "v0.1.0"
 published = "2026-09-15"
@@ -510,7 +515,8 @@ topic = "ai"
 
 [[works]]
 href = "texts/cutover"
-title = "cutover, a table migration check"
+title = "Did the migration change the table?"
+finding = "A small Python tool that compares two versions of a table, and on a month of New York taxi data it caught two differences and passed only after a fix and a declared half-cent tolerance."
 label = "Tool"
 detail = "v0.1.0"
 published = "2026-09-14"
@@ -519,6 +525,7 @@ topic = "ai"
 [[works]]
 href = "texts/second-brain"
 title = "A wiki that an agent keeps"
+finding = "A private wiki that an agent writes from primary sources under fixed rules, and one example of a gap it found in a NIST document, which a plain text search would also find."
 label = "Note"
 published = "2026-09-14"
 topic = "ai"
@@ -527,8 +534,8 @@ topic = "ai"
 
 [[works]]
 href = "texts/thesis"
-title = "Persistence of Prague's transit delays"
-finding = "Within a day, a sudden delay on Prague's buses and trams is still half there after about 33 minutes."
+title = "How long does a Prague delay linger?"
+finding = "A sudden delay on Prague's buses and trams is still half there after about 33 minutes, and seeing it coming is worth about 204 CZK a year by bus on a model index."
 label = "Thesis"
 detail = "Master's thesis · Charles University · exploratory"
 published = "2026-07-01"
@@ -548,8 +555,8 @@ ctas = [["Read", "texts/thesis"]]
 
 [[works]]
 href = "texts/thesis-logs"
-title = "Patterns in a university's logs"
-finding = "On one hand-labelled test set, the pattern method scored F1 96.0 % against 79.1 % for hand-written regular expressions, as the thesis reports."
+title = "Can one pipeline read all of a university's logs?"
+finding = "A master's thesis turned log lines into patterns and, on one hand-labelled test, scored F1 96.0 % against 79.1 % for hand-written rules, as reported, a figure that still needs a fair re-test."
 label = "Thesis"
 detail = "Master's thesis · VŠE"
 published = "2025-05-01"
@@ -558,8 +565,8 @@ topic = "theses"
 
 [[works]]
 href = "texts/thesis-eu"
-title = "Franco-German voting after the Treaty of Aachen"
-finding = "French and German votes in the EU Council did not move closer after the 2019 treaty; the other shifts cannot be credited to it."
+title = "Did France and Germany vote closer after Aachen?"
+finding = "In the EU Council their votes did not move closer after the 2019 treaty, and the other shifts the bachelor's thesis found cannot be credited to it."
 label = "Thesis"
 detail = "Bachelor's thesis · VŠE"
 published = "2021-04-01"

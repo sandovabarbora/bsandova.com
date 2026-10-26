@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The clock change and pedestrian crashes</title>
+<title>When the clocks go back, do more pedestrians get hit?</title>
 <meta name="description" content="A pre-specified analysis of ten autumns of Czech police records: in the two weeks after the clocks go back, the ratio of pedestrian crashes between 16:00 and 19:00 to midday crashes is about {{ratio_pct}} % higher than in the two weeks before.">
-<meta property="og:title" content="The clock change and pedestrian crashes">
+<meta property="og:title" content="When the clocks go back, do more pedestrians get hit?">
 <meta property="og:description" content="In the two weeks after the autumn clock change, the evening-to-midday ratio of pedestrian crashes is about {{ratio_pct}} % higher than before; ten autumns of police records, 2016–2025.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://bsandova.com/texts/dst-darkness">
@@ -33,8 +33,8 @@
 <article class="text">
 <header class="text-head">
   <p class="kicker">Research · roads · the autumn clock change, 2016–2025</p>
-  <h1>The clock change <em>and pedestrian crashes</em></h1>
-  <p class="deck">In ten autumns of Czech police records, the evening-to-midday ratio of pedestrian crashes was {{ratio}} times as high after the clocks went back than before ({{ratio_lo}}–{{ratio_hi}}), {{label}}; the originally registered model is inconclusive.</p>
+  <h1>When the clocks go back, <em>do more pedestrians get hit?</em></h1>
+  <p class="deck">In ten autumns, evening pedestrian crashes against midday ones ran {{ratio}} times as high in the fortnight after the clocks went back, though the model first registered could not tell.</p>
   <dl class="facts">
     <div><dt>evening-to-midday ratio, after against before</dt><dd>×{{ratio}} <small>pedestrian crashes, 16:00–18:59 against 10:00–13:59 · 95 % confidence interval (CI) {{ratio_lo}} to {{ratio_hi}} · {{label}}; original model ×{{gt}}, inconclusive</small></dd></div>
     <div><dt>morning, 06:00–07:59</dt><dd>×{{m_ratio}} <small>95 % CI {{m_lo}} to {{m_hi}} · {{m_label}}</small></dd></div>
@@ -62,7 +62,7 @@
   <div><dt>registration</dt><dd>registered analysis plan: design committed at <code>b5f527a</code> on 2 October 2026, before the results commit <code>a31ecdb</code>; commit times are self-reported. GitHub's activity log shows the design on the public branch from 20:32 UTC on 2 October 2026, about an hour before the data step was pushed at 21:29 UTC; a push is not a tamper-evident anchor. The design was committed before any accident record was downloaded; years and power changed at <code>6bc5450</code> and the unit of analysis at <code>b545aa2</code>, both before any record was read; code at <code>b545aa2</code>; data step at <code>bce31e4</code>; results commit <code>a31ecdb</code>. Four changes after registration, and the post-hoc check of 9 October 2026, are listed in <a href="../changelog/#dst-darkness-changes">the change log</a>.</dd></div>
   <div><dt>data</dt><dd>Police of the Czech Republic, accident statistics, yearly record files 2016–2025, accessed 2 October 2026<sup class="cite"><a href="#r4">4</a></sup>; Natural Earth admin-1 regions, v5.1.2<sup class="cite"><a href="#r8">8</a></sup>. Archive hashes in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/dst-darkness-data.json">dst-darkness-data.json</a>; the region × date × hour cells in <a href="../assets/dst/cells.parquet">cells.parquet</a>.</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/dst">tools/dst/</a> at the commit that publishes this page; rebuild: <code>uv run --with pandas --with pyarrow --with pyfixest python tools/dst/estimate.py</code> (pyfixest {{pyfixest}})</dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>The clock change and pedestrian crashes</i>. bsandova.com/texts/dst-darkness, version 2.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>When the clocks go back, do more pedestrians get hit?</i> bsandova.com/texts/dst-darkness, version 2.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text and figures CC BY 4.0; the cells are aggregated from police records</dd></div>
 </dl>
 </details>
