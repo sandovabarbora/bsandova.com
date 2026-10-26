@@ -691,3 +691,16 @@ the final code before stage 1 (§3.6).
     retried like 429 and 5xx, at most three attempts, and the attempt count in the error message is correct;
     (7) a baseline (b) with too few placebo dates falls back to (a) with the reason recorded; (8) a name comparison
     replaces an identity comparison of the event specification.
+  After the results (commit `211bebf`), not registered; no registered estimate, label or file changed:
+  - 26 October 2026: `tools/memes/describe.py` added. It reuses the frozen model on the stage 1 panel to write
+    `docs/research/memes-describe.json`: daily views, expected views, AR and the 5th to 95th percentile of the placebo
+    AR and running CAR at each day of the primary window, for the article's figures, and the spikes of the screening
+    series by a fixed rule (a day at least three times its centred 61-day median). It stops unless it reproduces each
+    primary CAR, the number of placebo dates and the 95th and 97.5th placebo percentiles. The confounders of §3.3 are
+    recorded in `tools/memes/README.md` from it and from the screening figure, and not acted upon.
+  - 26 October 2026: `tools/memes/article.py`, `template.html` and `refs.html` added, writing the article
+    `texts/actor-memes.html` from the result files. The page follows the house pattern of the site's registered studies
+    (interactive charts, method in a collapsed appendix) and the spec's style rules (no bold, no em dashes, no
+    semicolons in the article, checked by the script). The spec's page sections are kept: question, what I measured,
+    result, what would refute it, limits, method and sources. The spec's 3 KB page without JavaScript remains the stage 2
+    output `tools/data/memes/out/index.html`, not the site article.

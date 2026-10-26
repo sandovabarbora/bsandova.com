@@ -67,4 +67,44 @@ A plain `pytest tools/memes` skips the slow tests. CI runs `tools/memes` with th
 
 ## Confounders in the estimation windows
 
-To be filled after the download, from `estimation_windows.svg` (design §3.3). Recorded, not acted upon.
+Recorded after stage 2 from `docs/research/memes-estimation-windows.svg` (design §3.3) and from the spike list that
+`describe.py` writes into `docs/research/memes-describe.json`: a day at least three times the centred 61-day median of
+its own article, days under 14 apart counted as one episode and dated by its largest day, 1 January 2021 to 17 September
+2023, the TikTok block left out. Described, not explained: no cause was looked up. **Recorded, not acted upon**; nothing
+in the analysis changed.
+
+Inside an estimation window (Stonestreet 30 April to 27 August 2023 less 6 June to 13 July, Kevin James 24 April to
+21 August 2023):
+
+- `Eric_Stonestreet` (target): 19 July 2023, 14 992 views against a 61-day median of about 2 900 (5.2 times). Also 28 and
+  29 April 2023 (20 108 and 17 808 views, 5.6 times), the two days before his window opens, with 30 April still raised
+  (4 828).
+- `Sofía_Vergara` (Stonestreet's baseline): 18 July 2023, 117 926 views (8.0 times), raised from 17 to about 22 July.
+- `Ed_O'Neill` (Stonestreet's baseline): 13 May 2023, 22 201 views (4.9 times), raised from about 10 to 15 May.
+- `Victor_Williams` (Kevin James's second regressor): 19 July 2023, 2 841 views (3.7 times), then a raised level that
+  decays over weeks: daily median 407 from 24 April to 18 July, 796 from 19 July to 21 August, 532 from 22 August to 17
+  September.
+- `Leah_Remini` (King of Queens cast, not in Kevin James's baseline): 1 June 2023 (11 445 views, 3.2 times) and 3 August
+  2023 (19 012 views, 5.4 times).
+
+Between the estimation and the event window: `Leah_Remini` on 8 September 2023 (28 671 views, 8.2 times), raised from
+7 to 10 September, two weeks before the Kevin James meme. `Kevin_James` itself has no spike in 2023, and the medians of
+the Modern Family cast and of the reference pool have none at all.
+
+Earlier, outside every window (for the record): `Eric_Stonestreet` 23 August 2021 (56 580 views, 17.8 times), 22
+February and 30 March 2022; `Ed_O'Neill` 15 November 2022; `Julie_Bowen` seven episodes from February 2021 to March
+2023; `Ty_Burrell` 12 February 2022 (10.3 times); `Jesse_Tyler_Ferguson` four, the largest 13 June 2022 (8.9 times);
+`Sarah_Hyland` 23 August 2022, 24 November 2022 and 15 March 2023; `Ariel_Winter` 11 June 2022; `Nolan_Gould` 13 July
+2021 (14.6 times); `Rico_Rodriguez_(actor)` 16 September 2021; `Kevin_James` 16 February 2021 and 30 January 2022;
+`Leah_Remini` four from August 2021 to November 2022; `Victor_Williams` 9 February and 26 May 2021.
+
+## After the results (not registered)
+
+    uv run --no-project $P python -I tools/memes/describe.py   # docs/research/memes-describe.json
+    uv run --no-project $P python -I tools/memes/article.py    # assets/actor-memes/ and texts/actor-memes.html
+
+`describe.py` reuses the frozen model on the stage 1 panel for the article's figures (daily views, expected views, AR and
+the 5th to 95th percentile of the placebo AR and running CAR at each day) and the spike list above. It refuses unless the
+panel hash, each primary CAR, the number of placebo dates and the 95th and 97.5th placebo percentiles reproduce
+`memes-results.json`. `article.py` reads only the committed JSON files and asserts every statement of the text that a
+rerun could change.
