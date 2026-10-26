@@ -228,6 +228,22 @@ def q3_table(q3: dict) -> str:
     return "\n".join(out)
 
 
+WP_ROWS = (("q1", "Q1 · injury accidents inside the town"), ("q2", "Q2 · injury accidents, whole municipality"),
+           ("1_all_accidents_q1", "check 1 · all accidents, inside the town"),
+           ("1_all_accidents_q2", "check 1 · all accidents, whole municipality"))
+
+
+def wp_table(wp: dict) -> str:
+    out = []
+    for k, lab in WP_ROWS:
+        r, reg = wp["results"][k], wp["results"][k]["registered"]
+        lbl = r["label_by_registered_rule"] if k in ("q1", "q2") else "–"
+        out.append(f'  <tr><td>{lab}</td><td class="v">{p(reg["est"], 1)} <small>{nb("95 % " + iv(reg["ci95"], 1))}</small></td>'
+                   f'<td class="v">{p(r["est"], 1)} <small>{nb("90 % " + iv(r["ci90"], 1))}<br>{nb("95 % " + iv(r["ci95"], 1))}</small></td>'
+                   f'<td class="v">{lbl}</td></tr>')
+    return "\n".join(out)
+
+
 def number_refs(page: str, values: dict) -> str:
     """[[key]] markers become citations numbered by first appearance; every entry of refs.html must be cited."""
     entries = dict(re.findall(r'<li data-key="([\w-]+)">(.*?)</li>', render((HERE / "refs.html").read_text(encoding="utf-8"), values)))
@@ -243,9 +259,9 @@ def number_refs(page: str, values: dict) -> str:
 
 def main() -> None:
     j = results_reader("bypass")
-    res, scr, desc = j("results-a"), j("screening"), j("describe")
+    res, scr, desc, wp = j("results-a"), j("screening"), j("describe"), j("without-prague")
     A.mkdir(parents=True, exist_ok=True)
-    for src, dst in (("results-a", "results"), ("describe", "describe")):
+    for src, dst in (("results-a", "results"), ("describe", "describe"), ("without-prague", "without-prague")):
         shutil.copy(R / f"bypass-{src}.json", A / f"{dst}.json")
     charts = {"estimates": estimates_chart(res), "damage": damage_chart(desc)}
     (A / "charts.json").write_text(json.dumps(charts, ensure_ascii=False, separators=(",", ":")))
@@ -342,6 +358,18 @@ def main() -> None:
         "ph_post_old": n(ph["post years 1–3"]["damage_only_old_road"], 1),
         "ph_pre_inj": n(ph["pre-construction"]["injury"], 1), "ph_post_inj": n(ph["post years 1–3"]["injury"], 1),
         **{f"v_{k}": x for k, x in res["versions"].items()},
+        "wp_table": wp_table(wp), "wp_comp": wp["comparison_towns"], "wp_units": wp["comparison_units"],
+        "wp_left": " and ".join(wp["dropped"]["left_in_unit"]), "wp_unit": wp["dropped"]["unit"],
+        **{f"wp_{k}": p(wp["results"][k]["est"], 1) for k, _ in WP_ROWS},
+        **{f"wp_{k}_ci90": iv(wp["results"][k]["ci90"], 1) for k, _ in WP_ROWS},
+        **{f"wp_{k}_ci95": iv(wp["results"][k]["ci95"], 1) for k, _ in WP_ROWS},
+        "wp_q1_label": wp["results"]["q1"]["label_by_registered_rule"],
+        "wp_q2_label": wp["results"]["q2"]["label_by_registered_rule"],
+        "wp_q1_w": n(100 * wp["results"]["q1"]["power"]["ci90_width"], 0),
+        "wp_q1_d": acc(wp["results"]["q1"]["delta_per_town_year"]),
+        "wp_q2_out": acc(wp["results"]["q2"]["change_outside_built_up_per_town_year"]),
+        "wp_q2_out_ci": f'{acc(wp["results"]["q2"]["change_outside_ci95"][0])} to {acc(wp["results"]["q2"]["change_outside_ci95"][1])}',
+        "wp_redrawn": n(sum(wp["redrawn"].values())),
         "tests_table": tests_table(res), "checks_table": checks_table(res), "q3_table": q3_table(q3),
     }
     page = number_refs(render((HERE / "template.html").read_text(encoding="utf-8"), v | {"refs": "{{refs}}"}), v)
