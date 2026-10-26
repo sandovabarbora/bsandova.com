@@ -33,6 +33,7 @@ from article_kit import (
 )
 
 plt = use_article_style()
+plt.rcParams["svg.hashsalt"] = "actor-memes"  # stable ids, so a rerun leaves the figures unchanged
 SLUG = "actor-memes"
 R, A = ROOT / "docs" / "research", ROOT / "assets" / SLUG
 CORAL, TEAL = "#c0503f", "#2a7f86"
@@ -143,7 +144,7 @@ def static_daily(desc: dict, path: Path) -> None:
         ax.set_ylabel("above expected, %")
     axes[1].set_xlabel("days from the first post on X")
     f.tight_layout()
-    f.savefig(path)
+    f.savefig(path, metadata={"Date": None})
     plt.close(f)
 
 
@@ -202,7 +203,7 @@ def static_average(desc: dict, path: Path) -> None:
     ax.set_ylabel("average above expected, %")
     ax.legend(frameon=False, fontsize=8, loc="upper left")
     f.tight_layout()
-    f.savefig(path)
+    f.savefig(path, metadata={"Date": None})
     plt.close(f)
 
 
@@ -281,7 +282,7 @@ def static_screen(desc: dict, path: Path) -> None:
         ax.legend(frameon=False, fontsize=7, loc="upper left", ncol=3)
     axes[1].set_xticks([2021, 2022, 2023], ["2021", "2022", "2023"])
     f.tight_layout()
-    f.savefig(path)
+    f.savefig(path, metadata={"Date": None})
     plt.close(f)
 
 
@@ -392,6 +393,7 @@ def main() -> None:
     v = {
         "k_up": pct(k["car_pct_uplift"]), "k_car": n(k["car"], 1), "k_excess": thousands(k["excess_views"]),
         "k_p": pv(k["placebo_p"]), "k_holm": pv(k["holm_p"]), "k_n": n(k["n_placebo"]),
+        "k_ratio": n(sum(r["views"] for r in kd["days"]) / sum(r["expected"] for r in kd["days"]), 1),
         "k_beat": round(k["placebo_p"] * (k["n_placebo"] + 1)) - 1,
         "k_mdu": pct(k["mdu80_q975_pct"], sign=False),
         "k_day0": day(k["event_date"]), "k_peak_day": day(peak["date"]), "k_peak_views": n(peak["views"]),
@@ -418,7 +420,7 @@ def main() -> None:
         "s_mdu95": pct(s["mdu80_pct"], sign=False), "s_mdu_design": n(mdu_design, 1) + NB + "%",
         "s_beat": round(s["placebo_p"] * (s["n_placebo"] + 1)) - 1,
         "s_day0": day(s["event_date"]), "s_peak": pct(up(s["peak_ar"]), 1), "s_peak_day": day(s["peak_date"]),
-        "s_peak_raw": pct(up(s_peak_raw["ar"])), "s_peak_raw_day": day(s_peak_raw["date"]),
+        "s_peak_raw": pct(up(s_peak_raw["ar"]), sign=False), "s_peak_raw_day": day(s_peak_raw["date"]),
         "s_hl": n(s["half_life_days"]), "h2_diff": n(abs(res["h2"]["difference_days_stonestreet_minus_kevin_james"])),
         "s_f_car": n(s["falsification_car"], 1), "s_f_p": pv(s["falsification_p"]),
         "s_f_power": n(res["meta"]["falsification_power_pct"][ST]) + NB + "%", "s_loo_p": pv(s["loo_p"]),
