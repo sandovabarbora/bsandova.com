@@ -2,11 +2,10 @@
 No real MPSV or CzechInvest data is read."""
 from __future__ import annotations
 
-import sys
-from pathlib import Path
-
 import json
+import sys
 from dataclasses import replace
+from pathlib import Path
 
 import numpy as np
 import pandas as pd

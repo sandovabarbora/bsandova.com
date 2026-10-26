@@ -231,7 +231,7 @@ class DrawLog:
     def __init__(self, path: Path):
         path.parent.mkdir(parents=True, exist_ok=True)
         self.stamp = pd.Timestamp.now("UTC").isoformat()  # a rerun appends to the same file; this tells the runs apart
-        self.f = open(path, "a", encoding="utf-8", buffering=1)
+        self.f = open(path, "a", encoding="utf-8", buffering=1)  # noqa: SIM115 - open for the whole run, line-flushed
         self.run = ""
 
     def write(self, kind: str, i: int, **row) -> None:
