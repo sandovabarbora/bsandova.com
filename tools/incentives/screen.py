@@ -4,8 +4,8 @@ Projects: rows, incentive rows, place matching, decision years and promised-jobs
 per event, dropped events and why, the event and treated-district counts that decide the minimum rule of §4, and
 whether the decoded dashboard table is complete. MPSV files: months present, districts per month, per month the number
 of districts carrying each field used (present and not null), whether the population field changes within a calendar
-year (one yes/no per district-year from an equality test of hashes, never the value), and the outcome rule of §2 that
-follows. Districts moved in 2007 and 2016. No job-seeker or population value is printed, stored or compared across
+year (one yes/no per district-year from an equality test of hashes, never the value), the outcome rule of §2 as
+registered and as amended on 26 October 2026 (MPSV's own rate). Districts moved in 2007 and 2016. No job-seeker or population value is printed, stored or compared across
 districts or periods. Writes docs/research/incentives-screening.json.
 
     uv run --no-project --with pandas python -I tools/incentives/screen.py
@@ -28,7 +28,8 @@ OUT = ROOT / "docs/research/incentives-screening.json"
 JOBSEEKERS = "dosazitelniUchazeci15_64"
 POPULATION = "celkemObyvatelstvo15_64"
 FALLBACK = "uchazeciOZamestnaniUoZ"
-FIELDS = (JOBSEEKERS, POPULATION, FALLBACK)
+RATE = "podilNezamestnanychOsobPNO"  # amended outcome (26 October 2026), percentage points
+FIELDS = (JOBSEEKERS, POPULATION, FALLBACK, RATE)
 SPLIT_YEAR = 2013
 MIN_EVENTS, MIN_DISTRICTS = 20, 15
 BANDS = ((0, 1, "0"), (1, 50, "1-49"), (50, 100, "50-99"), (100, 200, "100-199"), (200, 300, "200-299"),
@@ -87,27 +88,34 @@ def field_everywhere(per_month: dict, field: str, pre: bool | None) -> str:
 
 
 def outcome_rule(per_month: dict) -> dict:
-    """§2: the primary outcome, the fixed fallback, or a descriptive panel from January 2013, from presence alone.
+    """§2 outcome rule from field presence alone, as registered and as amended on 26 October 2026.
 
-    A field counts as missing before 2013 only if no pre-2013 month carries it; months where it is missing for some
-    districts are dropped and listed under the rule that applies. A population field absent in every month leaves no
-    rule of §2 that can be computed; that is reported, not resolved.
+    Registered: primary, the fixed fallback, or a descriptive panel from January 2013, each of which divides by the
+    population field; a population field absent in every month leaves none of them computable. Amended: MPSV's rate
+    `podilNezamestnanychOsobPNO` in every month, needing no population field. A field counts as missing before 2013
+    only if no pre-2013 month carries it; months where it is missing for some districts are dropped and listed.
     """
     p = {f: {"pre2013": field_everywhere(per_month, f, True), "from2013": field_everywhere(per_month, f, False)}
          for f in FIELDS}
-    pop, js, fb = p[POPULATION], p[JOBSEEKERS], p[FALLBACK]
+    pop, js, fb, rate = p[POPULATION], p[JOBSEEKERS], p[FALLBACK], p[RATE]
     if pop["pre2013"] == "none" and pop["from2013"] == "none":
-        rule = "none: the population field is absent from every month; design §2 gives no computable outcome"
+        registered = "none: the population field is absent from every month; design §2 gives no computable outcome"
     elif js["pre2013"] != "none" and pop["pre2013"] != "none":
-        rule = "primary"
+        registered = "primary"
     elif js["pre2013"] == "none" and fb["pre2013"] != "none" and pop["pre2013"] != "none" and fb["from2013"] != "none":
-        rule = "fallback: uchazeciOZamestnaniUoZ / celkemObyvatelstvo15_64 in every month"
+        registered = "fallback: uchazeciOZamestnaniUoZ / celkemObyvatelstvo15_64 in every month"
     else:
-        rule = "descriptive: panel from January 2013, window 1 January 2015 - 31 December 2021, no labels"
-    fields_needed = (FALLBACK, POPULATION) if rule.startswith("fallback") else (JOBSEEKERS, POPULATION)
+        registered = "descriptive: panel from January 2013, window 1 January 2015 - 31 December 2021, no labels"
+    if rate["pre2013"] != "none" and rate["from2013"] != "none":
+        rule = "amended: podilNezamestnanychOsobPNO in every month (percentage points)"
+        needed = (RATE,)
+    else:
+        rule = "none: neither the registered outcome nor the amended rate is present"
+        needed = ()
     dropped = sorted(k for k, v in per_month.items() if not v.get("file")
-                     or any(v["present"][f] < v["districts"] for f in fields_needed) or not v["same_district_set"])
-    return {"presence": p, "rule": rule, "months_dropped": dropped if not rule.startswith("none") else "n/a"}
+                     or any(v["present"][f] < v["districts"] for f in needed) or not v["same_district_set"])
+    return {"presence": p, "registered_rule": registered, "rule": rule,
+            "months_dropped": dropped if needed else "n/a"}
 
 
 def project_counts(p, geo, events, dropped) -> dict:
@@ -120,7 +128,7 @@ def project_counts(p, geo, events, dropped) -> dict:
         "matched_to_one_district_rows": int((ipo["status"] == "matched").sum()),
         "by_decision_year": {str(y): by_year[y] for y in sorted(by_year)},
         "by_jobs_band": dict(collections.Counter(band(j) for j in ipo["jobs"])),
-        "blockers_200_unplaceable": {
+        f"blockers_{P.BLOCK_JOBS}_unplaceable": {
             "ambiguous_or_unmatched_rows": int(((ipo["jobs"] >= P.BLOCK_JOBS) & ipo["status"].isin(["ambiguous", "unmatched"])).sum()),
             "multi_site_rows": int(((ipo["jobs"] >= P.BLOCK_JOBS) & (ipo["status"] == "multi")).sum()),
         },
@@ -147,7 +155,9 @@ def main() -> None:
                           "unmatched_or_ambiguous": places.loc[places["status"].isin(["unmatched", "ambiguous"]),
                                                                ["lokalita_kraj", "lokalita_mesto", "status"]].to_dict("records")},
         "events": [{k: e[k] for k in ("id_projekt", "date", "jobs", "lokalita_mesto", "district", "district_name",
-                                      "n_comparisons", "cancelled", "regime")} for e in events],
+                                      "n_comparisons", "cancelled", "regime")}
+                   | {"boundary_districts_in_years_m2_to_3": e["moved"], "treated_in_boundary_list": e["district"] in e["moved"]}
+                   for e in events],
         "dropped": [{k: v for k, v in d.items() if k != "month"} for d in dropped],
         "dropped_by_reason": dict(collections.Counter(d["reason"] for d in dropped)),
         "n_events": n_events, "n_treated_districts": n_districts,
@@ -165,7 +175,8 @@ def main() -> None:
     OUT.write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     print("events", n_events, "treated districts", n_districts, "minimum met", out["minimum_rule"]["met"])
     print("dropped", out["dropped_by_reason"])
-    print("outcome rule:", rule["rule"])
+    print("outcome rule, registered:", rule["registered_rule"])
+    print("outcome rule, amended:", rule["rule"], "| months dropped:", len(rule["months_dropped"]))
     print("presence:", rule["presence"])
     print("population within year:", mpsv["population_within_year"]["district_years_checked"],
           mpsv["population_within_year"]["district_years_varying"])

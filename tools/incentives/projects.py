@@ -3,9 +3,10 @@
 Matches each `lokalita_mesto` of an incentive row to municipalities and so to districts as of 2024 (ČSÚ code lists
 fetched by fetch.py), writes the matching table tools/incentives/places.csv, and builds the events of §2: an incentive
 decision with at least 300 promised jobs naming one place in one district outside Prague, decided 1 July 2006 – 31
-January 2021, with no other incentive decision of at least 200 jobs in its district from 48 months before to 47 after
-(a multi-place or ambiguous project blocks every district it could be in), at least 10 comparison districts, and no
-2007/2016 boundary change of its own district inside years −2 to 3. Reads only the project list and code lists.
+January 2021, with no other incentive decision of at least 300 jobs in its district from 24 months before to 47 after
+(a multi-place or ambiguous project blocks every district it could be in) and at least 10 comparison districts, under
+the 26 October 2026 amendment of the design change log. Districts with a 2007/2016 boundary change stay in; each
+event lists the ones inside its years −2 to 3 for check 6. Reads only the project list and code lists.
 
     uv run --no-project --with pandas python -I tools/incentives/projects.py   # rewrites places.csv, prints counts
 """
@@ -30,8 +31,8 @@ HERE = Path(__file__).resolve().parent
 PLACES_CSV = HERE / "places.csv"
 
 EVENT_JOBS = 300
-BLOCK_JOBS = 200
-WIN_BEFORE, WIN_AFTER = 48, 47  # clean window in months around the decision month (§2)
+BLOCK_JOBS = 300  # amended 26 October 2026 (registered: 200)
+WIN_BEFORE, WIN_AFTER = 24, 47  # clean window in months around the decision month (amended; registered: 48 and 47)
 YEARS = (-2, -1, 0, 1, 2, 3)
 FIRST_DECISION, LAST_DECISION = dt.date(2006, 7, 1), dt.date(2021, 1, 31)
 MIN_COMPARISONS = 10
@@ -406,7 +407,7 @@ def in_window(month: int, m0: int, before: int = WIN_BEFORE, after: int = WIN_AF
 
 def blockers_near(projects: pd.DataFrame, district: str, m0: int, skip: int | None = None,
                   block_jobs: float = BLOCK_JOBS) -> list[str]:
-    """IDs of incentive decisions of at least 200 jobs that block `district` inside the clean window of month m0."""
+    """IDs of incentive decisions of at least `block_jobs` that block `district` inside the clean window of month m0."""
     out = []
     for r in projects.itertuples():
         if r.Index == skip or r.jobs < block_jobs or district not in r.block_set:
@@ -425,7 +426,8 @@ def build_events(projects: pd.DataFrame, geo: Geo, boundaries: dict[str, list[st
                  event_jobs: float = EVENT_JOBS, block_jobs: float = BLOCK_JOBS,
                  first: dt.date = FIRST_DECISION, last: dt.date = LAST_DECISION,
                  min_comparisons: int = MIN_COMPARISONS) -> tuple[list[dict], list[dict]]:
-    """Events kept and events dropped (with the first failing reason, in the order of §3.1)."""
+    """Events kept and events dropped (with the first failing reason, in the order of §3.1). `moved` on a kept event
+    are the districts with a boundary change inside its years −2 to 3 (headline keeps them; check 6 removes them)."""
     universe = [d for d in geo.districts if d != PRAGUE]
     kept, dropped = [], []
     for r in projects.itertuples():
@@ -453,16 +455,12 @@ def build_events(projects: pd.DataFrame, geo: Geo, boundaries: dict[str, list[st
             dropped.append(base | {"reason": "clean window", "blocked_by": block})
             continue
         moved = {x for lab, (y, m) in BOUNDARY_DATES.items() if years_cover(r.month, y, m) for x in boundaries[lab]}
-        if d in moved:
-            dropped.append(base | {"reason": "boundaries"})
-            continue
-        comps = [c for c in universe if c != d and c not in moved
-                 and not blockers_near(projects, c, r.month, block_jobs=block_jobs)]
+        comps = [c for c in universe if c != d and not blockers_near(projects, c, r.month, block_jobs=block_jobs)]
         if len(comps) < min_comparisons:
             dropped.append(base | {"reason": "fewer than 10 comparison districts", "n_comparisons": len(comps)})
             continue
         kept.append(base | {"comparisons": comps, "n_comparisons": len(comps),
-                            "boundary_excluded": sorted(moved - {d})})
+                            "moved": sorted(moved)})
     return kept, dropped
 
 
