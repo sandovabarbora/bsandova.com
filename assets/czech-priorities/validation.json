@@ -1,0 +1,247 @@
+{
+ "bound_macro_f1": 0.5,
+ "coders": {
+  "agree": 544,
+  "of": 600,
+  "raw_agreement": 0.9067,
+  "weighted_agreement": 0.8641
+ },
+ "adjudicated": {
+  "author": 9,
+  "assistant": 47
+ },
+ "parlacap": {
+  "by_topic": {
+   "Crime": {
+    "precision": 0.806,
+    "recall": 0.86,
+    "f1": 0.832,
+    "n_predicted": 39,
+    "n_reference": 41,
+    "word_share_classifier": 0.0591,
+    "word_share_reference": 0.0634,
+    "word_share_error": -0.0043
+   },
+   "Economy": {
+    "precision": 0.727,
+    "recall": 0.788,
+    "f1": 0.756,
+    "n_predicted": 39,
+    "n_reference": 42,
+    "word_share_classifier": 0.1427,
+    "word_share_reference": 0.1421,
+    "word_share_error": 0.0006
+   },
+   "Education": {
+    "precision": 0.785,
+    "recall": 0.761,
+    "f1": 0.773,
+    "n_predicted": 39,
+    "n_reference": 32,
+    "word_share_classifier": 0.0501,
+    "word_share_reference": 0.0383,
+    "word_share_error": 0.0118
+   },
+   "Environment and energy": {
+    "precision": 0.613,
+    "recall": 0.74,
+    "f1": 0.67,
+    "n_predicted": 39,
+    "n_reference": 36,
+    "word_share_classifier": 0.0666,
+    "word_share_reference": 0.057,
+    "word_share_error": 0.0097
+   },
+   "Health": {
+    "precision": 0.65,
+    "recall": 0.658,
+    "f1": 0.654,
+    "n_predicted": 39,
+    "n_reference": 36,
+    "word_share_classifier": 0.1045,
+    "word_share_reference": 0.0966,
+    "word_share_error": 0.0079
+   },
+   "Housing": {
+    "precision": 0.657,
+    "recall": 0.942,
+    "f1": 0.774,
+    "n_predicted": 39,
+    "n_reference": 26,
+    "word_share_classifier": 0.038,
+    "word_share_reference": 0.0243,
+    "word_share_error": 0.0137
+   },
+   "Immigration": {
+    "precision": 0.78,
+    "recall": 0.693,
+    "f1": 0.734,
+    "n_predicted": 38,
+    "n_reference": 33,
+    "word_share_classifier": 0.0302,
+    "word_share_reference": 0.0249,
+    "word_share_error": 0.0054
+   },
+   "Pensions": {
+    "precision": 0.951,
+    "recall": 0.469,
+    "f1": 0.628,
+    "n_predicted": 38,
+    "n_reference": 68,
+    "word_share_classifier": 0.0517,
+    "word_share_reference": 0.082,
+    "word_share_error": -0.0303
+   },
+   "Security and international": {
+    "precision": 0.664,
+    "recall": 0.857,
+    "f1": 0.748,
+    "n_predicted": 38,
+    "n_reference": 39,
+    "word_share_classifier": 0.0754,
+    "word_share_reference": 0.0658,
+    "word_share_error": 0.0096
+   },
+   "Unemployment": {
+    "precision": 0.524,
+    "recall": 0.24,
+    "f1": 0.329,
+    "n_predicted": 38,
+    "n_reference": 28,
+    "word_share_classifier": 0.0346,
+    "word_share_reference": 0.0451,
+    "word_share_error": -0.0105
+   }
+  },
+  "macro_f1": 0.69,
+  "classifier_limited": false,
+  "speeches": 500
+ },
+ "psp_2004_2013": {
+  "by_topic": {
+   "Crime": {
+    "precision": 0.358,
+    "recall": 1.0,
+    "f1": 0.527,
+    "n_predicted": 8,
+    "n_reference": 4,
+    "word_share_classifier": 0.0911,
+    "word_share_reference": 0.0418,
+    "word_share_error": 0.0493
+   },
+   "Economy": {
+    "precision": 0.953,
+    "recall": 0.866,
+    "f1": 0.907,
+    "n_predicted": 8,
+    "n_reference": 8,
+    "word_share_classifier": 0.1604,
+    "word_share_reference": 0.1397,
+    "word_share_error": 0.0208
+   },
+   "Education": {
+    "precision": 0.593,
+    "recall": 1.0,
+    "f1": 0.744,
+    "n_predicted": 8,
+    "n_reference": 7,
+    "word_share_classifier": 0.0456,
+    "word_share_reference": 0.0366,
+    "word_share_error": 0.009
+   },
+   "Environment and energy": {
+    "precision": 0.888,
+    "recall": 0.915,
+    "f1": 0.901,
+    "n_predicted": 8,
+    "n_reference": 8,
+    "word_share_classifier": 0.0588,
+    "word_share_reference": 0.0516,
+    "word_share_error": 0.0072
+   },
+   "Health": {
+    "precision": 0.775,
+    "recall": 0.781,
+    "f1": 0.778,
+    "n_predicted": 8,
+    "n_reference": 8,
+    "word_share_classifier": 0.0969,
+    "word_share_reference": 0.083,
+    "word_share_error": 0.0139
+   },
+   "Housing": {
+    "precision": 0.857,
+    "recall": 1.0,
+    "f1": 0.923,
+    "n_predicted": 8,
+    "n_reference": 7,
+    "word_share_classifier": 0.0387,
+    "word_share_reference": 0.0311,
+    "word_share_error": 0.0076
+   },
+   "Immigration": {
+    "precision": 0.993,
+    "recall": 1.0,
+    "f1": 0.996,
+    "n_predicted": 8,
+    "n_reference": 7,
+    "word_share_classifier": 0.0107,
+    "word_share_reference": 0.0086,
+    "word_share_error": 0.0021
+   },
+   "Pensions": {
+    "precision": 1.0,
+    "recall": 0.409,
+    "f1": 0.581,
+    "n_predicted": 8,
+    "n_reference": 12,
+    "word_share_classifier": 0.0413,
+    "word_share_reference": 0.0768,
+    "word_share_error": -0.0355
+   },
+   "Security and international": {
+    "precision": 0.952,
+    "recall": 0.743,
+    "f1": 0.835,
+    "n_predicted": 8,
+    "n_reference": 9,
+    "word_share_classifier": 0.0836,
+    "word_share_reference": 0.0792,
+    "word_share_error": 0.0044
+   },
+   "Unemployment": {
+    "precision": 0.598,
+    "recall": 0.507,
+    "f1": 0.549,
+    "n_predicted": 7,
+    "n_reference": 5,
+    "word_share_classifier": 0.0473,
+    "word_share_reference": 0.0359,
+    "word_share_error": 0.0114
+   }
+  },
+  "macro_f1": 0.774,
+  "classifier_limited": false,
+  "speeches": 100
+ },
+ "author_adjudicated_only": {
+  "speeches": 9,
+  "classifier_label_equals_author": 3
+ },
+ "mix_reference": {
+  "Government Operations": 12,
+  "Economy": 6,
+  "Domestic Commerce": 6,
+  "Pensions": 5,
+  "Security and international": 3,
+  "Health": 2,
+  "Unemployment": 2,
+  "Other": 2,
+  "Environment and energy": 2,
+  "Agriculture": 1,
+  "Civil Rights": 1,
+  "Crime": 1,
+  "Housing": 1,
+  "Education": 1
+ }
+}
