@@ -269,3 +269,8 @@ opposite sign to the primary, the article says so next to the label; the label s
   accidents fell by about half over 2016–2025, almost all of them below 100 000 CZK of damage, while those of the
   treated and the other comparison towns did not. The article reports this as a note. No estimate was re-run and no
   label changes.
+- 26 October 2026, after the results, not registered, at the author's request: Q1, Q2 and check 1 re-estimated
+  without Prague among the comparison towns (`tools/bypass/without_prague.py`, `docs/research/bypass-without-prague.json`).
+  Only Prague's row is dropped; the BYP-057 unit keeps Úvaly. The frozen code at `bypass-code-2` is imported unchanged,
+  with the same years, seed and 2 000 draws by bypass. Q1 −15.3 % (95 % −52.7 to +7.0 %), Q2 +6.5 % (95 % −12.8 to
+  +31.6 %), both underpowered by the §6 rule; check 1 −2.1 % (Q1) and +10.9 % (Q2). The registered labels stand.
