@@ -3,8 +3,9 @@ Q1, Q2, Q3, the pre-path difference, the district bootstrap with clones, randomi
 the label, and checks 1-11.
 
 Frozen with tests on made-up panels (test_incentives.py). On real MPSV data it runs only when asked with --unblind,
-and only if the screening (docs/research/incentives-screening.json) names an outcome rule of §2 that can be computed.
-Writes docs/research/incentives-results.json.
+and only if the screening (docs/research/incentives-screening.json) names an outcome rule that can be computed
+(the amended one of the 26 October 2026 change log entry: MPSV's podilNezamestnanychOsobPNO). Writes
+docs/research/incentives-results.json; every bootstrap and permutation draw is appended to tools/data/incentives/draws.jsonl.
 
     nice -n 20 uv run --no-project --with pandas --with numpy python -I tools/incentives/estimate.py --demo
     nice -n 20 uv run --no-project --with pandas --with numpy python -I tools/incentives/estimate.py --unblind
@@ -13,16 +14,20 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from dataclasses import dataclass, field, replace
 from pathlib import Path
+
+for _v in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "VECLIB_MAXIMUM_THREADS", "MKL_NUM_THREADS"):
+    os.environ.setdefault(_v, "2")  # two threads, set before numpy loads
 
 import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from common import MPSV_DIR, ROOT
+from common import DATA, MPSV_DIR, ROOT
 
 YEARS = (-2, -1, 0, 1, 2, 3)
 REF = -1
@@ -41,6 +46,9 @@ WIDTH_MAX = 0.40  # label 4
 ALPHA_P = 0.05
 SCREENING = ROOT / "docs/research/incentives-screening.json"
 OUT = ROOT / "docs/research/incentives-results.json"
+DRAW_LOG = DATA / "draws.jsonl"
+MAX_REDRAWS = 100_000  # a bootstrap whose draws never hold an event is a design failure, not something to wait out
+Q3_REASON = "population 15-64 is not in the MPSV files; Q3 not computable (design change log, 26 October 2026)"
 CRISIS = (2009 * 12, 2009 * 12 + 11)
 COVID = (2020 * 12, 2021 * 12 + 11)
 TOL = 1e-12
@@ -57,6 +65,7 @@ class Event:
     jobs: float = 0.0
     cancelled: str = ""
     regime: str = ""
+    moved: tuple[str, ...] = ()  # districts with a 2007/2016 boundary change inside years −2 to 3 (check 6)
 
 
 @dataclass
@@ -216,19 +225,37 @@ def estimate(panels: list[SubPanel], years: tuple[int, ...] = YEARS, with_contro
 
 # ---------- bootstrap and randomisation inference ----------
 
+class DrawLog:
+    """Appends one JSON line per draw as it is made, flushed at once, so an interrupted run keeps what it computed."""
+
+    def __init__(self, path: Path):
+        path.parent.mkdir(parents=True, exist_ok=True)
+        self.f = open(path, "a", encoding="utf-8", buffering=1)
+        self.run = ""
+
+    def write(self, kind: str, i: int, **row) -> None:
+        self.f.write(json.dumps(jsonable({"run": self.run, "kind": kind, "i": i} | row), allow_nan=False) + "\n")
+        self.f.flush()
+
+
+def failure(e: Exception) -> str:
+    return f"{type(e).__name__}: {e}"
+
+
 def clone_rows(sp: SubPanel, counts: dict[str, int]) -> np.ndarray:
     """Rows of a sub-panel after a district bootstrap draw: a district drawn k times enters as k copies."""
     return np.array([i for i, u in enumerate(sp.units) for _ in range(counts.get(u, 0))], dtype=int)
 
 
 def bootstrap(panels: list[SubPanel], draws: int = DRAWS, seed: int = SEED_BOOT, years: tuple[int, ...] = YEARS,
-              with_control: bool = False, stat=None) -> dict:
+              with_control: bool = False, stat=None, log: DrawLog | None = None) -> dict:
     """§4 intervals: whole districts drawn with replacement from every district in the stacked panel; n_e counted on
-    the drawn comparison copies; an event with no treated or no comparison copy is absent; empty draws are redrawn."""
+    the drawn comparison copies; an event with no treated or no comparison copy is absent; draws with no event are
+    redrawn and counted (the only gate). Any other failure inside a draw leaves that draw missing, and is counted."""
     stat = stat or (lambda beta, den: stats_of(beta, den))
     rng = np.random.default_rng(seed)
     universe = sorted({u for sp in panels for u in sp.units})
-    out, redrawn, n_events = [], 0, []
+    out, redrawn, failed, n_events = [], 0, 0, []
     while len(out) < draws:
         pick = rng.integers(0, len(universe), size=len(universe))
         cnt = np.bincount(pick, minlength=len(universe))
@@ -243,16 +270,29 @@ def bootstrap(panels: list[SubPanel], draws: int = DRAWS, seed: int = SEED_BOOT,
                 tcounts.append(int(d.treated.sum()))
         if not designs:
             redrawn += 1
+            if redrawn > MAX_REDRAWS:
+                raise RuntimeError("bootstrap: no draw holds an event")
             continue
-        beta = fit(designs, years, with_control)
-        out.append(stat(beta, q3_denominator(kept, tcounts)))
+        try:  # not a gate: a draw that cannot be estimated is missing, it must not stop the other draws
+            row, err = stat(fit(designs, years, with_control), q3_denominator(kept, tcounts)), None
+        except Exception as e:  # noqa: BLE001
+            row, err = {}, failure(e)
+            failed += 1
+        out.append(row)
         n_events.append(len(designs))
-    df = pd.DataFrame(out)
-    return {"draws": df, "redrawn": redrawn, "events_per_draw_mean": float(np.mean(n_events))}
+        if log:
+            log.write("boot", len(out) - 1, redrawn_so_far=redrawn, events=len(designs), stat=row, error=err)
+    return {"draws": pd.DataFrame(out), "redrawn": redrawn, "failed": failed,
+            "events_per_draw_mean": float(np.mean(n_events))}
+
+
+def column(df: pd.DataFrame, name: str) -> pd.Series:
+    """A statistic of the bootstrap draws; all missing if every draw failed."""
+    return df[name] if name in df else pd.Series(np.full(max(len(df), 1), np.nan))
 
 
 def interval(x: pd.Series, level: float) -> list[float]:
-    """Percentile interval of the bootstrap draws."""
+    """Percentile interval of the bootstrap draws that were estimated."""
     x = np.asarray(x, dtype=float)
     x = x[np.isfinite(x)]
     if not x.size:
@@ -263,11 +303,12 @@ def interval(x: pd.Series, level: float) -> list[float]:
 
 def permutation_p(panels: list[SubPanel], observed: float, perms: int = DRAWS, seed: int = SEED_PERM,
                   years: tuple[int, ...] = YEARS, pools: list[np.ndarray] | None = None,
-                  statistic=q1, with_control: bool = False) -> dict:
+                  statistic=q1, with_control: bool = False, log: DrawLog | None = None) -> dict:
     """§4 randomisation inference: per event one district of its pool (comparisons plus the true treated) drawn to
-    stand as treated, the others as comparisons with weight 1/n_e; p = share of permutations with |Q1| ≥ observed."""
+    stand as treated, the others as comparisons with weight 1/n_e; p = share of permutations with |Q1| ≥ observed.
+    A permutation that cannot be estimated is left out of the share (counted in `failed`), not counted as below."""
     rng = np.random.default_rng(seed)
-    vals = np.empty(perms)
+    vals = np.full(perms, np.nan)
     for b in range(perms):
         designs = []
         for i, sp in enumerate(panels):
@@ -276,18 +317,28 @@ def permutation_p(panels: list[SubPanel], observed: float, perms: int = DRAWS, s
             d = design_of(sp, pool, treated_row=t)
             if d is not None:
                 designs.append(d)
-        vals[b] = statistic(fit(designs, years, with_control))
-    p = float(np.mean(np.abs(vals) >= abs(observed) - TOL))
-    return {"p": p, "perms": perms}
+        err = None
+        try:  # not a gate: same rule as in the bootstrap
+            if not designs:
+                raise ValueError("no event in the permutation")
+            vals[b] = statistic(fit(designs, years, with_control))
+        except Exception as e:  # noqa: BLE001
+            err = failure(e)
+        if log:
+            log.write("perm", b, events=len(designs), q=vals[b], error=err)
+    ok = np.isfinite(vals)
+    failed = int((~ok).sum())
+    p = float(np.mean(np.abs(vals[ok]) >= abs(observed) - TOL)) if ok.any() else float("nan")
+    return {"p": p, "perms": perms, "failed": failed}
 
 
 # ---------- labels ----------
 
 def label(q1_est: float, ci90: list[float], ci95: list[float], p: float, pre_ci95: list[float],
-          minimum_met: bool = True, descriptive: bool = False) -> str | None:
-    """§6, the first that holds; §4 minimum rule removes labels 1-3; a descriptive study has no label."""
-    if descriptive:
-        return None
+          minimum_met: bool = True) -> str:
+    """§6, the first that holds; §4 minimum rule removes labels 1-3. With any input missing no label can be given."""
+    if not all(np.isfinite([q1_est, p, *ci90, *ci95])):
+        return "not computable"
     lab = None
     if minimum_met:
         if ci95[1] < 0 and q1_est <= -EFFECT_MIN + TOL and p <= ALPHA_P + TOL:
@@ -311,35 +362,43 @@ def minimum_met(panels: list[SubPanel]) -> bool:
 
 def run(panels: list[SubPanel], draws: int = DRAWS, perms: int = DRAWS, years: tuple[int, ...] = YEARS,
         with_control: bool = False, post: tuple[int, ...] = POST, pre: tuple[int, ...] = PRE,
-        labelled: bool = True, descriptive: bool = False) -> dict:
+        labelled: bool = True, log: DrawLog | None = None, name: str = "") -> dict:
     """Point estimate, bootstrap intervals and randomisation p of Q = mean(β post) − mean(β pre); with the primary
     years and reference also Q2, Q3, Q1 against year −1, the minimum rule and the label."""
+    if log:
+        log.run = name
     designs = [d for d in (design_of(sp) for sp in panels) if d is not None]
     beta = fit(designs, years, with_control)
     stat = (lambda b, den: {"q": q1(b, post, pre), "pre_diff": b[-1] - b[-2],
                             **{f"beta_{k}": b[k] for k in years}} | stats_of(b, den))
-    point = stat(beta, q3_denominator(panels))
-    boot = bootstrap(panels, draws, SEED_BOOT, years, with_control, stat)
+    den = q3_denominator(panels)
+    point = stat(beta, den)
+    boot = bootstrap(panels, draws, SEED_BOOT, years, with_control, stat, log)
     d = boot["draws"]
-    ri = permutation_p(panels, point["q"], perms, SEED_PERM, years, None, lambda b: q1(b, post, pre), with_control)
+    ri = permutation_p(panels, point["q"], perms, SEED_PERM, years, None, lambda b: q1(b, post, pre), with_control, log)
+    q = column(d, "q")
     res = {
         "n_events": len(panels), "n_treated_districts": len({sp.event.treated for sp in panels}),
-        "estimate": point["q"], "ci90": interval(d["q"], 0.90), "ci95": interval(d["q"], 0.95),
+        "estimate": point["q"], "ci90": interval(q, 0.90), "ci95": interval(q, 0.95),
         "p_randomisation": ri["p"],
-        "pre_diff": point["pre_diff"], "pre_diff_ci90": interval(d["pre_diff"], 0.90),
-        "pre_diff_ci95": interval(d["pre_diff"], 0.95),
+        "pre_diff": point["pre_diff"], "pre_diff_ci90": interval(column(d, "pre_diff"), 0.90),
+        "pre_diff_ci95": interval(column(d, "pre_diff"), 0.95),
         "beta": {str(k): point[f"beta_{k}"] for k in years},
-        "beta_ci95": {str(k): interval(d[f"beta_{k}"], 0.95) for k in years if k != REF},
-        "bootstrap_redrawn": boot["redrawn"], "draws": draws, "perms": perms,
+        "beta_ci95": {str(k): interval(column(d, f"beta_{k}"), 0.95) for k in years if k != REF},
+        "bootstrap_redrawn": boot["redrawn"], "bootstrap_failed": boot["failed"],
+        "bootstrap_missing_q": int((~np.isfinite(q)).sum()) if len(d) else draws,
+        "permutations_missing": ri["failed"], "draws": draws, "perms": perms,
     }
     if years == YEARS and post == POST and pre == PRE:
-        res["q2"] = {str(k): {"est": point[f"q2_y{k}"], "ci95": interval(d[f"q2_y{k}"], 0.95)} for k in (0, 1, 2, 3)}
-        res["q3"] = {"est": point["q3"], "ci90": interval(d["q3"], 0.90), "denominator": q3_denominator(panels)}
-        res["q1_ref_minus1"] = {"est": point["q1_ref_minus1"], "ci95": interval(d["q1_ref_minus1"], 0.95)}
+        res["q2"] = {str(k): {"est": point[f"q2_y{k}"], "ci95": interval(column(d, f"q2_y{k}"), 0.95)}
+                     for k in (0, 1, 2, 3)}
+        res["q3"] = ({"est": point["q3"], "ci90": interval(column(d, "q3"), 0.90), "denominator": den}
+                     if np.isfinite(den) else {"est": None, "reason": Q3_REASON})
+        res["q1_ref_minus1"] = {"est": point["q1_ref_minus1"], "ci95": interval(column(d, "q1_ref_minus1"), 0.95)}
         res["width90"] = res["ci90"][1] - res["ci90"][0]
         res["minimum_met"] = minimum_met(panels)
         res["label"] = label(res["estimate"], res["ci90"], res["ci95"], res["p_randomisation"],
-                             res["pre_diff_ci95"], res["minimum_met"], descriptive) if labelled else None
+                             res["pre_diff_ci95"], res["minimum_met"]) if labelled else None
     return res
 
 
@@ -371,42 +430,52 @@ def tercile_pool(sp: SubPanel, base: pd.Series) -> set[str]:
     return {u for u in sp.units[1:] if terc.get(u, -2) == t}
 
 
+def drop_moved(sp: SubPanel) -> SubPanel | None:
+    """Check 6: an event whose treated district moved is out; moved comparison districts leave the pool."""
+    moved = set(sp.event.moved)
+    if sp.event.treated in moved:
+        return None
+    return restrict_pool(sp, set(sp.units) - moved)
+
+
 def checks(wide: pd.DataFrame, events: list[Event], panels: list[SubPanel], *, draws: int, perms: int,
-           pop: pd.DataFrame | None, boundary: dict[str, list[str]], all_districts: list[str],
-           regions: dict[str, str], events_put_back: list[Event] | None = None) -> dict:
+           all_districts: list[str], regions: dict[str, str], log: DrawLog | None = None) -> dict:
     out = {}
     by_id = {sp.event.id: sp for sp in panels}
 
-    def go(sel: list[SubPanel], **kw) -> dict:
-        return run(sel, draws, perms, labelled=False, **kw) if sel else {"n_events": 0}
+    def go(name: str, sel: list[SubPanel], **kw) -> dict:
+        if not sel:
+            return {"n_events": 0}
+        try:  # a check that cannot be estimated is reported as such; it must not cost the others
+            return run(sel, draws, perms, labelled=False, log=log, name=name, **kw)
+        except Exception as e:  # noqa: BLE001
+            return {"n_events": len(sel), "error": failure(e)}
 
     for thr in (500, 1000):
-        out[f"1_jobs_{thr}"] = go([sp for sp in panels if sp.event.jobs >= thr])
+        out[f"1_jobs_{thr}"] = go(f"1_jobs_{thr}", [sp for sp in panels if sp.event.jobs >= thr])
     if panels:
         top = max(panels, key=lambda sp: (sp.event.jobs, -sp.event.month))
-        out["1_without_largest"] = go([sp for sp in panels if sp is not top]) | {"left_out": top.event.id}
-    out["2_without_cancelled_or_unverified"] = go([sp for sp in panels if sp.event.cancelled not in ("ANO", "ověřit")])
+        out["1_without_largest"] = go("1_without_largest", [sp for sp in panels if sp is not top]) | {
+            "left_out": top.event.id}
+    out["2_without_cancelled_or_unverified"] = go(
+        "2", [sp for sp in panels if sp.event.cancelled not in ("ANO", "ověřit")])
     same_region = [r for sp in panels
                    if (r := restrict_pool(sp, {u for u in sp.units if regions.get(u) == regions.get(sp.event.treated)}))]
-    out["3_same_region"] = go(same_region)
+    out["3_same_region"] = go("3", same_region)
     terc = []
     for sp in panels:
         base = baseline_means(wide, sp.event, all_districts)
         r = restrict_pool(sp, tercile_pool(sp, base))
         if r:
             terc.append(r)
-    out["4_same_tercile"] = go(terc)
-    out["5_without_2009_2020_21"] = go([sp for sp in panels if not covers(sp.event, *CRISIS)
-                                        and not covers(sp.event, *COVID)]) | {"labels": "none (design §7.5)"}
-    moved = set().union(*boundary.values()) if boundary else set()
-    out["6_without_boundary_districts"] = go([r for sp in panels if sp.event.treated not in moved
-                                              and (r := restrict_pool(sp, set(sp.units) - moved))])
-    if events_put_back:
-        out["6_boundary_districts_put_back"] = go([sp for ev in events_put_back if (sp := sub_panel(wide, ev, pop=pop))])
+    out["4_same_tercile"] = go("4", terc)
+    out["5_without_2009_2020_21"] = go("5", [sp for sp in panels if not covers(sp.event, *CRISIS)
+                                             and not covers(sp.event, *COVID)]) | {"labels": "none (design §7.5)"}
+    out["6_without_boundary_districts"] = go("6", [r for sp in panels if (r := drop_moved(sp))])
     long = [sp for ev in events if ev.month <= 2019 * 12 + 11
             if (sp := sub_panel(wide, ev, years=(-2, -1, 0, 1, 2, 3, 4, 5), required=YEARS))]
-    out["7_years_1_to_5"] = go(long, years=(-2, -1, 0, 1, 2, 3, 4, 5), post=(1, 2, 3, 4, 5))
-    out["8_statutory_regime_only"] = go([sp for sp in panels if sp.event.regime == "Zákonná pobídka"])
+    out["7_years_1_to_5"] = go("7", long, years=(-2, -1, 0, 1, 2, 3, 4, 5), post=(1, 2, 3, 4, 5))
+    out["8_statutory_regime_only"] = go("8", [sp for sp in panels if sp.event.regime == "Zákonná pobídka"])
     plac, left = [], 0
     for ev in events:
         if ev.month - 48 < FIRST_MONTH:
@@ -415,20 +484,20 @@ def checks(wide: pd.DataFrame, events: list[Event], panels: list[SubPanel], *, d
         sp = sub_panel(wide, replace(ev, month=ev.month - 24), years=(-2, -1, 0, 1), required=(-2, -1, 0, 1))
         if sp:
             plac.append(sp)
-    out["9_placebo_two_years_earlier"] = go(plac, years=(-2, -1, 0, 1), post=(0, 1)) | {"left_out_before_2004_07": left}
-    out["10_reference_year_minus1"] = go(panels, pre=(-1,))
+    out["9_placebo_two_years_earlier"] = go("9", plac, years=(-2, -1, 0, 1), post=(0, 1)) | {
+        "left_out_before_2004_07": left}
+    out["10_reference_year_minus1"] = go("10", panels, pre=(-1,))
     ctl = [sp for ev in events if ev.month - 36 >= FIRST_MONTH and ev.id in by_id
            if (sp := sub_panel(wide, ev, control_years=(-3, -2)))]
-    out["11_control_change_minus3_to_minus2"] = go(ctl, with_control=True)
+    out["11_control_change_minus3_to_minus2"] = go("11", ctl, with_control=True)
     return out
 
 
 # ---------- real data (refused unless --unblind) ----------
 
-def load_panel(rule: str, mpsv_dir: Path = MPSV_DIR) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Monthly outcome and population 15-64, months × districts, from the MPSV files, by the rule of §2."""
+def load_panel(mpsv_dir: Path = MPSV_DIR) -> pd.DataFrame:
+    """Monthly outcome, months × districts: MPSV's own rate podilNezamestnanychOsobPNO in percentage points."""
     from fetch import months, mpsv_name
-    num = "uchazeciOZamestnaniUoZ" if rule.startswith("fallback") else "dosazitelniUchazeci15_64"
     rows = []
     for y, m in months():
         f = mpsv_dir / mpsv_name(y, m)
@@ -436,51 +505,51 @@ def load_panel(rule: str, mpsv_dir: Path = MPSV_DIR) -> tuple[pd.DataFrame, pd.D
             continue
         for it in json.loads(f.read_text(encoding="utf-8"))["polozky"]:
             rows.append({"month": y * 12 + m - 1, "district": it["okres"].split("/")[-1],
-                         "num": it.get(num), "pop": it.get("celkemObyvatelstvo15_64")})
-    d = pd.DataFrame(rows)
-    d["y"] = 100 * d["num"] / d["pop"]
-    if rule.startswith("descriptive"):
-        d = d[d["month"] >= 2013 * 12]
-    return d.pivot(index="month", columns="district", values="y"), d.pivot(index="month", columns="district", values="pop")
+                         "y": it.get("podilNezamestnanychOsobPNO")})
+    return pd.DataFrame(rows).pivot(index="month", columns="district", values="y").astype(float)
 
 
 def to_events(raw: list[dict]) -> list[Event]:
     return sorted((Event(str(e["id_projekt"]), e["district"], int(e["month"]), tuple(e["comparisons"]),
-                         float(e["jobs"]), e.get("cancelled") or "", e.get("regime") or "")
+                         float(e["jobs"]), e.get("cancelled") or "", e.get("regime") or "", tuple(e["moved"]))
                    for e in raw), key=lambda e: (e.month, e.id))
 
 
-def real(draws: int, perms: int) -> dict:
+def real(draws: int, perms: int, log: DrawLog | None = None) -> dict:
     import projects as P
     screening = json.loads(SCREENING.read_text(encoding="utf-8"))
     rule = screening["mpsv"]["outcome_rule"]["rule"]
-    if rule.startswith("none"):
-        raise SystemExit(f"refused: screening says {rule!r}; the outcome cannot be computed as registered")
+    if not rule.startswith("amended"):
+        raise SystemExit(f"refused: screening says {rule!r}; the outcome of the 26 October 2026 amendment is not available")
     geo = P.load_geo()
     projects = P.load_projects()
     p = P.attach_places(projects, P.places_table(projects, geo))
-    bounds = P.boundary_districts(geo=geo)
-    kw = {}
-    if rule.startswith("descriptive"):
-        import datetime as dt
-        kw = {"first": dt.date(2015, 1, 1), "last": dt.date(2021, 12, 31)}
-    raw_events, _ = P.build_events(p, geo, bounds, **kw)
-    no_bounds, _ = P.build_events(p, geo, {k: [] for k in bounds}, **kw)
-    wide, pop = load_panel(rule)
-    dropped_months = set(screening["mpsv"]["outcome_rule"]["months_dropped"])
-    drop_idx = [y * 12 + m - 1 for y, m in (map(int, k.split("-")) for k in dropped_months)]
+    raw_events, _ = P.build_events(p, geo, P.boundary_districts(geo=geo))
+    wide = load_panel()
+    drop_idx = [y * 12 + m - 1 for y, m in (map(int, k.split("-")) for k in screening["mpsv"]["outcome_rule"]["months_dropped"])]
     wide.loc[wide.index.isin(drop_idx)] = np.nan
     events = to_events(raw_events)
-    panels = [sp for ev in events if (sp := sub_panel(wide, ev, pop=pop))]
-    descriptive = rule.startswith("descriptive")
+    panels = [sp for ev in events if (sp := sub_panel(wide, ev))]  # no population, so Q3 has no denominator
     res = {"rule": rule, "events_used": [sp.event.id for sp in panels],
            "events_dropped_missing_year": [ev.id for ev in events if ev.id not in {sp.event.id for sp in panels}],
            "comparison_weight_total": comparison_weights(panels),
-           "primary": run(panels, draws, perms, descriptive=descriptive)}
-    res["checks"] = checks(wide, events, panels, draws=draws, perms=perms, pop=pop, boundary=bounds,
-                           all_districts=[d for d in geo.districts if d != P.PRAGUE], regions=geo.district_kraj,
-                           events_put_back=to_events(no_bounds))
+           "primary": run(panels, draws, perms, log=log, name="primary")}
+    res["checks"] = checks(wide, events, panels, draws=draws, perms=perms,
+                           all_districts=[d for d in geo.districts if d != P.PRAGUE], regions=geo.district_kraj, log=log)
     return res
+
+
+def jsonable(o):
+    """Missing numbers as null: JSON has no NaN."""
+    if isinstance(o, dict):
+        return {k: jsonable(v) for k, v in o.items()}
+    if isinstance(o, (list, tuple)):
+        return [jsonable(v) for v in o]
+    if isinstance(o, (float, np.floating)):
+        return float(o) if np.isfinite(o) else None
+    if isinstance(o, np.integer):
+        return int(o)
+    return o
 
 
 def comparison_weights(panels: list[SubPanel]) -> dict[str, float]:
@@ -525,8 +594,8 @@ def main() -> None:
         return
     if not a.unblind:
         raise SystemExit("refused: estimate.py reads the real outcome only with --unblind (use --demo for made-up data)")
-    res = real(a.draws, a.draws)
-    OUT.write_text(json.dumps(res, indent=1, ensure_ascii=False, default=float) + "\n", encoding="utf-8")
+    res = real(a.draws, a.draws, DrawLog(DRAW_LOG))
+    OUT.write_text(json.dumps(jsonable(res), indent=1, ensure_ascii=False, allow_nan=False) + "\n", encoding="utf-8")
     print("written", OUT)
 
 

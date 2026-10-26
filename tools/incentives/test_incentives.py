@@ -5,6 +5,9 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+import json
+from dataclasses import replace
+
 import numpy as np
 import pandas as pd
 import pytest
@@ -244,7 +247,12 @@ def test_minimum_rule_removes_labels_1_to_3():
     assert E.label(-0.5, [-0.6, -0.4], [-0.7, -0.3], 0.0, [-0.1, 0.1], minimum_met=False) == "inconclusive"
     assert E.label(0.0, [-0.1, 0.1], [-0.2, 0.2], 0.5, [-0.1, 0.1], minimum_met=False) == "inconclusive"
     assert E.label(0.0, [-0.3, 0.3], [-0.4, 0.4], 0.5, [-0.1, 0.1], minimum_met=False) == "underpowered"
-    assert E.label(-0.5, [-0.6, -0.4], [-0.7, -0.3], 0.0, [-0.1, 0.1], descriptive=True) is None
+
+
+def test_label_not_computable_when_an_input_is_missing():
+    nan = float("nan")
+    assert E.label(-0.5, [nan, nan], [nan, nan], nan, [-0.1, 0.1]) == "not computable"
+    assert E.label(-0.5, [-0.6, -0.4], [-0.7, -0.3], nan, [-0.1, 0.1]) == "not computable"
 
 
 def test_minimum_counts_events_and_distinct_districts():
@@ -263,8 +271,12 @@ def test_checks_run_on_made_up_panel():
     wide, events = clean_panel(n_events=22, n_comp=12, effect=-0.5, noise=0.1, seed=6)
     ps = panels_of(wide, events)
     regions = {u: ("R1" if int(u[1:]) % 2 else "R2") for u in wide.columns}
-    out = E.checks(wide, events, ps, draws=30, perms=30, pop=None, boundary={"2007": ["C00"], "2016": []},
-                   all_districts=list(wide.columns), regions=regions)
+    ps = [E.SubPanel(replace(sp.event, moved=("C00", "T03") if sp.event.treated in ("T03", "T04") else ("C00",)),
+                     sp.units, sp.years, sp.y) for sp in ps]
+    out = E.checks(wide, [sp.event for sp in ps], ps, draws=30, perms=30, all_districts=list(wide.columns),
+                   regions=regions)
+    assert out["6_without_boundary_districts"]["n_events"] == len(ps) - 1  # T03 moved as treated; T04 does not
+    assert out["6_without_boundary_districts"]["bootstrap_failed"] == 0
     assert out["1_jobs_1000"]["n_events"] == sum(ev.jobs >= 1000 for ev in events)
     assert out["1_without_largest"]["n_events"] == len(ps) - 1
     assert out["9_placebo_two_years_earlier"]["estimate"] == pytest.approx(0.0, abs=0.05)
@@ -355,20 +367,34 @@ def test_shared_name_is_ambiguous_and_blocks_both():
     assert m.status == "ambiguous" and m.blocking(g) == {"3201", "3202"}
 
 
+def reasons(dropped):
+    return {d["id_projekt"]: d["reason"] for d in dropped}
+
+
+def kept_ids(kept):
+    return [e["id_projekt"] for e in kept]
+
+
 def test_clean_window_edges():
-    # blocker 48 months before the event month: inside; 49 months before: outside
-    kept, dropped = events_of([row(1, "Alfa", "2012-06-15"), row(2, "Alfa", "2008-06-01", jobs=200)])
-    assert [d["reason"] for d in dropped if d["id_projekt"] == "1"] == ["clean window"]
-    kept, dropped = events_of([row(1, "Alfa", "2012-06-15"), row(2, "Alfa", "2008-05-31", jobs=200)])
-    assert [e["id_projekt"] for e in kept] == ["1"]
-    # 47 months after: inside; 48 after: outside, but then the later one is blocked by the earlier (−48)
-    kept, dropped = events_of([row(1, "Alfa", "2010-01-10"), row(2, "Alfa", "2013-12-10", jobs=199)])
-    assert [e["id_projekt"] for e in kept] == ["1"]  # 199 jobs does not block
-    kept, dropped = events_of([row(1, "Alfa", "2010-01-10"), row(2, "Alfa", "2013-12-10", jobs=200)])
-    assert kept == []
-    kept, dropped = events_of([row(1, "Alfa", "2010-01-10"), row(2, "Alfa", "2014-01-10", jobs=300)])
-    assert [e["id_projekt"] for e in kept] == ["1"]
-    assert {d["id_projekt"]: d["reason"] for d in dropped} == {"2": "clean window"}
+    # window: 24 months before the event month to 47 after (amended 26 October 2026)
+    kept, dropped = events_of([row(1, "Alfa", "2012-06-15"), row(2, "Alfa", "2010-06-01")])
+    assert reasons(dropped)["1"] == "clean window"  # blocker 24 months before: inside
+    kept, dropped = events_of([row(1, "Alfa", "2012-06-15"), row(2, "Alfa", "2010-05-31")])
+    assert "1" in kept_ids(kept)  # 25 before: outside
+    kept, dropped = events_of([row(1, "Alfa", "2010-01-10"), row(2, "Alfa", "2013-12-10")])
+    assert "1" not in kept_ids(kept)  # 47 after: inside
+    kept, dropped = events_of([row(1, "Alfa", "2010-01-10"), row(2, "Alfa", "2014-01-10")])
+    assert kept_ids(kept) == ["1", "2"]  # 48 after: outside, and the earlier one is 48 before the later: outside
+    kept, dropped = events_of([row(1, "Alfa", "2010-01-10"), row(2, "Alfa", "2012-01-10", jobs=299)])
+    assert kept_ids(kept) == ["1"]  # a blocker needs 300 jobs, not 299
+    kept, dropped = events_of([row(1, "Alfa", "2010-01-10", jobs=500), row(2, "Alfa", "2011-12-10", jobs=250)])
+    assert kept_ids(kept) == ["1"]  # 250 jobs: neither an event nor a blocker
+    assert dropped == []
+
+
+def test_window_is_asymmetric_the_earlier_of_two_distant_events_drops():
+    kept, dropped = events_of([row(1, "Alfa", "2010-01-10"), row(2, "Alfa", "2012-07-10")])  # 30 months apart
+    assert kept_ids(kept) == ["2"] and reasons(dropped) == {"1": "clean window"}
 
 
 def test_events_that_block_each_other_both_drop():
@@ -378,23 +404,26 @@ def test_events_that_block_each_other_both_drop():
 
 def test_multi_place_project_blocks_each_matched_district_and_is_not_an_event():
     kept, dropped = events_of([row(1, "Alfa", "2010-01-10"), row(2, "Gama", "2010-01-10", kraj="B kraj"),
-                               row(3, "Beta, Gama", "2011-01-10", jobs=250)])
-    assert [e["id_projekt"] for e in kept] == ["1"]
-    assert {d["id_projekt"]: d["reason"] for d in dropped}["2"] == "clean window"
+                               row(3, "Beta, Gama", "2011-01-10", jobs=300)])
+    assert kept_ids(kept) == ["1"]
+    assert reasons(dropped)["2"] == "clean window"
     kept, dropped = events_of([row(3, "Beta, Gama", "2011-01-10", jobs=900)])
     assert dropped[0]["reason"] == "matching: several places"
 
 
 def test_comparison_pool_excludes_blocked_and_prague_and_needs_ten():
-    kept, _ = events_of([row(1, "Alfa", "2010-01-10"), row(2, "Filler1", "2012-01-10", jobs=200, kraj="C kraj"),
+    kept, _ = events_of([row(1, "Alfa", "2010-01-10"), row(2, "Filler1", "2012-01-10", jobs=300, kraj="C kraj"),
                          row(3, "Praha", "2001-01-01", jobs=50, kraj="Hlavní město Praha")])
-    comps = kept[0]["comparisons"]
+    comps = next(e for e in kept if e["id_projekt"] == "1")["comparisons"]
     assert "3901" not in comps and "3100" not in comps and "3201" not in comps
     assert len(comps) == 13  # 3202, 3301 and eleven fillers
-    rows = [row(1, "Alfa", "2010-01-10")] + [row(10 + i, f"Filler{i}", "2010-02-01", jobs=200, kraj="C kraj")
+    rows = [row(1, "Alfa", "2010-01-10")] + [row(10 + i, f"Filler{i}", "2010-02-01", jobs=300, kraj="C kraj")
                                             for i in range(1, 6)]  # 14 others, 5 blocked: 9 left
     kept, dropped = events_of(rows)
-    assert kept == [] and dropped[0]["reason"] == "fewer than 10 comparison districts"
+    assert "1" not in kept_ids(kept) and reasons(dropped)["1"] == "fewer than 10 comparison districts"
+    rows[1:] = [r | {"jobs": 299} for r in rows[1:]]  # below 300 they block nothing
+    kept, _ = events_of(rows)
+    assert kept_ids(kept) == ["1"]
 
 
 def test_prague_window_and_boundary_rules():
@@ -404,25 +433,249 @@ def test_prague_window_and_boundary_rules():
     assert {d["reason"] for d in dropped} == {"window"}
     kept, _ = events_of([row(1, "Alfa", "2006-07-01"), row(2, "Beta", "2021-01-31")])
     assert len(kept) == 2
-    # years −2..3 of an event in month m0 run from m0 − 24 to m0 + 47
+    # districts with a boundary change stay in the headline, as treated and as comparison; the event lists the ones
+    # inside its years −2..3, which run from m0 − 24 to m0 + 47
     b = {"2007": ["3201"], "2016": ["3301"]}
-    _, dropped = events_of([row(1, "Alfa", "2009-01-15")], boundaries=b)  # from January 2007
-    assert dropped[0]["reason"] == "boundaries"
+    kept, dropped = events_of([row(1, "Alfa", "2009-01-15")], boundaries=b)  # from January 2007
+    assert dropped == [] and kept[0]["moved"] == ["3201"] and "3301" in kept[0]["comparisons"]
     kept, _ = events_of([row(1, "Alfa", "2009-02-15")], boundaries=b)  # from February 2007, to January 2013
-    assert kept and "3301" in kept[0]["comparisons"]
+    assert kept[0]["moved"] == [] and "3301" in kept[0]["comparisons"]
     kept, _ = events_of([row(1, "Alfa", "2012-02-15")], boundaries=b)  # to January 2016
-    assert kept and "3301" not in kept[0]["comparisons"]
+    assert kept[0]["moved"] == ["3301"] and "3301" in kept[0]["comparisons"]
 
 
 def test_screen_outcome_rule_from_presence():
-    def month(js, pop, uoz, n=77):
+    def month(js, pop, uoz, rate=77, n=77):
         return {"file": True, "districts": n, "same_district_set": True,
-                "present": {S.JOBSEEKERS: js, S.POPULATION: pop, S.FALLBACK: uoz}}
+                "present": {S.JOBSEEKERS: js, S.POPULATION: pop, S.FALLBACK: uoz, S.RATE: rate}}
     pre, post = "2010-01", "2015-01"
-    assert S.outcome_rule({pre: month(77, 77, 77), post: month(77, 77, 77)})["rule"] == "primary"
-    assert S.outcome_rule({pre: month(0, 77, 77), post: month(77, 77, 77)})["rule"].startswith("fallback")
-    assert S.outcome_rule({pre: month(0, 0, 77), post: month(77, 77, 77)})["rule"].startswith("descriptive")
-    assert S.outcome_rule({pre: month(77, 0, 77), post: month(77, 77, 77)})["rule"].startswith("descriptive")
-    assert S.outcome_rule({pre: month(77, 0, 77), post: month(77, 0, 77)})["rule"].startswith("none")
-    r = S.outcome_rule({pre: month(77, 77, 77), "2011-03": month(76, 77, 77), post: month(77, 77, 77)})
-    assert r["rule"] == "primary" and r["months_dropped"] == ["2011-03"]
+    reg = lambda r: S.outcome_rule(r)["registered_rule"]
+    assert reg({pre: month(77, 77, 77), post: month(77, 77, 77)}) == "primary"
+    assert reg({pre: month(0, 77, 77), post: month(77, 77, 77)}).startswith("fallback")
+    assert reg({pre: month(0, 0, 77), post: month(77, 77, 77)}).startswith("descriptive")
+    assert reg({pre: month(77, 0, 77), post: month(77, 77, 77)}).startswith("descriptive")
+    assert reg({pre: month(77, 0, 77), post: month(77, 0, 77)}).startswith("none")
+    # the amended rule needs MPSV's rate in the pre-2013 and the later months, not a population field
+    r = S.outcome_rule({pre: month(77, 0, 77), post: month(77, 0, 77)})
+    assert r["rule"].startswith("amended") and r["months_dropped"] == []
+    r = S.outcome_rule({pre: month(77, 0, 77, rate=76), "2011-03": month(77, 0, 77), post: month(77, 0, 77)})
+    assert r["rule"].startswith("amended") and r["months_dropped"] == [pre]
+    assert S.outcome_rule({pre: month(77, 0, 77, rate=0), post: month(77, 0, 77, rate=0)})["rule"].startswith("none")
+    assert S.outcome_rule({pre: month(77, 0, 77, rate=0), post: month(77, 0, 77)})["rule"].startswith("none")
+
+
+# ---------- known effects of either sign ----------
+
+def test_wrong_sign_effect_is_estimated_with_its_sign_and_labelled_higher():
+    """The design expects a fall; a rise of the same size must come out as a rise, never as a fall."""
+    wide, events = clean_panel(effect=+0.5, noise=0.2, seed=11)
+    ps = panels_of(wide, events)
+    res = E.run(ps, draws=400, perms=200)
+    assert res["estimate"] == pytest.approx(0.5, abs=0.05)
+    assert res["ci95"][0] > 0 and res["p_randomisation"] <= 0.05
+    assert res["label"] == "higher unemployment after the promise"
+    assert all(res["q2"][str(k)]["est"] > 0 for k in (0, 1, 2, 3))
+
+
+def test_wrong_sign_is_the_mirror_of_the_expected_sign():
+    down, ev = clean_panel(effect=-0.4, noise=0.0, seed=8)
+    up, _ = clean_panel(effect=+0.4, noise=0.0, seed=8)
+    a, b = E.estimate(panels_of(down, ev))["q1"], E.estimate(panels_of(up, ev))["q1"]
+    assert a == pytest.approx(-0.4, abs=1e-9) and b == pytest.approx(0.4, abs=1e-9)
+
+
+def test_small_true_effect_below_the_label_threshold_is_not_labelled_lower():
+    wide, events = clean_panel(effect=-0.05, noise=0.05, seed=12)
+    res = E.run(panels_of(wide, events), draws=300, perms=200)
+    assert res["label"] == "no change larger than 0.20 points"
+
+
+def test_pre_trend_shows_in_pre_diff_and_suffix():
+    wide, events = clean_panel(effect=0.0, noise=0.02, seed=13, pre_trend=0.6)
+    res = E.run(panels_of(wide, events), draws=300, perms=100)
+    assert res["pre_diff_ci95"][0] > 0 or res["pre_diff_ci95"][1] < 0
+    assert res["label"].endswith("with differing paths in the two years before the promise")
+
+
+# ---------- a failing draw is a missing draw, never a crash ----------
+
+def small_panels():
+    wide, events = clean_panel(n_events=4, n_comp=6, effect=-0.3, noise=0.2, seed=21)
+    return panels_of(wide, events)
+
+
+def flaky_fit(monkeypatch, every, error):
+    real = E.fit
+    calls = {"n": 0}
+
+    def fit(*a, **k):
+        calls["n"] += 1
+        if calls["n"] % every == 0:
+            raise error
+        return real(*a, **k)
+    monkeypatch.setattr(E, "fit", fit)
+    return calls
+
+
+@pytest.mark.parametrize("error", [np.linalg.LinAlgError("Singular matrix"), KeyError(3), IndexError("x"),
+                                   ZeroDivisionError("x"), ValueError("x"), FloatingPointError("x")])
+def test_bootstrap_draw_failure_of_any_kind_is_left_missing(monkeypatch, error):
+    ps = small_panels()
+    flaky_fit(monkeypatch, 4, error)
+    b = E.bootstrap(ps, draws=40, seed=3)
+    assert len(b["draws"]) == 40 and b["failed"] == 10
+    assert b["draws"]["q1"].isna().sum() == 10
+    lo, hi = E.interval(b["draws"]["q1"], 0.95)
+    assert np.isfinite(lo) and np.isfinite(hi)
+
+
+def test_bootstrap_statistic_failure_is_left_missing_too():
+    ps = small_panels()
+    seen = {"n": 0}
+
+    def stat(beta, den):
+        seen["n"] += 1
+        if seen["n"] % 5 == 0:
+            raise KeyError("beta_9")
+        return {"q": E.q1(beta)}
+    b = E.bootstrap(ps, draws=20, seed=3, stat=stat)
+    assert len(b["draws"]) == 20 and b["failed"] == 4
+
+
+def test_bootstrap_with_every_draw_failing_still_returns(monkeypatch):
+    ps = small_panels()
+    flaky_fit(monkeypatch, 1, np.linalg.LinAlgError("Singular matrix"))
+    b = E.bootstrap(ps, draws=10, seed=3)
+    assert b["failed"] == 10 and len(b["draws"]) == 10
+    assert E.interval(E.column(b["draws"], "q1"), 0.95)[0] != E.interval(E.column(b["draws"], "q1"), 0.95)[0]  # NaN
+
+
+def test_run_survives_failing_draws_and_reports_them(monkeypatch):
+    ps = small_panels()
+    real = E.fit
+    state = {"primary_done": False, "n": 0}
+
+    def fit(*a, **k):
+        if not state["primary_done"]:  # the first call is the point estimate
+            state["primary_done"] = True
+            return real(*a, **k)
+        state["n"] += 1
+        if state["n"] % 3 == 0:
+            raise np.linalg.LinAlgError("Singular matrix")
+        return real(*a, **k)
+    monkeypatch.setattr(E, "fit", fit)
+    res = E.run(ps, draws=30, perms=30)
+    assert res["bootstrap_failed"] > 0 and res["bootstrap_missing_q"] >= res["bootstrap_failed"]
+    assert res["permutations_missing"] > 0
+    assert np.isfinite(res["ci95"][0]) and 0 <= res["p_randomisation"] <= 1
+
+
+def test_permutations_that_fail_are_not_counted_as_smaller_than_observed(monkeypatch):
+    ps = small_panels()
+    obs = E.estimate(ps)["q1"]
+    flaky_fit(monkeypatch, 1, np.linalg.LinAlgError("Singular matrix"))
+    r = E.permutation_p(ps, obs, perms=20)
+    assert r["failed"] == 20 and np.isnan(r["p"])  # not p = 0
+
+
+def test_unidentified_coefficient_gives_missing_not_a_crash():
+    """Events whose years 4 and 5 are missing leave those coefficients unidentified (NaN)."""
+    wide, events = clean_panel(n_events=3, n_comp=4, seed=5)
+    ps = panels_of(wide, events)
+    beta = E.fit([E.design_of(sp) for sp in ps], years=(-2, -1, 0, 1, 2, 3, 4, 5))
+    assert np.isnan(beta[4]) and np.isnan(beta[5]) and np.isfinite(beta[3])
+
+
+def test_check_that_cannot_be_estimated_is_reported_and_the_others_still_run(monkeypatch):
+    wide, events = clean_panel(n_events=22, n_comp=12, effect=-0.5, noise=0.1, seed=6)
+    ps = panels_of(wide, events)
+    real_run = E.run
+
+    def run(sel, *a, name="", **k):
+        if name == "3":
+            raise np.linalg.LinAlgError("Singular matrix")
+        return real_run(sel, *a, name=name, **k)
+    monkeypatch.setattr(E, "run", run)
+    regions = {u: ("R1" if int(u[1:]) % 2 else "R2") for u in wide.columns}
+    out = E.checks(wide, events, ps, draws=10, perms=10, all_districts=list(wide.columns), regions=regions)
+    assert "LinAlgError" in out["3_same_region"]["error"]
+    assert out["4_same_tercile"].get("n_events", 0) >= 0 and "error" not in out["10_reference_year_minus1"]
+
+
+# ---------- the draw log ----------
+
+def test_draws_are_appended_as_they_are_made(monkeypatch, tmp_path):
+    ps = small_panels()
+    path = tmp_path / "draws.jsonl"
+    log = E.DrawLog(path)
+    real = E.fit
+    lines_seen = []
+
+    def fit(*a, **k):
+        lines_seen.append(len(path.read_text().splitlines()))  # lines on disk when the next draw starts
+        return real(*a, **k)
+    monkeypatch.setattr(E, "fit", fit)
+    log.run = "t"
+    E.bootstrap(ps, draws=5, seed=1, log=log)
+    assert lines_seen == [0, 1, 2, 3, 4]
+    E.permutation_p(ps, 0.0, perms=3, log=log)
+    rows = [json.loads(x) for x in path.read_text().splitlines()]
+    assert [r["kind"] for r in rows] == ["boot"] * 5 + ["perm"] * 3
+    assert all(r["run"] == "t" and r["error"] is None for r in rows)
+
+
+def test_failed_draw_is_logged_with_its_error(monkeypatch, tmp_path):
+    ps = small_panels()
+    log = E.DrawLog(tmp_path / "d.jsonl")
+    flaky_fit(monkeypatch, 2, np.linalg.LinAlgError("Singular matrix"))
+    E.bootstrap(ps, draws=4, seed=1, log=log)
+    rows = [json.loads(x) for x in (tmp_path / "d.jsonl").read_text().splitlines()]
+    assert [r["error"] is not None for r in rows] == [False, True, False, True]
+    assert "LinAlgError" in rows[1]["error"]
+
+
+def test_run_and_checks_name_their_draws_in_the_log(tmp_path):
+    wide, events = clean_panel(n_events=22, n_comp=12, effect=-0.5, noise=0.1, seed=6)
+    ps = panels_of(wide, events)
+    log = E.DrawLog(tmp_path / "d.jsonl")
+    E.run(ps, draws=3, perms=2, log=log, name="primary")
+    regions = {u: "R" for u in wide.columns}
+    E.checks(wide, events, ps, draws=3, perms=2, all_districts=list(wide.columns), regions=regions, log=log)
+    names = {json.loads(x)["run"] for x in (tmp_path / "d.jsonl").read_text().splitlines()}
+    assert {"primary", "1_jobs_1000", "6", "9", "11"} <= names
+
+
+# ---------- Q3 without population, real-data plumbing ----------
+
+def test_q3_is_not_computable_without_population_and_computable_with_it():
+    wide, events = clean_panel(n_events=3, n_comp=4, effect=-0.5, noise=0.05, seed=2)
+    res = E.run(panels_of(wide, events), draws=20, perms=10)
+    assert res["q3"]["est"] is None and "not computable" in res["q3"]["reason"]
+    pop = wide * 0 + 50_000.0
+    res = E.run(panels_of(wide, events, pop=pop), draws=20, perms=10)
+    assert res["q3"]["est"] == pytest.approx(res["estimate"] / (100 * np.mean([e.jobs for e in events]) / 50_000), rel=1e-6)
+
+
+def test_results_serialise_missing_numbers_as_null():
+    out = E.jsonable({"a": float("nan"), "b": [np.float64("inf"), 1.5], "c": np.int64(3)})
+    assert json.dumps(out, allow_nan=False) == '{"a": null, "b": [null, 1.5], "c": 3}'
+
+
+def test_load_panel_reads_the_rate_and_nothing_else(tmp_path):
+    from fetch import months, mpsv_name
+    for y, m in months((2004, 7), (2004, 9)):
+        items = [{"okres": f"x/{code}", "podilNezamestnanychOsobPNO": v, "dosazitelniUchazeci15_64": 999}
+                 for code, v in (("3201", 1.0 * m), ("3202", None))]
+        (tmp_path / mpsv_name(y, m)).write_text(json.dumps({"polozky": items}))
+    wide = E.load_panel(tmp_path)
+    assert wide.columns.tolist() == ["3201", "3202"] and wide["3201"].tolist() == [7.0, 8.0, 9.0]
+    assert wide["3202"].isna().all()
+
+
+def test_events_from_the_project_step_load_into_the_estimator():
+    kept, _ = events_of([row(1, "Alfa", "2009-01-15", jobs=450, ipo_zruseni="ANO", ipo_rezim="Zákonná pobídka")],
+                        boundaries={"2007": ["3201"], "2016": []})
+    (ev,) = E.to_events(kept)
+    assert (ev.id, ev.treated, ev.jobs, ev.cancelled, ev.regime, ev.moved) == ("1", "3201", 450.0, "ANO",
+                                                                             "Zákonná pobídka", ("3201",))
+    assert ev.month == M(2009, 1) and len(ev.comparisons) == kept[0]["n_comparisons"]
