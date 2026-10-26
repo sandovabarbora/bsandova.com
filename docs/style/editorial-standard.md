@@ -31,7 +31,7 @@ null result is not padded.
 1. **Kicker**: kind · series and part · object and period. At most 12 words. It carries no status word such as
    "pre-registered" unless §6 allows it.
 2. **H1**: short and inviting, at most 60 characters: a question or a plain, vivid phrase that says why a reader would
-   care ("Do bypasses make towns safer?", "The day Prague's trams stopped"). No result, no label, no number but a year,
+   care ("Are towns calmer after the bypass opens?", "The day Prague's trams stopped"). No result, no label, no number but a year,
    no colon. A causal question is allowed only when the deck answers it within what the design shows; otherwise ask
    neutrally. Not a slogan, no "not X but Y" device. `<title>`, `og:title`, the cite-as line and `docs/works.toml` carry
    the same words.

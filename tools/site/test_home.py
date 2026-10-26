@@ -75,7 +75,7 @@ def test_titles_that_carry_a_result_are_rejected(title, why):
         home.validate(cfg(title=title))
 
 
-@pytest.mark.parametrize("title", ["What can Prague's next council actually deliver?", "Do bypasses make towns safer?",
+@pytest.mark.parametrize("title", ["What can Prague's next council actually deliver?", "Are towns calmer after the bypass opens?",
                                    "Prague's 2026 election programmes", 'What "pre-specified" means'])
 def test_short_names_and_years_pass(title):
     home.validate(cfg(title=title))
