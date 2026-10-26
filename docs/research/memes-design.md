@@ -372,6 +372,12 @@ W (first round) and X to AD (second round).
    matches its hash in the hash file, (ii) the panel file matches the panel hash recorded in stage 1, (iii) the files
    are committed and unmodified, and (iv) the tag `memes-null` is on HEAD. Stage 2 then also stops if the null it
    recomputes for an event differs from stage 1's, or the dropped pool actors differ.
+   **The code freeze (tag `memes-code`).** Before stage 1 the author tags the final code `memes-code`. Both stages
+   refuse unless that tag exists, `tools/memes` at HEAD equals it, and `tools/memes` and this design text have no
+   uncommitted changes; stage 1 also refuses if the tag `memes-null` already exists, and stage 2 requires `memes-code`
+   to be an ancestor of `memes-null`, the null file to use every admissible placebo date and seed 42, and every stored
+   null value (both windows, `n`, the placebo sd and 20th percentile) and the baseline choice to be reproduced.
+   `--n-placebo` is allowed only with `--synthetic`.
 None of it compares attention across events or after day −4.
 
 ## 4. Estimation (MacKinlay 1997, *Journal of Economic Literature* 35(1))
@@ -611,7 +617,8 @@ external falsification of the primary run.
 
 ## Running and verification
 
-Commands, the verified API facts and their dates are in `tools/memes/README.md`.
+Commands, the verified API facts and their dates are in `tools/memes/README.md`. The freeze tag is `memes-code`, set on
+the final code before stage 1 (§3.6).
 
 ## Change log
 
@@ -673,3 +680,14 @@ Commands, the verified API facts and their dates are in `tools/memes/README.md`.
   After the `memes-design` tag:
   - 26 October 2026, before any pageview number was downloaded: the author confirmed the 10 % threshold of the
     "uninformative" label and registration with the low power for her prior stated in §5. No text above changed.
+  - 26 October 2026, after the `memes-design` tag, before the code freeze and before any pageview number was
+    downloaded; code review before the freeze. Code fixes that change no registered estimate: (1) both stages refuse
+    unless the tag `memes-code` exists, `tools/memes` equals it and `tools/memes` and the design text are committed
+    (the tag name is registered in §3.6); (2) stage 1 refuses if `memes-null` exists, stage 2 requires `memes-code` to
+    be an ancestor of `memes-null`; (3) stage 2 requires the null file to use every admissible date and seed 42, and
+    `--n-placebo` is refused on real-data runs; (4) stage 2 also recomputes and compares the placebo sd, the 20th
+    percentile, `n`, the (−3, +14) window null and Kevin James's baseline choice; (5) the title check stops if a returned
+    normalised title is not the article with underscores replaced by spaces; (6) network errors and timeouts are
+    retried like 429 and 5xx, at most three attempts, and the attempt count in the error message is correct;
+    (7) a baseline (b) with too few placebo dates falls back to (a) with the reason recorded; (8) a name comparison
+    replaces an identity comparison of the event specification.

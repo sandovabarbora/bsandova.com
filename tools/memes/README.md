@@ -14,7 +14,11 @@ Dry run on a made-up panel (no network, both stages in memory), and the title ch
     uv run --no-project $P python -I tools/memes/cli.py --verify-titles
 
 The registered run has two stages and reads real pageviews, so both refuse without `--unblind`. Run them only after
-the code is frozen by tag.
+the code is frozen: tag the final code `memes-code` (the code makes no tag). Both stages refuse unless that tag exists,
+`tools/memes` at HEAD equals it, and `tools/memes` and the design text have no uncommitted changes. `--n-placebo` is
+only for `--synthetic`; the registered run uses every admissible placebo date and seed 42. A failed request is retried
+up to three attempts (HTTP 429 and 5xx, timeouts, dropped connections); `--verify-titles` stops if a returned title is
+not the article with underscores read as spaces.
 
 **Stage 1** downloads the panel, screens it, chooses Kevin James's baseline, computes the placebo null and the minimum
 detectable uplifts from non-event dates only, and writes the files below into `docs/research/`. It computes no CAR or
@@ -24,10 +28,12 @@ AR at any event.
         python -I tools/memes/cli.py --null-stage --unblind
 
 Then commit `memes-placebo-null.json`, `memes-null-files.sha256`, `memes-estimation-windows.svg` and
-`memes-estimation-gap-by-month.csv` and tag that commit `memes-null` (no tag is made by the code).
+`memes-estimation-gap-by-month.csv` and tag that commit `memes-null` (no tag is made by the code). Stage 1 refuses if `memes-null` already exists.
 
 **Stage 2** refuses unless those files match the hashes, the panel matches the hash of stage 1, the files are committed
-and unmodified, and the tag is on HEAD:
+and unmodified, the tag is on HEAD, `memes-code` is an ancestor of `memes-null`, and the null file used every admissible
+date and seed 42. It then recomputes the stored null values of both windows and the baseline choice and stops on any
+difference:
 
     nice -n 20 env OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 uv run --no-project $P \
         python -I tools/memes/cli.py --panel-csv tools/data/memes/raw/pageviews.csv --unblind
