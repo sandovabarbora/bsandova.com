@@ -3,33 +3,47 @@
 Code for `docs/research/memes-design.md`. The design is the registration: read it first. `config.py` holds the events,
 windows, seed and the frozen reference pool; `fetch.py` all I/O; `model.py` the pure logic; `report.py` the outputs;
 `cli.py` the run. `pool.py` documents how the reference pool was built (MediaWiki text only, no pageviews) and is not
-part of a run. The run writes `placebo_null.json` (the placebo spread and the minimum detectable uplift) before it
-estimates anything. The run writes `placebo_null.json` (the placebo spread and the minimum detectable uplift) before it
-estimates anything.
+part of a run.
 
 ## Running
 
-Dry run on a made-up panel (no network), and the title check (existence only, no pageview numbers):
+Versions are pinned (design deviation AD): `P="--with pandas==3.0.6 --with numpy==2.5.3 --with matplotlib==3.11.2"`.
+Dry run on a made-up panel (no network, both stages in memory), and the title check (existence only, no pageviews):
 
-    uv run --no-project --with pandas --with numpy --with matplotlib python -I tools/memes/cli.py --synthetic
-    uv run --no-project --with pandas --with numpy --with matplotlib python -I tools/memes/cli.py --verify-titles
+    uv run --no-project $P python -I tools/memes/cli.py --synthetic
+    uv run --no-project $P python -I tools/memes/cli.py --verify-titles
 
-The registered run reads real pageviews and refuses without `--unblind`. Run it only after the code is frozen by tag:
+The registered run has two stages and reads real pageviews, so both refuse without `--unblind`. Run them only after
+the code is frozen by tag.
 
-    nice -n 20 env OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 uv run --no-project --with pandas --with numpy \
-        --with matplotlib python -I tools/memes/cli.py --download --unblind
-    # rerun without downloading: --panel-csv tools/data/memes/raw/pageviews.csv --unblind
+**Stage 1** downloads the panel, screens it, chooses Kevin James's baseline, computes the placebo null and the minimum
+detectable uplifts from non-event dates only, and writes the files below into `docs/research/`. It computes no CAR or
+AR at any event.
 
-Tests (made-up data only) and ruff, then the slow simulations of design §5:
+    nice -n 20 env OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 uv run --no-project $P \
+        python -I tools/memes/cli.py --null-stage --unblind
 
-    uv run --no-project --with pandas --with numpy --with pytest --with matplotlib pytest -q tools/memes -m "not slow"
-    nice -n 20 env OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 uv run --no-project --with pandas --with numpy --with pytest \
-        --with matplotlib pytest -q tools/memes -m slow
+Then commit `memes-placebo-null.json`, `memes-null-files.sha256`, `memes-estimation-windows.svg` and
+`memes-estimation-gap-by-month.csv` and tag that commit `memes-null` (no tag is made by the code).
+
+**Stage 2** refuses unless those files match the hashes, the panel matches the hash of stage 1, the files are committed
+and unmodified, and the tag is on HEAD:
+
+    nice -n 20 env OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 uv run --no-project $P \
+        python -I tools/memes/cli.py --panel-csv tools/data/memes/raw/pageviews.csv --unblind
+
+Tests (made-up data only) and ruff, then the slow runs of design §5:
+
+    uv run --no-project $P --with pytest==9.1.1 pytest -q tools/memes -m "not slow"
+    nice -n 20 env OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 uv run --no-project $P --with pytest==9.1.1 \
+        pytest -q tools/memes -m slow
     uvx ruff check tools/memes
-    nice -n 20 uv run --no-project --with pandas --with numpy python -I tools/memes/simulate.py   # rewrites memes-power.json
+    nice -n 20 env OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 uv run --no-project --with pandas==3.0.6 \
+        --with numpy==2.5.3 python -I tools/memes/simulate.py   # rewrites memes-power.json
 
 A plain `pytest tools/memes` skips the slow tests. CI runs `tools/memes` with the other study suites (fast tests only;
-`matplotlib` is pinned in `tools/requirements-tests.txt`). Data and outputs go to `tools/data/memes/` (gitignored).
+`matplotlib`, `pandas` and `numpy` are pinned in `tools/requirements-tests.txt`). Data and stage 2 outputs go to
+`tools/data/memes/` (gitignored).
 
 ## What was verified, and when (26 October 2026)
 

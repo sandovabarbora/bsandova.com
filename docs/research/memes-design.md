@@ -429,30 +429,87 @@ None of it compares attention across events or after day −4.
 
 ## 5. Power
 
-**The numbers of this section come from `tools/memes/simulate.py` and `docs/research/memes-power.json`, committed after
-this design and before the registration tag, and are copied into this section by a later commit. §5 is therefore written
-after the code and the simulations it reports.** What is registered now is what they measure, on made-up panels with the
-registered geometry (baselines, cast, reference pool, blocked days and later-wave blocks, every admissible placebo date,
-weekday terms, equal estimation days):
+**This section was written after the code and the simulations it reports.** The design text above was committed first;
+the code, the tests and the runs followed; the numbers below were copied in by a later commit, before any real data.
 
-- the share of panels with p < 0.05 and p < 0.025 for H1 of both events, with no shock and with shocks of 0.1, 0.3,
-  0.5, 1.0 and 2.0 (a shock *s* adds s·exp(−t/5) to the target from day 0), with the mean uplift each implies; for
-  Kevin James at shared-factor shares of 0, 0.5 and 1 (the share of his own group's factor that is the pool's factor),
-  so that the table brackets the real power;
-- the false-positive rate of H1 and of the two falsification diagnostics without any jump;
-- the detection rate of the external and the leave-one-out falsification when 3, 5 or all of the cast controls jump by
-  0.5 and by 1.0;
-- the **empirical minimum detectable uplift** (deviation Z): a shock s·exp(−t/5) is injected into the target's own
-  series at every non-event placebo date, which adds s·A to each placebo CAR (A the sum of exp(−t/5) over days 0 to
-  +30, because the injection lies in the event window and the model is fitted before it); the s at which 80 % of the
-  injected CARs exceed a threshold is (threshold − the 20th percentile of the placebo CARs)/A, with the threshold the
-  95th percentile (the 5 % test) or the 97.5th (the Holm level), and it is reported as a mean uplift over the window,
-  exp((threshold − q20)/n days) − 1, for the primary window and for (−3, +14). The real run computes and writes them
-  to `memes-placebo-null.json` in stage 1, before any estimate, and the label is tied to the one at the Holm level
-  (§6).
+Computed on **made-up panels only**: an AR(1) factor with φ 0.8 and innovation sd 0.1 shared by all articles, a second
+such factor for each group (the target with its cast, and the reference pool), idiosyncratic noise sd 0.1, target beta
+1. The geometry is the registered one: for Stonestreet a baseline of the nine cast articles and the blocked days; for
+Kevin James a baseline of the 44 pool actors (the pool median alone: the second regressor of the null stage cannot be
+chosen in a simulation) and the later-wave block; every admissible placebo date (927 and 906); the weekday terms;
+equal estimation days; 300 simulated panels per cell (`tools/memes/simulate.py`, `docs/research/memes-power.json`, run
+niced on 26 October 2026). A shock *s* adds s·exp(−t/5) to the target's attention from day 0, so *s* = 0.3 is +35 % on
+day 0 and about +5 % on average over the window, and the CAR is about 5.5·*s*. **Kevin James's group factor is shared
+with the pool's by a share of 0, 0.5 or 1 (the share of its variance that is the pool's factor)**: 0 means the pool
+explains none of his own movement beyond the factor common to all actors, 1 means all of it. The real share is
+unknown, so the three panels bracket the real power; the price of the baseline decision (D2, his baseline not exposed
+to the meme) is that his power depends on it strongly.
 
-The text will state plainly that the design is likely underpowered for the author's prior, a small jump that fades
-within a few days.
+| Share of panels with p below | s = 0 (false positives) | s = 0.1 | s = 0.3 | s = 0.5 | s = 1.0 | s = 2.0 |
+|---|---|---|---|---|---|---|
+| Median mean uplift over the window | 0 % | 1.6 % | 5.0 % | 8.4 % | 17.6 % | 38 % |
+| Stonestreet, 0.05 | 5.3 % | 17 % | 53 % | 86 % | 100 % | 100 % |
+| Stonestreet, 0.025 | | 11 % | 41 % | 82 % | 100 % | 100 % |
+| Kevin James, share 0, 0.05 | 7.7 % | 10 % | 13 % | 19 % | 43 % | 87 % |
+| Kevin James, share 0, 0.025 | | 6 % | 9 % | 14 % | 33 % | 80 % |
+| Kevin James, share 0.5, 0.05 | 6.7 % | 10 % | 19 % | 31 % | 74 % | 100 % |
+| Kevin James, share 0.5, 0.025 | | 6 % | 14 % | 21 % | 62 % | 99 % |
+| Kevin James, share 1, 0.05 | 4.3 % | 19 % | 71 % | 99 % | 100 % | 100 % |
+| Kevin James, share 1, 0.025 | | 11 % | 58 % | 98 % | 100 % | 100 % |
+
+False positives at the 5 % level are 4.3 to 7.7 % (prototype: 4.3 %).
+
+**Minimum detectable uplift (method, deviations U and Z).** The unit is a mean uplift over the event window. In stage
+1, before any estimate, the run takes the placebo CAR of every admissible pseudo date, from non-event dates only, and
+**injects s·exp(−t/5) into the target's own series at those dates**. The injection lies in the event window and the
+model is fitted before it, so it adds exactly s·A to each placebo CAR, A being the sum of exp(−t/5) over days 0 to +30
+(5.5 for the primary window). The share of injected CARs above a threshold is therefore 80 % when s·A = threshold −
+*q20*, *q20* the 20th percentile of the placebo CARs, and the **80 % uplift** is exp((threshold − *q20*)/n days) − 1
+for n days the length of the window. The threshold is the 95th percentile of the placebo CARs (the 5 % test) or the
+**97.5th (the Holm level)**. A test confirms that injecting the resulting s exceeds each threshold in 80 % of placebo
+dates. Medians over the made-up null panels:
+
+| | placebo CAR sd | critical uplift (q95) | 80 % uplift at q95 | **80 % uplift at q97.5** | same, window (−3, +14) | panels "uninformative" |
+|---|---|---|---|---|---|---|
+| Stonestreet | 0.93 | 4.6 % | 6.9 % | **7.8 %** | 10.1 % | 6.7 % |
+| Kevin James, share 0 | 3.90 | 20.0 % | 33.1 % | **37.6 %** | 47.5 % | 100 % |
+| Kevin James, share 0.5 | 2.40 | 12.1 % | 19.4 % | **21.6 %** | 27.3 % | 100 % |
+| Kevin James, share 1 | 0.72 | 3.5 % | 5.4 % | **6.0 %** | 8.0 % | 0 % |
+
+The "uninformative" label (§6) is what a null gets when the bold column exceeds 10 %: in the made-up panels that is
+every Kevin James panel unless his series is nearly all the pool's factor, and one Stonestreet panel in fifteen. The
+real values come from the real series, which are likely spikier, and replace these in the text after stage 1.
+
+**The design is likely underpowered for the author's prior.** A small jump that fades within a few days, say *s* of
+0.1 to 0.2 (a mean uplift of 2 to 3 % over the window and a CAR of about 0.5 to 1), is far below the 80 % uplifts
+above. In the made-up panels Stonestreet's H1 rejects such a jump in 17 % of panels at *s* = 0.1, and Kevin James's in
+10 to 19 %, close to the false-positive rate. The likely outcome under the prior is therefore a null, for Kevin James
+very likely "uninformative", and it excludes only jumps above about 8 % (Stonestreet) or 6 to 38 % (Kevin James) on
+average over the window. At the Holm level 0.025 power is lower still. The prototype's figures (4.3 % false positives,
+power 67, 97 and 100 % for 0.3, 0.5 and 1.0) were higher because the estimation window was longer and the baseline
+closer to the target.
+
+**Falsification diagnostic** (descriptive, §1). Share of panels with p < 0.05, external index and leave-one-out, when
+all or some of the cast controls jump by *s* (Stonestreet has nine, Kevin James two; his cast shares the target's group
+factor and so the pool's by the share):
+
+| Cast controls that jump | external, s = 0.5 | external, s = 1.0 | leave-one-out, s = 0.5 | leave-one-out, s = 1.0 |
+|---|---|---|---|---|
+| Stonestreet, none (false positives) | 5.7 % | | 6.3 % | |
+| 3 of 9 | 10 % | 14 % | 3 % | 0 % |
+| 5 of 9 (a majority) | 12 % | 21 % | 38 % | 88 % |
+| 9 of 9 (all) | 17 % | 39 % | 12 % | 20 % |
+| Kevin James, none, share 0 / 0.5 / 1 | 7.0 / 7.7 / 7.0 % | | 6.0 / 5.0 / 3.3 % | |
+| Kevin James, 2 of 2, share 0 | 20 % | 42 % | 15 % | 33 % |
+| Kevin James, 2 of 2, share 0.5 | 34 % | 73 % | 18 % | 35 % |
+| Kevin James, 2 of 2, share 1 | 100 % | 100 % | 18 % | 33 % |
+
+The page's sentence carries each event's own figure: **about 17 % for Stonestreet and about 34 % for Kevin James** (the
+detection of a cast-wide jump of 0.5, Kevin James at a share of 0.5), against false-positive rates of about 6 to 8 %.
+Leave-one-out sees a majority jump much better and an all-cast jump worse. Neither can carry a label, which is why both
+are diagnostics.
+
+Real attention series carry spikes and news that these panels lack, so **real power is lower**.
 
 ## 6. Labels
 
@@ -526,8 +583,9 @@ external falsification of the primary run.
 - **Pages move and split.** A page rename or move splits its series between two titles; a redirect hides it. The title
   check catches only today's state.
 - **The falsification is weak** (§5): against an external index a cast-wide jump of 0.5 is seen in about one panel in
-  six and of 1.0 in two in five, and leave-one-out is blind to a jump that every control shares. It is a diagnostic. A
-  cast-wide rise does not give a false positive for H1: it pulls the baseline up with the target, and the CAR shrinks.
+  six and of 1.0 in two in five for Stonestreet (Kevin James: one in five to all, by how much of his movement is the
+  pool's), and leave-one-out is blind to a jump that every control shares. It is a diagnostic. A cast-wide rise does
+  not give a false positive for H1: it pulls the baseline up with the target, and the CAR shrinks.
 - **A common wave.** The two memes belong to the same autumn 2023 run of "actor stock photo" posts (Know Your Meme calls
   the Cam meme similar to the Kevin James trend), so shared drivers (a platform trend, the same news) are possible and
   the comparison of the two is descriptive.
