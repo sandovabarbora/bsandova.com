@@ -274,7 +274,10 @@ years before the promise"; the label itself stands.
      (`tools/incentives/population.py`). Year-end stocks are interpolated linearly to month ends, and the denominator is
      the mean over the months of year −1 kept for the event, so "population in year −1" is a mean over that year. ČSÚ
      publishes each year on that year's boundaries, not those of 2024; the difference matters only for the districts on
-     the 2007 and 2016 boundary list. The population is used in the Q3 denominator and nowhere else; it is not an
+     the 2007 and 2016 boundary list. There the stock steps at the change and the interpolation spreads the step over
+     the year: Brno-venkov's 15–64 stock is 122 787 at the end of 2006 and 137 463 at the end of 2007, so an event decided
+     in 2008 has a year −1 mean about 7 % below the new-boundary stock and a Q3 about 7 % too high; for Brdy's
+     neighbours the error is 1 to 2 %. This is accepted, not corrected, because Q3 carries no label. The population is used in the Q3 denominator and nowhere else; it is not an
      outcome. Q3 stays descriptive, with no label; check 11 builds its own Q3 the same way. The run refuses if any used
      event has no population for year −1.
   2. **Check 12 (§7).** Without events whose months −24 to +47 (the clean window, and years −2 to 3) contain January
