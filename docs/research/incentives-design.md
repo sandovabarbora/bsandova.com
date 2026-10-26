@@ -260,3 +260,25 @@ years before the promise"; the label itself stands.
   run refuses if the screening names no amended rule or an event district code is absent from the MPSV files; Q3 is
   "not computable" (§1 entry above). (6) Reported with the primary: events dropped for a missing year, total
   comparison weight per district, mean events per bootstrap draw. Two threads, `nice -n 20`.
+- 26 October 2026 (second deviation, **approved by the author before any outcome was read**; no unemployment value, and
+  no number derived from one, had been read, printed or computed by anyone). Changes, binding from this entry:
+  1. **Q3 denominator (§1; first 26 October entry, item 5).** The population aged 15–64 of the treated district comes
+     from ČSÚ open data set 130149, "Obyvatelstvo podle pohlaví a základních věkových skupin" (both sexes, age group
+     "15 až 64", statistical variable 2406, districts of číselník 101, stock at 31 December, 2000–2024; product page
+     csu.gov.cz/produkty/obyvatelstvo-k-3112-podle-pohlavi-v-obcich), with the ČSÚ district list (číselník 101); URLs,
+     download date and sha256 in `docs/research/incentives-mpsv-files.sha256`. The set 130142 (five-year groups) was
+     not used: it starts in 2010, and events from 2006 need 2005. ČSÚ districts are mapped to the MPSV district codes by
+     their LAU 1 code and cross-checked against ČSÚ's `kod_ruian` and the district name; all 76 districts outside Prague
+     map one to one (Brno-město 40711 → 3702, Brno-venkov 40720 → 3703). Prague has no district row in the set and is
+     outside the study; asking for it, or any district or data row that does not map, stops the run
+     (`tools/incentives/population.py`). Year-end stocks are interpolated linearly to month ends, and the denominator is
+     the mean over the months of year −1 kept for the event, so "population in year −1" is a mean over that year. ČSÚ
+     publishes each year on that year's boundaries, not those of 2024; the difference matters only for the districts on
+     the 2007 and 2016 boundary list. The population is used in the Q3 denominator and nowhere else; it is not an
+     outcome. Q3 stays descriptive, with no label; check 11 builds its own Q3 the same way. The run refuses if any used
+     event has no population for year −1.
+  2. **Check 12 (§7).** Without events whose months −24 to +47 (the clean window, and years −2 to 3) contain January
+     2013, when MPSV changed the definition of the published rate (consequence (ii) of the first 26 October entry):
+     decisions from February 2009 to January 2015 drop. On the project list alone, 10 of the 34 events drop and 24 in 22
+     districts remain, before any event lost for a missing year. Reported like the other checks; it never relabels the
+     primary result.
