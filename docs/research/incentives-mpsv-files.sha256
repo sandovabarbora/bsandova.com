@@ -1,4 +1,4 @@
-# Investment incentives study: MPSV monthly district files and code lists, fetched before any value is read
+# Investment incentives study: MPSV monthly district files, code lists and ČSÚ population (Q3 only), fetched before any outcome value is read
 # file	url	download_date	sha256
 codes/obce_okres_lau_2024-12-31.csv	https://apl2.czso.cz/iSMS/do_cis_export?kodcis=43&typdat=1&cisvaz=109_1770&datpohl=31.12.2024&cisjaz=203&format=2&separator=%2C	2026-10-16	4ab0ef0a6e028311ad1bfe11da0de2c2e5ba5cd55d070350d92be54bf4cc903e
 codes/obce_okres_nuts_2006-12-31.csv	https://apl2.czso.cz/iSMS/do_cis_export?kodcis=43&typdat=1&cisvaz=101_333&datpohl=31.12.2006&cisjaz=203&format=2&separator=%2C	2026-10-16	5d991e975144b732dd1a6a58c286b59781d6da72317bc24602357546ff052f50
@@ -9,6 +9,10 @@ codes/obce_okres_nuts_2024-12-31.csv	https://apl2.czso.cz/iSMS/do_cis_export?kod
 codes/casti_obce_2024-12-31.csv	https://apl2.czso.cz/iSMS/do_cis_export?kodcis=42&typdat=1&cisvaz=43_1218&datpohl=31.12.2024&cisjaz=203&format=2&separator=%2C	2026-10-16	15b08aa210b18948b9b0c8751b2b28ca763d4f827bdafd4e97717269898b6e1c
 codes/katastry_2024-12-31.csv	https://apl2.czso.cz/iSMS/do_cis_export?kodcis=52&typdat=1&cisvaz=43_1176&datpohl=31.12.2024&cisjaz=203&format=2&separator=%2C	2026-10-16	db921e45600b7cd30a832f0f2d2eaff812acba0b8392ee8fd7d007130346655b
 codes/mpsv_kraje.json	https://data.mpsv.cz/od/soubory/ciselniky/kraje.json	2026-10-16	c746283c01745553dd3155881b2d50e540b9da567c7ca0329457302302235e7f
+codes/okresy_101.csv	https://apl2.czso.cz/iSMS/do_cis_export?kodcis=101&typdat=0&cisjaz=203&format=2&separator=%2C	2026-10-26	ae71607f44af74eadaeb0f41d3c17b3261664ab4f0fae44b557d5fbaabcabab6
+czso/130149-25data052025.zip	https://csu.gov.cz/docs/107508/caaa6ad1-ddd1-c0df-1683-3c23ccf1f0c7/130149-25data052025.zip?version=1.0	2026-10-26	d79fe4ac887be5862c25cda72a16c340cd68c662c61f4065989fb1f264a60015
+czso/130149-25schema052025.json	https://csu.gov.cz/docs/107508/59a2a4da-5451-6714-8cc1-0c68742e1e12/130149-25schema052025.json?version=1.0	2026-10-26	634b498c93c957ff553c2d011cf91d4015058d1e2bf161bfb48df34b6536b82d
+czso/130149-23dds.htm	https://csu.gov.cz/docs/107508/0abd5d4b-e556-e9cd-5bc4-c20888fa7b81/130149-23dds.htm?version=1.0	2026-10-26	035e5893f3b56efc8a9dcbb308bac73e9ed53ee985c22ad4865f3d2115463d7e
 mpsv/nezamestnanost-mesicni-07-2004.json	https://data.mpsv.cz/od/soubory/nezamestnanost-mesicni/nezamestnanost-mesicni-07-2004.json	2026-10-16	ec7318888fcd248a32c1db6676a89da4ddf682d25645a4c62378905c16475a39
 mpsv/nezamestnanost-mesicni-08-2004.json	https://data.mpsv.cz/od/soubory/nezamestnanost-mesicni/nezamestnanost-mesicni-08-2004.json	2026-10-16	85a5175727420b6e29c2ea482ff3232c7e4db09c04d8b0b082743e9d2d0e2b1a
 mpsv/nezamestnanost-mesicni-09-2004.json	https://data.mpsv.cz/od/soubory/nezamestnanost-mesicni/nezamestnanost-mesicni-09-2004.json	2026-10-16	a4e7c302482025bae671dfe6e253b8dd4eafba83452e3dbdc807e71bc45485ec

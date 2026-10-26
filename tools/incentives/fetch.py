@@ -4,7 +4,9 @@ Fetches the MPSV monthly district files nezamestnanost-mesicni-MM-YYYY.json for 
 code lists that place a municipality in a district: the ČSÚ lists of parts of municipalities and of
 cadastral areas, the ČSÚ municipality → district (LAU 1) link valid on
 31 December 2024 (districts as of 2024), the municipality → district (NUTS 4) link on both sides of 1 January 2007
-(Vyhláška 513/2006) and 1 January 2016 (Brdy), and the MPSV region list. Files are saved as they come and are never
+(Vyhláška 513/2006) and 1 January 2016 (Brdy), the MPSV region list, the ČSÚ district list (číselník 101) and the ČSÚ
+open data set 130149 (population by sex and basic age groups, 31 December 2000–2024, used only as the denominator of
+Q3 under the second 26 October 2026 change log entry). Files are saved as they come and are never
 opened here beyond a JSON parse check; no value is printed. One thread, a pause between requests. Writes
 docs/research/incentives-mpsv-files.sha256 (file, URL, download date, sha256).
 
@@ -22,7 +24,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from common import CODES_DIR, MPSV_DIR, ROOT, UA, sha256
+from common import CODES_DIR, CZSO_DIR, MPSV_DIR, ROOT, UA, sha256
 
 MPSV_BASE = "https://data.mpsv.cz/od/soubory/nezamestnanost-mesicni/"
 FIRST, LAST = (2004, 7), (2024, 12)
@@ -42,6 +44,14 @@ CODE_LISTS = {
     "casti_obce_2024-12-31.csv": CSU_EXPORT.format(cis=42, vaz=PART_LINK, day="31.12.2024"),
     "katastry_2024-12-31.csv": CSU_EXPORT.format(cis=52, vaz=CADASTRE_LINK, day="31.12.2024"),
     "mpsv_kraje.json": "https://data.mpsv.cz/od/soubory/ciselniky/kraje.json",
+    "okresy_101.csv": "https://apl2.czso.cz/iSMS/do_cis_export?kodcis=101&typdat=0&cisjaz=203&format=2&separator=%2C",
+}
+CZSO_DOCS = "https://csu.gov.cz/docs/107508/"
+# ČSÚ product page: https://csu.gov.cz/produkty/obyvatelstvo-k-3112-podle-pohlavi-v-obcich (data set 130149)
+POPULATION_FILES = {
+    "130149-25data052025.zip": CZSO_DOCS + "caaa6ad1-ddd1-c0df-1683-3c23ccf1f0c7/130149-25data052025.zip?version=1.0",
+    "130149-25schema052025.json": CZSO_DOCS + "59a2a4da-5451-6714-8cc1-0c68742e1e12/130149-25schema052025.json?version=1.0",
+    "130149-23dds.htm": CZSO_DOCS + "0abd5d4b-e556-e9cd-5bc4-c20888fa7b81/130149-23dds.htm?version=1.0",
 }
 HASH_FILE = ROOT / "docs/research/incentives-mpsv-files.sha256"
 PAUSE_S = 1.5
@@ -102,7 +112,7 @@ def fetch_one(url: str, dest: Path, want_json: bool) -> str:
 
 
 def hash_lines(entries: list[tuple[Path, str]], dates: dict[str, str]) -> list[str]:
-    lines = ["# Investment incentives study: MPSV monthly district files and code lists, fetched before any value is read",
+    lines = ["# Investment incentives study: MPSV monthly district files, code lists and ČSÚ population (Q3 only), fetched before any outcome value is read",
              "# file\turl\tdownload_date\tsha256"]
     for path, url in entries:
         if path.exists():
@@ -128,6 +138,13 @@ def main() -> None:
     for name, url in CODE_LISTS.items():
         dest = CODES_DIR / name
         s = fetch_one(url, dest, want_json=name.endswith(".json"))
+        status[name] = s
+        if s == "saved" or name not in dates:
+            dates[name] = today
+        entries.append((dest, url))
+    for name, url in POPULATION_FILES.items():
+        dest = CZSO_DIR / name
+        s = fetch_one(url, dest, want_json=False)
         status[name] = s
         if s == "saved" or name not in dates:
             dates[name] = today

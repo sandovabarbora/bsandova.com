@@ -12,6 +12,7 @@ DATA = ROOT / "tools/data/incentives"
 RAW = DATA / "raw"
 MPSV_DIR = DATA / "mpsv"
 CODES_DIR = DATA / "codes"
+CZSO_DIR = DATA / "czso"  # ČSÚ population, the denominator of Q3 only
 MANIFEST = RAW / "manifest.tsv"
 PROJECTS_CSV = RAW / "czechinvest_powerbi_RP_1993-2025.csv"
 UA = "bsandova.com research"
