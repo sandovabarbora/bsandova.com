@@ -1584,7 +1584,7 @@ def test_checks_use_the_drawn_aircraft_weights_and_days_only_uses_the_base_weigh
     point, template, _ = E.point_estimates(P)
     s = E.MainSampler(P, template, tuple(E.ESTIMATORS))
     wd = np.ones(P.n_days)
-    row = s.row((wd, half))
+    row = s.row((wd, half, half))
     full = E.primary(P, wd, P.base_w)
     assert row["days_only.E.CZ"] == pytest.approx(full["E.CZ"])
     assert row["primary.E.CZ"] == pytest.approx(E.primary(P, wd, half * P.base_w)["E.CZ"])
@@ -1629,7 +1629,7 @@ def test_q3_paired_and_independent_readings(small, monkeypatch):
         return v
     monkeypatch.setattr(E, "aircraft_weights", aw)
     ctx = s.draw(np.random.default_rng(1))
-    assert calls == [(0, True), (1, False), (2, False)]  # one shared draw over both windows, then one per window
+    assert calls == [(0, True), (1, True), (2, False), (3, False)]  # shared loose, shared strict, then one per window
     row = s.row(ctx)
     for tag, W in (("e24", P24), ("e26", P26)):
         wd = ctx["wd"][tag]
@@ -1652,7 +1652,7 @@ def test_strict_airframe_reading_is_check_13():
     P = tiny(p, {"west": p["west"]})
     ids = {s: i for i, s in enumerate(P.icao)}
     # a: 40 west points over two days, all degraded: dropped by the loose rule; never 30 on a day, so kept by the strict
-    assert not P.keep[ids["a"]] and P.keep_strict[ids["a"]] and ids["a"] in P.pool
+    assert not P.keep[ids["a"]] and P.keep_strict[ids["a"]] and ids["a"] in P.pool_strict
     point, _, failed = E.point_estimates(P)
     assert not failed
     assert point["primary.E.CZ"] == pytest.approx(.10) and point["c13_strict_airframes.E.CZ"] == pytest.approx(.30)
@@ -1688,3 +1688,24 @@ def test_bands_note_and_regional_band_shares_are_reported(analysed):
     assert "not a regional contrast" in q2["bands_note"]
     assert q2["D_by_region_and_band"]["CZ"]["600-900"]["est"] == pytest.approx(.05, abs=.008)
     assert analysed["estimator_errors"] == {}
+
+
+def test_primary_draw_has_exactly_n_loose_aircraft_and_check_13_its_own(small):
+    P = small
+    s = E.MainSampler(P, {}, ())
+    rng = np.random.default_rng(3)
+    for _ in range(25):
+        wd, wa, wa_s = s.draw(rng)
+        assert wa.sum() == P.pool.size and wa_s.sum() == P.pool_strict.size
+        assert wa[~np.isin(np.arange(P.n_ac), P.pool)].sum() == 0
+    w = E.windows(P)
+    q = E.Q3Sampler(P.restrict(w[2024]), P.restrict(w[2026]))
+    ctx = q.draw(rng)
+    assert ctx["shared"].sum() == q.pool.size and ctx["shared_strict"].sum() == q.pool_strict.size
+
+
+def test_strict_pool_differs_from_loose_when_the_readings_differ():
+    p = {"points": [("a", "CZ", "600-900", 100, 50), ("c", "CTRL", "900+", 200, 0)], "west": [("a", 20, 20), ("c", 40, 0)]}
+    P = tiny(p, {"west": p["west"]})
+    ids = {s: i for i, s in enumerate(P.icao)}
+    assert ids["a"] in P.pool_strict and ids["a"] not in P.pool

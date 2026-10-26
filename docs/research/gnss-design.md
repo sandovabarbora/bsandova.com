@@ -291,8 +291,10 @@ read with the others, without a correction for multiplicity.
   - Q3 gate: a Q3 draw is redrawn if E_CZ is undefined in either window (counted, with the same 20 000-redraw limit).
   - Persistent airframes: the loose reading (at least 30 usable points west of 5° E in total, from at least two sampled
     days) stays primary. The strict reading (at least 30 on each of at least two sampled days, and half of all such
-    points degraded) is registered as check 13, with the same bootstrap draws; aircraft kept under either reading are in
-    the draw pool.
+    points degraded) is registered as check 13. In each draw the primary aircraft weights come first, from the aircraft
+    kept under the loose reading (exactly that many drawn), and check 13's weights next from the same generator, from
+    the aircraft kept under the strict reading, so the registered aircraft bootstrap is not altered. The days of the
+    draw are shared.
   - Q2 bands: E per band is unchanged and is not a regional contrast (control's points sit in the band and its
     reference is control's pooled share). The results also give each region's own share per band.
   - Gate: the pooled E_CZ is computed in its own guarded step; the rest of the primary estimate is a non-gate estimate,

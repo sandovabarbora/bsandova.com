@@ -113,7 +113,7 @@ class Panel:
         self.cagg_all, self.cagg_band = cagg_all.keyed(self.year), cagg_band.keyed(self.year)
         self.keep, self.screen, self.persistent, self.keep_strict = airframes or self.airframes()
         self.base_w, self.strict_w = self.keep.astype(float), self.keep_strict.astype(float)
-        self.pool = self.pool_of(self)
+        self.pool, self.pool_strict = self.pools(self)
         self.periods = [np.flatnonzero(self.year == y) for y in range(NYEAR)]
 
     def airframes(self):
@@ -129,20 +129,20 @@ class Panel:
         return ~persistent, screen, persistent, ~(strict_screen & (g >= AIRFRAME_SHARE * u))
 
     @staticmethod
-    def pool_of(P) -> np.ndarray:
-        """Aircraft that can carry weight in a draw: present, and kept under the primary or the strict airframe rule
-        (the strict rule is check 13 and needs its own aircraft in the draw)."""
+    def pools(P) -> tuple[np.ndarray, np.ndarray]:
+        """Aircraft resampled in a draw: present and kept under the primary airframe rule; and, for check 13 only,
+        present and kept under the strict rule (its own draw, so the primary draw has exactly N_loose aircraft)."""
         present = np.zeros(P.n_ac, bool)
         for r in (*P.points.values(), P.cross, P.cagg_all, P.cagg_band):
             present[r.ac] = True
-        return np.flatnonzero(present & (P.keep | P.keep_strict))
+        return np.flatnonzero(present & P.keep), np.flatnonzero(present & P.keep_strict)
     def restrict(self, day_mask: np.ndarray) -> Panel:
         """The same panel on some days only; the airframe screen stays the one of the whole sample."""
         p = copy.copy(self)
         m = lambda r: r.take(day_mask[r.day])  # noqa: E731
         p.points = {k: m(v) for k, v in self.points.items()}
         p.west, p.cross, p.cagg_all, p.cagg_band = m(self.west), m(self.cross), m(self.cagg_all), m(self.cagg_band)
-        p.pool = self.pool_of(p)
+        p.pool, p.pool_strict = self.pools(p)
         p.periods = [np.flatnonzero(day_mask)]
         return p
 
@@ -304,6 +304,10 @@ def block_weights(rng, periods: list[np.ndarray], n_days: int) -> np.ndarray:
     return wd
 
 
+def pick(P: Panel, name: str, wa, wa_strict):
+    return wa_strict if name in STRICT_ESTIMATORS else wa
+
+
 def aircraft_weights(rng, P: Panel, pool: np.ndarray | None = None) -> np.ndarray:
     pool = P.pool if pool is None else pool
     if pool.size == 0:
@@ -393,18 +397,21 @@ class MainSampler:
         self.P, self.template, self.names = P, template, names
 
     def draw(self, rng):
-        return block_weights(rng, self.P.periods, self.P.n_days), aircraft_weights(rng, self.P)
+        wd = block_weights(rng, self.P.periods, self.P.n_days)
+        wa = aircraft_weights(rng, self.P)  # N_loose aircraft exactly
+        return wd, wa, aircraft_weights(rng, self.P, self.P.pool_strict)  # check 13's own draw, N_strict aircraft
 
     def gate(self, ctx) -> bool:
         return gate_ok(self.P, ctx[0], ctx[1] * self.P.base_w)
 
     def row(self, ctx) -> dict:
-        P, (wd, wa) = self.P, ctx
+        P, (wd, wa, wa_s) = self.P, ctx
         row = flat("primary", attempt(primary, P, wd, wa * P.base_w, name="primary"), self.template)
         row.update(flat("days_only", attempt(primary, P, wd, P.base_w, name="days_only"), self.template, "primary"))
         for n in self.names:
             if n != "primary":
-                row.update(flat(n, attempt(ESTIMATORS[n], P, wd, wa * weights_for(P, n), name=n), self.template))
+                row.update(flat(n, attempt(ESTIMATORS[n], P, wd, pick(P, n, wa, wa_s) * weights_for(P, n), name=n),
+                                self.template))
         return row
 
 
@@ -415,12 +422,14 @@ class Q3Sampler:
     def __init__(self, P24: Panel, P26: Panel):
         self.W = (("e24", P24), ("e26", P26))
         self.pool = np.union1d(P24.pool, P26.pool)
+        self.pool_strict = np.union1d(P24.pool_strict, P26.pool_strict)
 
     def draw(self, rng):
         wd = {t: block_weights(rng, W.periods, W.n_days) for t, W in self.W}
         shared = aircraft_weights(rng, self.W[0][1], self.pool)
+        shared_strict = aircraft_weights(rng, self.W[0][1], self.pool_strict)
         own = {t: aircraft_weights(rng, W) for t, W in self.W}
-        return {"wd": wd, "shared": shared, "own": own}
+        return {"wd": wd, "shared": shared, "shared_strict": shared_strict, "own": own}
 
     def gate(self, ctx) -> bool:
         return all(gate_ok(W, ctx["wd"][t], ctx["shared"] * W.base_w) for t, W in self.W)
@@ -434,8 +443,8 @@ class Q3Sampler:
             out[f"{t}.indep.E.CZ"] = (attempt(GATE, W, wd, ctx["own"][t] * W.base_w, name="indep") or {}).get("E.CZ", np.nan)
             for n in Q3_ESTIMATORS:
                 if n != "primary":
-                    out[f"{t}.{n}.E.CZ"] = (attempt(ESTIMATORS[n], W, wd, wa * weights_for(W, n), name=n) or {}).get(
-                        "E.CZ", np.nan)
+                    w = pick(W, n, wa, ctx["shared_strict"]) * weights_for(W, n)
+                    out[f"{t}.{n}.E.CZ"] = (attempt(ESTIMATORS[n], W, wd, w, name=n) or {}).get("E.CZ", np.nan)
         return out
 
 
