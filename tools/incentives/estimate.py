@@ -302,7 +302,7 @@ def interval(x: pd.Series, level: float) -> list[float]:
 
 
 def permutation_p(panels: list[SubPanel], observed: float, perms: int = DRAWS, seed: int = SEED_PERM,
-                  years: tuple[int, ...] = YEARS, pools: list[np.ndarray] | None = None,
+                  years: tuple[int, ...] = YEARS,
                   statistic=q1, with_control: bool = False, log: DrawLog | None = None) -> dict:
     """§4 randomisation inference: per event one district of its pool (comparisons plus the true treated) drawn to
     stand as treated, the others as comparisons with weight 1/n_e; p = share of permutations with |Q1| ≥ observed.
@@ -311,8 +311,8 @@ def permutation_p(panels: list[SubPanel], observed: float, perms: int = DRAWS, s
     vals = np.full(perms, np.nan)
     for b in range(perms):
         designs = []
-        for i, sp in enumerate(panels):
-            pool = np.arange(len(sp.units)) if pools is None else pools[i]
+        for sp in panels:
+            pool = np.arange(len(sp.units))
             t = int(pool[rng.integers(0, len(pool))])
             d = design_of(sp, pool, treated_row=t)
             if d is not None:
@@ -375,7 +375,7 @@ def run(panels: list[SubPanel], draws: int = DRAWS, perms: int = DRAWS, years: t
     point = stat(beta, den)
     boot = bootstrap(panels, draws, SEED_BOOT, years, with_control, stat, log)
     d = boot["draws"]
-    ri = permutation_p(panels, point["q"], perms, SEED_PERM, years, None, lambda b: q1(b, post, pre), with_control, log)
+    ri = permutation_p(panels, point["q"], perms, SEED_PERM, years, lambda b: q1(b, post, pre), with_control, log)
     q = column(d, "q")
     res = {
         "n_events": len(panels), "n_treated_districts": len({sp.event.treated for sp in panels}),
