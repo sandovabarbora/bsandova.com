@@ -535,4 +535,18 @@ Commands, the verified API facts and their dates are in `tools/memes/README.md`.
   article (R3); fully specified checks (R4); the status of every deviation (R5); dropped spec items (R6); an
   "otherwise" label and the half-life window of the variants (R7). §5 is written after the code and the simulations.
   The commits follow below.
+- 26 October 2026, commits of the branch, one line each (the commit that adds this list is not in it):
+  - `70dc8cf` design registered (first version, before the code).
+  - `c88a98a` first version of the code, with the external falsification and the `--unblind` guard.
+  - `7dbb87a` tests of that code on made-up data.
+  - `18e5703` first runs of false positives, power and falsification detection on made-up panels.
+  - `8d712b6` first power numbers in the design, and the README.
+  - `8b9524c` the memes tests run in CI, matplotlib pinned.
+  - `ab24398` design revised after the two reviews and the author's decisions D1 to D5.
+  - `3ebc5d9` code: weekday terms, equal-day placebos, the omitted-day rule, the first-billed pool, the diagnostic
+    falsification, the smoothed half-life, the checks and the page.
+  - `3c74a59` tests: the review fixes, and the spec's §7 tests restored where possible.
+  - `2a3f2db` the runs of power, minimum detectable uplift and falsification detection on made-up panels, rerun.
+  - `c9c891e` §5 numbers and the minimum detectable uplift copied into the design: **§5 was written after the code and
+    the simulations**.
 
