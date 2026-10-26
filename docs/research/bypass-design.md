@@ -274,3 +274,10 @@ opposite sign to the primary, the article says so next to the label; the label s
   Only Prague's row is dropped; the BYP-057 unit keeps Úvaly. The frozen code at `bypass-code-2` is imported unchanged,
   with the same years, seed and 2 000 draws by bypass. Q1 −15.3 % (95 % −52.7 to +7.0 %), Q2 +6.5 % (95 % −12.8 to
   +31.6 %), both underpowered by the §6 rule; check 1 −2.1 % (Q1) and +10.9 % (Q2). The registered labels stand.
+- 26 October 2026, correction of the entry of 16 October: the town excluded for a boundary change of 3.7 % is Jičín
+  (572659), not Valdice; Valdice (573701), the other municipality of BYP-199, is a treated town. The code and the
+  screening file had it right; only the wording here was wrong.
+- 26 October 2026, after the results, not registered: a map of the treated towns and one example town, raw counts only
+  (`tools/bypass/towns_map.py`, `docs/research/bypass-towns.json`). The example is picked by a rule set before its
+  counts were read: among the towns on class I roads, the most post-opening years in 2016–2025, ties by the earliest
+  opening date (Kámen, BYP-014).
