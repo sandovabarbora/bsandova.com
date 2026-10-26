@@ -878,3 +878,25 @@ def test_population_loads_end_to_end_from_a_made_up_zip(tmp_path):
     m = POP.load(["3201", "3702", "3703"], M(2011, 1), M(2011, 12), tmp_path / "p.zip", tmp_path / "101.csv", tmp_path)
     assert m.loc[M(2011, 1), "3201"] == pytest.approx(1300.0) and m["3702"].eq(10.0).all()
 
+
+# ---------- check 12: windows spanning January 2013 ----------
+
+@pytest.mark.parametrize("decided, spans", [
+    (M(2009, 1), False),  # months -24..+47 end December 2012
+    (M(2009, 2), True),  # end January 2013
+    (M(2015, 1), True),  # start January 2013
+    (M(2015, 2), False),  # start February 2013
+])
+def test_check_12_boundary_months(decided, spans):
+    assert E.spans_pno_change(E.Event("a", "T", decided, ())) is spans
+
+
+def test_check_12_drops_exactly_the_events_spanning_january_2013():
+    wide, events = clean_panel(n_events=22, n_comp=12, effect=-0.5, noise=0.1, seed=6)
+    ps = panels_of(wide, events)
+    regions = {u: "R" for u in wide.columns}
+    out = E.checks(wide, events, ps, draws=5, perms=5, all_districts=list(wide.columns), regions=regions)
+    kept = [sp for sp in ps if not (M(2009, 2) <= sp.event.month <= M(2015, 1))]
+    assert 0 < len(kept) < len(ps)
+    assert out["12_without_window_spanning_2013_01"]["n_events"] == len(kept)
+    assert out["12_without_window_spanning_2013_01"]["label"] is None  # a check never relabels the primary

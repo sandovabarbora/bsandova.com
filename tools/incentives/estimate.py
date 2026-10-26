@@ -1,6 +1,6 @@
 """Estimates of the investment incentives study (design §4, §6, §7): the stacked weighted difference in differences,
 Q1, Q2, Q3, the pre-path difference, the district bootstrap with clones, randomisation inference, the minimum rule,
-the label, and checks 1-11.
+the label, and checks 1-12.
 
 Frozen with tests on made-up panels (test_incentives.py). On real MPSV data it runs only when asked with --unblind,
 and only if the screening (docs/research/incentives-screening.json) names an outcome rule that can be computed
@@ -49,9 +49,10 @@ OUT = ROOT / "docs/research/incentives-results.json"
 DRAW_LOG = DATA / "draws.jsonl"
 MAX_MISSING_SHARE = 0.01  # more missing bootstrap or permutation draws than this and the primary gets no label
 MAX_REDRAWS = 100_000  # a bootstrap whose draws never hold an event is a design failure, not something to wait out
-Q3_REASON = "population 15-64 is not in the MPSV files; Q3 not computable (design change log, 26 October 2026)"
+Q3_REASON = "no ČSÚ population 15-64 for year -1 of the treated districts; Q3 not computable"
 CRISIS = (2009 * 12, 2009 * 12 + 11)
 COVID = (2020 * 12, 2021 * 12 + 11)
+PNO_CHANGE = 2013 * 12  # January 2013, MPSV's new definition of the published rate (check 12)
 TOL = 1e-12
 
 
@@ -444,8 +445,14 @@ def drop_moved(sp: SubPanel) -> SubPanel | None:
     return restrict_pool(sp, set(sp.units) - moved)
 
 
+def spans_pno_change(ev: Event) -> bool:
+    """Check 12: the event's months −24 to +47 (its clean window, and years −2 to 3) contain January 2013."""
+    return covers(ev, PNO_CHANGE, PNO_CHANGE)
+
+
 def checks(wide: pd.DataFrame, events: list[Event], panels: list[SubPanel], *, draws: int, perms: int,
-           all_districts: list[str], regions: dict[str, str], log: DrawLog | None = None, save=None) -> dict:
+           all_districts: list[str], regions: dict[str, str], log: DrawLog | None = None, save=None,
+           pop: pd.DataFrame | None = None) -> dict:
     out = {}
     by_id = {sp.event.id: sp for sp in panels}
 
@@ -504,7 +511,8 @@ def checks(wide: pd.DataFrame, events: list[Event], panels: list[SubPanel], *, d
     go("10_reference_year_minus1", "10", lambda: panels, pre=(-1,))
     go("11_control_change_minus3_to_minus2", "11",
        lambda: [sp for ev in events if ev.month - 36 >= FIRST_MONTH and ev.id in by_id
-                if (sp := sub_panel(wide, ev, control_years=(-3, -2)))], with_control=True)
+                if (sp := sub_panel(wide, ev, pop=pop, control_years=(-3, -2)))], with_control=True)
+    go("12_without_window_spanning_2013_01", "12", lambda: [sp for sp in panels if not spans_pno_change(sp.event)])
     return out
 
 
@@ -547,7 +555,13 @@ def real(draws: int, perms: int, log: DrawLog | None = None, save=None) -> dict:
     unknown = {u for ev in events for u in (ev.treated, *ev.comparisons)} - set(wide.columns)
     if unknown:  # a code mismatch would drop events silently as "missing year"
         raise SystemExit(f"refused: district codes of the events are not in the MPSV files: {sorted(unknown)[:5]}")
-    panels = [sp for ev in events if (sp := sub_panel(wide, ev))]  # no population, so Q3 has no denominator
+    import population
+    districts = sorted({u for ev in events for u in (ev.treated, *ev.comparisons)})
+    pop = population.load(districts, FIRST_MONTH, LAST_MONTH)  # Q3 denominator only; population is not an outcome
+    panels = [sp for ev in events if (sp := sub_panel(wide, ev, pop=pop))]
+    no_pop = [sp.event.id for sp in panels if not (np.isfinite(sp.pop_pre) and sp.pop_pre > 0)]
+    if no_pop:  # Q3 would quietly average over fewer events
+        raise SystemExit(f"refused: no ČSÚ population for year -1 of events {no_pop[:5]}")
     res = {"rule": rule, "events_used": [sp.event.id for sp in panels],
            "events_dropped_missing_year": [ev.id for ev in events if ev.id not in {sp.event.id for sp in panels}],
            "comparison_weight_total": comparison_weights(panels),
@@ -556,6 +570,7 @@ def real(draws: int, perms: int, log: DrawLog | None = None, save=None) -> dict:
         save(res)
     res["checks"] = checks(wide, events, panels, draws=draws, perms=perms,
                            all_districts=[d for d in geo.districts if d != P.PRAGUE], regions=geo.district_kraj, log=log,
+                           pop=pop,
                            save=(lambda c: save(res | {"checks": c})) if save else None)
     return res
 
