@@ -15,6 +15,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
 import estimate as E
+import population as POP
 import projects as P
 import screen as S
 
@@ -768,3 +769,112 @@ def test_tercile_pool_keeps_comparisons_in_the_treated_tercile():
     sp = E.sub_panel(wide, events[0])
     base = pd.Series({u: float(i) for i, u in enumerate(sp.units)})  # 0..6, terciles by rank
     assert E.tercile_pool(sp, base) == {sp.units[1]}  # cut-offs 2 and 4: values 0 and 1 share a tercile
+
+
+# ---------- ČSÚ population for Q3 (made-up files) ----------
+
+
+MPSV_OKRESY = {"polozky": [
+    {"kod": "9999", "kodLau": "CZ0100", "nazev": {"cs": "území Hlavního města Prahy"}},
+    {"kod": "3100", "kodLau": "CZ0100", "nazev": {"cs": "Hlavní město Praha"}},
+    {"kod": "3201", "kodLau": "CZ0201", "nazev": {"cs": "Benešov"}},
+    {"kod": "3702", "kodLau": "CZ0642", "nazev": {"cs": "Brno-město"}},
+    {"kod": "3703", "kodLau": "CZ0643", "nazev": {"cs": "Brno-venkov"}},
+]}
+
+
+def csu_row(chodnota, text, lau, ruian):
+    return {"chodnota": chodnota, "text": text, "okres_lau": lau, "kod_ruian": ruian}
+
+
+CSU_101 = [csu_row("40002", "Extra-Regio", "CZZZZZ", ""), csu_row("40169", "Benešov", "CZ0201", "3201"),
+           csu_row("40711", "Brno-město", "CZ0642", "3702"), csu_row("40720", "Brno-venkov", "CZ0643", "3703"),
+           csu_row("40924", "Praha", "CZ0100", "")]
+
+
+def mpsv_codes(tmp_path):
+    (tmp_path / "mpsv_okresy.json").write_text(json.dumps(MPSV_OKRESY), encoding="utf-8")
+    return POP.mpsv_districts(tmp_path)
+
+
+def pop_row(kod, year, value, cis="101", vek=POP.AGE_15_64, sex=""):
+    return {"uzemi_cis": cis, "stapro_kod": POP.STAPRO, "vek_kod": vek, "pohlavi_kod": sex, "uzemi_kod": kod,
+            "uzemi_txt": "x", "obdobi": f"{year}-12-31", "hodnota": str(value)}
+
+
+def test_district_map_uses_lau_and_keeps_brno_and_prague_apart(tmp_path):
+    cmap = POP.district_map(CSU_101, mpsv_codes(tmp_path))
+    assert cmap == {"40169": "3201", "40711": "3702", "40720": "3703", "40924": "3100"}
+
+
+@pytest.mark.parametrize("bad", [
+    csu_row("40999", "Nowhere", "CZ0999", "3999"),  # LAU with no MPSV district
+    csu_row("40711", "Brno-město", "CZ0642", "3703"),  # kod_ruian of Brno-venkov on Brno-město
+    csu_row("40711", "Brno-venkov", "CZ0642", "3702"),  # name of the other Brno district
+    csu_row("40169", "Benešov", "CZ0201", ""),  # no kod_ruian outside Prague
+])
+def test_district_map_fails_loudly_on_a_district_that_does_not_map(tmp_path, bad):
+    with pytest.raises(POP.DistrictMismatch):
+        POP.district_map([*CSU_101, bad], mpsv_codes(tmp_path))
+
+
+def test_year_end_keeps_both_sexes_15_64_of_districts_only_and_fails_on_an_unmapped_district():
+    cmap = {"40169": "3201", "40711": "3702"}
+    rows = [pop_row("40169", 2010, 100), pop_row("40711", 2010, 300),
+            pop_row("40169", 2010, 7, sex="1"), pop_row("40169", 2010, 8, vek="400000610015000"),
+            pop_row("3018", 2010, 9, cis="100")]
+    ye = POP.year_end_15_64(rows, cmap)
+    assert ye.loc[2010].to_dict() == {"3201": 100.0, "3702": 300.0}
+    with pytest.raises(POP.DistrictMismatch, match="40720"):
+        POP.year_end_15_64([*rows, pop_row("40720", 2010, 5)], cmap)
+    with pytest.raises(ValueError, match="two values"):
+        POP.year_end_15_64([*rows, pop_row("40169", 2010, 101)], cmap)
+
+
+def test_monthly_population_is_linear_between_year_ends():
+    ye = pd.DataFrame({"3201": [1200.0, 2400.0]}, index=[2010, 2011])
+    m = POP.monthly(ye, ["3201"], M(2011, 1), M(2012, 1))
+    assert m.loc[M(2011, 1), "3201"] == pytest.approx(1300.0)  # end of January 2011
+    assert m.loc[M(2011, 12), "3201"] == pytest.approx(2400.0)  # 31 December 2011
+    assert np.isnan(m.loc[M(2012, 1), "3201"])  # no 2012 stock
+
+
+def test_monthly_population_refuses_prague_and_a_district_without_population():
+    ye = pd.DataFrame({"3201": [1.0, 2.0]}, index=[2010, 2011])
+    with pytest.raises(POP.DistrictMismatch, match="Prague"):
+        POP.monthly(ye, ["3201", "3100"], M(2011, 1), M(2011, 12))
+    with pytest.raises(POP.DistrictMismatch, match="3702"):
+        POP.monthly(ye, ["3201", "3702"], M(2011, 1), M(2011, 12))
+
+
+def test_q3_denominator_uses_the_mean_population_over_year_minus_1():
+    """Treated 3201 grows from 12 000 to 24 000 over 2011; decided in January 2012, year -1 is 2011, whose monthly
+    mean is 12 000 + 6.5/12 × 12 000 = 18 500. 370 promised jobs give 100 × 370 / 18 500 = 2 points."""
+    months = np.arange(M(2009, 1), M(2016, 12) + 1)
+    wide = pd.DataFrame(1.0, index=months, columns=["3201", "3702", "3703"])
+    ye = pd.DataFrame({"3201": [12_000.0] * 2 + [24_000.0] * 6, "3702": 5e4, "3703": 5e4}, index=range(2009, 2017))
+    ye.loc[2009:2010, "3201"] = 12_000.0
+    pop = POP.monthly(ye, ["3201", "3702", "3703"], months[0], months[-1])
+    ev = E.Event("a", "3201", M(2012, 1), ("3702", "3703"), jobs=370.0)
+    sp = E.sub_panel(wide, ev, pop=pop)
+    assert sp.pop_pre == pytest.approx(18_500.0)
+    assert E.q3_denominator([sp]) == pytest.approx(2.0)
+
+
+def test_population_loads_end_to_end_from_a_made_up_zip(tmp_path):
+    import zipfile
+    mpsv_codes(tmp_path)
+    cols = ["idhod", "hodnota", "stapro_kod", "pohlavi_cis", "pohlavi_kod", "vek_cis", "vek_kod", "uzemi_cis",
+            "uzemi_kod", "obdobi", "pohlavi_txt", "vek_txt", "uzemi_txt", "uzemi_typ"]
+    lines = [",".join(f'"{c}"' for c in cols)]
+    for i, (kod, y, v) in enumerate([("40169", 2010, 1200), ("40169", 2011, 2400), ("40711", 2010, 10),
+                                     ("40711", 2011, 10), ("40720", 2010, 5), ("40720", 2011, 5)]):
+        lines.append(f'"{i}","{v}","2406",,,"7700","{POP.AGE_15_64}","101","{kod}","{y}-12-31",,"15 až 64","x","okres"')
+    with zipfile.ZipFile(tmp_path / "p.zip", "w") as z:
+        z.writestr("OD_DEM05.CSV", "﻿" + "\n".join(lines) + "\n")
+    with open(tmp_path / "101.csv", "w", encoding="utf-8", newline="") as f:
+        f.write('"chodnota","text","okres_lau","kod_ruian"\n')
+        f.writelines(f'"{r["chodnota"]}","{r["text"]}","{r["okres_lau"]}","{r["kod_ruian"]}"\n' for r in CSU_101)
+    m = POP.load(["3201", "3702", "3703"], M(2011, 1), M(2011, 12), tmp_path / "p.zip", tmp_path / "101.csv", tmp_path)
+    assert m.loc[M(2011, 1), "3201"] == pytest.approx(1300.0) and m["3702"].eq(10.0).all()
+
