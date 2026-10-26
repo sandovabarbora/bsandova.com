@@ -903,3 +903,635 @@ def test_preflight_code_never_reads_quality_values():
     assert '"nac_p" in p[8]' in src
     for banned in ('["nac_p"]', ".get(\"nac_p", '["nic"]', ".get(\"nic"):
         assert banned not in src
+
+
+# =====================================================================================================================
+# Estimation (§4-§7): made-up days with known effects, never real counts.
+# =====================================================================================================================
+
+import ast  # noqa: E402
+
+import estimate as E  # noqa: E402
+
+BAND_OF = {"CZ": "600-900", "PL": "300-600", "BALT": "0-300", "CTRL": "900+", "AT": "900+", "CH": "900+", "DEW": "900+"}
+# variants whose degraded share is scaled, so that each estimator can be told apart
+FACTOR = {"c10_nacp7": 0.5, "c2_anyalt": 1.5}
+
+
+def synth(seed=7, step=2, n_ac=500, p=None, cz_year4=0.0, jump=None, crossing_q=None):
+    """Made-up days, 60 persistently degraded airframes (indices below 60), 30 that cannot be screened (60-89), a
+    per-aircraft multiplier on every share, CZ excess .03 (or as given), PL .06, BALT .18, control .02."""
+    rng = np.random.default_rng(seed)
+    p = {"CTRL": .02, "CZ": .05, "PL": .08, "BALT": .20, "AT": .02, "CH": .02, "DEW": .02, **(p or {})}
+    jump = {"CZ": .04, "PL": .03, "BALT": .05, "CTRL": .01, **(jump or {})}
+    crossing_q = {"CZ": .30, "PL": .30, "BALT": .30, "CTRL": .10, **(crossing_q or {})}
+    wed = F.sample_days()[::step]
+    re = rng.lognormal(0, .5, n_ac)
+    re /= re.mean()
+    ids = np.arange(n_ac)
+    pers, new = ids < 60, (ids >= 60) & (ids < 90)
+    icao = np.array([f"{i:06x}" for i in ids])
+    frames, kp = {}, {}
+    for k, d in enumerate(wed):
+        kp[str(d)] = 5.0 if k % 7 == 0 else (None if k % 11 == 5 else 3.0)
+        pts, cr, ca = [], [], []
+        for reg, pr in p.items():
+            pr = pr + (cz_year4 if reg == "CZ" and F.study_year(d) == 4 else 0.0)
+            idx = np.flatnonzero(rng.random(n_ac) < np.where(pers, .6, .3))
+            u = rng.integers(8, 40, idx.size)
+            base = np.where(pers[idx], .9, pr * re[idx])
+            for v in C.VARIANTS:
+                if v != "primary" and reg in R.CHECK6:
+                    continue
+                g = rng.binomial(u, np.clip(base * FACTOR.get(v, 1.0), 0, 1))
+                pts.append(pd.DataFrame({"icao": icao[idx], "variant": v, "region": reg, "band": BAND_OF[reg],
+                                         "usable": u, "degraded": g}))
+            if reg in R.PRIMARY:
+                q = crossing_q[reg]
+                cr.append(pd.DataFrame({"icao": icao[idx], "region": reg, "usable_buf": 4,
+                                        "degraded_buf": np.where(rng.random(idx.size) < q, 3, 0)}))
+                cr.append(pd.DataFrame({"icao": icao[idx], "region": reg, "usable_buf": 2, "degraded_buf": 2}))
+                j = (rng.random(idx.size) < jump[reg]).astype(int)
+                ca.append(pd.DataFrame({"band": "all", "region": reg, "icao": icao[idx], "crossings_usable": 1,
+                                        "jump_crossings_usable": j}))
+                ca.append(pd.DataFrame({"band": BAND_OF[reg], "region": reg, "icao": icao[idx],
+                                        "crossings_usable": 1, "jump_crossings_usable": j}))
+        wi = np.flatnonzero(rng.random(n_ac) < .5)
+        wu = rng.integers(10, 40, wi.size)
+        wg = rng.binomial(wu, np.where(pers[wi], .9, np.clip(.02 * re[wi], 0, 1)))
+        west = pd.DataFrame({"icao": icao[wi], "usable": wu, "degraded": wg})
+        if k != 3:
+            west = west[~new[west["icao"].map({s: i for i, s in enumerate(icao)}).to_numpy()]]
+        else:  # the unscreenable airframes show up west of 5 E on one day only, with 5 points
+            west = pd.concat([west[~new[west["icao"].map({s: i for i, s in enumerate(icao)}).to_numpy()]],
+                              pd.DataFrame({"icao": icao[new], "usable": 5, "degraded": 0})])
+        frames[d] = {"points": pd.concat(pts, ignore_index=True), "west": west.reset_index(drop=True),
+                     "crossings": pd.concat(cr, ignore_index=True), "crossings_agg": pd.concat(ca, ignore_index=True)}
+    return wed, frames, kp
+
+
+def panel_of(wed, frames, kp):
+    return E.build_panel([(d, str(d)) for d in wed], frames.__getitem__, kp)
+
+
+@pytest.fixture(scope="module")
+def world():
+    wed, frames, kp = synth()
+    return wed, frames, kp, panel_of(wed, frames, kp)
+
+
+@pytest.fixture(scope="module")
+def analysed(world):
+    return E.analyse(world[3], draws=150, seed=E.SEED)
+
+
+@pytest.fixture(scope="module")
+def analysed_rise():
+    """CZ excess .03 in every study year but the last, .07 in study year 4."""
+    wed, frames, kp = synth(seed=9, cz_year4=0.04)
+    return E.analyse(panel_of(wed, frames, kp), draws=100, seed=E.SEED)
+
+
+def tiny(*days, kp=None, start=0):
+    """Hand-made days: each a dict of rows. points: (icao, region, band, usable, degraded), copied to every variant."""
+    sample = F.sample_days()
+    wed = [sample[start + 4 * i] for i in range(len(days))]
+    frames = {}
+    for d, spec in zip(wed, days):
+        rows = [(ic, v, rg, bd, u, g) for (ic, rg, bd, u, g) in spec.get("points", []) for v in C.VARIANTS]
+        frames[d] = {
+            "points": pd.DataFrame(rows, columns=["icao", "variant", "region", "band", "usable", "degraded"]),
+            "west": pd.DataFrame(spec.get("west", []), columns=["icao", "usable", "degraded"]),
+            "crossings": pd.DataFrame(spec.get("crossings", []),
+                                      columns=["icao", "region", "usable_buf", "degraded_buf"]),
+            "crossings_agg": pd.DataFrame(spec.get("cagg", []), columns=["band", "region", "icao", "crossings_usable",
+                                                                          "jump_crossings_usable"])}
+    return panel_of(wed, frames, kp or {})
+
+
+def ones(P):
+    return np.ones(P.n_days), P.base_w
+
+
+# --- shares, weights -----------------------------------------------------------------------------------------------
+
+def test_pooled_share_and_excess_on_a_hand_made_day():
+    P = tiny({"points": [("a", "CZ", "600-900", 100, 10), ("b", "CZ", "600-900", 100, 20), ("c", "CTRL", "900+", 300, 6),
+                         ("a", "PL", "300-600", 50, 10), ("c", "BALT", "0-300", 40, 20)]})
+    r = E.primary(P, *ones(P))
+    assert r["D.CZ"] == pytest.approx(.15) and r["D.CTRL"] == pytest.approx(.02)
+    assert r["E.CZ"] == pytest.approx(.13) and r["E.PL"] == pytest.approx(.18) and r["E.BALT"] == pytest.approx(.48)
+    assert r["E.CZ.y1"] == pytest.approx(.13) and np.isnan(r["E.CZ.y2"])
+
+
+def test_weights_are_day_count_times_aircraft_count():
+    pts1 = [("a", "CZ", "600-900", 10, 5), ("b", "CZ", "600-900", 10, 0), ("c", "CTRL", "900+", 10, 1)]
+    pts2 = [("a", "CZ", "600-900", 20, 2), ("b", "CZ", "600-900", 20, 4), ("c", "CTRL", "900+", 20, 0)]
+    P = tiny({"points": pts1}, {"points": pts2})
+    ids = {s: i for i, s in enumerate(P.icao)}
+    wd, wa = np.array([2.0, 1.0]), np.zeros(P.n_ac)
+    wa[ids["a"]], wa[ids["b"]], wa[ids["c"]] = 3, 0, 1
+    r = E.primary(P, wd, wa)
+    # CZ: only aircraft a, weight 2*3 on day 1 and 1*3 on day 2; CTRL: c, 2 and 1
+    assert r["D.CZ"] == pytest.approx((6 * 5 + 3 * 2) / (6 * 10 + 3 * 20))
+    assert r["D.CTRL"] == pytest.approx((2 * 1 + 1 * 0) / (2 * 10 + 1 * 20))
+
+
+def test_year_and_band_breakdown():
+    P = tiny({"points": [("a", "CZ", "600-900", 100, 10), ("c", "CTRL", "900+", 100, 0)]},
+             {"points": [("a", "CZ", "600-900", 100, 30), ("c", "CTRL", "900+", 100, 0)]}, start=50)
+    r = E.primary(P, *ones(P))
+    assert F.study_year(P.wed[0]) != F.study_year(P.wed[1])
+    assert r["E.CZ"] == pytest.approx(.2) and r["E.CZ.y1"] == pytest.approx(.1) and r["E.CZ.y2"] == pytest.approx(.3)
+    # band share is taken over the four regions' points in the band; control's share overall is the reference
+    assert r["E.band.600-900"] == pytest.approx(.2) and r["E.band.900+"] == pytest.approx(0)
+    assert np.isnan(r["D.PL.band.300-600"]) and r["D.CZ.band.600-900"] == pytest.approx(.2)
+
+
+# --- persistent airframes -------------------------------------------------------------------------------------------
+
+def test_airframe_rule_boundaries():
+    west = lambda **kw: [(k, u, g) for k, (u, g) in kw.items()]  # noqa: E731
+    day1 = {"points": [(k, "CTRL", "900+", 10, 0) for k in "abcdefg"], "west": west(
+        a=(15, 8), b=(15, 7), c=(30, 25), d=(14, 9), e=(15, 15), f=(15, 8), g=(10, 0))}
+    day2 = {"west": west(a=(15, 7), b=(15, 7), c=(0, 0), d=(15, 8), e=(15, 15), f=(14, 7))}
+    P = tiny(day1, day2)
+    ids = {s: i for i, s in enumerate(P.icao)}
+    drop = {k: not P.keep[ids[k]] for k in "abcdefg"}
+    # a: 30 points, 15 degraded, two days: dropped (half is enough). b: 14 of 30, kept. c: 30 points, one day only.
+    # d: 29 points in total: cannot be screened. e: all degraded: dropped. f: 29 points: kept. g: too few: kept.
+    assert drop == {"a": True, "b": False, "c": False, "d": False, "e": True, "f": False, "g": False}
+    assert bool(P.screen[ids["a"]]) and not P.screen[ids["c"]] and not P.screen[ids["d"]]
+    assert P.persistent.sum() == 2
+
+
+def test_persistent_airframes_leave_every_estimate(world):
+    wed, frames, kp, P = world
+    assert {P.icao[i] for i in np.flatnonzero(P.persistent)} == {f"{i:06x}" for i in range(60)}
+    allp = pd.concat([f["points"] for f in frames.values()])
+    allp = allp[(allp["variant"] == "primary") & ~allp["icao"].isin([f"{i:06x}" for i in range(60)])]
+    g = allp.groupby("region")[["usable", "degraded"]].sum()
+    d = g["degraded"] / g["usable"]
+    r = E.primary(P, *ones(P))
+    assert r["E.CZ"] == pytest.approx(d["CZ"] - d["CTRL"], abs=1e-12)
+    assert r["D.BALT"] == pytest.approx(d["BALT"], abs=1e-12)
+    kept_in = E.primary(P, np.ones(P.n_days), np.ones(P.n_ac))["E.CZ"]
+    assert abs(kept_in - r["E.CZ"]) > .004  # kept in, the 60 airframes would have shifted the answer
+
+
+def test_unscreenable_airframes_are_kept(world):
+    P = world[3]
+    new = {f"{i:06x}" for i in range(60, 90)}
+    ids = {s: i for i, s in enumerate(P.icao)}
+    assert all(P.keep[ids[s]] and not P.screen[ids[s]] for s in new if s in ids)
+
+
+# --- estimators, one by one ------------------------------------------------------------------------------------------
+
+def test_each_variant_estimator_reads_its_own_rows(world):
+    P = world[3]
+    base = E.primary(P, *ones(P))["E.CZ"]
+    got = {n: E.ESTIMATORS[n](P, *ones(P))["E.CZ"] for n in ("c10_nacp7", "c2_anyalt", "c1_nic", "c3_v12", "c8_nobuf",
+                                                                 "c12_cap40", "c1_nic_same")}
+    assert got["c10_nacp7"] == pytest.approx(.5 * 0.03, abs=.006)
+    assert got["c2_anyalt"] == pytest.approx(1.5 * 0.03, abs=.008)
+    for n in ("c1_nic", "c3_v12", "c8_nobuf", "c12_cap40", "c1_nic_same"):
+        assert got[n] == pytest.approx(.03, abs=.008)
+    assert base == pytest.approx(.03, abs=.006)
+
+
+def test_control_variants_use_their_own_control_region(world):
+    P = world[3]
+    for n in ("c6_austria", "c6_switzerland", "c6_germany_w10e"):
+        assert E.ESTIMATORS[n](P, *ones(P))["E.CZ"] == pytest.approx(.03, abs=.006)
+    P2 = tiny({"points": [("a", "CZ", "600-900", 100, 10), ("c", "CTRL", "900+", 100, 5), ("d", "AT", "900+", 100, 1),
+                          ("e", "CH", "900+", 100, 3), ("f", "DEW", "900+", 100, 8)]})
+    assert E.control("AT")(P2, *ones(P2))["E.CZ"] == pytest.approx(.09)
+    assert E.control("CH")(P2, *ones(P2))["E.CZ"] == pytest.approx(.07)
+    assert E.control("DEW")(P2, *ones(P2))["E.CZ"] == pytest.approx(.02)
+
+
+def test_screenable_only_estimator():
+    day = {"points": [("a", "CZ", "600-900", 100, 10), ("b", "CZ", "600-900", 100, 50), ("c", "CTRL", "900+", 100, 0),
+                      ("d", "CTRL", "900+", 100, 20)],
+           "west": [("a", 40, 0), ("c", 40, 0), ("b", 5, 0), ("d", 5, 0)]}
+    P = tiny(day, {"west": [("a", 5, 0), ("c", 5, 0)]})
+    r = E.screenable_only(P, *ones(P))
+    assert r["E.CZ"] == pytest.approx(.10)  # b and d cannot be screened and are out
+
+
+def test_paired_estimator_subtracts_the_aircraft_own_west_share():
+    day = {"points": [("a", "CZ", "600-900", 100, 30), ("b", "CZ", "600-900", 100, 10), ("c", "CTRL", "900+", 100, 10),
+                      ("d", "CTRL", "900+", 100, 10)],
+           "west": [("a", 40, 16), ("b", 40, 4), ("c", 40, 4), ("d", 40, 0)]}
+    P = tiny(day, {"west": day["west"]})  # screenable needs two days; a at 40 % stays under the half-degraded drop
+    # CZ: (.30-.40 + .10-.10)/2 = -.05; CTRL: (.10-.10 + .10-0)/2 = .05 -> E = -.10 (equal weight per aircraft)
+    assert E.paired(P, *ones(P))["E.CZ"] == pytest.approx(-.10)
+
+
+def test_equal_day_weights():
+    P = tiny({"points": [("a", "CZ", "600-900", 1000, 100), ("c", "CTRL", "900+", 1000, 0)]},
+             {"points": [("a", "CZ", "600-900", 10, 0), ("c", "CTRL", "900+", 10, 0)]})
+    assert E.primary(P, *ones(P))["E.CZ"] == pytest.approx(100 / 1010)
+    assert E.equal_day(P, *ones(P))["E.CZ"] == pytest.approx(.05)
+    assert E.equal_day(P, np.array([3.0, 1.0]), P.base_w)["E.CZ"] == pytest.approx(.075)
+
+
+def test_kp_checks_split_days_and_keep_unknown_days_in_the_without_storm_run():
+    pts = lambda g: {"points": [("a", "CZ", "600-900", 100, g), ("c", "CTRL", "900+", 100, 0)]}  # noqa: E731
+    P0 = tiny(pts(10), pts(30), pts(50), start=0)
+    kp = {str(P0.wed[0]): 2.0, str(P0.wed[1]): 5.0, str(P0.wed[2]): None}
+    P = tiny(pts(10), pts(30), pts(50), kp=kp)
+    assert list(P.storm) == [False, True, False] and list(P.calm) == [True, False, False]
+    assert E.on_days("storm")(P, *ones(P))["E.CZ"] == pytest.approx(.30)
+    assert E.on_days("calm")(P, *ones(P))["E.CZ"] == pytest.approx(.10)
+    assert E.on_days("storm", True)(P, *ones(P))["E.CZ"] == pytest.approx(.30)  # days 1 and 3: (10+50)/200
+
+
+def test_kp_exactly_five_counts_as_storm_and_missing_is_neither():
+    P = tiny({"points": [("a", "CZ", "600-900", 1, 0)]}, {"points": []}, {"points": []},
+             kp={str(F.sample_days()[0]): 4.667, str(F.sample_days()[4]): 5.0})
+    assert list(P.storm) == [False, True, False] and list(P.calm) == [True, False, False]
+
+
+def test_crossing_estimator_needs_three_points_and_two_degraded():
+    day = {"points": [("a", "CZ", "600-900", 1, 0)],
+           "crossings": [("a", "CZ", 3, 2), ("b", "CZ", 3, 1), ("c", "CZ", 2, 2), ("d", "CZ", 8, 7),
+                         ("a", "CTRL", 4, 0), ("b", "CTRL", 3, 3), ("c", "CTRL", 2, 2), ("d", "CTRL", 3, 0)]}
+    P = tiny(day)
+    # CZ eligible: a (deg), b, d (deg) -> 2/3; CTRL eligible: a, b (deg), d -> 1/3; the 2-point crossing counts nowhere
+    assert E.crossings(P, *ones(P))["E.CZ"] == pytest.approx(1 / 3)
+
+
+def test_jump_shares_per_region_year_and_band():
+    day = {"points": [("a", "CZ", "600-900", 1, 0)],
+           "cagg": [("all", "CZ", "a", 3, 1), ("all", "CZ", "b", 1, 0), ("all", "CTRL", "a", 4, 0),
+                    ("600-900", "CZ", "a", 3, 1), ("600-900", "CZ", "b", 1, 0), ("900+", "CTRL", "a", 4, 0)]}
+    P = tiny(day)
+    r = E.jumps(P, *ones(P))
+    assert r["S.CZ"] == pytest.approx(.25) and r["S.CTRL"] == 0 and r["S.diff.CZ"] == pytest.approx(.25)
+    assert r["S.band.600-900"] == pytest.approx(.25) and r["S.band.900+"] == 0 and np.isnan(r["S.band.0-300"])
+
+
+def test_degraded_position_days_rule_and_repeat_airframes():
+    day = lambda cz, pl, ctrl, n=300: {"points": [("a", "CZ", "600-900", n, cz), ("b", "PL", "300-600", n, pl),  # noqa: E731
+                                                  ("c", "CTRL", "900+", n, ctrl)]}
+    P = tiny(day(30, 6, 3),    # CZ 10 % vs 1 %: a degraded-position day; PL 2 % but only +1 pt: not
+             day(6, 9, 0),     # CZ exactly 2 %, +2 pts over control at 0 %: counts (both limits are inclusive)
+             day(3, 3, 0, 299),  # 299 points: not eligible at all
+             day(30, 30, 30))   # high, but not above control
+    r = E.degraded_position_days(P)
+    assert r["CZ"]["1"] == {"eligible_days": 3, "degraded_position_days": 2}
+    assert r["PL"]["1"] == {"eligible_days": 3, "degraded_position_days": 1}
+    rep = E.repeat_airframes(tiny({"points": [(f"a{i}", "CZ", "600-900", 10, i + 1) for i in range(12)]}))
+    assert rep["CZ"] == pytest.approx(sum(range(3, 13)) / sum(range(1, 13)))
+    assert rep["PL"] is None
+
+
+def test_gradient_only_where_baltic_label_is_higher_and_only_for_draws_above_margin():
+    tags = ["", ".y1", ".y2", ".y3", ".y4"]
+    est = {f"primary.E.{x}{t}": v for t in tags for x, v in (("BALT", .10), ("CZ", .02), ("PL", .05))}
+    shape = (("BALT", 0), ("CZ", .02), ("PL", .05))
+    got = [{f"primary.E.{x}{t}": (b if x == "BALT" else v) for t in tags for x, v in shape} for b in [.2] * 40 + [.005] * 10]
+    res = {"E.BALT": {"label": E.HIGHER}}
+    for y in range(1, 5):
+        res[f"E.BALT.y{y}"] = {"label": E.INCONCLUSIVE}
+    g = E.gradient(est, got, res)
+    assert g["pooled"]["computed"] and g["pooled"]["est"] == pytest.approx(.2)
+    assert g["pooled"]["share_draws_undefined"] == pytest.approx(.2)
+    assert g["pooled"]["ci95"] == [pytest.approx(.1), pytest.approx(.1)]
+    assert not g[".y1"]["computed"] and set(g[".y1"]) == {"computed", "E_CZ_minus_E_BALT", "E_PL_minus_E_BALT"}
+    assert g[".y1"]["E_CZ_minus_E_BALT"]["est"] == pytest.approx(.02 - .10)
+
+
+def test_labels_follow_the_registered_order():
+    assert E.label_excess([.0101, .03], [.02, .02]) == E.HIGHER
+    assert E.label_excess([.0100, .03], [.0099, .0099]) == E.NO_EXCESS  # 95 % lower must exceed +.01 strictly
+    assert E.label_excess([-.004, .008], [-.003, .0099]) == E.NO_EXCESS
+    assert E.label_excess([-.004, .02], [-.003, .0101]) == E.INCONCLUSIVE
+    assert E.label_excess([.011, .03], [.012, .0099]) == E.HIGHER  # higher comes first
+    assert E.label_excess(None, None) == E.INCONCLUSIVE
+    assert E.label_change([.0001, .03], [.002, .02]) == E.INCREASE
+    assert E.label_change([-.001, .03], [.0, .0099]) == E.NO_INCREASE
+    assert E.label_change([-.001, .03], [.0, .0101]) == E.INCONCLUSIVE
+
+
+def test_intervals_are_percentiles_of_the_draws():
+    x = np.arange(1001, dtype=float)
+    assert E.interval(x, .95) == [pytest.approx(25), pytest.approx(975)]
+    assert E.interval(x, .90) == [pytest.approx(50), pytest.approx(950)]
+    assert E.interval([1.0] * 10, .95) is None  # too few finite draws to say
+    assert E.interval(np.r_[x, np.nan, np.nan], .95) == E.interval(x, .95)
+
+
+# --- resampling --------------------------------------------------------------------------------------------------------
+
+def test_day_blocks_are_four_consecutive_days_circular_within_each_period():
+    rng = np.random.default_rng(1)
+    periods = [np.arange(0, 10), np.arange(10, 13), np.arange(13, 14)]
+    for _ in range(200):
+        wd = E.block_weights(rng, periods, 14)
+        assert [wd[p].sum() for p in periods] == [10, 3, 1]  # each period keeps its length; nothing crosses over
+    rng = np.random.default_rng(2)
+    seen = set()
+    for _ in range(400):
+        seen.add(tuple(E.block_weights(rng, [np.arange(8)], 8)))
+    assert any(w[0] > 0 and w[7] > 0 for w in seen)  # a block can wrap from the end of the year to its start
+    # a draw of 8 days is two blocks of 4: counts come in runs of four consecutive days
+    for w in seen:
+        assert sum(w) == 8
+
+
+def test_aircraft_weights_resample_only_the_kept_pool():
+    P = tiny({"points": [(k, "CZ", "600-900", 5, 0) for k in "abcdef"], "west": [("a", 40, 40), ("a", 40, 40)]},
+             {"west": [("a", 40, 40)]})
+    ids = {s: i for i, s in enumerate(P.icao)}
+    assert not P.keep[ids["a"]]
+    rng = np.random.default_rng(3)
+    wa = E.aircraft_weights(rng, P)
+    assert wa[ids["a"]] == 0 and wa.sum() == P.pool.size == 5
+
+
+def test_same_seed_same_draws(world):
+    P = world[3]
+    a = [E.block_weights(np.random.default_rng(E.SEED), P.periods, P.n_days) for _ in range(2)]
+    assert (a[0] == a[1]).all() and E.SEED == 20261015 and E.DRAWS == 2000 and E.BLOCK == 4
+
+
+# --- the analysis on made-up days with known effects -------------------------------------------------------------------
+
+def test_registered_intervals_labels_and_known_effects(analysed):
+    res = analysed
+    assert res["draws"] == 150 and res["seed"] == 20261015 and res["sample"]["persistently_degraded"] == 60
+    q1 = res["q1"]
+    assert q1["est"] == pytest.approx(.03, abs=.006) and q1["label"] == E.HIGHER
+    assert q1["ci95"][0] < q1["est"] < q1["ci95"][1] and q1["ci95"][0] > .01
+    assert q1["ci90"][0] > q1["ci95"][0] and q1["ci90"][1] < q1["ci95"][1]
+    assert q1["days_only_ci95"][1] - q1["days_only_ci95"][0] < q1["ci95"][1] - q1["ci95"][0]  # days alone understate
+    q2 = res["q2"]
+    assert q2["E_PL"]["est"] == pytest.approx(.06, abs=.008) and q2["E_BALT"]["est"] == pytest.approx(.18, abs=.01)
+    assert q2["E_BALT"]["label"] == E.HIGHER
+    assert q2["gradient"]["pooled"]["computed"] and q2["gradient"]["pooled"]["est"] == pytest.approx(.03 / .18, abs=.04)
+    assert q2["bands"]["0-300"]["est"] == pytest.approx(.18, abs=.01)
+    assert q2["bands"]["600-900"]["est"] == pytest.approx(.03, abs=.006)
+    for y in range(1, 5):
+        assert res["primary"][f"E.CZ.y{y}"]["est"] == pytest.approx(.03, abs=.01)
+    assert abs(res["q3"]["change"]["est"]) < .012 and res["q3"]["change"]["label"] != E.INCREASE
+    json.dumps(E.clean(res))
+
+
+def test_q3_change_is_the_difference_of_two_windows(analysed_rise):
+    q3 = analysed_rise["q3"]
+    assert analysed_rise["primary"]["E.CZ.y4"]["est"] == pytest.approx(.07, abs=.01)
+    assert q3["days"]["2024"] > 5 and q3["days"]["2026"] > 5
+    ch = q3["change"]
+    assert ch["E_CZ_2024"] == pytest.approx(.03, abs=.01) and ch["E_CZ_2026"] == pytest.approx(.07, abs=.01)
+    assert ch["est"] == pytest.approx(.04, abs=.012) and ch["label"] == E.INCREASE
+    assert ch["ci95"][0] > 0 and ch["days_only_ci95"] is not None
+    for n in E.CHECKS:
+        assert q3["estimators"][n]["est"] is not None
+    assert q3["estimators"]["c10_nacp7"]["est"] == pytest.approx(.02, abs=.012)
+
+
+def test_windows_are_1_march_to_14_october_inclusive():
+    P = tiny(*[{} for _ in range(3)])
+    P.wed = [dt.date(2024, 3, 6), dt.date(2024, 10, 9), dt.date(2024, 10, 16), dt.date(2026, 10, 14), dt.date(2026, 2, 25)]
+    w = E.windows(P)
+    assert list(w[2024]) == [True, True, False, False, False] and list(w[2026]) == [False, False, False, True, False]
+    assert E.Q3_FROM == (3, 1) and E.Q3_TO == (10, 14)
+
+
+def test_checks_are_all_reported_with_both_labels(analysed):
+    c = analysed["checks"]
+    assert set(c) == set(E.CHECKS) and len(E.CHECKS) == 17
+    for n, v in c.items():
+        d = v["E.CZ"]
+        assert d["label"] in (E.HIGHER, E.NO_EXCESS, E.INCONCLUSIVE) and d["primary_label"] == E.HIGHER
+        assert d["differs_from_primary"] == (d["label"] != E.HIGHER)
+    assert c["c11_crossings"]["E.CZ"]["est"] == pytest.approx(.20, abs=.04)
+    assert c["c5_paired"]["E.CZ"]["est"] == pytest.approx(.03, abs=.012)
+    assert c["c7_equal_days"]["E.CZ"]["est"] == pytest.approx(.03, abs=.006)
+    assert c["c9_kp_below5"]["E.CZ"]["est"] == pytest.approx(.03, abs=.008)
+    assert c["c9_kp_5_or_more"]["E.CZ"]["est"] == pytest.approx(.03, abs=.012)
+    assert c["c10_nacp7"]["E.CZ"]["est"] < c["c2_anyalt"]["E.CZ"]["est"]
+    assert analysed["sample"]["days_kp_5_or_more"] > 5 and analysed["sample"]["days_kp_below_5"] > 40
+
+
+def test_jump_shares_on_made_up_days(analysed):
+    q4 = analysed["q4"]
+    assert q4["S.CZ"]["est"] == pytest.approx(.04, abs=.006) and q4["S.CTRL"]["est"] == pytest.approx(.01, abs=.004)
+    assert q4["S.diff.CZ"]["est"] == pytest.approx(.03, abs=.007)
+    assert q4["S.band.0-300"]["est"] == pytest.approx(.05, abs=.01)
+
+
+def test_no_excess_label_when_there_is_none():
+    wed, frames, kp = synth(seed=11, p={"CZ": .02}, n_ac=500)
+    res = E.analyse(panel_of(wed, frames, kp), draws=100, seed=E.SEED)
+    q1 = res["q1"]
+    assert abs(q1["est"]) < .004 and q1["label"] == E.NO_EXCESS and q1["ci90"][1] < .01
+    assert res["q3"]["change"]["label"] in (E.NO_INCREASE, E.INCONCLUSIVE)
+
+
+# --- failures, the draw log, the gate ----------------------------------------------------------------------------------
+
+@pytest.fixture
+def small():
+    wed, frames, kp = synth(seed=5, step=6, n_ac=150)
+    return panel_of(wed, frames, kp)
+
+
+@pytest.mark.parametrize("exc", [np.linalg.LinAlgError("SVD did not converge"), ValueError("empty"),
+                                 ZeroDivisionError(), KeyError("variant"), IndexError(), FloatingPointError(),
+                                 RuntimeError("anything")])
+def test_a_failing_non_gate_check_is_left_missing_and_the_run_goes_on(small, monkeypatch, tmp_path, exc):
+    """The bypass run died at draw 500 on one failing check; every non-gate failure here is caught."""
+    def make():
+        calls = {"n": 0}
+
+        def flaky(P, wd, wa):
+            calls["n"] += 1
+            if calls["n"] > 1 and calls["n"] % 2 == 0:  # the full-data call works, every second draw fails
+                raise exc
+            return E.excess(np.arange(E.NREG, dtype=float) / 10)
+        return flaky
+    for name in ("c5_paired", "c11_crossings", "jumps", "c7_equal_days"):
+        monkeypatch.setitem(E.ESTIMATORS, name, make())
+    log = tmp_path / "draws.jsonl"
+    res = E.analyse(small, draws=12, seed=E.SEED, log=log)
+    assert res["draws"] == 12 and len(log.read_text().splitlines()) == 12 + 12  # main and Q3 draws
+    miss = res["checks"]["c5_paired"]["E.CZ"]["missing_draws"]
+    assert 0 < miss < 12
+    assert res["q1"]["est"] is not None
+
+
+def test_a_check_that_fails_on_all_data_is_reported_not_run(small, monkeypatch):
+    def boom(P, wd, wa):
+        raise np.linalg.LinAlgError("SVD did not converge")
+    monkeypatch.setitem(E.ESTIMATORS, "c4_screenable", boom)
+    res = E.analyse(small, draws=10, seed=E.SEED)
+    assert res["checks"]["c4_screenable"] == {"run": False} and "c4_screenable" in res["estimators_failed_on_all_data"]
+    assert res["q3"]["estimators"]["c4_screenable"]["est"] is None or np.isnan(res["q3"]["estimators"]["c4_screenable"]["est"])
+
+
+def test_a_crash_keeps_the_draws_made_so_far(small, monkeypatch, tmp_path):
+    real, n = E.block_weights, {"k": 0}
+
+    def crash(*a, **k):
+        n["k"] += 1
+        if n["k"] == 4:
+            raise RuntimeError("machine went to sleep")
+        return real(*a, **k)
+    monkeypatch.setattr(E, "block_weights", crash)
+    log = tmp_path / "draws.jsonl"
+    with pytest.raises(RuntimeError, match="went to sleep"):
+        E.analyse(small, draws=10, seed=E.SEED, log=log)
+    rows = [json.loads(x) for x in log.read_text().splitlines()]
+    assert [r["draw"] for r in rows] == [1, 2, 3] and all(r["set"] == "main" for r in rows)
+    assert "primary.E.CZ" in rows[0]["stats"] and "c5_paired.E.CZ" in rows[0]["stats"]
+
+
+def test_log_can_finish_a_summary_without_drawing_again(small, tmp_path):
+    log = tmp_path / "draws.jsonl"
+    first = E.analyse(small, draws=15, seed=E.SEED, log=log)
+    again = E.analyse(small, draws=15, seed=E.SEED, replay=E.replay_rows(log))
+    assert again["q1"] == first["q1"] and again["q3"]["change"] == first["q3"]["change"]
+    short = tmp_path / "short.jsonl"
+    short.write_text("".join(log.read_text().splitlines(True)[:5]))
+    part = E.analyse(small, draws=15, seed=E.SEED, replay=E.replay_rows(short))
+    assert part["draws"] == 5 and part["draws_complete"] is False
+
+
+def test_same_seed_gives_the_same_results(small, tmp_path):
+    a = E.analyse(small, draws=10, seed=E.SEED)
+    b = E.analyse(small, draws=10, seed=E.SEED)
+    assert E.clean(a) == E.clean(b)
+
+
+def test_the_gate_redraws_and_gives_up_when_it_cannot_pass():
+    n = {"k": 0}
+
+    def once(rng):
+        n["k"] += 1
+        return None if n["k"] <= 3 else {"x": 1.0}
+    got, redrawn = E.run_draws(once, 5, 1, None, "t")
+    assert len(got) == 5 and redrawn == 3
+    with pytest.raises(RuntimeError, match="gate is broken"):
+        E.run_draws(lambda rng: None, 3, 1, None, "t")
+
+
+def test_an_undefined_gate_in_every_draw_stops_instead_of_looping():
+    P = tiny({"points": [("a", "CZ", "600-900", 10, 1)]}, {"points": [("a", "CZ", "600-900", 10, 1)]})  # no control
+    with pytest.raises(RuntimeError, match="gate is broken"):
+        E.analyse(P, draws=2, seed=E.SEED)
+
+
+# --- real data stays sealed until --unblind ------------------------------------------------------------------------------
+
+def test_sealed_is_opened_by_one_function_only():
+    tree = ast.parse((HERE / "estimate.py").read_text())
+    holders = set()
+    for fn in [n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef)]:
+        for c in ast.walk(fn):
+            if isinstance(c, ast.Constant) and c.value == "sealed":
+                holders.add(fn.name)
+    assert holders == {"merged_day"}
+    src = (HERE / "estimate.py").read_text()
+    assert src.count("merged_day(") == 2 and src.count("load_panel(") == 2  # the definitions and one call each
+
+
+def test_main_refuses_without_unblind_and_never_loads(monkeypatch):
+    monkeypatch.setattr(E, "load_panel", lambda *a: pytest.fail("opened the sealed counts"))
+    monkeypatch.setattr(sys, "argv", ["estimate.py"])
+    with pytest.raises(SystemExit, match="--unblind"):
+        E.main()
+
+
+def test_unblind_needs_the_tag_on_an_unchanged_tree(monkeypatch):
+    monkeypatch.setattr(E, "load_panel", lambda *a: pytest.fail("opened the sealed counts"))
+    monkeypatch.setattr(sys, "argv", ["estimate.py", "--unblind"])
+    monkeypatch.setattr(E, "frozen", lambda: "HEAD does not carry the tag gnss-estimation")
+    with pytest.raises(SystemExit, match="does not carry the tag"):
+        E.main()
+
+
+def test_frozen_checks_tag_and_clean_tree(monkeypatch):
+    out = {"tag": "gnss-design\n", "status": ""}
+
+    def fake(cmd, **kw):
+        return type("R", (), {"stdout": out["tag"] if "tag" in cmd else out["status"]})()
+    monkeypatch.setattr(E.subprocess, "run", fake)
+    assert "gnss-estimation" in E.frozen()
+    out["tag"] = "gnss-estimation\n"
+    assert E.frozen() is None
+    out["status"] = " M tools/gnss/estimate.py\n"
+    assert "uncommitted" in E.frozen()
+
+
+def test_main_with_unblind_writes_results(monkeypatch, tmp_path, small):
+    monkeypatch.setattr(sys, "argv", ["estimate.py", "--unblind"])
+    monkeypatch.setattr(E, "frozen", lambda: None)
+    monkeypatch.setattr(E, "load_panel", lambda *a: small)
+    monkeypatch.setattr(E, "OUT", tmp_path / "res.json")
+    monkeypatch.setattr(E, "DRAWS_LOG", tmp_path / "d.jsonl")
+    monkeypatch.setattr(E, "DRAWS", 6)
+    monkeypatch.setattr(F, "KP_DIR", tmp_path)
+    (tmp_path / F.KP_NAME).write_text("")
+    E.main()
+    res = json.loads((tmp_path / "res.json").read_text())
+    assert res["draws"] == 6 and res["seed"] == 20261015 and "q1" in res and "versions" in res
+    assert len(list(tmp_path.glob("d-*.jsonl"))) == 1
+
+
+# --- loading the per-day files -------------------------------------------------------------------------------------------
+
+def _write_day(root, wed, frame):
+    for layer, cols in {"screening": {"points": ["usable"], "west": ["usable"], "crossings": ["usable_buf"],
+                                       "crossings_agg": ["crossings_usable"]},
+                        "sealed": {"points": ["degraded"], "west": ["degraded"], "crossings": ["degraded_buf", "jump"],
+                                   "crossings_agg": ["jump_crossings_usable"]}}.items():
+        for name, own in cols.items():
+            df = frame[name].copy()
+            if name == "crossings":
+                df["crossing"] = range(len(df))
+                df["jump"] = False
+            key = {"points": ["icao", "variant", "region", "band"], "west": ["icao"],
+                   "crossings": ["icao", "region", "crossing"], "crossings_agg": ["band", "region", "icao"]}[name]
+            keep = key + own
+            (root / str(wed) / layer).mkdir(parents=True, exist_ok=True)
+            df[keep].to_parquet(root / str(wed) / layer / f"{name}.parquet", index=False)
+    (root / str(wed) / "manifest.json").write_text(json.dumps({"wednesday": str(wed), "status": "counted",
+                                                               "date_used": str(wed)}))
+
+
+def test_load_panel_joins_screening_and_sealed_rows(tmp_path, monkeypatch):
+    wed, frames, kp = synth(seed=3, step=40, n_ac=60)
+    for d in wed:
+        _write_day(tmp_path, d, frames[d])
+    monkeypatch.setattr(F, "sample_days", lambda: list(wed))
+    P = E.load_panel(tmp_path, kp)
+    Q = panel_of(wed, frames, kp)
+    assert P.n_days == len(wed) == Q.n_days
+    assert E.primary(P, *ones(P)) == pytest.approx(E.primary(Q, *ones(Q)), nan_ok=True)
+    assert E.crossings(P, *ones(P)) == pytest.approx(E.crossings(Q, *ones(Q)))
+
+
+def test_load_panel_stops_when_layers_do_not_line_up(tmp_path, monkeypatch):
+    wed, frames, kp = synth(seed=3, step=60, n_ac=40)
+    for d in wed:
+        _write_day(tmp_path, d, frames[d])
+    path = tmp_path / str(wed[0]) / "sealed" / "points.parquet"
+    df = pd.read_parquet(path)
+    df.iloc[[0, 1]] = df.iloc[[1, 0]].to_numpy()
+    df.to_parquet(path, index=False)
+    monkeypatch.setattr(F, "sample_days", lambda: list(wed))
+    with pytest.raises(ValueError, match="do not line up"):
+        E.load_panel(tmp_path, kp)
+
+
+def test_load_panel_reads_only_counted_and_replaced_days(tmp_path, monkeypatch):
+    wed, frames, kp = synth(seed=3, step=60, n_ac=40)
+    for d in wed:
+        _write_day(tmp_path, d, frames[d])
+    (tmp_path / str(wed[1]) / "manifest.json").write_text(json.dumps({"wednesday": str(wed[1]), "status": "lost"}))
+    monkeypatch.setattr(F, "sample_days", lambda: list(wed))
+    assert E.load_panel(tmp_path, kp).n_days == len(wed) - 1
