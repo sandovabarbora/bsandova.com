@@ -26,6 +26,11 @@ MIN_CANDIDATES = 100
 SEED = 42
 SEASON_DAYS = 45       # same-season placebo check (design §7)
 STRICT_EXCLUSION_DAYS = 90
+NULL_JSON = ROOT / "docs/research/memes-placebo-null.json"
+NULL_SHA = ROOT / "docs/research/memes-null-files.sha256"
+NULL_SVG = ROOT / "docs/research/memes-estimation-windows.svg"
+NULL_GAP = ROOT / "docs/research/memes-estimation-gap-by-month.csv"
+NULL_TAG = "memes-null"
 LEBLANC = "Matt_LeBlanc"  # Friends actor in the pool; Matthew Perry died 28 Oct 2023 (design §8)
 
 MF_CAST = ("Ed_O'Neill", "Sofía_Vergara", "Julie_Bowen", "Ty_Burrell", "Jesse_Tyler_Ferguson", "Sarah_Hyland",
@@ -157,6 +162,12 @@ TIKTOK_BLOCK = ("2023-06-06", "2023-07-13")
 # the September wave of the same meme, kept out of the TikTok run's placebo pool: -3..+30 around 27 September
 SEPTEMBER_BLOCK = ("2023-09-24", "2023-10-27")
 
+# Later waves of the memes, kept out of the placebo pools (design §4.5). Know Your Meme (the parts read) dates one for
+# Kevin James: his Tonight Show appearance on 23 January 2024. The page was read only to that paragraph, so the block
+# runs from 1 January to 29 February 2024 instead of a window around that one date. The Cam page lists nothing dated
+# after 6 October 2023, which lies in its own event window.
+KEVIN_LATER_WAVES = ("2024-01-01", "2024-02-29")
+
 STONESTREET = EventSpec(
     name="Stonestreet (Cam)", target="Eric_Stonestreet", controls=MF_CAST, event_date="2023-09-27",
     source_note="Know Your Meme, Cameron Tucker Smiling: earliest X post it lists, 27 Sep 2023",
@@ -166,6 +177,7 @@ KEVIN_JAMES = EventSpec(
     name="Kevin James", target="Kevin_James", controls=REFERENCE_POOL, event_date="2023-09-21",
     source_note="Know Your Meme, Kevin James Smirking Getty Image: earliest X post it lists, 21 Sep 2023",
     confirmatory=True, falsification=True, cast=KOQ_CAST, reference=REFERENCE_POOL,
+    placebo_blocked=(KEVIN_LATER_WAVES,), second_regressor="Victor_Williams",
     detect_window=("2023-09-01", "2023-10-15"))
 TIKTOK = EventSpec(
     name="Stonestreet TikTok pre-wave", target="Eric_Stonestreet", controls=MF_CAST, event_date="2023-06-13",

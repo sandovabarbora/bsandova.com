@@ -25,18 +25,30 @@ def _ar1(rng: np.random.Generator, n: int, phi: float, sd: float) -> np.ndarray:
 def synthetic_panel(seed: int, groups: Mapping[str, Sequence[str]], start: str = "2021-01-01", end: str = "2024-12-31",
                     bumps: Sequence[Bump] = (), beta: float = 1.0, level: float = 6.0, phi: float = 0.8,
                     sd: float = 0.1, common_sd: float = 0.0,
-                    weekday: Mapping[str, float] | None = None) -> pd.DataFrame:
+                    weekday: Mapping[str, float] | None = None,
+                    shared: Mapping[str, tuple[str, float]] | None = None) -> pd.DataFrame:
     """Daily views (not logs) for every article of `groups` ({target: controls}). A bump adds size * exp(-t / decay)
-    to log1p views from its date on, to one column or to all controls of one target ("controls:<target>")."""
+    to log1p views from its date on, to one column or to all controls of one target ("controls:<target>"). `shared`
+    maps a group to (another group, share): the group's factor is sqrt(1 - share) of its own plus sqrt(share) of the
+    other group's, so a share of 0 leaves it unrelated to that group and 1 makes it the same factor."""
     rng = np.random.default_rng(seed)
     days = pd.date_range(start, end, freq="D")
     cols: dict[str, np.ndarray] = {}
     common = _ar1(rng, len(days), phi, common_sd) if common_sd else 0.0
+    own, draws = {}, {}
     for target, controls in groups.items():
-        factor = _ar1(rng, len(days), phi, sd) + common
-        for name in controls:
-            cols[name] = level + rng.uniform(-0.5, 0.5) + factor + rng.normal(0, sd, len(days))
-        cols[target] = level + beta * factor + rng.normal(0, sd, len(days))
+        own[target] = _ar1(rng, len(days), phi, sd)
+        draws[target] = ([rng.uniform(-0.5, 0.5) + rng.normal(0, sd, len(days)) for _ in controls],
+                         rng.normal(0, sd, len(days)))
+    for target, controls in groups.items():
+        factor = own[target]
+        if shared and target in shared:
+            other, w = shared[target]
+            factor = np.sqrt(1 - w) * own[target] + np.sqrt(w) * own[other]
+        factor = factor + common
+        for name, noise in zip(controls, draws[target][0], strict=True):
+            cols[name] = level + factor + noise
+        cols[target] = level + beta * factor + draws[target][1]
     logs = pd.DataFrame(cols, index=days)
     for col, date, size, decay in bumps:
         t = (days - pd.Timestamp(date)).days.to_numpy()
@@ -45,5 +57,5 @@ def synthetic_panel(seed: int, groups: Mapping[str, Sequence[str]], start: str =
         for name in targets:
             logs[name] = logs[name] + shape
     for col, amp in (weekday or {}).items():
-        logs[col] = logs[col] + amp * WEEK[days.dayofweek.to_numpy()]
+        logs[col] = logs[col] + amp * WEEK[days.day_of_week.to_numpy()]
     return np.expm1(logs)

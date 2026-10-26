@@ -16,6 +16,7 @@ MAX_SVG_BYTES = 40_000
 BLURB = {
     "positive": "a jump",
     "no detectable jump": "no jump I can tell from chance",
+    "uninformative": "no jump I can tell from chance, and no power to see a small one",
     "inconclusive": "inconclusive",
 }
 
@@ -125,33 +126,40 @@ def _cast_sentence(e: Mapping, power_pct: float | None) -> str:
     return f" No cast-wide move was seen, but the test's power is about {power_pct:.0f} %."
 
 
-def _event_sentence(e: Mapping, power_pct: float | None) -> str:
+def _event_sentence(e: Mapping, power: Mapping[str, float]) -> str:
     name = e["name"]
     label = e["label"] or "inconclusive"
     if label == "positive":
         status = e.get("half_life_status")
         if status == "observed":
             hl = "Half of the peak was gone after " + _num(e["half_life_days"], 0) + " days."
+        elif status == "no positive peak":
+            hl = "There was no positive peak to halve."
         else:
             hl = "The peak had not halved by the end of the window."
         text = (f"{name}: a jump, on average {e['car_pct_uplift']:.0f} % above the baseline over the window, "
                 f"about {e['excess_views']:,.0f} extra views. {hl}")
+        if e["placebo_p"] < 0.04:
+            text += " The p-value is near the resolution of the test."
     elif label == "no detectable jump":
-        text = (f"{name}: no jump I can tell from chance. One above about {e['mdu80_pct']:.0f} % on average over the "
-                "window would have been seen four times in five, a smaller one could hide in the noise.")
+        text = (f"{name}: no jump I can tell from chance. One above about {e['mdu80_q975_pct']:.0f} % on average over "
+                "the window would have been seen four times in five, a smaller one could hide in the noise.")
+    elif label == "uninformative":
+        text = (f"{name}: no jump I can tell from chance, but the test could not have seen one below about "
+                f"{e['mdu80_q975_pct']:.0f} % on average over the window, so this says little.")
     else:
         text = f"{name}: inconclusive. Only the uncorrected test passes."
-    return text + _cast_sentence(e, power_pct)
+    return text + _cast_sentence(e, power.get(name))
 
 
 def render_html(summary: Mapping, svg: str) -> str:
     events = summary["events"]
-    power_pct = summary.get("meta", {}).get("falsification_power_pct")
+    power = summary.get("meta", {}).get("falsification_power_pct") or {}
     rows = "".join(
         f"<tr><td>{e['name']}</td><td>{e['event_date']}</td><td>{e['car_pct_uplift']:.0f} %</td>"
         f"<td>{e['excess_views']:,.0f}</td><td>{_p(e['placebo_p'])}</td><td>{_p(e['holm_p'])}</td>"
         f"<td>{_num(e['half_life_days'], 0)}</td><td>{e['label'] or 'n/a'}</td></tr>" for e in events)
-    results = " ".join(_event_sentence(e, power_pct) for e in events)
+    results = " ".join(_event_sentence(e, power) for e in events)
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Two memes, two Wikipedia pages</title><style>{CSS}</style></head><body>
