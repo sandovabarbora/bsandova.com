@@ -30,7 +30,9 @@
 .rows{list-style:none;border-top:1px solid var(--ink)}
 .rows li{border-bottom:1px solid var(--line)}
 .rows li>a{display:grid;grid-template-columns:minmax(0,1fr) 200px 96px;gap:var(--pad);align-items:baseline;padding:18px 0}
-.rows .t{font:500 clamp(22px,2.4vw,34px)/1.1 var(--display);letter-spacing:-.035em;transition:color .2s}
+.rows .tt{min-width:0}
+.rows .t{display:block;font:500 clamp(22px,2.4vw,34px)/1.1 var(--display);letter-spacing:-.035em;transition:color .2s}
+.rows .f{display:block;margin-top:6px;font:400 14px/1.45 var(--display);letter-spacing:0;color:var(--grey-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @media (hover:hover){.rows:hover .t{color:#b5b5b0}.rows li>a:hover .t{color:var(--ink)}}
 .rows .c,.cards .c{font:400 13px/1.4 var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--grey-ink)}
 .rows .wip,.cards .wip{display:block;font:400 11px/1.6 var(--mono);font-style:normal;text-transform:none;letter-spacing:0;color:var(--grey-ink)}
@@ -46,10 +48,13 @@
 .sp>ul{list-style:none;margin-top:8px;border-top:1px solid var(--line)}
 .sp li:last-child{border-bottom:0}
 .sp li>a{padding:12px 0}
-.sp .t{font-size:clamp(17px,1.6vw,22px);letter-spacing:-.02em;padding-left:clamp(18px,3vw,48px)}
+.sp .tt{padding-left:clamp(18px,3vw,48px)}
+.sp .t{font-size:clamp(17px,1.6vw,22px);letter-spacing:-.02em}
+.sp .f{font-size:13px}
 @media (max-width:820px){
   .rows li>a{grid-template-columns:minmax(0,1fr) auto;gap:6px 16px}
   .rows .c{grid-row:2;grid-column:1/-1}
+  .rows .f{white-space:normal}
   .rows .c .wip{display:inline;margin-left:10px}
   .sp .c{padding-left:clamp(18px,3vw,48px)}
 }
@@ -64,8 +69,8 @@
   <p class="deck">How many of a country&#x27;s players reach the strongest leagues, per head, against its peers.</p>
 </header>
 <ul class="rows">
-  <li><a href="../texts/hockey"><span class="t">Player Pool Atlas: Czech ice hockey players, 1995/96–2025/26</span><span class="c" title="Player Pool Atlas">Tool</span><span class="y" title="published 14 Sep 2026">Sep 2026</span></a></li>
-  <li><a href="../texts/football"><span class="t">Player Pool Atlas: Czech footballers in Europe, 1995/96–2025/26</span><span class="c" title="Player Pool Atlas">Tool</span><span class="y" title="published 14 Sep 2026">Sep 2026</span></a></li>
+  <li><a href="../texts/hockey"><span class="tt"><span class="t">Player Pool Atlas, hockey</span><span class="f">Per head, Czechia ranks 4th of ten in the NHL; Czech NHL regulars fell from 58 in 2001/02 to 20, with no single clear break.</span></span><span class="c" title="Player Pool Atlas">Tool</span><span class="y" title="published 14 Sep 2026">Sep 2026</span></a></li>
+  <li><a href="../texts/football"><span class="tt"><span class="t">Player Pool Atlas, football</span><span class="f">Czechia ranks seventh of nine per head in Europe&#x27;s nine highest-ranked leagues, and its Big-5 count fell from 26 to 6 and stands at 10.</span></span><span class="c" title="Player Pool Atlas">Tool</span><span class="y" title="published 14 Sep 2026">Sep 2026</span></a></li>
 </ul>
 <footer class="text-foot"><p class="back"><a href="../#works">← all work</a> · <a href="transit">Getting around</a> · <a href="prague">Prague</a> · <a href="money">State and money</a> · <a href="culture">Culture</a> · <a href="ai">AI and data</a> · <a href="theses">Theses</a> · <a href="../texts/registered">method</a></p></footer>
 </article>

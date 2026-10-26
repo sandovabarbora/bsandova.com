@@ -17,7 +17,7 @@ from topbar import bar
 
 CONFIG, INDEX, TOPICS = ROOT / "docs/works.toml", ROOT / "index.html", ROOT / "topics"
 LABELS = ("Registered study", "Pre-specified", "Exploratory", "Note", "Tool", "Series", "Thesis")
-LATEST, PER_TOPIC = 6, 4
+LATEST, PER_TOPIC, TITLE_MAX = 6, 4, 48
 ARROW = ('<svg viewBox="0 0 56 14" fill="none" stroke="currentColor" stroke-width="1.3">'
          '<path d="M0 7h54M48 1l6 6-6 6"/></svg>')
 e = html.escape
@@ -25,6 +25,15 @@ e = html.escape
 
 def load() -> dict:
     return tomllib.loads(CONFIG.read_text(encoding="utf-8"))
+
+
+def title_problems(title: str) -> list[str]:
+    """A title names the subject; the result belongs in the finding (years may stay, they are part of a name)."""
+    out = [f"is longer than {TITLE_MAX} characters"] if len(title) > TITLE_MAX else []
+    out += [f"contains {c!r}" for c in ":%?" if c in title]
+    if re.search(r"\d", re.sub(r"\b(19|20)\d\d\b", "", title)):
+        out.append("contains a number other than a year")
+    return out
 
 
 def validate(cfg: dict) -> None:
@@ -36,6 +45,8 @@ def validate(cfg: dict) -> None:
     for w in works:
         name = w.get("href", w.get("title", "?"))
         problems += [f"{name}: no {f}" for f in ("href", "title", "label", "published") if f not in w]
+        if "title" in w:
+            problems += [f"{name}: title {w['title']!r} {why}" for why in title_problems(w["title"])]
         if "label" in w and w["label"] not in LABELS:
             problems.append(f"{name}: label {w['label']!r} is not one of {', '.join(LABELS)}")
         if "topic" in w and w["topic"] not in topics:
@@ -103,13 +114,15 @@ def grouped(works: list[dict], topic: str) -> list[tuple[dict, list[dict]]]:
     return sorted(rows, key=lambda r: max([r[0]["published"]] + [p["published"] for p in r[1]]), reverse=True)
 
 
-def row(w: dict, parts: list[dict], base: str = "", indent: str = "        ") -> str:
+def row(w: dict, parts: list[dict], base: str = "", indent: str = "        ", part: int = 0) -> str:
     shown, title = when(w)
-    link = (f'<a href="{base}{w["href"]}"><span class="t">{e(w["title"])}</span>{label(w)}'
+    name = f"Part {part} · {w['title']}" if part else w["title"]
+    finding = f'<span class="f">{e(w["finding"])}</span>' if "finding" in w else ""
+    link = (f'<a href="{base}{w["href"]}"><span class="tt"><span class="t">{e(name)}</span>{finding}</span>{label(w)}'
             f'<span class="y"{title}>{e(shown)}</span></a>')
     if not parts:
         return f"{indent}<li>{link}</li>"
-    subs = "\n".join(row(p, [], base, indent + "    ") for p in parts)
+    subs = "\n".join(row(p, [], base, indent + "    ", i) for i, p in enumerate(parts, 1))
     return (f'{indent}<li class="ser">{link}\n'
             f'{indent}  <details class="sp"><summary>{len(parts)} parts</summary><ul>\n{subs}\n'
             f'{indent}  </ul></details></li>')

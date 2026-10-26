@@ -30,7 +30,9 @@
 .rows{list-style:none;border-top:1px solid var(--ink)}
 .rows li{border-bottom:1px solid var(--line)}
 .rows li>a{display:grid;grid-template-columns:minmax(0,1fr) 200px 96px;gap:var(--pad);align-items:baseline;padding:18px 0}
-.rows .t{font:500 clamp(22px,2.4vw,34px)/1.1 var(--display);letter-spacing:-.035em;transition:color .2s}
+.rows .tt{min-width:0}
+.rows .t{display:block;font:500 clamp(22px,2.4vw,34px)/1.1 var(--display);letter-spacing:-.035em;transition:color .2s}
+.rows .f{display:block;margin-top:6px;font:400 14px/1.45 var(--display);letter-spacing:0;color:var(--grey-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @media (hover:hover){.rows:hover .t{color:#b5b5b0}.rows li>a:hover .t{color:var(--ink)}}
 .rows .c,.cards .c{font:400 13px/1.4 var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--grey-ink)}
 .rows .wip,.cards .wip{display:block;font:400 11px/1.6 var(--mono);font-style:normal;text-transform:none;letter-spacing:0;color:var(--grey-ink)}
@@ -46,10 +48,13 @@
 .sp>ul{list-style:none;margin-top:8px;border-top:1px solid var(--line)}
 .sp li:last-child{border-bottom:0}
 .sp li>a{padding:12px 0}
-.sp .t{font-size:clamp(17px,1.6vw,22px);letter-spacing:-.02em;padding-left:clamp(18px,3vw,48px)}
+.sp .tt{padding-left:clamp(18px,3vw,48px)}
+.sp .t{font-size:clamp(17px,1.6vw,22px);letter-spacing:-.02em}
+.sp .f{font-size:13px}
 @media (max-width:820px){
   .rows li>a{grid-template-columns:minmax(0,1fr) auto;gap:6px 16px}
   .rows .c{grid-row:2;grid-column:1/-1}
+  .rows .f{white-space:normal}
   .rows .c .wip{display:inline;margin-left:10px}
   .sp .c{padding-left:clamp(18px,3vw,48px)}
 }
@@ -64,11 +69,11 @@
   <p class="deck">What the Czech state subsidises, buys, spends and votes for, and what a lottery pays back.</p>
 </header>
 <ul class="rows">
-  <li><a href="../texts/investment-incentives"><span class="t">Unemployment after large Czech investment incentives: +0.10 points, underpowered</span><span class="c">Registered study</span><span class="y" title="published 26 Oct 2026">Oct 2026</span></a></li>
-  <li><a href="../texts/czech-priorities"><span class="t">Spending did not move with Czech public concern; the Chamber&#x27;s speeches moved a little</span><span class="c">Registered study</span><span class="y" title="published 15 Oct 2026">Oct 2026</span></a></li>
-  <li><a href="../texts/un-votes"><span class="t">Czech votes at the UN changed little between governments, except on Israel and Palestine</span><span class="c" title="stage B, the third Babiš government, due around February 2027">Registered study<i class="wip">in progress</i></span><span class="y" title="published 15 Oct 2026">Oct 2026</span></a></li>
-  <li><a href="../texts/procurement-thresholds"><span class="t">Priced at the limit: Czech public contracts after the small-contract threshold rose in 2025</span><span class="c">Registered study</span><span class="y" title="published 13 Oct 2026">Oct 2026</span></a></li>
-  <li><a href="../texts/lottery"><span class="t">Can a lottery player choose better?</span><span class="c">Exploratory</span><span class="y" title="published 29 Sep 2026">Sep 2026</span></a></li>
+  <li><a href="../texts/investment-incentives"><span class="tt"><span class="t">Investment incentives and unemployment</span><span class="f">After 34 promises of at least 300 jobs, the district&#x27;s unemployment share moved by +0.10 pp relative to districts without one: underpowered.</span></span><span class="c">Registered study</span><span class="y" title="published 26 Oct 2026">Oct 2026</span></a></li>
+  <li><a href="../texts/czech-priorities"><span class="tt"><span class="t">Public concern, the Chamber and the budget</span><span class="f">Spending on a topic did not move with how many Czechs named it a top issue (not supported); the Chamber&#x27;s speeches moved a little, depending on the model.</span></span><span class="c">Registered study</span><span class="y" title="published 15 Oct 2026">Oct 2026</span></a></li>
+  <li><a href="../texts/un-votes"><span class="tt"><span class="t">Czech votes at the UN</span><span class="f">Czechia voted with the EU majority on about 96 % of votes under three governments, with no registered shift; its yes votes on Israel and Palestine fell from 76 to 40 %, described after the results.</span></span><span class="c" title="stage B, the third Babiš government, due around February 2027">Registered study<i class="wip">in progress</i></span><span class="y" title="published 15 Oct 2026">Oct 2026</span></a></li>
+  <li><a href="../texts/procurement-thresholds"><span class="tt"><span class="t">Czech public contracts at the threshold</span><span class="f">After the limits rose in April 2025, about 16 more contracts per 100 expected were priced exactly at the new small-contract limits: supported.</span></span><span class="c">Registered study</span><span class="y" title="published 13 Oct 2026">Oct 2026</span></a></li>
+  <li><a href="../texts/lottery"><span class="tt"><span class="t">Choosing lottery numbers</span><span class="f">7 550 Sportka draws show no large favoured number, and a less-picked Eurojackpot combination would add a few cents a column at most, on assumed popularities.</span></span><span class="c">Exploratory</span><span class="y" title="published 29 Sep 2026">Sep 2026</span></a></li>
 </ul>
 <footer class="text-foot"><p class="back"><a href="../#works">← all work</a> · <a href="transit">Getting around</a> · <a href="prague">Prague</a> · <a href="culture">Culture</a> · <a href="sport">Sport</a> · <a href="ai">AI and data</a> · <a href="theses">Theses</a> · <a href="../texts/registered">method</a></p></footer>
 </article>

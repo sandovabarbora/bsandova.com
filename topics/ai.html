@@ -30,7 +30,9 @@
 .rows{list-style:none;border-top:1px solid var(--ink)}
 .rows li{border-bottom:1px solid var(--line)}
 .rows li>a{display:grid;grid-template-columns:minmax(0,1fr) 200px 96px;gap:var(--pad);align-items:baseline;padding:18px 0}
-.rows .t{font:500 clamp(22px,2.4vw,34px)/1.1 var(--display);letter-spacing:-.035em;transition:color .2s}
+.rows .tt{min-width:0}
+.rows .t{display:block;font:500 clamp(22px,2.4vw,34px)/1.1 var(--display);letter-spacing:-.035em;transition:color .2s}
+.rows .f{display:block;margin-top:6px;font:400 14px/1.45 var(--display);letter-spacing:0;color:var(--grey-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @media (hover:hover){.rows:hover .t{color:#b5b5b0}.rows li>a:hover .t{color:var(--ink)}}
 .rows .c,.cards .c{font:400 13px/1.4 var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--grey-ink)}
 .rows .wip,.cards .wip{display:block;font:400 11px/1.6 var(--mono);font-style:normal;text-transform:none;letter-spacing:0;color:var(--grey-ink)}
@@ -46,10 +48,13 @@
 .sp>ul{list-style:none;margin-top:8px;border-top:1px solid var(--line)}
 .sp li:last-child{border-bottom:0}
 .sp li>a{padding:12px 0}
-.sp .t{font-size:clamp(17px,1.6vw,22px);letter-spacing:-.02em;padding-left:clamp(18px,3vw,48px)}
+.sp .tt{padding-left:clamp(18px,3vw,48px)}
+.sp .t{font-size:clamp(17px,1.6vw,22px);letter-spacing:-.02em}
+.sp .f{font-size:13px}
 @media (max-width:820px){
   .rows li>a{grid-template-columns:minmax(0,1fr) auto;gap:6px 16px}
   .rows .c{grid-row:2;grid-column:1/-1}
+  .rows .f{white-space:normal}
   .rows .c .wip{display:inline;margin-left:10px}
   .sp .c{padding-left:clamp(18px,3vw,48px)}
 }
@@ -64,13 +69,13 @@
   <p class="deck">Assistants over warehouses, and the tools that check them.</p>
 </header>
 <ul class="rows">
-  <li><a href="../texts/sitewitness"><span class="t">sitewitness: rules enforced in code</span><span class="c" title="v0.1.0">Tool</span><span class="y" title="published 22 Sep 2026">Sep 2026</span></a></li>
-  <li><a href="../texts/ai-over-data"><span class="t">An LLM assistant over a data warehouse: design notes</span><span class="c">Note</span><span class="y" title="published 17 Sep 2026">Sep 2026</span></a></li>
-  <li><a href="../texts/silent-detector"><span class="t">Can a wrong number be seen coming?</span><span class="c" title="companion to Quaesitor">Exploratory</span><span class="y" title="published 15 Sep 2026">Sep 2026</span></a></li>
-  <li><a href="../texts/quotecheck"><span class="t">quotecheck: a quotation check</span><span class="c" title="v0.1.0">Tool</span><span class="y" title="published 15 Sep 2026">Sep 2026</span></a></li>
-  <li><a href="../texts/quaesitor/"><span class="t">Quaesitor</span><span class="c" title="retired service, three texts">Exploratory</span><span class="y" title="published 14 Sep 2026">Sep 2026</span></a></li>
-  <li><a href="../texts/cutover"><span class="t">cutover: a table migration check</span><span class="c" title="v0.1.0">Tool</span><span class="y" title="published 14 Sep 2026">Sep 2026</span></a></li>
-  <li><a href="../texts/second-brain"><span class="t">A wiki that an agent keeps</span><span class="c">Note</span><span class="y" title="published 14 Sep 2026">Sep 2026</span></a></li>
+  <li><a href="../texts/sitewitness"><span class="tt"><span class="t">sitewitness, rules enforced in code</span><span class="f">Its last scored evaluation, 29 of 30, matched rather than improved on the version it replaced.</span></span><span class="c" title="v0.1.0">Tool</span><span class="y" title="published 22 Sep 2026">Sep 2026</span></a></li>
+  <li><a href="../texts/ai-over-data"><span class="tt"><span class="t">An LLM assistant over a data warehouse</span></span><span class="c">Note</span><span class="y" title="published 17 Sep 2026">Sep 2026</span></a></li>
+  <li><a href="../texts/silent-detector"><span class="tt"><span class="t">Spotting an AI&#x27;s silently wrong numbers</span><span class="f">Run-time signals barely separate wrong numbers from correct ones; the best model, chosen after the fact, reaches an AUC of 0.64.</span></span><span class="c" title="companion to Quaesitor">Exploratory</span><span class="y" title="published 15 Sep 2026">Sep 2026</span></a></li>
+  <li><a href="../texts/quotecheck"><span class="tt"><span class="t">quotecheck, a quotation check</span></span><span class="c" title="v0.1.0">Tool</span><span class="y" title="published 15 Sep 2026">Sep 2026</span></a></li>
+  <li><a href="../texts/quaesitor/"><span class="tt"><span class="t">Quaesitor</span><span class="f">Two models with about the same share of correct answers differed sharply in how often they declined, and about a third of planted failures gave errors under 10 %.</span></span><span class="c" title="retired service, three texts">Exploratory</span><span class="y" title="published 14 Sep 2026">Sep 2026</span></a></li>
+  <li><a href="../texts/cutover"><span class="tt"><span class="t">cutover, a table migration check</span></span><span class="c" title="v0.1.0">Tool</span><span class="y" title="published 14 Sep 2026">Sep 2026</span></a></li>
+  <li><a href="../texts/second-brain"><span class="tt"><span class="t">A wiki that an agent keeps</span></span><span class="c">Note</span><span class="y" title="published 14 Sep 2026">Sep 2026</span></a></li>
 </ul>
 <footer class="text-foot"><p class="back"><a href="../#works">← all work</a> · <a href="transit">Getting around</a> · <a href="prague">Prague</a> · <a href="money">State and money</a> · <a href="culture">Culture</a> · <a href="sport">Sport</a> · <a href="theses">Theses</a> · <a href="../texts/registered">method</a></p></footer>
 </article>

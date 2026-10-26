@@ -14,9 +14,9 @@ CFG = {
         {"href": "texts/a", "title": "A", "label": "Registered study", "published": "2026-10-20", "topic": "transit",
          "finding": "A fell: underpowered.", "detail": "stage B in 2027", "progress": True},
         {"href": "texts/hub", "title": "Hub", "label": "Series", "published": "2026-09-01", "topic": "transit"},
-        {"href": "texts/p1", "title": "Part 1", "label": "Pre-specified", "published": "2026-10-25", "topic": "transit",
+        {"href": "texts/p1", "title": "Rain and delays", "label": "Pre-specified", "published": "2026-10-25", "topic": "transit",
          "series": "texts/hub"},
-        {"href": "texts/p2", "title": "Part 2", "label": "Exploratory", "published": "2026-09-01", "topic": "transit",
+        {"href": "texts/p2", "title": "Heat and delays", "label": "Exploratory", "finding": "Less delay: inconclusive.", "published": "2026-09-01", "topic": "transit",
          "series": "texts/hub"},
         {"href": "texts/b", "title": "B", "label": "Note", "published": "2026-10-10", "topic": "transit"},
         {"href": "texts/c", "title": "C", "label": "Tool", "published": "2026-08-01", "topic": "transit"},
@@ -64,6 +64,23 @@ def test_a_part_needs_a_series_hub_in_its_topic():
         home.validate(c)
 
 
+@pytest.mark.parametrize("title, why", [
+    ("Injury accidents after a bypass: −19 %, underpowered", "':'"),
+    ("Unemployment +0.10 points", "number other than a year"),
+    ("Are trams later in rain?", "'?'"),
+    ("A fall of 19 %", "'%'"),
+    ("A very long title that keeps going well past the limit set", "longer than 48"),
+])
+def test_titles_that_carry_a_result_are_rejected(title, why):
+    with pytest.raises(ValueError, match=why):
+        home.validate(cfg(title=title))
+
+
+@pytest.mark.parametrize("title", ["Prague's 2026 election programmes", "Czech votes at the UN", 'What "pre-specified" means'])
+def test_short_names_and_years_pass(title):
+    home.validate(cfg(title=title))
+
+
 def test_latest_is_newest_first_without_parts_or_untopiced_pages():
     hrefs = [w["href"] for w in home.latest(CFG["works"], 4)]
     # the hub counts by its own date (Sep), not its newest part (Oct 25); parts and the method note are left out
@@ -88,6 +105,13 @@ def test_series_row_folds_its_parts_in_details():
     html = home.row(w, parts)
     assert html.count("<details") == 1 and "<summary>2 parts</summary>" in html
     assert html.index('href="texts/hub"') < html.index("<details") < html.index('href="texts/p1"')
+    assert ">Part 1 · Rain and delays<" in html and ">Part 2 · Heat and delays<" in html
+
+
+def test_row_shows_the_finding_under_the_title():
+    html = home.row(CFG["works"][0], [])
+    assert '<span class="tt"><span class="t">A</span><span class="f">A fell: underpowered.</span></span>' in html
+    assert 'class="f"' not in home.row(CFG["works"][4], [])
 
 
 def test_label_carries_detail_and_progress_marker():

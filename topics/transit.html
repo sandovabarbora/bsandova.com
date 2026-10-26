@@ -30,7 +30,9 @@
 .rows{list-style:none;border-top:1px solid var(--ink)}
 .rows li{border-bottom:1px solid var(--line)}
 .rows li>a{display:grid;grid-template-columns:minmax(0,1fr) 200px 96px;gap:var(--pad);align-items:baseline;padding:18px 0}
-.rows .t{font:500 clamp(22px,2.4vw,34px)/1.1 var(--display);letter-spacing:-.035em;transition:color .2s}
+.rows .tt{min-width:0}
+.rows .t{display:block;font:500 clamp(22px,2.4vw,34px)/1.1 var(--display);letter-spacing:-.035em;transition:color .2s}
+.rows .f{display:block;margin-top:6px;font:400 14px/1.45 var(--display);letter-spacing:0;color:var(--grey-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @media (hover:hover){.rows:hover .t{color:#b5b5b0}.rows li>a:hover .t{color:var(--ink)}}
 .rows .c,.cards .c{font:400 13px/1.4 var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--grey-ink)}
 .rows .wip,.cards .wip{display:block;font:400 11px/1.6 var(--mono);font-style:normal;text-transform:none;letter-spacing:0;color:var(--grey-ink)}
@@ -46,10 +48,13 @@
 .sp>ul{list-style:none;margin-top:8px;border-top:1px solid var(--line)}
 .sp li:last-child{border-bottom:0}
 .sp li>a{padding:12px 0}
-.sp .t{font-size:clamp(17px,1.6vw,22px);letter-spacing:-.02em;padding-left:clamp(18px,3vw,48px)}
+.sp .tt{padding-left:clamp(18px,3vw,48px)}
+.sp .t{font-size:clamp(17px,1.6vw,22px);letter-spacing:-.02em}
+.sp .f{font-size:13px}
 @media (max-width:820px){
   .rows li>a{grid-template-columns:minmax(0,1fr) auto;gap:6px 16px}
   .rows .c{grid-row:2;grid-column:1/-1}
+  .rows .f{white-space:normal}
   .rows .c .wip{display:inline;margin-left:10px}
   .sp .c{padding-left:clamp(18px,3vw,48px)}
 }
@@ -64,26 +69,26 @@
   <p class="deck">Trams, buses, roads and the air over Czechia, and how forecasts for them are checked.</p>
 </header>
 <ul class="rows">
-  <li><a href="../texts/gnss-interference"><span class="t">Do aircraft over Czechia broadcast degraded GNSS positions? About as often as over Austria and Switzerland</span><span class="c">Registered study</span><span class="y" title="published 26 Oct 2026">Oct 2026</span></a></li>
-  <li><a href="../texts/bypass-accidents"><span class="t">Injury accidents in Czech towns after a bypass opened: −19 %, underpowered</span><span class="c">Registered study</span><span class="y" title="published 26 Oct 2026">Oct 2026</span></a></li>
-  <li><a href="../texts/blackout"><span class="t">When the power went out: how Prague&#x27;s trams stopped and came back on 4 July 2025</span><span class="c">Registered study</span><span class="y" title="published 14 Oct 2026">Oct 2026</span></a></li>
-  <li class="ser"><a href="../texts/running-late"><span class="t">Running late</span><span class="c" title="four parts">Series</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a>
+  <li><a href="../texts/gnss-interference"><span class="tt"><span class="t">Degraded GNSS positions over Czechia</span><span class="f">Aircraft at cruise reported degraded positions about as often as over Austria and Switzerland, with no excess larger than one point; over Poland and the Baltic states, more often.</span></span><span class="c">Registered study</span><span class="y" title="published 26 Oct 2026">Oct 2026</span></a></li>
+  <li><a href="../texts/bypass-accidents"><span class="tt"><span class="t">Czech bypasses and road accidents</span><span class="f">In 35 towns, injury accidents inside the town changed by −19 % in the three years after the bypass opened, against towns still waiting: underpowered.</span></span><span class="c">Registered study</span><span class="y" title="published 26 Oct 2026">Oct 2026</span></a></li>
+  <li><a href="../texts/blackout"><span class="tt"><span class="t">Prague&#x27;s trams in the 2025 blackout</span><span class="f">When the grid split at noon on 4 July 2025, 56 % of tram service stopped; half of it ran again by 13:30 and nine tenths by 15:00.</span></span><span class="c">Registered study</span><span class="y" title="published 14 Oct 2026">Oct 2026</span></a></li>
+  <li class="ser"><a href="../texts/running-late"><span class="tt"><span class="t">Running late</span><span class="f">A tenth of Prague&#x27;s tram segments record half of all delay gained (supported, narrowly); the other parts ask about bunching, transfers and three Swiss cities.</span></span><span class="c" title="four parts">Series</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a>
     <details class="sp"><summary>4 parts</summary><ul>
-      <li><a href="../texts/delay-origins"><span class="t">Part 1 · Where is delay born on Prague&#x27;s trams?</span><span class="c">Pre-specified</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
-      <li><a href="../texts/bunching"><span class="t">Part 2 · How often do two 22s come at once? Tram bunching in Prague, 2025</span><span class="c">Pre-specified</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
-      <li><a href="../texts/transfers"><span class="t">Part 3 · Will you make your connection?</span><span class="c">Pre-specified</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
-      <li><a href="../texts/swiss-trams"><span class="t">Part 4 · Is Prague&#x27;s delay map a law of trams?</span><span class="c">Registered study</span><span class="y" title="published 14 Oct 2026">Oct 2026</span></a></li>
+      <li><a href="../texts/delay-origins"><span class="tt"><span class="t">Part 1 · Where delay is born on Prague&#x27;s trams</span><span class="f">Half of all delay gained is recorded on a tenth of the segments, the same ones week after week: supported, narrowly.</span></span><span class="c">Pre-specified</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
+      <li><a href="../texts/bunching"><span class="tt"><span class="t">Part 2 · Tram bunching in Prague</span><span class="f">The spacing between two trams of the same line shows practically no amplification from stop to stop: inconclusive.</span></span><span class="c">Pre-specified</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
+      <li><a href="../texts/transfers"><span class="tt"><span class="t">Part 3 · Tram transfers in Prague</span><span class="f">At connections planned 2–4 minutes apart, the two lines&#x27; delays moved together only slightly, about +0.6 pp: not supported.</span></span><span class="c">Pre-specified</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
+      <li><a href="../texts/swiss-trams"><span class="tt"><span class="t">Part 4 · Prague&#x27;s delay map in three Swiss cities</span><span class="f">Basel and Bern concentrate delay within five points of Prague and Zurich does not: roughly, not a law.</span></span><span class="c">Registered study</span><span class="y" title="published 14 Oct 2026">Oct 2026</span></a></li>
     </ul></details></li>
-  <li class="ser"><a href="../texts/weather-rails"><span class="t">Weather on the rails</span><span class="c" title="three parts">Series</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a>
+  <li class="ser"><a href="../texts/weather-rails"><span class="tt"><span class="t">Weather on the rails</span><span class="f">Trams gained about 9.7 seconds more delay in rain hours, an adjusted association; in hot hours they gained less (inconclusive), and rain did not shorten weekend stops more (not supported).</span></span><span class="c" title="three parts">Series</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a>
     <details class="sp"><summary>3 parts</summary><ul>
-      <li><a href="../texts/rain-delays"><span class="t">Part 1 · Are Prague&#x27;s trams later in rain hours?</span><span class="c">Pre-specified</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
-      <li><a href="../texts/heat-delays"><span class="t">Part 2 · Are Prague&#x27;s trams more delayed in hot hours?</span><span class="c">Pre-specified</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
-      <li><a href="../texts/rain-dwell"><span class="t">Part 3 · Are tram stops shorter in rain?</span><span class="c">Pre-specified</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
+      <li><a href="../texts/rain-delays"><span class="tt"><span class="t">Part 1 · Rain and Prague&#x27;s tram delays</span><span class="f">Trams gained about 9.7 seconds more delay in rain hours than in comparable dry hours: supported, but the placebo failed, so an adjusted association.</span></span><span class="c">Pre-specified</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
+      <li><a href="../texts/heat-delays"><span class="tt"><span class="t">Part 2 · Heat and Prague&#x27;s tram delays</span><span class="f">In dry hours at 30 °C or more, trams gained about 14.9 seconds less delay than in mild hours, the opposite of the expectation: inconclusive.</span></span><span class="c">Pre-specified</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
+      <li><a href="../texts/rain-dwell"><span class="tt"><span class="t">Part 3 · Rain and dwell at Prague&#x27;s tram stops</span><span class="f">Rain did not shorten weekend stops more than weekday-morning ones (+0.04 s), so Jan Gehl&#x27;s split is not supported here.</span></span><span class="c">Pre-specified</span><span class="y" title="published 8 Oct 2026">Oct 2026</span></a></li>
     </ul></details></li>
-  <li><a href="../texts/annual-pass"><span class="t">How did passenger counts move around cheaper annual passes in Vienna and Prague?</span><span class="c" title="descriptive">Note</span><span class="y" title="published 6 Oct 2026">Oct 2026</span></a></li>
-  <li><a href="../texts/dst-darkness"><span class="t">When the clocks go back: evening darkness and pedestrian crashes in Czechia</span><span class="c">Pre-specified</span><span class="y" title="published 3 Oct 2026">Oct 2026</span></a></li>
-  <li><a href="../texts/forecast-verification"><span class="t">Forecast verification: protocol</span><span class="c" title="protocol; first readings 9 and 16 Nov 2026">Note<i class="wip">in progress</i></span><span class="y" title="published 29 Sep 2026">Sep 2026</span></a></li>
-  <li><a href="../texts/delayed"><span class="t">Delayed All the Time: Prague public transport as sound</span><span class="c" title="sonification">Note</span><span class="y" title="published 14 Sep 2026">Sep 2026</span></a></li>
+  <li><a href="../texts/annual-pass"><span class="tt"><span class="t">Cheaper annual passes in Vienna and Prague</span><span class="f">Published passenger counts cannot say what the price cuts in Vienna (2012) and Prague (2015) did.</span></span><span class="c" title="descriptive">Note</span><span class="y" title="published 6 Oct 2026">Oct 2026</span></a></li>
+  <li><a href="../texts/dst-darkness"><span class="tt"><span class="t">The clock change and pedestrian crashes</span><span class="f">In ten autumns, the evening-to-midday ratio of pedestrian crashes was 1.75 times as high after the clocks went back: supported, while the originally registered model is inconclusive.</span></span><span class="c">Pre-specified</span><span class="y" title="published 3 Oct 2026">Oct 2026</span></a></li>
+  <li><a href="../texts/forecast-verification"><span class="tt"><span class="t">Forecast verification protocol</span><span class="f">No results yet: seven-day surf and Prague weather forecasts scored by lead day, first readings on 9 and 16 November 2026.</span></span><span class="c" title="protocol; first readings 9 and 16 Nov 2026">Note<i class="wip">in progress</i></span><span class="y" title="published 29 Sep 2026">Sep 2026</span></a></li>
+  <li><a href="../texts/delayed"><span class="tt"><span class="t">Delayed All the Time</span></span><span class="c" title="sonification">Note</span><span class="y" title="published 14 Sep 2026">Sep 2026</span></a></li>
 </ul>
 <footer class="text-foot"><p class="back"><a href="../#works">← all work</a> · <a href="prague">Prague</a> · <a href="money">State and money</a> · <a href="culture">Culture</a> · <a href="sport">Sport</a> · <a href="ai">AI and data</a> · <a href="theses">Theses</a> · <a href="../texts/registered">method</a></p></footer>
 </article>
