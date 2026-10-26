@@ -262,3 +262,10 @@ opposite sign to the primary, the article says so next to the label; the label s
   outside the guard that the main fit already had, so the whole run stopped instead of leaving check 9 missing for that
   draw as §4 and the code's own rule say. The trend fit now sits inside that guard, with a test. Nothing else changed;
   the run restarts from draw 1 with the same seed, so the accepted draws are the same as before.
+- 26 October 2026, after the results, not registered: check 1 (all accidents, damage-only included) came out of the
+  opposite sign to Q1. `tools/bypass/describe.py` (`docs/research/bypass-describe.json`) tabulates the counts behind it
+  by place and year, importing the frozen code and estimating nothing: Prague, a comparison town through BYP-057
+  (Úvaly), holds most of the comparison towns' accidents inside the built-up area, and its recorded damage-only
+  accidents fell by about half over 2016–2025, almost all of them below 100 000 CZK of damage, while those of the
+  treated and the other comparison towns did not. The article reports this as a note. No estimate was re-run and no
+  label changes.
