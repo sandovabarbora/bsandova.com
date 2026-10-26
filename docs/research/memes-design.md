@@ -368,25 +368,64 @@ None of it compares attention across events or after day −4.
 
 ## 5. Power
 
-**The numbers of this section come from `tools/memes/simulate.py` and `docs/research/memes-power.json`, committed after
-this design and before the registration tag, and are copied into this section by a later commit. §5 is therefore written
-after the code and the simulations it reports.** What is registered now is what they measure, on made-up panels with the
-registered geometry (baselines, cast, reference pool, blocked days, every admissible placebo date, weekday terms, equal
-estimation days):
+**This section was written after the code and the simulations it reports.** The design text above was committed first;
+the code, the tests and the runs followed; the numbers below were copied in by a later commit, before any real data.
 
-- the share of panels with p < 0.05 and p < 0.025 for H1 of both events, with no shock and with shocks of 0.1, 0.3, 0.5,
-  1.0 and 2.0 (a shock *s* adds s·exp(−t/5) to the target from day 0), with the mean uplift each implies;
-- the false-positive rate of H1 and of the two falsification diagnostics without any jump;
-- the detection rate of the external and the leave-one-out falsification when 3, 5 or all of the cast controls jump by
-  0.5 and by 1.0;
-- the **minimum detectable uplift**: the placebo CAR spread *sd* and 95th percentile *q95* from non-event dates,
-  converted to a mean uplift over the 34 days as (exp(*q*/34) − 1)·100, once for *q95* (the critical uplift) and once
-  for *q95* + 0.84·*sd* (the uplift detected in four cases in five). The real run computes and writes them to
-  `placebo_null.json` before any estimate (deviation U), and the "no detectable jump" label is tied to the 80 % uplift
-  (§6).
+Computed on **made-up panels only**: an AR(1) factor with φ 0.8 and innovation sd 0.1 shared by all articles, a second
+such factor for each group (the target with its cast, and the reference pool), idiosyncratic noise sd 0.1, target beta
+1. The geometry is the registered one: for Stonestreet a baseline of the nine cast articles and the blocked days; for
+Kevin James a baseline of the 44 pool actors; every admissible placebo date; the weekday terms; equal estimation days;
+300 simulated panels per cell (`tools/memes/simulate.py`, `docs/research/memes-power.json`, run niced on 26 October
+2026). A shock *s* adds s·exp(−t/5) to the target's attention from day 0, so *s* = 0.3 is +35 % on day 0 and about +5
+% on average over the window, and the CAR is about 5.5·*s*. **In these panels Kevin James shares only the common
+factor with the pool, not his own group's factor; that is an assumption, and if the real co-movement with the pool is
+stronger his power is higher.** It is the price of the baseline decision (D2): his baseline is not exposed to the
+meme, and is also less informative.
 
-The text will state plainly that the design is likely underpowered for the author's prior, a small jump that fades
-within a few days.
+| Share of panels with p below | s = 0 (false positives) | s = 0.1 | s = 0.3 | s = 0.5 | s = 1.0 | s = 2.0 |
+|---|---|---|---|---|---|---|
+| Median mean uplift over the window | 0 % | 1.6 % | 5.0 % | 8.4 % | 17.6 % | 38 % |
+| Stonestreet, 0.05 | 5.3 % | 17 % | 53 % | 86 % | 100 % | 100 % |
+| Stonestreet, 0.025 | | 11 % | 41 % | 82 % | 100 % | 100 % |
+| Kevin James, 0.05 | 6.7 % | 10 % | 13 % | 19 % | 41 % | 87 % |
+| Kevin James, 0.025 | | 6 % | 9 % | 14 % | 31 % | 80 % |
+
+False positives at the 5 % level are 5.3 to 6.7 % (prototype: 4.3 %).
+
+**Minimum detectable uplift (method, deviation U).** Before any estimate, the run computes the placebo CARs of every
+admissible pseudo date, from non-event dates only, and writes their standard deviation *sd* and 95th percentile *q95*
+to `placebo_null.json`, then converts them to a mean uplift over the 34 days, (exp(*q*/34) − 1)·100. **The critical
+uplift** uses *q95*: the smallest mean uplift that reaches p < 0.05. **The 80 % uplift** uses *q95* + 0.84·*sd*: the
+mean uplift that a normal placebo distribution of that spread would flag in four cases in five. The "no detectable
+jump" label is tied to the 80 % uplift (§6). In the made-up panels the medians of *sd* are 0.93 (Stonestreet) and 3.9
+(Kevin James), the critical uplift is 4.6 % and 20 %, and the 80 % uplift is 7.0 % and 33 %. The real values will come
+from the real series, which are likely spikier, and will replace these in the text.
+
+**The design is likely underpowered for the author's prior.** A small jump that fades within a few days, say *s* of
+0.1 to 0.2 (a mean uplift of 2 to 3 % over the window and a CAR of about 0.5 to 1), is far below the 80 % uplifts
+above. In the made-up panels Stonestreet's H1 rejects such a jump in 17 % of panels at *s* = 0.1, and Kevin James's in
+10 %, close to the false-positive rate. The likely outcome under the prior is therefore "no detectable jump", and that
+outcome says little: it excludes only jumps above about 7 % (Stonestreet) or 33 % (Kevin James) on average over the
+window. At the Holm level 0.025 power is lower still. The prototype's figures (4.3 % false positives, power 67, 97 and
+100 % for 0.3, 0.5 and 1.0) were higher because the estimation window was longer and the baseline closer to the
+target.
+
+**Falsification diagnostic** (descriptive, §1). Share of panels with p < 0.05, external index and leave-one-out, when
+all or some of the cast controls jump by *s* (Stonestreet has nine, Kevin James two):
+
+| Cast controls that jump | external, s = 0.5 | external, s = 1.0 | leave-one-out, s = 0.5 | leave-one-out, s = 1.0 |
+|---|---|---|---|---|
+| none (false positives) | 5.7 % | | 6.3 % | |
+| 3 of 9 | 10 % | 14 % | 3 % | 0 % |
+| 5 of 9 (a majority) | 12 % | 21 % | 38 % | 88 % |
+| 9 of 9 (all) | 17 % | 39 % | 12 % | 20 % |
+| Kevin James, 2 of 2 (none: 6.3 % and 5.7 %) | 20 % | 41 % | 17 % | 33 % |
+
+The external falsification sees a cast-wide jump of 0.5 in **about 17 % of panels against a false-positive rate of
+about 6 %**, and a jump of 1.0 in 39 %: this is the "power" in the page's sentence ("about 17 %"). Leave-one-out sees
+a majority jump much better and an all-cast jump worse. Neither can carry a label, which is why both are diagnostics.
+
+Real attention series carry spikes and news that these panels lack, so **real power is lower**.
 
 ## 6. Labels
 

@@ -3,7 +3,9 @@
 Code for `docs/research/memes-design.md`. The design is the registration: read it first. `config.py` holds the events,
 windows, seed and the frozen reference pool; `fetch.py` all I/O; `model.py` the pure logic; `report.py` the outputs;
 `cli.py` the run. `pool.py` documents how the reference pool was built (MediaWiki text only, no pageviews) and is not
-part of a run.
+part of a run. The run writes `placebo_null.json` (the placebo spread and the minimum detectable uplift) before it
+estimates anything. The run writes `placebo_null.json` (the placebo spread and the minimum detectable uplift) before it
+estimates anything.
 
 ## Running
 
@@ -35,10 +37,10 @@ A plain `pytest tools/memes` skips the slow tests. CI runs `tools/memes` with th
   means zero views or data not loaded; zero days are omitted from a series; 429 is throttling at the storage layer;
   redirects are not counted as views of the page they point to; data start on 1 July 2015.
 - Rate limits (mediawiki.org, Wikimedia APIs/Rate limits, "new in 2026 and subject to change"): 200 requests a minute for
-  a client with a compliant User-Agent, at most 3 concurrent, honour Retry-After on 429 and 503. The run makes 49
+  a client with a compliant User-Agent, at most 3 concurrent, honour Retry-After on 429 and 503. The run makes 57
   requests, one at a time, 0.2 s apart.
 - Article titles (MediaWiki API, no pageview numbers): see design §3. `Gary_Valentine` is a redirect to another person
-  and `Rico_Rodriguez` is a disambiguation page. The 49 titles in use were checked on 26 October 2026.
+  and `Rico_Rodriguez` is a disambiguation page. The 57 titles in use were checked on 26 October 2026.
 - Event dates: Know Your Meme, see design §2.
 - **Not verified:** that the pageview endpoint returns what the documentation says (no request for pageviews has been made,
   by design); that Know Your Meme's dates are the true first posts; the sizes in design §5 on real series.
