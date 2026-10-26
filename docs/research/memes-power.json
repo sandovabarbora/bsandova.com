@@ -1,0 +1,140 @@
+{
+ "Stonestreet (Cam)": {
+  "controls": 9,
+  "false_positive_rate": {
+   "n_seeds": 300,
+   "h1_p_below_0.05": 0.056666666666666664,
+   "external_falsification_p_below_0.05": 0.07333333333333333,
+   "leave_one_out_p_below_0.05": 0.07666666666666666
+  },
+  "power": [
+   {
+    "shock": 0.3,
+    "decay_days": 5.0,
+    "n_seeds": 300,
+    "p_below_0.05": 0.5633333333333334,
+    "p_below_0.025": 0.45666666666666667,
+    "median_car": 1.6276357152853258
+   },
+   {
+    "shock": 0.5,
+    "decay_days": 5.0,
+    "n_seeds": 300,
+    "p_below_0.05": 0.8733333333333333,
+    "p_below_0.025": 0.8266666666666667,
+    "median_car": 2.7287276945475654
+   },
+   {
+    "shock": 1.0,
+    "decay_days": 5.0,
+    "n_seeds": 300,
+    "p_below_0.05": 1.0,
+    "p_below_0.025": 1.0,
+    "median_car": 5.4814576427031705
+   }
+  ],
+  "falsification_power": [
+   {
+    "jumping_controls": 3,
+    "of": 9,
+    "shock": 0.5,
+    "n_seeds": 300,
+    "external_falsification_p_below_0.05": 0.11333333333333333,
+    "leave_one_out_p_below_0.05": 0.03666666666666667
+   },
+   {
+    "jumping_controls": 5,
+    "of": 9,
+    "shock": 0.5,
+    "n_seeds": 300,
+    "external_falsification_p_below_0.05": 0.13,
+    "leave_one_out_p_below_0.05": 0.39666666666666667
+   },
+   {
+    "jumping_controls": 9,
+    "of": 9,
+    "shock": 0.5,
+    "n_seeds": 300,
+    "external_falsification_p_below_0.05": 0.19666666666666666,
+    "leave_one_out_p_below_0.05": 0.14333333333333334
+   },
+   {
+    "jumping_controls": 3,
+    "of": 9,
+    "shock": 1.0,
+    "n_seeds": 300,
+    "external_falsification_p_below_0.05": 0.14333333333333334,
+    "leave_one_out_p_below_0.05": 0.0
+   },
+   {
+    "jumping_controls": 5,
+    "of": 9,
+    "shock": 1.0,
+    "n_seeds": 300,
+    "external_falsification_p_below_0.05": 0.20333333333333334,
+    "leave_one_out_p_below_0.05": 0.8866666666666667
+   },
+   {
+    "jumping_controls": 9,
+    "of": 9,
+    "shock": 1.0,
+    "n_seeds": 300,
+    "external_falsification_p_below_0.05": 0.4166666666666667,
+    "leave_one_out_p_below_0.05": 0.23666666666666666
+   }
+  ]
+ },
+ "Kevin James": {
+  "controls": 2,
+  "false_positive_rate": {
+   "n_seeds": 300,
+   "h1_p_below_0.05": 0.05,
+   "external_falsification_p_below_0.05": 0.07,
+   "leave_one_out_p_below_0.05": 0.06
+  },
+  "power": [
+   {
+    "shock": 0.3,
+    "decay_days": 5.0,
+    "n_seeds": 300,
+    "p_below_0.05": 0.5733333333333334,
+    "p_below_0.025": 0.43333333333333335,
+    "median_car": 1.731736106973731
+   },
+   {
+    "shock": 0.5,
+    "decay_days": 5.0,
+    "n_seeds": 300,
+    "p_below_0.05": 0.9466666666666667,
+    "p_below_0.025": 0.86,
+    "median_car": 2.8328280862359705
+   },
+   {
+    "shock": 1.0,
+    "decay_days": 5.0,
+    "n_seeds": 300,
+    "p_below_0.05": 1.0,
+    "p_below_0.025": 1.0,
+    "median_car": 5.585558034391576
+   }
+  ],
+  "falsification_power": [
+   {
+    "jumping_controls": 2,
+    "of": 2,
+    "shock": 0.5,
+    "n_seeds": 300,
+    "external_falsification_p_below_0.05": 0.2,
+    "leave_one_out_p_below_0.05": 0.16666666666666666
+   },
+   {
+    "jumping_controls": 2,
+    "of": 2,
+    "shock": 1.0,
+    "n_seeds": 300,
+    "external_falsification_p_below_0.05": 0.42,
+    "leave_one_out_p_below_0.05": 0.3233333333333333
+   }
+  ]
+ }
+}
