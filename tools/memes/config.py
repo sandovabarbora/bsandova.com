@@ -1,0 +1,163 @@
+"""Frozen settings of the meme event study: paths, windows, seed and the events with their sources
+(docs/research/memes-design.md §1, §2). No event date is written anywhere else."""
+from __future__ import annotations
+
+from pathlib import Path
+
+from model import EventSpec
+
+ROOT = Path(__file__).resolve().parents[2]
+DATA = ROOT / "tools/data/memes"
+RAW = DATA / "raw/pageviews.csv"
+OUT = DATA / "out"
+RESULTS = ROOT / "docs/research/memes-results.json"
+MANIFEST = ROOT / "docs/research/memes-files.sha256"
+DESIGN = ROOT / "docs/research/memes-design.md"
+
+USER_AGENT = "bsandova-meme-event-study/0.1 (https://bsandova.com)"
+PROJECT = "en.wikipedia"
+START, END = "2021-01-01", "2024-12-31"
+EST_WINDOW = (-150, -31)
+EVENT_WINDOW = (-3, 30)
+SENSITIVITY_WINDOWS = ((-3, 14), (-3, 60))
+EXCLUSION_DAYS = 30
+N_PLACEBO = 300
+MIN_CANDIDATES = 100
+SEED = 42
+
+MF_CAST = ("Ed_O'Neill", "Sofía_Vergara", "Julie_Bowen", "Ty_Burrell", "Jesse_Tyler_Ferguson", "Sarah_Hyland",
+           "Ariel_Winter", "Nolan_Gould", "Rico_Rodriguez_(actor)")
+# `Rico_Rodriguez` of the spec is a disambiguation page, the infobox of Modern Family links `Rico_Rodriguez_(actor)`
+# (design §2, deviation N).
+# The spec's third control, Gary_Valentine, is a redirect to another person (design §2, deviation E).
+KOQ_CAST = ("Leah_Remini", "Victor_Williams")
+
+# External reference pool of the falsification and of one sensitivity run (design §1, §2). Built on 26 October 2026 by
+# pool.py from the infoboxes of these shows, from Wikipedia text and page existence only, and frozen here.
+REFERENCE_SHOWS = (
+    "2_Broke_Girls",
+    "9JKL",
+    "Abby's",
+    "Alex,_Inc.",
+    "American_Housewife",
+    "Bless_This_Mess_(TV_series)",
+    "Broke_(2020_TV_series)",
+    "Call_Your_Mother",
+    "Carol's_Second_Act",
+    "Champions_(American_TV_series)",
+    "Connecting",
+    "Downward_Dog_(TV_series)",
+    "Dr._Ken",
+    "Fam_(TV_series)",
+    "Fresh_Off_the_Boat",
+    "Ghosted_(TV_series)",
+    "I_Feel_Bad",
+    "Indebted",
+    "LA_to_Vegas",
+    "Last_Man_Standing_(American_TV_series)",
+    "Life_in_Pieces",
+    "Living_Biblically",
+    "Man_with_a_Plan_(TV_series)",
+    "Marlon_(TV_series)",
+    "Me,_Myself_&_I_(TV_series)",
+    "Mike_&_Molly",
+    "Mixed-ish",
+    "Mom_(TV_series)",
+    "New_Girl",
+    "Outmatched",
+    "Perfect_Harmony_(TV_series)",
+    "Powerless_(TV_series)",
+    "Rel_(TV_series)",
+    "Schooled_(TV_series)",
+    "Single_Parents_(TV_series)",
+    "Speechless_(TV_series)",
+    "Splitting_Up_Together",
+    "Sunnyside_(American_TV_series)",
+    "Superior_Donuts_(TV_series)",
+    "The_Big_Bang_Theory",
+    "The_Carmichael_Show",
+    "The_Cool_Kids_(TV_series)",
+    "The_Good_Place",
+    "The_Great_Indoors_(TV_series)",
+    "The_Kids_Are_Alright_(TV_series)",
+    "The_Last_Man_on_Earth_(TV_series)",
+    "The_Mick_(TV_series)",
+    "The_Middle_(TV_series)",
+    "The_Real_O'Neals",
+    "The_Unicorn_(TV_series)",
+    "Trial_&_Error_(TV_series)",
+    "Undateable",
+    "United_We_Fall_(TV_series)",
+)
+REFERENCE_POOL = (
+    "Kat_Dennings",
+    "Linda_Lavin",
+    "Natalie_Morales_(actress)",
+    "Zach_Braff",
+    "Katy_Mixon",
+    "Dax_Shepard",
+    "Jaime_Camil",
+    "Kyra_Sedgwick",
+    "Patricia_Heaton",
+    "Anders_Holm",
+    "Otmara_Marrero",
+    "Allison_Tolman",
+    "Suzy_Nakamura",
+    "Nina_Dobrev",
+    "Randall_Park",
+    "Adam_Scott",
+    "Paul_Adelstein",
+    "Adam_Pally",
+    "Kim_Matula",
+    "Tim_Allen",
+    "Colin_Hanks",
+    "Jay_R._Ferguson",
+    "Matt_LeBlanc",
+    "Essence_Atkins",
+    "Bobby_Moynihan",
+    "Billy_Gardell",
+    "Tika_Sumpter",
+    "Anna_Faris",
+    "Zooey_Deschanel",
+    "Jason_Biggs",
+    "Bradley_Whitford",
+    "Vanessa_Hudgens",
+    "Sinbad_(comedian)",
+    "AJ_Michalka",
+    "Taran_Killam",
+    "Minnie_Driver",
+)
+# titles dropped by rule, never replaced (design §2)
+REFERENCE_DROPPED_TITLES = {
+    "Ella_Allan": "redirect",
+    "MOS:TV": "redirect",
+    "Mia_Allan": "redirect",
+    "Odessa_Adlon": "redirect",
+    "Sarayu_Blue": "redirect",
+}
+
+# TikTok pre-wave of the Stonestreet meme, 13 June 2023: -7..+30 days (design §4, deviation C)
+TIKTOK_BLOCK = ("2023-06-06", "2023-07-13")
+# the September wave of the same meme, kept out of the TikTok run's placebo pool: -3..+30 around 27 September
+SEPTEMBER_BLOCK = ("2023-09-24", "2023-10-27")
+
+STONESTREET = EventSpec(
+    name="Stonestreet (Cam)", target="Eric_Stonestreet", controls=MF_CAST, event_date="2023-09-27",
+    source_note="Know Your Meme, Cameron Tucker Smiling: first post on X, 27 Sep 2023",
+    confirmatory=True, falsification=True, gate_on_falsification=True, blocked=(TIKTOK_BLOCK,),
+    reference=REFERENCE_POOL)
+KEVIN_JAMES = EventSpec(
+    name="Kevin James", target="Kevin_James", controls=KOQ_CAST, event_date="2023-09-21",
+    source_note="Know Your Meme, Kevin James Smirking Getty Image: first known meme post on X, 21 Sep 2023",
+    confirmatory=True, falsification=True, detect_window=("2023-09-01", "2023-10-15"), reference=REFERENCE_POOL)
+TIKTOK = EventSpec(
+    name="Stonestreet TikTok pre-wave", target="Eric_Stonestreet", controls=MF_CAST, event_date="2023-06-13",
+    source_note="Know Your Meme, Cameron Tucker Smiling: first notable TikTok post, 13 Jun 2023 (sensitivity)",
+    blocked=(SEPTEMBER_BLOCK,))
+
+# day 0 of the sensitivity check for H2: the most-liked listed post of the Cam meme (design §1)
+SENSITIVITY_DAY0 = {"Stonestreet (Cam)": "2023-10-06"}
+
+EVENTS = (STONESTREET, KEVIN_JAMES)
+SENSITIVITY_EVENTS = (TIKTOK,)
+ARTICLES = tuple(dict.fromkeys(a for e in (*EVENTS, *SENSITIVITY_EVENTS) for a in (e.target, *e.controls, *e.reference)))
