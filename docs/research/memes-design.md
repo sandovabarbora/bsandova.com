@@ -1,11 +1,11 @@
 # Did two actor memes send people to Wikipedia? — research design
 
-**Status: pre-specified analysis, design committed 26 October 2026 and revised the same day after two independent
-reviews, before any pageview number for any article was downloaded.** An event study of daily English-Wikipedia
-pageviews around two memes of autumn 2023. The steps follow in dated commits: design, code and tests on made-up data
-(frozen by tag before it runs), real data and screening, results, page. Commit times are self-reported; the signed tag
-`memes-design` will fix this text. Deviations are listed, dated, in the change log. The study replaces the author's
-own pre-registration file (`PREREG.md` in her spec).
+**Status: pre-specified analysis, design committed 26 October 2026 and revised the same day after two rounds of
+independent review, before any pageview number for any article was downloaded.** An event study of daily
+English-Wikipedia pageviews around two memes of autumn 2023. The steps follow in dated commits: design, code and tests
+on made-up data (frozen by tag before it runs), real data and screening, results, page. Commit times are
+self-reported; the signed tag `memes-design` will fix this text. Deviations are listed, dated, in the change log. The
+study replaces the author's own pre-registration file (`PREREG.md` in her spec).
 
 ## 0. What has already been seen
 
@@ -63,8 +63,9 @@ own pre-registration file (`PREREG.md` in her spec).
 - **Not read:** the Rolling Stone India piece of 10 October 2023 that the spec cites for Kevin James ("last month");
   Know Your Meme made it unnecessary.
 - **Reviews.** Two independent reviews of this design (methods; data and consistency) were read on 26 October 2026,
-  before any pageview number was downloaded. Their must-fix and should-fix points, and the author's decisions on the
-  open ones, are in this text and in the change log. The code is reviewed again before the freeze tag.
+  and a second round of both after the revision, all before any pageview number was downloaded. Their must-fix and
+  should-fix points, and the author's decisions on the open ones, are in this text and in the change log. The code is
+  reviewed again before the freeze tag.
 - **Order of writing.** §5 was written after the code and the simulations it reports: the design was committed first,
   the code and the runs followed, and §5's numbers were copied in by a later commit, still before any real data.
 
@@ -92,7 +93,10 @@ the true one, ties counted as at least as large; only a positive jump counts.
   the Modern Family cast (`MF_CAST`, §2).
 - **H1, Kevin James (confirmatory).** The same for `Kevin_James`, day 0 21 September 2023. **Baseline: the daily median
   over the external reference pool of actors outside both shows (§2)**, not his own cast: Leah Remini reacted to the
-  meme herself, and the median of two controls is their mean. The King of Queens controls, `Leah_Remini` and
+  meme herself, and the median of two controls is their mean. **Before any estimate, the null stage chooses between (a)
+  the pool median and (b) the pool median plus `Victor_Williams` as a second regressor, by the smaller placebo CAR sd on
+  non-event dates (§3.5)**; the choice is written into the null file. The primary window and the Holm family are
+  unchanged. The King of Queens controls, `Leah_Remini` and
   `Victor_Williams`, are a check (§7). It enters the Holm family because its date is **found in a source**. Had it been
   detected from the data (the spec's fallback), it would be exploratory, carry `event_date_detected: true`, and stay out
   of H1 and Holm.
@@ -106,8 +110,9 @@ the true one, ties counted as at least as large; only a positive jump counts.
   attention of the cast's articles, against the **external index**, the daily median of the reference pool, with the
   same model, windows, blocked days, placebo dates and p as H1. It is run for both events and reported with its
   detection power (§5).
-  The page carries a pre-written sentence: "No cast-wide move was seen, but the test's power is about X %." (X from §5,
-  the detection of a cast-wide jump of 0.5), or, if the p-value is below 0.05, "The castmates' pages moved too, as a
+  The page carries a pre-written sentence **for each event, with that event's own power**: "No cast-wide move was
+  seen, but the test's power is about X %." (X from §5, the detection of a cast-wide jump of 0.5; Kevin James at a
+  shared-factor share of 0.5), or, if the p-value is below 0.05, "The castmates' pages moved too, as a
   group. That may be spillover of the meme or news about the show." The reasons for a diagnostic and not a gate: a
   cast-wide jump shrinks H1 and cannot create it, because the baseline rises with the target; the test detects a
   cast-wide jump of 0.5 in about one panel in six against a false-positive rate of about 6 % (§5); and spillover to
@@ -126,9 +131,9 @@ the true one, ties counted as at least as large; only a positive jump counts.
 
 ### Deviations from the author's spec
 
-Each is listed with its status. **Confirmed by the author on 26 October 2026** (in the decisions that follow the two
-reviews, as they stand in this text): A to P. **Applied on the author's instruction the same day, as the review
-fixes:** Q to W.
+Each is listed with its status. **Confirmed by the author on 26 October 2026** (in the decisions that follow the first
+review, as they stand in this text): A to P. **Applied on the author's instruction the same day, as review fixes:** Q to
+W (first round) and X to AD (second round).
 
 - **A. Falsification.** Not against the controls' own median, where the median control AR is about 0 by construction.
   Agreed first as leave-one-out, then as an external index, finally as a descriptive diagnostic that gates nothing (§1).
@@ -172,7 +177,7 @@ fixes:** Q to W.
 - **O. The external reference pool and its rule** (§2), applied mechanically; the lists are frozen in `config.py` and
   the full candidate list is committed. Confirmed.
 - **P.** Extra sensitivity runs and diagnostics beyond the spec's: §7. Confirmed.
-- **Q. Every admissible pseudo date is used** (927 for Stonestreet, 1 007 for Kevin James), not 300 random draws, so
+- **Q. Every admissible pseudo date is used** (927 for Stonestreet, 906 for Kevin James), not 300 random draws, so
   the seed no longer matters for the p-value (§4). `n_placebo` can still draw a seeded subset.
 - **R. Weekday effects** in the market model (§4), not in the spec.
 - **S. Equal estimation days.** Each placebo fit leaves out a seeded contiguous block of estimation days so that it
@@ -180,7 +185,8 @@ fixes:** Q to W.
   fit (§4).
 - **T. Omitted days are kept as missing**, not filled with 0 (the spec's §3), in the panel, with the exact rule of §3.
   `fetch_pageviews` still fills 0 by default, as the spec says; the panel does not.
-- **U. The placebo spread and the minimum detectable uplift are computed and written before any estimate** (§5).
+- **U. The placebo spread and the minimum detectable uplift are computed and written before any estimate** (§5), in a
+  separate first stage (deviation Y).
 - **V. The spec's §7 shock-recovery test** holds as written for one seed (seed 1) and fails for others by up to 2.6
   because the noise of a median index pulls beta to about 0.8 (§8). The tests therefore also keep a looser version over
   nine seeds (median error under 2, worst under 4.5). The other tests of the spec's §7 are kept as written; the 100-seed
@@ -192,6 +198,28 @@ fixes:** Q to W.
   because it was not read. (3) The "exploratory" web note for a detected date is not built: the dates are sourced, and
   the code still warns and flags a detected date. (4) The page text is a skeleton for the author to rewrite.
 
+- **X. Labels and pre-written page sentences** (the spec has neither): the four labels of §6, and the sentences the page
+  carries: the falsification sentence (§1), "the p-value is near the resolution of the test" on a positive label whose
+  raw p is below 0.04, the minimum-detectable-uplift sentence of "no detectable jump" and of "uninformative", and
+  separate wordings for a peak that never halved and for no positive peak (§6). They are the drafting assistant's
+  drafts for the author to rewrite.
+- **Y. Two stages.** Stage 1 (`--null-stage`, needs `--unblind`) downloads the panel, screens it, computes the placebo
+  null and the minimum detectable uplifts from non-event dates only, and writes `docs/research/memes-placebo-null.json`,
+  the two screening files and `memes-null-files.sha256` for the author to commit and tag `memes-null`. It computes no
+  CAR or AR at any event. Stage 2 (`--panel-csv`) refuses to run unless the committed files match their recorded
+  hashes, the panel matches the hash recorded in stage 1, the files are committed and unmodified, and the tag is on
+  HEAD (§3.6).
+- **Z. Empirical minimum detectable uplift and the "uninformative" label.** The 80 % uplift is found by injecting a
+  shock into the target's own series at the non-event placebo dates, at the 95th and the 97.5th percentile of the
+  placebo CARs; if the 80 % uplift at the Holm level exceeds 10 % a null is labelled "uninformative" (§5, §6).
+- **AA. Kevin James's baseline is chosen in the null stage** between the pool median and the pool median plus
+  `Victor_Williams`, by the smaller placebo CAR sd (§3.5).
+- **AB. A date-independent pool rule.** A pool member with an omitted day anywhere in 2021 to 2024 is dropped, in the
+  null stage, before any estimate (§3.2). This replaces the window-based pool rule of deviation T for pool members.
+- **AC. Later waves are blocked for the placebo pools only.** 1 January to 29 February 2024 for Kevin James (§4.5).
+- **AD. Pins and naming.** The run, freeze and test commands pin pandas 3.0.6, numpy 2.5.3 and matplotlib 3.11.2; the
+  code uses `day_of_week` and `day_of_year`, not the older aliases.
+
 ### Changes to the spec's interface (§6 of the spec)
 
 | Item | Spec | Here |
@@ -202,13 +230,13 @@ fixes:** Q to W.
 | `fit_market_model` | OLS, returns (a, b, sd) | same; new `weekday=False` adds weekday terms |
 | `abnormal_attention` | (y, x, event, est, ew) | new `blocked=()`, `weekday=True` (weekday terms, a behaviour change); omitted estimation days are left out; an omitted event-window day raises `EventDropped` |
 | `half_life` | as spec | unchanged; the primary H2 is the new `half_life_smoothed` |
-| `placebo_p_value` | `n_placebo=300` draws | default `n_placebo=None`, every admissible date; new `blocked`, `season_days`, `pre_only`, `weekday`; equal estimation days (S); returns n = number of finite placebo statistics |
+| `placebo_p_value` | `n_placebo=300` draws | default `n_placebo=None`, every admissible date; new `blocked`, `season_days`, `pre_only`, `weekday`, `placebo_blocked`; equal estimation days (S); returns n = number of finite placebo statistics |
 | `detect_event_date` | as spec | unchanged |
-| `run_event` | (panel, spec, ...) | new keyword-only options (`how`, `drop`, `controls`, `event_date`, `falsify`, `season_days`, `pre_only`, `weekday`, `space_time`, `variant`); raises `EventDropped` (a `ValueError`) |
-| `EventSpec` | not given | frozen dataclass: name, target, controls (baseline), event_date, source_note, confirmatory, falsification, cast, reference, blocked, detect_window |
-| `EventResult` | 14 fields | the 14 fields, with `peak_date`, `peak_ar`, `half_life_days` now from the smoothed series, plus `confirmatory`, `excess_views`, `half_life_status`, `half_life_raw_days`, `peak_date_raw`, `null_sd`, `null_p95`, `mdu_pct`, `mdu80_pct`, `falsification_car`, `falsification_p`, `loo_car`, `loo_p`, `space_time_p`, `n_space_time`, `dropped`, `holm_p`, `label`, `variant` |
+| `run_event` | (panel, spec, ...) | new keyword-only options (`how`, `drop`, `controls`, `event_date`, `falsify`, `season_days`, `pre_only`, `weekday`, `space_time`, `second`, `variant`); raises `EventDropped` (a `ValueError`) |
+| `EventSpec` | not given | frozen dataclass: name, target, controls (baseline), event_date, source_note, confirmatory, falsification, cast, reference, blocked, placebo_blocked, second_regressor, detect_window |
+| `EventResult` | 14 fields | the 14 fields, with `peak_date`, `peak_ar`, `half_life_days` now from the smoothed series, plus `confirmatory`, `excess_views`, `half_life_status`, `half_life_raw_days`, `peak_date_raw`, `null_sd`, `null_q20`, `null_p95`, `null_p975`, `mdu_pct`, `mdu80_pct`, `mdu80_q975_pct`, `s80_q95`, `s80_q975`, `second_regressor`, `falsification_car`, `falsification_p`, `loo_car`, `loo_p`, `space_time_p`, `n_space_time`, `dropped`, `holm_p`, `label`, `variant` |
 | errors | the spec's list | all kept; added `EventDropped`, "series must be a gap-free daily index", and a message for a title that is a redirect or disambiguation page |
-| added public functions | none | `model`: `excess_views`, `half_life_smoothed`, `placebo_candidates`, `external_falsification`, `falsification_test`, `space_time_p`, `monthly_gap`, `null_summary`, `null_distribution`, `holm_adjust`, `confirmatory_family`, `label_event`; `fetch`: `verify_titles`, `save_panel`, `load_panel`, `write_manifest`, `ArticleNotFound`; `cli`: `study`, `variant_plan`, `screening_outputs`, `write_outputs`; `report`: `ar_svg`, `estimation_svg`, `render_html`, `visible_text`, `write_summary`; modules `synth`, `simulate`, `pool` |
+| added public functions | none | `model`: `excess_views`, `half_life_smoothed`, `placebo_candidates`, `external_falsification`, `falsification_test`, `space_time_p`, `monthly_gap`, `injection_sum`, `null_summary`, `null_distribution`, `null_plan_dates`, `choose_baseline`, `pool_screen`, `holm_adjust`, `confirmatory_family`, `label_event` (now takes the 80 % uplift at the Holm level); `fetch`: `verify_titles`, `save_panel`, `load_panel`, `write_manifest`, `ArticleNotFound`; `cli`: `null_payload`, `run_null_stage`, `verify_null_stage`, `study`, `variant_plan`, `screening_outputs`, `write_outputs`, `falsification_power_pct`; `report`: `ar_svg`, `estimation_svg`, `render_html`, `visible_text`, `write_summary`; modules `synth`, `simulate`, `pool` |
 
 ## 2. Data and definitions
 
@@ -242,14 +270,16 @@ fixes:** Q to W.
      death date in 2023 (this removes Brooklyn Nine-Nine and The Odd Couple (2015); Friends, which would be dropped
      for Matthew Perry's death on 28 October 2023, is out anyway because it ended in 2004). Imaginary Mary was dropped
      as animated. No other show was dropped on a judgement. 53 shows are kept.
-  4. **The pool is the first-billed actor of every kept show**: the first entry of the infobox `starring` list (comments
-     and namespace links ignored). No cap and no ordering of shows. A first-billed entry with no article link, a title
-     that is missing, a redirect or a disambiguation page, or an actor already taken from another show is **dropped
-     and not replaced**, and the show adds nobody. Dropped: `9JKL`, `Dr._Ken`, `Marlon_(TV_series)`, `Rel_(TV_series)`,
-     `Sunnyside_(American_TV_series)`, `The_Carmichael_Show` and `The_Last_Man_on_Earth_(TV_series)` (first-billed
-     actor without a link), `I_Feel_Bad` (`Sarayu_Blue` is a redirect), `The_Middle_(TV_series)` (`Patricia_Heaton` was
-     taken from an earlier show). The full candidate list, one row per show with its first-billed title and its fate,
-     is `docs/research/memes-reference-pool.json`. 44 actors remain.
+  4. **The pool is the first-billed actor of every kept show**: the first entry of the infobox `starring` list
+     (comments and namespace links ignored). No cap and no ordering of shows. A first-billed entry with no article
+     link, a title that is missing, a redirect or a disambiguation page, or an actor already taken from another show
+     is **dropped and not replaced**, and the show adds nobody. Dropped: `9JKL`, `Dr._Ken`, `Marlon_(TV_series)`,
+     `Rel_(TV_series)`, `Sunnyside_(American_TV_series)`, `The_Carmichael_Show` and
+     `The_Last_Man_on_Earth_(TV_series)` (first-billed actor without a link), `I_Feel_Bad` (`Sarayu_Blue` is a
+     redirect), `The_Middle_(TV_series)` (`Patricia_Heaton` was taken from an earlier show: shows are taken in the
+     sorted order of their Wikipedia titles, Python's `sorted` on the titles with underscores, so `Carol's_Second_Act`
+     comes before `The_Middle_(TV_series)`). The full candidate list, one row per show with its first-billed title and
+     its fate, is `docs/research/memes-reference-pool.json`. 44 actors remain.
   The 53 shows: `2_Broke_Girls`, `9JKL`, `Abby's`, `Alex,_Inc.`, `American_Housewife`, `Bless_This_Mess_(TV_series)`,
   `Broke_(2020_TV_series)`, `Call_Your_Mother`, `Carol's_Second_Act`, `Champions_(American_TV_series)`, `Connecting`,
   `Downward_Dog_(TV_series)`, `Dr._Ken`, `Fam_(TV_series)`, `Fresh_Off_the_Boat`, `Ghosted_(TV_series)`, `I_Feel_Bad`,
@@ -262,7 +292,7 @@ fixes:** Q to W.
   `The_Kids_Are_Alright_(TV_series)`, `The_Last_Man_on_Earth_(TV_series)`, `The_Mick_(TV_series)`,
   `The_Middle_(TV_series)`, `The_Real_O'Neals`, `The_Unicorn_(TV_series)`, `Trial_&_Error_(TV_series)`, `Undateable`,
   `United_We_Fall_(TV_series)`.
-  The 44 actors, in alphabetical order of their shows: `Kat_Dennings`, `Natalie_Morales_(actress)`, `Zach_Braff`,
+  The 44 actors, in the sorted order of their show titles: `Kat_Dennings`, `Natalie_Morales_(actress)`, `Zach_Braff`,
   `Katy_Mixon`, `Dax_Shepard`, `Jaime_Camil`, `Kyra_Sedgwick`, `Patricia_Heaton`, `Anders_Holm`, `Otmara_Marrero`,
   `Allison_Tolman`, `Nina_Dobrev`, `Randall_Park`, `Adam_Scott`, `Adam_Pally`, `Kim_Matula`, `Tim_Allen`,
   `Colin_Hanks`, `Jay_R._Ferguson`, `Matt_LeBlanc`, `Bobby_Moynihan`, `Billy_Gardell`, `Tika_Sumpter`, `Anna_Faris`,
@@ -270,7 +300,8 @@ fixes:** Q to W.
   `Minnie_Driver`, `Jenna_Fischer`, `Judd_Hirsch`, `Johnny_Galecki`, `David_Alan_Grier`, `Kristen_Bell`,
   `Joel_McHale`, `Mary_McCormack`, `Kaitlin_Olson`, `Martha_Plimpton`, `Walton_Goggins`, `Nicholas_D'Agosto`,
   `Chris_D'Elia`, `Will_Sasso`.
-  The index is the daily median of log(1 + views) of these actors, over those that have a value that day.
+  The index is the daily median of log(1 + views) of these actors. A pool actor with an omitted day anywhere in 2021 to
+  2024 is dropped before any estimate (§3.2), so the index is over the actors that remain.
 - **Events** (in `tools/memes/config.py`, with their sources, not in code):
 
   | Event | Target | Baseline | Day 0 | Role | Source |
@@ -304,29 +335,49 @@ fixes:** Q to W.
      its estimation days are omitted. With 5 % or fewer, the omitted days are left out of the fit.
    - **Cast or baseline article that is not a pool member.** Dropped if more than 5 % of its estimation days are
      omitted; otherwise its omitted days are skipped by the daily median.
-   - **Pool member.** Dropped automatically on any omitted day in either window.
+   - **Pool member (deviation AB, date-independent).** Dropped automatically on any omitted day anywhere in 2021 to
+     2024, in whichever window. This is applied in the null stage, before any estimate, and recorded there
+     (`pool_dropped`); stage 2 stops if the set differs.
    - **Empty baseline.** If no baseline article is left, the event is not estimated.
    - **Continuation.** A dropped article or event is **never replaced**. It is listed (`dropped`, `dropped_events`), the
      other event is unaffected, and the Holm family is the remaining confirmatory events.
    - **Placebo windows.** Omitted days are left out of the fit. A pseudo date is admissible only if its event window has
      none and its estimation window still has at least as many usable days as the real fit.
-3. **Confounders in the estimation windows (deviation L).** `estimation_windows.svg` is **one small panel per article**,
-   raw log(1 + views) from 1 January 2021 to **17 September 2023**, which is day −4 of the earlier of the two events
-   (Kevin James). No event window of either meme is drawn, and the **TikTok block (6 June to 13 July 2023) is blank in
-   every panel**, so the TikTok window of `Eric_Stonestreet` and the event window of the TikTok sensitivity run are not
-   shown. The panels are the two targets and their casts (`Eric_Stonestreet` and the nine of `MF_CAST`;
-   `Kevin_James` and the two of `KOQ_CAST`) and one panel for the median of the reference pool; **the 44 pool actors are
-   not drawn one by one**. Spikes are recorded in the README with what is known of them (a death, a wedding, a new
-   show). **Nothing in the analysis is changed because of what is seen there.**
+3. **Confounders in the estimation windows (deviation L).** `estimation_windows.svg` is **one small panel per
+   article**, raw log(1 + views) from 1 January 2021 to **17 September 2023**, which is day −4 of the earlier of the
+   two events (Kevin James). No event window of either meme is drawn, and the **TikTok block (6 June to 13 July 2023)
+   is blank in every panel**, so the TikTok window of `Eric_Stonestreet` and the event window of the TikTok
+   sensitivity run are not shown. The panels are the two targets and their casts (`Eric_Stonestreet` and the nine of
+   `MF_CAST`; `Kevin_James` and the two of `KOQ_CAST`) and one panel for the median of the reference pool; **the 44
+   pool actors are not drawn one by one**. Written to `docs/research/memes-estimation-windows.svg` by stage 1. Spikes
+   are recorded in the README with what is known of them (a death, a wedding, a new show). **Nothing in the analysis
+   is changed because of what is seen there.**
 4. **Target minus baseline by month.** `estimation_gap_by_month.csv`: the mean of target attention minus baseline
    attention by calendar month in the same period (to 17 September 2023, blocked days left out), for each event, so a
-   drift or a level shift in the estimation windows is visible before the estimates.
+   drift or a level shift in the estimation windows is visible before the estimates. Written to
+   `docs/research/memes-estimation-gap-by-month.csv` by stage 1.
+5. **Kevin James's baseline (deviation AA).** In stage 1, before any estimate, the placebo CAR sd on non-event dates
+   (§5) is computed for (a) the pool median and (b) the pool median plus `Victor_Williams` as a second regressor
+   alongside the weekday terms. The smaller sd wins; a tie or an unusable second regressor (more than 5 % of its
+   estimation days omitted, or an omitted event-window day) goes to (a). Both sds and the choice are written into
+   `memes-placebo-null.json`, and the primary run and every check that keeps the pool baseline use the choice. Victor
+   Williams was a co-star and may himself have been exposed to the meme; the choice is made on the spread, not on any
+   effect, and the limit is stated in §8. Stonestreet's baseline is the nine cast articles, as registered.
+6. **The two stages (deviation Y).** Stage 1, `--null-stage --unblind`: verify the titles, download the panel (its hash
+   goes to `docs/research/memes-files.sha256` and, with the hashes of the other files, to
+   `docs/research/memes-null-files.sha256`), screen it (items 2 to 4), choose the baseline (item 5), compute the placebo
+   null and the minimum detectable uplifts for both windows (§5), and write `docs/research/memes-placebo-null.json`, the
+   two screening files and the hash file. **It computes no CAR or AR at any event.** The author commits those files
+   and tags the commit `memes-null`. Stage 2, `--panel-csv --unblind`, **refuses to run** unless (i) each committed file
+   matches its hash in the hash file, (ii) the panel file matches the panel hash recorded in stage 1, (iii) the files
+   are committed and unmodified, and (iv) the tag `memes-null` is on HEAD. Stage 2 then also stops if the null it
+   recomputes for an event differs from stage 1's, or the dropped pool actors differ.
 None of it compares attention across events or after day −4.
 
 ## 4. Estimation (MacKinlay 1997, *Journal of Economic Literature* 35(1))
 
 1. y = log(1 + views). Baseline x = daily median of y over the baseline articles.
-2. **Market model:** OLS of y_target on x and weekday dummies (Monday to Saturday against Sunday) over the estimation
+2. **Market model:** OLS of y_target on x and weekday dummies (Tuesday to Sunday against Monday) over the estimation
    window less blocked and omitted days: y = a + b·x + weekday. **Why weekday terms (deviation R):** Wikipedia views
    have a strong weekly cycle, and the event window of 34 days is four weeks and six days, so an uneven count of
    weekdays leaks the cycle into the CAR if the target's cycle differs from the baseline's. Restricting pseudo dates
@@ -335,25 +386,35 @@ None of it compares attention across events or after day −4.
 3. AR_t = y_t − (a + b·x_t + weekday_t) for t = −3 … +30. **CAR** = ΣAR_t. **Mean uplift** in per cent =
    (exp(mean AR) − 1)·100, the headline; **excess views** = Σ(views_t − (exp(prediction_t) − 1)).
 4. H2 as in §1, on AR from day 0.
-5. **Placebo test.** A pseudo event date d is admissible if its span, days d−150 to d+30, lies fully in the data; is at
-   least 30 days (`exclusion_days`) away from the real event window (at least 30 days lie between the two); touches no
-   blocked interval; has no omitted day in its event window; and has at least as many usable estimation days as the
-   real fit. **Every admissible date is used** (deviation Q): 927 for Stonestreet and 1 007 for Kevin James. For each,
+5. **Placebo test.** A pseudo event date d is admissible if its span, days d−150 to d+30, lies fully in the data; is
+   at least 30 days (`exclusion_days`) away from the real event window (at least 30 days lie between the two); touches
+   no blocked interval; has no omitted day in its event window; and has at least as many usable estimation days as the
+   real fit. **Every admissible date is used** (deviation Q): 927 for Stonestreet and 906 for Kevin James. For each,
    the same model and the same CAR are computed, **on exactly as many estimation days as the real fit** (deviation S):
-   from the usable days of the placebo's estimation window a seeded contiguous block is left out until the count equals
-   the real fit's (38 days for Stonestreet, none for Kevin James), the block's place drawn from
-   `numpy.random.default_rng([42, 1])`. One-sided p as in §1. With fewer than 100 admissible dates the run stops with an
-   error that recommends a longer range.
-   **What the p-value is.** The 927 dates are not independent: windows of 34 days overlap, so there are about 27 non-
-   overlapping windows, and the p-value is an **empirical-null calibration under stationarity**: it says how large a
-   CAR of this kind is on other dates of the same series, assuming those dates are exchangeable with the event date.
-   Its resolution is about 1/28, and **a p-value below about 0.04 is not to be presented as precise**; the Holm level
-   of 0.025 for the smaller p is below that resolution and is read as "among the very largest of the placebo CARs".
+   from the usable days of the placebo's estimation window a seeded contiguous block is left out until the count
+   equals the real fit's (38 days for Stonestreet, none for Kevin James). **Exact mechanics:** the admissible dates
+   are sorted ascending; `numpy.random.default_rng([42, 1])` draws one uniform u per admissible date, in that order;
+   for a date whose estimation window has m usable days and a real fit of U usable days, k = m − U, and the dropped
+   block is the k consecutive days, in the list of its usable days, that start at index floor(u·(m − k + 1)).
+   One-sided p as in §1. **Later waves (deviation AC):** the pseudo spans of Kevin James also stay clear of 1 January
+   to 29 February 2024, because Know Your Meme (the part read) dates his Tonight Show appearance to 23 January 2024
+   and the rest of the page was not read; this removes the pseudo dates that would put a later wave inside a placebo
+   window (1 007 to 906 dates). The Cam page lists nothing dated after 6 October 2023, which lies in its own event
+   window, so Stonestreet has no such block. With fewer than 100 admissible dates the run stops with an error that
+   recommends a longer range. **What the p-value is.** The 927 dates are not independent: windows of 34 days overlap,
+   so there are about 27 non- overlapping windows, and the p-value is an **empirical-null calibration under
+   stationarity**: it says how large a CAR of this kind is on other dates of the same series, assuming those dates are
+   exchangeable with the event date. Its resolution is about 1/28, and **a p-value below about 0.04 is not to be
+   presented as precise**; the Holm level of 0.025 for the smaller p is below that resolution and is read as "among
+   the very largest of the placebo CARs". **Pre-stated reading:** a positive label always has a raw p at or below
+   0.025 for the smaller of the two, so it falls in the imprecise range; every positive label whose raw p is below
+   0.04 therefore carries the page sentence "The p-value is near the resolution of the test."; the label itself
+   stands.
 6. **Falsification diagnostic** (§1): steps 1 to 5 with the cast series as the target and the external index as the
    baseline, on the same dates. Leave-one-out: per control, against the median of the other controls; the median of the
    CARs; the same dates.
 7. **Placebo checks** (§7): same season (pseudo dates within ±45 days of the event's calendar date in the other
-   years: 273 dates for each event), pre-event pseudo dates only (706 and 780), exclusion of 90 days (867 and 887), and
+   years: 273 dates for each event), pre-event pseudo dates only (706 and 780), exclusion of 90 days (867 and 846), and
    the **space-time placebo**: the rank of the target's CAR among the CARs of the pool actors at the real date, each
    against the median of the other pool actors, p = (k + 1)/(n + 1), k the number of pool actors with a CAR at least as
    large as the target's, n the number of pool actors left.
@@ -361,81 +422,56 @@ None of it compares attention across events or after day −4.
    estimation window not ending before the event window, a window outside the data (both ranges are named), a missing
    target or control (listed), no controls, too few placebo dates, a gap in the daily index; omitted days are handled
    by §3.
-9. Versions of Python, numpy and pandas are recorded in `memes-results.json`. Outputs: `summary.json`,
-   `placebo_null.json`, `ar_<target>.csv`, `abnormal_attention.svg`, `estimation_windows.svg`,
-   `estimation_gap_by_month.csv`, `index.html` under `tools/data/memes/out/` (gitignored), and the results copy
-   `docs/research/memes-results.json`. The page is copied to the site by the author.
+9. Versions of Python, numpy and pandas are recorded in `memes-results.json`. Stage 2 outputs: `summary.json`,
+   `ar_<target>.csv`, `abnormal_attention.svg` and `index.html` under `tools/data/memes/out/` (gitignored), and the
+   results copy `docs/research/memes-results.json`. Stage 1 outputs are in §3.6. The page is copied to the site by
+   the author. The commands pin pandas 3.0.6, numpy 2.5.3 and matplotlib 3.11.2 (deviation AD).
 
 ## 5. Power
 
-**This section was written after the code and the simulations it reports.** The design text above was committed first;
-the code, the tests and the runs followed; the numbers below were copied in by a later commit, before any real data.
+**The numbers of this section come from `tools/memes/simulate.py` and `docs/research/memes-power.json`, committed after
+this design and before the registration tag, and are copied into this section by a later commit. §5 is therefore written
+after the code and the simulations it reports.** What is registered now is what they measure, on made-up panels with the
+registered geometry (baselines, cast, reference pool, blocked days and later-wave blocks, every admissible placebo date,
+weekday terms, equal estimation days):
 
-Computed on **made-up panels only**: an AR(1) factor with φ 0.8 and innovation sd 0.1 shared by all articles, a second
-such factor for each group (the target with its cast, and the reference pool), idiosyncratic noise sd 0.1, target beta
-1. The geometry is the registered one: for Stonestreet a baseline of the nine cast articles and the blocked days; for
-Kevin James a baseline of the 44 pool actors; every admissible placebo date; the weekday terms; equal estimation days;
-300 simulated panels per cell (`tools/memes/simulate.py`, `docs/research/memes-power.json`, run niced on 26 October
-2026). A shock *s* adds s·exp(−t/5) to the target's attention from day 0, so *s* = 0.3 is +35 % on day 0 and about +5
-% on average over the window, and the CAR is about 5.5·*s*. **In these panels Kevin James shares only the common
-factor with the pool, not his own group's factor; that is an assumption, and if the real co-movement with the pool is
-stronger his power is higher.** It is the price of the baseline decision (D2): his baseline is not exposed to the
-meme, and is also less informative.
+- the share of panels with p < 0.05 and p < 0.025 for H1 of both events, with no shock and with shocks of 0.1, 0.3,
+  0.5, 1.0 and 2.0 (a shock *s* adds s·exp(−t/5) to the target from day 0), with the mean uplift each implies; for
+  Kevin James at shared-factor shares of 0, 0.5 and 1 (the share of his own group's factor that is the pool's factor),
+  so that the table brackets the real power;
+- the false-positive rate of H1 and of the two falsification diagnostics without any jump;
+- the detection rate of the external and the leave-one-out falsification when 3, 5 or all of the cast controls jump by
+  0.5 and by 1.0;
+- the **empirical minimum detectable uplift** (deviation Z): a shock s·exp(−t/5) is injected into the target's own
+  series at every non-event placebo date, which adds s·A to each placebo CAR (A the sum of exp(−t/5) over days 0 to
+  +30, because the injection lies in the event window and the model is fitted before it); the s at which 80 % of the
+  injected CARs exceed a threshold is (threshold − the 20th percentile of the placebo CARs)/A, with the threshold the
+  95th percentile (the 5 % test) or the 97.5th (the Holm level), and it is reported as a mean uplift over the window,
+  exp((threshold − q20)/n days) − 1, for the primary window and for (−3, +14). The real run computes and writes them
+  to `memes-placebo-null.json` in stage 1, before any estimate, and the label is tied to the one at the Holm level
+  (§6).
 
-| Share of panels with p below | s = 0 (false positives) | s = 0.1 | s = 0.3 | s = 0.5 | s = 1.0 | s = 2.0 |
-|---|---|---|---|---|---|---|
-| Median mean uplift over the window | 0 % | 1.6 % | 5.0 % | 8.4 % | 17.6 % | 38 % |
-| Stonestreet, 0.05 | 5.3 % | 17 % | 53 % | 86 % | 100 % | 100 % |
-| Stonestreet, 0.025 | | 11 % | 41 % | 82 % | 100 % | 100 % |
-| Kevin James, 0.05 | 6.7 % | 10 % | 13 % | 19 % | 41 % | 87 % |
-| Kevin James, 0.025 | | 6 % | 9 % | 14 % | 31 % | 80 % |
-
-False positives at the 5 % level are 5.3 to 6.7 % (prototype: 4.3 %).
-
-**Minimum detectable uplift (method, deviation U).** Before any estimate, the run computes the placebo CARs of every
-admissible pseudo date, from non-event dates only, and writes their standard deviation *sd* and 95th percentile *q95*
-to `placebo_null.json`, then converts them to a mean uplift over the 34 days, (exp(*q*/34) − 1)·100. **The critical
-uplift** uses *q95*: the smallest mean uplift that reaches p < 0.05. **The 80 % uplift** uses *q95* + 0.84·*sd*: the
-mean uplift that a normal placebo distribution of that spread would flag in four cases in five. The "no detectable
-jump" label is tied to the 80 % uplift (§6). In the made-up panels the medians of *sd* are 0.93 (Stonestreet) and 3.9
-(Kevin James), the critical uplift is 4.6 % and 20 %, and the 80 % uplift is 7.0 % and 33 %. The real values will come
-from the real series, which are likely spikier, and will replace these in the text.
-
-**The design is likely underpowered for the author's prior.** A small jump that fades within a few days, say *s* of
-0.1 to 0.2 (a mean uplift of 2 to 3 % over the window and a CAR of about 0.5 to 1), is far below the 80 % uplifts
-above. In the made-up panels Stonestreet's H1 rejects such a jump in 17 % of panels at *s* = 0.1, and Kevin James's in
-10 %, close to the false-positive rate. The likely outcome under the prior is therefore "no detectable jump", and that
-outcome says little: it excludes only jumps above about 7 % (Stonestreet) or 33 % (Kevin James) on average over the
-window. At the Holm level 0.025 power is lower still. The prototype's figures (4.3 % false positives, power 67, 97 and
-100 % for 0.3, 0.5 and 1.0) were higher because the estimation window was longer and the baseline closer to the
-target.
-
-**Falsification diagnostic** (descriptive, §1). Share of panels with p < 0.05, external index and leave-one-out, when
-all or some of the cast controls jump by *s* (Stonestreet has nine, Kevin James two):
-
-| Cast controls that jump | external, s = 0.5 | external, s = 1.0 | leave-one-out, s = 0.5 | leave-one-out, s = 1.0 |
-|---|---|---|---|---|
-| none (false positives) | 5.7 % | | 6.3 % | |
-| 3 of 9 | 10 % | 14 % | 3 % | 0 % |
-| 5 of 9 (a majority) | 12 % | 21 % | 38 % | 88 % |
-| 9 of 9 (all) | 17 % | 39 % | 12 % | 20 % |
-| Kevin James, 2 of 2 (none: 6.3 % and 5.7 %) | 20 % | 41 % | 17 % | 33 % |
-
-The external falsification sees a cast-wide jump of 0.5 in **about 17 % of panels against a false-positive rate of
-about 6 %**, and a jump of 1.0 in 39 %: this is the "power" in the page's sentence ("about 17 %"). Leave-one-out sees
-a majority jump much better and an all-cast jump worse. Neither can carry a label, which is why both are diagnostics.
-
-Real attention series carry spikes and news that these panels lack, so **real power is lower**.
+The text will state plainly that the design is likely underpowered for the author's prior, a small jump that fades
+within a few days.
 
 ## 6. Labels
 
-For each confirmatory event that was estimated (Stonestreet and Kevin James), in this order, **on H1 alone**:
+For each confirmatory event that was estimated (Stonestreet and Kevin James), in this order, **on H1 and the minimum
+detectable uplift (§5)**:
 
-1. **positive**: Holm-adjusted p < 0.05 and CAR > 0.
-2. **no detectable jump**: raw p ≥ 0.05. This is failure to reject, not evidence of no jump: it reads as "no jump above
-   about X % on average over the window, X being the uplift detected in four cases in five (`mdu80_pct`, §5), would have
-   gone unseen", and the page says so with that number.
-3. **inconclusive**: otherwise, that is, the raw p is below 0.05 and the Holm-adjusted p is not.
+1. **positive**: Holm-adjusted p < 0.05 and CAR > 0. A positive label whose raw p is below 0.04 carries the page
+   sentence "The p-value is near the resolution of the test." (§4.5).
+2. **inconclusive**: the raw p is below 0.05 and the Holm-adjusted p is not.
+3. **uninformative**: raw p ≥ 0.05 and the **80 % uplift at the Holm level** (`mdu80_q975_pct`, §5) **exceeds 10 % mean
+   uplift over the window**. The reason: the author's prior is a few per cent, so a test that could not have seen
+   anything under 10 % says little. The page says: no jump I can tell from chance, but the test could not have seen one
+   below about X % on average over the window, so this says little.
+4. **no detectable jump**: raw p ≥ 0.05 and that uplift is 10 % or less. This is failure to reject, not evidence of no
+   jump: the page says that a jump above about X % on average over the window, X being the 80 % uplift at the Holm
+   level, would have been seen four times in five.
+
+`label_event` takes that uplift and applies this rule; the uplift comes from the committed null file, and stage 2 stops
+if the one it recomputes differs. The 10 % threshold is registered here and is not tuned.
 
 An event dropped by the omitted-day rule (§3) gets no label. H2 has no label. The sensitivity runs and the diagnostics
 (§7) do not relabel; if one of them has a raw p ≥ 0.05 where the primary has p < 0.05, the article says so next to the
@@ -445,19 +481,20 @@ without searching.
 ## 7. Checks (reported; none relabels a primary result)
 
 Each is a `variant` in `summary.json`, with raw placebo p and no correction, run on every admissible placebo date.
-Unless stated, a variant changes one thing and keeps the rest of the primary run. **Falsification diagnostics (external
-and leave-one-out) are reported** in the variants marked F and not computed in the others.
+Unless stated, a variant changes one thing and keeps the rest of the primary run, including the Kevin James baseline
+chosen in stage 1. **Falsification diagnostics (external and leave-one-out) are reported** in the variants marked F
+and not computed in the others.
 
 | Variant | Events | What changes | F |
 |---|---|---|---|
-| `window_-3_14`, `window_-3_60` | both | event window; pseudo dates recomputed (975 and 837 for Stonestreet, 1 055 and 917 for Kevin James); the smoothed half-life uses that window | F |
+| `window_-3_14`, `window_-3_60` | both | event window; pseudo dates recomputed (975 and 837 for Stonestreet, 938 and 846 for Kevin James); the smoothed half-life uses that window; the (−3, +14) minimum detectable uplift is also in the null file, next to the primary one | F |
 | `mean_index` | both | mean instead of median baseline (also in the diagnostics) | F |
 | `drop_Sofía_Vergara` | Stonestreet | the spec's own-news article left out of the baseline | F |
-| `day0_2023-10-06` | Stonestreet | day 0 on the most-liked listed post; estimation window moves with it, blocked days stay; **p is reported, for H2 only; no label** | F |
+| `day0_2023-10-06` | Stonestreet | day 0 on the most-liked listed post; estimation window moves with it, blocked days stay; **the p-value is computed and reported as a by-product of the run; it is not a test of H1, enters no family and carries no label, and the variant is read for H2 only** | F |
 | `external_index` | Stonestreet | baseline: the reference pool, not the cast | |
 | `external_index_window_-3_60`, `..._without_Matt_LeBlanc` | Stonestreet | the pool baseline with window (−3, +60), then also without `Matt_LeBlanc` (pre-declared: Matthew Perry died on 28 October 2023, inside that window) | |
-| `koq_controls` | Kevin James | baseline: `Leah_Remini` and `Victor_Williams` | F |
-| `window_-3_60_without_Matt_LeBlanc` | Kevin James | the primary pool baseline, window (−3, +60), without `Matt_LeBlanc` | |
+| `koq_controls` | Kevin James | baseline: `Leah_Remini` and `Victor_Williams` (no second regressor) | F |
+| `window_-3_60_without_Matt_LeBlanc` | Kevin James | the primary baseline as chosen in stage 1, window (−3, +60), without `Matt_LeBlanc` | |
 | `same_season` | both | pseudo dates within ±45 days of the event's calendar date in the other years | |
 | `pre_event_only` | both | pseudo dates before the real event only | |
 | `exclusion_90` | both | at least 90 days between a pseudo span and the real event window | |
@@ -494,6 +531,11 @@ external falsification of the primary run.
 - **A common wave.** The two memes belong to the same autumn 2023 run of "actor stock photo" posts (Know Your Meme calls
   the Cam meme similar to the Kevin James trend), so shared drivers (a platform trend, the same news) are possible and
   the comparison of the two is descriptive.
+- **The baseline choice for Kevin James** rests on the placebo spread, which a second regressor tends to lower in
+  sample; `Victor_Williams` was a co-star and may have been exposed to the meme, so choice (b) can absorb part of a
+  jump. The `koq_controls` check and the exposure statement of §8 bound this, they do not remove it.
+- **The injected shock** has one shape, s·exp(−t/5), the shape of the author's prior; a jump that is flatter or later
+  has a different minimum detectable uplift.
 - **Half-life.** Even smoothed over 7 days and with a persistence rule, the half-life of a noisy series is a rough
   number; a censored half-life is a finding, not a failure.
 - **Noise in the baseline attenuates beta.** A median over a few noisy articles measures the common factor with error,
@@ -534,19 +576,16 @@ Commands, the verified API facts and their dates are in `tools/memes/README.md`.
   tests restored where possible (R1); the full interface list (R2); the confounder figure restricted and drawn per
   article (R3); fully specified checks (R4); the status of every deviation (R5); dropped spec items (R6); an
   "otherwise" label and the half-life window of the variants (R7). §5 is written after the code and the simulations.
-  The commits follow below.
-- 26 October 2026, commits of the branch, one line each (the commit that adds this list is not in it):
-  - `70dc8cf` design registered (first version, before the code).
-  - `c88a98a` first version of the code, with the external falsification and the `--unblind` guard.
-  - `7dbb87a` tests of that code on made-up data.
-  - `18e5703` first runs of false positives, power and falsification detection on made-up panels.
-  - `8d712b6` first power numbers in the design, and the README.
-  - `8b9524c` the memes tests run in CI, matplotlib pinned.
-  - `ab24398` design revised after the two reviews and the author's decisions D1 to D5.
-  - `3ebc5d9` code: weekday terms, equal-day placebos, the omitted-day rule, the first-billed pool, the diagnostic
-    falsification, the smoothed half-life, the checks and the page.
-  - `3c74a59` tests: the review fixes, and the spec's §7 tests restored where possible.
-  - `2a3f2db` the runs of power, minimum detectable uplift and falsification detection on made-up panels, rerun.
-  - `c9c891e` §5 numbers and the minimum detectable uplift copied into the design: **§5 was written after the code and
-    the simulations**.
+- 26 October 2026, after the second round of review, before any pageview number was downloaded; every new rule is in
+  the deviation table (X to AD): a two-stage run whose first stage writes the placebo null, the minimum detectable
+  uplift, the screening and a hash file, which the author commits and tags `memes-null`, and whose second stage
+  refuses to run without them (Y); an empirical minimum detectable uplift by injecting a shock into the placebo dates,
+  at the 95th and 97.5th percentile, and a label "uninformative" when the 80 % uplift at the Holm level exceeds 10 %
+  (Z); Kevin James's baseline chosen in stage 1 between the pool median and the pool median plus `Victor_Williams`
+  (AA); a date-independent pool rule on omitted days (AB); later waves of the memes kept out of the placebo pools, 1
+  January to 29 February 2024 for Kevin James (AC); pinned versions and current pandas names (AD); the labels and
+  pre-written sentences listed (X); the exact placebo mechanics, the sorted show order for duplicate actors, how a p
+  near the Holm level is read, the Monday reference day, the falsification sentence for both events and the "no
+  positive peak" wording written out. Power for Kevin James is rerun at shared-factor shares of 0, 0.5 and 1, with the
+  (−3, +14) minimum detectable uplift beside the primary one. The commits follow below.
 
