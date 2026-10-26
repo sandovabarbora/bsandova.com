@@ -6,8 +6,9 @@ Rule, applied as written: shows in four Wikipedia categories (2010s and 2020s Am
 sitcoms) whose infobox network is ABC, CBS, NBC, Fox or The CW and whose infobox last_aired year is 2016 to 2021;
 not animated; not Modern Family or The King of Queens, and not a show that lists any of their actors; not a show with
 a starring actor whose article gives a 2023 death date. Candidates are the links of the infobox `starring` field.
-Titles that are missing, redirects or disambiguation pages are dropped, never replaced. The pool is capped at CAP
-actors in round-robin order: the first-billed actor of each show, then the second, and so on, shows in alphabetical order.
+The pool holds the first-billed actor of every kept show (no cap). A first-billed title that is missing, a redirect or
+a disambiguation page, or an actor already taken from an earlier show, is dropped and the show adds nobody: no one is
+ever replaced.
 """
 from __future__ import annotations
 
@@ -21,7 +22,6 @@ import fetch as F
 CATEGORIES = ("2010s American multi-camera sitcoms", "2010s American single-camera sitcoms",
               "2020s American multi-camera sitcoms", "2020s American single-camera sitcoms")
 RUN_ENDED = (2016, 2021)
-CAP = 36
 EXCLUDED_SHOWS = ("Modern Family", "The King of Queens")
 NETWORK = re.compile(r"American Broadcasting Company|\bABC\b|\bCBS\b|\bNBC\b|Fox Broadcasting|\[\[Fox\b|The CW|\bCW\b")
 
@@ -31,13 +31,33 @@ def field(wikitext: str, name: str) -> str:
     return m.group(1) if m else ""
 
 
-def starring_links(wikitext: str) -> list[str]:
+def _links(text: str) -> list[str]:
     out = []
-    for target in re.findall(r"\[\[([^\]|#]+)(?:#[^\]|]*)?(?:\|[^\]]*)?\]\]", field(wikitext, "starring")):
+    for target in re.findall(r"\[\[([^\]|#]+)(?:#[^\]|]*)?(?:\|[^\]]*)?\]\]", text):
         title = target.strip().replace(" ", "_")
-        if not re.match(r"(File|Image|Category):", title, flags=re.IGNORECASE) and title not in out:
+        if ":" not in title and title not in out:  # a namespace prefix is not an article
             out.append(title)
     return out
+
+
+def _starring(wikitext: str) -> str:
+    return re.sub(r"<!--.*?-->", "", field(wikitext, "starring"), flags=re.DOTALL)
+
+
+def starring_links(wikitext: str) -> list[str]:
+    return _links(_starring(wikitext))
+
+
+def first_billed_link(wikitext: str) -> str | None:
+    """The link of the first entry of the starring list, None if that entry has no article link (the next entry is
+    not taken instead). Lists without bullets (templates, commas) fall back to the first link."""
+    text = _starring(wikitext)
+    items = [ln.strip() for ln in text.split("\n") if ln.strip().startswith("*")]
+    if not items:
+        links = _links(text)
+        return links[0] if links else None
+    links = _links(items[0])
+    return links[0] if links else None
 
 
 def end_year(wikitext: str) -> int | None:
@@ -58,16 +78,23 @@ def death_year(wikitext: str) -> int | None:
     return int(m.group(1)) if m else None
 
 
-def round_robin(show_actors: dict[str, list[str]], cap: int = CAP) -> list[str]:
-    shows = sorted(show_actors)
-    out: list[str] = []
-    for rank in range(max((len(v) for v in show_actors.values()), default=0)):
-        for s in shows:
-            if rank < len(show_actors[s]) and show_actors[s][rank] not in out:
-                out.append(show_actors[s][rank])
-                if len(out) == cap:
-                    return out
-    return out
+def first_billed(firsts: dict[str, str | None], bad: dict[str, str]) -> tuple[list[str], dict[str, dict]]:
+    """The pool and the full candidate list: per show its first-billed link and what became of it. `bad` maps a title
+    that is missing, a redirect or a disambiguation page to the reason."""
+    pool, table = [], {}
+    for show in sorted(firsts):
+        first = firsts[show]
+        if first is None:
+            status = "dropped: the first-billed actor has no article link"
+        elif first in bad:
+            status = f"dropped: {bad[first]}"
+        elif first in pool:
+            status = "dropped: already taken from an earlier show"
+        else:
+            status = "in pool"
+            pool.append(first)
+        table[show] = {"first_billed": first, "status": status}
+    return pool, table
 
 
 def _api(**params) -> dict:
@@ -99,10 +126,11 @@ def build(excluded_actors: Iterable[str] = ()) -> dict:
                 break
             cont = d["continue"]
     texts = _wikitext(sorted(members))
-    kept, dropped = {}, {}
+    kept, dropped, firsts = {}, {}, {}
     for title, wt in sorted(texts.items()):
         year = end_year(wt)
         links = starring_links(wt)
+        first = first_billed_link(wt)
         if title.replace("_", " ") in EXCLUDED_SHOWS:
             dropped[title] = "Modern Family or The King of Queens"
         elif not on_big_network(wt):
@@ -117,13 +145,15 @@ def build(excluded_actors: Iterable[str] = ()) -> dict:
             dropped[title] = "lists an actor of Modern Family or The King of Queens"
         else:
             kept[title] = links
+            firsts[title] = first
     actor_text = _wikitext(sorted({a for v in kept.values() for a in v}))
     for title in list(kept):
         if any(death_year(actor_text.get(a, "")) == 2023 for a in kept[title]):
             dropped[title] = "a starring actor died in 2023"
             del kept[title]
-    candidates = sorted({a for v in kept.values() for a in v})
-    ok, bad = {}, {}
+            del firsts[title]
+    candidates = sorted({f for f in firsts.values() if f})
+    bad = {}
     for i in range(0, len(candidates), 20):
         chunk = candidates[i:i + 20]
         d = _api(action="query", titles="|".join(c.replace("_", " ") for c in chunk), prop="info|pageprops",
@@ -138,8 +168,6 @@ def build(excluded_actors: Iterable[str] = ()) -> dict:
                 bad[c] = "redirect"
             elif "disambiguation" in p.get("pageprops", {}):
                 bad[c] = "disambiguation page"
-            else:
-                ok[c] = True
-    show_actors = {s: [a for a in v if a in ok] for s, v in kept.items()}
-    return {"shows": sorted(kept), "show_actors": show_actors, "dropped_shows": dropped, "dropped_titles": bad,
-            "pool": round_robin(show_actors), "n_eligible_actors": len(ok), "excluded_actors": sorted(excluded)}
+    pool, table = first_billed(firsts, bad)
+    return {"shows": sorted(kept), "candidates": table, "dropped_shows": dropped, "pool": pool,
+            "excluded_actors": sorted(excluded)}

@@ -7,14 +7,14 @@ from __future__ import annotations
 import io
 import json
 import re
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from pathlib import Path
 
 import pandas as pd
 
 MAX_SVG_BYTES = 40_000
 BLURB = {
-    "positive": "a jump, and the castmates did not move with it",
+    "positive": "a jump",
     "no detectable jump": "no jump I can tell from chance",
     "inconclusive": "inconclusive",
 }
@@ -67,19 +67,30 @@ def ar_svg(ars: Mapping[str, pd.Series], events: Mapping[str, str]) -> str:
     return out
 
 
-def estimation_svg(panel: pd.DataFrame, cutoffs: Mapping[str, str], start: str) -> str:
-    """Raw log1p series up to three days before each event only, for the confounder check of design §3. The event
-    windows are not drawn, so the check cannot be steered by the result."""
+def estimation_svg(panel: pd.DataFrame, articles: Sequence[str], pool_index: pd.Series | None, cutoff: str,
+                   masked: Sequence[tuple[str, str]], start: str) -> str:
+    """One small panel per article (and one for the pool index): raw log1p views from `start` to `cutoff`, with the
+    `masked` intervals left blank. The cutoff is day -4 of the earliest event, so no event window and no blocked
+    window is drawn and the check cannot be steered by the result (design §3)."""
     plt = _plt()
-    names = list(cutoffs)
-    fig, axes = plt.subplots(len(names), 1, figsize=(7, 2.2 * len(names)), squeeze=False)
     import numpy as np
-    for ax, name in zip(axes[:, 0], names, strict=True):
-        part = panel.loc[start:cutoffs[name]]
-        for col in part.columns:
-            ax.plot(part.index, np.log1p(part[col]).to_numpy(), lw=0.6)
-        ax.set_title(f"{name}: raw log1p views up to {cutoffs[name]}", fontsize=8)
+    series = [(a, np.log1p(panel[a])) for a in articles]
+    if pool_index is not None:
+        series.append(("median of the reference pool", pool_index))
+    cols = 3
+    rows = -(-len(series) // cols)
+    fig, axes = plt.subplots(rows, cols, figsize=(8, 1.7 * rows), squeeze=False, sharex=True)
+    for ax, (name, s) in zip(axes.ravel(), series, strict=False):
+        s = s.loc[start:cutoff].copy()
+        for lo, hi in masked:
+            s.loc[lo:hi] = float("nan")
+        ax.plot(s.index, s.to_numpy(), lw=0.6)
+        ax.set_title(name, fontsize=7)
+        ax.tick_params(labelsize=6)
         _tidy(ax)
+    for ax in axes.ravel()[len(series):]:
+        ax.axis("off")
+    fig.suptitle(f"raw log(1 + views) up to {cutoff}; blocked days blank", fontsize=8)
     fig.tight_layout()
     out = _svg(fig)
     plt.close(fig)
@@ -104,36 +115,43 @@ def _p(x: float | None) -> str:
     return "n/a" if x is None else f"{x:.3f}"
 
 
-def _cast_sentence(e: Mapping) -> str:
-    if not e.get("gates_label") or e.get("falsification_p") is None:
+def _cast_sentence(e: Mapping, power_pct: float | None) -> str:
+    if not e.get("cast_note") or e.get("falsification_p") is None:
         return ""
-    if e["falsification_p"] >= 0.05:
-        return " The castmates' own pages did not rise by more than chance."
-    return " The castmates' pages rose too, so this may be news about the show."
+    if e["falsification_p"] < 0.05:
+        return " The castmates' pages moved too, as a group. That may be spillover of the meme or news about the show."
+    if power_pct is None:
+        return " No cast-wide move was seen."
+    return f" No cast-wide move was seen, but the test's power is about {power_pct:.0f} %."
 
 
-def _event_sentence(e: Mapping) -> str:
+def _event_sentence(e: Mapping, power_pct: float | None) -> str:
     name = e["name"]
     label = e["label"] or "inconclusive"
     if label == "positive":
-        hl = ("Half of the peak was gone after " + _num(e["half_life_days"], 0) + " days."
-              if e["half_life_days"] is not None else "The peak did not halve within the window.")
-        text = f"{name}: a jump, on average {e['car_pct_uplift']:.0f} % above the baseline over the window. {hl}"
+        status = e.get("half_life_status")
+        if status == "observed":
+            hl = "Half of the peak was gone after " + _num(e["half_life_days"], 0) + " days."
+        else:
+            hl = "The peak had not halved by the end of the window."
+        text = (f"{name}: a jump, on average {e['car_pct_uplift']:.0f} % above the baseline over the window, "
+                f"about {e['excess_views']:,.0f} extra views. {hl}")
     elif label == "no detectable jump":
-        text = (f"{name}: no jump I can tell from chance. That is not proof of none, only that a small one would "
-                "hide in the noise.")
+        text = (f"{name}: no jump I can tell from chance. One above about {e['mdu80_pct']:.0f} % on average over the "
+                "window would have been seen four times in five, a smaller one could hide in the noise.")
     else:
-        text = f"{name}: inconclusive. The tests do not agree, or only the uncorrected test passes."
-    return text + _cast_sentence(e)
+        text = f"{name}: inconclusive. Only the uncorrected test passes."
+    return text + _cast_sentence(e, power_pct)
 
 
 def render_html(summary: Mapping, svg: str) -> str:
     events = summary["events"]
+    power_pct = summary.get("meta", {}).get("falsification_power_pct")
     rows = "".join(
         f"<tr><td>{e['name']}</td><td>{e['event_date']}</td><td>{e['car_pct_uplift']:.0f} %</td>"
-        f"<td>{_p(e['placebo_p'])}</td><td>{_p(e['holm_p'])}</td><td>{_num(e['half_life_days'], 0)}</td>"
-        f"<td>{e['label'] or 'n/a'}</td></tr>" for e in events)
-    results = " ".join(_event_sentence(e) for e in events)
+        f"<td>{e['excess_views']:,.0f}</td><td>{_p(e['placebo_p'])}</td><td>{_p(e['holm_p'])}</td>"
+        f"<td>{_num(e['half_life_days'], 0)}</td><td>{e['label'] or 'n/a'}</td></tr>" for e in events)
+    results = " ".join(_event_sentence(e, power_pct) for e in events)
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Two memes, two Wikipedia pages</title><style>{CSS}</style></head><body>
@@ -141,18 +159,18 @@ def render_html(summary: Mapping, svg: str) -> str:
 <h2>Question</h2>
 <p>Did two memes from autumn 2023 send people to Wikipedia? Not memes in general, but two: Eric Stonestreet as Cameron Tucker, and Kevin James in a King of Queens photo.</p>
 <h2>What I measured</h2>
-<p>Daily views of each actor's English article, set against the articles of their castmates. The castmates show what a normal day looks like, not what the meme did.</p>
-<p>I add up the gap from 3 days before the first post to 30 days after. A set of 300 other dates shows how large such a gap is by chance.</p>
+<p>Daily views of each actor's English article, set against other actors' articles. They show what a normal day looks like, not what the meme did.</p>
+<p>I add up the gap from 3 days before the first post to 30 days after. Every other date with no meme shows how large such a gap is by chance.</p>
 <h2>Result</h2>
 <p>{results}</p>
-<table><tr><th>Event</th><th>First post</th><th>Mean uplift</th><th>p</th><th>Holm p</th><th>Half-life, days</th><th>Label</th></tr>{rows}</table>
+<table><tr><th>Event</th><th>First post</th><th>Uplift</th><th>Extra views</th><th>p</th><th>Holm p</th><th>Half-life, days</th><th>Label</th></tr>{rows}</table>
 {svg}
 <h2>What would refute the thesis</h2>
 <p>If the castmates rose as much as the actor, it was news about the show, not the meme.</p>
 <h2>Limits</h2>
-<p>Views measure looking something up, not seeing a meme. Castmates have their own news. The first post is not the peak of the meme.</p>
+<p>Views measure looking something up, not seeing a meme. Actors have their own news. The first post is not the peak of the meme.</p>
 <details><summary>Method</summary>
-<p>Market model on log(1 + views), fitted on days -150 to -31 before the first post, minus the days around an earlier TikTok wave. Abnormal attention is the gap to the model. The p-value is the share of 300 random dates with a gap at least as large. Two tests share a Holm correction.</p></details>
+<p>Market model on log(1 + views) with weekday effects, fitted on days -150 to -31 before the first post, minus the days around an earlier TikTok wave. Abnormal attention is the gap to the model. The p-value is the share of other dates with a gap at least as large. Two tests share a Holm correction.</p></details>
 <h2>Sources</h2>
 <p><a href="https://knowyourmeme.com/memes/cameron-tucker-smiling">Know Your Meme, Cameron Tucker Smiling</a>. <a href="https://knowyourmeme.com/memes/kevin-james-smirking-getty-image">Know Your Meme, Kevin James Smirking Getty Image</a>. <a href="https://doc.wikimedia.org/generated-data-platform/aqs/analytics-api/">Wikimedia Analytics API</a>. MacKinlay (1997), Journal of Economic Literature 35(1).</p>
 </body></html>

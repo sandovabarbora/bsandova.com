@@ -11,6 +11,7 @@ from collections.abc import Mapping, Sequence
 import numpy as np
 import pandas as pd
 
+WEEK = np.array([0.4, 0.5, 0.5, 0.4, 0.2, -0.8, -1.0])  # a weekday pattern: weekends low
 Bump = tuple[str, str, float, float]  # (column or "controls:<target>", date, size, decay in days)
 
 
@@ -23,7 +24,8 @@ def _ar1(rng: np.random.Generator, n: int, phi: float, sd: float) -> np.ndarray:
 
 def synthetic_panel(seed: int, groups: Mapping[str, Sequence[str]], start: str = "2021-01-01", end: str = "2024-12-31",
                     bumps: Sequence[Bump] = (), beta: float = 1.0, level: float = 6.0, phi: float = 0.8,
-                    sd: float = 0.1, common_sd: float = 0.0) -> pd.DataFrame:
+                    sd: float = 0.1, common_sd: float = 0.0,
+                    weekday: Mapping[str, float] | None = None) -> pd.DataFrame:
     """Daily views (not logs) for every article of `groups` ({target: controls}). A bump adds size * exp(-t / decay)
     to log1p views from its date on, to one column or to all controls of one target ("controls:<target>")."""
     rng = np.random.default_rng(seed)
@@ -42,4 +44,6 @@ def synthetic_panel(seed: int, groups: Mapping[str, Sequence[str]], start: str =
         targets = [c for c in groups[col.split(":", 1)[1]]] if col.startswith("controls:") else [col]
         for name in targets:
             logs[name] = logs[name] + shape
+    for col, amp in (weekday or {}).items():
+        logs[col] = logs[col] + amp * WEEK[days.dayofweek.to_numpy()]
     return np.expm1(logs)

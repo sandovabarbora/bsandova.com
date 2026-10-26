@@ -21,9 +21,12 @@ EST_WINDOW = (-150, -31)
 EVENT_WINDOW = (-3, 30)
 SENSITIVITY_WINDOWS = ((-3, 14), (-3, 60))
 EXCLUSION_DAYS = 30
-N_PLACEBO = 300
+N_PLACEBO = None  # every admissible pseudo date (design §4.5); an int draws that many, seeded
 MIN_CANDIDATES = 100
 SEED = 42
+SEASON_DAYS = 45       # same-season placebo check (design §7)
+STRICT_EXCLUSION_DAYS = 90
+LEBLANC = "Matt_LeBlanc"  # Friends actor in the pool; Matthew Perry died 28 Oct 2023 (design §8)
 
 MF_CAST = ("Ed_O'Neill", "Sofía_Vergara", "Julie_Bowen", "Ty_Burrell", "Jesse_Tyler_Ferguson", "Sarah_Hyland",
            "Ariel_Winter", "Nolan_Gould", "Rico_Rodriguez_(actor)")
@@ -32,8 +35,9 @@ MF_CAST = ("Ed_O'Neill", "Sofía_Vergara", "Julie_Bowen", "Ty_Burrell", "Jesse_T
 # The spec's third control, Gary_Valentine, is a redirect to another person (design §2, deviation E).
 KOQ_CAST = ("Leah_Remini", "Victor_Williams")
 
-# External reference pool of the falsification and of one sensitivity run (design §1, §2). Built on 26 October 2026 by
-# pool.py from the infoboxes of these shows, from Wikipedia text and page existence only, and frozen here.
+# External reference pool of the falsification, of the baseline of Kevin James and of two sensitivity runs (design §1, §2).
+# Built on 26 October 2026 by pool.py from the infoboxes of these shows (Wikipedia text and page existence only) and
+# frozen here; the full candidate list is docs/research/memes-reference-pool.json.
 REFERENCE_SHOWS = (
     "2_Broke_Girls",
     "9JKL",
@@ -91,7 +95,6 @@ REFERENCE_SHOWS = (
 )
 REFERENCE_POOL = (
     "Kat_Dennings",
-    "Linda_Lavin",
     "Natalie_Morales_(actress)",
     "Zach_Braff",
     "Katy_Mixon",
@@ -102,18 +105,15 @@ REFERENCE_POOL = (
     "Anders_Holm",
     "Otmara_Marrero",
     "Allison_Tolman",
-    "Suzy_Nakamura",
     "Nina_Dobrev",
     "Randall_Park",
     "Adam_Scott",
-    "Paul_Adelstein",
     "Adam_Pally",
     "Kim_Matula",
     "Tim_Allen",
     "Colin_Hanks",
     "Jay_R._Ferguson",
     "Matt_LeBlanc",
-    "Essence_Atkins",
     "Bobby_Moynihan",
     "Billy_Gardell",
     "Tika_Sumpter",
@@ -122,18 +122,34 @@ REFERENCE_POOL = (
     "Jason_Biggs",
     "Bradley_Whitford",
     "Vanessa_Hudgens",
-    "Sinbad_(comedian)",
     "AJ_Michalka",
     "Taran_Killam",
     "Minnie_Driver",
+    "Jenna_Fischer",
+    "Judd_Hirsch",
+    "Johnny_Galecki",
+    "David_Alan_Grier",
+    "Kristen_Bell",
+    "Joel_McHale",
+    "Mary_McCormack",
+    "Kaitlin_Olson",
+    "Martha_Plimpton",
+    "Walton_Goggins",
+    "Nicholas_D'Agosto",
+    "Chris_D'Elia",
+    "Will_Sasso",
 )
-# titles dropped by rule, never replaced (design §2)
-REFERENCE_DROPPED_TITLES = {
-    "Ella_Allan": "redirect",
-    "MOS:TV": "redirect",
-    "Mia_Allan": "redirect",
-    "Odessa_Adlon": "redirect",
-    "Sarayu_Blue": "redirect",
+# first-billed titles dropped by rule, never replaced (design §2)
+REFERENCE_DROPPED = {
+    "9JKL": "dropped: the first-billed actor has no article link",
+    "Dr._Ken": "dropped: the first-billed actor has no article link",
+    "I_Feel_Bad": "dropped: redirect",
+    "Marlon_(TV_series)": "dropped: the first-billed actor has no article link",
+    "Rel_(TV_series)": "dropped: the first-billed actor has no article link",
+    "Sunnyside_(American_TV_series)": "dropped: the first-billed actor has no article link",
+    "The_Carmichael_Show": "dropped: the first-billed actor has no article link",
+    "The_Last_Man_on_Earth_(TV_series)": "dropped: the first-billed actor has no article link",
+    "The_Middle_(TV_series)": "dropped: already taken from an earlier show",
 }
 
 # TikTok pre-wave of the Stonestreet meme, 13 June 2023: -7..+30 days (design §4, deviation C)
@@ -143,21 +159,22 @@ SEPTEMBER_BLOCK = ("2023-09-24", "2023-10-27")
 
 STONESTREET = EventSpec(
     name="Stonestreet (Cam)", target="Eric_Stonestreet", controls=MF_CAST, event_date="2023-09-27",
-    source_note="Know Your Meme, Cameron Tucker Smiling: first post on X, 27 Sep 2023",
-    confirmatory=True, falsification=True, gate_on_falsification=True, blocked=(TIKTOK_BLOCK,),
-    reference=REFERENCE_POOL)
+    source_note="Know Your Meme, Cameron Tucker Smiling: earliest X post it lists, 27 Sep 2023",
+    confirmatory=True, falsification=True, cast=MF_CAST, reference=REFERENCE_POOL, blocked=(TIKTOK_BLOCK,))
+# the baseline of Kevin James is the external pool: Remini reacted to the meme herself and the median of two is a mean
 KEVIN_JAMES = EventSpec(
-    name="Kevin James", target="Kevin_James", controls=KOQ_CAST, event_date="2023-09-21",
-    source_note="Know Your Meme, Kevin James Smirking Getty Image: first known meme post on X, 21 Sep 2023",
-    confirmatory=True, falsification=True, detect_window=("2023-09-01", "2023-10-15"), reference=REFERENCE_POOL)
+    name="Kevin James", target="Kevin_James", controls=REFERENCE_POOL, event_date="2023-09-21",
+    source_note="Know Your Meme, Kevin James Smirking Getty Image: earliest X post it lists, 21 Sep 2023",
+    confirmatory=True, falsification=True, cast=KOQ_CAST, reference=REFERENCE_POOL,
+    detect_window=("2023-09-01", "2023-10-15"))
 TIKTOK = EventSpec(
     name="Stonestreet TikTok pre-wave", target="Eric_Stonestreet", controls=MF_CAST, event_date="2023-06-13",
     source_note="Know Your Meme, Cameron Tucker Smiling: first notable TikTok post, 13 Jun 2023 (sensitivity)",
-    blocked=(SEPTEMBER_BLOCK,))
+    cast=MF_CAST, blocked=(SEPTEMBER_BLOCK,))
 
 # day 0 of the sensitivity check for H2: the most-liked listed post of the Cam meme (design §1)
 SENSITIVITY_DAY0 = {"Stonestreet (Cam)": "2023-10-06"}
 
 EVENTS = (STONESTREET, KEVIN_JAMES)
 SENSITIVITY_EVENTS = (TIKTOK,)
-ARTICLES = tuple(dict.fromkeys(a for e in (*EVENTS, *SENSITIVITY_EVENTS) for a in (e.target, *e.controls, *e.reference)))
+ARTICLES = tuple(dict.fromkeys(a for e in (*EVENTS, *SENSITIVITY_EVENTS) for a in (e.target, *e.controls, *e.cast, *e.reference)))

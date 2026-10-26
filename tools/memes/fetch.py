@@ -54,8 +54,10 @@ def _get(url: str, retries: int) -> bytes:
     raise AssertionError("unreachable")
 
 
-def fetch_pageviews(article: str, start: str, end: str, project: str = "en.wikipedia", retries: int = 3) -> pd.Series:
-    """Daily user-agent views of one article, reindexed to every day of start..end with 0 for the omitted days."""
+def fetch_pageviews(article: str, start: str, end: str, project: str = "en.wikipedia", retries: int = 3, *,
+                    missing: str = "zero") -> pd.Series:
+    """Daily user-agent views of one article, reindexed to every day of start..end. The API omits days without data:
+    they are filled with 0 (the spec) or, with missing="nan", kept as NaN for the omitted-day rule of design §3."""
     url = (f"{AQS}/{project}/all-access/user/{urllib.parse.quote(article, safe='')}/daily/"
            f"{_stamp(start)}/{_stamp(end)}")
     try:
@@ -71,8 +73,9 @@ def fetch_pageviews(article: str, start: str, end: str, project: str = "en.wikip
     out = got.reindex(days)
     filled = int(out.isna().sum())
     if filled:
-        log.info("%s: %d of %d days missing in the API response, filled with 0", article, filled, len(days))
-    return out.fillna(0.0).rename(article)
+        log.info("%s: %d of %d days missing in the API response, %s", article, filled, len(days),
+                 "filled with 0" if missing == "zero" else "kept as missing")
+    return (out.fillna(0.0) if missing == "zero" else out).rename(article)
 
 
 def fetch_panel(articles: Sequence[str], start: str, end: str) -> pd.DataFrame:
@@ -80,7 +83,7 @@ def fetch_panel(articles: Sequence[str], start: str, end: str) -> pd.DataFrame:
     for i, art in enumerate(articles):
         if i:
             time.sleep(PAUSE)
-        series.append(fetch_pageviews(art, start, end))
+        series.append(fetch_pageviews(art, start, end, missing="nan"))
     return pd.concat(series, axis=1)
 
 
