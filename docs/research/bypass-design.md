@@ -256,3 +256,9 @@ opposite sign to the primary, the article says so next to the label; the label s
     rate is per year, not per km, as its length is not in the list.
   - Records without coordinates in 2023–2025 name their municipality only in text and are matched to a unique RÚIAN
     name.
+- 26 October 2026, after the code freeze, before any estimate was read. The registered run stopped twice without an
+  estimate. First, the run command in `estimate.py` lacked `geopandas` and `pyogrio`, which the town step imports; the
+  command now lists them. Second, at bootstrap draw 500 the town-trend fit of check 9 failed (`SVD did not converge`)
+  outside the guard that the main fit already had, so the whole run stopped instead of leaving check 9 missing for that
+  draw as §4 and the code's own rule say. The trend fit now sits inside that guard, with a test. Nothing else changed;
+  the run restarts from draw 1 with the same seed, so the accepted draws are the same as before.

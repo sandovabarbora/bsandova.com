@@ -411,3 +411,14 @@ def test_q3_rows_for_made_up_list(tmp_path):
     rows = Q.rows_for(towns, b).set_index("id")
     assert set(rows.index) == {"BYP-1", "BYP-5"}
     assert rows.loc["BYP-5", "codes"] == [100004] and rows.loc["BYP-5", "open_year"] == 2021
+
+
+def test_failed_trend_fit_leaves_spec_missing(monkeypatch):
+    """A trend fit (check 9) that fails in a draw leaves that spec missing instead of stopping the run (§4)."""
+    towns, counts = made_up()
+
+    def boom(*a, **k):
+        raise np.linalg.LinAlgError("SVD did not converge")
+    monkeypatch.setattr(E, "trend_offset", boom)
+    spec = next(s for s in E.check_specs().values() if s.trends)
+    assert not E.fit(towns, counts, YEARS, spec).ok

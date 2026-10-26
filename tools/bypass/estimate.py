@@ -7,7 +7,7 @@ runs only with `--stage A --headline-fixed` (stage A is the registered headline,
 stage B is not part of the study and is refused. Writes docs/research/bypass-results-a.json.
 
     nice -n 20 env OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 uv run --no-project --with pandas --with numpy \
-        --with pyarrow --with statsmodels --with scipy --with shapely --with pyproj \
+        --with pyarrow --with statsmodels --with scipy --with shapely --with pyproj --with geopandas --with pyogrio \
         python -I tools/bypass/estimate.py --stage A --headline-fixed
 """
 from __future__ import annotations
@@ -204,9 +204,9 @@ def fit(towns: pd.DataFrame, counts: pd.DataFrame, years: range, spec: Spec, *, 
     keep = informative & ~(X[idle].to_numpy().sum(axis=1) > 0) if idle else informative
     q, Xq, y = p[keep].reset_index(drop=True), X[keep].reset_index(drop=True), y_all[keep]
     Xq = Xq.loc[:, Xq.abs().sum() > 0]
-    offset = trend_offset(q, y, Xq) if spec.trends else None
     D = design(q, Xq)
     try:
+        offset = trend_offset(q, y, Xq) if spec.trends else None
         res = poisson(y, D, offset, q["cluster"].to_numpy() if clustered else None)
     except (np.linalg.LinAlgError, ValueError):
         return out
