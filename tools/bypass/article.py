@@ -228,9 +228,9 @@ def q3_table(q3: dict) -> str:
     return "\n".join(out)
 
 
-def number_refs(page: str) -> str:
+def number_refs(page: str, values: dict) -> str:
     """[[key]] markers become citations numbered by first appearance; every entry of refs.html must be cited."""
-    entries = dict(re.findall(r'<li data-key="([\w-]+)">(.*?)</li>', (HERE / "refs.html").read_text(encoding="utf-8")))
+    entries = dict(re.findall(r'<li data-key="([\w-]+)">(.*?)</li>', render((HERE / "refs.html").read_text(encoding="utf-8"), values)))
     order = list(dict.fromkeys(re.findall(r"\[\[([\w-]+)\]\]", page)))
     assert set(order) <= set(entries), set(order) - set(entries)
     assert set(entries) <= set(order), f"uncited: {set(entries) - set(order)}"
@@ -341,9 +341,10 @@ def main() -> None:
         "ph_pre_old": n(ph["pre-construction"]["damage_only_old_road"], 1),
         "ph_post_old": n(ph["post years 1–3"]["damage_only_old_road"], 1),
         "ph_pre_inj": n(ph["pre-construction"]["injury"], 1), "ph_post_inj": n(ph["post years 1–3"]["injury"], 1),
+        **{f"v_{k}": x for k, x in res["versions"].items()},
         "tests_table": tests_table(res), "checks_table": checks_table(res), "q3_table": q3_table(q3),
     }
-    page = number_refs(render((HERE / "template.html").read_text(encoding="utf-8"), v | {"refs": "{{refs}}"}))
+    page = number_refs(render((HERE / "template.html").read_text(encoding="utf-8"), v | {"refs": "{{refs}}"}), v)
     (ROOT / "texts" / f"{SLUG}.html").write_text(page, encoding="utf-8")
     print(json.dumps({k: x for k, x in v.items() if not k.endswith("table")}, ensure_ascii=False, indent=1))
 
