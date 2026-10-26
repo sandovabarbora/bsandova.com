@@ -561,6 +561,21 @@ def test_a_second_regressor_with_omitted_days_falls_back_to_the_pool_alone():
     assert out["chosen"] == "pool" and out["pool+second"] is None
 
 
+def test_too_few_placebo_dates_under_baseline_b_fall_back_to_a_with_the_reason(monkeypatch):
+    groups = {"T": CONTROLS, "R0": REF[1:], "V": ("V1",)}
+    panel = S.synthetic_panel(3, groups, common_sd=0.1)
+    real = M.null_distribution
+
+    def fake(panel, spec, **kw):
+        if kw.get("second"):
+            raise ValueError("only 40 admissible placebo dates remain, at least 100 are needed")
+        return real(panel, spec, **kw)
+    monkeypatch.setattr(M, "null_distribution", fake)
+    out = M.choose_baseline(panel, spec(controls=REF, cast=CONTROLS, reference=REF, second_regressor="V"), n_placebo=100)
+    assert out["chosen"] == "pool" and out["second_regressor"] is None and out["pool+second"] is None
+    assert "only 40 admissible" in out["fallback_reason"]
+
+
 def test_run_event_with_a_second_regressor_reports_it():
     groups = {"T": CONTROLS, "R0": REF[1:], "V": ("V1",)}
     panel = S.synthetic_panel(3, groups, common_sd=0.1)

@@ -645,8 +645,8 @@ def choose_baseline(panel: pd.DataFrame, spec: EventSpec, **kw) -> dict:
     if spec.second_regressor:
         try:
             b = null_distribution(panel, spec, second=spec.second_regressor, **kw)["null_sd"]
-        except EventDropped:
-            out["pool+second"] = None
+        except ValueError as err:                       # EventDropped, or too few placebo dates with the second regressor
+            out.update({"pool+second": None, "fallback_reason": str(err)})
             return out
         out["pool+second"] = b
         if b < a:
