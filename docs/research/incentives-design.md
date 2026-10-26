@@ -244,3 +244,19 @@ years before the promise"; the label itself stands.
   outcome from two fields); a level break in January 2013 can differ between districts and is absorbed only by the
   event-year effects, which are shared within an event; it has not been looked at, and no check is added here.
   (iii) Placebo check 9 reads years −2 to 1 shifted two years back, which now lie partly outside the clean window.
+- 26 October 2026 (code choices, still before any outcome was read; `tools/incentives/estimate.py`, reviewed line by
+  line against §4–§7 as amended and by an independent read-only, blinded reviewer): (1) Draws. Only a bootstrap draw
+  with no event is a gate (redrawn, counted, logged, capped at 100 000). Any other failure inside a bootstrap or
+  permutation draw is caught, logged with its error and left missing; missing bootstrap draws drop out of the
+  percentile intervals, missing permutations out of the p-value share (an unestimable permutation is never counted
+  as smaller than the observed value), and both counts are reported. If more than 1 % of the 2 000 bootstrap draws
+  or permutations are missing, or any input of the label is missing, the primary label is "not computable". (2) Log.
+  Every draw is appended and flushed to `tools/data/incentives/draws.jsonl` as it is made, with a run stamp, the
+  run name (primary or check) and its error if any; the file is not committed. (3) Checks. A check that cannot be
+  built or estimated is reported with its error and the others still run; results are saved after the primary and
+  after every check. (4) Check 6 is per event, a district being left out only for events whose years −2 to 3
+  contain 1 January 2007 or 1 January 2016 (a span that starts that month counts as containing it, which removes
+  slightly more). (5) The run uses 2 000 draws and 2 000 permutations; `--draws` is refused with `--unblind`. The
+  run refuses if the screening names no amended rule or an event district code is absent from the MPSV files; Q3 is
+  "not computable" (§1 entry above). (6) Reported with the primary: events dropped for a missing year, total
+  comparison weight per district, mean events per bootstrap draw. Two threads, `nice -n 20`.
