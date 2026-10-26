@@ -63,6 +63,14 @@ def test_missing_days_are_filled_with_zero(monkeypatch, calls):
     assert s.index.equals(pd.date_range("2023-01-01", "2023-01-03"))
 
 
+def test_omitted_days_can_be_kept_as_missing(monkeypatch, calls):
+    script(monkeypatch, calls, [body({"20230101": 10, "20230103": 30}), body({"20230101": 10, "20230103": 30})])
+    s = F.fetch_pageviews("A", "2023-01-01", "2023-01-03", missing="nan")
+    assert s.iloc[[0, 2]].tolist() == [10, 30] and s.isna().tolist() == [False, True, False]
+    panel = F.fetch_panel(["A"], "2023-01-01", "2023-01-03")                # the panel keeps the hole for the §3 rule
+    assert panel["A"].isna().tolist() == [False, True, False]
+
+
 def test_diacritics_and_apostrophe_are_encoded_and_the_user_agent_is_sent(monkeypatch, calls):
     script(monkeypatch, calls, [body({"20230101": 1}), body({"20230101": 1})])
     F.fetch_pageviews("Sofía_Vergara", "2023-01-01", "2023-01-01")

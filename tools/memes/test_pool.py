@@ -44,18 +44,44 @@ def test_death_year():
     assert P.death_year("| birth_date = {{birth date|1969|8|19}}") is None
 
 
-def test_round_robin_takes_first_billed_actors_first_and_caps():
-    shows = {"B": ["b1", "b2"], "A": ["a1", "a2", "a3"], "C": ["a1", "c2"]}
-    assert P.round_robin(shows, cap=10) == ["a1", "b1", "a2", "b2", "c2", "a3"]
-    assert P.round_robin(shows, cap=3) == ["a1", "b1", "a2"]
+def test_comments_and_namespace_links_are_not_cast():
+    wt = """\n| starring = {{plainlist|
+<!-- see [[Talk:Made Up/Archive 2#x]] and [[MOS:TV]] -->
+* [[Ann One]]
+* [[Wikipedia:Cast]]
+* [[Bob Two]]
+}}
+| network = ABC
+"""
+    assert P.starring_links(wt) == ["Ann_One", "Bob_Two"]
 
 
-def test_frozen_pool_obeys_its_own_rules():
+def test_first_billed_is_the_first_entry_and_never_the_next_when_it_has_no_link():
+    assert P.first_billed_link(SHOW) == "Ann_One"
+    unlinked = SHOW.replace("* [[Ann One]]", "* Ann Unlinked", 1)
+    assert P.first_billed_link(unlinked) is None
+    assert P.first_billed_link("\n| starring = {{ubl|[[Cy Three]]|[[Di Four]]}}\n| network = x") == "Cy_Three"
+
+
+def test_the_pool_takes_one_first_billed_actor_per_show_and_replaces_nobody():
+    firsts = {"B": "bob", "A": "ann", "C": "ann", "D": None, "E": "eve", "F": "fay"}
+    pool, table = P.first_billed(firsts, {"eve": "redirect"})
+    assert pool == ["ann", "bob", "fay"]
+    assert table["C"]["status"] == "dropped: already taken from an earlier show"
+    assert table["D"]["status"].startswith("dropped: the first-billed actor has no article link")
+    assert table["E"]["status"] == "dropped: redirect" and table["A"]["status"] == "in pool"
+
+
+def test_frozen_pool_obeys_its_own_rules_and_matches_the_committed_candidate_list():
+    import json
     pool = C.REFERENCE_POOL
-    assert len(pool) == P.CAP == len(set(pool))
+    assert len(pool) == len(set(pool)) <= len(C.REFERENCE_SHOWS) == 53
     inside = {*C.MF_CAST, *C.KOQ_CAST, "Eric_Stonestreet", "Kevin_James", "Rico_Rodriguez", "Gary_Valentine"}
     assert not inside & set(pool)
-    assert not set(C.REFERENCE_DROPPED_TITLES) & set(pool)
+    assert not set(C.REFERENCE_DROPPED) & set(pool)
     assert "Modern_Family" not in C.REFERENCE_SHOWS and "The_King_of_Queens" not in C.REFERENCE_SHOWS
     assert "Kevin_Can_Wait" not in C.REFERENCE_SHOWS
-    assert set(pool) <= set(C.ARTICLES)
+    assert set(pool) <= set(C.ARTICLES) and C.LEBLANC in pool
+    listed = json.loads((C.ROOT / "docs/research/memes-reference-pool.json").read_text())
+    assert listed["pool"] == list(pool) and listed["shows"] == list(C.REFERENCE_SHOWS)
+    assert [s for s, v in listed["candidates"].items() if v["status"] == "in pool"] and len(listed["candidates"]) == 53

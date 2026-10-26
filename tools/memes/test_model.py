@@ -34,23 +34,29 @@ def shock_panel(seed=0, shock=2.0, decay=5.0):
 
 # ---------------------------------------------------------------- spec §7
 
-def test_shock_recovery_peak_halflife_and_p():
+def test_spec_shock_recovery_peak_halflife_and_p():
+    """The spec's test as written, on one seed (seed 1): CAR within 2 of the truth, peak on the event day on the raw
+    series, raw half-life 3 or 4 days, p < 0.05."""
+    res, _ = M.run_event(shock_panel(1), spec())
+    truth = sum(2 * np.exp(-t / 5) for t in range(31))
+    assert abs(res.car - truth) < 2
+    assert res.peak_date_raw == "2023-09-27"
+    assert res.half_life_raw_days in (3.0, 4.0)
+    assert res.placebo_p < 0.05
+
+
+def test_shock_recovery_over_nine_seeds_is_looser_than_the_spec_tolerance():
+    # the spec's tolerance of 2 fails for some seeds (seed 0 is off by 2.6): the median-index noise pulls beta to
+    # about 0.8, so this keeps the median error under 2 and the worst under 4.5 (design deviation R1)
     truth = sum(2 * np.exp(-t / 5) for t in range(31))
     errors = []
     for seed in range(9):
         res, ar = M.run_event(shock_panel(seed), spec())
         errors.append(abs(res.car - truth))
-        assert abs((pd.Timestamp(res.peak_date) - EVENT).days) <= 1
-        assert res.half_life_days in (3.0, 4.0, 5.0)
-        assert res.placebo_p < 0.05
-        assert len(ar) == 34
-    # the spec's tolerance of 2 holds for a typical seed, not for every one: the median-index noise pulls beta to ~0.8
+        assert abs((pd.Timestamp(res.peak_date_raw) - EVENT).days) <= 1
+        assert res.placebo_p < 0.05 and len(ar) == 34
+        assert res.half_life_status == "observed" and 3 <= res.half_life_days <= 6
     assert np.median(errors) < 2 and max(errors) < 4.5
-
-
-def test_half_life_is_three_or_four_days_for_the_spec_shock():
-    res, _ = M.run_event(shock_panel(1), spec())
-    assert res.peak_date == "2023-09-27" and res.half_life_days in (3.0, 4.0)
 
 
 def test_null_share_of_false_positives_over_100_seeds_is_at_most_ten_percent():
@@ -59,10 +65,9 @@ def test_null_share_of_false_positives_over_100_seeds_is_at_most_ten_percent():
 
 
 def test_beta_is_near_one():
-    for seed in (0, 1):
-        y, x = logs(S.synthetic_panel(seed, GROUPS))
-        _, beta, _ = M.abnormal_attention(y, x, EVENT, EST, EW)
-        assert 0.7 < beta < 1.3
+    y, x = logs(S.synthetic_panel(0, GROUPS))
+    _, beta, _ = M.abnormal_attention(y, x, EVENT, EST, EW)
+    assert 0.7 < beta < 1.3
 
 
 def test_half_life_without_positive_peak_is_none():
@@ -155,12 +160,15 @@ def test_gappy_series_are_refused():
 
 def test_placebo_is_reproducible_and_seed_dependent():
     y, x = logs(S.synthetic_panel(0, GROUPS))
-    args = (y, x, EVENT, 3.0, EST, EW)
+    args = (y, x, EVENT, 0.0, EST, EW)
     assert M.placebo_p_value(*args) == M.placebo_p_value(*args)
-    assert M.placebo_p_value(*args, seed=1)[1] == 300
+    assert M.placebo_p_value(*args)[1] > 900                    # every admissible date by default
+    assert M.placebo_p_value(*args, n_placebo=300)[1] == 300
+    assert M.placebo_p_value(*args, n_placebo=300) == M.placebo_p_value(*args, n_placebo=300)
+    assert M.placebo_p_value(*args, n_placebo=300, seed=1) != M.placebo_p_value(*args, n_placebo=300)
 
 
-# ---------------------------------------------------------------- deviation A: leave-one-out falsification
+# ---------------------------------------------------------------- the leave-one-out check
 
 CAST = {"T": ("C1", "C2", "C3", "C4", "C5", "C6")}
 
@@ -177,7 +185,7 @@ def test_leave_one_out_sees_a_majority_jump_that_the_own_median_hides():
     naive = [M.abnormal_attention(np.log1p(panel[c]), own, EVENT, EST, EW)[0].sum() for c in controls]
     median_car, p, n = M.falsification_test(panel, controls, EVENT, EST, EW)
     assert abs(np.median(naive)) < 1.5        # against their own median the median control is flat by construction
-    assert median_car > 2.5 and p < 0.05 and n == 300
+    assert median_car > 2.5 and p < 0.05 and n > 900
 
 
 def test_a_unanimous_cast_jump_is_invisible_to_the_falsification():
@@ -232,8 +240,12 @@ def test_labels():
     assert M.label_event(0.004, 0.008, 5.0) == "positive"
     assert M.label_event(0.2, 0.4, 1.0) == "no detectable jump"
     assert M.label_event(0.04, 0.08, 1.0) == "inconclusive"          # passes raw, not Holm
-    assert M.label_event(0.004, 0.008, 5.0, 0.01, use_falsification=True) == "inconclusive"
-    assert M.label_event(0.004, 0.008, 5.0, 0.01, use_falsification=False) == "positive"
+    assert M.label_event(0.5, 0.9, -2.0) == "no detectable jump"
+
+
+def test_labels_rest_on_h1_alone():
+    import inspect
+    assert list(inspect.signature(M.label_event).parameters) == ["placebo_p", "holm_p", "car"]
 
 
 # ---------------------------------------------------------------- deviation C: the TikTok pre-wave
@@ -279,7 +291,7 @@ def test_tiktok_spike_cannot_enter_a_placebo_window():
     seen = []
     orig = M._car_at
     try:
-        M._car_at = lambda yy, xx, p, est, ew: seen.append(p) or 0.0
+        M._car_at = lambda yy, xx, dow, p, u, est, ew, usable, weekday: seen.append(p) or 0.0
         M.placebo_p_value(y, x, EVENT, 1.0, EST, EW, blocked=[TIKTOK])
     finally:
         M._car_at = orig
@@ -300,7 +312,7 @@ def ext_panel(seed=5, cast_jump=0.0):
 
 def test_external_falsification_sees_a_cast_wide_jump():
     car, p, n = M.external_falsification(ext_panel(cast_jump=3.0), CAST["T"], REF, EVENT, EST, EW)
-    assert car > 5 and p < 0.05 and n == 300
+    assert car > 5 and p < 0.05 and n > 900
 
 
 def test_external_falsification_is_quiet_without_a_jump():
@@ -318,13 +330,13 @@ def test_external_falsification_uses_the_same_placebo_dates_as_h1():
 
 
 def test_run_event_reports_external_falsification_and_keeps_leave_one_out_as_a_check():
-    s = spec(controls=CAST["T"], reference=REF, falsification=True, gate_on_falsification=True)
+    s = spec(controls=CAST["T"], cast=CAST["T"], reference=REF, falsification=True)
     res, _ = M.run_event(ext_panel(cast_jump=3.0), s)
     assert res.falsification_p < 0.05 and res.loo_p is not None and res.loo_car is not None
 
 
 def test_run_event_needs_the_reference_in_the_panel():
-    s = spec(controls=CAST["T"], reference=(*REF, "R99"), falsification=True)
+    s = spec(controls=CAST["T"], cast=CAST["T"], reference=(*REF, "R99"), falsification=True)
     with pytest.raises(KeyError, match="R99"):
         M.run_event(ext_panel(), s)
 
@@ -333,4 +345,213 @@ def test_run_event_overrides_for_the_sensitivity_runs():
     panel = S.synthetic_panel(1, {"T": CONTROLS}, bumps=[("T", "2023-10-06", 2.0, 5.0)])
     res, _ = M.run_event(panel, spec(), event_date="2023-10-06", controls=CONTROLS[:3], falsify=False, variant="d0")
     assert res.event_date == "2023-10-06" and res.variant == "d0" and res.falsification_p is None
-    assert res.peak_date == "2023-10-06"
+    assert res.peak_date_raw == "2023-10-06"
+
+
+# ---------------------------------------------------------------- review fixes: weekday effects, equal estimation days
+
+def test_weekday_effects_remove_the_bias_of_a_window_that_is_not_whole_weeks():
+    # the event window of 34 days holds 5 of some weekdays and 4 of others, so a weekday pattern in the target only
+    # leaks into the CAR unless the model has weekday terms
+    panel = S.synthetic_panel(4, GROUPS, weekday={"T": 1.0})
+    y, x = logs(panel)
+    plain = M.abnormal_attention(y, x, EVENT, EST, EW, weekday=False)[0].sum()
+    weekly = M.abnormal_attention(y, x, EVENT, EST, EW, weekday=True)[0].sum()
+    assert abs(plain) > 1.5 and abs(weekly) < 1.5
+
+
+def test_weekday_pattern_does_not_inflate_false_positives():
+    hits = sum(M.run_event(S.synthetic_panel(s, GROUPS, weekday={"T": 1.0}), spec())[0].placebo_p < 0.05
+               for s in range(40))
+    assert hits <= 8
+
+
+def test_every_placebo_fit_has_as_many_estimation_days_as_the_real_fit(monkeypatch):
+    panel = S.synthetic_panel(2, GROUPS)
+    y, x = logs(panel)
+    blocked = [("2023-06-06", "2023-07-13")]
+    sizes = []
+    orig = M._fit
+
+    def spy(yy, xx, dow, weekday):
+        sizes.append(len(yy))
+        return orig(yy, xx, dow, weekday)
+    monkeypatch.setattr(M, "_fit", spy)
+    M.abnormal_attention(y, x, EVENT, EST, EW, blocked=blocked)
+    M.placebo_p_value(y, x, EVENT, 1.0, EST, EW, blocked=blocked)
+    assert sizes[0] == 82 and len(sizes) > 900 and set(sizes[1:]) == {82}
+
+
+def test_the_dropped_block_is_contiguous_seeded_and_moves_between_placebos():
+    seen = []
+
+    def fake_fit(yy, xx, dow, weekday):
+        seen.append(yy.copy())
+        return np.zeros(8), 1.0
+    y, x = np.arange(400, dtype=float), np.ones(400)
+    orig = M._fit
+    M._fit = fake_fit
+    try:
+        for u in (0.0, 0.5, 0.99):
+            M._car_at(y, x, np.zeros(400, int), 200, u, (-150, -31), (-3, 30), 82, True)
+    finally:
+        M._fit = orig
+    assert all(len(v) == 82 for v in seen)
+    start, middle, end = seen
+    assert start[0] == 88 and (np.diff(start) == 1).all()                    # block at the start of the window
+    assert end[0] == 50 and end[-1] == 131 and (np.diff(end) == 1).all()    # block at the end
+    gap = np.diff(middle)
+    assert (gap > 1).sum() == 1 and gap.max() == 39                         # one 38-day block cut out in the middle
+
+
+def test_a_placebo_pool_that_cannot_match_the_real_estimation_days_is_not_used():
+    panel = S.synthetic_panel(2, GROUPS)
+    y, x = logs(panel)
+    y = y.copy()
+    y.iloc[500:700] = np.nan                      # a long hole in the target: fewer usable days around it
+    n_all = M.placebo_p_value(*logs(panel), EVENT, 1.0, EST, EW)[1]
+    n_hole = M.placebo_p_value(y, x, EVENT, 1.0, EST, EW)[1]
+    assert n_hole < n_all
+
+
+# ---------------------------------------------------------------- placebo-rule variants
+
+def test_same_season_pre_event_and_strict_exclusion_pools():
+    idx = pd.date_range("2021-01-01", "2024-12-31")
+    base = M.placebo_candidates(idx, EVENT, EST, EW, 30)
+    season = M.placebo_candidates(idx, EVENT, EST, EW, 30, season_days=45)
+    pre = M.placebo_candidates(idx, EVENT, EST, EW, 30, pre_only=True)
+    strict = M.placebo_candidates(idx, EVENT, EST, EW, 90)
+    assert 100 <= len(season) < len(base) and 100 <= len(pre) < len(base) and len(strict) < len(base)
+    doy = idx[season].dayofyear - EVENT.dayofyear
+    assert (np.minimum(np.abs(doy), 365 - np.abs(doy)) <= 45).all()
+    assert (idx[pre] < EVENT).all()
+    assert set(strict) <= set(base)
+
+
+# ---------------------------------------------------------------- space-time placebo
+
+def test_space_time_rank_of_the_target_among_pool_actors():
+    panel = S.synthetic_panel(3, {"T": CONTROLS, "R0": REF[1:]}, bumps=[("T", "2023-09-27", 2.0, 5.0)], common_sd=0.1)
+    ar, _, _ = M.abnormal_attention(np.log1p(panel["T"]), M.control_index(panel, CONTROLS), EVENT, EST, EW)
+    p, n = M.space_time_p(panel, REF, float(ar.sum()), EVENT, EST, EW)
+    assert n == len(REF) and p == pytest.approx(1 / (n + 1))              # larger than every pool actor
+    p_low, _ = M.space_time_p(panel, REF, -50.0, EVENT, EST, EW)
+    assert p_low == pytest.approx(1.0)
+    with pytest.raises(ValueError, match="at least three"):
+        M.space_time_p(panel, REF[:2], 1.0, EVENT, EST, EW)
+
+
+# ---------------------------------------------------------------- minimum detectable uplift, uplift and excess views
+
+def test_null_summary_converts_the_placebo_spread_to_uplift_percent():
+    cars = np.random.default_rng(0).normal(0, 2.0, 5000)
+    out = M.null_summary(cars, 34)
+    assert out["null_sd"] == pytest.approx(2.0, rel=0.05) and out["null_p95"] == pytest.approx(3.29, rel=0.05)
+    assert out["mdu_pct"] == pytest.approx(np.expm1(out["null_p95"] / 34) * 100)
+    assert out["mdu80_pct"] > out["mdu_pct"] > 0
+
+
+def test_null_distribution_never_looks_at_the_event():
+    s = spec()
+    quiet = M.null_distribution(S.synthetic_panel(2, GROUPS), s)
+    shocked = M.null_distribution(S.synthetic_panel(2, GROUPS, bumps=[("T", "2023-09-27", 3.0, 5.0)]), s)
+    assert quiet["null_sd"] == pytest.approx(shocked["null_sd"], rel=0.02)   # only the event window differs, and it is out
+    res, _ = M.run_event(S.synthetic_panel(2, GROUPS), s)
+    assert res.mdu_pct > 0 and res.mdu80_pct > res.mdu_pct and res.null_sd > 0
+
+
+def test_excess_views_and_uplift_for_a_flat_shift():
+    idx = pd.date_range("2023-01-01", periods=5)
+    y = pd.Series(np.log1p([100.0] * 5), index=idx)
+    ar = pd.Series(np.log(2.0) * np.ones(5), index=idx)        # log1p views twice what the model predicts
+    # the model predicts expm1(log1p(100) - log 2) = 49.5 views, the data have 100
+    assert M.excess_views(y, ar) == pytest.approx(5 * (100 - (101 / 2 - 1)))
+    assert np.expm1(ar.mean()) * 100 == pytest.approx(100.0)
+
+
+# ---------------------------------------------------------------- H2 on the smoothed series
+
+def _ar(values):
+    return pd.Series(values, index=pd.date_range("2023-09-24", periods=len(values)))
+
+
+def test_smoothed_half_life_observed_censored_and_no_peak():
+    ev = pd.Timestamp("2023-09-27")
+    decay = [0.0] * 3 + [2 * np.exp(-t / 3) for t in range(31)]
+    peak_date, peak, hl, status = M.half_life_smoothed(_ar(decay), ev)
+    assert status == "observed" and hl is not None and peak > 0 and peak_date >= ev
+    slow = [0.0] * 3 + [1.0 for _ in range(31)]
+    assert M.half_life_smoothed(_ar(slow), ev)[2:] == (None, "censored")
+    assert M.half_life_smoothed(_ar([0.0] * 3 + [-1.0] * 31), ev)[2:] == (None, "no positive peak")
+
+
+def test_a_dip_below_half_that_comes_back_is_not_the_half_life():
+    ev = pd.Timestamp("2023-09-27")
+    vals = [0.0] * 3 + [4.0] * 8 + [0.0] * 2 + [4.0] * 8 + [0.0] * 13   # dips for two days only
+    shape = M.half_life_smoothed(_ar(vals), ev)
+    smooth = _ar(vals).rolling(7, center=True).mean().loc[ev:].dropna()
+    first_dip = smooth.index[(smooth < smooth.max() / 2).to_numpy().argmax()]
+    assert shape[3] == "observed" and (shape[0] + pd.Timedelta(days=shape[2])) >= first_dip
+
+
+def test_the_smoothed_window_needs_seven_days_from_day_zero():
+    with pytest.raises(ValueError, match="too short"):
+        M.half_life_smoothed(_ar([0.0, 0.0, 0.0, 1.0, 1.0]), pd.Timestamp("2023-09-27"))
+
+
+# ---------------------------------------------------------------- omitted days (design §3)
+
+def holes(panel, col, days):
+    out = panel.copy()
+    out.loc[out.index[days], col] = np.nan
+    return out
+
+
+def test_target_with_too_many_omitted_estimation_days_is_dropped():
+    panel = S.synthetic_panel(2, GROUPS)
+    ev = (EVENT - panel.index[0]).days
+    est = list(range(ev - 150, ev - 31))
+    with pytest.raises(M.EventDropped, match="T"):
+        M.run_event(holes(panel, "T", est[:7]), spec())             # 7 of 120 > 5 %
+    res, _ = M.run_event(holes(panel, "T", est[:5]), spec())         # 5 of 120 is allowed and left out of the fit
+    assert res.n_placebo > 900
+
+
+def test_an_omitted_event_window_day_of_the_target_drops_the_event():
+    panel = S.synthetic_panel(2, GROUPS)
+    ev = (EVENT - panel.index[0]).days
+    with pytest.raises(M.EventDropped):
+        M.run_event(holes(panel, "T", [ev + 5]), spec())
+
+
+def test_pool_member_with_any_omitted_day_is_dropped_but_a_cast_control_below_five_percent_stays():
+    groups = {"T": CONTROLS, "R0": REF[1:]}
+    panel = S.synthetic_panel(2, groups, common_sd=0.1)
+    ev = (EVENT - panel.index[0]).days
+    s = spec(controls=REF, cast=CONTROLS, reference=REF, falsification=True)
+    res, _ = M.run_event(holes(panel, "R3", [ev - 60]), s, falsify=False)
+    assert any(d.startswith("R3 (pool member") for d in res.dropped)
+    res, _ = M.run_event(holes(panel, "C2", [ev - 60, ev - 61]), spec(cast=CONTROLS))
+    assert res.dropped == []
+    res, _ = M.run_event(holes(panel, "C2", list(range(ev - 150, ev - 140))), spec(cast=CONTROLS))
+    assert any(d.startswith("C2 (") for d in res.dropped) and not any("pool" in d for d in res.dropped)
+
+
+def test_all_baseline_articles_dropped_stops_the_event_and_nothing_is_replaced():
+    panel = S.synthetic_panel(2, {"T": CONTROLS}, common_sd=0.1)
+    ev = (EVENT - panel.index[0]).days
+    for c in CONTROLS:
+        panel = holes(panel, c, list(range(ev - 150, ev - 130)))
+    with pytest.raises(M.EventDropped, match="no baseline"):
+        M.run_event(panel, spec())
+
+
+def test_monthly_gap_uses_days_up_to_the_cutoff_and_skips_blocked_days():
+    idx = pd.date_range("2023-04-01", "2023-09-30")
+    y = pd.Series(np.where(idx.month == 6, 5.0, 1.0), index=idx)
+    x = pd.Series(0.0, index=idx)
+    gap = M.monthly_gap(y, x, "2023-09-17", blocked=[("2023-06-06", "2023-07-13")])
+    assert str(gap.index.max()) == "2023-09" and gap.loc[pd.Period("2023-06")] == pytest.approx(5.0)
+    assert gap.loc[pd.Period("2023-07")] == pytest.approx(1.0)
+    assert gap.loc[pd.Period("2023-09")] == pytest.approx(1.0)

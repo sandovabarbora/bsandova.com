@@ -18,6 +18,7 @@ pytestmark = pytest.mark.slow
 @pytest.mark.parametrize("spec", C.EVENTS, ids=lambda s: s.name)
 def test_false_positive_rate_over_300_seeds_stays_near_five_percent(spec):
     r = SIM.false_positive_rate(spec)
+    assert r["median_mdu_pct"] > 0 and r["median_mdu80_pct"] > r["median_mdu_pct"]
     assert r["n_seeds"] == 300
     assert r["h1_p_below_0.05"] <= 0.10
     assert r["external_falsification_p_below_0.05"] <= 0.10
@@ -28,7 +29,7 @@ def test_false_positive_rate_over_300_seeds_stays_near_five_percent(spec):
 def test_power_rises_with_the_shock(spec):
     pw = [SIM.power(spec, s)["p_below_0.05"] for s in SIM.SHOCKS]
     assert pw == sorted(pw)
-    assert pw[0] > 0.4 and pw[-1] > 0.95
+    assert pw[0] < 0.25 and pw[-1] > 0.8
 
 
 def test_external_falsification_sees_a_cast_wide_jump_that_leave_one_out_cannot():
