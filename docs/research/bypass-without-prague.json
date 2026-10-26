@@ -1,0 +1,195 @@
+{
+ "note": "added after the results, not registered; does not replace the registered labels",
+ "dropped": {
+  "town": 554782,
+  "name": "Praha",
+  "unit": "BYP-057",
+  "left_in_unit": [
+   "Úvaly; Praha"
+  ]
+ },
+ "comparison_towns": 49,
+ "treated_towns": 35,
+ "comparison_units": 46,
+ "years": [
+  2016,
+  2025
+ ],
+ "seed": 20261015,
+ "draws": 2000,
+ "redrawn": {
+  "no_treated_post_year": 0,
+  "separated": 2,
+  "not_converged": 0
+ },
+ "pre_trends": {
+  "towns_per_lead": {
+   "lead|-3": 30,
+   "lead|-2": 32
+  },
+  "towns_any_lead": 32,
+  "coefficients": {
+   "lead|-3": 0.06823685729768346,
+   "lead|-2": -0.0227670040425359
+  },
+  "wald": 0.9727567949359324,
+  "df": 2,
+  "p": 0.61484910594463,
+  "uninformative": false,
+  "rejects_5pct": false
+ },
+ "results": {
+  "q1": {
+   "est": -0.15314678107137347,
+   "ci90": [
+    -0.42981023770936344,
+    0.02035897409040541
+   ],
+   "ci95": [
+    -0.5273005729704854,
+    0.07048828234113537
+   ],
+   "delta_per_town_year": -1.1263703652760442,
+   "delta_ci95": [
+    -3.0435769911234343,
+    0.15865071801012237
+   ],
+   "treated_towns": 35,
+   "draws_missing": 0,
+   "power": {
+    "ci90_width": 0.4501692117997689,
+    "smallest_detectable_change": 0.29889442765581037
+   },
+   "label_by_registered_rule": "underpowered",
+   "registered": {
+    "est": -0.18778892906638378,
+    "ci90": [
+     -0.44158646507106813,
+     -0.00027791227813571775
+    ],
+    "ci95": [
+     -0.5342292912306602,
+     0.034301580078261396
+    ],
+    "label": "underpowered"
+   }
+  },
+  "q2": {
+   "est": 0.06507116329680018,
+   "ci90": [
+    -0.09484927447170366,
+    0.27239267264113304
+   ],
+   "ci95": [
+    -0.1275059382913029,
+    0.31555204573387063
+   ],
+   "delta_per_town_year": -0.0870694435220646,
+   "delta_ci95": [
+    -2.1723854917538987,
+    1.6988722743208067
+   ],
+   "treated_towns": 35,
+   "draws_missing": 0,
+   "power": {
+    "ci90_width": 0.3672419471128367,
+    "smallest_detectable_change": 0.22152899201258677
+   },
+   "label_by_registered_rule": "underpowered",
+   "registered": {
+    "est": 0.023254332936599065,
+    "ci90": [
+     -0.11627190513030057,
+     0.23477274217333793
+    ],
+    "ci95": [
+     -0.14398414053109446,
+     0.2806381700770074
+    ],
+    "label": "underpowered"
+   },
+   "change_inside_built_up_per_town_year": -1.1263703652760442,
+   "change_outside_built_up_per_town_year": 1.0393009217539795,
+   "change_outside_ci95": [
+    -0.005970832990765906,
+    2.2622220642080673
+   ]
+  },
+  "1_all_accidents_q1": {
+   "est": -0.020726749541557177,
+   "ci90": [
+    -0.32277219255812584,
+    0.179644196419239
+   ],
+   "ci95": [
+    -0.3894859434926652,
+    0.22286026684935512
+   ],
+   "delta_per_town_year": -0.1153518145753406,
+   "delta_ci95": [
+    -8.177918279342313,
+    6.899412530752923
+   ],
+   "treated_towns": 35,
+   "draws_missing": 0,
+   "power": {
+    "ci90_width": 0.5024163889773648,
+    "smallest_detectable_change": 0.30617310517101015
+   },
+   "label_by_registered_rule": "underpowered",
+   "registered": {
+    "est": 0.4969921901461507,
+    "ci90": [
+     -0.22294484387585095,
+     0.6379718991783155
+    ],
+    "ci95": [
+     -0.285226828048428,
+     0.6655084466888014
+    ],
+    "label": null
+   }
+  },
+  "1_all_accidents_q2": {
+   "est": 0.10948722707509617,
+   "ci90": [
+    -0.04486236346211721,
+    0.26278034180686705
+   ],
+   "ci95": [
+    -0.060399179989501894,
+    0.301482473131758
+   ],
+   "delta_per_town_year": 3.799252771096727,
+   "delta_ci95": [
+    -2.7055713560662467,
+    11.041859848623005
+   ],
+   "treated_towns": 35,
+   "draws_missing": 0,
+   "power": {
+    "ci90_width": 0.30764270526898424,
+    "smallest_detectable_change": 0.18094082656062996
+   },
+   "label_by_registered_rule": "underpowered",
+   "registered": {
+    "est": 0.6551349381488938,
+    "ci90": [
+     -0.00710326424868079,
+     0.7679810315420537
+    ],
+    "ci95": [
+     -0.03671511248474303,
+     0.785712214418165
+    ],
+    "label": null
+   }
+  }
+ },
+ "versions": {
+  "numpy": "2.5.4",
+  "pandas": "3.1.0",
+  "statsmodels": "0.15.0",
+  "scipy": "1.18.1"
+ }
+}
