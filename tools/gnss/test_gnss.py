@@ -915,7 +915,8 @@ import estimate as E  # noqa: E402
 
 BAND_OF = {"CZ": "600-900", "PL": "300-600", "BALT": "0-300", "CTRL": "900+", "AT": "900+", "CH": "900+", "DEW": "900+"}
 # variants whose degraded share is scaled, so that each estimator can be told apart
-FACTOR = {"c10_nacp7": 0.5, "c2_anyalt": 1.5}
+FACTOR = {"c1_nic": .8, "c1_nic_same": 1.2, "c2_anyalt": 1.5, "c3_v12": .7, "c8_nobuf": 1.1, "c10_nacp7": .5,
+          "c12_cap40": .9}
 
 
 def synth(seed=7, step=2, n_ac=500, p=None, cz_year4=0.0, jump=None, crossing_q=None):
@@ -1090,14 +1091,10 @@ def test_unscreenable_airframes_are_kept(world):
 
 def test_each_variant_estimator_reads_its_own_rows(world):
     P = world[3]
-    base = E.primary(P, *ones(P))["E.CZ"]
-    got = {n: E.ESTIMATORS[n](P, *ones(P))["E.CZ"] for n in ("c10_nacp7", "c2_anyalt", "c1_nic", "c3_v12", "c8_nobuf",
-                                                                 "c12_cap40", "c1_nic_same")}
-    assert got["c10_nacp7"] == pytest.approx(.5 * 0.03, abs=.006)
-    assert got["c2_anyalt"] == pytest.approx(1.5 * 0.03, abs=.008)
-    for n in ("c1_nic", "c3_v12", "c8_nobuf", "c12_cap40", "c1_nic_same"):
-        assert got[n] == pytest.approx(.03, abs=.008)
-    assert base == pytest.approx(.03, abs=.006)
+    assert E.primary(P, *ones(P))["E.CZ"] == pytest.approx(.03, abs=.006)
+    for n, f in FACTOR.items():
+        assert E.ESTIMATORS[n](P, *ones(P))["E.CZ"] == pytest.approx(f * .03, abs=.006), n
+    assert len(set(FACTOR.values())) == len(FACTOR)  # a variant read from the wrong rows could not pass twice
 
 
 def test_control_variants_use_their_own_control_region(world):
@@ -1210,7 +1207,8 @@ def test_labels_follow_the_registered_order():
     assert E.label_excess([-.004, .008], [-.003, .0099]) == E.NO_EXCESS
     assert E.label_excess([-.004, .02], [-.003, .0101]) == E.INCONCLUSIVE
     assert E.label_excess([.011, .03], [.012, .0099]) == E.HIGHER  # higher comes first
-    assert E.label_excess(None, None) == E.INCONCLUSIVE
+    assert E.label_excess(None, None) == E.NOT_COMPUTED and E.label_change([0, 1], None) == E.NOT_COMPUTED
+    assert not E.differs(E.NOT_COMPUTED, E.HIGHER) and E.differs(E.NO_EXCESS, E.HIGHER)
     assert E.label_change([.0001, .03], [.002, .02]) == E.INCREASE
     assert E.label_change([-.001, .03], [.0, .0099]) == E.NO_INCREASE
     assert E.label_change([-.001, .03], [.0, .0101]) == E.INCONCLUSIVE
@@ -1303,7 +1301,7 @@ def test_windows_are_1_march_to_14_october_inclusive():
 
 def test_checks_are_all_reported_with_both_labels(analysed):
     c = analysed["checks"]
-    assert set(c) == set(E.CHECKS) and len(E.CHECKS) == 17
+    assert set(c) == set(E.CHECKS) and len(E.CHECKS) == 18
     for n, v in c.items():
         d = v["E.CZ"]
         assert d["label"] in (E.HIGHER, E.NO_EXCESS, E.INCONCLUSIVE) and d["primary_label"] == E.HIGHER
@@ -1390,15 +1388,43 @@ def test_a_crash_keeps_the_draws_made_so_far(small, monkeypatch, tmp_path):
     assert "primary.E.CZ" in rows[0]["stats"] and "c5_paired.E.CZ" in rows[0]["stats"]
 
 
-def test_log_can_finish_a_summary_without_drawing_again(small, tmp_path):
-    log = tmp_path / "draws.jsonl"
-    first = E.analyse(small, draws=15, seed=E.SEED, log=log)
-    again = E.analyse(small, draws=15, seed=E.SEED, replay=E.replay_rows(log))
-    assert again["q1"] == first["q1"] and again["q3"]["change"] == first["q3"]["change"]
-    short = tmp_path / "short.jsonl"
-    short.write_text("".join(log.read_text().splitlines(True)[:5]))
-    part = E.analyse(small, draws=15, seed=E.SEED, replay=E.replay_rows(short))
-    assert part["draws"] == 5 and part["draws_complete"] is False
+def test_a_resumed_run_equals_an_uninterrupted_one(small, tmp_path):
+    full_log = tmp_path / "full.jsonl"
+    full = E.analyse(small, draws=15, seed=E.SEED, log=full_log)
+    lines = full_log.read_text().splitlines(True)
+    main = [x for x in lines if '"set": "main"' in x]
+    assert len(main) == 15
+    cut = tmp_path / "cut.jsonl"
+    cut.write_text("".join(main[:6]))  # crashed in the main set, Q3 never reached
+    resumed = E.analyse(small, draws=15, seed=E.SEED, log=cut, replay=E.replay_rows(cut))
+    assert E.clean(resumed) == E.clean(full)
+    assert len(cut.read_text().splitlines()) == len(lines)
+    again = E.analyse(small, draws=15, seed=E.SEED, log=cut, replay=E.replay_rows(cut))  # nothing left to draw
+    assert E.clean(again) == E.clean(full) and len(cut.read_text().splitlines()) == len(lines)
+    mid = tmp_path / "mid.jsonl"
+    mid.write_text("".join(lines[:15 + 4]))  # crashed inside the Q3 set
+    assert E.clean(E.analyse(small, draws=15, seed=E.SEED, log=mid, replay=E.replay_rows(mid))) == E.clean(full)
+
+
+def test_a_log_without_q3_draws_stops_loudly_when_the_main_set_is_done(small, tmp_path):
+    log = tmp_path / "d.jsonl"
+    E.analyse(small, draws=8, seed=E.SEED, log=log)
+    main_only = tmp_path / "main.jsonl"
+    main_only.write_text("".join(x for x in log.read_text().splitlines(True) if '"set": "main"' in x))
+    with pytest.raises(RuntimeError, match="no Q3 draws"):
+        E.analyse(small, draws=8, seed=E.SEED, log=main_only, replay=E.replay_rows(main_only))
+    assert main_only.read_text().count('"set": "q3"') == 0
+
+
+def test_a_log_from_other_data_is_refused(small, tmp_path):
+    log = tmp_path / "d.jsonl"
+    E.analyse(small, draws=6, seed=E.SEED, log=log)
+    rows = [json.loads(x) for x in log.read_text().splitlines()]
+    [r for r in rows if r["set"] == "main"][-1]["redrawn"] = 7
+    bad = tmp_path / "bad.jsonl"
+    bad.write_text("".join(json.dumps(r) + "\n" for r in rows))
+    with pytest.raises(RuntimeError, match="does not belong"):
+        E.analyse(small, draws=6, seed=E.SEED, log=bad, replay=E.replay_rows(bad))
 
 
 def test_same_seed_gives_the_same_results(small, tmp_path):
@@ -1410,18 +1436,29 @@ def test_same_seed_gives_the_same_results(small, tmp_path):
 def test_the_gate_redraws_and_gives_up_when_it_cannot_pass():
     n = {"k": 0}
 
-    def once(rng):
-        n["k"] += 1
-        return None if n["k"] <= 3 else {"x": 1.0}
-    got, redrawn = E.run_draws(once, 5, 1, None, "t")
+    class Fake:
+        def draw(self, rng):
+            n["k"] += 1
+            return n["k"]
+
+        def gate(self, ctx):
+            return ctx > 3
+
+        def row(self, ctx):
+            return {"x": float(ctx)}
+    got, redrawn = E.run_draws(Fake(), 5, 1, None, "t")
     assert len(got) == 5 and redrawn == 3
+
+    class Never(Fake):
+        def gate(self, ctx):
+            return False
     with pytest.raises(RuntimeError, match="gate is broken"):
-        E.run_draws(lambda rng: None, 3, 1, None, "t")
+        E.run_draws(Never(), 3, 1, None, "t")
 
 
 def test_an_undefined_gate_in_every_draw_stops_instead_of_looping():
     P = tiny({"points": [("a", "CZ", "600-900", 10, 1)]}, {"points": [("a", "CZ", "600-900", 10, 1)]})  # no control
-    with pytest.raises(RuntimeError, match="gate is broken"):
+    with pytest.raises(RuntimeError, match="fails on the full data"):
         E.analyse(P, draws=2, seed=E.SEED)
 
 
@@ -1449,7 +1486,7 @@ def test_main_refuses_without_unblind_and_never_loads(monkeypatch):
 def test_unblind_needs_the_tag_on_an_unchanged_tree(monkeypatch):
     monkeypatch.setattr(E, "load_panel", lambda *a: pytest.fail("opened the sealed counts"))
     monkeypatch.setattr(sys, "argv", ["estimate.py", "--unblind"])
-    monkeypatch.setattr(E, "frozen", lambda: "HEAD does not carry the tag gnss-estimation")
+    monkeypatch.setattr(E, "frozen", lambda: "HEAD does not carry the tag gnss-code")
     with pytest.raises(SystemExit, match="does not carry the tag"):
         E.main()
 
@@ -1460,8 +1497,8 @@ def test_frozen_checks_tag_and_clean_tree(monkeypatch):
     def fake(cmd, **kw):
         return type("R", (), {"stdout": out["tag"] if "tag" in cmd else out["status"]})()
     monkeypatch.setattr(E.subprocess, "run", fake)
-    assert "gnss-estimation" in E.frozen()
-    out["tag"] = "gnss-estimation\n"
+    assert "gnss-code" in E.frozen()
+    out["tag"] = "gnss-code\n"
     assert E.frozen() is None
     out["status"] = " M tools/gnss/estimate.py\n"
     assert "uncommitted" in E.frozen()
@@ -1535,3 +1572,119 @@ def test_load_panel_reads_only_counted_and_replaced_days(tmp_path, monkeypatch):
     (tmp_path / str(wed[1]) / "manifest.json").write_text(json.dumps({"wednesday": str(wed[1]), "status": "lost"}))
     monkeypatch.setattr(F, "sample_days", lambda: list(wed))
     assert E.load_panel(tmp_path, kp).n_days == len(wed) - 1
+
+
+# --- review items: weights, windows, readings, strict airframes, gate -----------------------------------------------
+
+def test_checks_use_the_drawn_aircraft_weights_and_days_only_uses_the_base_weights(small, monkeypatch):
+    P = small
+    half = np.zeros(P.n_ac)
+    half[P.pool[::2]] = 1.0
+    monkeypatch.setattr(E, "aircraft_weights", lambda rng, P_, pool=None: half)
+    point, template, _ = E.point_estimates(P)
+    s = E.MainSampler(P, template, tuple(E.ESTIMATORS))
+    wd = np.ones(P.n_days)
+    row = s.row((wd, half))
+    full = E.primary(P, wd, P.base_w)
+    assert row["days_only.E.CZ"] == pytest.approx(full["E.CZ"])
+    assert row["primary.E.CZ"] == pytest.approx(E.primary(P, wd, half * P.base_w)["E.CZ"])
+    assert row["primary.E.CZ"] != pytest.approx(full["E.CZ"], abs=1e-9)
+    for n in ("c10_nacp7", "c5_paired", "c11_crossings", "c7_equal_days", "c4_screenable"):
+        want = E.ESTIMATORS[n](P, wd, half * P.base_w)["E.CZ"]
+        assert row[f"{n}.E.CZ"] == pytest.approx(want), n
+        assert want != pytest.approx(point[f"{n}.E.CZ"], abs=1e-9), n
+
+
+def test_blocks_are_runs_of_four_consecutive_days_inside_their_period():
+    class Fixed:
+        def integers(self, lo, hi, size):
+            return np.array([2, 7, 8][:size])
+    idx = np.arange(5, 15)  # a period of 10 days inside a longer panel
+    wd = E.block_weights(Fixed(), [idx], 20)
+    # starts 2, 7, 8 give days 2-5, 7-9 and 0, then 8-9, cut to the period length of 10
+    want = np.bincount([2, 3, 4, 5, 7, 8, 9, 0, 8, 9], minlength=10)
+    assert list(wd[5:15]) == list(want) and wd[:5].sum() == 0 and wd[15:].sum() == 0
+
+
+def test_q3_blocks_stay_in_their_window(small):
+    w = E.windows(small)
+    P24, P26 = small.restrict(w[2024]), small.restrict(w[2026])
+    ctx = E.Q3Sampler(P24, P26).draw(np.random.default_rng(4))
+    for tag, mask in (("e24", w[2024]), ("e26", w[2026])):
+        assert ctx["wd"][tag][~mask].sum() == 0 and ctx["wd"][tag].sum() == mask.sum()
+
+
+def test_q3_paired_and_independent_readings(small, monkeypatch):
+    w = E.windows(small)
+    P24, P26 = small.restrict(w[2024]), small.restrict(w[2026])
+    s = E.Q3Sampler(P24, P26)
+    seq = iter(range(1000))
+    calls = []
+
+    def aw(rng, P, pool=None):
+        k = next(seq)
+        calls.append((k, pool is not None))
+        v = np.zeros(P.n_ac)
+        v[P.pool[np.random.default_rng(k).integers(0, P.pool.size, P.pool.size)]] += 1
+        return v
+    monkeypatch.setattr(E, "aircraft_weights", aw)
+    ctx = s.draw(np.random.default_rng(1))
+    assert calls == [(0, True), (1, False), (2, False)]  # one shared draw over both windows, then one per window
+    row = s.row(ctx)
+    for tag, W in (("e24", P24), ("e26", P26)):
+        wd = ctx["wd"][tag]
+        assert row[f"{tag}.primary.E.CZ"] == pytest.approx(E.GATE(W, wd, ctx["shared"] * W.base_w)["E.CZ"])
+        assert row[f"{tag}.indep.E.CZ"] == pytest.approx(E.GATE(W, wd, ctx["own"][tag] * W.base_w)["E.CZ"])
+    assert not np.array_equal(ctx["own"]["e24"], ctx["own"]["e26"])
+    assert row["e24.primary.E.CZ"] != pytest.approx(row["e24.indep.E.CZ"], abs=1e-12)
+
+
+def test_q3_independent_reading_is_reported_beside_the_primary(analysed_rise):
+    q3 = analysed_rise["q3"]
+    ind = q3["independent_aircraft"]
+    assert ind["est"] == pytest.approx(q3["change"]["est"]) and ind["ci95"] is not None
+    assert q3["change"]["independent_aircraft_ci95"] == ind["ci95"] and "paired" in q3["reading"]
+
+
+def test_strict_airframe_reading_is_check_13():
+    p = {"points": [("a", "CZ", "600-900", 100, 50), ("b", "CZ", "600-900", 100, 10), ("c", "CTRL", "900+", 200, 0)],
+         "west": [("a", 20, 20), ("b", 40, 0), ("c", 40, 0)]}
+    P = tiny(p, {"west": p["west"]})
+    ids = {s: i for i, s in enumerate(P.icao)}
+    # a: 40 west points over two days, all degraded: dropped by the loose rule; never 30 on a day, so kept by the strict
+    assert not P.keep[ids["a"]] and P.keep_strict[ids["a"]] and ids["a"] in P.pool
+    point, _, failed = E.point_estimates(P)
+    assert not failed
+    assert point["primary.E.CZ"] == pytest.approx(.10) and point["c13_strict_airframes.E.CZ"] == pytest.approx(.30)
+    assert point["c4_screenable.E.CZ"] == pytest.approx(.10)
+
+
+def test_gate_is_its_own_step_and_primary_failures_leave_keys_missing(small, monkeypatch):
+    def boom(P, wd, wa):
+        raise np.linalg.LinAlgError("SVD did not converge")
+    monkeypatch.setattr(E, "primary", boom)
+    point, template, _ = E.point_estimates(small)
+    template["primary"] = ["E.CZ", "E.PL"]
+    s = E.MainSampler(small, template, ("jumps",))
+    ctx = s.draw(np.random.default_rng(1))
+    assert s.gate(ctx)  # the gate does not go through primary()
+    row = s.row(ctx)
+    assert np.isnan(row["primary.E.CZ"]) and np.isnan(row["days_only.E.CZ"]) and np.isfinite(row["jumps.S.CZ"])
+    assert E.ERRORS["primary"] == "LinAlgError"
+
+
+def test_primary_failing_on_the_full_data_stops_before_any_draw(small, monkeypatch, tmp_path):
+    def boom(P, wd, wa):
+        raise ValueError("x")
+    monkeypatch.setitem(E.ESTIMATORS, "primary", boom)
+    log = tmp_path / "d.jsonl"
+    with pytest.raises(RuntimeError, match="no draw is made"):
+        E.analyse(small, draws=5, seed=E.SEED, log=log)
+    assert not log.exists()
+
+
+def test_bands_note_and_regional_band_shares_are_reported(analysed):
+    q2 = analysed["q2"]
+    assert "not a regional contrast" in q2["bands_note"]
+    assert q2["D_by_region_and_band"]["CZ"]["600-900"]["est"] == pytest.approx(.05, abs=.008)
+    assert analysed["estimator_errors"] == {}
