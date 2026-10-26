@@ -292,3 +292,17 @@ years before the promise"; the label itself stands.
   after the per-event gaps had been computed. It builds the panels with the frozen code and checks that the mean of the
   per-event gap changes reproduces the registered Q1 exactly. Raw figures, no interval, no label; nothing was
   re-estimated and no label changes (`docs/research/incentives-districts.json`).
+- 26 October 2026 (after the results, **not registered**; correction of §8, whose registered text stays unchanged):
+  §8 says "no realisation data exist (NKÚ 20/13)". The audit says more narrowly that the ministry checked at the
+  recipients that the legal minimums of investment and new jobs were met, had no duty to compare, and did not compare,
+  the jobs created with those promised, and had no duty to track how many went to registered job seekers. No
+  per-project realisation figures are published.
+- 26 October 2026 (after the results, **not registered**): the base of the outcome. Read back from the MPSV files as
+  the sum over districts of `dosazitelniUchazeci15_64` / `podilNezamestnanychOsobPNO` × 100
+  (`tools/incentives/districts.py`, `implied_denominator` in `docs/research/incentives-districts.json`), the national
+  base is about 5.4 to 5.7 million and constant within each year through December 2013 (5 689 303 in every month of
+  2013), and about 7.1 million, the population aged 15–64, varying by month from January 2014 (7 127 654). The step in
+  these files is therefore in January 2014, not January 2013 as the change log assumed for check 12. Check 12 is
+  reported as registered; all 10 events it leaves out also span January 2014, and 3 more do (Most and Cheb 2015, Beroun
+  2015). A check at January 2014 is not run. For Q3, the bound −1 is exact only for months from 2014; earlier months
+  have a smaller base, so the bound there is larger in size.

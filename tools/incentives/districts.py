@@ -42,6 +42,7 @@ RES = ROOT / "docs/research/incentives-results.json"
 RUIAN_URL = "https://services.cuzk.gov.cz/shp/stat/epsg-5514/1.zip"
 OBCE = DATA / "ruian" / "OBCE_P.shp"
 HELD, GREY = "#34507c", "#8a8a86"
+STEP_2014 = 2014 * 12  # January 2014, where the base of the published share changes in the MPSV files
 MONTHS = ("January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
           "November", "December")
 STATUS = {"ANO": " (cancelled)", "ověřit": " (to be verified)"}
@@ -65,6 +66,25 @@ def ensure_ruian() -> Path:
 def rings(geom, tol: float) -> list:
     g = geom.simplify(tol, preserve_topology=True)
     return [[[round(x, 3), round(y, 3)] for x, y in p.exterior.coords] for p in getattr(g, "geoms", [g])]
+
+
+def implied_denominator() -> dict:
+    """The national base the published share divides by, read back as sum(job seekers 15-64) / share × 100 summed over
+    districts: it tells which months use the economically active base of the old rate and which the population 15-64."""
+    from fetch import months, mpsv_name
+    out = {}
+    for y, m in months():
+        f = E.MPSV_DIR / mpsv_name(y, m)
+        if not f.exists():
+            continue
+        items = json.loads(f.read_text(encoding="utf-8"))["polozky"]
+        out[f"{y}-{m:02d}"] = sum(it["dosazitelniUchazeci15_64"] / it["podilNezamestnanychOsobPNO"] * 100
+                                  for it in items if it.get("podilNezamestnanychOsobPNO"))
+    step = [k for a, k in zip(out, list(out)[1:]) if out[k] / out[a] > 1.1]
+    assert step == ["2014-01"], step  # the article states the base changes in January 2014 and nowhere else
+    return {"by_month": {k: round(v) for k, v in out.items()}, "step": step[0],
+            "before": round(np.mean([v for k, v in out.items() if "2013-01" <= k <= "2013-12"])),
+            "after": round(np.mean([v for k, v in out.items() if "2014-01" <= k <= "2014-12"]))}
 
 
 def panels():
@@ -106,6 +126,7 @@ def main() -> None:
                      "year": y, "month": m + 1, "jobs": int(ev.jobs), "cancelled": ev.cancelled, "regime": ev.regime,
                      "comparisons": len(sp.units) - 1, "pop_15_64_year_m1": round(sp.pop_pre),
                      "jobs_per_100": 100 * ev.jobs / sp.pop_pre, "spans_2013_01": E.spans_pno_change(ev),
+                     "spans_2014_01": E.covers(ev, STEP_2014, STEP_2014),
                      "gap": {str(k): v for k, v in gap.items()}, "change": change,
                      "treated": {str(k): float(v) for k, v in zip(sp.years, sp.y[0])},
                      "comparison_mean": {str(k): float(v) for k, v in zip(sp.years, sp.y[1:].mean(axis=0))}})
@@ -120,7 +141,8 @@ def main() -> None:
         "mean_change_equals_registered_q1": mean_change,
         "example_rule": "the event with the most promised jobs, the one registered check 1 leaves out; picked after "
                         "the per-event gaps had been computed",
-        "example": example["id"], "events": rows}, indent=1, ensure_ascii=False), encoding="utf-8")
+        "example": example["id"], "implied_denominator": implied_denominator(),
+        "events": rows}, indent=1, ensure_ascii=False), encoding="utf-8")
     write_map(rows)
     print("events", len(rows), "mean change", round(mean_change, 6), "registered", round(reg["estimate"], 6),
           "example", example["district_name"], example["jobs"])
