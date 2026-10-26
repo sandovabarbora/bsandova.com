@@ -15,4 +15,11 @@ jobs:
       - run: pip install -q pytest && python -m pytest -q surf/tests weather/tests ask/test_eval_guard.py tools/site/test_status_check.py   # the verifiers' tests, the eval guard and the status verdicts
       - run: pip install -q -r tools/requirements-tests.txt
       # the study suites (made-up data) and the golden-master pins; pins whose inputs live only in tools/data skip here
-      - run: python -m pytest -q -rs tools/rain tools/heat tools/late tools/bunch tools/gehl tools/transfer tools/dst tools/eurovision tools/eras tools/procurement tools/un tools/memes
+      - run: python -m pytest -q -rs tools/rain tools/heat tools/late tools/bunch tools/gehl tools/transfer tools/dst tools/eurovision tools/eras tools/procurement tools/un
+      # suites that share module names (estimate, common, ...) run each in its own process
+      - run: python -m pytest -q -rs tools/bypass
+      - run: python -m pytest -q -rs tools/gnss
+      - run: python -m pytest -q -rs tools/incentives
+      - run: python -m pytest -q -rs tools/blackout
+      - run: python -m pytest -q -rs tools/priorities
+      - run: python -m pytest -q -rs tools/memes
