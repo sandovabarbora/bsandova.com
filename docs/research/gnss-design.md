@@ -306,3 +306,8 @@ read with the others, without a correction for multiplicity.
     gate, so a resumed run equals an uninterrupted one; a log whose redraw count does not match is refused. If the main
     set is complete and the log holds no Q3 draws the run stops instead of drawing them. The first exception class of
     each estimator is reported once.
+- 26 October 2026, after the results, correction: §2 (distance bands) says Czechia spans "about 650–950 km" from
+  Kaliningrad city; it spans about 525–812 km (524–812 km by great-circle distance over the vertices of the Natural Earth
+  boundary used in the data step), so its points fall in the 300–600 and 600–900 km bands. The sentence is descriptive:
+  the frozen code (`count.py`, `estimate.py`) uses only the band edges and the Kaliningrad coordinates, not that
+  range, so no count, estimate or label changes.
