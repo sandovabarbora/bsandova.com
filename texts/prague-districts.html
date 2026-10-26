@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Do districts whose mayor's party is in City Hall's coalition receive more city grants?</title>
+<title>Do City Hall's allies get bigger grants?</title>
 <meta name="description" content="Part 3 of Prague, measured. A registered test of whether Prague districts whose mayor's party joins the city coalition receive more in-year grants is inconclusive: the design could detect a premium of about 100 %, against premiums of 19–47 % reported elsewhere.">
-<meta property="og:title" content="Do districts whose mayor's party is in City Hall's coalition receive more city grants?">
+<meta property="og:title" content="Do City Hall's allies get bigger grants?">
 <meta property="og:description" content="Part 3 of Prague, measured: a registered test of party alignment in the city's in-year grants to its 57 districts, 2015–2023, inconclusive, with the districts' budgets per resident.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://bsandova.com/texts/prague-districts">
@@ -56,8 +56,8 @@
 <article class="text">
 <header class="text-head">
   <p class="kicker">Research · Prague, measured, Part 3 · city grants to 57 districts, 2015–2023</p>
-  <h1>Do districts whose mayor's party is in City Hall's coalition <em>receive more city grants?</em></h1>
-  <p class="deck">Districts whose mayor's party joined the city coalition did not receive detectably more in-year grants (H1 inconclusive); the design could detect only a premium of about 100 %, against 19–47 % reported elsewhere.</p>
+  <h1>Do City Hall's allies <em>get bigger grants?</em></h1>
+  <p class="deck">Districts whose mayor's party joined the city coalition got no detectably bigger grants, but only a doubling could have been seen, so a smaller bonus may be there unseen.</p>
   <dl class="facts">
     <div><dt>smallest premium the design could detect</dt><dd>≈ 100 % or more <small>at 80 % power (the test finds a true premium of that size four times in five) · simulated before this analysis was run, 75–150 % across scenarios, assuming three years after the 2023 change; the test as run has one, so its power is lower</small></dd></div>
     <div><dt>change on becoming aligned, H1</dt><dd>−37 % <small>of controls' usual grants · 95 % CI −115 to +21 % · p = 0.70 · inconclusive</small></dd></div>
@@ -86,7 +86,7 @@
   <div><dt>registration</dt><dd>registered analysis plan: design committed at <code>683b0c8</code> on 29 September 2026 (author time 01:07 CEST), with an addendum on parser coverage, the bridge check and the investment split at <code>7be2ad5</code> (author time 01:18 CEST; both commits were written to the branch at 01:19), before the results commit <code>d8270ac</code> (01:29 CEST); commit times are self-reported, and the branch was pushed after the analysis (<code>feature/PRAHA-3x_districts-extended</code>, 29 September 2026, 05:18 CEST). The author has worked with these sources continuously since May 2024, in work that led to this study, so the design was written with knowledge of the sources, not blind to them. The <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-districts-design.md">design file</a> lists every later change. Changes after registration, each dated, are in <a href="../changelog/#prague-districts-changes">the change log</a>.</dd></div>
   <div><dt>data</dt><dd>MONITOR, Ministry of Finance, district reports 2022–2025 (earlier years are empty for the Prague districts), accessed 28 September 2026; ČSÚ residents by district 1991–2025, accessed 28 September 2026; the city's closing accounts, part III, 2014–2025, and approved budgets, praha.eu, accessed 28 September 2026; ČSÚ candidate registers 2014, 2018 and 2022 (2022 register of 28 March 2026). Raw files are not redistributed; their SHA-256 hashes are in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-districts-files.sha256">prague-districts-files.sha256</a>. Derived data: <a href="../assets/praha/districts.json">districts.json</a>, <a href="../assets/praha/districts_extended.json">districts_extended.json</a>, <a href="../assets/praha/districts_extended_robust.json">districts_extended_robust.json</a>.</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/praha">tools/praha/</a>, estimates as published at commit <code>ff0f0ca</code>; rebuild the estimates with <code>uv run --with pandas --with numpy --with openpyxl --with xlrd --with scipy python tools/praha/districts_extended.py</code> (full order under <a href="#reproduction">Reproduction</a>).</dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Do districts whose mayor's party is in City Hall's coalition receive more city grants?</i> bsandova.com/texts/prague-districts, version 3. · archive: <a href="https://doi.org/10.5281/zenodo.23040133">doi:10.5281/zenodo.23040133</a> · <a href="../assets/pdf/prague-districts.pdf">PDF</a></dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Do City Hall's allies get bigger grants?</i> bsandova.com/texts/prague-districts, version 3. · archive: <a href="https://doi.org/10.5281/zenodo.23040133">doi:10.5281/zenodo.23040133</a> · <a href="../assets/pdf/prague-districts.pdf">PDF</a></dd></div>
   <div><dt>licence</dt><dd>code MIT; text, figures and data CC BY 4.0.</dd></div>
 </dl>
 </details>
@@ -238,7 +238,7 @@
 <li id="r7">Český statistický úřad, Prague office (2026). Obyvatelstvo Prahy podle městských částí 1991–2025, table CR_L3_MC, residents at 31 December. <a href="https://csu.gov.cz/pha/casove-rady-lide">csu.gov.cz/pha/casove-rady-lide</a>. Accessed 28 September 2026.</li>
 <li id="r8">Český statistický úřad (2026). Municipal elections 2014, 2018 and 2022: open data and candidate registers, lists with votes and seats in each district assembly (2022 register of 28 March 2026). <a href="https://volby.gov.cz/opendata/kv2022/kv2022_opendata.htm">volby.gov.cz</a>. Accessed 28 September 2026.</li>
 <li id="r9">Hlavní město Praha (2015–2026). Zpráva o plnění rozpočtu a vyúčtování výsledků hospodaření hl. m. Prahy, 2014–2025, part III (městské části), and approved budgets with the tables of financial relations to the districts, 2016–2026. <a href="https://praha.eu/zpravy-o-plneni-rozpoctu">praha.eu/zpravy-o-plneni-rozpoctu</a>. Accessed 28 September 2026.</li>
-<li id="r10">Šandová, B. (2026). <a href="prague-council">Do Prague's councillors vote against less, term after term?</a> Prague, measured, Part 1. bsandova.com. Accessed 29 September 2026.</li>
+<li id="r10">Šandová, B. (2026). <a href="prague-council">Do Prague's councillors still say no?</a> Prague, measured, Part 1. bsandova.com. Accessed 29 September 2026.</li>
 <li id="r11">Šandová, B. (2026). <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/prague-districts-design.md">Part 3 research design</a>, pre-specified version 2 with dated changes. GitHub, docs/research/prague-districts-design.md. Accessed 29 September 2026.</li>
 <li id="r12">Cengiz, D., Dube, A., Lindner, A., Zipperer, B. (2019). The effect of minimum wages on low-wage jobs. <i>Quarterly Journal of Economics</i> 134(3), 1405–1454.</li>
 <li id="r13">Wu, J., Ding, P. (2021). Randomization tests for weak null hypotheses in randomized experiments. <i>Journal of the American Statistical Association</i> 116(536), 1898–1913.</li>

@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>cutover: a table migration check</title>
+<title>Did a rewritten pipeline change the table?</title>
 <meta name="description" content="cutover compares an old and a new version of a table in five ordered checks and a verdict, and passes only when nothing differs. Method, tests, limits and a worked example on a month of NYC taxi data.">
-<meta property="og:title" content="cutover: a table migration check">
+<meta property="og:title" content="Did a rewritten pipeline change the table?">
 <meta property="og:description" content="cutover compares an old and a new version of a table in five ordered checks and a verdict, and passes only when nothing differs. Method, tests, limits and a worked example on a month of NYC taxi data.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://bsandova.com/assets/og/cutover.jpg">
@@ -49,8 +49,8 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
 <article class="text">
 <header class="text-head">
   <p class="kicker">Tool · cutover 0.1.0 · comparing two versions of a table</p>
-  <h1>cutover: checking that <em>a table migration</em> changed nothing</h1>
-  <p class="deck">A Python package that compares two versions of a table in five ordered checks and a verdict; on a month of NYC taxi aggregates it failed a first run on two differences and passed after a cast and a declared half-cent tolerance.</p>
+  <h1>Did a rewritten pipeline <em>change the table?</em></h1>
+  <p class="deck">A small Python tool that compares two versions of a table, and on a month of New York taxi data it caught two differences and passed only after a fix and a declared half-cent tolerance.</p>
   <dl class="facts">
     <div><dt>checks</dt><dd>5 <small>schema · key · row set · columns · fingerprints, then a verdict · administrative count</small></dd></div>
     <div><dt>tests</dt><dd>41 <small>passing on 29 September 2026 · administrative count</small></dd></div>
@@ -77,7 +77,7 @@ pre b{color:var(--coral);font-weight:400}pre i{color:var(--fg-2);font-style:norm
   <div><dt>status</dt><dd>tool v0.1.0</dd></div>
   <div><dt>data</dt><dd>NYC TLC yellow taxi trip records, January 2025, <code>yellow_tripdata_2025-01.parquet</code>, downloaded 14 September 2026; reports <a href="../assets/cutover/report-1.json">report-1.json</a> and <a href="../assets/cutover/report-2.json">report-2.json</a>, written by cutover 0.1.0 on 14 September 2026; re-runs <a href="../assets/cutover/report-3.json">report-3.json</a> and <a href="../assets/cutover/report-4.json">report-4.json</a>, written by cutover 0.1.0 on 9 October 2026</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/cutover">sandovabarbora/cutover</a>, tag v0.1.0 (commit 3bf9b72); demo <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/demos/cutover_demo.py">tools/demos/cutover_demo.py</a>, rebuilt with <code>uv run --with cutover --with pandas python tools/demos/cutover_demo.py</code> (add <code>--strict</code> for runs 3 and 4)</dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>cutover: checking that a table migration changed nothing</i>. bsandova.com/texts/cutover, version 4.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Did a rewritten pipeline change the table?</i> bsandova.com/texts/cutover, version 4.</dd></div>
   <div><dt>licence</dt><dd>package code Apache-2.0; demo script MIT; text, figures and data CC BY 4.0</dd></div>
 </dl>
 </details>

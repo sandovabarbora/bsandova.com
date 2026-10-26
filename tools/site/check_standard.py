@@ -125,11 +125,14 @@ def main() -> int:
     spec = importlib.util.spec_from_file_location("home", Path(__file__).with_name("home.py"))
     home = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(home)
-    page = home.INDEX.read_text(encoding="utf-8")
-    if home.render(page) != page:
-        print("FAIL index.html: differs from docs/works.toml; run tools/site/home.py")
+    try:
+        for f in home.stale():
+            print(f"FAIL {f}: differs from docs/works.toml; run tools/site/home.py")
+            failed += 1
+    except ValueError as err:
+        print(f"FAIL {err}")
         failed += 1
-    linked = {w["href"].removeprefix("texts/").rstrip("/") for w in home.tomllib.loads(home.CONFIG.read_text(encoding="utf-8"))["works"]}
+    linked = {w["href"].removeprefix("texts/").rstrip("/") for w in home.load()["works"]}
     for p in sorted(TEXTS.glob("*.html")):
         if not p.name.startswith("_") and p.stem not in linked:
             print(f"FAIL {p.relative_to(ROOT)}: not listed in docs/works.toml")
