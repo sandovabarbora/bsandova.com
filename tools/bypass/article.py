@@ -188,6 +188,71 @@ def static_damage(desc: dict, path: Path) -> None:
     plt.close(f)
 
 
+# ---------------------------------------------------------------- where the crashes went
+
+def where_rows(res: dict) -> list[tuple[str, float, list[float], str]]:
+    q1, q2, c10 = res["questions"]["q1"], res["questions"]["q2"], res["checks"]["10_old_through_road_q1"]
+    return [("inside town · Q1", q1["delta_per_town_year"], q1["delta_ci95"], "held"),
+            ("old road · check 10", c10["delta_per_town_year"], c10["delta_ci95"], "grey"),
+            ("outside · Q2 split", q2["change_outside_built_up_per_town_year"],
+             q2["change_outside_ci95"], "held"),
+            ("municipality · Q2", q2["delta_per_town_year"], q2["delta_ci95"], "held")]
+
+
+def where_chart(res: dict) -> dict:
+    rows = where_rows(res)
+    q3 = res["questions"]["q3"]
+    geo = [b for b in q3["bypasses"] if b.get("bypass_accidents") is not None]
+    pooled = q3["pooled"]["per_km_year"]
+    r = [{"y": lab, "lo": round(ci[0], 2), "hi": round(ci[1], 2), "mid": round(e, 2), "c": c,
+          "tip": f"{lab}: {acc(e)} injury accidents per town and year, 95 % {acc(ci[0])} to {acc(ci[1])}"}
+         for lab, e, ci, c in rows]
+    q3lab = "bypass · Q3"
+    dots = [{"x": round(b["per_km_year"], 2), "y": q3lab, "c": "light", "r": 3.5,
+             "tip": f'{b["id"]} · {b["road"]}: {n(b["per_km_year"], 2)} per km and year, {b["bypass_accidents"]} accidents'}
+            for b in geo]
+    return {"alt": "Changes in police-recorded injury accidents per town and year in years 1–3 after a bypass opened, "
+                   "relative to towns still waiting, with 95 % intervals: fewer inside the town, on all roads and on "
+                   "the old through road, more outside the built-up area, and about no change for the whole "
+                   "municipality; below, the injury accidents per kilometre and year on 17 bypass roads, descriptive.",
+            "panels": [{"title": "change per town and year",
+                        "h": 30 * len(rows) + 30,
+                        "x": {"kind": "linear", "domain": [-3.5, 2.5], "ticks": [-3, -2, -1, 0, 1, 2],
+                              "fmt": {"dp": 0, "sign": True}, "label": "injury accidents, 95 % interval"},
+                        "y": {"kind": "cat", "domain": [x[0] for x in rows]},
+                        "marks": [{"type": "rule", "axis": "x", "v": 0, "c": "grey"},
+                                  {"type": "range", "rows": r, "w": 3}]},
+                       {"title": "on the bypass, per km and year",
+                        "h": 70,
+                        "x": {"kind": "linear", "domain": [0, 1.5], "ticks": [0, 0.5, 1, 1.5],
+                              "fmt": {"dp": 1}, "label": "injury accidents per km and year"},
+                        "y": {"kind": "cat", "domain": [q3lab]},
+                        "marks": [{"type": "dots", "pts": dots},
+                                  {"type": "range", "rows": [{"y": q3lab, "lo": None, "hi": None, "mid": round(pooled, 2),
+                                                              "c": "ink", "tip": f"all {len(geo)} bypasses: {n(pooled, 2)} per km and year"}]}]}],
+            "legend": [{"label": "registered, 95 % interval", "c": HELD}, {"label": "check, 95 % interval", "c": "grey"},
+                       {"label": "one bypass road (grey dots) and all of them (black)", "c": "light", "shape": "o"}],
+            "table": {"cols": ["where", "injury accidents per town and year", "95 % interval"],
+                      "rows": [[lab, round(e, 2), f"{acc(ci[0])} to {acc(ci[1])}"] for lab, e, ci, _ in rows]
+                      + [[f"{q3lab} (per km and year, {len(geo)} bypasses)", round(pooled, 2), "descriptive, no interval"]]},
+            "data": ["results.json"]}
+
+
+def static_where(res: dict, path: Path) -> None:
+    rows = where_rows(res)
+    f, ax = plt.subplots(figsize=(7.2, 2.2))
+    ax.axvline(0, color=GREY, lw=0.8)
+    for i, (lab, e, ci, c) in enumerate(reversed(rows)):
+        col = HELD if c == "held" else GREY
+        ax.plot(ci, [i, i], color=col, lw=3, solid_capstyle="round")
+        ax.plot(e, i, "o", color=col, ms=6, mec="white")
+    ax.set_yticks(range(len(rows)), [x[0] for x in reversed(rows)], fontsize=8)
+    ax.set_xlabel("change in injury accidents per town and year, 95 % interval")
+    f.tight_layout()
+    f.savefig(path)
+    plt.close(f)
+
+
 # ---------------------------------------------------------------- tables in the text
 
 def tests_table(res: dict) -> str:
@@ -260,13 +325,20 @@ def number_refs(page: str, values: dict) -> str:
 def main() -> None:
     j = results_reader("bypass")
     res, scr, desc, wp = j("results-a"), j("screening"), j("describe"), j("without-prague")
+    tj = j("towns")
+    ex = next(t for t in tj["towns"] if t["town"] == tj["example"])
+    exq3 = next(b for b in res["questions"]["q3"]["bypasses"] if b["id"] == ex["row"])
+    em = ex["yearly_injury_municipality"]
+    assert tj["example_tied"] == 1 and not any(ex["yearly_injury_inside"].values())  # the text says so
+    assert sum(1 for t in tj["towns"] if t["class"] == "I" and t["open_year"] == ex["open_year"]) == 1
     A.mkdir(parents=True, exist_ok=True)
     for src, dst in (("results-a", "results"), ("describe", "describe"), ("without-prague", "without-prague")):
         shutil.copy(R / f"bypass-{src}.json", A / f"{dst}.json")
-    charts = {"estimates": estimates_chart(res), "damage": damage_chart(desc)}
+    charts = {"estimates": estimates_chart(res), "damage": damage_chart(desc), "where": where_chart(res)}
     (A / "charts.json").write_text(json.dumps(charts, ensure_ascii=False, separators=(",", ":")))
     static_estimates(res, A / "01-estimates.svg")
     static_damage(desc, A / "02-damage-only.svg")
+    static_where(res, A / "00-where.svg")
 
     q1, q2, q3 = res["questions"]["q1"], res["questions"]["q2"], res["questions"]["q3"]
     ch, pt, pl = res["checks"], res["pre_trends"], res["placebo"]
@@ -358,6 +430,14 @@ def main() -> None:
         "ph_post_old": n(ph["post years 1–3"]["damage_only_old_road"], 1),
         "ph_pre_inj": n(ph["pre-construction"]["injury"], 1), "ph_post_inj": n(ph["post years 1–3"]["injury"], 1),
         **{f"v_{k}": x for k, x in res["versions"].items()},
+        "map_i": sum(t["class"] == "I" for t in tj["towns"]), "map_ii": sum(t["class"] == "II" for t in tj["towns"]),
+        "map_median_pre": n(sorted(t["pre_mean"] for t in tj["towns"])[len(tj["towns"]) // 2], 1),
+        "ex_post_n": ex["post_years"],
+        "ex_name": ex["name"], "ex_road": ex["road"], "ex_row": ex["row"], "ex_start": ex["start_year"],
+        "ex_opened": f'{int(ex["opened"][8:])} {["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][int(ex["opened"][5:7]) - 1]} {ex["opened"][:4]}',
+        "ex_muni_pre": ", ".join(str(em[str(y)]) for y in range(2016, ex["open_year"])) + f" in 2016–{ex['open_year'] - 1}",
+        "ex_muni_post": ", ".join(str(em[str(y)]) for y in range(ex["open_year"] + 1, 2026)),
+        "ex_q3": f'{exq3["bypass_accidents"]}',
         "wp_table": wp_table(wp), "wp_comp": wp["comparison_towns"], "wp_units": wp["comparison_units"],
         "wp_left": " and ".join(wp["dropped"]["left_in_unit"]), "wp_unit": wp["dropped"]["unit"],
         **{f"wp_{k}": p(wp["results"][k]["est"], 1) for k, _ in WP_ROWS},
