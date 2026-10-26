@@ -1,6 +1,8 @@
-"""CLI tests: the blinding refusal, the synthetic dry run end to end, and the Holm family wiring. No network."""
+"""CLI tests: the blinding refusal, the two stages and the gate between them, the synthetic dry run, the Holm family
+wiring. No network."""
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -25,7 +27,7 @@ def no_network(monkeypatch):
 def test_real_data_needs_unblind_and_touches_nothing_without_it(no_network, tmp_path, capsys):
     csv = tmp_path / "panel.csv"
     csv.write_text("date,A\n2023-01-01,1\n")
-    for argv in (["--download"], ["--panel-csv", str(csv)]):
+    for argv in (["--null-stage"], ["--panel-csv", str(csv)]):
         with pytest.raises(SystemExit) as e:
             cli.main(argv)
         assert "--unblind" in str(e.value)
@@ -72,10 +74,10 @@ def test_synthetic_run_end_to_end(no_network, tmp_path, capsys):
     assert summary["meta"]["synthetic"] is True
     assert summary["meta"]["holm_family"] == ["Kevin James", "Stonestreet (Cam)"]
     assert all(e["falsification_p"] is not None and e["loo_p"] is not None for e in summary["events"])
-    assert all(e["mdu80_pct"] > 0 and e["excess_views"] is not None for e in summary["events"])
+    assert all(e["mdu80_q975_pct"] > 0 and e["excess_views"] is not None for e in summary["events"])
     assert summary["events"][0]["space_time_p"] is not None
     assert summary["h2"]["stonestreet_from_6_oct"]["peak_date"]
-    assert {e["label"] for e in summary["events"]} <= {"positive", "no detectable jump", "inconclusive"}
+    assert {e["label"] for e in summary["events"]} <= set(cli.M.LABELS)
     variants = {s["variant"] for s in summary["sensitivity"]}
     expected = {v for sp in C.EVENTS for v, _ in cli.variant_plan(sp)} | {"tiktok_prewave"}
     assert expected <= variants
@@ -83,6 +85,33 @@ def test_synthetic_run_end_to_end(no_network, tmp_path, capsys):
               "placebo_null.json", "ar_Eric_Stonestreet.csv", "ar_Kevin_James.csv"):
         assert (out / f).exists()
     assert json.loads(capsys.readouterr().out)["summary"].endswith("summary.json")
+
+
+def test_the_label_uses_the_null_files_minimum_detectable_uplift(no_network, tmp_path):
+    cli.main(["--synthetic", "--out", str(tmp_path), "--n-placebo", "150"])
+    summary = json.loads((tmp_path / "summary.json").read_text())
+    for e in summary["events"]:
+        stage1 = summary["meta"]["null"]["events"][e["name"]]["windows"]["window_-3_30"]["mdu80_q975_pct"]
+        assert e["mdu80_q975_pct"] == pytest.approx(stage1)
+        if e["label"] in ("no detectable jump", "uninformative"):
+            assert (e["label"] == "uninformative") == (stage1 > 10.0)
+
+
+def test_the_null_stage_computes_no_event_and_reports_both_windows_and_the_kevin_baseline(no_network):
+    seen = []
+    orig = cli.M.run_event
+    cli.M.run_event = lambda *a, **k: seen.append("run") or orig(*a, **k)
+    try:
+        payload = cli.null_payload(cli._synthetic_panel(), None)
+    finally:
+        cli.M.run_event = orig
+    assert seen == []                                                  # no AR or CAR at any event
+    assert payload["pool_dropped"] == [] and payload["uninformative_threshold_pct"] == 10.0
+    kevin = payload["events"]["Kevin James"]
+    assert kevin["baseline"]["chosen"] in ("pool", "pool+second") and {"pool", "pool+second"} <= set(kevin["baseline"])
+    for ev in payload["events"].values():
+        w30, w14 = ev["windows"]["window_-3_30"], ev["windows"]["window_-3_14"]
+        assert w30["mdu80_q975_pct"] > 0 and w14["mdu80_q975_pct"] > 0 and w14["n_dates"] > w30["n_dates"]
 
 
 def test_the_null_summary_is_written_before_any_estimate(no_network, tmp_path):
@@ -94,7 +123,84 @@ def test_the_null_summary_is_written_before_any_estimate(no_network, tmp_path):
         cli.main(["--synthetic", "--out", str(tmp_path), "--n-placebo", "120"])
     finally:
         cli.M.null_distribution, cli.M.run_event = orig_null, orig_run
-    assert order[:2] == ["null", "null"] and order[2] == "run"
+    assert "run" in order and order.index("run") > max(i for i, o in enumerate(order) if o == "null")
+
+
+# ---------------------------------------------------------------- the gate between the stages
+
+@pytest.fixture
+def staged(tmp_path, monkeypatch):
+    """A stage 1 run on a made-up panel, written to a temporary docs folder, with git stubbed."""
+    docs = tmp_path / "docs"
+    docs.mkdir()
+    for name, fn in (("NULL_JSON", "null.json"), ("NULL_SHA", "files.sha256"), ("NULL_SVG", "w.svg"), ("NULL_GAP", "g.csv")):
+        monkeypatch.setattr(C, name, docs / fn)
+    panel = cli._synthetic_panel()
+    path = tmp_path / "pageviews.csv"
+    F.save_panel(panel, path)
+    state = {"tags": "memes-null\n", "dirty": ""}
+    monkeypatch.setattr(cli, "_git", lambda *a: state["dirty"] if a[0] == "status" else state["tags"])
+    cli.run_null_stage(panel, path, 150)
+    return path, state, panel
+
+
+def test_stage_two_runs_only_when_every_condition_holds(staged):
+    path, _, _ = staged
+    assert cli.verify_null_stage(path)["stage"].startswith("null")
+    lines = C.NULL_SHA.read_text().splitlines()
+    assert len(lines) == 4 and lines[3].endswith("(the panel, gitignored)")
+
+
+def test_stage_two_refuses_without_the_tag_on_head(staged):
+    path, state, _ = staged
+    state["tags"] = "something-else\n"
+    with pytest.raises(SystemExit, match="memes-null is not on HEAD"):
+        cli.verify_null_stage(path)
+
+
+def test_stage_two_refuses_if_the_null_file_was_changed_after_stage_one(staged):
+    path, _, _ = staged
+    C.NULL_JSON.write_text(C.NULL_JSON.read_text().replace('"seed": 42', '"seed": 43'))
+    with pytest.raises(SystemExit, match="does not match the hash"):
+        cli.verify_null_stage(path)
+
+
+def test_stage_two_refuses_a_panel_other_than_the_one_of_stage_one(staged):
+    path, _, panel = staged
+    other = panel.copy()
+    other.iloc[10, 0] += 1.0
+    F.save_panel(other, path)
+    with pytest.raises(SystemExit, match="panel file does not match"):
+        cli.verify_null_stage(path)
+
+
+def test_stage_two_refuses_uncommitted_stage_one_files_and_missing_ones(staged):
+    path, state, _ = staged
+    state["dirty"] = " M docs/research/memes-placebo-null.json"
+    with pytest.raises(SystemExit, match="not committed"):
+        cli.verify_null_stage(path)
+    state["dirty"] = ""
+    C.NULL_SVG.unlink()
+    with pytest.raises(SystemExit, match="stage 1 has not been run"):
+        cli.verify_null_stage(path)
+
+
+def test_the_sha_file_hashes_what_was_written(staged):
+    lines = {ln.split()[1]: ln.split()[0] for ln in C.NULL_SHA.read_text().splitlines()}
+    assert lines["null.json"] == hashlib.sha256(C.NULL_JSON.read_bytes()).hexdigest()
+    assert lines["w.svg"] == hashlib.sha256(C.NULL_SVG.read_bytes()).hexdigest()
+
+
+def test_stage_two_estimates_on_the_checked_panel_and_labels_from_the_null_file(staged):
+    path, _, panel = staged
+    null = cli.verify_null_stage(path)
+    summary, _ = cli.study(panel, null, 150)
+    assert [e["name"] for e in summary["events"]] == ["Stonestreet (Cam)", "Kevin James"]
+    assert summary["events"][1]["second_regressor"] == null["events"]["Kevin James"]["baseline"]["second_regressor"]
+    panel2 = panel.copy()
+    panel2.loc[panel2.index[50], "Kat_Dennings"] = float("nan")          # a pool actor gains a hole after stage 1
+    with pytest.raises(SystemExit, match="pool actors dropped now differ"):
+        cli.study(panel2, null, 150)
 
 
 def test_h2_makes_no_ordering_claim_when_a_half_life_is_censored(no_network, tmp_path):
@@ -127,15 +233,23 @@ def test_detected_kevin_james_date_would_leave_the_family(no_network):
     assert isinstance(pd.Timestamp(res.event_date), pd.Timestamp)
 
 
-def test_a_target_with_omitted_days_is_dropped_and_reported_not_replaced(no_network, tmp_path):
+def test_a_target_with_omitted_days_is_dropped_and_reported_not_replaced(no_network):
     panel = cli._synthetic_panel()
     panel.loc[panel.index[850:890], "Kevin_James"] = float("nan")      # the estimation window of Kevin James
-    summary, _ = cli.study(panel, n_placebo=120, out=None)
+    null = cli.null_payload(panel, 120)
+    assert "dropped_event" in null["events"]["Kevin James"]
+    summary, _ = cli.study(panel, null, 120)
     assert [d["name"] for d in summary["dropped_events"]] == ["Kevin James"]
     assert [e["name"] for e in summary["events"]] == ["Stonestreet (Cam)"]
     assert summary["meta"]["holm_family"] == ["Stonestreet (Cam)"]
 
 
-def test_the_page_power_comes_from_the_committed_simulation_numbers():
-    pct = cli.falsification_power_pct()
-    assert pct is None or 0 <= pct <= 100
+def test_the_page_power_comes_from_the_committed_runs_for_each_event():
+    power = cli.falsification_power_pct()
+    assert all(0 <= v <= 100 for v in power.values())
+
+
+def test_kevin_jamess_later_waves_and_second_regressor_are_registered():
+    assert C.KEVIN_JAMES.placebo_blocked == (("2024-01-01", "2024-02-29"),)
+    assert C.KEVIN_JAMES.second_regressor == "Victor_Williams" and C.STONESTREET.second_regressor is None
+    assert C.STONESTREET.placebo_blocked == () and C.NULL_TAG == "memes-null"

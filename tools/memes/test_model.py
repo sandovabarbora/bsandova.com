@@ -237,15 +237,31 @@ def test_family_has_sourced_primary_h1_only():
 
 
 def test_labels():
-    assert M.label_event(0.004, 0.008, 5.0) == "positive"
-    assert M.label_event(0.2, 0.4, 1.0) == "no detectable jump"
-    assert M.label_event(0.04, 0.08, 1.0) == "inconclusive"          # passes raw, not Holm
-    assert M.label_event(0.5, 0.9, -2.0) == "no detectable jump"
+    assert M.label_event(0.004, 0.008, 5.0, 6.0) == "positive"
+    assert M.label_event(0.2, 0.4, 1.0, 6.0) == "no detectable jump"
+    assert M.label_event(0.04, 0.08, 1.0, 6.0) == "inconclusive"          # passes raw, not Holm
+    assert M.label_event(0.5, 0.9, -2.0, 6.0) == "no detectable jump"
 
 
-def test_labels_rest_on_h1_alone():
+def test_a_null_with_a_large_minimum_detectable_uplift_is_uninformative_not_no_detectable_jump():
+    assert M.label_event(0.2, 0.4, 1.0, 10.0) == "no detectable jump"       # at the threshold, not above it
+    assert M.label_event(0.2, 0.4, 1.0, 10.01) == "uninformative"
+    assert M.label_event(0.5, 0.9, -2.0, 33.0) == "uninformative"
+    # the MDU never turns a positive or an inconclusive result into something else
+    assert M.label_event(0.004, 0.008, 5.0, 33.0) == "positive"
+    assert M.label_event(0.04, 0.08, 1.0, 33.0) == "inconclusive"
+    assert "uninformative" in M.LABELS and M.UNINFORMATIVE_PCT == 10.0
+
+
+def test_labels_rest_on_h1_and_the_minimum_detectable_uplift_alone():
     import inspect
-    assert list(inspect.signature(M.label_event).parameters) == ["placebo_p", "holm_p", "car"]
+    assert list(inspect.signature(M.label_event).parameters) == ["placebo_p", "holm_p", "car", "mdu80_q975_pct"]
+
+
+def test_run_event_carries_the_uplift_that_decides_the_label():
+    res, _ = M.run_event(S.synthetic_panel(2, GROUPS), spec())
+    assert res.mdu80_q975_pct > res.mdu80_pct > res.mdu_pct > 0
+    assert M.label_event(0.9, 0.9, 0.0, res.mdu80_q975_pct) in ("no detectable jump", "uninformative")
 
 
 # ---------------------------------------------------------------- deviation C: the TikTok pre-wave
@@ -291,7 +307,7 @@ def test_tiktok_spike_cannot_enter_a_placebo_window():
     seen = []
     orig = M._car_at
     try:
-        M._car_at = lambda yy, xx, dow, p, u, est, ew, usable, weekday: seen.append(p) or 0.0
+        M._car_at = lambda yy, xx, dow, p, u, est, ew, usable, weekday, shock=0.0: seen.append(p) or 0.0
         M.placebo_p_value(y, x, EVENT, 1.0, EST, EW, blocked=[TIKTOK])
     finally:
         M._car_at = orig
@@ -446,19 +462,122 @@ def test_space_time_rank_of_the_target_among_pool_actors():
 
 def test_null_summary_converts_the_placebo_spread_to_uplift_percent():
     cars = np.random.default_rng(0).normal(0, 2.0, 5000)
-    out = M.null_summary(cars, 34)
-    assert out["null_sd"] == pytest.approx(2.0, rel=0.05) and out["null_p95"] == pytest.approx(3.29, rel=0.05)
-    assert out["mdu_pct"] == pytest.approx(np.expm1(out["null_p95"] / 34) * 100)
-    assert out["mdu80_pct"] > out["mdu_pct"] > 0
+    out = M.null_summary(cars)
+    q20, q95, q975 = (np.percentile(cars, q) for q in (20, 95, 97.5))
+    assert out["null_sd"] == pytest.approx(2.0, rel=0.05) and out["null_p95"] == pytest.approx(q95)
+    assert out["mdu_pct"] == pytest.approx(np.expm1(q95 / 34) * 100)
+    assert out["mdu80_pct"] == pytest.approx(np.expm1((q95 - q20) / 34) * 100)
+    assert out["mdu80_q975_pct"] == pytest.approx(np.expm1((q975 - q20) / 34) * 100)
+    assert out["mdu80_q975_pct"] > out["mdu80_pct"] > out["mdu_pct"] > 0
+    assert out["s80_q95"] == pytest.approx((q95 - q20) / M.injection_sum((-3, 30)))
+
+
+def test_the_empirical_minimum_detectable_uplift_is_what_injecting_a_shock_gives():
+    # inject s*exp(-t/5) into the target's own series at the non-event placebo dates: at the s of the summary, 80 % of
+    # the injected CARs exceed the 95th and the 97.5th percentile of the placebo CARs
+    panel = S.synthetic_panel(6, GROUPS)
+    s = spec()
+    y, x, idx, usable, plan = M._null_setup(panel, s, EST, EW, None, 42, 100, 30, "median", None, None)
+    plain = M._cars(y, x, idx, plan, EST, EW, usable, True)
+    out = M.null_summary(plain, EW)
+    for key, thr in (("s80_q95", out["null_p95"]), ("s80_q975", out["null_p975"])):
+        injected = M._cars(y, x, idx, plan, EST, EW, usable, True, shock=out[key])
+        assert (injected > thr).mean() == pytest.approx(0.8, abs=0.01)
+    assert M.injection_sum(EW) == pytest.approx(sum(np.exp(-t / 5) for t in range(31)))
 
 
 def test_null_distribution_never_looks_at_the_event():
-    s = spec()
-    quiet = M.null_distribution(S.synthetic_panel(2, GROUPS), s)
-    shocked = M.null_distribution(S.synthetic_panel(2, GROUPS, bumps=[("T", "2023-09-27", 3.0, 5.0)]), s)
-    assert quiet["null_sd"] == pytest.approx(shocked["null_sd"], rel=0.02)   # only the event window differs, and it is out
-    res, _ = M.run_event(S.synthetic_panel(2, GROUPS), s)
-    assert res.mdu_pct > 0 and res.mdu80_pct > res.mdu_pct and res.null_sd > 0
+    s = spec(placebo_blocked=(("2024-01-01", "2024-02-29"),))
+    quiet = S.synthetic_panel(2, GROUPS)
+    shocked = S.synthetic_panel(2, GROUPS, bumps=[("T", "2023-09-27", 3.0, 5.0)])
+    # the pseudo dates are identical with and without a jump at the event, and so is every number of the null
+    d_quiet, d_shocked = M.null_plan_dates(quiet, s), M.null_plan_dates(shocked, s)
+    assert d_quiet.equals(d_shocked) and len(d_quiet) > 700
+    a, b = M.null_distribution(quiet, s), M.null_distribution(shocked, s)
+    assert a["null_sd"] == pytest.approx(b["null_sd"], rel=1e-12) and a["mdu80_q975_pct"] == pytest.approx(b["mdu80_q975_pct"])
+    # no placebo span (estimation plus event window) touches an event window: the two memes' windows (day -3 to +30), the
+    # 6 October variant, and the blocked days; nor does it come within 30 days of the event it is a null for
+    windows = [(pd.Timestamp(d) - pd.Timedelta(days=3), pd.Timestamp(d) + pd.Timedelta(days=30))
+               for d in ("2023-09-27", "2023-09-21", "2023-10-06")]
+    windows += [(pd.Timestamp(lo), pd.Timestamp(hi)) for lo, hi in s.placebo_blocked]
+    for d in d_quiet:
+        lo, hi = d + pd.Timedelta(days=EST[0]), d + pd.Timedelta(days=EW[1])
+        assert all(hi < w0 or lo > w1 for w0, w1 in windows)
+        assert hi < EVENT - pd.Timedelta(days=33) or lo > EVENT + pd.Timedelta(days=60)
+    res, _ = M.run_event(quiet, s)
+    assert res.mdu80_q975_pct == pytest.approx(M.null_distribution(quiet, s)["mdu80_q975_pct"], rel=1e-9)
+    assert res.mdu_pct > 0 and res.null_sd > 0
+
+
+def test_later_waves_are_kept_out_of_the_placebo_pool_only():
+    idx = pd.date_range("2021-01-01", "2024-12-31")
+    block = ("2024-01-01", "2024-02-29")
+    kept = M.placebo_candidates(idx, EVENT, EST, EW, 30, [block])
+    base = M.placebo_candidates(idx, EVENT, EST, EW, 30)
+    assert len(kept) < len(base)
+    spans_touch = [d for d in idx[kept] if (d + pd.Timedelta(days=30) >= pd.Timestamp(block[0]))
+                   and (d + pd.Timedelta(days=EST[0]) <= pd.Timestamp(block[1]))]
+    assert spans_touch == []
+    panel = S.synthetic_panel(1, GROUPS)
+    plain, _ = M.run_event(panel, spec())
+    walled, _ = M.run_event(panel, spec(placebo_blocked=(block,)))
+    assert walled.n_placebo < plain.n_placebo and walled.car == pytest.approx(plain.car)  # the real fit is untouched
+
+
+def test_pool_members_with_an_omitted_day_anywhere_are_dropped_by_a_date_independent_rule():
+    panel = S.synthetic_panel(2, {"T": CONTROLS, "R0": REF[1:]}, common_sd=0.1)
+    panel.loc[panel.index[3], "R4"] = np.nan                      # a hole in January 2021, far from any window
+    kept, dropped = M.pool_screen(panel, REF)
+    assert dropped == ["R4"] and "R4" not in kept and len(kept) == len(REF) - 1
+    s = spec(controls=REF, cast=CONTROLS, reference=REF, falsification=True)
+    res, _ = M.run_event(panel, s, falsify=False)
+    assert res.dropped == ["R4 (pool member, an omitted day in the panel)"]
+
+
+# ---------------------------------------------------------------- the baseline choice of the null stage (design §3.5)
+
+def test_the_second_regressor_is_chosen_only_if_it_lowers_the_placebo_spread():
+    groups = {"T": CONTROLS, "R0": REF[1:], "V": ("V1",)}
+    panel = S.synthetic_panel(3, groups, common_sd=0.1, shared={"V": ("T", 1.0)})
+    panel["V"] = panel["T"] * np.exp(np.random.default_rng(3).normal(0, 0.02, len(panel)))   # V moves with the target
+    s = spec(controls=REF, cast=CONTROLS, reference=REF, second_regressor="V")
+    helpful = M.choose_baseline(panel, s)
+    assert helpful["chosen"] == "pool+second" and helpful["second_regressor"] == "V"
+    assert helpful["pool+second"] < helpful["pool"]
+    panel["V"] = np.expm1(np.random.default_rng(4).normal(6, 0.5, len(panel)))               # pure noise
+    useless = M.choose_baseline(panel, s)
+    assert useless["pool+second"] > 0.95 * useless["pool"]          # pure noise barely changes the spread
+    assert helpful["pool+second"] < 0.5 * helpful["pool"]
+    assert useless["chosen"] == ("pool+second" if useless["pool+second"] < useless["pool"] else "pool")
+    assert M.choose_baseline(panel, spec(controls=REF, cast=CONTROLS, reference=REF))["chosen"] == "pool"
+
+
+def test_a_second_regressor_with_omitted_days_falls_back_to_the_pool_alone():
+    groups = {"T": CONTROLS, "R0": REF[1:], "V": ("V1",)}
+    panel = S.synthetic_panel(3, groups, common_sd=0.1)
+    ev = (EVENT - panel.index[0]).days
+    panel.loc[panel.index[ev - 140:ev - 100], "V"] = np.nan
+    out = M.choose_baseline(panel, spec(controls=REF, cast=CONTROLS, reference=REF, second_regressor="V"))
+    assert out["chosen"] == "pool" and out["pool+second"] is None
+
+
+def test_run_event_with_a_second_regressor_reports_it():
+    groups = {"T": CONTROLS, "R0": REF[1:], "V": ("V1",)}
+    panel = S.synthetic_panel(3, groups, common_sd=0.1)
+    res, _ = M.run_event(panel, spec(controls=REF, cast=CONTROLS, reference=REF, second_regressor="V"), second="V")
+    assert res.second_regressor == "V" and res.n_placebo > 900
+
+
+# ---------------------------------------------------------------- the shared factor of the synthetic panels
+
+def test_shared_factor_share_sets_how_much_a_target_moves_with_the_pool():
+    groups = {"T": CONTROLS, "R0": REF[1:]}
+    corr = {}
+    for w in (0.0, 0.5, 1.0):
+        p = np.log1p(S.synthetic_panel(5, groups, shared={"T": ("R0", w)}))
+        d = p.diff().dropna()
+        corr[w] = np.corrcoef(d["T"], d["R1"])[0, 1]
+    assert corr[0.0] < 0.1 < corr[0.5] < corr[1.0]
 
 
 def test_excess_views_and_uplift_for_a_flat_shift():

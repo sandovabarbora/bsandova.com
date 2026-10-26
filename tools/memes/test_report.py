@@ -20,16 +20,16 @@ FAKE_SVG = "<svg><text>x</text></svg>"
 
 def event(name, label, **kw):
     base = {"name": name, "event_date": "2023-09-27", "car_pct_uplift": 14.2, "excess_views": 12345.0, "placebo_p": 0.01,
-            "holm_p": 0.02, "half_life_days": 4.0, "half_life_status": "observed", "label": label, "mdu80_pct": 8.7,
+            "holm_p": 0.02, "half_life_days": 4.0, "half_life_status": "observed", "label": label, "mdu80_q975_pct": 8.7,
             "falsification_p": None, "cast_note": False}
     return {**base, **kw}
 
 
 def summary(label_a="positive", label_b="no detectable jump", fp=0.4, power=20.0):
-    return {"meta": {"falsification_power_pct": power},
+    return {"meta": {"falsification_power_pct": {"Stonestreet (Cam)": power, "Kevin James": 41.0}},
             "events": [event("Stonestreet (Cam)", label_a, falsification_p=fp, cast_note=True),
                        event("Kevin James", label_b, half_life_days=None, half_life_status="censored", holm_p=0.5,
-                             placebo_p=0.3)]}
+                             placebo_p=0.3, falsification_p=0.5, cast_note=True)]}
 
 
 @pytest.mark.parametrize("a", R.BLURB)
@@ -53,6 +53,32 @@ def test_page_says_no_cast_wide_move_with_the_power_of_the_test():
 def test_page_with_a_falsification_hit_describes_it_without_changing_the_label():
     page = R.render_html(summary("positive", fp=0.01), FAKE_SVG)
     assert "moved too, as a group" in page and "a jump, on average 14 %" in page
+
+
+def test_kevin_james_gets_the_falsification_sentence_with_his_own_power():
+    page = R.render_html(summary("positive", "positive"), FAKE_SVG)
+    assert "No cast-wide move was seen, but the test's power is about 41 %." in page
+
+
+def test_a_positive_label_near_the_resolution_of_the_test_says_so():
+    s = summary("positive", "no detectable jump")
+    assert "near the resolution of the test" in R.render_html(s, FAKE_SVG)
+    s["events"][0]["placebo_p"] = 0.2
+    assert "near the resolution" not in R.render_html(s, FAKE_SVG)
+
+
+def test_uninformative_says_what_the_test_could_not_have_seen():
+    page = R.render_html(summary("uninformative", "uninformative"), FAKE_SVG)
+    assert "could not have seen one below about 9 % on average over the window, so this says little." in page
+    assert "would have been seen four times in five" not in page
+
+
+def test_no_positive_peak_and_not_halved_have_their_own_wording():
+    s = summary("positive", "positive")
+    s["events"][0]["half_life_status"] = "no positive peak"
+    s["events"][0]["half_life_days"] = None
+    page = R.render_html(s, FAKE_SVG)
+    assert "There was no positive peak to halve." in page and "had not halved" in page   # Kevin James is censored
 
 
 def test_no_detectable_jump_is_tied_to_the_minimum_detectable_uplift():
