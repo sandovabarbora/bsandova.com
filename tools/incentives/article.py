@@ -51,7 +51,7 @@ CHECKS = [  # key in results.json, label, name in the template
     ("1_without_largest", "1 · without the largest (Kutná Hora)", "klarge"),
     ("2_without_cancelled_or_unverified", "2 · without cancelled or unverified", "kcanc"),
     ("3_same_region", "3 · comparisons in the same region", "kregion"),
-    ("4_same_tercile", "4 · comparisons in the same tercile", "kterc"),
+    ("4_same_tercile", "4 · comparisons in the same third of unemployment", "kterc"),
     ("5_without_2009_2020_21", "5 · without 2009 and 2020–21", "kcrisis"),
     ("6_without_boundary_districts", "6 · without boundary changes", "kbound"),
     ("7_years_1_to_5", "7 · years 1–5", "k15"),
@@ -87,8 +87,9 @@ FRACTION = {5: "fifth", 6: "sixth", 7: "seventh", 8: "eighth", 9: "ninth", 10: "
 
 
 def names_big(es: list[dict]) -> str:
-    xs = [f'{e["company"]} in {e["place"]} ({n(e["jobs"])} jobs, {e["year"]})' for e in es]
-    return ", ".join(xs[:-1]) + " and " + xs[-1]
+    xs = [f'{e["company"]} in {e["place"]}' + ("" if e["place"] == e["district_name"] else f' ({e["district_name"]} district)')
+          + f', {n(e["jobs"])} jobs in {e["year"]}' for e in es]
+    return "; ".join(xs[:-1]) + "; and " + xs[-1]
 
 
 def nb(s: str) -> str:
@@ -351,6 +352,9 @@ def main() -> None:
     assert ex["gap"]["-2"] > 0 and ex["gap"]["-1"] > 0 and statistics.mean(ex["gap"][k] for k in "123") < 0
     assert sum(e["jobs"] <= 600 for e in ev) > len(ev) / 2
     span_m = [e["year"] * 12 + e["month"] - 1 for e in span]
+    imp = dist["implied_denominator"]
+    assert imp["step"] == "2014-01" and all(e["spans_2014_01"] for e in span)
+    extra14 = [e for e in ev if e["spans_2014_01"] and not e["spans_2013_01"]]
     drop = scr["dropped_by_reason"]
     cancelled = sum(e["cancelled"] == "ANO" for e in ev)
     unverified = sum(e["cancelled"] == "ověřit" for e in ev)
@@ -424,6 +428,9 @@ def main() -> None:
         "first_decision": f"{FIRST_DECISION.day} {MONTHS[FIRST_DECISION.month - 1]} {FIRST_DECISION.year}",
         "last_decision": f"{LAST_DECISION.day} {MONTHS[LAST_DECISION.month - 1]} {LAST_DECISION.year}",
         "win_before": WIN_BEFORE, "win_after": WIN_AFTER,
+        "base_before": n(imp["before"] / 1e6, 1), "base_after": n(imp["after"] / 1e6, 1),
+        "base_ratio": n(imp["after"] / imp["before"], 2),
+        "n_span14_extra": len(extra14), "span14_extra": names(extra14),
         "largest": names_big(sorted(ev, key=lambda e: -e["jobs"])[:3]),
         "checks_table": checks_table(res), "path_table": path_table(pr),
     }
