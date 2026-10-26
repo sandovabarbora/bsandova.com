@@ -285,3 +285,10 @@ years before the promise"; the label itself stands.
      decisions from February 2009 to January 2015 drop. On the project list alone, 10 of the 34 events drop and 24 in 22
      districts remain, before any event lost for a missing year. Reported like the other checks; it never relabels the
      primary result.
+- 26 October 2026 (after the results, **not registered**): `tools/incentives/districts.py` lists the 34 events one by
+  one (promise, promised jobs per 100 residents aged 15–64 in year −1, and the raw gap between the treated district's
+  outcome and the plain mean of its comparison districts per event year), draws the map of the 28 treated districts
+  from ČÚZK RÚIAN municipal polygons and names an example district, Kutná Hora (the event check 1 leaves out), picked
+  after the per-event gaps had been computed. It builds the panels with the frozen code and checks that the mean of the
+  per-event gap changes reproduces the registered Q1 exactly. Raw figures, no interval, no label; nothing was
+  re-estimated and no label changes (`docs/research/incentives-districts.json`).
