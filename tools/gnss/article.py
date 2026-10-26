@@ -17,6 +17,8 @@ import shutil
 import sys
 from pathlib import Path
 
+import numpy as np
+
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(HERE))
@@ -149,6 +151,14 @@ def decimal(d: str) -> float:
     return round(t.year + (t - start).days / (dt.date(t.year + 1, 1, 1) - start).days, 4)
 
 
+def balt_2025(desc: dict) -> list[dict]:
+    return [d for d in desc["days"] if d["date_used"] >= "2025-01-01" and d["BALT"]["share"] is not None]
+
+
+def balt_typical(desc: dict) -> str:
+    return pct(float(np.median([d["BALT"]["share"] for d in balt_2025(desc)])), 0)
+
+
 def days_chart(desc: dict) -> dict:
     days = desc["days"]
     ticks = [2023.5, 2024, 2024.5, 2025, 2025.5, 2026, 2026.5]
@@ -172,7 +182,7 @@ def days_chart(desc: dict) -> dict:
                 "marks": marks}
     return {"alt": "Descriptive, added after the results: the share of degraded position reports per sampled day. Over "
                    "Czechia and the control it stays under 2 % on every day; over Poland it rises from 2024 and over "
-                   "the Baltic states it climbs to between 10 and 47 % on most days from 2025.",
+                   f"the Baltic states it is typically about {balt_typical(desc)} from 2025, with one peak near 47 %.",
             "layout": "rows",
             "panels": [panel("Czechia and control", ("CZ", "CTRL"), [0, 3], [0, 1, 2, 3]),
                        panel("Poland and the Baltic states", ("PL", "BALT"), [0, 50], [0, 10, 20, 30, 40, 50])],
@@ -223,7 +233,7 @@ def bands_chart(q2: dict) -> dict:
     return {"alt": "The share of degraded position reports per region and band of distance from Kaliningrad city, on a "
                    "log scale, with 95 % intervals: Czechia about 0.5 % in both of its bands, like control; Poland "
                    "about 5 % within 300 km, 1.5 % at 300–600 km and 4 % at 600–900 km; the Baltic states 4 %, 9 % "
-                   "and 50 %, the highest in their farthest band, north-eastern Estonia.",
+                   "and 50 %, the highest in their farthest band, the north of Estonia.",
             "panels": [{"h": 300,
                         "x": {"kind": "linear", "domain": [-0.5, 3.5], "ticks": [0, 1, 2, 3],
                               "tickLabels": {str(i): BAND_LAB[b] for i, b in enumerate(BANDS)}, "fmt": {"dp": 0},
@@ -435,7 +445,11 @@ def main() -> None:
         "aircraft": n(smp["aircraft"]), "screenable": n(smp["screenable"]),
         "persistent": smp["persistently_degraded"], "persistent_strict": smp["persistently_degraded_strict_reading"],
         "storm_days": smp["days_kp_5_or_more"],
-        "pts_cz": n(pts["CZ"]["usable"] / 1e6, 1), "pts_pl": n(pts["PL"]["usable"] / 1e6, 1),
+        "pts_cz": n(pts["CZ"]["usable"] / 1e6, 1),
+        "pts_cz_y2": n(sum(d["CZ"]["usable"] for d in desc["days"] if d["study_year"] == 2) / 1e6, 1),
+        "balt_med": balt_typical(desc),
+        "balt_peak": pct(max(d["BALT"]["share"] for d in balt_2025(desc)), 0),
+        "balt_peak_day": fmt_day(max(balt_2025(desc), key=lambda d: d["BALT"]["share"])["date_used"]), "pts_pl": n(pts["PL"]["usable"] / 1e6, 1),
         "pts_balt": n(pts["BALT"]["usable"] / 1e6, 1), "pts_ctrl": n(pts["CTRL"]["usable"] / 1e6, 1),
         "v2_y1": pct(v12["v2"], 1), "old_y1": pct(v12["v0"] + v12["v1"], 1),
         # Q1

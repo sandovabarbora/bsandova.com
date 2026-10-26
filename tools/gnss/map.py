@@ -113,7 +113,7 @@ def main() -> None:
                       {"key": "d", "label": "share D", "fmt": {"dp": 2, "unit": " %"}, "scale": "seq",
                        "domain": [0, 8], "note": "degraded position reports, % of usable reports"},
                       {"key": "days", "label": "degraded days", "fmt": {"dp": 0}, "scale": "seq", "domain": [0, 140],
-                       "note": "sampled days with a degraded-position day, of 183; not defined for control"},
+                       "note": "degraded-position days, of 182 (Poland) or 183 eligible sampled days; not defined for control"},
                       {"key": "jumps", "label": "position jumps", "fmt": {"dp": 2, "unit": " %"}, "scale": "seq",
                        "domain": [0, 0.5], "note": "crossings with a position jump, % of crossings"}],
             "note": "Registered estimates, read from the results file; circles mark 300, 600 and 900 km from Kaliningrad.",
