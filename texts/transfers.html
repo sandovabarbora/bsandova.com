@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Will you make your connection? Tram transfers in Prague, 2025</title>
+<title>Tram transfers in Prague</title>
 <meta name="description" content="A pre-specified analysis of 5.0 million Prague tram connections planned two to four minutes apart in 2025: 80.7 % were made, and the two lines' delays moved together by about +0.6 percentage points (+0.1 to +1.2 across specifications), registered label not supported. A roulette covers 6 624 cells at 56 of 111 stops.">
-<meta property="og:title" content="Will you make your connection?">
+<meta property="og:title" content="Tram transfers in Prague">
 <meta property="og:description" content="Planned three minutes apart, a Prague tram connection was made 80 times in a hundred in 2025. A roulette for 6 624 combinations of stop, lines and time of day at 56 of 111 stops, about 77 % of connections. Part 3 of Running late.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://bsandova.com/texts/transfers">
@@ -36,7 +36,7 @@
 <article class="text">
 <header class="text-head">
   <p class="kicker">Research · Running late, part 3 · Prague tram transfers, 2025</p>
-  <h1>Will you make your connection? <em>Tram transfers in Prague, 2025</em></h1>
+  <h1>Tram transfers <em>in Prague</em></h1>
   <p class="deck">Across 5.0 million Prague tram connections planned 2–4 minutes apart in 2025, the two lines' delays moved together slightly, about +0.6 pp (+0.1 to +1.2 across specifications): not supported by the registered rule.</p>
   <dl class="facts">
     <div><dt>made, planned 3 min apart</dt><dd>80 % <small>78.4–80.3 % if the 1.9 % with an unobserved planned tram were all missed or all made</small></dd></div>
@@ -67,7 +67,7 @@
   <div><dt>registration</dt><dd>registered analysis plan: design committed at <code>a0f7648</code> on 8 October 2026, before the results commit <code>e12a6c0</code>; commit times are self-reported, and the branch was pushed after the analysis. Clarifications dated before any connection was scored at <code>04eb423</code>; screening at <code>14d5158</code>; estimation code frozen with tests at <code>85516cc</code> (tag <code>late-transfers-v1</code>). Five later fixes for memory only were recorded at <code>a6458e7</code> and <code>abf4a05</code>: Q1 equivalence was checked on the March 2025 rows (the first three fixes together, and the bootstrap-by-week fix), the rest by reading the diffs. Arrival times had been read for <a href="weather-rails">Weather on the rails</a> and parts <a href="delay-origins">1</a> and <a href="bunching">2</a>, never as a connection between two lines. Added after the results, not registered: the make-up of the uncertain connections, the bounds on unobserved planned trams only, the §4.4 bounds for Q1b and Q2 and the §7 timing check for Q2 (which had been omitted), the out-of-sample slack test, and Q4's baseline. Changes after registration, each dated, are in <a href="../changelog/#transfers-changes">the change log</a>.</dd></div>
   <div><dt>data</dt><dd>Prague Integrated Transport stop-time history via Golemio, 15 March – 8 September 2025, as used in the author's master's thesis<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup>; platform positions from the PID timetable data<sup class="cite"><a href="#r3">3</a></sup>. The passes are not redistributed; the estimates are in <a href="../assets/transfers/results.json">results.json</a>, the post-hoc analyses in <a href="../assets/transfers/posthoc.json">posthoc.json</a>, the descriptions in <a href="../assets/transfers/describe.json">describe.json</a>, the roulette's cells in <a href="../assets/transfers/roulette.json">roulette.json</a>.</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/transfer">tools/transfer/</a>; rebuild: <code>uv run --with numpy --with pandas --with pyarrow --with duckdb python tools/transfer/estimate.py</code></dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Will you make your connection? Tram transfers in Prague, 2025</i>. bsandova.com/texts/transfers, version 1.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Tram transfers in Prague</i>. bsandova.com/texts/transfers, version 1.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text, figures and data CC BY 4.0</dd></div>
 </dl>
 </details>
@@ -193,7 +193,7 @@
 <h2>Reproduction</h2>
 <p>Every number on this page is filled in from the result files by a script, from the repository root:</p>
 <ol>
-<li>The rain study's screening of closures and feed gaps: <a href="rain-delays">Are Prague's trams later in rain hours?</a>, Reproduction.</li>
+<li>The rain study's screening of closures and feed gaps: <a href="rain-delays">Rain and Prague's tram delays</a>, Reproduction.</li>
 <li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/transfer/screen.py"><code>tools/transfer/screen.py</code></a>: hubs, platform pairs, connections and the screening counts.</li>
 <li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/transfer/estimate.py"><code>estimate.py</code></a>, checked by <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/transfer/test_transfer.py"><code>test_transfer.py</code></a>: the registered estimates, bounds and checks.</li>
 <li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/transfer/describe.py"><code>describe.py</code></a>: the roulette's cells, the in-sample calibration and the misses; with <code>--post-hoc</code>, the make-up of the uncertain connections.</li>

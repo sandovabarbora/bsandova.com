@@ -54,21 +54,21 @@ def main() -> None:
 
 
 PARTS = [  # slug, part, title, kicker, summary, screen-reader name[, photo of another part]; {{tokens}} from the results
-    ("delay-origins", 1, "Where is delay born on Prague's trams?",
+    ("delay-origins", 1, "Where delay is born on Prague's trams",
      "Part 1 · where delay appears · {{segments}} tram segments, 15 March – 8 September 2025",
      "A tenth of the segments record {{S}} % of all delay gained, just over half, the same ones in odd and "
      "even weeks. Described afterwards, not registered: many of them leave large stops, and part of what they "
      "record is early trams waiting for their time.",
      None),
-    ("bunching", 2, "How often do two 22s come at once? Tram bunching in Prague, 2025",
+    ("bunching", 2, "Tram bunching in Prague",
      "Part 2 · bunching · {{pairs}} pairs of trams, 15 March – 8 September 2025",
      "The spacing between two trams of a line shows practically no amplification from stop to stop ({{g}} per "
      "stop, {{g_label}} by the registered rule, corrected in its version 2), and bunches build gradually "
      "towards the end of a line. The rare sudden closings concentrate on some platforms, as other rare "
      "one-stop events do, and partly by line. City buses show a small positive value ({{bg}}, {{bg_label}}), "
      "about the size of the spread among the tram estimates.",
-     "How often do two 22s come at once?"),
-    ("transfers", 3, "Will you make your connection?",
+     None),
+    ("transfers", 3, "Tram transfers in Prague",
      "Part 3 · transfers · tram-to-tram connections, 15 March – 8 September 2025",
      "Planned three minutes apart, a connection was made {{m3}} times in a hundred and cost over five minutes "
      "more {{c3}} % of the time. The data show a small association between the two lines' delays, about "
@@ -76,12 +76,12 @@ PARTS = [  # slug, part, title, kicker, summary, screen-reader name[, photo of a
      "specifications), with real differences between pairs of lines and no mechanism identified. A roulette "
      "gives the share made for {{cells_shown}} combinations of stop, lines and time of day.",
      None),
-    ("swiss-trams", 4, "Is Prague's delay map a law of trams? Zurich, Basel and Bern",
+    ("swiss-trams", 4, "Prague's delay map in three Swiss cities",
      "Part 4 · four networks · Zurich, Basel and Bern, 15 March – 8 September 2025",
      "The same measure on Swiss trams: a tenth of the segments make {{zs}} % of the delay in Zurich, {{bs}} % in "
      "Basel and {{ns}} % in Bern. Basel and Bern are like Prague by the registered rule, Zurich is not; above what "
      "chance alone would give, all three concentrate less than Prague.",
-     "Is Prague's delay map a law of trams?", "delay-origins"),
+     None, "delay-origins"),
 ]
 
 

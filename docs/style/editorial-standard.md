@@ -30,8 +30,9 @@ null result is not padded.
 
 1. **Kicker**: kind · series and part · object and period. At most 12 words. It carries no status word such as
    "pre-registered" unless §6 allows it.
-2. **H1**: names the object and, for research, the finding or the question. It is not a slogan and does not use the
-   "not X but Y" device.
+2. **H1**: a short name of the object, at most 48 characters: no result, no label, no number but a year, no colon
+   or question mark. The finding goes in the deck. It is not a slogan and does not use the "not X but Y" device.
+   `<title>`, `og:title`, the cite-as line and `docs/works.toml` carry the same words.
 3. **Deck**: one sentence of at most 35 words that gives the question and the main result with its registered
    label.
 4. **Facts strip**: at most four cards. Each card has a number, its unit, and its interval or the words

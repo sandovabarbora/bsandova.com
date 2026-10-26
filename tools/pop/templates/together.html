@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pop, measured, together: songs lasted longer in their artist's language market, and ticket prices varied little with income</title>
+<title>Pop, measured, together</title>
 <meta name="description" content="Pop, measured, part 6. Two exploratory models across five artists: songs lasted about {{m1_x}} times as long in countries that speak the language of the artist's market, and average tickets were {{m2_th}} % higher where host-country GDP per capita was 1 % higher.">
-<meta property="og:title" content="Pop, measured, together: songs lasted longer in their artist's language market, and ticket prices varied little with income">
+<meta property="og:title" content="Pop, measured, together">
 <meta property="og:description" content="Across five artists, a song lasted about {{m1_x}} times as long where the language of the artist's market is spoken ({{dyn_x}} with Dynamite coded as English); average tickets were {{m2_th}} % higher per 1 % higher host-country income.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://bsandova.com/texts/pop-together">
@@ -35,7 +35,7 @@
 <article class="text">
 <header class="text-head">
   <p class="kicker">Research · Pop, measured, part 6 · five artists together, 2017–2026</p>
-  <h1>Songs lasted longer in their artist's language market, <em>and ticket prices varied little with income</em></h1>
+  <h1>Pop, measured, <em>together</em></h1>
   <p class="deck">Exploratory, five artists: songs lasted {{m1_x}} times as long where their artist's market language is spoken, {{dyn_x}} with <i>Dynamite</i> coded as English; average tickets were {{m2_th}} % higher per 1 % higher host-country income.</p>
   <dl class="facts">
     <div><dt>language of the artist's market, days in the chart</dt><dd>{{m1_x}}× <small>95 % CI {{m1_lo}}–{{m1_hi}} · {{m1_n}} artist–country pairs, artist and country fixed effects; <i>Dynamite</i> coded as English {{dyn_x}}× ({{dyn_lo}}–{{dyn_hi}})</small></dd></div>
@@ -64,7 +64,7 @@
   <div><dt>registration</dt><dd>exploratory: design committed at <code>4fe0484</code> on 2 October 2026 (tag <code>pop-together-design</code>), with the code at <code>9545ead</code>, before the results commit <code>85b798f</code> (tag <code>pop-together-results</code>); commit times are self-reported, and the branch was pushed after the analysis. On <code>main</code> the design and the results arrived in one squash commit, <code>3b9f827</code>, so they are not independently timestamped; the tags were set on 9 October 2026. The inputs had been seen as descriptive results in parts 1–5, so no result here is confirmatory. "Work since March 2026" means the author has worked with the series' sources (kworb.net's Spotify chart pages and Wikipedia's tour pages) continuously since then, in work that led to this study, so the models were written with knowledge of the sources, not blind to them; the inputs here are the results of parts 1–5, computed on 1–2 October 2026. Changes after registration, each dated, are in <a href="../changelog/#pop-together-changes">the change log</a>.</dd></div>
   <div><dt>data</dt><dd>the published results of <a href="pop-measured">Pop, measured</a>, parts 1–5: <a href="../assets/pop/together/panel.csv">panel.csv</a> ({{m1_n}} artist–country pairs) and <a href="../assets/pop/together/tickets.csv">tickets.csv</a> ({{m2_n}} Boxscore entries), drawn from kworb.net, Wikipedia (Boxscore) and the World Bank</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/pop/together.py">tools/pop/together.py</a> at the commit that publishes this page; rebuild: <code>uv run --with pandas --with numpy --with statsmodels python tools/pop/together.py</code></dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Pop, measured, together: songs lasted longer in their artist's language market, and ticket prices varied little with income</i>. bsandova.com/texts/pop-together, version 3.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Pop, measured, together</i>. bsandova.com/texts/pop-together, version 3.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text, figures and data CC BY 4.0</dd></div>
 </dl>
 </details>

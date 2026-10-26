@@ -64,17 +64,17 @@ def main() -> None:
 
 
 PARTS = [  # slug, part, title, kicker, summary; {{tokens}} are filled from the results
-    ("rain-delays", 1, "Are Prague's trams later in rain hours?",
+    ("rain-delays", 1, "Rain and Prague's tram delays",
      "Part 1 · rain · March–September 2025, {{rain_dates}} days with rain",
      "In an hour with at least 0.5 mm of rain, a tram gained {{r}} seconds more delay than in a dry hour of the same "
      "route, hour and weekday on the same date ({{r_lo}} to {{r_hi}}, {{rl}}); the difference is larger in heavier "
      "rain, but the registered placebo failed, so it is an adjusted association."),
-    ("heat-delays", 2, "Are Prague's trams more delayed in hot hours?",
+    ("heat-delays", 2, "Heat and Prague's tram delays",
      "Part 2 · heat · summer 2025, {{hot_dates}} days at 30 °C or more",
      "In a dry hour at 30 °C or more, a tram gained {{h}} seconds less delay than in a mild hour of the same route and "
      "week ({{h_lo}} to {{h_hi}}); registered as more delay, so {{hl}}; an association on {{hot_dates}} hot days whose "
      "cause the data cannot distinguish."),
-    ("rain-dwell", 3, "Are tram stops shorter in rain?",
+    ("rain-dwell", 3, "Rain and dwell at Prague's tram stops",
      "Part 3 · rain, heat and who boards · {{wet_weekends}} wet weekend days",
      "In rain hours a tram's stop was about {{dr}} seconds shorter on a weekday morning, and the weekend difference is "
      "{{th}} s ({{th_lo}} to {{th_hi}}, {{tl}}), so dwell gives no sign that rain cancels mainly optional trips; hot "

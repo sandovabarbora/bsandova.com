@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Are Prague's trams more delayed in hot hours? Hot hours and delay, 2025</title>
+<title>Heat and Prague's tram delays</title>
 <meta name="description" content="A pre-specified analysis of 121 million stop passes and ČHMÚ ten-minute temperatures: in a dry hour at 30 °C or more, a Prague tram gained about 14.9 seconds less delay than in a mild hour, the opposite of what was expected; an association on 11 hot days.">
-<meta property="og:title" content="Are Prague's trams more delayed in hot hours?">
+<meta property="og:title" content="Heat and Prague's tram delays">
 <meta property="og:description" content="In a dry hour at 30 °C or more, a Prague tram gained about 14.9 seconds less delay than in a mild hour of the same route and week, an association on 11 hot days; the metro shows no clear change; summer 2025.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://bsandova.com/texts/heat-delays">
@@ -33,7 +33,7 @@
 <article class="text">
 <header class="text-head">
   <p class="kicker">Research · Weather on the rails, part 2 · Prague trams and buses, summer 2025</p>
-  <h1>Are Prague's trams more delayed in hot hours? <em>Hot hours and delay, 2025</em></h1>
+  <h1>Heat and <em>Prague's tram delays</em></h1>
   <p class="deck">In dry hours at 30 °C or more, Prague's trams gained about 14.9 seconds less delay than in mild hours of the same week (−20.9 to −8.2), the opposite of the registered expectation: inconclusive.</p>
   <dl class="facts">
     <div><dt>trams, hot against mild</dt><dd>−14.9 s <small>delay gained per trip-hour · 95 % confidence interval (CI) −20.9 to −8.2 · inconclusive: the opposite sign</small></dd></div>
@@ -59,11 +59,11 @@
   <summary>About this study</summary>
 <dl class="meta">
   <div><dt>status</dt><dd>research, pre-specified analysis (self-timestamped)</dd></div>
-  <div><dt>series</dt><dd><a href="weather-rails">Weather on the rails</a>, part 2; part 1 is <a href="rain-delays">Are Prague's trams later in rain hours?</a></dd></div>
+  <div><dt>series</dt><dd><a href="weather-rails">Weather on the rails</a>, part 2; part 1 is <a href="rain-delays">Rain and Prague's tram delays</a></dd></div>
   <div><dt>registration</dt><dd>registered analysis plan: design committed at <code>56e041a</code> on 8 October 2026, before the results commit <code>61374d3</code>; commit times are self-reported. GitHub's activity log shows the design on the public branch from 13:08 UTC on 8 October 2026 and the results pushed at 13:23 UTC; a push is not a tamper-evident anchor. The design was committed before any temperature value was read; power from temperature and dispersion only at <code>52dc94c</code>; code frozen with tests at <code>09601e1</code>; results at <code>61374d3</code>; the chain is kept under the tag <code>heat-delays-v1</code>. The delays had been read before, for the rain study, but never against temperature. Changes after registration, each dated, are in <a href="../changelog/#heat-delays-changes">the change log</a>.</dd></div>
   <div><dt>data</dt><dd>Prague Integrated Transport stop-time history via Golemio, 15 March – 8 September 2025, as used in the author's master's thesis<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup>; ČHMÚ ten-minute air temperature and hourly precipitation, four Prague stations, CC BY 4.0<sup class="cite"><a href="#r3">3</a></sup>. The stop passes are not redistributed; the estimates are in <a href="../assets/heat/results.json">results.json</a>.</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/heat">tools/heat/</a>, built on <a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/rain">tools/rain/</a>; rebuild: <code>uv run --with pandas --with pyarrow --with pyfixest python tools/heat/estimate.py</code> (pyfixest 0.60.0)</dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Are Prague's trams more delayed in hot hours? Hot hours and delay, 2025</i>. bsandova.com/texts/heat-delays, version 2.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Heat and Prague's tram delays</i>. bsandova.com/texts/heat-delays, version 2.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text and figures CC BY 4.0; weather data ČHMÚ, CC BY 4.0</dd></div>
 </dl>
 </details>
@@ -134,7 +134,7 @@
 <h2>Reproduction</h2>
 <p>Every number on this page is filled in from the result files by a script, from the repository root:</p>
 <ol>
-<li>The rain study's steps, which build and screen the units: <a href="rain-delays">Are Prague's trams later in rain hours?</a>, Reproduction.</li>
+<li>The rain study's steps, which build and screen the units: <a href="rain-delays">Rain and Prague's tram delays</a>, Reproduction.</li>
 <li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/heat/power.py"><code>tools/heat/power.py</code></a>: hot and mild hours and the power calculation.</li>
 <li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/heat/estimate.py"><code>estimate.py</code></a>, checked by <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/heat/test_heat.py"><code>test_heat.py</code></a>: the registered estimates and checks.</li>
 <li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/heat/describe.py"><code>describe.py</code></a> and <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/heat/article.py"><code>article.py</code></a>: the descriptive numbers, the figures and this page.</li>
