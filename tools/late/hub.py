@@ -64,7 +64,7 @@ PARTS = [  # slug, part, title, kicker, summary, screen-reader name[, photo of a
     ("bunching", 2, "How often do two trams of a line arrive together?",
      "Part 2 · bunching · {{pairs}} pairs of trams, 15 March – 8 September 2025",
      "When two trams of a line are off their planned spacing at one stop, they drift hardly any further off "
-     "at the next, a result left {{g_label}} by the registered rule ({{g}} per stop, rule corrected in its "
+     "at the next, a result the registered rule labels {{g_label}} ({{g}} per stop, rule corrected in its "
      "version 2). Bunches "
      "build gradually towards the end of a line. The rare sudden closings concentrate on some platforms, as "
      "other rare one-stop events do, and partly by line. City buses show a small positive value ({{bg}}, "
