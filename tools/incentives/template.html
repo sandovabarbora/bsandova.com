@@ -81,9 +81,15 @@
 </details>
 
 <section>
-<p>Czech governments offer tax relief and grants to firms that build or expand a plant and promise to hire. Did registered unemployment in a district fall after a large promise, relative to districts with none at the time? Between {{year_first}} and {{year_last}}, {{events}} incentive decisions promised at least 300 jobs in a single district outside Prague, with no other promise of that size there in the two years before or the four years after; they fell in {{districts}} districts. Each is compared with {{comp_min}} to {{comp_max}} districts without such a promise, using the CzechInvest project list[[czechinvest]] and the monthly district figures of the Ministry of Labour and Social Affairs (MPSV), July 2004 to December 2024[[mpsv]]. The questions and the rules for reading the result were fixed under a signed tag before any unemployment figure was read.</p>
-<p>In years 1 to 3 after the decision, the unemployment share in these districts moved by {{q1}} relative to the comparison districts, measured against the two years before. The 90 % interval runs from {{q1_ci90}}: a fall of a tenth of a point is as consistent with the data as a rise of three tenths. Handing each promise instead to a district drawn at random from its comparison pool gives an estimate at least as far from zero in more than half the draws (randomisation p = {{p}}). Year by year, the share stays within about a tenth of a point of the year before the decision (fig. 1).</p>
-<p>The registered label is <b>underpowered</b>: the 90 % interval is {{width}} points wide, just over the {{width_max}} the rule allows. With {{events}} promises, only a change of about {{sdc}} points either way could have been told from zero, and the design named this label as likely.</p>
+<p>If you have ever read that a new plant will bring hundreds of jobs to a district, you may have wondered whether fewer people there are out of work a few years later.</p>
+<p>Czech governments offer tax relief and grants to firms that build or expand a plant and promise to hire. This study asks whether registered unemployment in a district fell after a large promise, relative to districts with none at the time.</p>
+<p>Between {{year_first}} and {{year_last}}, {{events}} incentive decisions promised at least 300 jobs in a single district outside Prague. No other promise of that size was made there in the two years before or the four years after. The promises fell in {{districts}} districts.</p>
+<p>Each promise is compared with {{comp_min}} to {{comp_max}} districts without such a promise. The data are the CzechInvest project list[[czechinvest]] and the monthly district figures of the Ministry of Labour and Social Affairs (MPSV), July 2004 to December 2024[[mpsv]]. The questions and the rules for reading the result were fixed under a signed tag before any unemployment figure was read.</p>
+<p>Relative to the comparison districts, unemployment barely moved, and the data cannot tell a small fall from a small rise. In years 1 to 3 after the decision, the unemployment share in these districts moved by {{q1}} relative to the comparison districts, measured against the two years before.</p>
+<p>The 90 % interval, the range the data leave plausible, runs from {{q1_ci90}}. So a fall of a tenth of a point is as consistent with the data as a rise of three tenths.</p>
+<p>A second test asks how unusual the estimate is. It hands each promise instead to a district drawn at random from its comparison pool. That gives an estimate at least as far from zero in more than half the draws (randomisation p = {{p}}).</p>
+<p>Year by year, the share stays within about a tenth of a point of the year before the decision (fig. 1).</p>
+<p>The registered label is underpowered, which means there was too little data to tell. The 90 % interval is {{width}} points wide, just over the {{width_max}} the rule allows. With {{events}} promises, only a change of about {{sdc}} points either way could have been told from zero, and the design named this label as likely.</p>
 <figure data-chart="../assets/investment-incentives/charts.json#path">
   <p class="ch-head">Relative to comparison districts, the unemployment share in districts with a large promise stayed within about a tenth of a point of the year before the decision.</p>
   <img src="../assets/investment-incentives/01-path.svg" alt="Coefficients by year from the incentive decision, relative to comparison districts and to year −1, in percentage points with 95 % intervals: year −2 {{b_m2}}, year 0 {{b0}}, years 1 to 3 {{b1}}, {{b2}} and {{b3}}; every interval includes zero." loading="lazy">
@@ -93,12 +99,17 @@
 
 <section>
 <h2>How far to trust it</h2>
-<p>Firms chose where to invest, and until September 2019 the law halved the minimum investment in districts whose unemployment was at least half as high again as the national rate[[nku]], so the districts with a promise are not a random draw. The list records promises, not plants: {{cancelled}} of the {{events}} were later cancelled and {{unverified}} is marked for verification. The audit office found in 2021 that the ministry had no duty to compare, and did not compare, the jobs created with those promised, nor to track who filled them; it did check that recipients met the legal minimums[[nku]]. And the study changed before its outcome was read: the population field the registered outcome needed is missing from every MPSV file, and the registered rules left 12 events, under the minimum of {{min_events}}. The author approved MPSV's published unemployment share as the outcome, a clean window from two years rather than four before the decision, and a bar of {{block_jobs}} rather than 200 jobs for projects that exclude a district. Everything added after the results is marked as such and changes no label.</p>
+<p>The districts with a promise are not a random draw. Firms chose where to invest, and until September 2019 the law halved the minimum investment in districts whose unemployment was at least half as high again as the national rate[[nku]].</p>
+<p>The list records promises, not plants. Of the {{events}} promises, {{cancelled}} were later cancelled and {{unverified}} is marked for verification.</p>
+<p>The audit office found in 2021 that the ministry had no duty to compare, and did not compare, the jobs created with those promised, nor to track who filled them. It did check that recipients met the legal minimums[[nku]].</p>
+<p>The study also changed before its outcome was read. The population field the registered outcome needed is missing from every MPSV file, and the registered rules left 12 events, under the minimum of {{min_events}}.</p>
+<p>The author approved MPSV's published unemployment share as the outcome instead. The clean window, the stretch around a promise with no other large one in the district, now starts two years rather than four before the decision. And another project now rules a district out only if it promised at least {{block_jobs}} jobs, rather than 200. Everything added after the results is marked as such and changes no label.</p>
 </section>
 
 <section>
 <h2>The {{districts}} districts</h2>
-<p>The promises spread from Cheb in the west to Ostrava in the east (fig. 2), most of them for 300 to 600 jobs, typically {{q3_med}} jobs per 100 residents aged 15 to 64. {{twice}} each had two promises far enough apart to count twice. The largest were {{largest}}.</p>
+<p>The promises spread from Cheb in the west to Ostrava in the east (fig. 2). Most of them were for 300 to 600 jobs. A typical promise came to {{q3_med}} jobs per 100 residents aged 15 to 64.</p>
+<p>{{twice}} each had two promises far enough apart to count twice. The largest were {{largest}}.</p>
 <figure class="mp-fig" data-map="../assets/investment-incentives/map.json">
   <img class="mp-static" src="../assets/investment-incentives/02-map.svg" alt="Map of Czechia's 77 districts with the {{districts}} districts that had a large incentive promise shaded by the number of promised jobs and labelled with the year of the decision, spread across the country." loading="lazy">
   <figcaption><b>fig. 2</b> · The {{districts}} districts with a promise of at least 300 jobs. Views: promised jobs, year of the first decision, jobs per 100 residents aged 15–64, the raw change in the district's gap with its comparison districts, cancellation status and number of promises; hover, tap or use the arrow keys for the firms and dates. Raw figures, not estimates, added after the results and not registered (<code>tools/incentives/districts.py</code>). Base: ČÚZK RÚIAN[[ruian]]; data: CzechInvest[[czechinvest]], MPSV[[mpsv]], ČSÚ[[csu]].</figcaption>
@@ -107,13 +118,24 @@
 
 <section>
 <h2>One district: {{ex_name}}</h2>
-<p>Added after the results and not registered: the largest promise, {{ex_jobs}} jobs for {{ex_company}} at {{ex_name}}, decided on {{ex_date}}, in a district of about {{ex_pop}} residents aged 15 to 64, so {{ex_per100}} jobs per 100. Registered check 1 sets it aside, which is why it is shown; it was picked after the per-promise figures had been computed. In the two years before the decision, {{ex_name}}'s share was {{ex_g_pre_abs}} points above the mean of its {{ex_comp}} comparison districts; in years 1 to 3, from spring 2008 through the 2009 recession to early 2011, it was {{ex_g_post_abs}} points below, a raw change of {{ex_change}}. If every promised job had taken one available job seeker of the district off the register, the share would have fallen by at least {{ex_per100}} points. One district is not evidence: the recession reached districts differently, and the list does not say whom the plant hired.</p>
+<p>One district shows what the raw figures look like. This part was added after the results and is not registered.</p>
+<p>The largest promise was {{ex_jobs}} jobs for {{ex_company}} at {{ex_name}}, decided on {{ex_date}}. The district had about {{ex_pop}} residents aged 15 to 64, so that is {{ex_per100}} jobs per 100.</p>
+<p>Registered check 1 sets it aside, which is why it is shown here. It was picked after the per-promise figures had been computed.</p>
+<p>In the two years before the decision, {{ex_name}}'s share was {{ex_g_pre_abs}} points above the mean of its {{ex_comp}} comparison districts. In years 1 to 3, from spring 2008 through the 2009 recession to early 2011, it was {{ex_g_post_abs}} points below. That is a raw change of {{ex_change}}.</p>
+<p>If every promised job had taken one available job seeker of the district off the register, the share would have fallen by at least {{ex_per100}} points. One district is not evidence, though. The recession reached districts differently, and the list does not say whom the plant hired.</p>
 </section>
 
 <section>
 <h2>How large a fall was possible</h2>
-<p>Q3 puts the change on the scale of the promises. A promise averaged {{q3_den}} jobs per 100 residents aged 15 to 64, pulled up by {{ex_name}} (without it {{q3_den_wo}}; median {{q3_med}}). Q1 divided by that is {{q3}} (90 % {{q3_ci90}}). On this scale −1 is the direct arithmetic bound: every promised job going to an available job seeker aged 15–64 of the district, which lowers MPSV's share, available job seekers per 100 residents aged 15–64, by the promise's jobs per 100. In the files used that base holds from January 2014; earlier months divide by a smaller base of about {{base_before}} million against {{base_after}} million nationally, where the same jobs lower the share by about {{base_ratio}} times as much, so for them the bound is larger and the comparison below is conservative. The interval's lower end, {{q3_lo}}, is about a {{q3_lo_frac}} of the bound. The bound is not a cap on any effect: jobs at suppliers or from local spending could in principle exceed it, while commuters, people changing jobs, workers from abroad[[nku]] and cancelled promises push the other way. Q3 is descriptive and carries no label.</p>
-<p>Fig. 3, added after the results, shows the promises one by one. Their raw changes run from {{chg_min}} to {{chg_max}} whatever the size of the promise, {{neg}} below zero and {{pos}} above, and {{n_below}} fell by more than even the bound allows ({{below}}). The movement from district to district is larger than anything the promises could plausibly bring, which is why {{events}} of them cannot pin the average down.</p>
+<p>Q3 sets the change against the size of the promises. A promise averaged {{q3_den}} jobs per 100 residents aged 15 to 64. {{ex_name}} pulls that average up: without it the figure is {{q3_den_wo}}, and the median is {{q3_med}}.</p>
+<p>Q1 divided by that average is {{q3}} (90 % {{q3_ci90}}).</p>
+<p>On this scale −1 is the direct arithmetic bound. It is what would happen if every promised job went to an available job seeker aged 15–64 of the district. MPSV's share counts available job seekers per 100 residents aged 15–64, so each such hire lowers it by the promise's jobs per 100.</p>
+<p>In the files used, that base holds from January 2014. Earlier months divide by a smaller base, about {{base_before}} million against {{base_after}} million nationally. There the same jobs lower the share by about {{base_ratio}} times as much. So for those months the bound is larger, and the comparison below is conservative.</p>
+<p>The interval's lower end, {{q3_lo}}, is about a {{q3_lo_frac}} of the bound.</p>
+<p>The bound is not a cap on any effect. Jobs at suppliers or from local spending could in principle exceed it. Commuters, people changing jobs, workers from abroad[[nku]] and cancelled promises push the other way. Q3 is descriptive and carries no label.</p>
+<p>Fig. 3, added after the results, shows the promises one by one. Their raw changes run from {{chg_min}} to {{chg_max}}, whatever the size of the promise. Of these, {{neg}} are below zero and {{pos}} above.</p>
+<p>In {{n_below}} of those below zero the gap fell by more than even the bound allows ({{below}}).</p>
+<p>The movement from district to district is larger than anything the promises could plausibly bring. That is why {{events}} of them cannot pin the average down.</p>
 <figure data-chart="../assets/investment-incentives/charts.json#events">
   <p class="ch-head">Added after the results: the raw changes scatter around zero whatever the size of the promise, and the promises whose years span January 2013 lie mostly above it.</p>
   <img src="../assets/investment-incentives/03-events.svg" alt="For each of the {{events}} promises, the promised jobs per 100 residents aged 15–64 on a log scale against the raw change in the district's unemployment share relative to its comparison districts: the changes scatter between {{chg_min}} and {{chg_max}}; {{ex_name}}, with {{ex_per100}} jobs per 100, lies at {{ex_change}}." loading="lazy">
@@ -123,8 +145,15 @@
 
 <section>
 <h2>The check that flipped the sign</h2>
-<p>Twelve registered checks repeat the analysis with one thing changed, and most land between zero and a sixth of a point (fig. 4; all numbers in the appendix). Two land below zero: the {{k1000_n}} promises of at least 1 000 jobs, too few to read, and check 12. MPSV announced a new definition of its unemployment share from January 2013, so before the outcome was read the design added check 12, which leaves out the {{n_span}} promises whose years −2 to 3 contain that month. With the {{k2013_n}} that remain it is {{k2013}} (90 % {{k2013_ci90}}). Of the {{n_span}} left out, {{span_pos}} had raw changes above zero, mean {{span_mean}} (fig. 3, coral). The definition change, the years {{span_from}}–{{span_to}} those windows cover or chance among ten districts could explain it; the data cannot tell them apart.</p>
-<p>A finding after the results, not registered: in the MPSV files the share's base changes in January 2014, not 2013, so check 12 sits a year early. All {{n_span}} promises it leaves out also straddle January 2014, and {{n_span14_extra}} more do ({{span14_extra}}); a check at January 2014 was not registered and was not run. Both Q1's interval and check 12's include zero, so the flip shows how fragile the sign is, not that promises lowered unemployment. Leaving out cancelled and unverified promises gives {{kcanc}}; a placebo that moves every decision two years earlier, so that it compares only years before the real one, gives {{kplac}}, half the size of Q1.</p>
+<p>Twelve registered checks repeat the analysis with one thing changed. Most land between zero and a sixth of a point (fig. 4, with all numbers in the appendix).</p>
+<p>Two land below zero. One is the {{k1000_n}} promises of at least 1 000 jobs, too few to read. The other is check 12.</p>
+<p>MPSV announced a new definition of its unemployment share from January 2013. So before the outcome was read, the design added check 12, which leaves out the {{n_span}} promises whose years −2 to 3 contain that month.</p>
+<p>With the {{k2013_n}} that remain, the estimate is {{k2013}} (90 % {{k2013_ci90}}). Of the {{n_span}} left out, {{span_pos}} had raw changes above zero. Across all of them the mean was {{span_mean}} (fig. 3, coral).</p>
+<p>Any of three things could lie behind this: the definition change, the years {{span_from}}–{{span_to}} those windows cover, or chance among ten districts. The data cannot tell them apart.</p>
+<p>One finding came after the results and is not registered. In the MPSV files the share's base changes in January 2014, not 2013, so check 12 sits a year early.</p>
+<p>All {{n_span}} promises it leaves out also straddle January 2014, and {{n_span14_extra}} more do ({{span14_extra}}). A check at January 2014 was not registered and was not run.</p>
+<p>Both Q1's interval and check 12's include zero. So the flip shows how fragile the sign is, not that promises lowered unemployment.</p>
+<p>Two more checks are worth naming. Leaving out cancelled and unverified promises gives {{kcanc}}. A placebo, a check that should find nothing, moves every decision two years earlier, so that it compares only years before the real one. It gives {{kplac}}, half the size of Q1.</p>
 <figure data-chart="../assets/investment-incentives/charts.json#checks">
   <p class="ch-head">Every interval includes zero; without the promises whose years span January 2013 the estimate turns negative.</p>
   <img src="../assets/investment-incentives/04-checks.svg" alt="Q1 and the registered checks, change in the unemployment share in percentage points with 90 and 95 % intervals: Q1 {{q1}}; most checks between 0 and +0.16; check 12, without windows spanning January 2013, {{k2013}}; every interval includes zero." loading="lazy">
@@ -134,17 +163,24 @@
 
 <section>
 <h2>The author's expectation</h2>
-<p>On 16 October 2026, before reading anything about incentives, the author expected a large promise to lower unemployment in the district a little, barely visible in district figures. The estimate has the other sign, but the interval includes small falls down to {{q1_lo90}} points: the data neither support the expectation nor rule it out.</p>
+<p>On 16 October 2026, before reading anything about incentives, the author expected a large promise to lower unemployment in the district a little, barely visible in district figures.</p>
+<p>The estimate has the other sign, but the interval includes small falls down to {{q1_lo90}} points. So the data neither support the expectation nor rule it out.</p>
 </section>
 
 <section>
 <h2>What this means</h2>
-<p>The measured quantity is the change in a district's registered unemployment share in the three years after a promise of at least 300 jobs, relative to districts without one: {{q1}}, 90 % interval {{q1_ci90}}. The lower end of that interval is about a {{q3_lo_frac}} of the direct arithmetic bound; this describes an association, not an effect of incentives. The sign turns on the {{n_span}} promises made from {{span_y0}} to {{span_y1}}; that does not mean those {{n_span}} caused it. Whether incentives create jobs, and for whom, the public data cannot say: the ministry did not compare created with promised jobs or track who filled them[[nku]].</p>
+<p>Put plainly, after a large job promise the district's unemployment barely moved relative to the comparison districts, and there was too little data to say which way. The measured quantity is the change in a district's registered unemployment share in the three years after a promise of at least 300 jobs, relative to districts without one. It is {{q1}}, with a 90 % interval of {{q1_ci90}}.</p>
+<p>The lower end of that interval is about a {{q3_lo_frac}} of the direct arithmetic bound. This describes an association, not an effect of incentives.</p>
+<p>The sign turns on the {{n_span}} promises made from {{span_y0}} to {{span_y1}}. That does not mean those {{n_span}} caused it.</p>
+<p>Whether incentives create jobs, and for whom, the public data cannot say. The ministry did not compare created with promised jobs or track who filled them[[nku]].</p>
 </section>
 
 <section>
 <h2>What this does not show</h2>
-<p>It does not show an effect of incentives in either direction. The decision date is not the day hiring began: projects are announced earlier and plants open later. Jobs taken by commuters show in neighbouring districts, some of them comparison districts. A district with one large promise and none other for six years may differ from districts that attract many. And registered unemployment moves with the rules for registering, with benefits and, as check 12 shows, with the definition of the share.</p>
+<p>It does not show an effect of incentives in either direction.</p>
+<p>The decision date is not the day hiring began. Projects are announced earlier and plants open later.</p>
+<p>Jobs taken by commuters show in neighbouring districts, some of them comparison districts. And a district with one large promise and none other for six years may differ from districts that attract many.</p>
+<p>Registered unemployment also moves with the rules for registering, with benefits and, as check 12 shows, with the definition of the share.</p>
 </section>
 
 <section id="reproduction">
