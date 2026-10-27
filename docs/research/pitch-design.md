@@ -13,11 +13,16 @@ will fix this text. Deviations are listed, dated, in the change log.
 - **The brief** was written by the author and approved by her on 27 October 2026 (the date of every statement of the
   author below). It fixes the question, the unit, the codebook's categories, the three questions, the bootstrap, the
   data handling, the model, the validation gate and the workflow. This text turns it into a registered design; every
-  choice the brief does not make is listed under "Decisions of the drafting assistant" below, for the author to
-  confirm before the tag.
-- **The films.** The author supplies the subtitle files from her own copies of both films. Whether and how often she
-  has seen the films, and her prior expectation for each question, are to be stated by her before the tag
-  `pitch-design` and added to this section in the commit that precedes it. **Until then this bullet is open.**
+  choice the brief does not make was drafted by the drafting assistant and settled by the author before the tag
+  (§1, "Settled decisions").
+- **The films.** The author supplies the subtitle files from her own copies of both films. **She has seen both films
+  several times** (the exact count is not known to her). She knows their jokes as a viewer; she has not counted or
+  coded them, and no subtitle file has been read.
+- **Prior expectation**, stated by the author on 27 October 2026, before any data: **Q1 yes**, *Pitch Perfect 2* aims a
+  larger share of its jokes at America than *Pitch Perfect*; **Q2 mostly satire**, butt = speaker more often than
+  butt = group among protected-trait jokes; **Q3 yes**, more "would not pass today" jokes per hour in *Pitch Perfect
+  2*. These priors are recorded so that readers can judge the risk of confirmation: **the author is also the blind
+  annotator of the validation sample** (§3.4), so her expectations can shape her own codes, though not the model's.
 - **The subtitles.** No subtitle file of either film has been supplied, opened, parsed, counted or hashed. No cue
   count, runtime of dialogue, scene count or joke count of either film is known to this design. The numbers of §5 are
   assumptions, labelled as such.
@@ -88,10 +93,11 @@ found", with no interval.
 **No family correction.** The three questions are separate questions with separate readings, reported side by side.
 There is no tally across them (editorial standard §7) and no headline that combines them.
 
-### Decisions of the drafting assistant (to be confirmed by the author before the tag)
+### Settled decisions
 
-The brief does not settle these. Each is applied in this text and listed here so it can be changed before
-`pitch-design`; after the tag a change is a dated deviation (§6.3).
+The brief does not settle these. The drafting assistant drafted them; **the author confirmed A to C and E to I, and
+the two-sided readings of Q2 and Q3, and changed D, on 27 October 2026**, before the tag. After the tag a change is a
+dated deviation (§6.3).
 
 - **A. Butt is coded for every joke**, not only for protected-trait jokes, so that the validation sample (§3.4) gives
   a Butt agreement on more than a handful of cues. For a target that is not a group of people, `group` means "the
@@ -103,11 +109,11 @@ The brief does not settle these. Each is applied in this text and listed here so
 - **C. America versus nationality.** A joke at Americans or the United States as a nation is America (national
   identity). A joke at any other nationality or national origin is group: nationality. A joke at a racial or ethnic
   group within the United States is group: race.
-- **D. "Protected trait" is the brief's five group types**: gender, race, weight, sexuality, nationality. Weight is in
-  the list though it is not a protected characteristic in most law; the term is this study's, not a legal one. Jokes
-  at other groups (age, religion, disability, class, occupation) are coded group: other with the group written down,
-  counted and reported, and are **not** protected traits in Q2 and Q3. The author may move any of them into the
-  protected set before the tag.
+- **D. "Protected trait" is seven group types**: gender, race, weight, sexuality, nationality, religion and
+  disability (the brief's five, with religion and disability added by the author). Weight is in the list though it is
+  not a protected characteristic in most law; the term is this study's, not a legal one. Jokes at other groups (age,
+  class, occupation and any other) are coded group: other with the group written down, counted and reported, and are
+  **not** protected traits in Q2 and Q3.
 - **E. The validation sample is 50 cues from each film**, not 100 from the pooled cues, so neither film dominates it.
 - **F. Scenes are built on the kept cues**, after lyrics and sound cues are removed (§2.2). A song therefore usually
   breaks a scene. Dialogue hours are the sum of scene durations, so long songs and silences do not count as hours of
@@ -124,8 +130,8 @@ The brief does not settle these. Each is applied in this text and listed here so
 - **Source.** English `.srt` subtitle files of *Pitch Perfect* (2012, dir. Jason Moore) and *Pitch Perfect 2* (2015,
   dir. Elizabeth Banks), supplied by the author from her own copies. One file per film. If a file is SDH (subtitles
   for the deaf and hard of hearing), it is used as described below; the type of each file is recorded.
-- **Storage.** `tools/data/pitch/raw/pp1.srt` and `tools/data/pitch/raw/pp2.srt`, **gitignored** (the entry is added
-  with the code, before any file is supplied). They are never edited by hand. Their SHA-256 hashes, sizes and the date
+- **Storage.** `tools/data/pitch/raw/pp1.srt` and `tools/data/pitch/raw/pp2.srt`, **gitignored** (`tools/data/pitch/`,
+  ignored since commit `ddbcc6c`, before any file was supplied). They are never edited by hand. Their SHA-256 hashes, sizes and the date
   supplied go to `docs/research/pitch-files.sha256`, committed before any model run. Every run checks both hashes and
   stops on a mismatch. A file is read as UTF-8, else as cp1252, and the encoding used is recorded.
 - **Copyright.** The subtitles are the films' scripts and are not published. The repository and the page carry only
@@ -189,12 +195,14 @@ in the order group of people, America, genre, character or situation (decision B
   - "We're Americans. If it isn't a competition, we'll make it one and then sue the judges."
   - "Freshman orientation: three hours on fire safety, five minutes on where the library is."
 - `group`: a group of people defined by a shared trait, where the trait is what the joke is about. The **group type**
-  is recorded: `gender`, `race`, `weight`, `sexuality`, `nationality`, or `other` with the group written down (age,
-  religion, disability, class, occupation; decision D). Americans as a nation are `america`, not `group`
+  is recorded: `gender`, `race`, `weight`, `sexuality`, `nationality`, `religion`, `disability`, or `other` with the
+  group written down (age, class, occupation and any other; decision D). Americans as a nation are `america`, not `group`
   (decision C).
   - gender: "Of course she can't read the map, she's been holding it like a handbag."
   - weight: "He sat on the bench and the bench filed a complaint."
   - nationality: "The Swiss team arrived exactly on time, which is how you know they're not from here."
+  - religion: "Ask the vicar's daughter to judge the talent show, she only knows hymns and guilt."
+  - disability: "He uses a wheelchair, so obviously he's the one we leave to guard the stairs."
 - `character`: an individual character or a situation in the story, where no group trait and no national institution
   is what the joke is about: a character's habits, a mishap, an absurd turn of events, wordplay with no target.
   - "I've rehearsed this apology so much it now has a bridge and a key change."
@@ -219,8 +227,8 @@ in the order group of people, America, genre, character or situation (decision B
 - `unclear`: both readings are open from the text, or the delivery (tone, face, a cut) would decide and the
   subtitles do not show it. Used when the coder cannot choose, not as a middle value.
 
-**Protected trait** (decision D): target `group` with group type `gender`, `race`, `weight`, `sexuality` or
-`nationality`. **Would not pass today**: a protected-trait joke with butt `group`.
+**Protected trait** (decision D): target `group` with group type `gender`, `race`, `weight`, `sexuality`,
+`nationality`, `religion` or `disability`. **Would not pass today**: a protected-trait joke with butt `group`.
 
 The model returns JSON, `{target, group_type, group_other, butt}`; `group_type` is empty unless the target is
 `group`. A reply that does not parse or uses a value outside the codebook is retried once, then logged as failed and
@@ -300,7 +308,9 @@ clustering entered as a design effect.
   1 + (3 − 1) · 0.1 = **1.2**.
 - **Q1**: a share of America jokes of **15 %** in both films under the null.
 - **Q2**: protected-trait jokes are **10 %** of all jokes (30 per film at N = 300); speaker and group split evenly
-  and no `unclear` (the variance is then largest).
+  and no `unclear` (the variance is then largest). **The 10 % is kept after religion and disability were added to the
+  protected set (decision D)**: it was a round guess, not an estimate, and jokes on these two traits are not expected
+  to be common enough to move it; a higher share would only lower the detectable sizes of Q2 and Q3.
 - **Q3**: half of protected-trait jokes would not pass today (15 per film at N = 300); **1.6 dialogue hours** per film
   (a runtime of about two hours less songs and silences, assumed, not measured).
 
@@ -376,7 +386,8 @@ the model run.
 - **Lyrics are excluded.** Jokes in the songs (parodies, changed lyrics) are not counted. The marker rule depends on
   how the file marks songs; the fallback depends on the author's review.
 - **The author is also the annotator** of the validation sample, and she approved the codebook. Her coding is blind to
-  the model's output, not to her own expectations or her knowledge of the films.
+  the model's output, not to her own expectations (recorded in §0: she expects mostly satire in Q2, and yes in Q1 and
+  Q3) or to her knowledge of the films, which she has seen several times.
 - **The coding model and the drafting assistant know the films** from their training (§0). The model may recognise a
   line and code it by what it knows of the scene or its reception, not by the text it is given.
 - **One model family codes**, validated by one human; no second human coder.
@@ -409,5 +420,9 @@ versions, hashes, no subtitle text), and the gitignored working files under `too
 ## Change log
 
 - 27 October 2026: design committed, before any subtitle file of either film was supplied, read or hashed, and before
-  any model coded any line. Decisions A to I of §1 are the drafting assistant's and await the author's confirmation
-  before the tag `pitch-design`; §0's statement of what the author has seen and her prior expectation is still open.
+  any model coded any line, with decisions A to I of §1 drafted by the drafting assistant.
+- 27 October 2026, the author's decisions, before the tag `pitch-design` and before any subtitle file was supplied:
+  decisions A to C and E to I and the two-sided readings of Q2 and Q3 confirmed; decision D changed, religion and
+  disability added to the protected traits (age, class and occupation stay group: other), with invented codebook
+  examples for both and the 10 % assumption of §5 kept; §0 completed with what the author has seen of the films and
+  her prior expectation for each question; the local data folder `tools/data/pitch/` gitignored (commit `ddbcc6c`).
