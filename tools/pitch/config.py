@@ -48,7 +48,10 @@ SKIP = "skip"
 
 # §3.6, §4
 MODEL = "claude-sonnet-5-5"
-TEMPERATURE = 0.0
+# As registered (§4.1). The API rejects a non-default temperature on this model and SDK 2.x has no such argument: an
+# open decision before the code freeze (None omits the field). Until then every real call would fail with a 400.
+TEMPERATURE: float | None = 0.0
+SDK_PIN = "anthropic==2.3.0"
 MAX_TOKENS = {"segment": 16000, "code": 8000}
 RUNS = (1, 2)
 PRIMARY_RUN = 1               # decision G
