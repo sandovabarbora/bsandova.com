@@ -275,3 +275,67 @@ def test_the_registered_ten_thousand_replicates_on_invented_films():
         assert lo <= est[k]["estimate"] <= hi
     pairs = [("genre", "genre", "group", "group"), ("america", "genre", "speaker", "speaker")] * 20
     assert T.kappa_interval(pairs)["dropped_target"] < 10_000
+
+
+def test_detection_uses_every_detected_span_and_codes_only_coded_jokes():
+    coded = [joke(5, "genre", last=6)]
+    spans = [{"first_cue": 2, "last_cue": 3, "kind": "joke"}, {"first_cue": 5, "last_cue": 6, "kind": "joke"}]
+    codes = T.cue_codes(coded, [1, 2, 3, 5, 8, 9], spans, excluded=[8, 9])
+    assert codes[1] == {"joke": False} and codes[2] == {"joke": True, "target": None, "butt": None}
+    assert codes[5]["target"] == "genre" and codes[8] is None and codes[9] is None
+
+
+def test_agreement_leaves_out_cues_without_output_and_uncoded_joke_cues_from_kappa():
+    x = {1: {"joke": True, "target": None, "butt": None}, 2: {"joke": True, "target": "genre", "butt": "group"},
+         3: None, 4: {"joke": False}}
+    y = {1: {"joke": True, "target": "genre", "butt": "group"}, 2: {"joke": True, "target": "genre", "butt": "group"},
+         3: {"joke": True, "target": "genre", "butt": "group"}, 4: {"joke": False}}
+    a = T.agreement(x, y, [1, 2, 3, 4])
+    assert a["detection"]["cues"] == 3 and a["detection"]["cues_without_model_output"] == 1
+    assert a["detection"]["percent_agreement"] == 100
+    assert a["codes"]["cues"] == 1 and a["codes"]["joke_cues_without_codes"] == 1
+
+
+def test_validation_counts_cues_without_model_output_and_uncoded_detections():
+    model = {("pp1", 1): None, ("pp1", 2): {"joke": True, "target": None, "butt": None},
+             ("pp1", 3): {"joke": True, "target": "genre", "butt": "group"}}
+    hum = [human("pp1", 1, True, "genre", "group"), human("pp1", 2, True, "genre", "group"),
+           human("pp1", 3, True, "genre", "group")]
+    v = T.validation(model, hum, reps=10)
+    assert v["without_model_output"] == 1 and v["coded"] == 2
+    assert v["detection"]["share_of_author_jokes_found_by_model"] == 1.0
+    assert v["codes"]["cues"] == 1 and v["codes"]["joke_cues_without_model_codes"] == 1
+
+
+@pytest.mark.parametrize("model_targets,model_butts", [
+    (["genre", "genre", "genre", "america", "america", "america"], ["group", "speaker", "unclear"] * 2),
+    (["genre", "america", "character"] * 2, ["group", "group", "group", "group", "group", "group"])])
+def test_the_gate_fails_on_either_kappa_below_point_six_or_undefined(model_targets, model_butts):
+    targets = ["genre", "america", "character"] * 2
+    butts = ["group", "speaker", "unclear"] * 2
+    model = {("pp1", k): {"joke": True, "target": t, "butt": b}
+             for k, (t, b) in enumerate(zip(model_targets, model_butts, strict=True))}
+    hum = [human("pp1", k, True, t, b) for k, (t, b) in enumerate(zip(targets, butts, strict=True))]
+    v = T.validation(model, hum, reps=20)
+    kt, kb = v["codes"]["kappa_target"], v["codes"]["kappa_butt"]
+    assert v["status"] == "Exploratory"
+    assert (kt < 0.6 and kb >= 0.6) or (kt >= 0.6 and kb is not None and kb < 0.6) or kt is None or kb is None
+
+
+def test_target_below_and_butt_above_the_gate_is_exploratory():
+    targets = ["genre", "america", "character", "genre", "america", "character"]
+    butts = ["group", "speaker", "unclear"] * 2
+    wrong = ["america", "genre", "character", "genre", "character", "america"]
+    model = {("pp1", k): {"joke": True, "target": t, "butt": b}
+             for k, (t, b) in enumerate(zip(wrong, butts, strict=True))}
+    hum = [human("pp1", k, True, t, b) for k, (t, b) in enumerate(zip(targets, butts, strict=True))]
+    v = T.validation(model, hum, reps=20)
+    assert v["codes"]["kappa_target"] < 0.6 <= v["codes"]["kappa_butt"] and v["status"] == "Exploratory"
+
+
+def test_undefined_kappa_is_exploratory_even_with_perfect_detection():
+    model = {("pp1", k): {"joke": True, "target": "genre", "butt": "group"} for k in range(4)}
+    hum = [human("pp1", k, True, "genre", "group") for k in range(4)]
+    v = T.validation(model, hum, reps=20)
+    assert v["codes"]["kappa_target"] is None and v["detection"]["percent_agreement"] == 100
+    assert v["status"] == "Exploratory"

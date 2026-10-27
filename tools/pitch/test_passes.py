@@ -259,3 +259,17 @@ def test_cache_writes_are_atomic_and_a_corrupt_file_is_a_miss(tmp_path):
     for broken in ('{"request": {}, "rep', '{"request": {}}', '{"reply": {"text": 1}}', ""):
         path.write_text(broken)
         assert cache.get(req) is None
+
+
+def test_failed_scenes_and_uncoded_jokes_are_recorded_for_the_analysis(tmp_path):
+    seg = {11: "x"}                                                      # scene 2 never parses
+
+    def code(user, n):
+        return '{"target": "x"}' if ">> [21]" in user else ('{"target": "genre", "group_type": "", '
+                                                             '"group_other": "", "butt": "group"}')
+    out = run(tmp_path, FakeClient(segment=lambda u, n: seg.get(_first(u)) or jokes([(_first(u), _first(u) + 1,
+                                                                                       "joke")]), code=code),
+              scenes(60))
+    assert out["failed_scenes"] == [2] and out["failed_scene_cues"] == [11, 12]
+    assert out["failed_jokes"] == ["3-1"] and len(out["jokes"]) == 58
+    assert {"first_cue": 21, "last_cue": 22, "kind": "joke"} in out["detected_spans"] and len(out["detected_spans"]) == 59

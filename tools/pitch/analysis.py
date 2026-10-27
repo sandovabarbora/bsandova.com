@@ -21,11 +21,18 @@ class Film:
     cleaning: Mapping
 
 
+def coded_cues(film: Film, out: Mapping) -> list[S.Cue]:
+    """The kept cues less those of scenes whose pass 1 failed: such scenes leave the scene table, the dialogue hours
+    and the bootstrap (design change log, 27 October 2026)."""
+    failed = set(out.get("failed_scene_cues", ()))
+    return [c for c in film.kept if c.index not in failed]
+
+
 def tables(films: Mapping[str, Film], run: Mapping[str, Mapping], v: T.Variant = T.PRIMARY,
            gap: float = C.SCENE_GAP_S) -> dict:
     out = {}
     for f in C.FILMS:
-        scenes = S.build_scenes(films[f].kept, gap)
+        scenes = S.build_scenes(coded_cues(films[f], run[f]), gap)
         out[f] = T.scene_table(run[f]["jokes"], [s.duration_ms / 3_600_000 for s in scenes], S.scene_of(scenes), v,
                                S.runtime_hours(films[f].raw))
     return out
@@ -33,7 +40,7 @@ def tables(films: Mapping[str, Film], run: Mapping[str, Mapping], v: T.Variant =
 
 def counts(film: Film, out: Mapping) -> dict:
     jokes = out["jokes"]
-    scenes = S.build_scenes(film.kept)
+    scenes = S.build_scenes(coded_cues(film, out))
     protected = [j for j in jokes if j["target"] == "group" and j["group_type"] in C.PROTECTED]
     return {
         "jokes": len(jokes), "by_kind": dict(Counter(j["kind"] for j in jokes)),
@@ -46,7 +53,8 @@ def counts(film: Film, out: Mapping) -> dict:
         "america": sum(j["target"] == "america" for j in jokes),
         "scenes": len(scenes), "kept_cues": len(film.kept), "dialogue_hours": S.dialogue_hours(scenes),
         "runtime_hours": S.runtime_hours(film.raw), "cleaning": dict(film.cleaning),
-        "failed_scenes": len(out["failed_scenes"]), "failed_jokes": len(out["failed_jokes"]),
+        "failed_scenes": len(out["failed_scenes"]), "kept_cues_in_failed_scenes": len(out.get("failed_scene_cues", ())),
+        "failed_jokes": len(out["failed_jokes"]),
         "jokes_found_in_pass_1": out["jokes_found"],
     }
 
@@ -62,10 +70,12 @@ def readings(est: Mapping, cnt: Mapping, power: Mapping) -> dict:
             "Q3": T.read_q3(est["delta3"])}
 
 
-def cue_map(films: Mapping[str, Film], run: Mapping[str, Mapping]) -> dict[tuple[str, int], dict]:
+def cue_map(films: Mapping[str, Film], run: Mapping[str, Mapping]) -> dict[tuple[str, int], dict | None]:
     out = {}
     for f in C.FILMS:
-        codes = T.cue_codes(run[f]["jokes"], [c.index for c in films[f].kept])
+        r = run[f]
+        codes = T.cue_codes(r["jokes"], [c.index for c in films[f].kept], r.get("detected_spans"),
+                            r.get("failed_scene_cues", ()))
         out.update({(f, cue): v for cue, v in codes.items()})
     return out
 

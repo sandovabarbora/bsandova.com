@@ -13,13 +13,24 @@ COLS = ("jokes", "america", "protected", "speaker", "group", "unclear", "wnpt", 
 
 # ---------------------------------------------------------------- per-cue codes and agreement (§4.6, §4.7)
 
-def cue_codes(jokes: Sequence[Mapping], cues: Sequence[int]) -> dict[int, dict]:
-    """Each cue's codes: the joke whose span starts first, then the shortest; a cue in no span is not a joke."""
-    out = {}
+def cue_codes(jokes: Sequence[Mapping], cues: Sequence[int], detected: Sequence[Mapping] | None = None,
+              excluded: Sequence[int] = ()) -> dict[int, dict | None]:
+    """Each cue's codes. A cue is a joke if it lies in any detected span (`detected`, by default the coded jokes);
+    its codes are those of the coded joke whose span starts first, then the shortest, or None when only an uncoded
+    span (pass 2 failed) covers it. A cue of a scene whose pass 1 failed maps to None: it has no model output."""
+    spans = jokes if detected is None else detected
+    skip = set(excluded)
+    out: dict[int, dict | None] = {}
     for cue in cues:
+        if cue in skip:
+            out[cue] = None
+            continue
+        if not any(j["first_cue"] <= cue <= j["last_cue"] for j in spans):
+            out[cue] = {"joke": False}
+            continue
         covering = [j for j in jokes if j["first_cue"] <= cue <= j["last_cue"]]
         if not covering:
-            out[cue] = {"joke": False}
+            out[cue] = {"joke": True, "target": None, "butt": None}
             continue
         j = min(covering, key=lambda j: (j["first_cue"], j["last_cue"] - j["first_cue"]))
         out[cue] = {"joke": True, "target": j["target"], "butt": j["butt"]}
@@ -45,12 +56,20 @@ def _pct(a: Sequence, b: Sequence) -> float | None:
     return 100 * sum(x == y for x, y in zip(a, b, strict=True)) / len(a) if a else None
 
 
-def agreement(x: Mapping[int, Mapping], y: Mapping[int, Mapping], cues: Sequence[int]) -> dict:
-    """Joke detection on every cue, then target and butt on the cues both call a joke."""
-    dx, dy = [x[c]["joke"] for c in cues], [y[c]["joke"] for c in cues]
-    both = [c for c in cues if x[c]["joke"] and y[c]["joke"]]
-    return {"detection": {"cues": len(cues), "percent_agreement": _pct(dx, dy), "kappa": kappa(dx, dy)},
-            "codes": {"cues": len(both),
+def _coded(v: Mapping) -> bool:
+    return bool(v["joke"]) and v.get("target") is not None
+
+
+def agreement(x: Mapping, y: Mapping, cues: Sequence) -> dict:
+    """Joke detection on every cue both sides have output for, then target and butt on the cues both call a joke
+    and both have codes for."""
+    usable = [c for c in cues if x[c] is not None and y[c] is not None]
+    dx, dy = [x[c]["joke"] for c in usable], [y[c]["joke"] for c in usable]
+    both = [c for c in usable if _coded(x[c]) and _coded(y[c])]
+    uncoded = sum(1 for c in usable if x[c]["joke"] and y[c]["joke"]) - len(both)
+    return {"detection": {"cues": len(usable), "cues_without_model_output": len(cues) - len(usable),
+                          "percent_agreement": _pct(dx, dy), "kappa": kappa(dx, dy)},
+            "codes": {"cues": len(both), "joke_cues_without_codes": uncoded,
                       "kappa_target": kappa([x[c]["target"] for c in both], [y[c]["target"] for c in both]),
                       "kappa_butt": kappa([x[c]["butt"] for c in both], [y[c]["butt"] for c in both])}}
 
@@ -78,23 +97,26 @@ def kappa_interval(pairs: Sequence[tuple], reps: int = C.BOOT_REPS, seed: int = 
 def validation(model: Mapping[tuple, Mapping], human: Sequence[Mapping], reps: int = C.BOOT_REPS) -> dict:
     """Run 1 against the author on the sampled cues (design §4.7, §4.8). `model` maps (film, cue) to codes."""
     skipped = [h for h in human if h["joke"] == C.SKIP]
-    rows = [h for h in human if h["joke"] != C.SKIP]
+    no_output = [h for h in human if h["joke"] != C.SKIP and model[(h["film"], h["cue"])] is None]
+    rows = [h for h in human if h["joke"] != C.SKIP and model[(h["film"], h["cue"])] is not None]
     m = [model[(h["film"], h["cue"])] for h in rows]
     dh, dm = [h["joke"] for h in rows], [x["joke"] for x in m]
     author_jokes = [k for k, h in enumerate(rows) if h["joke"]]
     model_jokes = [k for k, x in enumerate(m) if x["joke"]]
-    both = [k for k in author_jokes if m[k]["joke"]]
+    found = [k for k in author_jokes if m[k]["joke"]]
+    both = [k for k in found if _coded(m[k])]
     pairs = [(m[k]["target"], rows[k]["target"], m[k]["butt"], rows[k]["butt"]) for k in both]
     kt = kappa([p[0] for p in pairs], [p[1] for p in pairs])
     kb = kappa([p[2] for p in pairs], [p[3] for p in pairs])
     gate = kt is not None and kb is not None and kt >= C.KAPPA_GATE and kb >= C.KAPPA_GATE
     return {
-        "cues": len(human), "skipped": len(skipped), "coded": len(rows),
+        "cues": len(human), "skipped": len(skipped), "without_model_output": len(no_output), "coded": len(rows),
         "detection": {"percent_agreement": _pct(dh, dm), "kappa": kappa(dh, dm),
                       "author_joke_cues": len(author_jokes), "model_joke_cues": len(model_jokes),
-                      "share_of_author_jokes_found_by_model": len(both) / len(author_jokes) if author_jokes else None,
-                      "share_of_model_jokes_marked_by_author": len(both) / len(model_jokes) if model_jokes else None},
-        "codes": {"cues": len(both), "kappa_target": kt, "kappa_butt": kb,
+                      "share_of_author_jokes_found_by_model": len(found) / len(author_jokes) if author_jokes else None,
+                      "share_of_model_jokes_marked_by_author": len(found) / len(model_jokes) if model_jokes else None},
+        "codes": {"cues": len(both), "joke_cues_without_model_codes": len(found) - len(both),
+                  "kappa_target": kt, "kappa_butt": kb,
                   "interval": kappa_interval(pairs, reps=reps)},
         "status": "Registered study" if gate else "Exploratory",
     }

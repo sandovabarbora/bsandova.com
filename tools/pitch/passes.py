@@ -83,5 +83,9 @@ def run_film(film: str, scenes: Sequence[Scene], prompts: Mapping[str, str], cli
     _check_failures(film, "pass 2 (jokes)", len(failed_jokes), len(jokes))
     log.info("%s run %d: %d scenes, %d jokes, %d failed scenes, %d failed jokes", film, run, len(scenes), len(jokes),
              len(failed_scenes), len(failed_jokes))
+    # spans of every joke pass 1 found, coded or not: joke detection is measured on these (pass 2 failures included)
+    spans = [{k: j[k] for k in ("first_cue", "last_cue", "kind")} for j in jokes]
+    failed_cues = sorted(c for n in failed_scenes for c in by_number[n].cue_ids)
     return {"film": film, "run": run, "scenes": len(scenes), "jokes": coded, "jokes_found": len(jokes),
-            "failed_scenes": failed_scenes, "failed_jokes": failed_jokes, "model_versions": sorted(versions)}
+            "detected_spans": spans, "failed_scenes": failed_scenes, "failed_scene_cues": failed_cues,
+            "failed_jokes": failed_jokes, "model_versions": sorted(versions)}

@@ -82,3 +82,25 @@ def test_a_film_without_jokes_still_bootstraps_and_reads_indeterminate_where_sha
     res = A.study(films, rr, None, reps=100)
     assert res["readings"]["Q1"]["label"] == "indeterminate" and res["validation"] is None and res["status"] is None
     assert res["estimates"]["share_america_pp2"]["estimate"] is None
+
+
+def test_a_failed_pass_1_scene_leaves_the_table_the_hours_and_the_agreement():
+    films = {"pp1": film(), "pp2": film()}
+    failed = dict(out(PP1), failed_scenes=[2], failed_scene_cues=[6, 7, 8, 9, 10])
+    failed["jokes"] = [x for x in PP1 if not 6 <= x["first_cue"] <= 10]
+    rr = {1: {"pp1": failed, "pp2": out(PP2)}, 2: {"pp1": out(PP1), "pp2": out(PP2)}}
+    t = A.tables(films, rr[1])
+    assert t["pp1"].shape[0] == 5 and t["pp1"][:, -1].sum() == pytest.approx(5 * 14 / 3600)
+    c = A.counts(films["pp1"], failed)
+    assert c["scenes"] == 5 and c["kept_cues_in_failed_scenes"] == 5 and c["failed_scenes"] == 1
+    assert c["dialogue_hours"] == pytest.approx(5 * 14 / 3600)
+    agree = A.self_agreement(films, rr[1], rr[2])["pp1"]["detection"]
+    assert agree["cues"] == 25 and agree["cues_without_model_output"] == 5
+
+
+def test_detection_counts_jokes_whose_pass_2_failed():
+    films = {"pp1": film(), "pp2": film()}
+    r1 = dict(out(PP1[1:]), detected_spans=[{k: x[k] for k in ("first_cue", "last_cue", "kind")} for x in PP1])
+    m = A.cue_map(films, {"pp1": r1, "pp2": out(PP2)})
+    assert m[("pp1", 1)] == {"joke": True, "target": None, "butt": None}
+    assert A.counts(films["pp1"], r1)["jokes"] == 5
