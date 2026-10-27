@@ -29,6 +29,7 @@ the dry run use invented text and a scripted or mocked model.
 
     P="--with numpy==2.5.3"
     uv run --no-project $P python -I tools/pitch/cli.py --synthetic        # invented files, scripted model
+    # writes to a new temporary folder (or --out), never under tools/data/pitch
 
 Every stage on the real files needs `--unblind` and refuses unless the tag `pitch-code` exists and is an ancestor of
 HEAD, `tools/pitch` at HEAD equals it, `tools/pitch` and the design text have no uncommitted changes, and both
@@ -54,12 +55,24 @@ output exists or the sample was drawn before, and stops if the fallback applies 
 
 `--run` refuses unless, in addition, no tracked file differs from HEAD and nothing is untracked in `tools/pitch` or
 `docs/research`, the manifest is committed, `validation-human.json` exists and matches its committed hash, and, if the
-lyric fallback applies, the song marks are committed with their hash. Raw replies are cached under
-`tools/data/pitch/out/run<n>/cache/` (a rerun resumes from the cache; run and attempt are part of the cache key, so run
-2 and a retry are fresh calls), the call log is `calls.jsonl`, and the run's settings with the SHA-256 of every prompt
-file are in `settings.json`. More than 2 % failed scenes or jokes in a film and pass stops the run.
+lyric fallback applies, the song marks are committed with their hash. A run is made once: `--run N` refuses if
+`out/runN/pp1.json` or `pp2.json` exists. Only the gate opens `run_model` to a real client; the scripted model of the
+dry run needs none.
 
-`--analyse` refuses unless the code is frozen, the files and the codes match their hashes and both runs are complete.
+Raw replies are cached under `tools/data/pitch/out/run<n>/cache/` (written atomically; a file that does not read back
+is a miss). Run and attempt are part of the cache key, so run 2 and a retry are fresh calls. **Failed attempts are
+cached too and replayed on a rerun**: a run stopped by the 2 % limit stops again in the same place, it is not re-rolled.
+The call log is `calls.jsonl`; the settings, the SHA-256 of every prompt file and of both schemas are in
+`settings.json`. More than 2 % failed scenes or jokes in a film and pass stops the run, and the run's outputs
+(`pp1.json`, `pp2.json`) are written only once both films are done. Each output and `settings.json` carry a stamp: the
+SHA-256 of both subtitle files, the commit of `pitch-code` and the SHA-256 of `validation-human.json`.
+
+A scene whose pass 1 failed leaves the scene table, the dialogue hours and the bootstrap, and its cues leave the
+agreement measures; the counts are reported per film and run. A joke whose pass 2 failed is in no count, but its span
+counts for joke detection in the self-agreement and the validation.
+
+`--analyse` refuses unless the code is frozen, the files and the codes match their hashes, both runs are complete and
+both runs' stamps match the files, the tag and the codes of now.
 
 Tests (invented data only), then the full 10 000-replicate bootstrap, then ruff:
 
@@ -80,4 +93,4 @@ schema limits target, group type and butt to the codebook. The strict parsing st
 stop reason is anything other than `end_turn` (`max_tokens`, `refusal`, ...) is a failed attempt even if its JSON
 parses. `max_tokens` is 32 000 for pass 1 and 16 000 for pass 2, with room for thinking, and the calls stream. The
 model is pinned as `claude-sonnet-5-5`, the SDK as `anthropic==2.3.0`; both, with thinking, effort, the prompt hashes
-and the schema hash, are in each run's `settings.json` and in every cached request. See the design's change log.
+and the schema hashes, are in each run's `settings.json` and in every cached request. See the design's change log.
