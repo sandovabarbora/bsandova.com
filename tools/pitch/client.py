@@ -111,10 +111,11 @@ def cli_command(system: str, schema: dict) -> list[str]:
 
 
 def cli_env(max_tokens: int = 0) -> dict[str, str]:
-    """The caller's environment without any ANTHROPIC_ variable (the API key, a base URL or model override; the call
-    runs on the signed-in account), with memory, CLAUDE.md, auto-update and telemetry off and max_tokens as the
+    """The caller's environment without any ANTHROPIC_ variable (the API key, a base URL or model override) or
+    CLAUDE_CODE_USE_ provider switch (the call runs on the signed-in account), with memory, CLAUDE.md, auto-update and telemetry off and max_tokens as the
     output-token limit."""
-    env = {k: v for k, v in os.environ.items() if not k.startswith("ANTHROPIC_")}
+    env = {k: v for k, v in os.environ.items()
+           if not k.startswith(("ANTHROPIC_", "CLAUDE_CODE_USE_"))}   # no key, base URL, model or cloud provider
     env = {**env, **CLI_ENV}
     return {**env, "CLAUDE_CODE_MAX_OUTPUT_TOKENS": str(max_tokens)} if max_tokens else env
 
@@ -147,7 +148,9 @@ def parse_cli_result(raw: str, model: str = C.MODEL, max_tokens: int | None = No
         raise CallFailed("CLI call had a denied permission")
     if not isinstance(res.get("structured_output"), dict):
         raise CallFailed("CLI call has no structured output")
-    used = sorted(res.get("modelUsage") or {})
+    if not isinstance(res.get("modelUsage"), dict):
+        raise CallFailed("CLI call has no model usage")
+    used = sorted(res["modelUsage"])
     if used != [model]:
         raise CallFailed(f"CLI call used {used}, not {model}")
     usage = res.get("usage")
@@ -162,7 +165,7 @@ def parse_cli_result(raw: str, model: str = C.MODEL, max_tokens: int | None = No
                     else [int(res["modelUsage"][model]["outputTokens"])])
         tokens_in = sum(int(usage.get(k) or 0) for k in
                         ("input_tokens", "cache_creation_input_tokens", "cache_read_input_tokens"))
-    except (KeyError, TypeError, ValueError):
+    except (KeyError, TypeError, ValueError, OverflowError):
         raise CallFailed("CLI call has malformed token usage") from None
     if min(per_turn) < 0 or sum(per_turn) == 0:
         raise CallFailed("CLI call reports no output tokens")

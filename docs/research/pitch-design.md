@@ -476,7 +476,7 @@ versions, hashes, no subtitle text), and the gitignored working files under `too
   codebook and the schemas are unchanged. Each call is a fresh process in an empty folder with the study's system
   prompt in place of the CLI's own, the schema as structured output, and no tools, settings files, hooks,
   auto-memory, CLAUDE.md, MCP servers, skills or saved session; every `ANTHROPIC_` variable (the API key, any base
-  URL or model override) is removed from its environment, and the CLI's auto-update and telemetry are off. Three
+  URL or model override) and every `CLAUDE_CODE_USE_` provider switch are removed from its environment, and the CLI's auto-update and telemetry are off. Three
   plugins still load (the author's `guards`, which has no hooks, and two built-in ones); a test call on invented
   text with Czech diacritics, lyric marks, a fake password, an e-mail address, a URL, a git command and SQL got
   every one of those lines back unchanged, and no hook ran. Differences from §3.6:

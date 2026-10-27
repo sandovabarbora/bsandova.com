@@ -318,6 +318,9 @@ def test_parse_cli_result_success():
     _cli_result(structured_output=["not", "a", "dict"]),
     "[1, 2]",
     _cli_result(usage=None),
+    _cli_result(modelUsage=[1, "a"]),
+    _cli_result(modelUsage=5),
+    _cli_result(usage={"output_tokens": 7, "iterations": [{"output_tokens": float("inf")}]}),
     _cli_result(usage=[1]),
     _cli_result(usage={"output_tokens": 7}, modelUsage={C.MODEL: {}}),
     _cli_result(usage={"output_tokens": 7, "iterations": "x"}),
@@ -368,6 +371,7 @@ def _cli_client(monkeypatch, replies, seen):
     monkeypatch.setattr(CL.subprocess, "run", fake_run)
     monkeypatch.setenv(CL.KEY_NAME, "not-a-real-value")
     monkeypatch.setenv("ANTHROPIC_BASE_URL", "http://example.invalid")
+    monkeypatch.setenv("CLAUDE_CODE_USE_BEDROCK", "1")
     return CL.ClaudeCliClient(sleep=lambda s: seen.append(("slept", s)))
 
 
@@ -381,7 +385,7 @@ def test_the_cli_call_is_isolated(monkeypatch):
     assert cmd == CL.cli_command("SYSTEM", {"type": "object"}) and "USER ♪ text" not in cmd
     assert kw["input"] == "USER ♪ text" and kw["encoding"] == "utf-8"
     assert Path(kw["cwd"]).name.startswith("call-")
-    assert not any(k.startswith("ANTHROPIC_") for k in kw["env"])
+    assert not any(k.startswith(("ANTHROPIC_", "CLAUDE_CODE_USE_")) for k in kw["env"])
     assert kw["env"]["CLAUDE_CODE_MAX_OUTPUT_TOKENS"] == "123"
     assert all(kw["env"][k] == v for k, v in CL.CLI_ENV.items())
 
