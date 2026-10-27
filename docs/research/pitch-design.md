@@ -471,15 +471,32 @@ versions, hashes, no subtitle text), and the gitignored working files under `too
   Butt κ on the jokes among them, and the gate of κ ≥ 0.6 on both is unchanged. With fewer jokes the κ interval is
   wider, and the label follows the registered rule.
 - 27 October 2026, after `pitch-code`, after the author's codes were hashed and before any model run, proposed by
-  the author: no API key is available, so the runs go through the Claude Code CLI in print mode under the author's
-  account instead of the SDK. The model (`claude-sonnet-5-5`), the effort (high), the prompts, the codebook and the
-  schemas are unchanged. Each call is a fresh `claude -p` process in an empty folder with the study's system prompt in
-  place of the CLI's own, the schema as structured output, and no tools, settings, CLAUDE.md, MCP servers, skills or
-  saved session. Differences from §3.6: the CLI chooses its own thinking (adaptive is the Claude 5 default, but it is
-  not sent explicitly); the schema is enforced through the CLI's structured-output tool rather than the API's output
-  format, so a completed call with a structured output from that model alone is recorded with stop reason `end_turn`,
-  and anything else is a failed attempt; `max_tokens` is passed as the CLI's output-token limit; the CLI version
-  replaces the SDK version in each run's settings. The SDK client stays in the code, selectable with `--client api`.
-  The only code change is the new client, its tests and the tag name; it was reviewed independently and frozen under
-  the new tag `pitch-code-cli`, which replaces `pitch-code` as the code of record. A smoke test on invented subtitles
-  checked the call before the tag; no real subtitle text was sent.
+  the author: no API key is available, so the runs go through the Claude Code CLI in print mode (`claude -p`) under
+  the author's account instead of the SDK. The model (`claude-sonnet-5-5`), the effort (high), the prompts, the
+  codebook and the schemas are unchanged. Each call is a fresh process in an empty folder with the study's system
+  prompt in place of the CLI's own, the schema as structured output, and no tools, settings files, hooks,
+  auto-memory, CLAUDE.md, MCP servers, skills or saved session; the API key is removed from its environment and the
+  CLI's auto-update is off. Differences from §3.6:
+  (1) Neither temperature nor thinking is sent: the CLI uses its own default thinking.
+  (2) The CLI keeps a few lines of its own around the study's prompt, checked with a test call on invented text: a
+  one-line agent preamble before the system prompt, the description of its structured-output tool, a block with the
+  working folder, platform, model name and date, and the signed-in account's e-mail address. None names the films,
+  the study or its questions. Managed-policy settings and inherited environment variables are not suppressed; the
+  check that only `claude-sonnet-5-5` was used catches a different model, not other overrides.
+  (3) The schema is enforced by the CLI's structured-output tool, which validates the reply, rather than by the API's
+  constrained output format. A call counts only if it completed with that tool call as its stop, in two turns (the
+  tool call and its acknowledgement) or three (the model first gives the JSON as plain text, as the prompt asks, and
+  the CLI then asks for it through the tool), with no denied permission, a structured output from that model alone
+  and fewer output tokens than `max_tokens` over all turns, so no turn was cut at the limit; it is then recorded with
+  stop reason `end_turn`, and anything else is a failed attempt under the same one-retry and 2 % rules.
+  (4) `max_tokens` is passed as the CLI's output-token limit.
+  (5) A usage or rate limit of the account is not a failed attempt: the client waits (doubling from one minute, at
+  most six hours in all) and then stops the run, which resumes from the cache when started again.
+  (6) The input tokens in the call log include cached input, unlike the API path's.
+  (7) The CLI version replaces the SDK version in each run's settings, with the client, the command's flags and its
+  environment overrides; a run refuses to start or resume with a client or version other than one already recorded
+  for either run.
+  The SDK client stays in the code, selectable with `--client api`. The code change is the new client, its tests and
+  the code tag, which becomes `pitch-code-cli` and replaces `pitch-code` as the code of record; `pitch-code` is not
+  moved. The change was reviewed independently, the review's findings applied and reviewed again, before the tag.
+  Test calls used invented subtitles only; no real subtitle text was sent before the tag.

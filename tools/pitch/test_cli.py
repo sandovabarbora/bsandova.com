@@ -10,6 +10,7 @@ import analysis as A
 import cli
 import client as CL
 import config as C
+import files as F
 import pytest
 import synth as SY
 from conftest import srt
@@ -298,9 +299,28 @@ def test_a_missing_key_refuses_the_run_without_printing_anything_secret(repo, mo
     def no_key():
         raise CL.CallFailed("no ANTHROPIC_API_KEY in the environment or in .env")
     monkeypatch.setattr(CL, "AnthropicClient", no_key)
-    monkeypatch.setattr(CL, "ClaudeCliClient", no_key)
     with pytest.raises(SystemExit, match="no ANTHROPIC_API_KEY"):
-        cli.main(["--run", "1", "--unblind"])
+        cli.main(["--run", "1", "--unblind", "--client", "api"])
+
+
+@pytest.mark.parametrize("args, chosen", [([], "cli"), (["--client", "claude-cli"], "cli"), (["--client", "api"], "api")])
+def test_the_client_flag_picks_the_client(repo, monkeypatch, args, chosen):
+    to_blind_sample(repo)
+    def pick(name):
+        def make():
+            raise CL.CallFailed(f"picked {name}")
+        return make
+    monkeypatch.setattr(CL, "AnthropicClient", pick("api"))
+    monkeypatch.setattr(CL, "ClaudeCliClient", pick("cli"))
+    with pytest.raises(SystemExit, match=f"picked {chosen}"):
+        cli.main(["--run", "1", "--unblind", *args])
+
+
+def test_a_run_refuses_a_client_version_other_than_the_one_recorded(tmp_path):
+    F.write_json(tmp_path / "run1" / "settings.json", {"sdk": "claude-cli 1.0"})
+    cli.check_same_client(tmp_path, 1, "claude-cli 1.0")
+    with pytest.raises(SystemExit, match="made with claude-cli 1.0"):
+        cli.check_same_client(tmp_path, 2, "claude-cli 2.0")
 
 
 # ---------------------------------------------------------------- the lyric fallback

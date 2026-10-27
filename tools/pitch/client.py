@@ -12,6 +12,7 @@ import logging
 import os
 import subprocess
 import tempfile
+import time
 from pathlib import Path
 from typing import Protocol
 
@@ -87,57 +88,119 @@ class AnthropicClient:
         return Reply(text, msg.model, msg.stop_reason, msg.usage.input_tokens, msg.usage.output_tokens)
 
 
+CLI_SETTINGS = {"disableAllHooks": True, "autoMemoryEnabled": False}
+CLI_ENV = {"CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1", "CLAUDE_CODE_DISABLE_CLAUDE_MDS": "1", "DISABLE_AUTOUPDATER": "1"}
+LIMIT_STATUSES = (429, 529)
+CLI_TURNS = (2, 3)
+
+
+class UsageLimit(RuntimeError):
+    """The account's usage or rate limit: not a failed attempt; the client waits, then stops the run (it resumes from
+    the cache)."""
+
+
 def cli_command(system: str, schema: dict) -> list[str]:
     """One isolated print-mode call: the pinned model and effort, the study's system prompt in place of the CLI's own,
-    the schema as structured output, and no tools, settings, CLAUDE.md, MCP servers, skills or saved session."""
+    the schema as structured output, and no tools, settings files, hooks, memory, CLAUDE.md, MCP servers, skills or
+    saved session. The user prompt goes on stdin."""
     return ["claude", "-p", "--model", C.MODEL, "--effort", C.EFFORT, "--system-prompt", system,
             "--json-schema", json.dumps(schema, sort_keys=True), "--output-format", "json", "--tools", "",
-            "--setting-sources", "", "--strict-mcp-config", "--disable-slash-commands", "--no-session-persistence"]
+            "--setting-sources", "", "--settings", json.dumps(CLI_SETTINGS), "--strict-mcp-config",
+            "--disable-slash-commands", "--no-session-persistence"]
 
 
-def parse_cli_result(raw: str, model: str = C.MODEL) -> Reply:
-    """The CLI's JSON result as a Reply. A completed call with a structured output from the pinned model alone is
-    recorded as stop reason end_turn (the CLI reports the schema as a tool call); anything else is a failed attempt."""
+def cli_env(max_tokens: int) -> dict[str, str]:
+    """The caller's environment without the API key (the call runs on the signed-in account), with memory, CLAUDE.md
+    and auto-update off and max_tokens as the output-token limit."""
+    env = {k: v for k, v in os.environ.items() if k != KEY_NAME}
+    return {**env, **CLI_ENV, "CLAUDE_CODE_MAX_OUTPUT_TOKENS": str(max_tokens)}
+
+
+def parse_cli_result(raw: str, model: str = C.MODEL, max_tokens: int | None = None) -> Reply:
+    """The CLI's JSON result as a Reply. A call counts only if it completed with the schema's tool call as its stop,
+    in two turns (the tool call, then its acknowledgement) or three (the answer as plain text first, which the CLI
+    then asks to be given through the tool), with no denied permission, a structured output from the pinned model
+    alone and, all turns together, fewer output tokens than max_tokens (so no turn was cut at the limit); it is then
+    recorded with stop reason end_turn. Anything else, a refusal included, is a failed attempt; a usage or rate limit
+    raises UsageLimit."""
     try:
         res = json.loads(raw)
     except ValueError:
         raise CallFailed("the CLI returned no JSON result") from None
-    if res.get("is_error") or res.get("subtype") != "success" or res.get("structured_output") is None:
+    if not isinstance(res, dict):
+        raise CallFailed("the CLI result is not a JSON object")
+    if res.get("api_error_status") in LIMIT_STATUSES:
+        raise UsageLimit(f"status {res.get('api_error_status')}")
+    if res.get("is_error") or res.get("subtype") != "success":
         raise CallFailed(f"CLI call failed: {res.get('subtype')} {res.get('api_error_status') or ''}".strip())
+    for key, want in {"terminal_reason": "completed", "stop_reason": "tool_use"}.items():
+        if res.get(key) != want:
+            raise CallFailed(f"CLI call ended with {key} {res.get(key)!r}, not {want!r}")
+    if res.get("num_turns") not in CLI_TURNS:
+        raise CallFailed(f"CLI call took {res.get('num_turns')!r} turns")
+    if res.get("permission_denials"):
+        raise CallFailed("CLI call had a denied permission")
+    if not isinstance(res.get("structured_output"), dict):
+        raise CallFailed("CLI call has no structured output")
     used = sorted(res.get("modelUsage") or {})
     if used != [model]:
         raise CallFailed(f"CLI call used {used}, not {model}")
     usage = res.get("usage") or {}
+    turns = usage.get("iterations") or [usage]
+    out_total = max(int(usage.get("output_tokens") or 0), sum(int(t.get("output_tokens") or 0) for t in turns))
+    if max_tokens is not None and out_total >= max_tokens:
+        raise CallFailed("CLI call reached max_tokens")
     tokens_in = sum(int(usage.get(k) or 0) for k in
                     ("input_tokens", "cache_creation_input_tokens", "cache_read_input_tokens"))
-    return Reply(json.dumps(res["structured_output"], ensure_ascii=False), model, "end_turn", tokens_in,
-                 int(usage.get("output_tokens") or 0))
+    return Reply(json.dumps(res["structured_output"], ensure_ascii=False), model, "end_turn", tokens_in, out_total)
 
 
 class ClaudeCliClient:
     """claude-sonnet-5-5 through the Claude Code CLI in print mode, signed in with the author's account. Each call
-    is a fresh process in an empty folder; max_tokens is passed as the CLI's output-token limit."""
+    is a fresh process in an empty folder. A usage or rate limit is waited out (doubling from one minute, at most
+    LIMIT_WAIT_S in all); after that the run stops and resumes from the cache when started again."""
 
-    def __init__(self, model: str = C.MODEL, timeout: int = C.CLI_TIMEOUT_S):
-        self.model, self.timeout = model, timeout
+    def __init__(self, model: str = C.MODEL, timeout: int = C.CLI_TIMEOUT_S, sleep=time.sleep):
+        self.model, self.timeout, self.sleep = model, timeout, sleep
         try:
-            out = subprocess.run(["claude", "--version"], capture_output=True, text=True, timeout=60, check=True)
-        except (OSError, subprocess.SubprocessError):
+            out = subprocess.run(["claude", "--version"], capture_output=True, text=True, encoding="utf-8",
+                                 timeout=60, check=True, env=cli_env(0))
+        except (OSError, subprocess.SubprocessError, UnicodeError):
             raise CallFailed("the claude CLI is not available") from None
         self.sdk_version = "claude-cli " + out.stdout.strip()
 
-    def call(self, system: str, user: str, max_tokens: int, schema: dict) -> Reply:
-        env = {k: v for k, v in os.environ.items() if k != KEY_NAME}
-        env["CLAUDE_CODE_MAX_OUTPUT_TOKENS"] = str(max_tokens)
-        with tempfile.TemporaryDirectory(prefix="pitch-call-") as cwd:
+    def _once(self, system: str, user: str, max_tokens: int, schema: dict) -> Reply:
+        with tempfile.TemporaryDirectory(prefix="call-") as cwd:
             try:
                 proc = subprocess.run(cli_command(system, schema), input=user, capture_output=True, text=True,
-                                      cwd=cwd, env=env, timeout=self.timeout)
+                                      encoding="utf-8", cwd=cwd, env=cli_env(max_tokens), timeout=self.timeout)
             except subprocess.TimeoutExpired:
                 raise CallFailed(f"CLI call timed out after {self.timeout} s") from None
-        if proc.returncode != 0 and not proc.stdout.strip():
+            except (OSError, UnicodeError, subprocess.SubprocessError) as err:
+                raise CallFailed(f"CLI call could not run: {type(err).__name__}") from None
+        if proc.returncode != 0:
+            try:
+                parse_cli_result(proc.stdout, self.model, max_tokens)
+            except UsageLimit:
+                raise
+            except CallFailed:
+                pass
             raise CallFailed(f"CLI exited with {proc.returncode}")
-        return parse_cli_result(proc.stdout, self.model)
+        return parse_cli_result(proc.stdout, self.model, max_tokens)
+
+    def call(self, system: str, user: str, max_tokens: int, schema: dict) -> Reply:
+        waited, wait = 0, 60
+        while True:
+            try:
+                return self._once(system, user, max_tokens, schema)
+            except UsageLimit as err:
+                if waited >= C.LIMIT_WAIT_S:
+                    raise SystemExit(f"stopping: usage limit ({err}) after {waited} s of waiting; start the same "
+                                     "run again later, it resumes from the cache") from None
+                log.warning("usage limit (%s), waiting %d s", err, wait)
+                self.sleep(wait)
+                waited += wait
+                wait = min(wait * 2, 900)
 
 
 class Cache:

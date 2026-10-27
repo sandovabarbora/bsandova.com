@@ -4,7 +4,7 @@ scripted model and needs neither.
 
     P="--with numpy==2.5.3"
     uv run --no-project $P python -I tools/pitch/cli.py --synthetic
-    # after the tag pitch-code, with tools/data/pitch/raw/pp1.srt and pp2.srt in place:
+    # after the code tag (config.CODE_TAG), with tools/data/pitch/raw/pp1.srt and pp2.srt in place:
     uv run --no-project $P python -I tools/pitch/cli.py --hash-files --unblind     # commit pitch-files.sha256
     uv run --no-project $P python -I tools/pitch/cli.py --italic-runs --unblind    # only if a file has no ♪, ♫ or #
     uv run --no-project $P python -I tools/pitch/cli.py --draw-sample --unblind    # code the form offline
@@ -63,7 +63,7 @@ def _rel(path: Path) -> str:
 
 
 def check_code_frozen() -> None:
-    """The tag `pitch-code` exists and is an ancestor of HEAD, tools/pitch at HEAD equals it, and neither tools/pitch
+    """The code tag (config.CODE_TAG) exists and is an ancestor of HEAD, tools/pitch at HEAD equals it, and neither tools/pitch
     nor the design text has uncommitted changes (design §3.3)."""
     if not _git_ok("rev-parse", "--verify", "--quiet", CODE_REF):
         sys.exit(f"refusing to run: the code is not frozen, the tag {C.CODE_TAG} does not exist")
@@ -267,11 +267,25 @@ def stage_hash_sample() -> dict:
 
 
 def run_settings(prompts: dict, sdk_version: str | None) -> dict:
+    cli = bool(sdk_version and sdk_version.startswith("claude-cli"))
+    client = {"client": "claude-cli", "thinking": "cli-default", "structured_outputs": "cli json-schema tool",
+              "cli_command": CL.cli_command("<system>", {"schema": "<schema>"}), "cli_env": CL.CLI_ENV,
+              "sdk_pin": None} if cli else {"client": "api"}
     return {"model": C.MODEL, "thinking": C.THINKING, "effort": C.EFFORT, "structured_outputs": "json_schema",
             "max_tokens": C.MAX_TOKENS, "retries": C.RETRIES,
             "max_fail_share": C.MAX_FAIL_SHARE, "prompt_sha256": K.prompt_hashes(prompts),
             "schema_sha256": K.schema_hashes(),
-            "sdk": sdk_version, "sdk_pin": C.SDK_PIN}
+            "sdk": sdk_version, "sdk_pin": C.SDK_PIN, **client}
+
+
+def check_same_client(out: Path, run: int, sdk_version: str | None) -> None:
+    """A run resumes, and the other run is made, with the same client and version as recorded before."""
+    for r in C.RUNS:
+        path = out / f"run{r}" / "settings.json"
+        if path.exists():
+            seen = F.read_json(path).get("sdk")
+            if seen != sdk_version:
+                sys.exit(f"refusing to run: run {r} was made with {seen}, this run would use {sdk_version}")
 
 
 def run_model(films: dict[str, A.Film], client, run: int, out: Path, sdk_version: str | None = None,
@@ -285,6 +299,7 @@ def run_model(films: dict[str, A.Film], client, run: int, out: Path, sdk_version
     done = [f for f in C.FILMS if (folder / f"{f}.json").exists()]
     if done:
         sys.exit(f"refusing to run: run {run} exists already ({done}); a run is made once")
+    check_same_client(out, run, sdk_version)
     prompts = F.load_prompts()
     F.write_json(folder / "settings.json", {**run_settings(prompts, sdk_version), "stamp": stamp})
     cache, call_log = CL.Cache(folder / "cache"), CL.CallLog(folder / "calls.jsonl")

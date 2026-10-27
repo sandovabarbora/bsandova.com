@@ -58,6 +58,7 @@ SDK_PIN = "anthropic==2.3.0"
 # model, effort, prompts and schemas; the SDK client stays for anyone re-running the study with an API key.
 CLIENTS = ("claude-cli", "api")
 CLI_TIMEOUT_S = 1800
+LIMIT_WAIT_S = 6 * 3600   # waiting out a usage limit, in all, before the run stops
 # thinking counts toward max_tokens, so both leave room for it; the calls stream, as the SDK requires above ~21 000
 MAX_TOKENS = {"segment": 32000, "code": 16000}
 RUNS = (1, 2)

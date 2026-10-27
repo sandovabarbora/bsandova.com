@@ -6,6 +6,7 @@ import json
 import logging
 import sys
 import types
+from pathlib import Path
 
 import client as CL
 import coding as K
@@ -287,6 +288,7 @@ def test_cli_command_isolates_the_call():
 
 def _cli_result(**over):
     res = {"type": "result", "subtype": "success", "is_error": False, "structured_output": {"jokes": []},
+           "terminal_reason": "completed", "stop_reason": "tool_use", "num_turns": 2, "permission_denials": [],
            "modelUsage": {C.MODEL: {}}, "usage": {"input_tokens": 2, "cache_creation_input_tokens": 10,
                                                   "cache_read_input_tokens": 3, "output_tokens": 7}}
     res.update(over)
@@ -306,7 +308,97 @@ def test_parse_cli_result_success():
     _cli_result(structured_output=None),
     _cli_result(modelUsage={"claude-haiku-4-5-20251001": {}}),
     _cli_result(modelUsage={C.MODEL: {}, "claude-haiku-4-5-20251001": {}}),
+    _cli_result(stop_reason="max_tokens"),
+    _cli_result(stop_reason="refusal"),
+    _cli_result(terminal_reason="max_turns"),
+    _cli_result(num_turns=1),
+    _cli_result(num_turns=4),
+    _cli_result(permission_denials=[{"tool": "x"}]),
+    _cli_result(structured_output=["not", "a", "dict"]),
+    "[1, 2]",
 ])
 def test_parse_cli_result_failures(raw):
     with pytest.raises(CL.CallFailed):
         CL.parse_cli_result(raw)
+
+
+def test_three_turns_are_accepted_and_the_token_limit_is_checked():
+    assert CL.parse_cli_result(_cli_result(num_turns=3)).stop_reason == "end_turn"
+    assert CL.parse_cli_result(_cli_result(), max_tokens=8).output_tokens == 7
+    with pytest.raises(CL.CallFailed, match="max_tokens"):
+        CL.parse_cli_result(_cli_result(), max_tokens=7)
+    two = _cli_result(usage={"output_tokens": 5, "iterations": [{"output_tokens": 5}, {"output_tokens": 5}]})
+    assert CL.parse_cli_result(two).output_tokens == 10
+    with pytest.raises(CL.CallFailed, match="max_tokens"):
+        CL.parse_cli_result(two, max_tokens=10)
+
+
+def test_a_usage_limit_is_not_a_failed_attempt():
+    with pytest.raises(CL.UsageLimit):
+        CL.parse_cli_result(_cli_result(is_error=True, subtype="error", api_error_status=429))
+
+
+class _Proc:
+    def __init__(self, stdout, returncode=0):
+        self.stdout, self.returncode, self.stderr = stdout, returncode, ""
+
+
+def _cli_client(monkeypatch, replies, seen):
+    def fake_run(cmd, **kw):
+        seen.append((cmd, kw))
+        if cmd[:2] == ["claude", "--version"]:
+            return _Proc("9.9.9 (Claude Code)")
+        reply = replies.pop(0)
+        if isinstance(reply, BaseException):
+            raise reply
+        return reply
+    monkeypatch.setattr(CL.subprocess, "run", fake_run)
+    monkeypatch.setenv(CL.KEY_NAME, "sk-secret-do-not-pass")
+    return CL.ClaudeCliClient(sleep=lambda s: seen.append(("slept", s)))
+
+
+def test_the_cli_call_is_isolated(monkeypatch):
+    seen = []
+    cl = _cli_client(monkeypatch, [_Proc(_cli_result())], seen)
+    assert cl.sdk_version == "claude-cli 9.9.9 (Claude Code)"
+    r = cl.call("SYSTEM", "USER ♪ text", 123, {"type": "object"})
+    assert r.stop_reason == "end_turn"
+    cmd, kw = seen[-1]
+    assert cmd == CL.cli_command("SYSTEM", {"type": "object"}) and "USER ♪ text" not in cmd
+    assert kw["input"] == "USER ♪ text" and kw["encoding"] == "utf-8"
+    assert Path(kw["cwd"]).name.startswith("call-")
+    assert CL.KEY_NAME not in kw["env"] and kw["env"]["CLAUDE_CODE_MAX_OUTPUT_TOKENS"] == "123"
+    assert all(kw["env"][k] == v for k, v in CL.CLI_ENV.items())
+
+
+@pytest.mark.parametrize("reply, match", [
+    (CL.subprocess.TimeoutExpired(["claude", "SYSTEM"], 5), "timed out"),
+    (OSError("boom"), "could not run"),
+    (_Proc("", 1), "exited with 1"),
+    (_Proc(_cli_result(), 1), "exited with 1"),
+])
+def test_cli_call_failures_echo_no_prompt(monkeypatch, reply, match):
+    cl = _cli_client(monkeypatch, [reply], [])
+    with pytest.raises(CL.CallFailed, match=match) as err:
+        cl.call("SYSTEM", "USER", 10, {"type": "object"})
+    assert "SYSTEM" not in str(err.value) and "USER" not in str(err.value)
+
+
+def test_a_usage_limit_is_waited_out_then_stops_the_run(monkeypatch):
+    seen = []
+    limit = _Proc(_cli_result(is_error=True, subtype="error", api_error_status=429), 1)
+    cl = _cli_client(monkeypatch, [limit, _Proc(_cli_result())], seen)
+    assert cl.call("S", "U", 10, {}).stop_reason == "end_turn"
+    assert ("slept", 60) in seen
+    monkeypatch.setattr(C, "LIMIT_WAIT_S", 100)
+    cl = _cli_client(monkeypatch, [limit] * 5, [])
+    with pytest.raises(SystemExit, match="usage limit"):
+        cl.call("S", "U", 10, {})
+
+
+def test_a_missing_cli_is_a_failed_client(monkeypatch):
+    def fake_run(cmd, **kw):
+        raise OSError("no claude")
+    monkeypatch.setattr(CL.subprocess, "run", fake_run)
+    with pytest.raises(CL.CallFailed, match="not available"):
+        CL.ClaudeCliClient()
