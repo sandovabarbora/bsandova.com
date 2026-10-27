@@ -26,3 +26,14 @@ def srt(*cues: tuple) -> str:
         ms = round(t * 1000)
         return f"{ms // 3600000:02d}:{ms // 60000 % 60:02d}:{ms // 1000 % 60:02d},{ms % 1000:03d}"
     return "\n".join(f"{i}\n{stamp(a)} --> {stamp(b)}\n{text}\n" for i, a, b, text in cues)
+
+
+@pytest.fixture(autouse=True, scope="session")
+def real_outputs_untouched():
+    # the tests write into temporary folders only: fail loudly if a real output of the study appears or changes
+    import config as C
+    paths = (C.MANIFEST, C.SONG_MARKS, C.RESULTS, C.SAMPLE, C.FORM, C.HUMAN, C.OUT / "run1", C.OUT / "run2")
+    before = {p: p.stat().st_mtime_ns if p.exists() else None for p in paths}
+    yield
+    after = {p: p.stat().st_mtime_ns if p.exists() else None for p in paths}
+    assert after == before, "a test wrote into the study's real outputs"

@@ -36,8 +36,9 @@ class ModelClient(Protocol):
     def call(self, system: str, user: str, max_tokens: int) -> Reply: ...
 
 
-def load_env_key(env_file: Path = C.ENV_FILE) -> bool:
+def load_env_key(env_file: Path | None = None) -> bool:
     """Put the API key from .env into the environment unless it is already there. Says only whether a key is set."""
+    env_file = env_file or C.ENV_FILE
     if os.environ.get(KEY_NAME):
         return True
     if env_file.exists():

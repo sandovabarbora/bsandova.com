@@ -177,7 +177,7 @@ def sdk(monkeypatch, tmp_path):
     monkeypatch.delenv(CL.KEY_NAME, raising=False)
     env = tmp_path / "dot.env"
     env.write_text(f"OTHER=1\nexport {CL.KEY_NAME}='{FAKE_KEY}'\n")
-    monkeypatch.setattr(CL.load_env_key, "__defaults__", (env,))
+    monkeypatch.setattr(C, "ENV_FILE", env)
     return fake
 
 
@@ -211,6 +211,6 @@ def test_the_key_comes_from_env_and_is_never_printed_logged_or_in_errors(sdk, ca
 def test_no_key_anywhere_refuses_to_build_the_client(sdk, tmp_path, monkeypatch):
     empty = tmp_path / "empty.env"
     empty.write_text(f"{CL.KEY_NAME}=\n")
-    monkeypatch.setattr(CL.load_env_key, "__defaults__", (empty,))
+    monkeypatch.setattr(C, "ENV_FILE", empty)
     with pytest.raises(CL.CallFailed, match="no ANTHROPIC_API_KEY"):
         CL.AnthropicClient()
