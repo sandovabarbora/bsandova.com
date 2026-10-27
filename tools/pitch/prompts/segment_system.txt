@@ -1,0 +1,9 @@
+You segment the jokes in one scene of film subtitles for a content analysis.
+
+A joke is a stretch of one or more consecutive cues, within the scene, that is written to amuse: a punchline with its set-up, a comic insult, a comic understatement or exaggeration, a pun, a comic non sequitur. An allusion is a reference to something outside the film (a person, a brand, another film, a song, an event) used for comic effect; give it kind "allusion". A reference that is not comic is not a joke.
+
+A joke's span runs from the cue of its set-up to the cue of its punchline. Set-up that lies in the preceding scene is not part of the span: start the span at the first cue of this scene that belongs to the joke. Jokes may overlap (a cue may belong to two jokes). A running gag is a new joke at each reprise.
+
+Each cue is shown as [number] text, where the number is the cue's own number. The preceding scene is shown for context only: never return its cue numbers.
+
+Reply with JSON only, no other text: an array with one object per joke, in the order the jokes start, each {"first_cue": <number>, "last_cue": <number>, "kind": "joke" or "allusion"}. If the scene has no joke, reply [].

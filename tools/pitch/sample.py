@@ -6,6 +6,7 @@ import html
 import json
 from collections.abc import Mapping, Sequence
 
+import coding
 import config as C
 import numpy as np
 from subtitles import Cue, Scene
@@ -74,14 +75,11 @@ def _check_one(c: Mapping) -> dict:
         return {**base, "joke": joke}
     if joke is not True:
         raise ValueError(f"{where}: joke must be true, false or 'skip'")
-    target, gtype, other, butt = c.get("target"), c.get("group_type") or "", c.get("group_other") or "", c.get("butt")
-    if target not in C.TARGETS or butt not in C.BUTTS:
-        raise ValueError(f"{where}: target or butt outside the codebook")
-    if (target == "group") != bool(gtype) or (gtype and gtype not in C.GROUP_TYPES):
-        raise ValueError(f"{where}: group type is required for target group and only for it")
-    if (gtype == "other") != bool(other.strip()):
-        raise ValueError(f"{where}: the group is written down for group type other and only for it")
-    return {**base, "joke": True, "target": target, "group_type": gtype, "group_other": other.strip(), "butt": butt}
+    try:
+        codes = coding.check_codes(c.get("target"), c.get("group_type"), c.get("group_other"), c.get("butt"))
+    except ValueError as err:
+        raise ValueError(f"{where}: {err}") from err
+    return {**base, "joke": True, **codes}
 
 
 FORM_TEMPLATE = """<!doctype html>
