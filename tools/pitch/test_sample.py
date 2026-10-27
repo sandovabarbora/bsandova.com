@@ -96,3 +96,8 @@ def test_codes_must_cover_exactly_the_sample_once():
             SA.check_codes({"codes": codes}, smp)
     with pytest.raises(TypeError, match="no list"):
         SA.check_codes({}, smp)
+
+
+def test_the_forms_escape_covers_quotes_for_attribute_values():
+    page = SA.render_form([])
+    assert '.replace(/"/g, "&quot;").replace(/\'/g, "&#39;")' in page

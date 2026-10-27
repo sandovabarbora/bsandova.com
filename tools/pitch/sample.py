@@ -117,7 +117,11 @@ const id = it => it.film + ":" + it.cue;
 function radios(name, values, cur) {
   return values.map(v => `<label><input type="radio" name="${name}" value="${v}"${cur === v ? " checked" : ""}> ${v}</label>`).join("");
 }
-function esc(s) { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+function esc(s) {
+  const d = document.createElement("div");
+  d.textContent = s;
+  return d.innerHTML.replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
 function render() {
   const root = document.getElementById("items");
   root.innerHTML = "";

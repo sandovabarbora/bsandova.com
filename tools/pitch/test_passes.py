@@ -248,3 +248,14 @@ def test_no_key_anywhere_refuses_to_build_the_client(sdk, tmp_path, monkeypatch)
     monkeypatch.setattr(C, "ENV_FILE", empty)
     with pytest.raises(CL.CallFailed, match="no ANTHROPIC_API_KEY"):
         CL.AnthropicClient()
+
+
+def test_cache_writes_are_atomic_and_a_corrupt_file_is_a_miss(tmp_path):
+    cache = CL.Cache(tmp_path)
+    req = {"system": "s", "user": "u", "attempt": 1}
+    cache.put(req, CL.Reply("{}", "m", "end_turn", 1, 1))
+    assert cache.get(req) == CL.Reply("{}", "m", "end_turn", 1, 1) and not list(tmp_path.glob("*.tmp"))
+    path = tmp_path / f"{CL.Cache.key(req)}.json"
+    for broken in ('{"request": {}, "rep', '{"request": {}}', '{"reply": {"text": 1}}', ""):
+        path.write_text(broken)
+        assert cache.get(req) is None

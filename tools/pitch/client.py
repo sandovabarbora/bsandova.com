@@ -97,16 +97,20 @@ class Cache:
         return hashlib.sha256(json.dumps(request, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()
 
     def get(self, request: dict) -> Reply | None:
+        """The cached reply, or None; a file that does not read back as a reply (a crash mid-write) is a miss."""
         path = self.root / f"{self.key(request)}.json"
-        if not path.exists():
+        try:
+            return Reply(**json.loads(path.read_text(encoding="utf-8"))["reply"])
+        except (OSError, ValueError, KeyError, TypeError):
             return None
-        return Reply(**json.loads(path.read_text(encoding="utf-8"))["reply"])
 
     def put(self, request: dict, reply: Reply) -> None:
         self.root.mkdir(parents=True, exist_ok=True)
         path = self.root / f"{self.key(request)}.json"
-        path.write_text(json.dumps({"request": request, "reply": dataclasses.asdict(reply)}, ensure_ascii=False,
-                                   indent=1), encoding="utf-8")
+        tmp = path.with_suffix(".tmp")
+        tmp.write_text(json.dumps({"request": request, "reply": dataclasses.asdict(reply)}, ensure_ascii=False,
+                                  indent=1), encoding="utf-8")
+        os.replace(tmp, path)
 
 
 class CallLog:

@@ -18,7 +18,11 @@ def read_srt(path: Path) -> tuple[str, str]:
     try:
         return data.decode("utf-8-sig"), "utf-8"
     except UnicodeDecodeError:
+        pass
+    try:
         return data.decode("cp1252"), "cp1252"
+    except UnicodeDecodeError as err:
+        raise SystemExit(f"refusing to run: {path.name} is neither UTF-8 nor cp1252 (byte {err.start})") from None
 
 
 def sha256(path: Path) -> str:

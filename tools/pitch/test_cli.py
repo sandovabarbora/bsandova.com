@@ -143,6 +143,20 @@ def test_the_freeze_refuses_without_the_tag_or_when_it_is_not_an_ancestor(repo):
         cli.check_code_frozen()
 
 
+def test_a_branch_named_like_the_tag_does_not_count_as_the_freeze(repo):
+    git(repo, "tag", "-d", "pitch-code")
+    git(repo, "branch", "pitch-code")
+    with pytest.raises(SystemExit, match="pitch-code does not exist"):
+        cli.check_code_frozen()
+
+
+def test_a_file_in_neither_encoding_is_refused(repo):
+    put_files(repo, pp1="1\n00:00:01,000 --> 00:00:02,000\nA.\n")
+    (C.RAW / "pp1.srt").write_bytes(b"1\n00:00:01,000 --> 00:00:02,000\n\x81\xff\n")
+    with pytest.raises(SystemExit, match="neither UTF-8 nor cp1252"):
+        cli.main(["--hash-files", "--unblind"])
+
+
 def test_the_freeze_refuses_code_changed_after_the_tag_and_uncommitted_changes(repo):
     (repo / "docs/research/pitch-design.md").write_text("edited\n")
     with pytest.raises(SystemExit, match="uncommitted"):

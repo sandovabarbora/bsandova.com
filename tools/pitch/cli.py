@@ -38,6 +38,7 @@ import synth as SY
 log = logging.getLogger("pitch")
 TOOL = "tools/pitch"
 DESIGN = "docs/research/pitch-design.md"
+CODE_REF = f"refs/tags/{C.CODE_TAG}"     # a branch of the same name can never stand in for the tag
 
 
 def raw_path(film: str) -> Path:
@@ -61,11 +62,11 @@ def _rel(path: Path) -> str:
 def check_code_frozen() -> None:
     """The tag `pitch-code` exists and is an ancestor of HEAD, tools/pitch at HEAD equals it, and neither tools/pitch
     nor the design text has uncommitted changes (design §3.3)."""
-    if not _git_ok("rev-parse", "--verify", "--quiet", f"refs/tags/{C.CODE_TAG}"):
+    if not _git_ok("rev-parse", "--verify", "--quiet", CODE_REF):
         sys.exit(f"refusing to run: the code is not frozen, the tag {C.CODE_TAG} does not exist")
-    if not _git_ok("merge-base", "--is-ancestor", C.CODE_TAG, "HEAD"):
+    if not _git_ok("merge-base", "--is-ancestor", CODE_REF, "HEAD"):
         sys.exit(f"refusing to run: the tag {C.CODE_TAG} is not an ancestor of HEAD")
-    if not _git_ok("diff", "--quiet", C.CODE_TAG, "HEAD", "--", TOOL):
+    if not _git_ok("diff", "--quiet", CODE_REF, "HEAD", "--", TOOL):
         sys.exit(f"refusing to run: {TOOL} at HEAD differs from the tag {C.CODE_TAG}")
     if _git("status", "--porcelain", "--", TOOL, DESIGN).strip():
         sys.exit(f"refusing to run: {TOOL} or the design text has uncommitted changes")
@@ -313,7 +314,7 @@ def stage_analyse() -> dict:
     res["meta"] = {
         "versions": _versions(settings[0].get("sdk")), "run_settings": settings,
         "model_versions": {r: {f: runs[r][f]["model_versions"] for f in C.FILMS} for r in C.RUNS},
-        "tags": {t: _git("rev-list", "-n", "1", t).strip() for t in (C.DESIGN_TAG, C.CODE_TAG)},
+        "tags": {t: _git("rev-list", "-n", "1", f"refs/tags/{t}").strip() for t in (C.DESIGN_TAG, C.CODE_TAG)},
         "file_hashes": {k: v["sha256"] for k, v in manifest.items()},
     }
     F.write_json(C.RESULTS, res)
