@@ -60,7 +60,7 @@
 
 <section>
 <h2>Parts 1 and 2 side by side</h2>
-<p>Parts 1 and 2 use the same table and outcome, the delay a trip gains within a clock hour, compared with the same route at the same hour and weekday, with the weather of that hour from four ČHMÚ stations, but not the same model: part 1 compares hours within a date (date effects), part 2 within a week (week effects), because heat lasts all day. Part 2's registered check with date effects gives {{hde}} seconds ({{hde_lo}} to {{hde_hi}}). The two estimates have opposite signs. The metro's intervals include zero under both, {{rm}} s in rain ({{rm_lo}} to {{rm_hi}}) and {{hm}} s in heat ({{hm_lo}} to {{hm_hi}}), which fits a difference on the street rather than one common to all modes, without showing what causes it. The heat part rests on {{hot_dates}} hot days, the rain part on {{rain_dates}} wet ones.</p>
+<p>Parts 1 and 2 use the same table and the same outcome, the delay a trip gains within a clock hour, compared with the same route at the same hour and weekday and matched to the weather of that hour at four ČHMÚ stations. The models differ, though. Part 1 compares hours within a date (date effects), and part 2 compares them within a week (week effects), because heat lasts all day. Part 2's registered check with date effects gives {{hde}} seconds ({{hde_lo}} to {{hde_hi}}). The two estimates have opposite signs, more delay gained in rain hours and less in hot ones. On the metro the intervals include zero under both, {{rm}} s in rain ({{rm_lo}} to {{rm_hi}}) and {{hm}} s in heat ({{hm_lo}} to {{hm_hi}}). That fits a difference out on the street rather than one shared by all modes, though it does not show what lies behind it. The heat part rests on {{hot_dates}} hot days and the rain part on {{rain_dates}} wet ones.</p>
 <figure data-chart="../assets/weather-rails/charts.json#compare">
   <p class="ch-head">About {{r}} s more delay gained per trip-hour in rain hours, about {{h}} s less in hot hours; the metro's intervals include zero.</p>
   <img src="../assets/weather-rails/01-compare.svg" alt="Delay gained per trip-hour against fair weather, with 95 % intervals: rain above zero for trams and buses, heat below zero for both, the metro near zero in both." loading="lazy">
@@ -70,7 +70,7 @@
 
 <section>
 <h2>How each part was pre-specified</h2>
-<p>Each part has its own design file, committed before the weather it studies was joined to its outcome, and its own dated changes after registration in its change log. The heat part reused the delays the rain part had already read, against rain only, and says so; the third part measures dwell, which neither earlier part had read, and changed its weekend window once, before the comparison, for a stated reason. The commit times are the author's own, not an independent registry's.</p>
+<p>Each part has its own design file, committed before the weather it studies was joined to its outcome, and its change log lists the dated changes made after registration. The heat part reused delays that the rain part had already read, though only against rain, and says so. The third part measures dwell, which neither earlier part had read, and it changed its weekend window once, before the comparison, for a stated reason. The commit times are the author's own and were not logged by an independent registry.</p>
 </section>
 
 <footer class="text-foot">
