@@ -24,6 +24,7 @@ def no_real_client(monkeypatch):
     class Scripted(SY.ScriptedModel):
         sdk_version = "scripted"
     monkeypatch.setattr(CL, "AnthropicClient", Scripted)
+    monkeypatch.setitem(cli._gate, "passed", False)
     monkeypatch.setattr(A, "study", functools.partial(A.study, reps=200))
     monkeypatch.setattr(SY, "srt_file", functools.partial(SY.srt_file, n_cues=160))    # keeps the suite fast
 
@@ -346,3 +347,67 @@ def test_the_fallback_needs_the_authors_marks_before_the_sample_and_committed_be
         cli.main(["--run", "1", "--unblind"])
     with pytest.raises(SystemExit, match="song marks are not committed"):
         cli.check_song_marks_committed()
+
+
+# ---------------------------------------------------------------- run stamps, no re-runs, the gate inside the library
+
+def test_synthetic_output_never_goes_into_the_real_data_folder(tmp_path, monkeypatch):
+    for out in (C.OUT / "run1", C.DATA, C.OUT / "synthetic"):
+        with pytest.raises(SystemExit, match="refusing --synthetic"):
+            cli.main(["--synthetic", "--out", str(out), "--reps", "10"])
+    monkeypatch.setattr(cli.tempfile, "mkdtemp", lambda prefix: str(tmp_path / "tmpdir"))
+    assert cli.main(["--synthetic", "--reps", "10"]) == 0 and (tmp_path / "tmpdir/results.json").exists()
+
+
+def test_run_model_refuses_a_real_client_without_the_gate(tmp_path):
+    class Real:
+        def call(self, *a):
+            raise AssertionError("called")
+    films = cli.load_films({"pp1": SY.srt_file(1), "pp2": SY.srt_file(2)}, None)
+    with pytest.raises(SystemExit, match="needs the gate"):
+        cli.run_model(films, Real(), 1, tmp_path)
+    assert not (tmp_path / "run1").exists()
+
+
+def test_a_run_is_made_once_and_carries_its_stamp(repo):
+    to_blind_sample(repo)
+    cli.main(["--run", "1", "--unblind"])
+    out = json.loads((C.OUT / "run1/pp1.json").read_text())
+    stamp = out["stamp"]
+    assert stamp == json.loads((C.OUT / "run1/settings.json").read_text())["stamp"]
+    assert stamp["pitch_code_commit"] == git(repo, "rev-parse", "pitch-code^{commit}").strip()
+    assert stamp["human_sha256"] == cli.F.sha256(C.HUMAN) and set(stamp["raw_sha256"]) == {"pp1", "pp2"}
+    with pytest.raises(SystemExit, match="run 1 exists already"):
+        cli.main(["--run", "1", "--unblind"])
+
+
+def test_analyse_refuses_runs_made_on_other_inputs(repo):
+    to_blind_sample(repo)
+    cli.main(["--run", "1", "--unblind"])
+    cli.main(["--run", "2", "--unblind"])
+    path = C.OUT / "run2/pp2.json"
+    run2 = json.loads(path.read_text())
+    run2["stamp"]["human_sha256"] = "0" * 64
+    path.write_text(json.dumps(run2))
+    with pytest.raises(SystemExit, match="run 2 was made on other"):
+        cli.main(["--analyse", "--unblind"])
+    run2["stamp"] = None
+    path.write_text(json.dumps(run2))
+    with pytest.raises(SystemExit, match="run 2 was made on other"):
+        cli.main(["--analyse", "--unblind"])
+
+
+def test_a_stopped_run_writes_no_run_output(repo, monkeypatch):
+    to_blind_sample(repo)
+
+    class Failing(SY.ScriptedModel):
+        sdk_version = "x"
+
+        def call(self, system, user, max_tokens, schema):
+            if "Scene to segment" in user:
+                return CL.Reply("nope", "m", "end_turn", 1, 1)
+            return super().call(system, user, max_tokens, schema)
+    monkeypatch.setattr(CL, "AnthropicClient", Failing)
+    with pytest.raises(SystemExit, match="stopping"):
+        cli.main(["--run", "1", "--unblind"])
+    assert not (C.OUT / "run1/pp1.json").exists() and (C.OUT / "run1/settings.json").exists()

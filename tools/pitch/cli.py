@@ -16,10 +16,12 @@ scripted model and needs neither.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import logging
 import subprocess
 import sys
+import tempfile
 from collections.abc import Sequence
 from pathlib import Path
 
@@ -134,8 +136,19 @@ def check_song_marks_committed() -> None:
         sys.exit(f"refusing to run: {C.SONG_MARKS.name} is not committed")
 
 
-def gate_model_run() -> None:
-    """The model may run on real subtitles only after the freeze and the committed hash of the blind sample (§3)."""
+_gate = {"passed": False}
+
+
+def current_stamp() -> dict:
+    """What a run's outputs are tied to: both subtitle files, the frozen code and the author's codes."""
+    human = F.sha256(C.HUMAN) if C.HUMAN.exists() else None
+    return {"raw_sha256": {f: F.sha256(raw_path(f)) for f in C.FILMS},
+            "pitch_code_commit": _git("rev-parse", f"{CODE_REF}^{{commit}}").strip(), "human_sha256": human}
+
+
+def gate_model_run() -> dict:
+    """The model may run on real subtitles only after the freeze and the committed hash of the blind sample (§3).
+    Opens run_model for a real client and returns the stamp the run's outputs carry."""
     check_clean_tree()
     check_code_frozen()
     if not _committed(C.MANIFEST):
@@ -143,6 +156,8 @@ def gate_model_run() -> None:
     verify_raw()
     check_human_hashed()
     check_song_marks_committed()
+    _gate["passed"] = True
+    return current_stamp()
 
 
 # ---------------------------------------------------------------- loading the films
@@ -258,27 +273,38 @@ def run_settings(prompts: dict, sdk_version: str | None) -> dict:
             "sdk": sdk_version, "sdk_pin": C.SDK_PIN}
 
 
-def run_model(films: dict[str, A.Film], client, run: int, out: Path, sdk_version: str | None = None) -> dict:
-    prompts = F.load_prompts()
+def run_model(films: dict[str, A.Film], client, run: int, out: Path, sdk_version: str | None = None,
+              stamp: dict | None = None) -> dict:
+    """Both passes over both films. Any client but the scripted one needs gate_model_run() first; a run whose outputs
+    exist is never made again (no re-rolls); the outputs are written only once both films are done, so a stopped run
+    resumes from the cache."""
+    if not isinstance(client, SY.ScriptedModel) and not _gate["passed"]:
+        sys.exit("refusing to run: a real model client needs the gate of --run (gate_model_run) first")
     folder = out / f"run{run}"
-    F.write_json(folder / "settings.json", run_settings(prompts, sdk_version))
+    done = [f for f in C.FILMS if (folder / f"{f}.json").exists()]
+    if done:
+        sys.exit(f"refusing to run: run {run} exists already ({done}); a run is made once")
+    prompts = F.load_prompts()
+    F.write_json(folder / "settings.json", {**run_settings(prompts, sdk_version), "stamp": stamp})
     cache, call_log = CL.Cache(folder / "cache"), CL.CallLog(folder / "calls.jsonl")
-    result = {}
+    result = {f: P.run_film(f, S.build_scenes(films[f].kept), prompts, client, cache, call_log, run)
+              for f in C.FILMS}
     for f in C.FILMS:
-        result[f] = P.run_film(f, S.build_scenes(films[f].kept), prompts, client, cache, call_log, run)
-        F.write_json(folder / f"{f}.json", result[f])
+        F.write_json(folder / f"{f}.json", {**result[f], "stamp": stamp})
     return result
 
 
 def stage_run(run: int) -> dict:
-    gate_model_run()
+    stamp = gate_model_run()
+    if any((C.OUT / f"run{run}" / f"{f}.json").exists() for f in C.FILMS):
+        sys.exit(f"refusing to run: run {run} exists already; a run is made once")
     films = load_real_films()
     try:
         model = CL.AnthropicClient()
     except CL.CallFailed as err:
         sys.exit(f"refusing to run: {err}")
     try:
-        res = run_model(films, model, run, C.OUT, model.sdk_version)
+        res = run_model(films, model, run, C.OUT, model.sdk_version, stamp)
     except P.RunStopped as err:
         sys.exit(f"stopping: {err}")
     return {f: {"jokes": len(r["jokes"]), "failed_scenes": len(r["failed_scenes"]),
@@ -290,13 +316,17 @@ def _versions(sdk: str | None) -> dict:
     return {"python": sys.version.split()[0], "numpy": np.__version__, "anthropic": sdk}
 
 
-def load_runs(out: Path) -> dict[int, dict]:
+def load_runs(out: Path, stamp: dict) -> dict[int, dict]:
+    """Both runs, each made on the files, the frozen code and the codes in force now (their stamps must match)."""
     runs = {}
     for r in C.RUNS:
         missing = [f for f in C.FILMS if not (out / f"run{r}" / f"{f}.json").exists()]
         if missing:
             sys.exit(f"refusing to analyse: run {r} is incomplete, missing {missing}")
         runs[r] = {f: F.read_json(out / f"run{r}" / f"{f}.json") for f in C.FILMS}
+        seen = [runs[r][f].get("stamp") for f in C.FILMS] + [F.read_json(out / f"run{r}" / "settings.json").get("stamp")]
+        if any(x != stamp for x in seen):
+            sys.exit(f"refusing to analyse: run {r} was made on other subtitle files, code or codes than those of now")
     return runs
 
 
@@ -306,7 +336,7 @@ def stage_analyse() -> dict:
     check_human_hashed()
     check_song_marks_committed()
     films = load_real_films()
-    runs = load_runs(C.OUT)
+    runs = load_runs(C.OUT, current_stamp())
     human = SA.check_codes(F.read_json(C.HUMAN), F.read_json(C.SAMPLE))
     res = A.study(films, runs, human)
     settings = [F.read_json(C.OUT / f"run{r}" / "settings.json") for r in C.RUNS]
@@ -327,9 +357,14 @@ def stage_analyse() -> dict:
 
 def synthetic(out: Path, reps: int = C.BOOT_REPS) -> dict:
     """Both runs, the validation and the results on invented subtitle files with a scripted model."""
+    data = C.DATA.resolve()
+    if out.resolve() == data or data in out.resolve().parents:
+        sys.exit(f"refusing --synthetic into {_rel(C.DATA)}: invented outputs never sit beside the real ones")
     texts = {"pp1": SY.srt_file(1), "pp2": SY.srt_file(2)}
     films = load_films(texts, None)
-    runs = {r: run_model(films, SY.ScriptedModel(noise_seed=None if r == 1 else 7), r, out) for r in C.RUNS}
+    stamp = {"synthetic": True, "raw_sha256": {f: hashlib.sha256(t.encode()).hexdigest() for f, t in texts.items()}}
+    runs = {r: run_model(films, SY.ScriptedModel(noise_seed=None if r == 1 else 7), r, out, stamp=stamp)
+            for r in C.RUNS}
     smp = SA.draw({f: films[f].kept for f in C.FILMS})
     by_cue = {(f, c.index): c.text for f in C.FILMS for c in films[f].kept}
     human = []
@@ -366,7 +401,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.reps is not None and not args.synthetic:
         sys.exit("refusing --reps on real data: the registered run uses 10 000 replicates")
     if args.synthetic:
-        out = args.out or C.OUT / "synthetic"
+        out = args.out or Path(tempfile.mkdtemp(prefix="pitch-synthetic-"))
         res = synthetic(out, args.reps or C.BOOT_REPS)
         print(json.dumps({"results": str(out / "results.json"), "status": res["status"]}))
         return 0
