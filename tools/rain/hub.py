@@ -77,8 +77,8 @@ PARTS = [  # slug, part, title, kicker, summary; {{tokens}} are filled from the 
      "It is an association on {{hot_dates}} hot days whose cause these records cannot tell apart."),
     ("rain-dwell", 3, "Are tram stops shorter on rainy weekends?",
      "Part 3 · rain, heat and who boards · {{wet_weekends}} wet weekend days",
-     "Stops were no shorter on rainy weekends than on rainy weekday mornings. In rain hours a tram stood at a stop "
-     "about {{dr}} seconds less on a weekday morning, and the weekend difference is {{th}} s ({{th_lo}} to {{th_hi}}, "
+     "The gap between wet and dry stop lengths was no larger at weekends than on weekday mornings. In rain hours "
+     "a tram's stop was about {{dr}} seconds shorter on a weekday morning, and the weekend difference is {{th}} s ({{th_lo}} to {{th_hi}}, "
      "{{tl}}). So the time trams stand at stops gives no sign that rain cancels mainly optional trips. Hot hours show "
      "no shorter stops ({{dh}} s)."),
 ]
