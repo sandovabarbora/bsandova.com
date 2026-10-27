@@ -447,3 +447,16 @@ versions, hashes, no subtitle text), and the gitignored working files under `too
   fallback applies, are committed as `docs/research/pitch-song-marks.json` (cue numbers, times and marks, no text)
   with their hash in `pitch-files.sha256`; (6) a reply that the model refuses, or that stops for any reason other than
   `end_turn`, is a failed attempt, retried once under the rule of §2.3 and §2.4, with no fallback to another model.
+- 27 October 2026, after an independent review of the code and before `pitch-code`, before any subtitle file was
+  supplied: (1) cue times are carried as integer milliseconds, as the file writes them, and the scene rule compares
+  the gap in whole milliseconds (8 000 ms joins a scene, 8 001 ms opens a new one; the same for the 5 s and 12 s
+  checks and for the dialogue hours), so no rounding of decimal seconds can move a cue across the 8 s line; (2) a
+  scene whose pass 1 failed after the retry (within the 2 % limit) leaves the scene table, the dialogue hours and the
+  bootstrap, its cues leave the agreement measures, and the numbers are reported per film and run; (3) joke detection
+  in the self-agreement and the validation counts the spans of every joke pass 1 found, including jokes whose pass 2
+  failed, which stay out of the Target and Butt κ and of every count; (4) with overlapping cues, the gap to the next
+  cue is measured from the latest end so far in the scene, and a scene ends at its latest cue end; (5) the pass 1
+  schema gives `first_cue` and `last_cue` as plain integers, and that both belong to the scene is checked by the code,
+  as are duplicate spans; (6) every run's outputs carry a stamp (the SHA-256 of both subtitle files, the commit of
+  `pitch-code` and the SHA-256 of the author's codes), the analysis refuses runs whose stamp differs from the files,
+  tag and codes in force, and a run, once its outputs exist, is never made again.
