@@ -11,9 +11,9 @@ def prompts():
     return {name: (C.PROMPTS / name).read_text(encoding="utf-8") for name in K.PROMPT_FILES}
 
 
-SCENE = S.Scene(4, (S.Cue(10, 0, 1, ("The kettle is judging me.",)), S.Cue(12, 1, 2, ("It whistles in B flat.", "Sharp.")),
-                    S.Cue(13, 2, 3, ("Of course it does.",))))
-PREV = S.Scene(3, (S.Cue(7, -20, -19, ("We bought a kettle.",)),))
+SCENE = S.Scene(4, (S.Cue.secs(10, 0, 1, ("The kettle is judging me.",)), S.Cue.secs(12, 1, 2, ("It whistles in B flat.", "Sharp.")),
+                    S.Cue.secs(13, 2, 3, ("Of course it does.",))))
+PREV = S.Scene(3, (S.Cue.secs(7, -20, -19, ("We bought a kettle.",)),))
 
 
 def test_the_prompt_files_exist_name_no_film_and_carry_only_invented_examples():

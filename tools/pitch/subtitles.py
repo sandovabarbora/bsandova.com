@@ -26,10 +26,23 @@ class NeedsSongMarks(ValueError):
 
 @dataclasses.dataclass(frozen=True)
 class Cue:
+    """Times in integer milliseconds, as the file writes them, so that the 8 s rule compares exact values."""
     index: int
-    start: float
-    end: float
+    start_ms: int
+    end_ms: int
     lines: tuple[str, ...]
+
+    @classmethod
+    def secs(cls, index: int, start: float, end: float, lines: tuple[str, ...]) -> Cue:
+        return cls(index, round(start * 1000), round(end * 1000), lines)
+
+    @property
+    def start(self) -> float:
+        return self.start_ms / 1000
+
+    @property
+    def end(self) -> float:
+        return self.end_ms / 1000
 
     @property
     def text(self) -> str:
@@ -42,24 +55,36 @@ class Scene:
     cues: tuple[Cue, ...]
 
     @property
+    def start_ms(self) -> int:
+        return self.cues[0].start_ms
+
+    @property
+    def end_ms(self) -> int:
+        return max(c.end_ms for c in self.cues)
+
+    @property
+    def duration_ms(self) -> int:
+        return self.end_ms - self.start_ms
+
+    @property
     def start(self) -> float:
-        return self.cues[0].start
+        return self.start_ms / 1000
 
     @property
     def end(self) -> float:
-        return max(c.end for c in self.cues)
+        return self.end_ms / 1000
 
     @property
     def duration(self) -> float:
-        return self.end - self.start
+        return self.duration_ms / 1000
 
     @property
     def cue_ids(self) -> tuple[int, ...]:
         return tuple(c.index for c in self.cues)
 
 
-def _seconds(h: str, m: str, s: str, ms: str) -> float:
-    return int(h) * 3600 + int(m) * 60 + int(s) + int(ms.ljust(3, "0")) / 1000
+def _ms(h: str, m: str, s: str, ms: str) -> int:
+    return ((int(h) * 60 + int(m)) * 60 + int(s)) * 1000 + int(ms.ljust(3, "0"))
 
 
 def parse_srt(text: str) -> list[Cue]:
@@ -79,7 +104,7 @@ def parse_srt(text: str) -> list[Cue]:
         t = TIME.match(lines[i + 1]) if i + 1 < n else None
         if not t:
             raise MalformedSrt(f"line {i + 2}: cue {index} has no valid time line")
-        start, end = _seconds(*t.groups()[:4]), _seconds(*t.groups()[4:])
+        start, end = _ms(*t.groups()[:4]), _ms(*t.groups()[4:])
         if end < start:
             raise MalformedSrt(f"line {i + 2}: cue {index} ends before it starts")
         if index in seen:
@@ -138,7 +163,7 @@ def italic_runs(cues: Sequence[Cue], min_len: int = C.ITALIC_RUN_MIN) -> list[di
             continue
         if len(cur) >= min_len:
             runs.append({"first_cue": cur[0].index, "last_cue": cur[-1].index, "cues": len(cur),
-                         "start": round(cur[0].start, 3), "end": round(cur[-1].end, 3)})
+                         "start": cur[0].start, "end": cur[-1].end})
         cur = []
     return runs
 
@@ -207,26 +232,28 @@ def clean(cues: Sequence[Cue], song_marks: Mapping[tuple[int, int], str] | None 
 
 def build_scenes(cues: Sequence[Cue], gap: float = C.SCENE_GAP_S) -> list[Scene]:
     """Maximal runs of kept cues with no gap over `gap` seconds between the latest end so far and the next start
-    (design §2.2.5). Cues are taken in time order; overlapping cues never open a scene."""
-    ordered = sorted(cues, key=lambda c: (c.start, c.index))
+    (design §2.2.5), compared in integer milliseconds. Cues are taken in time order; overlapping cues never open a
+    scene."""
+    gap_ms = round(gap * 1000)
+    ordered = sorted(cues, key=lambda c: (c.start_ms, c.index))
     scenes: list[list[Cue]] = []
     last_end = None
     for c in ordered:
-        if last_end is None or c.start - last_end > gap:
+        if last_end is None or c.start_ms - last_end > gap_ms:
             scenes.append([c])
-            last_end = c.end
+            last_end = c.end_ms
         else:
             scenes[-1].append(c)
-            last_end = max(last_end, c.end)
+            last_end = max(last_end, c.end_ms)
     return [Scene(k + 1, tuple(s)) for k, s in enumerate(scenes)]
 
 
 def dialogue_hours(scenes: Sequence[Scene]) -> float:
-    return sum(s.duration for s in scenes) / 3600
+    return sum(s.duration_ms for s in scenes) / 3_600_000
 
 
 def runtime_hours(raw_cues: Sequence[Cue]) -> float:
-    return max((c.end for c in raw_cues), default=0.0) / 3600
+    return max((c.end_ms for c in raw_cues), default=0) / 3_600_000
 
 
 def scene_of(scenes: Sequence[Scene]) -> dict[int, int]:

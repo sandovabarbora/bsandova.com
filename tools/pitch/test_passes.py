@@ -22,8 +22,8 @@ def prompts():
 
 
 def scenes(n=3):
-    return [S.Scene(k + 1, (S.Cue(10 * k + 1, 30.0 * k, 30.0 * k + 2, (f"invented line {k}a",)),
-                            S.Cue(10 * k + 2, 30.0 * k + 3, 30.0 * k + 5, (f"invented line {k}b",))))
+    return [S.Scene(k + 1, (S.Cue.secs(10 * k + 1, 30.0 * k, 30.0 * k + 2, (f"invented line {k}a",)),
+                            S.Cue.secs(10 * k + 2, 30.0 * k + 3, 30.0 * k + 5, (f"invented line {k}b",))))
             for k in range(n)]
 
 

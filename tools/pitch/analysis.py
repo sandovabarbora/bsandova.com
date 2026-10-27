@@ -26,7 +26,7 @@ def tables(films: Mapping[str, Film], run: Mapping[str, Mapping], v: T.Variant =
     out = {}
     for f in C.FILMS:
         scenes = S.build_scenes(films[f].kept, gap)
-        out[f] = T.scene_table(run[f]["jokes"], [s.duration / 3600 for s in scenes], S.scene_of(scenes), v,
+        out[f] = T.scene_table(run[f]["jokes"], [s.duration_ms / 3_600_000 for s in scenes], S.scene_of(scenes), v,
                                S.runtime_hours(films[f].raw))
     return out
 

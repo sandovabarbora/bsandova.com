@@ -12,7 +12,7 @@ def film(n=30, gap_every=5):
     # cues 2 s long, 1 s apart, a 10 s gap after every `gap_every` cues: scenes of `gap_every` cues
     cues, t = [], 0.0
     for i in range(1, n + 1):
-        cues.append(S.Cue(i, t, t + 2, (f"invented {i}",)))
+        cues.append(S.Cue.secs(i, t, t + 2, (f"invented {i}",)))
         t += 3 + (10 if i % gap_every == 0 else 0)
     return A.Film(tuple(cues), tuple(cues), {"kept_cues": n})
 

@@ -11,7 +11,7 @@ import subtitles as S
 
 
 def film(n, start_index=1, step=1):
-    return [S.Cue(start_index + k * step, 20.0 * k, 20.0 * k + 2, (f"invented line {k}",)) for k in range(n)]
+    return [S.Cue.secs(start_index + k * step, 20.0 * k, 20.0 * k + 2, (f"invented line {k}",)) for k in range(n)]
 
 
 def test_draws_fifty_per_film_with_seed_2012_pp1_first_then_the_display_order():

@@ -131,7 +131,7 @@ def test_a_file_with_markers_never_uses_the_fallback():
 # ---------------------------------------------------------------- scenes
 
 def cues_at(*spans):
-    return [S.Cue(k + 1, a, b, ("x",)) for k, (a, b) in enumerate(spans)]
+    return [S.Cue.secs(k + 1, a, b, ("x",)) for k, (a, b) in enumerate(spans)]
 
 
 def test_a_gap_of_exactly_eight_seconds_stays_in_the_scene_and_more_opens_a_new_one():
@@ -148,7 +148,7 @@ def test_overlapping_cues_stay_together_and_the_scene_ends_at_the_latest_end():
 
 
 def test_scenes_are_built_in_time_order_and_numbered():
-    cues = [S.Cue(1, 100, 101, ("a",)), S.Cue(2, 0, 1, ("b",)), S.Cue(3, 2, 3, ("c",))]
+    cues = [S.Cue.secs(1, 100, 101, ("a",)), S.Cue.secs(2, 0, 1, ("b",)), S.Cue.secs(3, 2, 3, ("c",))]
     scenes = S.build_scenes(cues)
     assert [(s.number, s.cue_ids) for s in scenes] == [(1, (2, 3)), (2, (1,))]
     assert S.scene_of(scenes) == {2: 1, 3: 1, 1: 2}
@@ -165,3 +165,26 @@ def test_scenes_come_after_cleaning_so_a_song_breaks_a_scene():
 def test_the_gap_is_a_parameter_for_the_sensitivity_checks():
     cues = cues_at((0, 1), (7, 8), (19, 20))
     assert len(S.build_scenes(cues, 5.0)) == 3 and len(S.build_scenes(cues, 12.0)) == 1
+
+
+def test_times_are_integer_milliseconds_so_eight_seconds_is_exact():
+    text = ("1\n00:00:00,500 --> 00:00:01,100\nA.\n\n2\n00:00:09,100 --> 00:00:09,700\nB.\n\n"
+            "3\n00:00:17,701 --> 00:00:18,000\nC.\n")
+    cues = S.parse_srt(text)
+    assert [(c.start_ms, c.end_ms) for c in cues] == [(500, 1100), (9100, 9700), (17701, 18000)]
+    assert [s.cue_ids for s in S.build_scenes(cues)] == [(1, 2), (3,)]          # 8 000 ms joins, 8 001 ms splits
+    assert S.build_scenes(cues)[0].duration_ms == 9200
+    assert S.dialogue_hours(S.build_scenes(cues)) == 9499 / 3_600_000
+
+
+@pytest.mark.parametrize("gap_s,gap_ms_between,scenes", [(5.0, 5000, 1), (5.0, 5001, 2), (12.0, 12000, 1),
+                                                          (12.0, 12001, 2), (8.0, 8000, 1), (8.0, 8001, 2)])
+def test_every_scene_gap_is_compared_in_whole_milliseconds(gap_s, gap_ms_between, scenes):
+    a = S.Cue(1, 0, 1_100, ("x",))
+    b = S.Cue(2, 1_100 + gap_ms_between, 1_100 + gap_ms_between + 300, ("y",))
+    assert len(S.build_scenes([a, b], gap_s)) == scenes
+
+
+def test_a_short_millisecond_field_reads_as_hundreds():
+    cue = S.parse_srt("1\n00:00:01,1 --> 00:00:02,25\nA.\n")[0]
+    assert (cue.start_ms, cue.end_ms) == (1100, 2250)
