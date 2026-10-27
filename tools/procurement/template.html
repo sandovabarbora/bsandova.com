@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Priced at the limit: Czech public contracts after the small-contract threshold rose in 2025</title>
+<title>Do Czech contracts hug the no-tender limit?</title>
 <meta name="description" content="A registered study of {{n_czk}} Czech contract records, 2020–2026: after the limits for small-scale contracts rose in April 2025, more contracts were priced at exactly the new limits than round numbers explain.">
-<meta property="og:title" content="Priced at the limit: Czech public contracts after the small-contract threshold rose">
+<meta property="og:title" content="Do Czech contracts hug the no-tender limit?">
 <meta property="og:description" content="After the small-contract limit rose to 3 million Kč, more Czech public contracts were priced at exactly 3 million than round numbers explain; registered study, 2020–2026.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://bsandova.com/texts/procurement-thresholds">
@@ -46,8 +46,8 @@
 <article class="text">
 <header class="text-head">
   <p class="kicker">Research · public spending · Czech contracts, 2020–2026</p>
-  <h1>Priced at the limit: <em>Czech public contracts after the small-contract threshold rose in 2025</em></h1>
-  <p class="deck">More Czech contracts were priced at exactly the new small-contract limits after April 2025 than round numbers explain: about {{h1_pct}} more per 100 expected contracts (95 % CI {{h1_lo_pct}} to {{h1_hi_pct}}), {{h1_label}}.</p>
+  <h1>Do Czech contracts <em>hug the no-tender limit?</em></h1>
+  <p class="deck">After the limits for buying without a tender rose in April 2025, about {{h1_pct}} more contracts per 100 expected were priced at exactly the new limits, {{h1_label}} by the test set in advance.</p>
   <dl class="facts">
     <div><dt>new limits, pooled</dt><dd>+{{h1}} <small>contracts at exactly the limit per expected contract in the band · 95 % CI {{h1_lo}} to {{h1_hi}}, t with 6 degrees of freedom · {{h1_label}} · {{n_auth}} authorities</small></dd></div>
     <div><dt>3 million alone</dt><dd>+{{n3}} <small>supplies and services · 95 % CI {{n3_lo}} to {{n3_hi}}, bootstrap percentile, not calibrated, unregistered · 9 million (works): {{n9}}</small></dd></div>
@@ -74,7 +74,7 @@
   <div><dt>registration</dt><dd>design registered by the signed annotated tag <code>procurement-bunching-design</code>, tag object <code>217169a13a5940df65dd30bd9c8e61bc95778b72</code>, on commit <code>a0489507160d51e6b2a3eca65eac11819dc70a25</code>, verified with <code>git tag -v</code> and pushed to the public repository with its branch before any data beyond the two months of structure checks were downloaded. GitHub's activity log records the branch push at 13:41:28 UTC on 12 October 2026; GitHub keeps no server-side time for the tag push, and the tag's own date, 13:41:21 UTC, is set by the tagging machine. A push is not a tamper-evident anchor; commit times are self-reported. Downloads started at 14:58 UTC per the run log; the <code>downloaded</code> field in the manifest records when each file was hashed, not when it arrived. One file ended early (curl exit 18) and was fetched again unchanged. The detectable effects that fixed the old-limit label were committed locally at 18:14:37 UTC and published with the results, commit <code>e4ab590e93087c60388728ab75c44dd9d7a3c1b3</code>, pushed at 18:17:55 UTC; there is no public timestamp for them before the estimate. Everything is in <a href="../changelog/#procurement-thresholds-changes">the change log</a>.</dd></div>
   <div><dt>data</dt><dd>Registr smluv, monthly open-data dumps January 2020 – September 2026, {{n_dumps}} files, {{gib}} GiB, accessed 12 October 2026, published as open data under the register's <a href="https://smlouvy.gov.cz/stranka/otevrena-data">terms of use</a> (they contain personal data, so only aggregates are published here); hashes in <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/docs/research/procurement-bunching-manifest.json">procurement-bunching-manifest.json</a>. The price bins behind fig. 1 are in <a href="../assets/procurement/bins.csv">bins.csv</a>; the record-level table is not published.</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/procurement">tools/procurement/</a> at the commit that publishes this page; rebuild: <code>python tools/procurement/estimate.py</code> after <code>collect.py</code> and <code>prepare.py</code></dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Priced at the limit: Czech public contracts after the small-contract threshold rose in 2025</i>. bsandova.com/texts/procurement-thresholds, version 1.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Do Czech contracts hug the no-tender limit?</i> bsandova.com/texts/procurement-thresholds, version 1.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text, figures and the binned data CC BY 4.0</dd></div>
 </dl>
 </details>

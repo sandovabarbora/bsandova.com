@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Where is delay born on Prague's trams? Segment by segment, 2025</title>
+<title>Where do Prague's trams fall behind?</title>
 <meta name="description" content="A pre-specified analysis of 21.4 million tram passes over 618 segments in Prague, 2025: half of all delay is recorded on a tenth of the segments, narrowly, and on the same ones in odd and even weeks; many leave the large stops, and part of what they record is early trams waiting for their time.">
-<meta property="og:title" content="Where is delay born on Prague's trams?">
+<meta property="og:title" content="Where do Prague's trams fall behind?">
 <meta property="og:description" content="Half of the delay on Prague's trams is recorded on a tenth of the segments, narrowly, the same ones every week; part of it is early trams waiting for their time. Part 1 of Running late.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://bsandova.com/texts/delay-origins">
@@ -33,8 +33,8 @@
 <article class="text">
 <header class="text-head">
   <p class="kicker">Research · Running late, part 1 · Prague trams and buses, spring and summer 2025</p>
-  <h1>Where is delay born on Prague's trams? <em>Segment by segment, 2025</em></h1>
-  <p class="deck">A pre-specified analysis of every stop-to-stop segment of Prague's tram network finds that half of all delay is recorded on a tenth of the segments, narrowly, and on the same ones in odd and even weeks; many of them leave the large stops, and part of what they record is early trams waiting for their time.</p>
+  <h1>Where do Prague's trams <em>fall behind?</em></h1>
+  <p class="deck">Half of all delay is picked up on a tenth of the stretches between stops, just over the bar set in advance, and about 24 % of that is early trams waiting for their time.</p>
   <dl class="facts">
     <div><dt>delay recorded on the top tenth of segments</dt><dd>50.6 % <small>95 % confidence interval (CI) 50.3 to 50.9 % · supported, narrowly</small></dd></div>
     <div><dt>top tenth shared by odd and even weeks</dt><dd>95 % <small>by total; rank correlation 0.999 · supported</small></dd></div>
@@ -64,7 +64,7 @@
   <div><dt>registration</dt><dd>design committed at <code>379e533</code> on 8 October 2026, before any segment-level delay was read; screening and the estimation code frozen with tests at <code>75f633d</code> (tag <code>late-origins-v1</code>); results at <code>52ef4b6</code>. Commit times are self-reported. Delays had been read before for the author's thesis and for <a href="weather-rails">Weather on the rails</a>, never by place. Described after the results, not registered: the comparison with tram volume, the concentration curve, the overlap of the top tenth between weeks, the split of the gain into lateness and early trams waiting, and the pattern at six large stops (<code>tools/late/describe.py</code>). Changes after registration, each dated, are in <a href="../changelog/#delay-origins-changes">the change log</a>.</dd></div>
   <div><dt>data</dt><dd>Prague Integrated Transport stop-time history via Golemio, 15 March – 8 September 2025, as used in the author's master's thesis<sup class="cite"><a href="#r1">1</a></sup><sup class="cite"><a href="#r2">2</a></sup>; stop positions from the PID timetable data<sup class="cite"><a href="#r3">3</a></sup>. The passes are not redistributed; the per-segment values are in <a href="../assets/late/segments.json">segments.json</a>, the descriptions in <a href="../assets/late/describe.json">describe.json</a> and the estimates in <a href="../assets/late/results.json">results.json</a>.</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/late">tools/late/</a>; rebuild: <code>uv run --with numpy --with pandas --with pyarrow --with scipy python tools/late/estimate.py</code></dd></div>
-  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Where is delay born on Prague's trams? Segment by segment, 2025</i>. bsandova.com/texts/delay-origins, version 2.</dd></div>
+  <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Where do Prague's trams fall behind?</i> bsandova.com/texts/delay-origins, version 2.</dd></div>
   <div><dt>licence</dt><dd>code MIT; text and figures CC BY 4.0</dd></div>
 </dl>
 </details>
@@ -166,7 +166,7 @@
 <h2>Reproduction</h2>
 <p>Every number on this page is filled in from the result files by a script, from the repository root:</p>
 <ol>
-<li>The rain study's screening of closures and feed gaps: <a href="rain-delays">Are Prague's trams later in rain hours?</a>, Reproduction.</li>
+<li>The rain study's screening of closures and feed gaps: <a href="rain-delays">Are Prague's trams later when it rains?</a>, Reproduction.</li>
 <li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/late/screen.py"><code>tools/late/screen.py</code></a>: the definition check, the screening and the segment sums.</li>
 <li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/late/estimate.py"><code>estimate.py</code></a>, checked by <a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/late/test_late.py"><code>test_late.py</code></a>: the registered estimates and checks.</li>
 <li><a href="https://github.com/sandovabarbora/bsandova.com/blob/main/tools/late/describe.py"><code>describe.py</code></a>: the descriptions computed after the results.</li>

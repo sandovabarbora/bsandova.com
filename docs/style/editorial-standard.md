@@ -30,10 +30,15 @@ null result is not padded.
 
 1. **Kicker**: kind · series and part · object and period. At most 12 words. It carries no status word such as
    "pre-registered" unless §6 allows it.
-2. **H1**: names the object and, for research, the finding or the question. It is not a slogan and does not use the
-   "not X but Y" device.
-3. **Deck**: one sentence of at most 35 words that gives the question and the main result with its registered
-   label.
+2. **H1**: short and inviting, at most 60 characters: a question or a plain, vivid phrase that says why a reader would
+   care ("Are towns calmer after the bypass opens?", "The day Prague's trams stopped"). No result, no label, no number but a year,
+   no colon. A causal question is allowed only when the deck answers it within what the design shows; otherwise ask
+   neutrally. Not a slogan, no "not X but Y" device. `<title>`, `og:title`, the cite-as line and `docs/works.toml` carry
+   the same words.
+3. **Deck**: one plain-English sentence of at most 35 words saying what came out, without jargon, with the registered
+   label's meaning in plain words ("too few towns to rule out no change" for underpowered). The exact label word stays
+   visible on the page, in the facts strip or the short version. No causal verb for an association. It is also the
+   article's `finding` in `docs/works.toml`.
 4. **Facts strip**: at most four cards. Each card has a number, its unit, and its interval or the words
    "administrative count".
 5. **The short version** (`details.tldr`, "Overwhelmed? Here's the short version"): 3–5 bullets. It is the one
