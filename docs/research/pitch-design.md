@@ -426,3 +426,24 @@ versions, hashes, no subtitle text), and the gitignored working files under `too
   disability added to the protected traits (age, class and occupation stay group: other), with invented codebook
   examples for both and the 10 % assumption of §5 kept; §0 completed with what the author has seen of the films and
   her prior expectation for each question; the local data folder `tools/data/pitch/` gitignored (commit `ddbcc6c`).
+- 27 October 2026, after the `pitch-design` tag and before `pitch-code`, approved by the author, before any subtitle
+  file was supplied: temperature 0 cannot be sent (removed for Claude 5 models, 400 error); replaced by explicit
+  adaptive thinking at effort high, enum-constrained structured outputs and max_tokens stops counted as failures.
+  Run-to-run self-agreement, already registered, now carries the burden of showing sampling noise. Sources:
+  https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide,
+  https://platform.claude.com/docs/en/api/migration-2026-10-21 and
+  https://platform.claude.com/docs/en/build-with-claude/structured-outputs. In the code: every call sends
+  `thinking={"type": "adaptive"}` and `output_config.effort = "high"` and no sampling parameter; the model is pinned as
+  `claude-sonnet-5-5` and the SDK as `anthropic==2.3.0`; `max_tokens` is 32 000 for pass 1 and 16 000 for pass 2 (room
+  for thinking, which counts toward it), and the calls stream; the pass 1 reply is an object `{"jokes": [...]}` (the
+  list of §2.3 inside an object) whose schema limits cue numbers to the scene's own and `kind` to the codebook, and
+  the pass 2 schema limits target, group type and butt to the codebook values; the strict validation of §2.3 and §2.4
+  stays as a second guard. Implementation clarifications, settled at the same time: (1) the blind sample is drawn
+  with one `default_rng(2012)` over PP1's kept cues, then PP2's, and the form's display order is a permutation drawn
+  from the same generator afterwards; (2) the scene bootstrap draws, within each replicate, PP1's scenes and then
+  PP2's from the one `default_rng(42)`; (3) jokes whose pass 2 failed after the retry (within the 2 % limit) are left
+  out of every count, share and rate, and their number is reported per film and run; (4) the full-runtime check of §7
+  holds the runtime fixed as the denominator and resamples only the counts; (5) the author's song marks, if the
+  fallback applies, are committed as `docs/research/pitch-song-marks.json` (cue numbers, times and marks, no text)
+  with their hash in `pitch-files.sha256`; (6) a reply that the model refuses, or that stops for any reason other than
+  `end_turn`, is a failed attempt, retried once under the rule of §2.3 and §2.4, with no fallback to another model.
