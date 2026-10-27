@@ -460,3 +460,13 @@ versions, hashes, no subtitle text), and the gitignored working files under `too
   as are duplicate spans; (6) every run's outputs carry a stamp (the SHA-256 of both subtitle files, the commit of
   `pitch-code` and the SHA-256 of the author's codes), the analysis refuses runs whose stamp differs from the files,
   tag and codes in force, and a run, once its outputs exist, is never made again.
+- 27 October 2026, after `pitch-code`, after the blind sample was drawn and before any model run, decided by the
+  author: the author coded the blind sample in a guided version of the form (one cue per screen, a context window of
+  5 cues before and 3 after the coded cue that can be widened, Czech help text; the same items in the same order and
+  the same output file). It was built outside the frozen code and read the items from the frozen `form.html`. The
+  author coded the first 50 cues in the form's order, a random permutation of the sample, and stopped there; she
+  marked 3 of them skip. The remaining 50 were not attempted and are saved as `skip`, the only value the frozen
+  code accepts for an uncoded cue, so §3.4's "skipped" count of 53 is 3 cues she could not code and 50 she did not
+  reach. This is a deviation from the 50 cues per film of §3.4: the validation rests on 47 coded cues, the Target and
+  Butt κ on the jokes among them, and the gate of κ ≥ 0.6 on both is unchanged. With fewer jokes the κ interval is
+  wider, and the label follows the registered rule.
