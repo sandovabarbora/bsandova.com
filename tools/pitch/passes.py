@@ -58,7 +58,7 @@ def run_film(film: str, scenes: Sequence[Scene], prompts: Mapping[str, str], cli
     for k, scene in enumerate(scenes):
         system, user = K.segment_prompt(prompts, scenes[k - 1] if k else None, scene)
         req = {**base, "pass": "segment", "unit": scene.number, "system": system, "user": user,
-               "max_tokens": C.MAX_TOKENS["segment"], "schema": K.segment_schema(scene)}
+               "max_tokens": C.MAX_TOKENS["segment"], "schema": K.SEGMENT_SCHEMA}
         segs, version = _attempts(client, cache, call_log, req, lambda t, s=scene: K.parse_segments(t, s),
                                   {"film": film, "run": run, "pass": "segment", "unit": scene.number})
         if segs is None:

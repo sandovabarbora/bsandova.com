@@ -67,7 +67,9 @@ def test_valid_segments_parse_including_overlaps_and_the_empty_scene():
     (J('[{"first_cue": true, "last_cue": 10, "kind": "joke"}]'), "outside the scene"),
     (J('[{"first_cue": "10", "last_cue": 10, "kind": "joke"}]'), "outside the scene"),
     ("```\n{\"jokes\": []}\n``` and more", "not JSON"),
-    ("", "not JSON")])
+    ("", "not JSON"),
+    (J('[{"first_cue": 10, "last_cue": 12, "kind": "joke"}, {"first_cue": 10, "last_cue": 12, "kind": "allusion"}]'),
+     "given twice")])
 def test_malformed_segment_replies_are_refused(text, msg):
     with pytest.raises(K.BadReply, match=msg):
         K.parse_segments(text, SCENE)
@@ -99,13 +101,14 @@ def test_malformed_or_out_of_codebook_codes_are_refused(text, msg):
         K.parse_codes(text)
 
 
-def test_the_schemas_are_enums_of_the_codebook_and_of_the_scenes_cues():
-    seg = K.segment_schema(SCENE)
+def test_the_schemas_are_enums_of_the_codebook_with_plain_integer_cues():
+    seg = K.SEGMENT_SCHEMA
     item = seg["properties"]["jokes"]["items"]
-    assert item["properties"]["first_cue"]["enum"] == [10, 12, 13] == item["properties"]["last_cue"]["enum"]
+    assert item["properties"]["first_cue"] == {"type": "integer"} == item["properties"]["last_cue"]
     assert item["properties"]["kind"]["enum"] == ["joke", "allusion"]
     assert seg["additionalProperties"] is False and item["additionalProperties"] is False
     assert seg["required"] == ["jokes"] and item["required"] == ["first_cue", "last_cue", "kind"]
+    assert set(K.schema_hashes()) == {"segment", "code"}
     code = K.CODE_SCHEMA["properties"]
     assert code["target"]["enum"] == list(C.TARGETS) and code["butt"]["enum"] == list(C.BUTTS)
     assert code["group_type"]["enum"] == ["", *C.GROUP_TYPES] and code["group_other"] == {"type": "string"}

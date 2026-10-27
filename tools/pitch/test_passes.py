@@ -82,9 +82,7 @@ def test_the_requests_use_the_registered_settings_and_the_log_holds_no_text(tmp_
         assert req["thinking"] == {"type": "adaptive"} and req["effort"] == "high"
     assert {json.dumps(r["schema"], sort_keys=True) for r in reqs if r["pass"] == "code"} == {
         json.dumps(K.CODE_SCHEMA, sort_keys=True)}
-    seg = next(r for r in reqs if r["pass"] == "segment" and r["unit"] == 2)
-    assert seg["schema"]["properties"]["jokes"]["items"]["properties"]["first_cue"]["enum"] == [11, 12]
-    assert fake.calls[0][3] == K.segment_schema(scenes()[0]) and fake.calls[3][3] == K.CODE_SCHEMA
+    assert fake.calls[0][3] == K.SEGMENT_SCHEMA and fake.calls[3][3] == K.CODE_SCHEMA
     assert "invented" not in (tmp_path / "log.jsonl").read_text()
     assert set(log_rows(tmp_path)[0]) == {"film", "run", "pass", "unit", "attempt", "status", "cached", "input_tokens",
                                           "output_tokens"}

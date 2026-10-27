@@ -56,15 +56,23 @@ def prompt_hashes(prompts: Mapping[str, str]) -> dict[str, str]:
     return {name: hashlib.sha256(prompts[name].encode("utf-8")).hexdigest() for name in PROMPT_FILES}
 
 
-def segment_schema(scene: Scene) -> dict:
-    """Pass 1's structured-output schema: cue numbers limited to the scene's own, kind to the codebook."""
-    ids = list(scene.cue_ids)
-    item = {"type": "object", "properties": {"first_cue": {"type": "integer", "enum": ids},
-                                             "last_cue": {"type": "integer", "enum": ids},
-                                             "kind": {"type": "string", "enum": list(C.KINDS)}},
-            "required": ["first_cue", "last_cue", "kind"], "additionalProperties": False}
-    return {"type": "object", "properties": {"jokes": {"type": "array", "items": item}}, "required": ["jokes"],
-            "additionalProperties": False}
+def schema_hashes() -> dict[str, str]:
+    def h(schema: dict) -> str:
+        return hashlib.sha256(json.dumps(schema, sort_keys=True).encode("utf-8")).hexdigest()
+    return {"segment": h(SEGMENT_SCHEMA), "code": h(CODE_SCHEMA)}
+
+
+_SEGMENT_ITEM = {
+    "type": "object",
+    "properties": {"first_cue": {"type": "integer"}, "last_cue": {"type": "integer"},
+                   "kind": {"type": "string", "enum": list(C.KINDS)}},
+    "required": ["first_cue", "last_cue", "kind"],
+    "additionalProperties": False,
+}
+# Pass 1's structured-output schema, one for every scene; that the cue numbers belong to the scene is checked by
+# parse_segments, so the schema does not change from call to call.
+SEGMENT_SCHEMA = {"type": "object", "properties": {"jokes": {"type": "array", "items": _SEGMENT_ITEM}},
+                  "required": ["jokes"], "additionalProperties": False}
 
 
 CODE_SCHEMA = {
@@ -113,6 +121,8 @@ def parse_segments(text: str, scene: Scene) -> list[dict]:
             raise BadReply(f"first cue {first} comes after last cue {last}")
         if kind not in C.KINDS:
             raise BadReply(f"kind outside the codebook: {kind!r}")
+        if any((j["first_cue"], j["last_cue"]) == (first, last) for j in out):
+            raise BadReply(f"the span {first} to {last} is given twice")
         out.append({"first_cue": first, "last_cue": last, "kind": kind})
     return out
 
