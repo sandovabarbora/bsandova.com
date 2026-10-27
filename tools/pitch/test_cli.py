@@ -39,6 +39,8 @@ def repo(tmp_path, monkeypatch):
     git(r.parent, "init", "-q", str(r))
     git(r, "config", "user.email", "t@example.com")
     git(r, "config", "user.name", "t")
+    git(r, "config", "commit.gpgsign", "false")
+    git(r, "config", "tag.gpgsign", "false")
     git(r, "add", "-A")
     git(r, "commit", "-qm", "design")
     git(r, "tag", "pitch-design")
