@@ -470,3 +470,16 @@ versions, hashes, no subtitle text), and the gitignored working files under `too
   reach. This is a deviation from the 50 cues per film of §3.4: the validation rests on 47 coded cues, the Target and
   Butt κ on the jokes among them, and the gate of κ ≥ 0.6 on both is unchanged. With fewer jokes the κ interval is
   wider, and the label follows the registered rule.
+- 27 October 2026, after `pitch-code`, after the author's codes were hashed and before any model run, proposed by
+  the author: no API key is available, so the runs go through the Claude Code CLI in print mode under the author's
+  account instead of the SDK. The model (`claude-sonnet-5-5`), the effort (high), the prompts, the codebook and the
+  schemas are unchanged. Each call is a fresh `claude -p` process in an empty folder with the study's system prompt in
+  place of the CLI's own, the schema as structured output, and no tools, settings, CLAUDE.md, MCP servers, skills or
+  saved session. Differences from §3.6: the CLI chooses its own thinking (adaptive is the Claude 5 default, but it is
+  not sent explicitly); the schema is enforced through the CLI's structured-output tool rather than the API's output
+  format, so a completed call with a structured output from that model alone is recorded with stop reason `end_turn`,
+  and anything else is a failed attempt; `max_tokens` is passed as the CLI's output-token limit; the CLI version
+  replaces the SDK version in each run's settings. The SDK client stays in the code, selectable with `--client api`.
+  The only code change is the new client, its tests and the tag name; it was reviewed independently and frozen under
+  the new tag `pitch-code-cli`, which replaces `pitch-code` as the code of record. A smoke test on invented subtitles
+  checked the call before the tag; no real subtitle text was sent.

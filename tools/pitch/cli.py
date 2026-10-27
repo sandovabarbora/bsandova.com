@@ -9,8 +9,9 @@ scripted model and needs neither.
     uv run --no-project $P python -I tools/pitch/cli.py --italic-runs --unblind    # only if a file has no ♪, ♫ or #
     uv run --no-project $P python -I tools/pitch/cli.py --draw-sample --unblind    # code the form offline
     uv run --no-project $P python -I tools/pitch/cli.py --hash-sample --unblind    # commit the manifest (and marks)
-    uv run --no-project $P --with anthropic==2.3.0 python -I tools/pitch/cli.py --run 1 --unblind
-    uv run --no-project $P --with anthropic==2.3.0 python -I tools/pitch/cli.py --run 2 --unblind
+    uv run --no-project $P python -I tools/pitch/cli.py --run 1 --unblind        # through the claude CLI
+    uv run --no-project $P python -I tools/pitch/cli.py --run 2 --unblind
+    # or, with an API key in .env: add --with anthropic==2.3.0 and --client api
     uv run --no-project $P python -I tools/pitch/cli.py --analyse --unblind
 """
 from __future__ import annotations
@@ -294,13 +295,13 @@ def run_model(films: dict[str, A.Film], client, run: int, out: Path, sdk_version
     return result
 
 
-def stage_run(run: int) -> dict:
+def stage_run(run: int, client: str = C.CLIENTS[0]) -> dict:
     stamp = gate_model_run()
     if any((C.OUT / f"run{run}" / f"{f}.json").exists() for f in C.FILMS):
         sys.exit(f"refusing to run: run {run} exists already; a run is made once")
     films = load_real_films()
     try:
-        model = CL.AnthropicClient()
+        model = CL.ClaudeCliClient() if client == "claude-cli" else CL.AnthropicClient()
     except CL.CallFailed as err:
         sys.exit(f"refusing to run: {err}")
     try:
@@ -393,6 +394,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     stage.add_argument("--hash-sample", action="store_true", help="hash the author's codes into the manifest")
     stage.add_argument("--run", type=int, choices=C.RUNS, help="model run 1 (primary) or 2 (self-agreement)")
     stage.add_argument("--analyse", action="store_true", help="estimate and write docs/research/pitch-results.json")
+    ap.add_argument("--client", choices=C.CLIENTS, default=C.CLIENTS[0],
+                    help="model client of --run: the Claude Code CLI (default) or the SDK with an API key")
     ap.add_argument("--unblind", action="store_true", help="allow reading the real subtitle files (design §3)")
     ap.add_argument("--out", type=Path, default=None, help="output folder of --synthetic")
     ap.add_argument("--reps", type=int, default=None, help="bootstrap replicates of --synthetic only")
@@ -417,7 +420,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     elif args.hash_sample:
         result = stage_hash_sample()
     elif args.run is not None:
-        result = stage_run(args.run)
+        result = stage_run(args.run, args.client)
     else:
         result = stage_analyse()
     print(json.dumps(result, ensure_ascii=False))

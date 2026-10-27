@@ -44,8 +44,9 @@ subtitle files match the hashes in `docs/research/pitch-files.sha256`. The code 
     # open tools/data/pitch/validation/form.html offline, code every cue, save validation-human.json next to it
     uv run --no-project $P python -I tools/pitch/cli.py --hash-sample --unblind
     # commit the manifest (and the song marks, if the fallback applies) in one commit
-    uv run --no-project $P --with anthropic==2.3.0 python -I tools/pitch/cli.py --run 1 --unblind
-    uv run --no-project $P --with anthropic==2.3.0 python -I tools/pitch/cli.py --run 2 --unblind
+    uv run --no-project $P python -I tools/pitch/cli.py --run 1 --unblind   # through the claude CLI, signed in
+    uv run --no-project $P python -I tools/pitch/cli.py --run 2 --unblind
+    # with an API key in .env instead: add --with anthropic==2.3.0 and --client api
     # commit validation-human.json
     uv run --no-project $P python -I tools/pitch/cli.py --analyse --unblind   # docs/research/pitch-results.json
 
@@ -93,4 +94,8 @@ schema limits target, group type and butt to the codebook. The strict parsing st
 stop reason is anything other than `end_turn` (`max_tokens`, `refusal`, ...) is a failed attempt even if its JSON
 parses. `max_tokens` is 32 000 for pass 1 and 16 000 for pass 2, with room for thinking, and the calls stream. The
 model is pinned as `claude-sonnet-5-5`, the SDK as `anthropic==2.3.0`; both, with thinking, effort, the prompt hashes
-and the schema hashes, are in each run's `settings.json` and in every cached request. See the design's change log.
+and the schema hashes, are in each run's `settings.json` and in every cached request. The runs of record go through the Claude Code CLI in print mode (`--client claude-cli`, the default): each call is a
+fresh `claude -p` process in an empty folder with the same model, effort, system prompt and schema, no tools,
+settings, CLAUDE.md, MCP servers, skills or saved session, and `max_tokens` as the CLI's output-token limit. A call
+counts only if it completes with a structured output from `claude-sonnet-5-5` alone; it is then recorded with stop
+reason `end_turn`. The CLI version replaces the SDK version in `settings.json`. See the design's change log.

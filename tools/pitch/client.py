@@ -1,4 +1,4 @@
-"""The model client, the cache of raw replies and the call log (design §3.6, §4.1). All network I/O of the study.
+"""The model clients, the cache of raw replies and the call log (design §3.6, §4.1). All network I/O of the study.
 
 The API key is read from the environment (or from .env into the environment) by the SDK itself; this module never
 returns, prints or logs it.
@@ -10,6 +10,8 @@ import hashlib
 import json
 import logging
 import os
+import subprocess
+import tempfile
 from pathlib import Path
 from typing import Protocol
 
@@ -83,6 +85,59 @@ class AnthropicClient:
             raise CallFailed(f"{type(err).__name__} {getattr(err, 'status_code', '')}".strip()) from None
         text = "".join(b.text for b in msg.content if b.type == "text")
         return Reply(text, msg.model, msg.stop_reason, msg.usage.input_tokens, msg.usage.output_tokens)
+
+
+def cli_command(system: str, schema: dict) -> list[str]:
+    """One isolated print-mode call: the pinned model and effort, the study's system prompt in place of the CLI's own,
+    the schema as structured output, and no tools, settings, CLAUDE.md, MCP servers, skills or saved session."""
+    return ["claude", "-p", "--model", C.MODEL, "--effort", C.EFFORT, "--system-prompt", system,
+            "--json-schema", json.dumps(schema, sort_keys=True), "--output-format", "json", "--tools", "",
+            "--setting-sources", "", "--strict-mcp-config", "--disable-slash-commands", "--no-session-persistence"]
+
+
+def parse_cli_result(raw: str, model: str = C.MODEL) -> Reply:
+    """The CLI's JSON result as a Reply. A completed call with a structured output from the pinned model alone is
+    recorded as stop reason end_turn (the CLI reports the schema as a tool call); anything else is a failed attempt."""
+    try:
+        res = json.loads(raw)
+    except ValueError:
+        raise CallFailed("the CLI returned no JSON result") from None
+    if res.get("is_error") or res.get("subtype") != "success" or res.get("structured_output") is None:
+        raise CallFailed(f"CLI call failed: {res.get('subtype')} {res.get('api_error_status') or ''}".strip())
+    used = sorted(res.get("modelUsage") or {})
+    if used != [model]:
+        raise CallFailed(f"CLI call used {used}, not {model}")
+    usage = res.get("usage") or {}
+    tokens_in = sum(int(usage.get(k) or 0) for k in
+                    ("input_tokens", "cache_creation_input_tokens", "cache_read_input_tokens"))
+    return Reply(json.dumps(res["structured_output"], ensure_ascii=False), model, "end_turn", tokens_in,
+                 int(usage.get("output_tokens") or 0))
+
+
+class ClaudeCliClient:
+    """claude-sonnet-5-5 through the Claude Code CLI in print mode, signed in with the author's account. Each call
+    is a fresh process in an empty folder; max_tokens is passed as the CLI's output-token limit."""
+
+    def __init__(self, model: str = C.MODEL, timeout: int = C.CLI_TIMEOUT_S):
+        self.model, self.timeout = model, timeout
+        try:
+            out = subprocess.run(["claude", "--version"], capture_output=True, text=True, timeout=60, check=True)
+        except (OSError, subprocess.SubprocessError):
+            raise CallFailed("the claude CLI is not available") from None
+        self.sdk_version = "claude-cli " + out.stdout.strip()
+
+    def call(self, system: str, user: str, max_tokens: int, schema: dict) -> Reply:
+        env = {k: v for k, v in os.environ.items() if k != KEY_NAME}
+        env["CLAUDE_CODE_MAX_OUTPUT_TOKENS"] = str(max_tokens)
+        with tempfile.TemporaryDirectory(prefix="pitch-call-") as cwd:
+            try:
+                proc = subprocess.run(cli_command(system, schema), input=user, capture_output=True, text=True,
+                                      cwd=cwd, env=env, timeout=self.timeout)
+            except subprocess.TimeoutExpired:
+                raise CallFailed(f"CLI call timed out after {self.timeout} s") from None
+        if proc.returncode != 0 and not proc.stdout.strip():
+            raise CallFailed(f"CLI exited with {proc.returncode}")
+        return parse_cli_result(proc.stdout, self.model)
 
 
 class Cache:

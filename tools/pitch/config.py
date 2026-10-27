@@ -22,7 +22,8 @@ ITALIC_RUNS = VALIDATION / "italic-runs.json"
 ENV_FILE = ROOT / ".env"
 
 DESIGN_TAG = "pitch-design"
-CODE_TAG = "pitch-code"       # freezes tools/pitch, the prompts and the codebook (design §3.3)
+CODE_TAG = "pitch-code-cli"   # freezes tools/pitch, the prompts and the codebook (design §3.3); replaces the tag
+                              # pitch-code, whose code is unchanged but for the client below (change log, 27 October 2026)
 
 FILMS = ("pp1", "pp2")        # order matters: the bootstrap and the sample draw PP1 first (design §3.4, §4.5)
 FILM_NAMES = {"pp1": "Pitch Perfect", "pp2": "Pitch Perfect 2"}
@@ -53,6 +54,10 @@ MODEL = "claude-sonnet-5-5"   # the full model ID, no alias
 THINKING = {"type": "adaptive"}
 EFFORT = "high"
 SDK_PIN = "anthropic==2.3.0"
+# Deviation of 27 October 2026: the runs go through the Claude Code CLI in print mode (no API key), with the same
+# model, effort, prompts and schemas; the SDK client stays for anyone re-running the study with an API key.
+CLIENTS = ("claude-cli", "api")
+CLI_TIMEOUT_S = 1800
 # thinking counts toward max_tokens, so both leave room for it; the calls stream, as the SDK requires above ~21 000
 MAX_TOKENS = {"segment": 32000, "code": 16000}
 RUNS = (1, 2)

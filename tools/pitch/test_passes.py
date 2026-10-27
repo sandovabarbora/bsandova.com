@@ -273,3 +273,40 @@ def test_failed_scenes_and_uncoded_jokes_are_recorded_for_the_analysis(tmp_path)
     assert out["failed_scenes"] == [2] and out["failed_scene_cues"] == [11, 12]
     assert out["failed_jokes"] == ["3-1"] and len(out["jokes"]) == 58
     assert {"first_cue": 21, "last_cue": 22, "kind": "joke"} in out["detected_spans"] and len(out["detected_spans"]) == 59
+
+
+def test_cli_command_isolates_the_call():
+    cmd = CL.cli_command("SYSTEM", {"type": "object"})
+    assert cmd[:2] == ["claude", "-p"]
+    for flag, value in (("--model", C.MODEL), ("--effort", C.EFFORT), ("--system-prompt", "SYSTEM"),
+                        ("--output-format", "json"), ("--tools", ""), ("--setting-sources", "")):
+        assert cmd[cmd.index(flag) + 1] == value
+    for flag in ("--strict-mcp-config", "--disable-slash-commands", "--no-session-persistence", "--json-schema"):
+        assert flag in cmd
+
+
+def _cli_result(**over):
+    res = {"type": "result", "subtype": "success", "is_error": False, "structured_output": {"jokes": []},
+           "modelUsage": {C.MODEL: {}}, "usage": {"input_tokens": 2, "cache_creation_input_tokens": 10,
+                                                  "cache_read_input_tokens": 3, "output_tokens": 7}}
+    res.update(over)
+    return json.dumps(res)
+
+
+def test_parse_cli_result_success():
+    r = CL.parse_cli_result(_cli_result())
+    assert json.loads(r.text) == {"jokes": []}
+    assert (r.model, r.stop_reason, r.input_tokens, r.output_tokens) == (C.MODEL, "end_turn", 15, 7)
+
+
+@pytest.mark.parametrize("raw", [
+    "not json",
+    _cli_result(is_error=True),
+    _cli_result(subtype="error_max_turns"),
+    _cli_result(structured_output=None),
+    _cli_result(modelUsage={"claude-haiku-4-5-20251001": {}}),
+    _cli_result(modelUsage={C.MODEL: {}, "claude-haiku-4-5-20251001": {}}),
+])
+def test_parse_cli_result_failures(raw):
+    with pytest.raises(CL.CallFailed):
+        CL.parse_cli_result(raw)

@@ -24,6 +24,7 @@ def no_real_client(monkeypatch):
     class Scripted(SY.ScriptedModel):
         sdk_version = "scripted"
     monkeypatch.setattr(CL, "AnthropicClient", Scripted)
+    monkeypatch.setattr(CL, "ClaudeCliClient", Scripted)
     monkeypatch.setitem(cli._gate, "passed", False)
     monkeypatch.setattr(A, "study", functools.partial(A.study, reps=200))
     monkeypatch.setattr(SY, "srt_file", functools.partial(SY.srt_file, n_cues=160))    # keeps the suite fast
@@ -46,7 +47,7 @@ def repo(tmp_path, monkeypatch):
     git(r, "commit", "-qm", "design")
     git(r, "tag", "pitch-design")
     git(r, "commit", "-q", "--allow-empty", "-m", "code")
-    git(r, "tag", "pitch-code")
+    git(r, "tag", C.CODE_TAG)
     data = r / "tools/data/pitch"
     for name, value in (("ROOT", r), ("DATA", data), ("RAW", data / "raw"), ("VALIDATION", data / "validation"),
                         ("OUT", data / "out"), ("MANIFEST", r / "docs/research/pitch-files.sha256"),
@@ -133,21 +134,21 @@ def test_the_freeze_passes_on_the_tagged_clean_code(repo):
 
 
 def test_the_freeze_refuses_without_the_tag_or_when_it_is_not_an_ancestor(repo):
-    git(repo, "tag", "-d", "pitch-code")
-    with pytest.raises(SystemExit, match="pitch-code does not exist"):
+    git(repo, "tag", "-d", C.CODE_TAG)
+    with pytest.raises(SystemExit, match=f"{C.CODE_TAG} does not exist"):
         cli.check_code_frozen()
     git(repo, "checkout", "-q", "--orphan", "other")
     git(repo, "commit", "-q", "--allow-empty", "-m", "elsewhere")
-    git(repo, "tag", "pitch-code")
+    git(repo, "tag", C.CODE_TAG)
     git(repo, "checkout", "-q", "master" if "master" in git(repo, "branch") else "main")
     with pytest.raises(SystemExit, match="not an ancestor of HEAD"):
         cli.check_code_frozen()
 
 
 def test_a_branch_named_like_the_tag_does_not_count_as_the_freeze(repo):
-    git(repo, "tag", "-d", "pitch-code")
-    git(repo, "branch", "pitch-code")
-    with pytest.raises(SystemExit, match="pitch-code does not exist"):
+    git(repo, "tag", "-d", C.CODE_TAG)
+    git(repo, "branch", C.CODE_TAG)
+    with pytest.raises(SystemExit, match=f"{C.CODE_TAG} does not exist"):
         cli.check_code_frozen()
 
 
@@ -165,13 +166,13 @@ def test_the_freeze_refuses_code_changed_after_the_tag_and_uncommitted_changes(r
     git(repo, "checkout", "--", ".")
     (repo / "tools/pitch/code.py").write_text("x = 2\n")
     commit_all(repo, "change")
-    with pytest.raises(SystemExit, match="differs from the tag pitch-code"):
+    with pytest.raises(SystemExit, match=f"differs from the tag {C.CODE_TAG}"):
         cli.check_code_frozen()
 
 
 def test_no_real_stage_runs_on_unfrozen_code(repo):
     put_files(repo)
-    git(repo, "tag", "-d", "pitch-code")
+    git(repo, "tag", "-d", C.CODE_TAG)
     for argv in (["--hash-files"], ["--draw-sample"], ["--hash-sample"], ["--run", "1"], ["--analyse"]):
         with pytest.raises(SystemExit, match="refusing"):
             cli.main([*argv, "--unblind"])
@@ -197,7 +198,7 @@ def test_the_whole_registered_sequence_on_invented_files(repo, capsys):
     assert cli.main(["--analyse", "--unblind"]) == 0
     res = json.loads(C.RESULTS.read_text())
     assert res["validation"]["cues"] == 100 and res["validation"]["skipped"] > 0
-    assert res["meta"]["tags"]["pitch-code"] == git(repo, "rev-parse", "pitch-code").strip()
+    assert res["meta"]["tags"][C.CODE_TAG] == git(repo, "rev-parse", C.CODE_TAG).strip()
     assert set(res["meta"]["file_hashes"]) == {"pp1.srt", "pp2.srt", "validation-human.json"}
     assert not any(w in C.RESULTS.read_text() for w in SY.WORDS)
 
@@ -297,6 +298,7 @@ def test_a_missing_key_refuses_the_run_without_printing_anything_secret(repo, mo
     def no_key():
         raise CL.CallFailed("no ANTHROPIC_API_KEY in the environment or in .env")
     monkeypatch.setattr(CL, "AnthropicClient", no_key)
+    monkeypatch.setattr(CL, "ClaudeCliClient", no_key)
     with pytest.raises(SystemExit, match="no ANTHROPIC_API_KEY"):
         cli.main(["--run", "1", "--unblind"])
 
@@ -375,7 +377,7 @@ def test_a_run_is_made_once_and_carries_its_stamp(repo):
     out = json.loads((C.OUT / "run1/pp1.json").read_text())
     stamp = out["stamp"]
     assert stamp == json.loads((C.OUT / "run1/settings.json").read_text())["stamp"]
-    assert stamp["pitch_code_commit"] == git(repo, "rev-parse", "pitch-code^{commit}").strip()
+    assert stamp["pitch_code_commit"] == git(repo, "rev-parse", f"{C.CODE_TAG}^{{commit}}").strip()
     assert stamp["human_sha256"] == cli.F.sha256(C.HUMAN) and set(stamp["raw_sha256"]) == {"pp1", "pp2"}
     with pytest.raises(SystemExit, match="run 1 exists already"):
         cli.main(["--run", "1", "--unblind"])
@@ -408,6 +410,7 @@ def test_a_stopped_run_writes_no_run_output(repo, monkeypatch):
                 return CL.Reply("nope", "m", "end_turn", 1, 1)
             return super().call(system, user, max_tokens, schema)
     monkeypatch.setattr(CL, "AnthropicClient", Failing)
+    monkeypatch.setattr(CL, "ClaudeCliClient", Failing)
     with pytest.raises(SystemExit, match="stopping"):
         cli.main(["--run", "1", "--unblind"])
     assert not (C.OUT / "run1/pp1.json").exists() and (C.OUT / "run1/settings.json").exists()
