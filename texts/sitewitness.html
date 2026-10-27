@@ -115,13 +115,13 @@ original  Only one September run has an unverified model attribution: the <b>"op
 enforced  quotes_need_verification
 answer    I can't answer that from this site. This assistant answers only from the site's data files …
 ok        false</pre>
-<p>The original answer contains the expected word. So why was it refused? In this one trace, the quotation rule fired because its pattern takes any forty or more characters between two quotation marks as a quotation, a diagnosis that rests on this single record, not on a repeated test. Here those characters were the text between two short quoted words, <i>"opus"</i> and <i>"unverified"</i>, marked above. The refusal was therefore a false one, and the run's only miss.</p>
+<p>The original answer contains the expected word. In this one trace, the quotation rule fired because its pattern takes any forty or more characters between two quotation marks as a quotation. Here those characters were the text between two short quoted words, <i>"opus"</i> and <i>"unverified"</i>, marked above. The refusal was therefore a false one and the run's only miss, though that diagnosis rests on this single record, not on a repeated test.</p>
 </section>
 
 <section>
 <h2>Tests and the evaluation runs</h2>
 <p>The package's 47 tests run on Python 3.10 to 3.13 in GitHub Actions and passed locally on 29 September 2026. The model client is replaced by a stub, so no test calls the network.</p>
-<p>The golden set, a fixed test set with known answers, is thirty questions about the site, each with an expected substring or refusal. 18 are labelled as data questions whose answer must come from <code>read_data</code>: 13 expect a number and 5 a name or status read from a file. 7 are text questions, 1 is a quotation and 4 should be declined.</p>
+<p>The golden set, a set of test questions with expected answers, is thirty questions about the site, each with an expected substring or refusal. 18 are labelled as data questions whose answer must come from <code>read_data</code>: 13 expect a number and 5 a name or status read from a file. 7 are text questions, 1 is a quotation and 4 should be declined.</p>
 <p>An answer counts as correct if it contains the expected string anywhere, after case, spaces and thousands separators are normalised, unless it also contains the refusal phrase. A decline counts if the refusal phrase appears anywhere in the answer. Some expectations are a single character or a common word (<i>6</i>, <i>not</i>, <i>pass</i>), so the score is an upper bound on accuracy<sup class="cite"><a href="#r5">5</a></sup>.</p>
 <p>The six runs on 21 and 22 September 2026 with claude-sonnet-5 were used to find faults, not to measure progress. Only the last run is saved. Five were scored, at 22, 26, 26, 28 and 29 of 30, and the earlier of these scores come from terminal output (not saved, not verifiable). The sixth, the fourth run on one day, was stopped by the 4 USD daily budget as configured. The six together cost 5.3 USD, a figure that also comes from terminal output that was not saved and cannot be verified<sup class="cite"><a href="#r5">5</a></sup>.</p>
 <p>The golden set itself was corrected three times during the series (table below), so the scores were not measured against a fixed instrument and cannot be compared across runs.</p>
@@ -145,7 +145,7 @@ ok        false</pre>
 </tbody></table></div>
 <p>The last run scored 29 of 30 (95 % Wilson interval 83–99 %). The Wilson interval is a confidence interval for a proportion that stays sensible near 100 %.</p>
 <p>Two of the 29 passes are weak. The Ericeira question expected <i>6</i> surfable days. The answer gave 8 and passed because <i>6</i> occurs in the date 2026-06-14. The daily-budget question, scored as a correct decline, received a two-paragraph answer about the caps, with the refusal phrase in its second paragraph. Not crediting these two would give 27 of 30.</p>
-<p>The Worker it replaced had scored 29 of 30 on 17 September 2026, against the golden set as it stood then. So the package matched that score and did not improve on it. With thirty questions, and a single quotation question, a difference of one answer is within noise. In that run only the quotation rule fired, once, on the false refusal shown above, so no refusal in the run removed a wrong answer<sup class="cite"><a href="#r5">5</a></sup>.</p>
+<p>The Worker that sitewitness replaced had scored 29 of 30 on 17 September 2026, against the golden set as it stood then. So the package matched that score and did not improve on it. With thirty questions, and a single quotation question, a difference of one answer is within noise. In the last run only the quotation rule fired, once, on the false refusal shown above, so no refusal in the run removed a wrong answer<sup class="cite"><a href="#r5">5</a></sup>.</p>
 </section>
 
 <section>
