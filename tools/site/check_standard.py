@@ -91,7 +91,7 @@ def check(path: Path) -> tuple[list[str], list[str]]:
         hard.append(f"uncited references {sorted(set(ids) - cites)}")
     if cites - set(ids):
         hard.append(f"citations without an entry {sorted(cites - set(ids))}")
-    figs = [int(x) for x in re.findall(r"<b>fig\. (\d+)</b>", s)]
+    figs = [int(x) for x in re.findall(r'<(?:b|span class="fig-n")>fig\. (\d+)</(?:b|span)>', s)]  # fig-n: pages without bold
     if figs and figs != list(range(1, len(figs) + 1)):
         hard.append(f"figures numbered {figs}")
     refs = {int(x) for x in re.findall(r"\(fig\. (\d+)\)", text)}
