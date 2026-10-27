@@ -90,7 +90,7 @@
 <section>
 <h2>How well it found patterns</h2>
 <p>To test the pattern detection, a sample of log lines from several sources was labelled by hand. Each part of each line was marked as fixed or variable. The algorithm's output was then compared with the labels, part by part. Precision is the share of parts the method marked as variable that really vary. Recall is the share of truly variable parts it caught. F1 combines the two into one score.</p>
-<p>The method reached a precision of 97.3 %, a recall of 94.8 % and an F1 score of 96.0 %, in-sample figures, because the threshold was tried at several values on the labelled set itself. The baseline reached 82.1 %, 76.4 % and 79.1 %. It was a set of regular expressions (hand-written text-matching rules) that I wrote to catch common values such as IP addresses and timestamps.</p>
+<p>The method reached a precision of 97.3 %, a recall of 94.8 % and an F1 score of 96.0 %, in-sample figures, because the threshold was tried at several values on the labelled set itself. The baseline reached 82.1 %, 76.4 % and 79.1 %, measured on the same labelled set. It was a set of regular expressions (hand-written text-matching rules) that I wrote to catch common values such as IP addresses and timestamps.</p>
 <p>The thesis counts detection of unusual events as met, using simple statistical methods, but it did not measure how well the tool finds them. Of 22 requirements set with the IT centre, the thesis counts 18 as met, 3 as partly met and one as not verifiable. Its two requirement tables disagree on which one. The main text names scalability to very large data volumes, the appendix names long-term availability.</p>
 </section>
 
