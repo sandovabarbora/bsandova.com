@@ -80,7 +80,7 @@
 </details>
 
 <section>
-<p>Below a certain price, a Czech public body does not have to run a tender. It may award a <i>small-scale contract</i> without one, as long as it treats suppliers fairly and transparently. Above the limit it must run a procurement procedure, with publication, deadlines and the chance for any supplier to bid.</p>
+<p>At or below a certain price, a Czech public body does not have to run a tender. It may award a <i>small-scale contract</i> without one, as long as it treats suppliers fairly and transparently. Above the limit it must run a procurement procedure, with publication, deadlines and the chance for any supplier to bid.</p>
 <p>On 3 April 2025 an amendment to the procurement act raised that limit. For supplies and services it went from 2 to 3 million Kč, and for works from 6 to 9 million Kč, both without VAT<sup class="cite"><a href="#r1">1</a></sup>.</p>
 <p>The act counts a contract whose value is equal to the limit as small-scale<sup class="cite"><a href="#r2">2</a></sup>. So a price of exactly 3 000 000 Kč needs no tender after the change and needed one before it.</p>
 <p>Contracts may cluster just under such a limit. Palguta and Pertold found such clustering in Czech procurement when these limits were first introduced<sup class="cite"><a href="#r3">3</a></sup>. Studies of other countries ask what discretion below a limit does to competition and prices<sup class="cite"><a href="#r4">4</a></sup><sup class="cite"><a href="#r5">5</a></sup><sup class="cite"><a href="#r6">6</a></sup>.</p>
@@ -138,7 +138,7 @@
 
 <section>
 <h2>Contracts priced at exactly the new limits</h2>
-<p>At the new limits, more contracts were priced at exactly the limit than before, beyond what the change at round millions predicts. The mass rose by {{h1}} per expected contract in the band. Its 95 % CI, the range the data leave plausible, runs from {{h1_lo}} to {{h1_hi}}. So by the rule set in advance the hypothesis is {{h1_label}}.</p>
+<p>At the new limits, a larger mass of contracts was priced exactly at the limit than before, beyond what the change at round millions predicts. The mass rose by {{h1}} per expected contract in the band. Its 95 % CI, the range the data leave plausible, runs from {{h1_lo}} to {{h1_hi}}. So by the rule set in advance the hypothesis is {{h1_label}}.</p>
 <p>Pooled over both limits, the figure combines two different responses. At 3 million, the limit for supplies and services, the increase is {{n3}} ({{n3_lo}} to {{n3_hi}}). At 9 million, the limit for works, it is {{n9}} ({{n9_lo}} to {{n9_hi}}).</p>
 <p>These single-limit figures are descriptive. They were not registered as tests, and their intervals are bootstrap percentiles without the placebo correction.</p>
 <p>Before the change, {{l3a_pre}} contracts were priced at exactly 3 million for every one expected in the band below it. After the change, the figure was {{l3a_post}}. At 9 million it stayed at {{l9a_pre}}.</p>
@@ -161,7 +161,7 @@
 <section>
 <h2>The old limits, and contracts just below each limit</h2>
 <p>At the old limits, the mass priced exactly at the limit fell by {{h2}} (95 % CI {{h2_lo}} to {{h2_hi}}), a description only, because this test was {{h2_label}}. The fall came at 2 million, where the figure went from {{l2a_pre}} to {{l2a_post}} per expected contract. At 6 million it stayed at {{l6a_pre}}.</p>
-<p>With the number of contracts available, this test could detect only an effect of {{mde_h2}} or more, above the bound of 0.25 set in advance.</p>
+<p>With the number of contracts available, this test could detect only an effect of {{mde_h2}} or more, above the bound of 0.25 set in advance, so the hypothesis is {{h2_label}}.</p>
 <p>The old limits may also keep some pull of their own. The model directive the ministry offers municipalities uses 2 and 6 million as bounds between categories of small contracts<sup class="cite"><a href="#r14">14</a></sup>.</p>
 <p>Just below the limits, in <i>b</i>, the band below the new limits filled and the band below the old ones emptied. The change was +{{nb}} ({{nb_lo}} to {{nb_hi}}) at the new limits and +{{ob}} ({{ob_lo}} to {{ob_hi}}) at the old ones, with percentile intervals (fig. 3).</p>
 <p>Unlike <i>a</i>, <i>b</i> moved at the works limit too, by {{nb9}} ({{nb9_lo}} to {{nb9_hi}}).</p>
@@ -176,7 +176,7 @@
 <section>
 <h2>Robustness</h2>
 <p>Each check changes one choice and recomputes the calibrated estimate for the new limits. By the rule set in advance, the result would be called sensitive if three or more of sixteen checks changed its label. In the event, {{n_flip}} did.</p>
-<p>Narrowing the band to 2.5 % below the limit raises the estimate. Widening it to 10 % lowers it to {{w10}}, which reads as "not supported", because a mass at a single price weighs less against a wider band.</p>
+<p>Narrowing the band to 2.5 % below the limit raises the estimate. Widening it to 10 % lowers it to {{w10}}, which reads as "not supported". The reason is that a mass at a single price weighs less against a wider band.</p>
 <p>Keeping only records whose publisher marked itself as the payer, {{pay_share}} % of kept records, gives {{pay}} ({{pay_lo}} to {{pay_hi}}), inconclusive. The other checks stay between {{rob_min}} and {{rob_max}}, all supported.</p>
 <div class="ht-wrap">
 <table class="ht">
