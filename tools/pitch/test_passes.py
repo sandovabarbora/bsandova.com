@@ -289,8 +289,9 @@ def test_cli_command_isolates_the_call():
 def _cli_result(**over):
     res = {"type": "result", "subtype": "success", "is_error": False, "structured_output": {"jokes": []},
            "terminal_reason": "completed", "stop_reason": "tool_use", "num_turns": 2, "permission_denials": [],
-           "modelUsage": {C.MODEL: {}}, "usage": {"input_tokens": 2, "cache_creation_input_tokens": 10,
-                                                  "cache_read_input_tokens": 3, "output_tokens": 7}}
+           "modelUsage": {C.MODEL: {"outputTokens": 7}}, "usage": {"input_tokens": 2, "cache_creation_input_tokens": 10,
+                                                  "cache_read_input_tokens": 3, "output_tokens": 7,
+                                                  "iterations": [{"output_tokens": 7}]}}
     res.update(over)
     return json.dumps(res)
 
@@ -306,8 +307,8 @@ def test_parse_cli_result_success():
     _cli_result(is_error=True),
     _cli_result(subtype="error_max_turns"),
     _cli_result(structured_output=None),
-    _cli_result(modelUsage={"claude-haiku-4-5-20251001": {}}),
-    _cli_result(modelUsage={C.MODEL: {}, "claude-haiku-4-5-20251001": {}}),
+    _cli_result(modelUsage={"claude-haiku-4-5-20251001": {"outputTokens": 7}}),
+    _cli_result(modelUsage={C.MODEL: {"outputTokens": 7}, "claude-haiku-4-5-20251001": {"outputTokens": 1}}),
     _cli_result(stop_reason="max_tokens"),
     _cli_result(stop_reason="refusal"),
     _cli_result(terminal_reason="max_turns"),
@@ -316,6 +317,14 @@ def test_parse_cli_result_success():
     _cli_result(permission_denials=[{"tool": "x"}]),
     _cli_result(structured_output=["not", "a", "dict"]),
     "[1, 2]",
+    _cli_result(usage=None),
+    _cli_result(usage=[1]),
+    _cli_result(usage={"output_tokens": 7}, modelUsage={C.MODEL: {}}),
+    _cli_result(usage={"output_tokens": 7, "iterations": "x"}),
+    _cli_result(usage={"output_tokens": 7, "iterations": [{"output_tokens": "many"}]}),
+    _cli_result(usage={"output_tokens": 7, "iterations": [{}]}),
+    _cli_result(usage={"output_tokens": 0, "iterations": [{"output_tokens": 0}]}),
+    _cli_result(usage={"input_tokens": "x", "output_tokens": 7, "iterations": [{"output_tokens": 7}]}),
 ])
 def test_parse_cli_result_failures(raw):
     with pytest.raises(CL.CallFailed):
@@ -327,10 +336,14 @@ def test_three_turns_are_accepted_and_the_token_limit_is_checked():
     assert CL.parse_cli_result(_cli_result(), max_tokens=8).output_tokens == 7
     with pytest.raises(CL.CallFailed, match="max_tokens"):
         CL.parse_cli_result(_cli_result(), max_tokens=7)
-    two = _cli_result(usage={"output_tokens": 5, "iterations": [{"output_tokens": 5}, {"output_tokens": 5}]})
-    assert CL.parse_cli_result(two).output_tokens == 10
+    two = _cli_result(num_turns=3, usage={"output_tokens": 5, "iterations": [{"output_tokens": 5}, {"output_tokens": 6}]})
+    assert CL.parse_cli_result(two, max_tokens=7).output_tokens == 11
     with pytest.raises(CL.CallFailed, match="max_tokens"):
-        CL.parse_cli_result(two, max_tokens=10)
+        CL.parse_cli_result(two, max_tokens=6)
+    unlisted = _cli_result(usage={"output_tokens": 4, "iterations": []}, modelUsage={C.MODEL: {"outputTokens": 9}})
+    assert CL.parse_cli_result(unlisted, max_tokens=10).output_tokens == 9
+    with pytest.raises(CL.CallFailed, match="max_tokens"):
+        CL.parse_cli_result(unlisted, max_tokens=9)
 
 
 def test_a_usage_limit_is_not_a_failed_attempt():
@@ -353,7 +366,8 @@ def _cli_client(monkeypatch, replies, seen):
             raise reply
         return reply
     monkeypatch.setattr(CL.subprocess, "run", fake_run)
-    monkeypatch.setenv(CL.KEY_NAME, "sk-secret-do-not-pass")
+    monkeypatch.setenv(CL.KEY_NAME, "not-a-real-value")
+    monkeypatch.setenv("ANTHROPIC_BASE_URL", "http://example.invalid")
     return CL.ClaudeCliClient(sleep=lambda s: seen.append(("slept", s)))
 
 
@@ -367,7 +381,8 @@ def test_the_cli_call_is_isolated(monkeypatch):
     assert cmd == CL.cli_command("SYSTEM", {"type": "object"}) and "USER ♪ text" not in cmd
     assert kw["input"] == "USER ♪ text" and kw["encoding"] == "utf-8"
     assert Path(kw["cwd"]).name.startswith("call-")
-    assert CL.KEY_NAME not in kw["env"] and kw["env"]["CLAUDE_CODE_MAX_OUTPUT_TOKENS"] == "123"
+    assert not any(k.startswith("ANTHROPIC_") for k in kw["env"])
+    assert kw["env"]["CLAUDE_CODE_MAX_OUTPUT_TOKENS"] == "123"
     assert all(kw["env"][k] == v for k, v in CL.CLI_ENV.items())
 
 

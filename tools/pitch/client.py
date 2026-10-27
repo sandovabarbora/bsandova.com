@@ -89,8 +89,9 @@ class AnthropicClient:
 
 
 CLI_SETTINGS = {"disableAllHooks": True, "autoMemoryEnabled": False}
-CLI_ENV = {"CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1", "CLAUDE_CODE_DISABLE_CLAUDE_MDS": "1", "DISABLE_AUTOUPDATER": "1"}
-LIMIT_STATUSES = (429, 529)
+CLI_ENV = {"CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1", "CLAUDE_CODE_DISABLE_CLAUDE_MDS": "1", "DISABLE_AUTOUPDATER": "1",
+           "DISABLE_TELEMETRY": "1", "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"}
+LIMIT_STATUSES = (429, 529)   # rate or usage limit, and overloaded
 CLI_TURNS = (2, 3)
 
 
@@ -109,18 +110,21 @@ def cli_command(system: str, schema: dict) -> list[str]:
             "--disable-slash-commands", "--no-session-persistence"]
 
 
-def cli_env(max_tokens: int) -> dict[str, str]:
-    """The caller's environment without the API key (the call runs on the signed-in account), with memory, CLAUDE.md
-    and auto-update off and max_tokens as the output-token limit."""
-    env = {k: v for k, v in os.environ.items() if k != KEY_NAME}
-    return {**env, **CLI_ENV, "CLAUDE_CODE_MAX_OUTPUT_TOKENS": str(max_tokens)}
+def cli_env(max_tokens: int = 0) -> dict[str, str]:
+    """The caller's environment without any ANTHROPIC_ variable (the API key, a base URL or model override; the call
+    runs on the signed-in account), with memory, CLAUDE.md, auto-update and telemetry off and max_tokens as the
+    output-token limit."""
+    env = {k: v for k, v in os.environ.items() if not k.startswith("ANTHROPIC_")}
+    env = {**env, **CLI_ENV}
+    return {**env, "CLAUDE_CODE_MAX_OUTPUT_TOKENS": str(max_tokens)} if max_tokens else env
 
 
 def parse_cli_result(raw: str, model: str = C.MODEL, max_tokens: int | None = None) -> Reply:
     """The CLI's JSON result as a Reply. A call counts only if it completed with the schema's tool call as its stop,
     in two turns (the tool call, then its acknowledgement) or three (the answer as plain text first, which the CLI
-    then asks to be given through the tool), with no denied permission, a structured output from the pinned model
-    alone and, all turns together, fewer output tokens than max_tokens (so no turn was cut at the limit); it is then
+    then asks to be given through the tool, or a reply the tool's validation sent back), with no denied permission,
+    a structured output from the pinned model alone and every request below max_tokens (no request cut at the limit;
+    when the CLI does not list its requests, the model's total output over the call must be below it); it is then
     recorded with stop reason end_turn. Anything else, a refusal included, is a failed attempt; a usage or rate limit
     raises UsageLimit."""
     try:
@@ -132,7 +136,8 @@ def parse_cli_result(raw: str, model: str = C.MODEL, max_tokens: int | None = No
     if res.get("api_error_status") in LIMIT_STATUSES:
         raise UsageLimit(f"status {res.get('api_error_status')}")
     if res.get("is_error") or res.get("subtype") != "success":
-        raise CallFailed(f"CLI call failed: {res.get('subtype')} {res.get('api_error_status') or ''}".strip())
+        raise CallFailed(f"CLI call failed: subtype {res.get('subtype')!r}, is_error {res.get('is_error')!r}, "
+                         f"status {res.get('api_error_status')!r}")
     for key, want in {"terminal_reason": "completed", "stop_reason": "tool_use"}.items():
         if res.get(key) != want:
             raise CallFailed(f"CLI call ended with {key} {res.get(key)!r}, not {want!r}")
@@ -145,13 +150,25 @@ def parse_cli_result(raw: str, model: str = C.MODEL, max_tokens: int | None = No
     used = sorted(res.get("modelUsage") or {})
     if used != [model]:
         raise CallFailed(f"CLI call used {used}, not {model}")
-    usage = res.get("usage") or {}
-    turns = usage.get("iterations") or [usage]
-    out_total = max(int(usage.get("output_tokens") or 0), sum(int(t.get("output_tokens") or 0) for t in turns))
-    if max_tokens is not None and out_total >= max_tokens:
+    usage = res.get("usage")
+    if not isinstance(usage, dict):
+        raise CallFailed("CLI call has no token usage")
+    turns = usage.get("iterations") or []
+    try:
+        if not isinstance(turns, list) or not all(isinstance(t, dict) for t in turns):
+            raise TypeError
+        # per request when the CLI lists them, otherwise the model's total over the call (a stricter bound)
+        per_turn = ([int(t["output_tokens"]) for t in turns] if turns
+                    else [int(res["modelUsage"][model]["outputTokens"])])
+        tokens_in = sum(int(usage.get(k) or 0) for k in
+                        ("input_tokens", "cache_creation_input_tokens", "cache_read_input_tokens"))
+    except (KeyError, TypeError, ValueError):
+        raise CallFailed("CLI call has malformed token usage") from None
+    if min(per_turn) < 0 or sum(per_turn) == 0:
+        raise CallFailed("CLI call reports no output tokens")
+    if max_tokens is not None and max(per_turn) >= max_tokens:
         raise CallFailed("CLI call reached max_tokens")
-    tokens_in = sum(int(usage.get(k) or 0) for k in
-                    ("input_tokens", "cache_creation_input_tokens", "cache_read_input_tokens"))
+    out_total = sum(per_turn)
     return Reply(json.dumps(res["structured_output"], ensure_ascii=False), model, "end_turn", tokens_in, out_total)
 
 
@@ -164,7 +181,7 @@ class ClaudeCliClient:
         self.model, self.timeout, self.sleep = model, timeout, sleep
         try:
             out = subprocess.run(["claude", "--version"], capture_output=True, text=True, encoding="utf-8",
-                                 timeout=60, check=True, env=cli_env(0))
+                                 timeout=60, check=True, env=cli_env())
         except (OSError, subprocess.SubprocessError, UnicodeError):
             raise CallFailed("the claude CLI is not available") from None
         self.sdk_version = "claude-cli " + out.stdout.strip()

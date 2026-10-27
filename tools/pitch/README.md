@@ -31,10 +31,10 @@ the dry run use invented text and a scripted or mocked model.
     uv run --no-project $P python -I tools/pitch/cli.py --synthetic        # invented files, scripted model
     # writes to a new temporary folder (or --out), never under tools/data/pitch
 
-Every stage on the real files needs `--unblind` and refuses unless the tag `pitch-code` exists and is an ancestor of
+Every stage on the real files needs `--unblind` and refuses unless the tag `pitch-code-cli` (which replaced `pitch-code`, see the design change log) exists and is an ancestor of
 HEAD, `tools/pitch` at HEAD equals it, `tools/pitch` and the design text have no uncommitted changes, and both
 subtitle files match the hashes in `docs/research/pitch-files.sha256`. The code makes no tag. After the author tags
-`pitch-code` and puts `pp1.srt` and `pp2.srt` in `tools/data/pitch/raw/` (gitignored):
+`pitch-code-cli` and puts `pp1.srt` and `pp2.srt` in `tools/data/pitch/raw/` (gitignored):
 
     uv run --no-project $P python -I tools/pitch/cli.py --hash-files --unblind
     # commit docs/research/pitch-files.sha256
@@ -66,7 +66,7 @@ cached too and replayed on a rerun**: a run stopped by the 2 % limit stops again
 The call log is `calls.jsonl`; the settings, the SHA-256 of every prompt file and of both schemas are in
 `settings.json`. More than 2 % failed scenes or jokes in a film and pass stops the run, and the run's outputs
 (`pp1.json`, `pp2.json`) are written only once both films are done. Each output and `settings.json` carry a stamp: the
-SHA-256 of both subtitle files, the commit of `pitch-code` and the SHA-256 of `validation-human.json`.
+SHA-256 of both subtitle files, the commit of `pitch-code-cli` and the SHA-256 of `validation-human.json`.
 
 A scene whose pass 1 failed leaves the scene table, the dialogue hours and the bootstrap, and its cues leave the
 agreement measures; the counts are reported per film and run. A joke whose pass 2 failed is in no count, but its span
