@@ -52,6 +52,11 @@
 <section class="film film-page"><div class="shot" style="view-transition-name:ph-weather-rails;--bg:url(../assets/photo/rain-delays.jpg);--bg-s:url(../assets/photo/rain-delays-1200.jpg)"></div><p class="credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Praha,_Ko%C5%A1%C3%AD%C5%99e_Kaval%C3%ADrka_v_noci.jpg">Aktron</a> · CC BY-SA 4.0, toned</p></section>
 
 <section>
+<p>Does the weather hold up Prague's trams? Anyone who has waited at a stop in a downpour, or in heavy summer heat, has probably wondered.</p>
+<p>The studies in this series take that question to the stop-by-stop records of Prague's trams. Rain and heat each get their own comparison with ordinary hours on the same routes, and a last part looks at how long trams stand at their stops.</p>
+</section>
+
+<section>
 <h2>The parts</h2>
 <ol class="parts">
   <li>
@@ -59,7 +64,7 @@
     <div>
       <p class="n">Part 1 · rain · March–September 2025, 47 days with rain</p>
       <h2><a href="rain-delays">Are Prague's trams later when it rains?</a></h2>
-      <p>In an hour with at least 0.5 mm of rain, a tram gained 9.7 seconds more delay than in a dry hour of the same route, hour and weekday on the same date (5.8 to 13.6, supported); the difference is larger in heavier rain, but the registered placebo failed, so it is an adjusted association.</p>
+      <p>In an hour with at least 0.5 mm of rain, a tram fell 9.7 seconds further behind than in a dry hour of the same route, hour and weekday on the same date (5.8 to 13.6, supported), though the registered placebo failed, so it is an adjusted association and part of it may not be the rain itself. The gap is larger in heavier rain.</p>
     </div>
   </li>
   <li>
@@ -67,7 +72,7 @@
     <div>
       <p class="n">Part 2 · heat · summer 2025, 11 days at 30 °C or more</p>
       <h2><a href="heat-delays">Are Prague's trams later in the heat?</a></h2>
-      <p>In a dry hour at 30 °C or more, a tram gained 14.9 seconds less delay than in a mild hour of the same route and week (−20.9 to −8.2); registered as more delay, so inconclusive; an association on 11 hot days whose cause the data cannot distinguish.</p>
+      <p>Hot hours went the other way from what was expected, so the result is inconclusive. In a dry hour at 30 °C or more, a tram gained 14.9 seconds less delay than in a mild hour of the same route and week (−20.9 to −8.2). It is an association on 11 hot days whose cause these records cannot tell apart.</p>
     </div>
   </li>
   <li>
@@ -75,7 +80,7 @@
     <div>
       <p class="n">Part 3 · rain, heat and who boards · 14 wet weekend days</p>
       <h2><a href="rain-dwell">Are tram stops shorter on rainy weekends?</a></h2>
-      <p>In rain hours a tram's stop was about 0.25 seconds shorter on a weekday morning, and the weekend difference is +0.04 s (−0.29 to 0.37, not supported), so dwell gives no sign that rain cancels mainly optional trips; hot hours show no shorter stops (−0.12 s).</p>
+      <p>The gap between wet and dry stop lengths was no larger at weekends than on weekday mornings. In rain hours a tram's stop was about 0.25 seconds shorter on a weekday morning, and the weekend difference is +0.04 s (−0.29 to 0.37, not supported). So the time trams stand at stops gives no sign that rain cancels mainly optional trips. Hot hours show no shorter stops (−0.12 s).</p>
     </div>
   </li>
 </ol>
@@ -83,7 +88,11 @@
 
 <section>
 <h2>Parts 1 and 2 side by side</h2>
-<p>Parts 1 and 2 use the same table and outcome, the delay a trip gains within a clock hour, compared with the same route at the same hour and weekday, with the weather of that hour from four ČHMÚ stations, but not the same model: part 1 compares hours within a date (date effects), part 2 within a week (week effects), because heat lasts all day. Part 2's registered check with date effects gives −11.4 seconds (−16.4 to −6.3). The two estimates have opposite signs. The metro's intervals include zero under both, −2.8 s in rain (−6.1 to 0.6) and −1.4 s in heat (−4.2 to 1.3), which fits a difference on the street rather than one common to all modes, without showing what causes it. The heat part rests on 11 hot days, the rain part on 47 wet ones.</p>
+<p>Parts 1 and 2 use the same table and the same outcome, the delay a trip gains within a clock hour. Each compares it with the same route at the same hour and weekday, matched to the weather of that hour at four ČHMÚ stations.</p>
+<p>The models differ, though. Part 1 compares hours within a date (date effects, a separate baseline for each day), and part 2 compares them within a week (week effects), because heat lasts all day. Part 2's registered check with date effects gives −11.4 seconds (−16.4 to −6.3).</p>
+<p>The two estimates point opposite ways, more delay gained in rain hours, where the placebo failed, and less in hot ones, where the answer is inconclusive.</p>
+<p>Underground, the metro shows no clear change in either. Its intervals include zero under both, −2.8 s in rain (−6.1 to 0.6) and −1.4 s in heat (−4.2 to 1.3). That fits a difference out on the street rather than one shared by all modes, though it does not show what lies behind it.</p>
+<p>The heat part rests on 11 hot days and the rain part on 47 wet ones.</p>
 <figure data-chart="../assets/weather-rails/charts.json#compare">
   <p class="ch-head">About 9.7 s more delay gained per trip-hour in rain hours, about 14.9 s less in hot hours; the metro's intervals include zero.</p>
   <img src="../assets/weather-rails/01-compare.svg" alt="Delay gained per trip-hour against fair weather, with 95 % intervals: rain above zero for trams and buses, heat below zero for both, the metro near zero in both." loading="lazy">
@@ -93,7 +102,7 @@
 
 <section>
 <h2>How each part was pre-specified</h2>
-<p>Each part has its own design file, committed before the weather it studies was joined to its outcome, and its own dated changes after registration in its change log. The heat part reused the delays the rain part had already read, against rain only, and says so; the third part measures dwell, which neither earlier part had read, and changed its weekend window once, before the comparison, for a stated reason. The commit times are the author's own, not an independent registry's.</p>
+<p>Each part has its own design file, committed before the weather it studies was joined to its outcome, and its change log lists the dated changes made after registration. The heat part reused delays that the rain part had already read, though only against rain, and says so. The third part measures dwell, which neither earlier part had read, and it changed its weekend window once, before the comparison, for a stated reason. The commit times are the author's own and were not logged by an independent registry.</p>
 </section>
 
 <footer class="text-foot">
