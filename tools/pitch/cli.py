@@ -16,6 +16,7 @@ scripted model and needs neither.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import logging
 import subprocess
@@ -250,8 +251,11 @@ def stage_hash_sample() -> dict:
 
 
 def run_settings(prompts: dict, sdk_version: str | None) -> dict:
-    return {"model": C.MODEL, "temperature": C.TEMPERATURE, "max_tokens": C.MAX_TOKENS, "retries": C.RETRIES,
-            "max_fail_share": C.MAX_FAIL_SHARE, "prompt_sha256": K.prompt_hashes(prompts), "sdk": sdk_version}
+    return {"model": C.MODEL, "thinking": C.THINKING, "effort": C.EFFORT, "structured_outputs": "json_schema",
+            "max_tokens": C.MAX_TOKENS, "retries": C.RETRIES,
+            "max_fail_share": C.MAX_FAIL_SHARE, "prompt_sha256": K.prompt_hashes(prompts),
+            "code_schema_sha256": hashlib.sha256(json.dumps(K.CODE_SCHEMA, sort_keys=True).encode()).hexdigest(),
+            "sdk": sdk_version, "sdk_pin": C.SDK_PIN}
 
 
 def run_model(films: dict[str, A.Film], client, run: int, out: Path, sdk_version: str | None = None) -> dict:

@@ -174,7 +174,9 @@ def test_the_whole_registered_sequence_on_invented_files(repo, capsys):
     assert cli.main(["--run", "1", "--unblind"]) == 0
     assert cli.main(["--run", "2", "--unblind"]) == 0
     settings = json.loads((C.OUT / "run1/settings.json").read_text())
-    assert settings["model"] == "claude-sonnet-5-5" and settings["temperature"] == C.TEMPERATURE
+    assert settings["model"] == "claude-sonnet-5-5" and "temperature" not in settings
+    assert settings["thinking"] == {"type": "adaptive"} and settings["effort"] == "high"
+    assert settings["sdk_pin"] == "anthropic==2.3.0" and len(settings["code_schema_sha256"]) == 64
     assert len(settings["prompt_sha256"]) == 5 and settings["sdk"] == "scripted"
     capsys.readouterr()
     assert cli.main(["--analyse", "--unblind"]) == 0

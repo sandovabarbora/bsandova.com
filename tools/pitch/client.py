@@ -33,7 +33,7 @@ class Reply:
 
 
 class ModelClient(Protocol):
-    def call(self, system: str, user: str, max_tokens: int) -> Reply: ...
+    def call(self, system: str, user: str, max_tokens: int, schema: dict) -> Reply: ...
 
 
 def load_env_key(env_file: Path | None = None) -> bool:
@@ -50,28 +50,34 @@ def load_env_key(env_file: Path | None = None) -> bool:
     return bool(os.environ.get(KEY_NAME))
 
 
-class AnthropicClient:
-    """claude-sonnet-5-5 at the registered settings, through the official SDK (imported only for a real run)."""
+def request_body(model: str, system: str, user: str, max_tokens: int, schema: dict) -> dict:
+    """Every call: the pinned model, explicit adaptive thinking at the fixed effort, an enum-constrained JSON schema,
+    and no sampling parameter (Claude 5 models reject them; design change log, 27 October 2026)."""
+    return {"model": model, "max_tokens": max_tokens, "system": system,
+            "messages": [{"role": "user", "content": user}], "thinking": dict(C.THINKING),
+            "output_config": {"effort": C.EFFORT, "format": {"type": "json_schema", "schema": schema}}}
 
-    def __init__(self, model: str = C.MODEL, temperature: float | None = C.TEMPERATURE):
+
+class AnthropicClient:
+    """claude-sonnet-5-5 through the official SDK (imported only for a real run). Calls stream, since the SDK refuses
+    a non-streaming call whose max_tokens could take over ten minutes."""
+
+    def __init__(self, model: str = C.MODEL):
         import anthropic
         if not load_env_key():
             raise CallFailed(f"no {KEY_NAME} in the environment or in .env")
         self._sdk = anthropic
         self._client = anthropic.Anthropic(max_retries=4)
-        self.model, self.temperature = model, temperature
+        self.model = model
 
     @property
     def sdk_version(self) -> str:
         return self._sdk.__version__
 
-    def call(self, system: str, user: str, max_tokens: int) -> Reply:
-        # SDK 2.x has no temperature argument, so the registered value goes in the body as written (see config)
-        extra = {} if self.temperature is None else {"extra_body": {"temperature": self.temperature}}
+    def call(self, system: str, user: str, max_tokens: int, schema: dict) -> Reply:
         try:
-            msg = self._client.messages.create(
-                model=self.model, max_tokens=max_tokens, system=system, messages=[{"role": "user", "content": user}],
-                **extra)
+            with self._client.messages.stream(**request_body(self.model, system, user, max_tokens, schema)) as stream:
+                msg = stream.get_final_message()
         except self._sdk.APIError as err:
             # the status and type only: the SDK's message can echo request details
             raise CallFailed(f"{type(err).__name__} {getattr(err, 'status_code', '')}".strip()) from None

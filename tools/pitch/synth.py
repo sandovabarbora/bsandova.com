@@ -45,7 +45,7 @@ class ScriptedModel:
     def __init__(self, noise_seed: int | None = None):
         self.rng = np.random.default_rng(noise_seed) if noise_seed is not None else None
 
-    def call(self, system: str, user: str, max_tokens: int) -> Reply:
+    def call(self, system: str, user: str, max_tokens: int, schema: dict) -> Reply:
         if "Scene to segment" in user:
             block = user.split("Scene to segment", 1)[1]
             jokes = []
@@ -55,7 +55,7 @@ class ScriptedModel:
                         continue
                     kind = "allusion" if "ALLUSION" in m.group(2) else "joke"
                     jokes.append({"first_cue": int(m.group(1)), "last_cue": int(m.group(1)), "kind": kind})
-            return Reply(json.dumps(jokes), "scripted", "end_turn", len(user) // 4, 20)
+            return Reply(json.dumps({"jokes": jokes}), "scripted", "end_turn", len(user) // 4, 20)
         marked = " ".join(m.group(1) for m in re.finditer(r"^>> \[\d+\] (.*)$", user, re.MULTILINE))
         return Reply(json.dumps(code_from_text(marked)), "scripted", "end_turn", len(user) // 4, 20)
 

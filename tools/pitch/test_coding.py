@@ -40,25 +40,33 @@ def test_code_prompt_marks_the_joke_cues_and_carries_the_codebook():
     assert "[10] The kettle" in user and ">> [12]" in user and ">> [13]" in user and ">> [10]" not in user
 
 
+def J(items: str) -> str:
+    return '{"jokes": ' + items + '}'
+
+
 def test_valid_segments_parse_including_overlaps_and_the_empty_scene():
-    text = '[{"first_cue": 10, "last_cue": 12, "kind": "joke"}, {"first_cue": 12, "last_cue": 13, "kind": "allusion"}]'
+    text = J('[{"first_cue": 10, "last_cue": 12, "kind": "joke"}, {"first_cue": 12, "last_cue": 13, "kind": "allusion"}]')
     assert [j["kind"] for j in K.parse_segments(text, SCENE)] == ["joke", "allusion"]
-    assert K.parse_segments("  []  ", SCENE) == []
-    assert K.parse_segments('```json\n[{"first_cue": 13, "last_cue": 13, "kind": "joke"}]\n```', SCENE)[0]["first_cue"] == 13
+    assert K.parse_segments('  {"jokes": []}  ', SCENE) == []
+    fenced = "```json\n" + J('[{"first_cue": 13, "last_cue": 13, "kind": "joke"}]') + "\n```"
+    assert K.parse_segments(fenced, SCENE)[0]["first_cue"] == 13
 
 
 @pytest.mark.parametrize("text,msg", [
-    ("Here are the jokes: []", "not JSON"),
-    ('[{"first_cue": 10, "last_cue": 12, "kind": "joke"}] trailing', "not JSON"),
-    ('{"first_cue": 10, "last_cue": 12, "kind": "joke"}', "not a JSON array"),
-    ('[{"first_cue": 7, "last_cue": 10, "kind": "joke"}]', "outside the scene"),
-    ('[{"first_cue": 10, "last_cue": 11, "kind": "joke"}]', "outside the scene"),
-    ('[{"first_cue": 13, "last_cue": 10, "kind": "joke"}]', "comes after"),
-    ('[{"first_cue": 10, "last_cue": 10, "kind": "pun"}]', "kind outside"),
-    ('[{"first_cue": 10, "last_cue": 10}]', "exactly"),
-    ('[{"first_cue": true, "last_cue": 10, "kind": "joke"}]', "outside the scene"),
-    ('[{"first_cue": "10", "last_cue": 10, "kind": "joke"}]', "outside the scene"),
-    ("```\n[]\n``` and more", "not JSON"),
+    ('Here are the jokes: {"jokes": []}', "not JSON"),
+    (J('[{"first_cue": 10, "last_cue": 12, "kind": "joke"}]') + " trailing", "not JSON"),
+    ('[{"first_cue": 10, "last_cue": 12, "kind": "joke"}]', "is not"),
+    ('{"first_cue": 10, "last_cue": 12, "kind": "joke"}', "is not"),
+    ('{"jokes": [], "note": "x"}', "is not"),
+    ('{"jokes": {}}', "is not"),
+    (J('[{"first_cue": 7, "last_cue": 10, "kind": "joke"}]'), "outside the scene"),
+    (J('[{"first_cue": 10, "last_cue": 11, "kind": "joke"}]'), "outside the scene"),
+    (J('[{"first_cue": 13, "last_cue": 10, "kind": "joke"}]'), "comes after"),
+    (J('[{"first_cue": 10, "last_cue": 10, "kind": "pun"}]'), "kind outside"),
+    (J('[{"first_cue": 10, "last_cue": 10}]'), "exactly"),
+    (J('[{"first_cue": true, "last_cue": 10, "kind": "joke"}]'), "outside the scene"),
+    (J('[{"first_cue": "10", "last_cue": 10, "kind": "joke"}]'), "outside the scene"),
+    ("```\n{\"jokes\": []}\n``` and more", "not JSON"),
     ("", "not JSON")])
 def test_malformed_segment_replies_are_refused(text, msg):
     with pytest.raises(K.BadReply, match=msg):
@@ -89,6 +97,19 @@ def test_valid_codes_parse():
 def test_malformed_or_out_of_codebook_codes_are_refused(text, msg):
     with pytest.raises(K.BadReply, match=msg):
         K.parse_codes(text)
+
+
+def test_the_schemas_are_enums_of_the_codebook_and_of_the_scenes_cues():
+    seg = K.segment_schema(SCENE)
+    item = seg["properties"]["jokes"]["items"]
+    assert item["properties"]["first_cue"]["enum"] == [10, 12, 13] == item["properties"]["last_cue"]["enum"]
+    assert item["properties"]["kind"]["enum"] == ["joke", "allusion"]
+    assert seg["additionalProperties"] is False and item["additionalProperties"] is False
+    assert seg["required"] == ["jokes"] and item["required"] == ["first_cue", "last_cue", "kind"]
+    code = K.CODE_SCHEMA["properties"]
+    assert code["target"]["enum"] == list(C.TARGETS) and code["butt"]["enum"] == list(C.BUTTS)
+    assert code["group_type"]["enum"] == ["", *C.GROUP_TYPES] and code["group_other"] == {"type": "string"}
+    assert K.CODE_SCHEMA["additionalProperties"] is False and len(K.CODE_SCHEMA["required"]) == 4
 
 
 def test_protected_trait_is_the_seven_group_types_of_decision_d():

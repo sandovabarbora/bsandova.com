@@ -32,18 +32,21 @@ def _first(user):
     return int(line.split("]")[0].strip("["))
 
 
+def jokes(spans):
+    return json.dumps({"jokes": [{"first_cue": a, "last_cue": b, "kind": k} for a, b, k in spans]})
+
+
 class FakeClient:
     """Answers by pass: a segment reply per scene and a code reply per joke, from scripted functions."""
 
     def __init__(self, segment=None, code=None):
         self.calls = []
-        self.segment = segment or (lambda user, n: json.dumps([{"first_cue": _first(user), "last_cue": _first(user),
-                                                                 "kind": "joke"}]))
+        self.segment = segment or (lambda user, n: jokes([(_first(user), _first(user), "joke")]))
         self.code = code or (lambda user, n: '{"target": "group", "group_type": "weight", "group_other": "", '
                                              '"butt": "group"}')
 
-    def call(self, system, user, max_tokens):
-        self.calls.append((system, user, max_tokens))
+    def call(self, system, user, max_tokens, schema):
+        self.calls.append((system, user, max_tokens, schema))
         n = len(self.calls)
         text = self.segment(user, n) if "Scene to segment" in user else self.code(user, n)
         return CL.Reply(text, "claude-sonnet-5-5-fake", "end_turn", 100, 10)
@@ -73,8 +76,15 @@ def test_the_requests_use_the_registered_settings_and_the_log_holds_no_text(tmp_
     assert "(none: this is the first scene)" in fake.calls[0][1] and "[1] invented line 0a" in fake.calls[1][1]
     cached = list((tmp_path / "cache1").glob("*.json"))
     assert len(cached) == 6
-    req = json.loads(cached[0].read_text())["request"]
-    assert req["model"] == "claude-sonnet-5-5" and req["temperature"] == 0.0 and req["run"] == 1
+    reqs = [json.loads(p.read_text())["request"] for p in cached]
+    for req in reqs:
+        assert req["model"] == "claude-sonnet-5-5" and req["run"] == 1 and "temperature" not in req
+        assert req["thinking"] == {"type": "adaptive"} and req["effort"] == "high"
+    assert {json.dumps(r["schema"], sort_keys=True) for r in reqs if r["pass"] == "code"} == {
+        json.dumps(K.CODE_SCHEMA, sort_keys=True)}
+    seg = next(r for r in reqs if r["pass"] == "segment" and r["unit"] == 2)
+    assert seg["schema"]["properties"]["jokes"]["items"]["properties"]["first_cue"]["enum"] == [11, 12]
+    assert fake.calls[0][3] == K.segment_schema(scenes()[0]) and fake.calls[3][3] == K.CODE_SCHEMA
     assert "invented" not in (tmp_path / "log.jsonl").read_text()
     assert set(log_rows(tmp_path)[0]) == {"film", "run", "pass", "unit", "attempt", "status", "cached", "input_tokens",
                                           "output_tokens"}
@@ -98,10 +108,10 @@ def test_a_bad_reply_is_retried_once_and_then_counted_as_failed(tmp_path):
         first = _first(user)
         seen[first] = seen.get(first, 0) + 1
         if first == 11:                                   # scene 2: always outside the scene
-            return '[{"first_cue": 99, "last_cue": 99, "kind": "joke"}]'
+            return jokes([(99, 99, "joke")])
         if first == 21 and seen[first] == 1:              # scene 3: malformed once, then fine
             return "Sure! Here you go"
-        return json.dumps([{"first_cue": first, "last_cue": first, "kind": "joke"}])
+        return jokes([(first, first, "joke")])
     out = run(tmp_path, FakeClient(segment=segment), scenes(60))
     assert out["failed_scenes"] == [2] and out["jokes_found"] == 59
     rows = log_rows(tmp_path)
@@ -113,10 +123,10 @@ def test_a_bad_reply_is_retried_once_and_then_counted_as_failed(tmp_path):
 
 def test_more_than_two_percent_failed_scenes_stops_the_run(tmp_path):
     def segment(user, n):
-        return "not json" if _first(user) in (11, 21) else "[]"
+        return "not json" if _first(user) in (11, 21) else jokes([])
     with pytest.raises(P.RunStopped, match="2 of 60 failed"):
         run(tmp_path, FakeClient(segment=segment), scenes(60))
-    one = run(tmp_path / "b", FakeClient(segment=lambda u, n: "x" if _first(u) == 11 else "[]"), scenes(60))
+    one = run(tmp_path / "b", FakeClient(segment=lambda u, n: "x" if _first(u) == 11 else jokes([])), scenes(60))
     assert one["failed_scenes"] == [2]                                   # 1 of 60 = 1.7 %: under the limit
 
 
@@ -130,15 +140,20 @@ def test_api_errors_refusals_and_truncated_replies_are_failed_attempts(tmp_path)
         def __init__(self, script):
             self.script = list(script)
 
-        def call(self, system, user, max_tokens):
+        def call(self, system, user, max_tokens, schema):
             step = self.script.pop(0)
             if step == "error":
                 raise CL.CallFailed("RateLimitError 429")
-            return CL.Reply("[]", "m", step, 1, 0)
+            return CL.Reply(jokes([]), "m", step, 1, 0)        # valid JSON whatever the stop reason
     with pytest.raises(P.RunStopped, match="1 of 1"):
         run(tmp_path, Odd(["error", "refusal"]), scenes(1))
     assert [r["status"] for r in log_rows(tmp_path)] == ["failed: RateLimitError 429", "failed: stop reason refusal"]
     assert run(tmp_path / "b", Odd(["max_tokens", "end_turn"]), scenes(1))["failed_scenes"] == []
+    with pytest.raises(P.RunStopped):
+        run(tmp_path / "c", Odd(["max_tokens", "max_tokens"]), scenes(1))
+    with pytest.raises(P.RunStopped):
+        run(tmp_path / "d", Odd(["stop_sequence", "pause_turn"]), scenes(1))
+    assert [r["status"] for r in log_rows(tmp_path / "c")] == ["failed: stop reason max_tokens"] * 2
 
 
 # ---------------------------------------------------------------- the real client, with the SDK mocked
@@ -153,15 +168,31 @@ class FakeSDK(types.ModuleType):
         class APIError(Exception):
             status_code = 500
 
+        class Stream:
+            def __init__(self, kw):
+                self.kw = kw
+
+            def __enter__(self):
+                if self.kw["messages"][0]["content"] == "boom":
+                    raise APIError(f"echo of the request with {FAKE_KEY}")
+                return self
+
+            def __exit__(self, *exc):
+                return False
+
+            def get_final_message(self):
+                block = types.SimpleNamespace
+                return block(content=[block(type="thinking", thinking=""), block(type="text", text='{"jokes": []}')],
+                             model="claude-sonnet-5-5", stop_reason="end_turn",
+                             usage=block(input_tokens=12, output_tokens=3))
+
         class Messages:
             def create(self, **kw):
+                raise AssertionError("calls stream: a non-streaming call with this max_tokens is refused by the SDK")
+
+            def stream(self, **kw):
                 sdk.seen.append(kw)
-                if kw["messages"][0]["content"] == "boom":
-                    raise APIError(f"echo of the request with {FAKE_KEY}")
-                block = types.SimpleNamespace
-                return block(content=[block(type="thinking", thinking=""), block(type="text", text="[]")],
-                             model="claude-sonnet-5-5-20261001", stop_reason="end_turn",
-                             usage=block(input_tokens=12, output_tokens=3))
+                return Stream(kw)
 
         class Anthropic:
             def __init__(self, **kw):
@@ -181,19 +212,24 @@ def sdk(monkeypatch, tmp_path):
     return fake
 
 
-def test_the_client_sends_model_temperature_and_returns_text_only(sdk):
+def test_the_client_sends_thinking_effort_and_schema_and_no_sampling_parameter(sdk):
     cl = CL.AnthropicClient()
-    reply = cl.call("sys", "user text", 100)
+    reply = cl.call("sys", "user text", C.MAX_TOKENS["code"], K.CODE_SCHEMA)
     kw = sdk.seen[0]
-    assert kw["model"] == "claude-sonnet-5-5" and kw["extra_body"] == {"temperature": 0.0} and kw["system"] == "sys"
-    assert kw["max_tokens"] == 100 and kw["messages"] == [{"role": "user", "content": "user text"}]
-    assert reply == CL.Reply("[]", "claude-sonnet-5-5-20261001", "end_turn", 12, 3)
+    assert set(kw) == {"model", "max_tokens", "system", "messages", "thinking", "output_config"}
+    assert kw["model"] == "claude-sonnet-5-5" and kw["system"] == "sys" and kw["max_tokens"] == 16000
+    assert kw["messages"] == [{"role": "user", "content": "user text"}]
+    assert kw["thinking"] == {"type": "adaptive"}
+    assert kw["output_config"] == {"effort": "high", "format": {"type": "json_schema", "schema": K.CODE_SCHEMA}}
+    assert not {"temperature", "top_p", "top_k", "extra_body", "tool_choice"} & set(kw)
+    assert reply == CL.Reply('{"jokes": []}', "claude-sonnet-5-5", "end_turn", 12, 3)
     assert cl.sdk_version == "0.0-test"
 
 
-def test_temperature_none_leaves_the_field_out(sdk):
-    CL.AnthropicClient(temperature=None).call("s", "u", 5)
-    assert "extra_body" not in sdk.seen[0] and "temperature" not in sdk.seen[0]
+def test_the_pinned_settings():
+    assert C.MODEL == "claude-sonnet-5-5" and C.SDK_PIN == "anthropic==2.3.0" and not hasattr(C, "TEMPERATURE")
+    assert C.THINKING == {"type": "adaptive"} and C.EFFORT == "high"
+    assert C.MAX_TOKENS == {"segment": 32000, "code": 16000}
 
 
 def test_the_key_comes_from_env_and_is_never_printed_logged_or_in_errors(sdk, caplog, capsys):
@@ -201,7 +237,7 @@ def test_the_key_comes_from_env_and_is_never_printed_logged_or_in_errors(sdk, ca
     cl = CL.AnthropicClient()
     assert "api_key" not in sdk.client_kw                                  # the SDK reads it from the environment
     with pytest.raises(CL.CallFailed) as err:
-        cl.call("sys", "boom", 10)
+        cl.call("sys", "boom", 10, K.CODE_SCHEMA)
     out = capsys.readouterr()
     for text in (str(err.value), repr(err.value), caplog.text, out.out, out.err):
         assert FAKE_KEY not in text

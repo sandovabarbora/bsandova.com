@@ -47,12 +47,14 @@ SAMPLE_SEED = 2012
 SKIP = "skip"
 
 # §3.6, §4
-MODEL = "claude-sonnet-5-5"
-# As registered (§4.1). The API rejects a non-default temperature on this model and SDK 2.x has no such argument: an
-# open decision before the code freeze (None omits the field). Until then every real call would fail with a 400.
-TEMPERATURE: float | None = 0.0
+MODEL = "claude-sonnet-5-5"   # the full model ID, no alias
+# Deviation of 27 October 2026 (design change log): temperature cannot be sent to Claude 5 models, so it is not sent;
+# thinking and effort are fixed explicitly instead of left to the API's defaults.
+THINKING = {"type": "adaptive"}
+EFFORT = "high"
 SDK_PIN = "anthropic==2.3.0"
-MAX_TOKENS = {"segment": 16000, "code": 8000}
+# thinking counts toward max_tokens, so both leave room for it; the calls stream, as the SDK requires above ~21 000
+MAX_TOKENS = {"segment": 32000, "code": 16000}
 RUNS = (1, 2)
 PRIMARY_RUN = 1               # decision G
 MAX_FAIL_SHARE = 0.02

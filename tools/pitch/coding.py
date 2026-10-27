@@ -56,6 +56,28 @@ def prompt_hashes(prompts: Mapping[str, str]) -> dict[str, str]:
     return {name: hashlib.sha256(prompts[name].encode("utf-8")).hexdigest() for name in PROMPT_FILES}
 
 
+def segment_schema(scene: Scene) -> dict:
+    """Pass 1's structured-output schema: cue numbers limited to the scene's own, kind to the codebook."""
+    ids = list(scene.cue_ids)
+    item = {"type": "object", "properties": {"first_cue": {"type": "integer", "enum": ids},
+                                             "last_cue": {"type": "integer", "enum": ids},
+                                             "kind": {"type": "string", "enum": list(C.KINDS)}},
+            "required": ["first_cue", "last_cue", "kind"], "additionalProperties": False}
+    return {"type": "object", "properties": {"jokes": {"type": "array", "items": item}}, "required": ["jokes"],
+            "additionalProperties": False}
+
+
+CODE_SCHEMA = {
+    "type": "object",
+    "properties": {"target": {"type": "string", "enum": list(C.TARGETS)},
+                   "group_type": {"type": "string", "enum": ["", *C.GROUP_TYPES]},
+                   "group_other": {"type": "string"},
+                   "butt": {"type": "string", "enum": list(C.BUTTS)}},
+    "required": ["target", "group_type", "group_other", "butt"],
+    "additionalProperties": False,
+}
+
+
 def parse_json(text: str):
     """The whole reply must be one JSON value; a single ```json fence around the whole reply is the only wrapper taken."""
     body = text.strip()
@@ -73,10 +95,12 @@ def _is_int(v) -> bool:
 
 
 def parse_segments(text: str, scene: Scene) -> list[dict]:
-    """Pass 1: a list of {first_cue, last_cue, kind}, every cue number inside the scene and first not after last."""
+    """Pass 1: {"jokes": [{first_cue, last_cue, kind}, ...]}, every cue number inside the scene and first not after
+    last. The schema already constrains this; the check stays as a second guard."""
     data = parse_json(text)
-    if not isinstance(data, list):
-        raise BadReply("pass 1 reply is not a JSON array")
+    if not isinstance(data, dict) or set(data) != {"jokes"} or not isinstance(data["jokes"], list):
+        raise BadReply('pass 1 reply is not {"jokes": [...]}')
+    data = data["jokes"]
     ids = set(scene.cue_ids)
     out = []
     for item in data:
@@ -109,7 +133,7 @@ def check_codes(target, group_type, group_other, butt) -> dict:
 
 
 def parse_codes(text: str) -> dict:
-    """Pass 2: exactly {target, group_type, group_other, butt} within the codebook."""
+    """Pass 2: exactly {target, group_type, group_other, butt} within the codebook (a second guard after the schema)."""
     data = parse_json(text)
     if not isinstance(data, dict) or set(data) != {"target", "group_type", "group_other", "butt"}:
         raise BadReply("pass 2 reply must be exactly {target, group_type, group_other, butt}")

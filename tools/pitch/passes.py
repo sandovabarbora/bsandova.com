@@ -26,9 +26,10 @@ def _attempts(client, cache, call_log, request: dict, parse: Callable[[str], obj
         status = "ok"
         try:
             if reply is None:
-                reply = client.call(req["system"], req["user"], req["max_tokens"])
+                reply = client.call(req["system"], req["user"], req["max_tokens"], req["schema"])
                 cache.put(req, reply)
-            if reply.stop_reason not in ("end_turn", "stop_sequence"):
+            # a reply cut at max_tokens, refused or stopped any other way fails even if its JSON parses
+            if reply.stop_reason != "end_turn":
                 raise K.BadReply(f"stop reason {reply.stop_reason}")
             parsed = parse(reply.text)
         except (CallFailed, K.BadReply) as err:
@@ -51,13 +52,13 @@ def _check_failures(film: str, pass_name: str, failed: int, total: int) -> None:
 def run_film(film: str, scenes: Sequence[Scene], prompts: Mapping[str, str], client, cache, call_log,
              run: int) -> dict:
     """Pass 1 over every scene, then pass 2 over every joke found. Returns cue numbers and codes only, no text."""
-    base = {"model": C.MODEL, "temperature": C.TEMPERATURE, "run": run, "film": film}
+    base = {"model": C.MODEL, "thinking": C.THINKING, "effort": C.EFFORT, "run": run, "film": film}
     versions: set[str] = set()
     jokes, failed_scenes = [], []
     for k, scene in enumerate(scenes):
         system, user = K.segment_prompt(prompts, scenes[k - 1] if k else None, scene)
         req = {**base, "pass": "segment", "unit": scene.number, "system": system, "user": user,
-               "max_tokens": C.MAX_TOKENS["segment"]}
+               "max_tokens": C.MAX_TOKENS["segment"], "schema": K.segment_schema(scene)}
         segs, version = _attempts(client, cache, call_log, req, lambda t, s=scene: K.parse_segments(t, s),
                                   {"film": film, "run": run, "pass": "segment", "unit": scene.number})
         if segs is None:
@@ -71,7 +72,7 @@ def run_film(film: str, scenes: Sequence[Scene], prompts: Mapping[str, str], cli
     for joke in jokes:
         system, user = K.code_prompt(prompts, by_number[joke["scene"]], joke)
         req = {**base, "pass": "code", "unit": joke["id"], "system": system, "user": user,
-               "max_tokens": C.MAX_TOKENS["code"]}
+               "max_tokens": C.MAX_TOKENS["code"], "schema": K.CODE_SCHEMA}
         codes, version = _attempts(client, cache, call_log, req, K.parse_codes,
                                    {"film": film, "run": run, "pass": "code", "unit": joke["id"]})
         if codes is None:

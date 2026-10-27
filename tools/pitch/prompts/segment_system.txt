@@ -6,4 +6,4 @@ A joke's span runs from the cue of its set-up to the cue of its punchline. Set-u
 
 Each cue is shown as [number] text, where the number is the cue's own number. The preceding scene is shown for context only: never return its cue numbers.
 
-Reply with JSON only, no other text: an array with one object per joke, in the order the jokes start, each {"first_cue": <number>, "last_cue": <number>, "kind": "joke" or "allusion"}. If the scene has no joke, reply [].
+Reply with JSON only, no other text: {"jokes": [...]}, with one object per joke in the order the jokes start, each {"first_cue": <number>, "last_cue": <number>, "kind": "joke" or "allusion"}. If the scene has no joke, reply {"jokes": []}.
