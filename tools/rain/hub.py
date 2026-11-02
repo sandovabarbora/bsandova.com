@@ -66,19 +66,21 @@ def main() -> None:
 PARTS = [  # slug, part, title, kicker, summary; {{tokens}} are filled from the results
     ("rain-delays", 1, "Are Prague's trams later when it rains?",
      "Part 1 · rain · March–September 2025, {{rain_dates}} days with rain",
-     "In an hour with at least 0.5 mm of rain, a tram gained {{r}} seconds more delay than in a dry hour of the same "
-     "route, hour and weekday on the same date ({{r_lo}} to {{r_hi}}, {{rl}}); the difference is larger in heavier "
-     "rain, but the registered placebo failed, so it is an adjusted association."),
+     "In an hour with at least 0.5 mm of rain, a tram fell {{r}} seconds further behind than in a dry hour of the "
+     "same route, hour and weekday on the same date ({{r_lo}} to {{r_hi}}, {{rl}}), though the registered placebo "
+     "failed, so it is an adjusted association and part of it may not be the rain itself. The gap is larger in "
+     "heavier rain."),
     ("heat-delays", 2, "Are Prague's trams later in the heat?",
      "Part 2 · heat · summer 2025, {{hot_dates}} days at 30 °C or more",
-     "In a dry hour at 30 °C or more, a tram gained {{h}} seconds less delay than in a mild hour of the same route and "
-     "week ({{h_lo}} to {{h_hi}}); registered as more delay, so {{hl}}; an association on {{hot_dates}} hot days whose "
-     "cause the data cannot distinguish."),
+     "Hot hours went the other way from what was expected, so the result is {{hl}}. In a dry hour at 30 °C or more, "
+     "a tram gained {{h}} seconds less delay than in a mild hour of the same route and week ({{h_lo}} to {{h_hi}}). "
+     "It is an association on {{hot_dates}} hot days whose cause these records cannot tell apart."),
     ("rain-dwell", 3, "Are tram stops shorter on rainy weekends?",
      "Part 3 · rain, heat and who boards · {{wet_weekends}} wet weekend days",
-     "In rain hours a tram's stop was about {{dr}} seconds shorter on a weekday morning, and the weekend difference is "
-     "{{th}} s ({{th_lo}} to {{th_hi}}, {{tl}}), so dwell gives no sign that rain cancels mainly optional trips; hot "
-     "hours show no shorter stops ({{dh}} s)."),
+     "The gap between wet and dry stop lengths was no larger at weekends than on weekday mornings. In rain hours "
+     "a tram's stop was about {{dr}} seconds shorter on a weekday morning, and the weekend difference is {{th}} s ({{th_lo}} to {{th_hi}}, "
+     "{{tl}}). So the time trams stand at stops gives no sign that rain cancels mainly optional trips. Hot hours show "
+     "no shorter stops ({{dh}} s)."),
 ]
 
 

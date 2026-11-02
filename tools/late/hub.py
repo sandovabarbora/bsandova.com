@@ -56,31 +56,35 @@ def main() -> None:
 PARTS = [  # slug, part, title, kicker, summary, screen-reader name[, photo of another part]; {{tokens}} from the results
     ("delay-origins", 1, "Where do Prague's trams fall behind?",
      "Part 1 · where delay appears · {{segments}} tram segments, 15 March – 8 September 2025",
-     "A tenth of the segments record {{S}} % of all delay gained, just over half, the same ones in odd and "
-     "even weeks. Described afterwards, not registered: many of them leave large stops, and part of what they "
-     "record is early trams waiting for their time.",
+     "Delay piles up in a few fixed places, though only just past the bar set in advance. A tenth of the "
+     "segments record {{S}} % of all delay gained, just over half, and they are the same ones in odd and even "
+     "weeks. Many of them leave large stops, and part of "
+     "what they record is early trams waiting for their time, both described afterwards and not registered.",
      None),
     ("bunching", 2, "How often do two trams of a line arrive together?",
      "Part 2 · bunching · {{pairs}} pairs of trams, 15 March – 8 September 2025",
-     "The spacing between two trams of a line shows practically no amplification from stop to stop ({{g}} per "
-     "stop, {{g_label}} by the registered rule, corrected in its version 2), and bunches build gradually "
-     "towards the end of a line. The rare sudden closings concentrate on some platforms, as other rare "
-     "one-stop events do, and partly by line. City buses show a small positive value ({{bg}}, {{bg_label}}), "
-     "about the size of the spread among the tram estimates.",
+     "When two trams of a line are off their planned spacing at one stop, they drift hardly any further off "
+     "at the next, a result the registered rule labels {{g_label}} ({{g}} per stop, rule corrected in its "
+     "version 2). Bunches "
+     "build gradually towards the end of a line. The rare sudden closings concentrate on some platforms, as "
+     "other rare one-stop events do, and partly by line. City buses show a small positive value ({{bg}}, "
+     "{{bg_label}}), about the size of the spread among the tram estimates.",
      None),
     ("transfers", 3, "Will you make your tram connection?",
      "Part 3 · transfers · tram-to-tram connections, 15 March – 8 September 2025",
-     "Planned three minutes apart, a connection was made {{m3}} times in a hundred and cost over five minutes "
-     "more {{c3}} % of the time. The data show a small association between the two lines' delays, about "
-     "{{dp1}} percentage points ({{dp}} registered, {{dp_label}}; {{spec_lo}} to {{spec_hi}} across "
-     "specifications), with real differences between pairs of lines and no mechanism identified. A roulette "
-     "gives the share made for {{cells_shown}} combinations of stop, lines and time of day.",
+     "Planned three minutes apart, a connection was made {{m3}} times in a hundred, and {{c3}} % of the time "
+     "it cost over five minutes more. The two lines' delays go together only slightly, about {{dp1}} "
+     "percentage points, and the registered test came out {{dp_label}} ({{dp}}, and {{spec_lo}} to "
+     "{{spec_hi}} across specifications). The differences between pairs of lines are real, and no mechanism "
+     "was identified. A roulette gives the share made for {{cells_shown}} combinations of stop, lines and "
+     "time of day.",
      None),
     ("swiss-trams", 4, "Do Swiss trams pile up delay like Prague's?",
      "Part 4 · four networks · Zurich, Basel and Bern, 15 March – 8 September 2025",
-     "The same measure on Swiss trams: a tenth of the segments make {{zs}} % of the delay in Zurich, {{bs}} % in "
-     "Basel and {{ns}} % in Bern. Basel and Bern are like Prague by the registered rule, Zurich is not; above what "
-     "chance alone would give, all three concentrate less than Prague.",
+     "Swiss trams were measured the same way over the same season. A tenth of the segments make {{zs}} % of "
+     "the delay in Zurich, {{bs}} % in Basel and {{ns}} % in Bern. Basel and Bern are like Prague by the "
+     "registered rule and Zurich is not. Above what chance alone would give, all three concentrate less than "
+     "Prague.",
      None, "delay-origins"),
 ]
 
