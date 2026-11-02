@@ -103,6 +103,18 @@ def agree_table(val: dict, sa: dict) -> str:
     return "\n".join(f'  <tr><td>{a}</td><td class="v">{b}</td><td class="v">{c}</td></tr>' for a, b, c in rows)
 
 
+def q2_table(res: dict) -> str:
+    est, c = res["estimates"], res["counts"]
+    out = []
+    for butt in ("speaker", "group", "unclear"):
+        cells = "".join(
+            f'<td class="v">{c[f]["protected_by_butt"].get(butt, 0)} of {c[f]["protected"]} · '
+            f'{pct(est[f"share_{butt}_{f}"]["estimate"])}<small>95 % CI '
+            f'{plain_ci(est[f"share_{butt}_{f}"]["ci95"], unit=NB + "%")}</small></td>' for f in ("pp1", "pp2"))
+        out.append(f"  <tr><td>{butt}</td>{cells}</tr>")
+    return "\n".join(out)
+
+
 def num_refs(page: str, values: dict) -> str:
     """[[key]] markers become citations numbered by first appearance; every entry of refs.html must be cited."""
     refs = render((HERE / "refs.html").read_text(encoding="utf-8"), values)
@@ -140,6 +152,9 @@ def values(res: dict) -> dict:
                for group in [est, *chk.values()] for e in group.values())
     assert c1["failed_scenes"] == 0 and c2["failed_scenes"] == 1 and c1["failed_jokes"] == c2["failed_jokes"] == 0
     assert all(c["cleaning"]["lyric_fallback"] and c["cleaning"]["italic_runs"] == 0 for c in (c1, c2))
+    assert all(c["cleaning"]["lyric_lines_removed"] == c["cleaning"]["song_run_cues_removed"] == 0 for c in (c1, c2))  # "no line"
+    assert r1["failed_scenes"] == r2["failed_scenes"] == 0
+    assert reading(run2["D_pp2"], "Q2") == "speaker" and reading(run2["delta3"], "Q3") == "inconclusive"
     assert all(c["cleaning"]["raw_cues"] - c["kept_cues"] == c["cleaning"]["cues_dropped_at_sound_and_tags"] for c in (c1, c2))
     assert c1["would_not_pass_today"] == c2["would_not_pass_today"]
     assert all(12 < 1 / est[f"share_america_{f}"]["estimate"] < 14 for f in ("pp1", "pp2"))  # "one in thirteen"
@@ -152,8 +167,8 @@ def values(res: dict) -> dict:
 
     jokes_all = c1["jokes"] + c2["jokes"]
     v = {
-        "deck": (f"A language model found {n(jokes_all)} jokes in the two films' subtitles and coded them "
-                 "consistently across two runs, but it barely agreed with a human on whom they target, so every result is exploratory."),
+        "deck": ("In two runs, a language model mostly agreed with itself but barely with a human on whom the films' "
+                 "jokes target, so every result is exploratory, and one film's satire reading did not repeat."),
         "jokes_all": n(jokes_all), "gate": n(gate, 1),
         "tag_design": meta["tags"]["pitch-design"], "tag_design_obj": TAG_OBJECTS["pitch-design"],
         "tag_code": meta["tags"]["pitch-code-cli-2"], "tag_code_obj": TAG_OBJECTS["pitch-code-cli-2"],
@@ -218,6 +233,14 @@ def values(res: dict) -> dict:
         "amr1": n(aph["rate_america_pp1"]["estimate"], 1), "amr2": n(aph["rate_america_pp2"]["estimate"], 1),
         "amr_d": n(aph["delta_rate_america"]["estimate"], 1, sign=True),
         "amr_d_ci": signed_ci(aph["delta_rate_america"]["ci95"], 1, 1, ""),
+        # run 2 beside run 1
+        "r2_scenes2": r2["scenes"], "r2_hours2": n(r2["dialogue_hours"], 2),
+        "r2_am1": pct(run2["share_america_pp1"]["estimate"]), "r2_am1_ci": plain_ci(run2["share_america_pp1"]["ci95"], unit=NB + "%"),
+        "r2_am2": pct(run2["share_america_pp2"]["estimate"]), "r2_am2_ci": plain_ci(run2["share_america_pp2"]["ci95"], unit=NB + "%"),
+        "r2_rate1": n(run2["rate_wnpt_pp1"]["estimate"], 1), "r2_rate1_ci": plain_ci(run2["rate_wnpt_pp1"]["ci95"], 1),
+        "r2_rate2": n(run2["rate_wnpt_pp2"]["estimate"], 1), "r2_rate2_ci": plain_ci(run2["rate_wnpt_pp2"]["ci95"], 1),
+        "r2_Ddiff": pp(run2["D_diff"]["estimate"]), "r2_Ddiff_ci": signed_ci(run2["D_diff"]["ci95"]),
+        "q2_table": q2_table(res),
     }
     return v
 
