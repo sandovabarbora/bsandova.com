@@ -506,3 +506,21 @@ versions, hashes, no subtitle text), and the gitignored working files under `too
   the code tag, which becomes `pitch-code-cli` and replaces `pitch-code` as the code of record; `pitch-code` is not
   moved. The change was reviewed independently, the review's findings applied and reviewed again, before the tag.
   Test calls used invented subtitles only; no real subtitle text was sent before the tag.
+- 2 November 2026, during run 1, approved by the author; no code, count or estimate had been looked at, only the
+  call log's statuses: run 1 stopped under the 2 % rule. *Pitch Perfect* had finished (89 scenes, 194 jokes found, 1
+  joke failed after its retry); in *Pitch Perfect 2* 46 consecutive pass 1 calls, and 2 before them, ended with the
+  CLI exiting without an answer, consistent with the account's usage limit, which the client had recognised only by
+  a 429 or 529 status the CLI did not report, so 25 of 72 scenes counted as failed. Changes, under the new code tag
+  `pitch-code-cli-2`, which replaces `pitch-code-cli`: (1) a call that gets no answer from the model (no JSON result,
+  an error status from the service, an error result the model's replies did not cause, a timeout, or the CLI
+  failing to start) is not a failed attempt; the client waits (doubling from one minute to fifteen, at most six
+  hours for one call) and repeats it, then stops the run. Failures caused by the model's reply (too many turns,
+  `error_max_turns`, a structured output that fails validation repeatedly, a cut at `max_tokens`, another model, a
+  reply the schema check rejects) stay failed attempts as before. (2) When a stopped run resumes, an attempt that
+  failed on the model's reply before the stop keeps its failure and is not called again, so no unit gets more than
+  the registered one retry; attempts that got no answer (48 in pass 1 of *Pitch Perfect 2* and 3 in pass 2 of
+  *Pitch Perfect*, logged as "CLI exited") are called again. Successful replies come from the cache. (3) The CLI
+  updated itself between the stop and the resume (2.1.311 to 2.1.316), while every call of run 1 so far used
+  2.1.311; a copy of 2.1.311 (SHA-256 85d8c08707fcfd1e78ffa0204eefbc6ec9e4fe22f375fb2767ef85d957ed3161) is kept
+  in the gitignored data folder and used for both runs. Change (2) is a stricter reading than restarting the run,
+  which would have re-called every failed attempt.

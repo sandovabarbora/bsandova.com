@@ -91,20 +91,37 @@ class AnthropicClient:
 CLI_SETTINGS = {"disableAllHooks": True, "autoMemoryEnabled": False}
 CLI_ENV = {"CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1", "CLAUDE_CODE_DISABLE_CLAUDE_MDS": "1", "DISABLE_AUTOUPDATER": "1",
            "DISABLE_TELEMETRY": "1", "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"}
-LIMIT_STATUSES = (429, 529)   # rate or usage limit, and overloaded
 CLI_TURNS = (2, 3)
 
 
-class UsageLimit(RuntimeError):
-    """The account's usage or rate limit: not a failed attempt; the client waits, then stops the run (it resumes from
-    the cache)."""
+# the CLI's own error results that come from the model's replies, not from the service
+MODEL_ERROR_SUBTYPES = ("error_max_turns", "error_max_structured_output_retries")
+# call-log statuses of attempts that got no answer from the model (logged as failures before 2 November 2026)
+INFRA_STATUS_PREFIXES = ("failed: CLI exited", "failed: CLI call timed out", "failed: CLI call could not run",
+                         "failed: the CLI returned no JSON", "failed: the CLI result is not")
+
+
+class Unavailable(RuntimeError):
+    """No answer from the model: a usage or rate limit, an overloaded service, or the CLI failing without a result.
+    Not a failed attempt; the client waits, then stops the run, which resumes from the cache."""
+
+
+
+def is_model_failure(status: str) -> bool:
+    """A logged failed attempt whose cause was the model's reply (kept as failed when a run resumes)."""
+    return status.startswith("failed:") and not status.startswith(INFRA_STATUS_PREFIXES)
+
+
+def cli_bin() -> str:
+    """The pinned copy of the CLI when it exists, otherwise `claude` on PATH."""
+    return str(C.CLI_BIN) if C.CLI_BIN.is_file() else "claude"
 
 
 def cli_command(system: str, schema: dict) -> list[str]:
     """One isolated print-mode call: the pinned model and effort, the study's system prompt in place of the CLI's own,
     the schema as structured output, and no tools, settings files, hooks, memory, CLAUDE.md, MCP servers, skills or
     saved session. The user prompt goes on stdin."""
-    return ["claude", "-p", "--model", C.MODEL, "--effort", C.EFFORT, "--system-prompt", system,
+    return [cli_bin(), "-p", "--model", C.MODEL, "--effort", C.EFFORT, "--system-prompt", system,
             "--json-schema", json.dumps(schema, sort_keys=True), "--output-format", "json", "--tools", "",
             "--setting-sources", "", "--settings", json.dumps(CLI_SETTINGS), "--strict-mcp-config",
             "--disable-slash-commands", "--no-session-persistence"]
@@ -126,19 +143,23 @@ def parse_cli_result(raw: str, model: str = C.MODEL, max_tokens: int | None = No
     then asks to be given through the tool, or a reply the tool's validation sent back), with no denied permission,
     a structured output from the pinned model alone and every request below max_tokens (no request cut at the limit;
     when the CLI does not list its requests, the model's total output over the call must be below it); it is then
-    recorded with stop reason end_turn. Anything else, a refusal included, is a failed attempt; a usage or rate limit
-    raises UsageLimit."""
+    recorded with stop reason end_turn. A reply that breaks any of these, a refusal included, is a failed attempt
+    (CallFailed). No result, an error status from the service, or an error result the model's replies did not cause
+    raises Unavailable."""
     try:
         res = json.loads(raw)
-    except ValueError:
-        raise CallFailed("the CLI returned no JSON result") from None
+    except (ValueError, RecursionError):
+        raise Unavailable("the CLI returned no JSON result") from None
     if not isinstance(res, dict):
-        raise CallFailed("the CLI result is not a JSON object")
-    if res.get("api_error_status") in LIMIT_STATUSES:
-        raise UsageLimit(f"status {res.get('api_error_status')}")
+        raise Unavailable("the CLI result is not a JSON object")
+    status = res.get("api_error_status")
+    if status is not None:
+        raise Unavailable(f"service status {status!r}")
     if res.get("is_error") or res.get("subtype") != "success":
-        raise CallFailed(f"CLI call failed: subtype {res.get('subtype')!r}, is_error {res.get('is_error')!r}, "
-                         f"status {res.get('api_error_status')!r}")
+        detail = f"subtype {res.get('subtype')!r}, is_error {res.get('is_error')!r}"
+        if res.get("subtype") in MODEL_ERROR_SUBTYPES:
+            raise CallFailed(f"CLI call failed: {detail}")
+        raise Unavailable(f"CLI error result: {detail}")
     for key, want in {"terminal_reason": "completed", "stop_reason": "tool_use"}.items():
         if res.get(key) != want:
             raise CallFailed(f"CLI call ended with {key} {res.get(key)!r}, not {want!r}")
@@ -177,13 +198,14 @@ def parse_cli_result(raw: str, model: str = C.MODEL, max_tokens: int | None = No
 
 class ClaudeCliClient:
     """claude-sonnet-5-5 through the Claude Code CLI in print mode, signed in with the author's account. Each call
-    is a fresh process in an empty folder. A usage or rate limit is waited out (doubling from one minute, at most
-    LIMIT_WAIT_S in all); after that the run stops and resumes from the cache when started again."""
+    is a fresh process in an empty folder. When the model gives no answer (Unavailable) the call is repeated after a
+    wait (doubling from one minute to 15 minutes, at most LIMIT_WAIT_S in all for one call); after that the run stops
+    and resumes from the cache when started again."""
 
     def __init__(self, model: str = C.MODEL, timeout: int = C.CLI_TIMEOUT_S, sleep=time.sleep):
         self.model, self.timeout, self.sleep = model, timeout, sleep
         try:
-            out = subprocess.run(["claude", "--version"], capture_output=True, text=True, encoding="utf-8",
+            out = subprocess.run([cli_bin(), "--version"], capture_output=True, text=True, encoding="utf-8",
                                  timeout=60, check=True, env=cli_env())
         except (OSError, subprocess.SubprocessError, UnicodeError):
             raise CallFailed("the claude CLI is not available") from None
@@ -195,17 +217,12 @@ class ClaudeCliClient:
                 proc = subprocess.run(cli_command(system, schema), input=user, capture_output=True, text=True,
                                       encoding="utf-8", cwd=cwd, env=cli_env(max_tokens), timeout=self.timeout)
             except subprocess.TimeoutExpired:
-                raise CallFailed(f"CLI call timed out after {self.timeout} s") from None
+                raise Unavailable(f"CLI call timed out after {self.timeout} s") from None
             except (OSError, UnicodeError, subprocess.SubprocessError) as err:
-                raise CallFailed(f"CLI call could not run: {type(err).__name__}") from None
+                raise Unavailable(f"CLI call could not run: {type(err).__name__}") from None
         if proc.returncode != 0:
-            try:
-                parse_cli_result(proc.stdout, self.model, max_tokens)
-            except UsageLimit:
-                raise
-            except CallFailed:
-                pass
-            raise CallFailed(f"CLI exited with {proc.returncode}")
+            parse_cli_result(proc.stdout, self.model, max_tokens)   # a failed reply raises CallFailed or Unavailable
+            raise Unavailable(f"CLI exited with {proc.returncode} after a valid result")
         return parse_cli_result(proc.stdout, self.model, max_tokens)
 
     def call(self, system: str, user: str, max_tokens: int, schema: dict) -> Reply:
@@ -213,11 +230,11 @@ class ClaudeCliClient:
         while True:
             try:
                 return self._once(system, user, max_tokens, schema)
-            except UsageLimit as err:
+            except Unavailable as err:
                 if waited >= C.LIMIT_WAIT_S:
-                    raise SystemExit(f"stopping: usage limit ({err}) after {waited} s of waiting; start the same "
-                                     "run again later, it resumes from the cache") from None
-                log.warning("usage limit (%s), waiting %d s", err, wait)
+                    raise SystemExit(f"stopping: no answer from the model ({err}) after {waited} s of waiting; start "
+                                     "the same run again later, it resumes from the cache") from None
+                log.warning("no answer from the model (%s), waiting %d s", err, wait)
                 self.sleep(wait)
                 waited += wait
                 wait = min(wait * 2, 900)
@@ -256,6 +273,18 @@ class CallLog:
 
     def __init__(self, path: Path):
         self.path = path
+
+    def model_failures(self, film: str) -> dict[tuple, str]:
+        """(pass, unit, attempt) -> status of each attempt already logged for this film that failed on the model's
+        reply, the last such status per attempt; attempts that got no answer are left out, so they are called again."""
+        out: dict[tuple, str] = {}
+        if not self.path.exists():
+            return out
+        for line in self.path.read_text(encoding="utf-8").splitlines():
+            row = json.loads(line)
+            if row.get("film") == film and is_model_failure(str(row.get("status", ""))):
+                out[(row["pass"], row["unit"], row["attempt"])] = row["status"]
+        return out
 
     def write(self, **row) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)

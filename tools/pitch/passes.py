@@ -17,10 +17,18 @@ class RunStopped(RuntimeError):
     """More than 2 % of a film's scenes or jokes failed after one retry: no estimate is computed (design §3.6)."""
 
 
-def _attempts(client, cache, call_log, request: dict, parse: Callable[[str], object], unit: Mapping) -> tuple[object, str]:
-    """Up to 1 + RETRIES attempts; returns (parsed, model version) or (None, '') when every attempt failed."""
+def _attempts(client, cache, call_log, request: dict, parse: Callable[[str], object], unit: Mapping,
+              failed_before: Mapping | None = None) -> tuple[object, str]:
+    """Up to 1 + RETRIES attempts; returns (parsed, model version) or (None, '') when every attempt failed. An attempt
+    that failed on the model's reply before a stopped run resumed (failed_before) stays failed and is not called
+    again."""
+    failed_before = failed_before or {}
     for attempt in range(1, C.RETRIES + 2):
         req = {**request, "attempt": attempt}
+        earlier = failed_before.get((unit["pass"], unit["unit"], attempt))
+        if earlier is not None:
+            call_log.write(**unit, attempt=attempt, status=earlier, cached=True, input_tokens=0, output_tokens=0)
+            continue
         reply = cache.get(req)
         cached = reply is not None
         status = "ok"
@@ -50,8 +58,10 @@ def _check_failures(film: str, pass_name: str, failed: int, total: int) -> None:
 
 
 def run_film(film: str, scenes: Sequence[Scene], prompts: Mapping[str, str], client, cache, call_log,
-             run: int) -> dict:
-    """Pass 1 over every scene, then pass 2 over every joke found. Returns cue numbers and codes only, no text."""
+             run: int, failed_before: Mapping | None = None) -> dict:
+    """Pass 1 over every scene, then pass 2 over every joke found. Returns cue numbers and codes only, no text.
+    failed_before maps (pass, unit, attempt) to the status of an attempt that failed on the model's reply before the
+    run stopped and resumed."""
     base = {"model": C.MODEL, "thinking": C.THINKING, "effort": C.EFFORT, "run": run, "film": film}
     versions: set[str] = set()
     jokes, failed_scenes = [], []
@@ -60,7 +70,7 @@ def run_film(film: str, scenes: Sequence[Scene], prompts: Mapping[str, str], cli
         req = {**base, "pass": "segment", "unit": scene.number, "system": system, "user": user,
                "max_tokens": C.MAX_TOKENS["segment"], "schema": K.SEGMENT_SCHEMA}
         segs, version = _attempts(client, cache, call_log, req, lambda t, s=scene: K.parse_segments(t, s),
-                                  {"film": film, "run": run, "pass": "segment", "unit": scene.number})
+                                  {"film": film, "run": run, "pass": "segment", "unit": scene.number}, failed_before)
         if segs is None:
             failed_scenes.append(scene.number)
             continue
@@ -74,7 +84,7 @@ def run_film(film: str, scenes: Sequence[Scene], prompts: Mapping[str, str], cli
         req = {**base, "pass": "code", "unit": joke["id"], "system": system, "user": user,
                "max_tokens": C.MAX_TOKENS["code"], "schema": K.CODE_SCHEMA}
         codes, version = _attempts(client, cache, call_log, req, K.parse_codes,
-                                   {"film": film, "run": run, "pass": "code", "unit": joke["id"]})
+                                   {"film": film, "run": run, "pass": "code", "unit": joke["id"]}, failed_before)
         if codes is None:
             failed_jokes.append(joke["id"])
             continue

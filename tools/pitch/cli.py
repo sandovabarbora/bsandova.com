@@ -303,7 +303,8 @@ def run_model(films: dict[str, A.Film], client, run: int, out: Path, sdk_version
     prompts = F.load_prompts()
     F.write_json(folder / "settings.json", {**run_settings(prompts, sdk_version), "stamp": stamp})
     cache, call_log = CL.Cache(folder / "cache"), CL.CallLog(folder / "calls.jsonl")
-    result = {f: P.run_film(f, S.build_scenes(films[f].kept), prompts, client, cache, call_log, run)
+    result = {f: P.run_film(f, S.build_scenes(films[f].kept), prompts, client, cache, call_log, run,
+                            call_log.model_failures(f))
               for f in C.FILMS}
     for f in C.FILMS:
         F.write_json(folder / f"{f}.json", {**result[f], "stamp": stamp})

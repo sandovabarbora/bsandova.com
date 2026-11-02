@@ -278,7 +278,7 @@ def test_failed_scenes_and_uncoded_jokes_are_recorded_for_the_analysis(tmp_path)
 
 def test_cli_command_isolates_the_call():
     cmd = CL.cli_command("SYSTEM", {"type": "object"})
-    assert cmd[:2] == ["claude", "-p"]
+    assert cmd[:2] == [CL.cli_bin(), "-p"]
     for flag, value in (("--model", C.MODEL), ("--effort", C.EFFORT), ("--system-prompt", "SYSTEM"),
                         ("--output-format", "json"), ("--tools", ""), ("--setting-sources", "")):
         assert cmd[cmd.index(flag) + 1] == value
@@ -303,8 +303,8 @@ def test_parse_cli_result_success():
 
 
 @pytest.mark.parametrize("raw", [
-    "not json",
-    _cli_result(is_error=True),
+    _cli_result(subtype="error_max_turns", is_error=True),
+    _cli_result(subtype="error_max_structured_output_retries", is_error=True),
     _cli_result(subtype="error_max_turns"),
     _cli_result(structured_output=None),
     _cli_result(modelUsage={"claude-haiku-4-5-20251001": {"outputTokens": 7}}),
@@ -316,7 +316,6 @@ def test_parse_cli_result_success():
     _cli_result(num_turns=4),
     _cli_result(permission_denials=[{"tool": "x"}]),
     _cli_result(structured_output=["not", "a", "dict"]),
-    "[1, 2]",
     _cli_result(usage=None),
     _cli_result(modelUsage=[1, "a"]),
     _cli_result(modelUsage=5),
@@ -350,7 +349,7 @@ def test_three_turns_are_accepted_and_the_token_limit_is_checked():
 
 
 def test_a_usage_limit_is_not_a_failed_attempt():
-    with pytest.raises(CL.UsageLimit):
+    with pytest.raises(CL.Unavailable):
         CL.parse_cli_result(_cli_result(is_error=True, subtype="error", api_error_status=429))
 
 
@@ -362,7 +361,7 @@ class _Proc:
 def _cli_client(monkeypatch, replies, seen):
     def fake_run(cmd, **kw):
         seen.append((cmd, kw))
-        if cmd[:2] == ["claude", "--version"]:
+        if cmd[1:2] == ["--version"]:
             return _Proc("9.9.9 (Claude Code)")
         reply = replies.pop(0)
         if isinstance(reply, BaseException):
@@ -390,16 +389,25 @@ def test_the_cli_call_is_isolated(monkeypatch):
     assert all(kw["env"][k] == v for k, v in CL.CLI_ENV.items())
 
 
-@pytest.mark.parametrize("reply, match", [
-    (CL.subprocess.TimeoutExpired(["claude", "SYSTEM"], 5), "timed out"),
-    (OSError("boom"), "could not run"),
-    (_Proc("", 1), "exited with 1"),
-    (_Proc(_cli_result(), 1), "exited with 1"),
+@pytest.mark.parametrize("raw", ["not json", "[1, 2]", _cli_result(is_error=True),
+                                 _cli_result(is_error=True, subtype="error", api_error_status=None),
+                                 _cli_result(api_error_status=500), _cli_result(subtype="error_during_execution")])
+def test_no_answer_from_the_model_is_not_a_failed_attempt(raw):
+    with pytest.raises(CL.Unavailable):
+        CL.parse_cli_result(raw)
+
+
+@pytest.mark.parametrize("reply, exc, match", [
+    (CL.subprocess.TimeoutExpired(["claude", "SYSTEM"], 5), CL.Unavailable, "timed out"),
+    (OSError("boom"), CL.Unavailable, "could not run"),
+    (_Proc("", 1), CL.Unavailable, "no JSON"),
+    (_Proc(_cli_result(), 1), CL.Unavailable, "after a valid result"),
+    (_Proc(_cli_result(num_turns=5), 1), CL.CallFailed, "turns"),
 ])
-def test_cli_call_failures_echo_no_prompt(monkeypatch, reply, match):
+def test_cli_call_failures_echo_no_prompt(monkeypatch, reply, exc, match):
     cl = _cli_client(monkeypatch, [reply], [])
-    with pytest.raises(CL.CallFailed, match=match) as err:
-        cl.call("SYSTEM", "USER", 10, {"type": "object"})
+    with pytest.raises(exc, match=match) as err:
+        cl._once("SYSTEM", "USER", 10, {"type": "object"})
     assert "SYSTEM" not in str(err.value) and "USER" not in str(err.value)
 
 
@@ -411,7 +419,7 @@ def test_a_usage_limit_is_waited_out_then_stops_the_run(monkeypatch):
     assert ("slept", 60) in seen
     monkeypatch.setattr(C, "LIMIT_WAIT_S", 100)
     cl = _cli_client(monkeypatch, [limit] * 5, [])
-    with pytest.raises(SystemExit, match="usage limit"):
+    with pytest.raises(SystemExit, match="no answer from the model"):
         cl.call("S", "U", 10, {})
 
 
@@ -421,3 +429,52 @@ def test_a_missing_cli_is_a_failed_client(monkeypatch):
     monkeypatch.setattr(CL.subprocess, "run", fake_run)
     with pytest.raises(CL.CallFailed, match="not available"):
         CL.ClaudeCliClient()
+
+
+def test_only_model_failures_are_kept_on_resume(tmp_path):
+    assert CL.is_model_failure("failed: CLI call took 4 turns")
+    assert CL.is_model_failure("failed: stop reason max_tokens")
+    assert not CL.is_model_failure("failed: CLI exited with 1")
+    assert not CL.is_model_failure("ok")
+    log_ = CL.CallLog(tmp_path / "calls.jsonl")
+    log_.write(film="pp1", run=1, **{"pass": "segment"}, unit=3, attempt=1, status="failed: CLI call took 4 turns")
+    log_.write(film="pp1", run=1, **{"pass": "segment"}, unit=3, attempt=2, status="failed: CLI exited with 1")
+    log_.write(film="pp2", run=1, **{"pass": "code"}, unit="j1", attempt=1, status="failed: bad json")
+    assert log_.model_failures("pp1") == {("segment", 3, 1): "failed: CLI call took 4 turns"}
+    assert log_.model_failures("pp2") == {("code", "j1", 1): "failed: bad json"}
+
+
+def test_a_resumed_attempt_that_failed_on_the_model_is_not_called_again():
+    calls = []
+
+    class Client:
+        def call(self, *a):
+            calls.append(a)
+            return CL.Reply("{}", C.MODEL, "end_turn", 1, 1)
+
+    class Log:
+        rows = []
+        def write(self, **row):
+            self.rows.append(row)
+
+    class NoCache:
+        def get(self, req):
+            return None
+        def put(self, req, reply):
+            pass
+
+    unit = {"film": "pp1", "run": 1, "pass": "segment", "unit": 3}
+    req = {"system": "s", "user": "u", "max_tokens": 10, "schema": {}}
+    both = {("segment", 3, 1): "failed: x", ("segment", 3, 2): "failed: y"}
+    assert P._attempts(Client(), NoCache(), Log(), req, lambda t: t, unit, both) == (None, "")
+    assert calls == []
+    assert P._attempts(Client(), NoCache(), Log(), req, lambda t: t, unit, {("segment", 3, 1): "failed: x"})[0] == "{}"
+    assert len(calls) == 1
+
+
+def test_the_pinned_cli_copy_is_used_when_present(tmp_path, monkeypatch):
+    monkeypatch.setattr(C, "CLI_BIN", tmp_path / "claude")
+    assert CL.cli_bin() == "claude"
+    (tmp_path / "claude").write_text("")
+    assert CL.cli_bin() == str(tmp_path / "claude")
+    assert CL.cli_command("S", {})[0] == str(tmp_path / "claude")
