@@ -92,6 +92,9 @@ CLI_SETTINGS = {"disableAllHooks": True, "autoMemoryEnabled": False}
 CLI_ENV = {"CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1", "CLAUDE_CODE_DISABLE_CLAUDE_MDS": "1", "DISABLE_AUTOUPDATER": "1",
            "DISABLE_TELEMETRY": "1", "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"}
 CLI_TURNS = (2, 3)
+# service statuses that come from the request itself (not a limit, a timeout or a conflict): a failed attempt
+REQUEST_ERROR_STATUSES = frozenset(range(400, 500)) - {408, 409, 429}
+TIMEOUTS_PER_CALL = 3   # a call that times out this many times in a row is a failed attempt (a runaway reply)
 
 
 # the CLI's own error results that come from the model's replies, not from the service
@@ -104,7 +107,6 @@ INFRA_STATUS_PREFIXES = ("failed: CLI exited", "failed: CLI call timed out", "fa
 class Unavailable(RuntimeError):
     """No answer from the model: a usage or rate limit, an overloaded service, or the CLI failing without a result.
     Not a failed attempt; the client waits, then stops the run, which resumes from the cache."""
-
 
 
 def is_model_failure(status: str) -> bool:
@@ -144,8 +146,8 @@ def parse_cli_result(raw: str, model: str = C.MODEL, max_tokens: int | None = No
     a structured output from the pinned model alone and every request below max_tokens (no request cut at the limit;
     when the CLI does not list its requests, the model's total output over the call must be below it); it is then
     recorded with stop reason end_turn. A reply that breaks any of these, a refusal included, is a failed attempt
-    (CallFailed). No result, an error status from the service, or an error result the model's replies did not cause
-    raises Unavailable."""
+    (CallFailed), as is a refusal or a 4xx status caused by the request (not 408, 409 or 429). No result, any other
+    error status from the service, or an error result the model's replies did not cause raises Unavailable."""
     try:
         res = json.loads(raw)
     except (ValueError, RecursionError):
@@ -153,6 +155,10 @@ def parse_cli_result(raw: str, model: str = C.MODEL, max_tokens: int | None = No
     if not isinstance(res, dict):
         raise Unavailable("the CLI result is not a JSON object")
     status = res.get("api_error_status")
+    if res.get("stop_reason") == "refusal":
+        raise CallFailed("CLI call ended with a refusal")
+    if status in REQUEST_ERROR_STATUSES:
+        raise CallFailed(f"CLI call failed: service status {status!r}")
     if status is not None:
         raise Unavailable(f"service status {status!r}")
     if res.get("is_error") or res.get("subtype") != "success":
@@ -226,11 +232,14 @@ class ClaudeCliClient:
         return parse_cli_result(proc.stdout, self.model, max_tokens)
 
     def call(self, system: str, user: str, max_tokens: int, schema: dict) -> Reply:
-        waited, wait = 0, 60
+        waited, wait, timeouts = 0, 60, 0
         while True:
             try:
                 return self._once(system, user, max_tokens, schema)
             except Unavailable as err:
+                timeouts = timeouts + 1 if "timed out" in str(err) else 0
+                if timeouts >= TIMEOUTS_PER_CALL:
+                    raise CallFailed(f"CLI call timed out {timeouts} times in a row") from None
                 if waited >= C.LIMIT_WAIT_S:
                     raise SystemExit(f"stopping: no answer from the model ({err}) after {waited} s of waiting; start "
                                      "the same run again later, it resumes from the cache") from None
@@ -276,15 +285,19 @@ class CallLog:
 
     def model_failures(self, film: str) -> dict[tuple, str]:
         """(pass, unit, attempt) -> status of each attempt already logged for this film that failed on the model's
-        reply, the last such status per attempt; attempts that got no answer are left out, so they are called again."""
-        out: dict[tuple, str] = {}
+        reply, judged by the last row of each attempt; attempts that got no answer are left out, so they are called
+        again. A line that does not read back (a crash mid-write) is skipped."""
+        last: dict[tuple, str] = {}
         if not self.path.exists():
-            return out
+            return last
         for line in self.path.read_text(encoding="utf-8").splitlines():
-            row = json.loads(line)
-            if row.get("film") == film and is_model_failure(str(row.get("status", ""))):
-                out[(row["pass"], row["unit"], row["attempt"])] = row["status"]
-        return out
+            try:
+                row = json.loads(line)
+                if row.get("film") == film:
+                    last[(row["pass"], row["unit"], row["attempt"])] = str(row.get("status", ""))
+            except (ValueError, KeyError, AttributeError):
+                continue
+        return {k: v for k, v in last.items() if is_model_failure(v)}
 
     def write(self, **row) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)

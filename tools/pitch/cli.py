@@ -269,7 +269,8 @@ def stage_hash_sample() -> dict:
 def run_settings(prompts: dict, sdk_version: str | None) -> dict:
     cli = bool(sdk_version and sdk_version.startswith("claude-cli"))
     client = {"client": "claude-cli", "thinking": "cli-default", "structured_outputs": "cli json-schema tool",
-              "cli_command": CL.cli_command("<system>", {"schema": "<schema>"}), "cli_env": CL.CLI_ENV,
+              "cli_command": ["claude", *CL.cli_command("<system>", {"schema": "<schema>"})[1:]],
+              "cli_bin_sha256": F.sha256(C.CLI_BIN) if C.CLI_BIN.is_file() else None, "cli_env": CL.CLI_ENV,
               "sdk_pin": None} if cli else {"client": "api"}
     return {"model": C.MODEL, "thinking": C.THINKING, "effort": C.EFFORT, "structured_outputs": "json_schema",
             "max_tokens": C.MAX_TOKENS, "retries": C.RETRIES,

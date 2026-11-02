@@ -99,5 +99,7 @@ fresh `claude -p` process in an empty folder with the same model, effort, system
 settings, CLAUDE.md, MCP servers, skills or saved session, and `max_tokens` as the CLI's output-token limit. A call
 counts only if it completes with a structured output from `claude-sonnet-5-5` alone; it is then recorded with stop
 reason `end_turn`. No answer at all (a limit, an error status, the CLI failing) is not a failed attempt: the call
-waits and is repeated. A pinned copy of the CLI in `tools/data/pitch/bin/claude` is used when present. The CLI
+waits and is repeated. A pinned copy of the CLI in `tools/data/pitch/bin/claude` is used when present (runs of record:
+2.1.311, e.g. `cp ~/.local/share/claude/versions/2.1.311 tools/data/pitch/bin/claude`; `--version` prints
+`2.1.311 (Claude Code)`). The CLI
 version replaces the SDK version in `settings.json`. See the design's change log.

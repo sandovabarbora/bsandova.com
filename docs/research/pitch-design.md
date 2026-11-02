@@ -508,19 +508,28 @@ versions, hashes, no subtitle text), and the gitignored working files under `too
   Test calls used invented subtitles only; no real subtitle text was sent before the tag.
 - 2 November 2026, during run 1, approved by the author; no code, count or estimate had been looked at, only the
   call log's statuses: run 1 stopped under the 2 % rule. *Pitch Perfect* had finished (89 scenes, 194 jokes found, 1
-  joke failed after its retry); in *Pitch Perfect 2* 46 consecutive pass 1 calls, and 2 before them, ended with the
-  CLI exiting without an answer, consistent with the account's usage limit, which the client had recognised only by
-  a 429 or 529 status the CLI did not report, so 25 of 72 scenes counted as failed. Changes, under the new code tag
-  `pitch-code-cli-2`, which replaces `pitch-code-cli`: (1) a call that gets no answer from the model (no JSON result,
-  an error status from the service, an error result the model's replies did not cause, a timeout, or the CLI
-  failing to start) is not a failed attempt; the client waits (doubling from one minute to fifteen, at most six
-  hours for one call) and repeats it, then stops the run. Failures caused by the model's reply (too many turns,
-  `error_max_turns`, a structured output that fails validation repeatedly, a cut at `max_tokens`, another model, a
-  reply the schema check rejects) stay failed attempts as before. (2) When a stopped run resumes, an attempt that
-  failed on the model's reply before the stop keeps its failure and is not called again, so no unit gets more than
-  the registered one retry; attempts that got no answer (48 in pass 1 of *Pitch Perfect 2* and 3 in pass 2 of
-  *Pitch Perfect*, logged as "CLI exited") are called again. Successful replies come from the cache. (3) The CLI
-  updated itself between the stop and the resume (2.1.311 to 2.1.316), while every call of run 1 so far used
-  2.1.311; a copy of 2.1.311 (SHA-256 85d8c08707fcfd1e78ffa0204eefbc6ec9e4fe22f375fb2767ef85d957ed3161) is kept
-  in the gitignored data folder and used for both runs. Change (2) is a stricter reading than restarting the run,
-  which would have re-called every failed attempt.
+  joke failed after its retry); in *Pitch Perfect 2* the last 46 pass 1 calls in a row (scenes 50 to 72, both
+  attempts) ended with the CLI exiting without a usable result, consistent with the account's usage limit, which the
+  client had recognised only by a 429 or 529 status the CLI did not report; with 2 earlier such exits and 4 failures
+  on the model's reply, 25 of 72 scenes counted as failed. This entry supersedes item (5) of the entry of 27 October
+  2026 on the CLI client, whose last sentence is reversed. Changes, under the new code tag `pitch-code-cli-2`, which
+  replaces `pitch-code-cli`:
+  (1) A call that gets no answer from the model is not a failed attempt: no JSON result, a service status other than
+  a request error, an error result the model's replies did not cause, a timeout, the CLI failing to start, or the CLI
+  exiting non-zero after a valid result. The client waits (doubling from one minute to fifteen, at most six hours for
+  one call) and repeats the call, then stops the run. Failures caused by the reply stay failed attempts as before:
+  too many turns, `error_max_turns`, repeated structured-output validation failures, a cut at `max_tokens`, another
+  model, a reply the schema check rejects, a refusal, a 4xx status other than 408, 409 or 429, and a call that times
+  out three times in a row (a runaway reply).
+  (2) When a stopped run resumes, an attempt whose last logged status is a failure on the model's reply keeps that
+  failure and is not called again, so no unit gets more than the registered one retry. Attempts logged as "CLI
+  exited" are treated as having had no answer and are called again: 48 in pass 1 of *Pitch Perfect 2* and 3 in pass
+  2 of *Pitch Perfect*. The old client logged every non-zero exit that way, so the log cannot tell whether the 5
+  isolated ones (outside the final run of 46) had a reply the client discarded; re-calling them may give those units
+  (at most 4) a fresh draw. Where attempt 1 had no answer and attempt 2 succeeded, attempt 1 is called again and, if
+  it succeeds, is used, as the frozen order of attempts requires. Successful replies come from the cache, and a kept
+  failure is logged again on each resume with zero tokens.
+  (3) The CLI updated itself between the stop and the resume (2.1.311 to 2.1.316); run 1's settings record 2.1.311.
+  A copy of 2.1.311 (SHA-256 85d8c08707fcfd1e78ffa0204eefbc6ec9e4fe22f375fb2767ef85d957ed3161) is kept in the
+  gitignored data folder and used for both runs; each run's settings record its hash.
+  Change (2) is stricter than restarting the run, which would have re-called every failed attempt.

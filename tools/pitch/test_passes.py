@@ -13,6 +13,8 @@ import coding as K
 import config as C
 import passes as P
 import pytest
+import files as F
+import synth as SY
 import subtitles as S
 
 FAKE_KEY = "not-a-real-key-" + "q" * 12
@@ -478,3 +480,59 @@ def test_the_pinned_cli_copy_is_used_when_present(tmp_path, monkeypatch):
     (tmp_path / "claude").write_text("")
     assert CL.cli_bin() == str(tmp_path / "claude")
     assert CL.cli_command("S", {})[0] == str(tmp_path / "claude")
+
+
+def test_a_later_ok_row_clears_an_earlier_failure_and_bad_lines_are_skipped(tmp_path):
+    log_ = CL.CallLog(tmp_path / "calls.jsonl")
+    log_.write(film="pp1", run=1, **{"pass": "code"}, unit="j1", attempt=1, status="failed: CLI call took 4 turns")
+    log_.write(film="pp1", run=1, **{"pass": "code"}, unit="j1", attempt=1, status="ok")
+    with (tmp_path / "calls.jsonl").open("a") as fh:
+        fh.write('{"film": "pp1", "pa')
+    assert log_.model_failures("pp1") == {}
+
+
+@pytest.mark.parametrize("raw, exc", [
+    (_cli_result(is_error=True, stop_reason="refusal"), CL.CallFailed),
+    (_cli_result(stop_reason="refusal"), CL.CallFailed),
+    (_cli_result(is_error=True, subtype="error", api_error_status=400), CL.CallFailed),
+    (_cli_result(is_error=True, subtype="error", api_error_status=413), CL.CallFailed),
+    (_cli_result(is_error=True, subtype="error", api_error_status=408), CL.Unavailable),
+    (_cli_result(is_error=True, subtype="error", api_error_status=529), CL.Unavailable),
+    (_cli_result(is_error=True, subtype="success"), CL.Unavailable),
+])
+def test_refusals_and_request_errors_are_failed_attempts(raw, exc):
+    with pytest.raises(exc):
+        CL.parse_cli_result(raw)
+
+
+def test_repeated_timeouts_become_a_failed_attempt(monkeypatch):
+    t = CL.subprocess.TimeoutExpired(["x"], 5)
+    cl = _cli_client(monkeypatch, [t, t, t], [])
+    with pytest.raises(CL.CallFailed, match="timed out 3 times"):
+        cl.call("S", "U", 10, {})
+
+
+def test_run_film_keeps_a_failure_from_before_the_stop(monkeypatch):
+    monkeypatch.setattr(C, "MAX_FAIL_SHARE", 1.0)
+    calls = []
+
+    class Client:
+        def call(self, system, user, max_tokens, schema):
+            calls.append(schema is K.SEGMENT_SCHEMA)
+            return CL.Reply('{"jokes": []}', C.MODEL, "end_turn", 1, 1)
+
+    class Log:
+        def write(self, **row):
+            pass
+
+    class NoCache:
+        def get(self, req):
+            return None
+        def put(self, req, reply):
+            pass
+
+    scenes = S.build_scenes(S.parse_srt(SY.srt_file(1, n_cues=40)))
+    first = scenes[0].number
+    before = {("segment", first, 1): "failed: a", ("segment", first, 2): "failed: b"}
+    res = P.run_film("pp1", scenes, F.load_prompts(), Client(), NoCache(), Log(), 1, before)
+    assert first in res["failed_scenes"] and len(calls) == len(scenes) - 1
