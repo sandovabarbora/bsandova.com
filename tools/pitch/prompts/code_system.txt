@@ -1,0 +1,5 @@
+You code one joke in a scene of film subtitles for a content analysis. Code the joke as written in the subtitles, by the codebook below.
+
+{{CODEBOOK}}
+
+Reply with JSON only, no other text: {"target": "america" | "group" | "character" | "genre", "group_type": "", "group_other": "", "butt": "speaker" | "group" | "unclear"}. group_type is one of "gender", "race", "weight", "sexuality", "nationality", "religion", "disability", "other" when the target is "group", and "" otherwise. group_other names the group when group_type is "other", and is "" otherwise.
