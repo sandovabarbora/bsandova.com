@@ -187,5 +187,33 @@
   "errors": [
    "HTTP Error 502: Bad Gateway"
   ]
+ },
+ {
+  "date": "2026-11-02",
+  "api": "https://api.bsandova.com",
+  "n": 30,
+  "correct": 27,
+  "by_kind": {
+   "number": {
+    "n": 18,
+    "ok": 16
+   },
+   "text": {
+    "n": 7,
+    "ok": 6
+   },
+   "quote": {
+    "n": 1,
+    "ok": 1
+   },
+   "decline": {
+    "n": 4,
+    "ok": 4
+   }
+  },
+  "protocol_violations": 1,
+  "cost_usd": 1.8771,
+  "median_ms": 3899,
+  "model": "claude-sonnet-5"
  }
 ]
