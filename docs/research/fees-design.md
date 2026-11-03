@@ -646,3 +646,14 @@ on HEAD with `tools/fees/` unchanged since. Check 2 of §3 runs with every alloc
     fulfilment in ČRo's 2025 report, "pokles" of receivers and a "nárůst" for natural persons there, minus signs in
     the difference columns of Part G, and "-" in SILC Tab. 2a row D for deciles 8 and 10. Every later masked print also
     masked signs.
+- 3 November 2026, open items after the snapshot step, before any outcome value was read. The design text above is unchanged.
+  - **Životní minimum (§2.4, E1).** The author confirmed that 4 860 CZK a month for a single person was in force on 1 January 2026
+    (unchanged from January 2023 to 30 September 2026). The amounts of act 110/2006 Coll. in force on 1 January 2026, as the
+    design pins them, are therefore those of version 28: 4 860 single person, 4 470 first person, 4 040 each further adult,
+    3 490, 3 050 and 2 480 for the child bands. The rise to 5 500 CZK from 1 October 2026 does not apply under the pinned rule and
+    is not used. This closes the open item of the snapshot entry.
+  - **Notice under §6(3) (§2.10 item 2).** The author found none announced for 2027 (none found as of 3 November 2026). The
+    §6(2) path of the model stands.
+  - **Fact note, effective date of the bill.** Press reports of 1 November 2026 (tvguru.cz, citing Seznam Zprávy) say that the
+    bill's effective date is now expected during 2027 or from January 2028, not 1 January 2027. As §8 says, the comparison stays
+    "as introduced" over 2027-2030; the article will state the expected delay.
