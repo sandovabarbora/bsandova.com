@@ -33,8 +33,13 @@ def text(page: str) -> str:
     return html.unescape(re.sub(r"<[^>]+>", " ", s)).replace(NB, " ")
 
 
+def unquoted(page: str) -> str:
+    """The page without the registered readings, which are quoted verbatim and carry their conditions beside them."""
+    return re.sub(r'<blockquote class="registered">.*?</blockquote>', " ", page, flags=re.DOTALL)
+
+
 def sentences(page: str) -> list[str]:
-    blocks = re.findall(r"<(p|li|dd)\b[^>]*>(.*?)</\1>", page, re.DOTALL)
+    blocks = re.findall(r"<(p|li|dd)\b[^>]*>(.*?)</\1>", unquoted(page), re.DOTALL)
     return [x for _, b in blocks for x in re.split(r"(?<=[a-z0-9)%])\. (?=[A-ZČŘŠŽ])", re.sub(r"\s+", " ", text(b)))]
 
 
@@ -172,11 +177,59 @@ def test_firm_comparison_sits_in_one_sentence_with_its_caveat(page, v):
             assert plain(v["f_today"]) in s and "not like for like" in s, s
 
 
-def test_x_is_always_in_2026_prices(page, v):
+def test_x_is_always_in_2026_prices_with_payers_held_fixed(page, v):
     claims = [s for s in sentences(page) if plain(v["x"]) in s]
     assert claims
+    deck = text(re.search(r'<p class="deck">(.*?)</p>', page).group(1))
     for s in claims:
         assert "2026 prices" in s, s
+        assert "payers held fixed" in s or s == deck, s  # the deck is the listed finding, capped at 35 words
+
+
+MONTHS = "January|February|March|April|May|June|July|August|September|October|November|December"
+
+
+def main_story(page: str) -> str:
+    """Visible prose: the sections between the metadata and the folded details, without figures and tables."""
+    a = page.index("</details>", page.index('class="meta-more"'))
+    body = page[a:page.index('<section id="reproduction">')]
+    return re.sub(r"<(figure|table)\b[^>]*>.*?</\1>", " ", body, flags=re.DOTALL)
+
+
+def counted_numbers(s: str) -> list[str]:
+    s = re.sub(rf"(\d{{1,2}} )?({MONTHS}) \d{{4}}|\b(19|20)\d\d(–(19|20)\d\d)?\b", " ", s)
+    return re.findall(r"\d{1,3}(?: \d{3})+(?:\.\d+)?|\d+(?:\.\d+)?", s)
+
+
+def test_main_story_is_short_with_short_paragraphs(page):
+    story = main_story(page)
+    words = len(text(story).split())
+    assert 700 <= words <= 900, words
+    for _, b in re.findall(r"<(p|li)\b[^>]*>(.*?)</\1>", story, re.DOTALL):
+        t = re.sub(r"\s+", " ", text(b)).strip()
+        assert len(t.split()) <= 55, t
+        assert len(counted_numbers(t)) <= 3, (counted_numbers(t), t)
+
+
+def test_visible_text_has_no_codes(page):
+    head = page.index("<article")
+    seen = re.sub(r'<details class="appendix">.*?</details>|<details class="meta-more">.*?</details>|<table\b.*?</table>',
+                  " ", page[head:page.index('id="refs"')], flags=re.DOTALL)
+    t = text(seen)
+    for pat in (r"\b(X|Y|Z|Q-A|Q-B|E0|E1|R1|R2)\b", r"\bpp\b", "§", r"\bdeciles?\b", r"\blabel (after )?is\b",
+                r"\bprimary\b"):
+        assert not re.search(pat, t), (pat, re.search(rf".{{0,40}}{pat}.{{0,40}}", t).group(0))
+
+
+def test_registered_readings_are_quoted_verbatim_with_their_conditions(page, res):
+    block = re.search(r'<blockquote class="registered">(.*?)</blockquote>\s*<p class="note">(.*?)</p>', page, re.DOTALL)
+    assert block
+    quoted = [html.unescape(q) for q in re.findall(r"<p>(.*?)</p>", block.group(1), re.DOTALL)]
+    assert quoted == [res["qa"]["reading_a"], res["qb"]["reading_b"], res["reading_c"]["text"]]
+    note = text(block.group(2))
+    for part in ("payers held fixed", "crude", "not like for like"):
+        assert part in note, part
+    assert page.rfind('<details class="appendix">', 0, block.start()) > page.index('<section id="reproduction">')
 
 
 def test_z_is_tied_to_its_tax_structure_and_followed_by_its_assumptions(page, v):

@@ -201,7 +201,7 @@ def money_chart(res: dict) -> dict:
                    f"{bn(qa['primary']['real']['p2'])}, a gap of {bnx(qa['x_primary_bn'])}.",
             "panels": [{"h": 280, "padRight": 96,
                         "x": {"kind": "linear", "domain": [2026.8, 2030.2], "ticks": xs, "fmt": {"dp": 0, "nogroup": True},
-                              "label": "year (primary: forecast inflation, sum reading, 2026 budgets)"},
+                              "label": "year (inflation as forecast, starting from the 2026 budgets)"},
                         "y": {"kind": "linear", "domain": [0, 10], "ticks": [0, 2, 4, 6, 8, 10],
                               "fmt": {"dp": 0}, "label": "bn CZK a year, 2026 prices"},
                         "marks": [{"type": "area", "pts": [[x, b, a] for x, a, b in zip(xs, law, bill)], "c": "light",
@@ -256,7 +256,7 @@ def ratio_rows(qb: dict) -> list[dict]:
             ("state budget, VAT only", a["ratio_z_vat_only"], HELD, False),
             ("state budget, income tax only", a["ratio_z_pit_only"], HELD, False)]
     return [{"y": lab, "x1": round(v, 4), "c": c, "label": times(v), "in_label": inl,
-             "tip": f"{lab}: {times(v)}" + ("" if inl else ", reported, not in the label")} for lab, v, c, inl in rows]
+             "tip": f"{lab}: {times(v)}" + ("" if inl else ", shown for comparison")} for lab, v, c, inl in rows]
 
 
 def ratio_chart(res: dict) -> dict:
@@ -277,11 +277,11 @@ def ratio_chart(res: dict) -> dict:
                                   {"type": "hbar", "o": 0.4, "rows": [r for r, x in zip(strip, rows) if not x["in_label"]]}]}],
             "legend": [{"label": "fee today, nobody exempt", "c": INK, "shape": "box", "o": 0.85},
                        {"label": "fee today, poorest tenth exempt", "c": GREY, "shape": "box", "o": 0.85},
-                       {"label": "state budget, in the label", "c": HELD, "shape": "box", "o": 0.85},
-                       {"label": "state budget, not in the label", "c": HELD, "shape": "box", "o": 0.4},
+                       {"label": "state budget, average tax mix", "c": HELD, "shape": "box", "o": 0.85},
+                       {"label": "state budget, one tax alone (for comparison)", "c": HELD, "shape": "box", "o": 0.4},
                        {"label": "similar, 0.9 to 1.1; the line marks 1, the same share", "c": GREY, "shape": "box",
                         "o": 0.14}],
-            "table": {"cols": ["funding", "ratio, poorest ÷ richest tenth", "in the label"],
+            "table": {"cols": ["funding", "ratio, poorest ÷ richest tenth", "used for the registered result"],
                       "rows": [[r["y"], r["x1"], "yes" if r["in_label"] else "no"] for r in rows]},
             "data": ["results.json"]}
 
@@ -527,6 +527,9 @@ def values(res: dict) -> dict:
         "obj_code1": TAG_OBJECTS["fees-code"], "code1_commit": FIRST_CODE_COMMIT,
         "v_python": res["versions"]["python"], "v_pdftotext": res["versions"]["pdftotext"].split()[-1],
         **{f"alt_{k.replace('-', '_')}": html.escape(fn(res)["alt"]) for k, (fn, _) in CHARTS.items()},
+        # the pre-written readings of design §1, quoted verbatim in the details
+        "reading_a": html.escape(qa["reading_a"]), "reading_b": html.escape(qb["reading_b"]),
+        "reading_c": html.escape(rc["text"]),
     }
     # the pre-written readings of design §1, as the study code filled them, carry the same numbers
     assert f"receive {v['x']} less (2026 prices)".replace(NB, " ") in qa["reading_a"].replace(NB, " ")
