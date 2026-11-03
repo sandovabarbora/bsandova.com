@@ -69,12 +69,13 @@ SELF_CU = [n * D("0.15") for n in NET_CU]
 Q_HH = [D(x) for x in (1_000_000, 1_020_000, 1_030_000, 1_035_000, 1_030_000)]
 Q_MEMBERS = [D(x) for x in ("1.5", "2.0", "2.4", "2.6", "2.7")]
 
-BUDGET_2025 = {1111: 120_000_000, 1112: 20_000_000, 1113: 10_000_000, 1121: 130_000_000, 1131: 2_000_000,
+BUDGET_2025 = {1220: 2_000_000, 1228: 1_000_000, 1229: 500_000, 1232: 700_000, 1111: 120_000_000, 1112: 20_000_000, 1113: 10_000_000, 1121: 130_000_000, 1131: 2_000_000,
                1211: 300_000_000, 1221: 30_000_000, 1222: 40_000_000, 1223: 10_000_000, 1224: 3_000_000,
                1225: 1_000_000, 1231: 5_000_000, 1233: 4_000_000, 1234: 500_000, 1321: 3_000_000,
                1611: 350_000_000, 1621: 40_000_000}
-FEE = {"ct_budget": 6_700_000, "cro_chart": 2_400_000, "ct_real": 6_400_000, "cro_real": 2_300_000,
-       "ct_households": 3_700_000, "cro_stock": 3_050_000}
+# magnitudes kept well away from any figure that has been seen (design §0, change log): ČT 3.1 bn, ČRo realised 0.9 bn
+FEE = {"ct_budget": 3_100_000, "cro_chart": 1_300_000, "ct_real": 2_800_000, "cro_real": 900_000,
+       "ct_households": 1_100_000, "cro_stock": 900_000}
 CNB_Q = {2023: ["10.7", "10.0", "7.0", "6.9"], 2024: ["2.3", "2.2", "2.7", "2.9"], 2025: ["2.8", "2.5", "2.9", "2.5"],
          2026: ["2.1", "2.4", "2.6", "2.4"], 2027: ["2.5", "2.4", "2.3", "2.2"], 2028: ["2.1", "2.0", "2.0", None]}
 BAND_COUNTS = {"000": 5000, "110": 900_000, "120": 300_000, "130": 90_000, "210": 50_000, "220": 12_000, "230": 20_000,
@@ -91,7 +92,7 @@ def fmt_cz(v) -> str:
 DECILE_HEAD = [f"{w} 10 %" for w in P.DECILE_WORDS[:-1]] + ["nejvyšších 10 %"]
 
 
-def _silc_common(title: str, header_cols: list[str], hh, members, children, net_label_vals, extra=None) -> list[list]:
+def _silc_common(title: str, header_cols: list[str], hh: list, members: list, children: list) -> list[list]:
     pad = ["", "", ""]
     rows = [[f"Tab. 3  {title}"], ["", "a/ Složení domácností a roční příjmy"], ["", "Households", "", "", "", "", "", "", "", "", "", "", "Rok  2025"],
             ["", "a/ Household composition", "", "", "", "", "", "", "", "", "", "", "Year 2025"], [""],
@@ -104,7 +105,7 @@ def _silc_common(title: str, header_cols: list[str], hh, members, children, net_
 
 
 def silc_3a() -> bytes:
-    rows = _silc_common("Domácnosti podle decilového rozdělení", DECILE_HEAD, HH, MEMBERS, CHILDREN, None)
+    rows = _silc_common("Domácnosti podle decilového rozdělení", DECILE_HEAD, HH, MEMBERS, CHILDREN)
     pad = ["", "", ""]
     rows += [["nezaměstnaných"] + pad[1:] + [0] * 10, ["", "", ""] + [0] * 10,
              [" Spotřebních jednotek   OECD", "", ""] + [1] * 10, ["", "                 OECD modif.", ""] + CU,
@@ -127,7 +128,7 @@ def silc_10a() -> bytes:
     rows = _silc_common("Domácnosti podle druhu domácnosti EU", SENIOR_HEAD,
                         [D(x) for x in (700_000, 640_000, 500_000, 380_000, 300_000, 150_000, 200_000, 220_000, 90_000, 100_000)],
                         [D(x) for x in ("1", "1", "2", "2", "2.8", "2.2", "3", "4", "5", "4.5")],
-                        [D(0)] * 4 + [D("0.3")] * 6, None)
+                        [D(0)] * 4 + [D("0.3")] * 6)
     rows += [["nezaměstnaných", "", ""] + [0] * 10, [" Spotřebních jednotek   OECD", "", ""] + [1] * 10,
              ["", "                 OECD modif.", ""] + [1] * 10, [" PŘEHLED PŘÍJMŮ za rok 2024 (Kč)"],
              [" E. Čisté peněžní příjmy (A-B-C+D)", "", ""]
@@ -259,16 +260,16 @@ def ct_budget() -> str:
     return ("Televizní poplatky\n\n"
             + " " * 52 + "2025" + " " * 10 + "2026\n (v tis. Kč)\n"
             + " " * 51 + "rozpočet      rozpočet      rozdíl      %\n"
-            + f" příjem z televizních poplatků     {fmt_cz(n - 900_000)[:-3]}   {fmt_cz(n)[:-3]}    900 000   15,5 %\n")
+            + f" příjem z televizních poplatků     {fmt_cz(n - 300_000)[:-3]}   {fmt_cz(n)[:-3]}    300 000   10,7 %\n")
 
 
 def ct_report() -> str:
     return ("Příjem z televizních poplatků\n\n\n (v tis. Kč)                                 Rozpočet           Skutečnost"
             "             Rozdíl             Plnění %\n"
-            f"příjem z televizních poplatků                    {fmt_cz(6_000_000)[:-3]}      {fmt_cz(FEE['ct_real'])[:-3]}"
-            "          400 000           106,7 %\n\n"
+            f"příjem z televizních poplatků                    {fmt_cz(2_500_000)[:-3]}      {fmt_cz(FEE['ct_real'])[:-3]}"
+            "          300 000           112,0 %\n\n"
             f"K 31. 12. 2025 měla Česká televize v evidenci celkem {fmt_cz(FEE['ct_households'])[:-3]} domácností, z toho "
-            "2 000 000 (54 %) představovali SIPO plátci a 1 700 000 (46 %) plátci hradící České televizi napřímo.\n")
+            "600 000 (55 %) představovali SIPO plátci a 500 000 (45 %) plátci hradící České televizi napřímo.\n")
 
 
 def cro_chart() -> str:
@@ -281,15 +282,17 @@ def cro_report() -> str:
     return ("Text of the left column of a two-column page                 Počet evid. rozhlasových                stav\n"
             " " * 110 + "změna\n"
             + " " * 73 + "přijímačů (v ks)               k 1. 1. 2025                     k 31. 12. 2025\n"
-            + " " * 73 + "Fyzické osoby – SIPO             1 100 000          -100 000         1 000 000\n"
-            + "left text                                                    FYZICKÉ OSOBY                    3 000 000         50 000      "
+            + " " * 73 + "Fyzické osoby – SIPO             600 000          -100 000         500 000\n"
+            + "left text                                                    FYZICKÉ OSOBY                    850 000         50 000      "
             + stock + "\n"
-            "Výnosy z rozhlasových poplatků byly oproti původní plánované roční hodnotě 2 000 000 tis. Kč vykázá-\n"
-            "ny v objemu o 300 000 tis. Kč vyšším, tj. v částce 2 300 000 tis. Kč. Do tohoto nárůstu se promítají dopady.\n")
+            "Výnosy z rozhlasových poplatků byly oproti původní plánované roční hodnotě 700 000 tis. Kč vykázá-\n"
+            "ny v objemu o 200 000 tis. Kč vyšším, tj. v částce 900 000 tis. Kč. Do tohoto nárůstu se promítají dopady.\n")
 
 
 def bill() -> str:
-    return ("Příspěvek pro rok 2027 činí celkem 5 741 826 000 Kč.\n\nPříspěvek pro rok 2027 činí celkem 2 065 766 000 Kč.\n")
+    clause = ("Pokud kumulativní průměrná roční míra inflace překročí 10 procentních bodů, tato částka se zvýší o 10 %.\n")
+    return ("Příspěvek pro rok 2027 činí celkem 5 741 826 000 Kč.\n" + clause + "\nPříspěvek pro rok 2027 činí celkem "
+            "2 065 766 000 Kč.\n" + clause)
 
 
 def band_codes_csv() -> str:

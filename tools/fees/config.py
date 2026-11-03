@@ -82,6 +82,9 @@ ITEM_CIT = (1121,)
 OUT_OF_POOL_PREFIXES = ("1131", "1234", "132", "133", "135", "136", "137", "138", "140", "152", "170")
 ITEM_SOCIAL_PREFIXES = ("161", "162")
 BUDGET_YEAR = 2025
+# Pool items whose label does not occur in Tab. 2a (the structure stage found 1226 and 1227 absent, 3 Nov 2026). Any other
+# absent pool item, or a pool item with an empty cell, stops the run.
+POOL_ABSENT = frozenset({1226, 1227})
 
 # ---- Q-A and Q-B rules ----
 SHOCKS = (-1, 0, 1)                                 # inflation path, percentage points
@@ -91,7 +94,6 @@ TIE_BN = Fraction(1, 10)                            # §6 tie threshold, bn CZK
 SIMILAR_BAND = (Fraction(9, 10), Fraction(11, 10))  # §6 band for a ratio
 CNB_TARGET = Decimal("2.0")                         # fill for missing quarters and years after the horizon
 CNB_NOISE_DP = 6                                    # quarterly cells are rounded here only to drop spreadsheet float noise
-INFLATION_CUTOFF = "2026-11-30"
 
 # firm schedule, §5(3)-(4): (lowest employees, highest employees or None, multiple of the monthly household fee).
 # 500 employees fall in the class of 100 ("the higher", design §2.2).

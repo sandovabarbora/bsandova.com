@@ -114,8 +114,8 @@ def test_price_levels_and_shock():
 
 def inputs(**kw):
     d = {"csu_2025": D("2.5"), "cnb_annual": {2026: D("2.5"), 2027: D("2.0"), 2028: D("2.0")},
-         "fee_line_2026": {"CT": F(6_000_000_000), "CRO": F(2_000_000_000)},
-         "realised_2025": {"CT": F(5_400_000_000), "CRO": F(1_800_000_000)}} | kw
+         "fee_line_2026": {"CT": F(3_100_000_000), "CRO": F(1_300_000_000)},
+         "realised_2025": {"CT": F(2_900_000_000), "CRO": F(900_000_000)}} | kw
     return L.QaInputs(**d)
 
 
@@ -125,9 +125,9 @@ def test_paths_real_values_and_x_without_any_trigger():
     r = L.qa_member(inp, 0, "R1", "A")
     assert r["current_law_steps"] == [] and r["paths_2_and_3_coincide"]
     # zero inflation: price level 1, path 1 = baseline each year, path 2 = bill
-    assert r["real"]["p1"] == 4 * 8_000_000_000
+    assert r["real"]["p1"] == 4 * 4_400_000_000
     assert r["real"]["p2"] == 4 * 7_807_592_000 == r["real"]["p3"]
-    assert r["x"] == F(32_000_000_000 - 31_230_368_000, 10**9)
+    assert r["x"] == F(17_600_000_000 - 31_230_368_000, 10**9)
 
 
 def test_half_year_step_enters_path_1_pro_rata():
@@ -136,24 +136,24 @@ def test_half_year_step_enters_path_1_pro_rata():
     r = L.qa_member(inp, 0, "R1", "A")
     assert r["current_law_steps"][0] == 2026
     nominal = r["nominal"]["p1"]["CT"]
-    assert nominal[2027] == F(6_000_000_000) * 1854 / 1800
-    assert nominal[2028] == F(6_000_000_000) * 1908 / 1800
-    assert r["nominal"]["p1"]["CRO"][2027] == F(2_000_000_000) * (6 * 55 + 6 * 59) / (12 * 55)
+    assert nominal[2027] == F(3_100_000_000) * 1854 / 1800
+    assert nominal[2028] == F(3_100_000_000) * 1908 / 1800
+    assert r["nominal"]["p1"]["CRO"][2027] == F(1_300_000_000) * (6 * 55 + 6 * 59) / (12 * 55)
 
 
 def test_baseline_b_indexes_the_realised_2025_revenue():
     inp = inputs(csu_2025=D(0), cnb_annual={})
     r = L.qa_member(inp, 0, "R1", "B")
     # CT: 5.4 bn x 1800 / (4x135 + 8x150 = 1740)
-    assert r["baseline_2026"]["CT"] == F(5_400_000_000) * 1800 / 1740
-    assert r["baseline_2026"]["CRO"] == F(1_800_000_000) * 660 / (4 * 45 + 8 * 55)
+    assert r["baseline_2026"]["CT"] == F(2_900_000_000) * 1800 / 1740
+    assert r["baseline_2026"]["CRO"] == F(900_000_000) * 660 / (4 * 45 + 8 * 55)
 
 
 def test_baseline_a_falls_back_to_b_for_a_broadcaster_without_a_fee_line():
-    inp = inputs(fee_line_2026={"CT": F(6_000_000_000), "CRO": None})
+    inp = inputs(fee_line_2026={"CT": F(3_100_000_000), "CRO": None})
     r = L.qa_member(inp, 0, "R1", "A")
-    assert r["baseline_2026"]["CT"] == 6_000_000_000
-    assert r["baseline_2026"]["CRO"] == F(1_800_000_000) * 660 / 620       # S(2026) = 12 x 55; S(2025) = 4 x 45 + 8 x 55
+    assert r["baseline_2026"]["CT"] == 3_100_000_000
+    assert r["baseline_2026"]["CRO"] == F(900_000_000) * 660 / 620       # S(2026) = 12 x 55; S(2025) = 4 x 45 + 8 x 55
 
 
 def test_twelve_members_and_the_primary():

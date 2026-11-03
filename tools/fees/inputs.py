@@ -59,24 +59,29 @@ class Loaded:
     gross_labels: dict[str, bool]
     cnb_quarterly: dict[int, list[Decimal | None]]
     budget_blank_items: list[int]
+    pool_items_absent: list[int]
 
 
-def first_sheet(path: Path):
-    return next(iter(X.read_workbook(path).values()))
+def sheet(path: Path, name: str):
+    wb = X.read_workbook(path)
+    if name not in wb:
+        raise P.ParseError(f"sheet {name!r} not found in {path.name}")
+    return wb[name]
 
 
 def load(src: Sources) -> Loaded:
     P.verify_bill(P.read_text(src.bill, layout=False))
-    silc = P.parse_silc_deciles(first_sheet(src.silc_3a))
-    seniors = P.parse_silc_seniors(first_sheet(src.silc_10a))
-    hh_q, members_q = P.parse_hbs_characteristics(first_sheet(src.hbs_characteristics))
-    hbs = P.Hbs(hh_q, members_q, P.parse_hbs_expenditure(first_sheet(src.hbs_expenditure)))
+    silc = P.parse_silc_deciles(sheet(src.silc_3a, "příjmy"))
+    seniors = P.parse_silc_seniors(sheet(src.silc_10a, "příjmy"))
+    hh_q, members_q = P.parse_hbs_characteristics(sheet(src.hbs_characteristics, "Charakteristiky"))
+    hbs = P.Hbs(hh_q, members_q, P.parse_hbs_expenditure(sheet(src.hbs_expenditure, "Vydaje")))
     total_hh = sum(silc.households)
     if not Decimal(3_000_000) <= total_hh <= Decimal(8_000_000):
         raise P.ParseError("SILC household count is outside the plausible range: check the unit of the table")
     budget_text = P.read_text(src.budget_g)
     items = P.parse_budget_items(budget_text)
-    pool = P.pool_lines(items)
+    blank = P.blank_items(budget_text)
+    pool = P.pool_lines(items, blank)
     gross_labels = P.gross_line_labels(P.read_text(src.budget_c))
     quarterly = P.parse_cnb_quarterly(X.read_workbook(src.cnb_indicators))
     csu = P.parse_csu_cpi(P.read_text(src.csu_cpi, layout=False))
@@ -95,4 +100,4 @@ def load(src: Sources) -> Loaded:
     qb = M.QbInputs(silc=silc, hbs=hbs, vat_map=P.read_map(src.vat_map), excise_map=P.read_map(src.excise_map),
                     pool=pool, payers_tv=ct_n, payers_r=cro_n, fee_revenue_2026=revenue, seniors=seniors,
                     employer_counts=P.count_employers(src.res_csv, labels), band_labels=labels, gross_lines=None)
-    return Loaded(qb, qa, gross_labels, quarterly, P.blank_items(budget_text))
+    return Loaded(qb, qa, gross_labels, quarterly, blank, P.pool_absent(items))

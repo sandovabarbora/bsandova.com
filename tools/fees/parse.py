@@ -5,7 +5,6 @@ file can be checked for layout without any number being computed or shown."""
 from __future__ import annotations
 
 import csv
-import json
 import re
 import subprocess
 from collections.abc import Mapping, Sequence
@@ -15,6 +14,9 @@ from fractions import Fraction
 from pathlib import Path
 
 import config as C
+import xlsx as X
+
+Rows = list[list[X.Cell]]
 
 
 class ParseError(Exception):
@@ -68,19 +70,21 @@ def _unit(text: str) -> int:
 
 # ---------------------------------------------------------------- xlsx helpers
 
-def _label(row: Sequence, n: int = 3) -> str:
+def _label(row: Sequence[X.Cell], n: int = 3) -> str:
     return " ".join(str(c) for c in row[:n] if isinstance(c, str))
 
 
-def _find_row(rows, pattern: str, start: int = 0, flags: int = 0) -> int:
+def _find_row(rows: Rows, pattern: str, start: int = 0, flags: int = 0) -> int:
     rx = re.compile(pattern, flags)
-    for i in range(start, len(rows)):
-        if rx.search(_label(rows[i])):
-            return i
-    raise ParseError(f"row not found: /{pattern}/")
+    hits = [i for i in range(start, len(rows)) if rx.search(_label(rows[i]))]
+    if not hits:
+        raise ParseError(f"row not found: /{pattern}/")
+    if len(hits) > 1:
+        raise ParseError(f"row label matches {len(hits)} rows: /{pattern}/")
+    return hits[0]
 
 
-def _header_cols(rows, words: Sequence[str]) -> list[int]:
+def _header_cols(rows: Rows, words: Sequence[str]) -> list[int]:
     for r in rows[:15]:
         cols = [j for j, c in enumerate(r) if isinstance(c, str) and c.strip().startswith(words[0])]
         if not cols:
@@ -99,11 +103,11 @@ def _header_cols(rows, words: Sequence[str]) -> list[int]:
 DASHES = ("-", "\u2013", "\u2014")           # a dash in a table cell means none (e.g. no dependent children)
 
 
-def _cells(rows, i: int, cols: Sequence[int]) -> list[Decimal]:
+def _cells(rows: Rows, i: int, cols: Sequence[int], dash_ok: bool = False) -> list[Decimal]:
     out = []
     for j in cols:
         c = rows[i][j] if j < len(rows[i]) else None
-        if isinstance(c, str) and c.strip() in DASHES:
+        if dash_ok and isinstance(c, str) and c.strip() in DASHES:
             c = Decimal(0)
         if not isinstance(c, Decimal):
             raise ParseError(f"row {i} has no number in column {j}")
@@ -111,7 +115,7 @@ def _cells(rows, i: int, cols: Sequence[int]) -> list[Decimal]:
     return out
 
 
-def _year(rows, pattern: str) -> int:
+def _year(rows: Rows, pattern: str) -> int:
     rx = re.compile(pattern)
     for r in rows[:40]:
         for c in r:
@@ -148,15 +152,15 @@ class SilcDeciles:
     survey_year: int
 
 
-def locate_silc_deciles(rows) -> dict:
+def locate_silc_deciles(rows: Rows) -> dict:
     cols = _header_cols(rows, DECILE_WORDS)
     return {"cols": cols, "rows": {k: _find_row(rows, p) for k, p in SILC_ROWS.items()},
             "income_year": _year(rows, r"PŘEHLED PŘÍJMŮ za rok (\d{4})"), "survey_year": _year(rows, r"Rok\s+(\d{4})")}
 
 
-def parse_silc_deciles(rows) -> SilcDeciles:
+def parse_silc_deciles(rows: Rows) -> SilcDeciles:
     loc = locate_silc_deciles(rows)
-    v = {k: _cells(rows, i, loc["cols"]) for k, i in loc["rows"].items()}
+    v = {k: _cells(rows, i, loc["cols"], dash_ok=k == "children") for k, i in loc["rows"].items()}
     return SilcDeciles(v["households"], v["members"], v["children"], v["cu"], v["gross"], v["emp"], v["self"], v["tax"],
                        v["net"], loc["income_year"], loc["survey_year"])
 
@@ -173,7 +177,7 @@ class SeniorCut:
 SENIOR_COLUMNS = {"one person, 65 or more": r"a více let", "two adults, at least one 65 or more": r"aspoň jeden"}
 
 
-def locate_silc_seniors(rows) -> dict:
+def locate_silc_seniors(rows: Rows) -> dict:
     cols = {}
     for name, rx in SENIOR_COLUMNS.items():
         hit = [(i, j) for i, r in enumerate(rows[:12]) for j, c in enumerate(r)
@@ -185,11 +189,11 @@ def locate_silc_seniors(rows) -> dict:
     return {"cols": cols, "rows": {k: _find_row(rows, p) for k, p in pats.items()}}
 
 
-def parse_silc_seniors(rows) -> list[SeniorCut]:
+def parse_silc_seniors(rows: Rows) -> list[SeniorCut]:
     loc = locate_silc_seniors(rows)
     out = []
     for name, j in loc["cols"].items():
-        v = {k: _cells(rows, i, [j])[0] for k, i in loc["rows"].items()}
+        v = {k: _cells(rows, i, [j], dash_ok=k == "children")[0] for k, i in loc["rows"].items()}
         out.append(SeniorCut(name, v["households"], v["members"], v["children"], v["net"]))
     return out
 
@@ -201,16 +205,15 @@ class Hbs:
     households: list[Decimal]               # five quintiles of net money income per person
     members: list[Decimal]
     spend_pp: dict[str, list[Decimal]]      # CZ-COICOP code -> annual CZK per person, five quintiles
-    income_year: int | None = None
 
 
-def locate_hbs_characteristics(rows) -> dict:
+def locate_hbs_characteristics(rows: Rows) -> dict:
     cols = _header_cols(rows, QUINTILE_WORDS)
     return {"cols": cols, "households": _find_row(rows, r"Počet domácností \(absol\.\)"),
             "members": _find_row(rows, r"^\s*členů\b", flags=re.IGNORECASE)}
 
 
-def parse_hbs_characteristics(rows) -> tuple[list[Decimal], list[Decimal]]:
+def parse_hbs_characteristics(rows: Rows) -> tuple[list[Decimal], list[Decimal]]:
     loc = locate_hbs_characteristics(rows)
     return _cells(rows, loc["households"], loc["cols"]), _cells(rows, loc["members"], loc["cols"])
 
@@ -218,7 +221,7 @@ def parse_hbs_characteristics(rows) -> tuple[list[Decimal], list[Decimal]]:
 _CODE = re.compile(r"^\d{2}(\.\d+)*$")
 
 
-def locate_hbs_expenditure(rows) -> dict:
+def locate_hbs_expenditure(rows: Rows) -> dict:
     cols = _header_cols(rows, QUINTILE_WORDS)
     if not any(isinstance(c, str) and "na osobu" in c for r in rows[:4] for c in r):
         raise ParseError("title does not say the table is per person")
@@ -232,17 +235,24 @@ def locate_hbs_expenditure(rows) -> dict:
     return {"cols": cols, "end": end, "coded": coded}
 
 
-def _row_numbers(rows, i, cols, end):
-    try:
+def _numeric_count(rows: Rows, i: int, cols: Sequence[int]) -> int:
+    return sum(1 for j in cols if j < len(rows[i]) and isinstance(rows[i][j], Decimal))
+
+
+def _row_numbers(rows: Rows, i: int, cols: Sequence[int], end: int) -> list[Decimal]:
+    """The five quintile numbers of a coded row. Only a row with no numeric quintile cell at all takes them from the
+    next row (a label that continues there, which carries no code of its own); a partly numeric row is an error."""
+    n = _numeric_count(rows, i, cols)
+    if n == len(cols):
         return _cells(rows, i, cols)
-    except ParseError:
-        nxt = rows[i + 1] if i + 1 < end else []
-        if not (nxt and isinstance(nxt[0] if nxt else None, str) and _CODE.match(nxt[0].strip())):
-            return _cells(rows, i + 1, cols)       # the label continues on the next row, which carries the numbers
-        raise
+    if n == 0 and i + 1 < end:
+        nxt = rows[i + 1]
+        if not (nxt and isinstance(nxt[0], str) and _CODE.match(nxt[0].strip())):
+            return _cells(rows, i + 1, cols)
+    raise ParseError(f"row {i} has {n} of {len(cols)} numeric quintile cells")
 
 
-def parse_hbs_expenditure(rows) -> dict[str, list[Decimal]]:
+def parse_hbs_expenditure(rows: Rows) -> dict[str, list[Decimal]]:
     loc = locate_hbs_expenditure(rows)
     out: dict[str, list[Decimal]] = {}
     for i, code in loc["coded"]:
@@ -279,6 +289,8 @@ def map_partition(spend: Mapping[str, Sequence[Fraction]], entries: list[dict]) 
             raise ParseError(f"residual {code} needs a child not yet computed")
         n = len(spend[parent])
         vals[code] = [Fraction(spend[parent][k]) - sum(vals[c][k] for c in under) for k in range(n)]
+        if any(v < -abs(Fraction(spend[parent][k])) / 10**9 for k, v in enumerate(vals[code])):
+            raise ParseError(f"residual {code} is negative: the listed children exceed the parent")
     return vals
 
 
@@ -356,12 +368,23 @@ def blank_items(text: str, year: int = C.BUDGET_YEAR) -> list[int]:
     return [h["code"] for h in locate_budget_items(text, year) if h["raw"] is None]
 
 
-def pool_lines(items: Mapping[int, Decimal]) -> dict:
-    """The tax pool and its parts in CZK as Fractions (design §2.4, change log open item 4)."""
-    def total(codes):
-        missing = [c for c in codes if c not in items]
-        if missing and len(missing) == len(codes):
-            raise ParseError(f"no budget item found for {codes[0]}..{codes[-1]}")
+POOL_CODES = (*C.ITEM_VAT, *C.ITEM_EXCISE, *C.ITEM_PIT, *C.ITEM_CIT)
+
+
+def pool_absent(items: Mapping[int, Decimal]) -> list[int]:
+    return sorted(c for c in POOL_CODES if c not in items)
+
+
+def pool_lines(items: Mapping[int, Decimal], blank: Sequence[int] = ()) -> dict[str, Fraction]:
+    """The tax pool and its parts in CZK as Fractions (design §2.4, change log open item 4). A pool item with an empty
+    cell, or an absent item other than config.POOL_ABSENT, is an error."""
+    if set(pool_absent(items)) != set(C.POOL_ABSENT):
+        raise ParseError(f"pool items absent from Tab. 2a: {pool_absent(items)}, expected {sorted(C.POOL_ABSENT)}")
+    empty = sorted(c for c in blank if c in POOL_CODES)
+    if empty:
+        raise ParseError(f"pool items with an empty cell under Skutečnost: {empty}")
+
+    def total(codes) -> Fraction:
         return sum((Fraction(items[c]) * 1000 for c in codes if c in items), Fraction(0))
     other = sum((Fraction(v) * 1000 for c, v in items.items() if str(c).startswith(C.OUT_OF_POOL_PREFIXES)), Fraction(0))
     si = sum((Fraction(v) * 1000 for c, v in items.items() if str(c).startswith(C.ITEM_SOCIAL_PREFIXES)), Fraction(0))
@@ -384,7 +407,7 @@ def gross_line_labels(text_c: str) -> dict[str, bool]:
 
 # ---------------------------------------------------------------- inflation
 
-def locate_cnb_inflation(sheets: Mapping[str, list]) -> dict:
+def locate_cnb_inflation(sheets: Mapping[str, Rows]) -> dict:
     rows = sheets["Česká verze"]
     i = _find_row(rows, r"^\s*Spotřebitelské ceny\s+\(%, meziročně, průměr\)")
     groups = {}
@@ -397,14 +420,18 @@ def locate_cnb_inflation(sheets: Mapping[str, list]) -> dict:
     return {"row": i, "groups": groups}
 
 
-def parse_cnb_quarterly(sheets: Mapping[str, list]) -> dict[int, list[Decimal | None]]:
+def parse_cnb_quarterly(sheets: Mapping[str, Rows]) -> dict[int, list[Decimal | None]]:
     loc = locate_cnb_inflation(sheets)
     row = sheets["Česká verze"][loc["row"]]
     quant = Decimal(1).scaleb(-C.CNB_NOISE_DP)
     out = {}
-    for y, j in loc["groups"].items():
+    for y, j in sorted(loc["groups"].items(), key=lambda kv: kv[1]):
         out[y] = [row[j + k].quantize(quant) if j + k < len(row) and isinstance(row[j + k], Decimal) else None
                   for k in range(4)]
+    flat_q = [q for y in out for q in out[y]]
+    first_none = next((k for k, q in enumerate(flat_q) if q is None), len(flat_q))
+    if any(q is not None for q in flat_q[first_none:]):
+        raise ParseError("ČNB consumer-price row has an empty quarter before a filled one")
     return out
 
 
@@ -431,24 +458,29 @@ def parse_csu_cpi(text: str, year: int = 2025) -> Decimal:
 # ---------------------------------------------------------------- broadcasters
 
 def locate_ct_budget(text: str, year: int = 2026) -> dict:
+    """The one line 'příjem z televizních poplatků' with four columns under a header of two years (rozpočet, rozpočet,
+    rozdíl, %). Two such lines are an error."""
     lines = text.splitlines()
+    found = []
     for i, line in enumerate(lines):
         m = re.match(r"^\s*příjem z televizních poplatků\s+\S", line)
         if not m:
             continue
         toks = number_tokens(line, m.end() - 1)
-        if len(toks) < 3:
-            continue
         above = lines[max(0, i - 8):i]
         yline = next((ln for ln in reversed(above) if len(re.findall(r"\b20\d\d\b", ln)) >= 2
                       and not re.search(r"[^\W\d_]", ln)), None)
-        if yline is None:
-            raise ParseError("year header of the ČT budget table not found")
+        if len(toks) != 4 or yline is None:
+            continue
         years = [int(y) for y in re.findall(r"\b(20\d\d)\b", yline)]
         if year not in years:
             raise ParseError(f"ČT budget table has no column for {year}")
-        return {"raw": toks[years.index(year)][2], "unit": _unit("\n".join(above)), "columns": len(toks)}
-    raise ParseError("ČT budget line 'příjem z televizních poplatků' not found")
+        found.append({"raw": toks[years.index(year)][2], "unit": _unit("\n".join(above)), "columns": len(toks)})
+    if not found:
+        raise ParseError("ČT budget line 'příjem z televizních poplatků' with four columns not found")
+    if len(found) > 1:
+        raise ParseError(f"ČT budget line found {len(found)} times")
+    return found[0]
 
 
 def parse_ct_budget(text: str, year: int = 2026) -> Fraction:
@@ -465,18 +497,23 @@ def locate_ct_report(layout: str, prose: str, year: int = 2025) -> dict:
     if not m or int(m.group(3)) != year or (m.group(1), m.group(2)) != ("31", "12"):
         raise ParseError("ČT household count sentence for 31 December of the year not found")
     lines = layout.splitlines()
+    found = []
     for i, line in enumerate(lines):
         if not re.match(r"^\s*příjem z televizních poplatků\s+\S", line):
             continue
         above = lines[max(0, i - 8):i]
         head = next((ln for ln in reversed(above) if "Skutečnost" in ln and "Rozpočet" in ln), None)
         toks = number_tokens(line, 25)
-        if head is None or len(toks) < 2:
+        if head is None or len(toks) != 4:
             continue
-        order = [w for w in re.findall(r"Rozpočet|Skutečnost|Rozdíl|Plnění", head)]
-        return {"households": m.group(4), "revenue": toks[order.index("Skutečnost")][2],
-                "unit": _unit("\n".join(above)), "columns": len(toks)}
-    raise ParseError("ČT report table line 'příjem z televizních poplatků' not found")
+        order = re.findall(r"Rozpočet|Skutečnost|Rozdíl|Plnění", head)
+        found.append({"households": m.group(4), "revenue": toks[order.index("Skutečnost")][2],
+                      "unit": _unit("\n".join(above)), "columns": len(toks)})
+    if not found:
+        raise ParseError("ČT report table line 'příjem z televizních poplatků' with four columns not found")
+    if len(found) > 1:
+        raise ParseError(f"ČT report table line found {len(found)} times")
+    return found[0]
 
 
 def parse_ct_report(layout: str, prose: str, year: int = 2025) -> tuple[Fraction, Fraction]:
@@ -546,6 +583,10 @@ def verify_bill(text: str) -> dict[str, int]:
              re.findall(r"Příspěvek pro rok 2027 činí celkem\s+(\d{1,3}(?:[  ]\d{3})+)\s+Kč", flat(text))]
     if sorted(found) != sorted(C.BILL_2027.values()):
         raise ParseError("the bill's 2027 amounts do not match config.BILL_2027")
+    t = flat(text)
+    for phrase in ("překročí 10 procentních bodů", "zvýší o 10 %"):
+        if t.count(phrase) < 2:                    # the clause is identical in the two acts
+            raise ParseError(f"the bill's clause no longer reads '{phrase}'")
     return dict(C.BILL_2027)
 
 
@@ -597,7 +638,3 @@ def count_employers(csv_path: Path, codes: Mapping[str, str]) -> dict[str, int]:
         if unknown - {""}:
             raise ParseError("res_data.csv has size codes outside code list 579: " + ", ".join(sorted(unknown)[:5]))
     return counts
-
-
-def read_json(path: Path):
-    return json.loads(Path(path).read_text(encoding="utf-8"))

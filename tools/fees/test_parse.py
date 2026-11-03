@@ -120,11 +120,16 @@ def test_pool_lines():
     pool = P.pool_lines(items)
     assert pool["vat"] == 300_000_000 * 1000 and pool["pit"] == (120 + 20 + 10) * 10**6 * 1000
     assert pool["cit"] == 130_000_000 * 1000
-    assert pool["excise"] == (30 + 40 + 10 + 3 + 1 + 5 + 4) * 10**6 * 1000      # 1221-1225, 1231, 1233
+    assert pool["excise"] == ((30 + 40 + 10 + 3 + 1 + 5 + 4) * 10**6 + 2_000_000 + 1_000_000 + 500_000 + 700_000) * 1000
     assert pool["other"] == (2_000_000 + 500_000 + 3_000_000) * 1000             # 1131, 1234, 132x
     assert pool["social"] == (350_000_000 + 40_000_000) * 1000                   # 161x, 162x
-    with pytest.raises(P.ParseError):
+    assert P.pool_absent(items) == [1226, 1227] == sorted(C.POOL_ABSENT)
+    with pytest.raises(P.ParseError, match="absent"):
         P.pool_lines({1211: D(1)})
+    with pytest.raises(P.ParseError, match="absent"):
+        P.pool_lines({k: v for k, v in items.items() if k != 1211})            # a pool item that is not expected to be absent
+    with pytest.raises(P.ParseError, match="empty cell"):
+        P.pool_lines(items, blank=[1211])                                      # a blank pool cell is never read as zero
 
 
 def test_cnb_quarters_drop_float_noise_and_fill_missing_quarters(snap):
@@ -138,18 +143,18 @@ def test_cpi_budget_and_reports(snap):
     assert P.parse_csu_cpi(P.read_text(snap.csu_cpi)) == D("2.5")
     with pytest.raises(P.ParseError):
         P.parse_csu_cpi("Průměrná roční míra inflace")
-    assert P.parse_ct_budget(P.read_text(snap.ct_budget)) == F(6_700_000_000)
+    assert P.parse_ct_budget(P.read_text(snap.ct_budget)) == F(3_100_000_000)
     n, real = P.parse_ct_report(P.read_text(snap.ct_report), P.read_text(snap.ct_report, layout=False))
-    assert n == 3_700_000 and real == 6_400_000_000
-    assert P.parse_cro_chart(snap.cro_chart.read_text(encoding="utf-8")) == F(2_400_000_000)
+    assert n == 1_100_000 and real == 2_800_000_000
+    assert P.parse_cro_chart(snap.cro_chart.read_text(encoding="utf-8")) == F(1_300_000_000)
     stock, rev = P.parse_cro_report(P.read_text(snap.cro_report), P.read_text(snap.cro_report, layout=False))
-    assert stock == 3_050_000 and rev == 2_300_000_000
+    assert stock == 900_000 and rev == 900_000_000
 
 
 def test_cro_report_arithmetic_and_date_column_guards(snap):
     txt = snap.cro_report.read_text(encoding="utf-8")
     with pytest.raises(P.ParseError, match="does not equal"):
-        P.parse_cro_report(txt, txt.replace("v částce 2 300 000", "v částce 2 400 000"))
+        P.parse_cro_report(txt, txt.replace("v částce 900 000", "v částce 950 000"))
     with pytest.raises(P.ParseError, match="31. 12"):
         P.parse_cro_report(txt.replace("k 31. 12. 2025", "k 30. 6. 2025"), txt)
 
@@ -191,3 +196,77 @@ def test_employer_counts_skip_terminated_entities_and_reject_unknown_codes(snap,
 def test_gross_line_labels(snap):
     got = P.gross_line_labels(P.read_text(snap.budget_c))
     assert got == {"vat": True, "cit": True, "pit": False, "excise_mineral_oils": True}
+
+
+def test_duplicate_row_labels_fail_loudly():
+    rows = [["", "", ""], [" Členů", "", "", D(1)], [" Členů", "", "", D(2)]]
+    with pytest.raises(P.ParseError, match="matches 2 rows"):
+        P._find_row(rows, r"^\s*Členů\s*$")
+    with pytest.raises(P.ParseError, match="not found"):
+        P._find_row(rows, r"^\s*Nothing")
+
+
+def test_duplicate_ct_lines_fail_loudly_and_token_counts_are_asserted():
+    budget = SY.ct_budget()
+    line = next(ln for ln in budget.splitlines() if ln.startswith(" příjem"))
+    with pytest.raises(P.ParseError, match="found 2 times"):
+        P.locate_ct_budget(budget + "\n" + line + "\n")
+    with pytest.raises(P.ParseError, match="four columns"):
+        P.locate_ct_budget(budget.replace("    300 000   10,7 %", "   10,7 %"))        # three columns are not the table
+    layout = SY.ct_report()
+    row = next(ln for ln in layout.splitlines() if ln.startswith("příjem"))
+    with pytest.raises(P.ParseError, match="found 2 times"):
+        P.locate_ct_report(layout.replace(row, row + "\n" + row), layout)
+    with pytest.raises(P.ParseError, match="four columns"):
+        P.locate_ct_report(layout.replace("           112,0 %", ""), layout)
+
+
+def test_a_dash_is_zero_only_in_the_children_rows(snap):
+    rows = next(iter(X.read_workbook(snap.silc_3a).values()))
+    loc = P.locate_silc_deciles(rows)
+    rows[loc["rows"]["children"]][5] = "-"
+    assert P.parse_silc_deciles(rows).children[2] == 0
+    rows[loc["rows"]["net"]][5] = "-"
+    with pytest.raises(P.ParseError, match="no number"):
+        P.parse_silc_deciles(rows)
+
+
+def test_a_partly_numeric_expenditure_row_is_an_error_not_a_fallback(snap):
+    rows = next(iter(X.read_workbook(snap.hbs_expenditure).values()))
+    i = next(k for k, r in enumerate(rows) if r and isinstance(r[0], str) and r[0].strip() == "01.1.2")
+    rows[i][5] = None
+    with pytest.raises(P.ParseError, match="numeric quintile cells"):
+        P.parse_hbs_expenditure(rows)
+
+
+def test_a_negative_residual_is_an_error():
+    spend = {"01": [D(5)], "01.1.1": [D(2)], "01.1.2": [D(4)]}
+    entries = [{"coicop": c, "kind": k} for c, k in (("01.1.1", "row"), ("01.1.2", "row"), ("01~rest", "residual"))]
+    with pytest.raises(P.ParseError, match="negative"):
+        P.map_partition(spend, entries)
+    spend["01"] = [D(6)]                                                   # exactly zero is fine
+    assert P.map_partition(spend, entries)["01~rest"] == [F(0)]
+
+
+def test_empty_cnb_quarters_must_be_a_trailing_block(snap):
+    rows = X.read_workbook(snap.cnb_indicators)
+    row = rows["Česká verze"][5]
+    j = row.index(next(c for c in row if c == D("2.1") + D("0.0000000000000004")))
+    row[j] = None                                                          # a hole in the middle of the path
+    with pytest.raises(P.ParseError, match="before a filled one"):
+        P.parse_cnb_quarterly(rows)
+
+
+def test_the_bill_clause_phrases_are_asserted():
+    broken = SY.bill().replace("překročí 10 procentních bodů", "překročí 8 procentních bodů")
+    with pytest.raises(P.ParseError, match="clause no longer reads"):
+        P.verify_bill(broken)
+    with pytest.raises(P.ParseError, match="clause no longer reads"):
+        P.verify_bill(SY.bill().replace("zvýší o 10 %", "zvýší o 5 %"))
+
+
+def test_sheets_are_selected_by_name(snap):
+    import inputs as I
+    assert I.sheet(snap.hbs_expenditure, "Vydaje")
+    with pytest.raises(P.ParseError, match="not found"):
+        I.sheet(snap.silc_3a, "Vydaje")

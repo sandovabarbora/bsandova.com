@@ -2,11 +2,11 @@
 and the frozen code; --structure and --verify-files read labels and hashes only; --synthetic runs on invented files.
 
     P="--with pytest==9.1.1"          # tests only; the run itself needs no package (standard library, poppler's pdftotext)
-    uv run --no-project python -I tools/fees/cli.py --synthetic
-    uv run --no-project python -I tools/fees/cli.py --verify-files
-    uv run --no-project python -I tools/fees/cli.py --structure
+    uv run --no-project --python 3.12 python -I tools/fees/cli.py --synthetic
+    uv run --no-project --python 3.12 python -I tools/fees/cli.py --verify-files
+    uv run --no-project --python 3.12 python -I tools/fees/cli.py --structure
     # after the author signs the tag fees-code (config.CODE_TAG):
-    nice -n 20 uv run --no-project python -I tools/fees/cli.py --run --unblind
+    nice -n 20 uv run --no-project --python 3.12 python -I tools/fees/cli.py --run --unblind
 """
 from __future__ import annotations
 
@@ -40,6 +40,7 @@ def results_for(src: I.Sources) -> dict:
                      "cnb_quarterly_pct": loaded.cnb_quarterly,
                      "fee_line_2026_czk": loaded.qa.fee_line_2026, "realised_2025_czk": loaded.qa.realised_2025,
                      "budget_items_with_empty_cell_read_as_zero": loaded.budget_blank_items,
+                     "pool_items_absent_from_tab_2a": loaded.pool_items_absent,
                      "household_payers": {"tv": loaded.qb.payers_tv, "radio": loaded.qb.payers_r},
                      "employer_counts_by_band": loaded.qb.employer_counts}
     return res
