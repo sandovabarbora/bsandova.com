@@ -679,3 +679,23 @@ on HEAD with `tools/fees/` unchanged since. Check 2 of §3 runs with every alloc
     "after" figure. (h) PDFs are read with poppler's `pdftotext`, version recorded in the results. (i) Reading A when the label is
     "about equal" is worded: "If the bill passes as introduced, ČT and ČRo would receive the same over 2027-2030 as under current
     law, within 0.1 bn CZK (2026 prices)."
+- 3 November 2026, exposures during code and review, before the code tag `fees-code`. No outcome value was read. What was seen,
+  as digit-group shape only (magnitude, no digit):
+  - **Drafting assistant, during the code.** (a) A masked print of ČRo's 2025 report showed the digit groups of the planned fee
+    revenue, the excess over plan and the total of the realised fee revenue (all in the millions of thousand CZK). (b) A masked
+    print of ČT's 2025 report showed that the year-end household count is a seven-digit number, and that its SIPO and direct-payer
+    parts are seven digits each, with two-digit percentages. (c) A masked print of Part G, Tab. 2a, showed the digit grouping of
+    the 2025 lines for VAT and the tobacco excise (VAT in the hundreds of millions of thousand CZK). Other masked prints of Part G
+    showed only the position of tokens and which cells are empty.
+  - **Reviewer.** The digit-group shape of the class and group rows of Part G, Tab. 2a (Daňové, Nedaňové, Kapitálové příjmy,
+    Přijaté transfery, and the first Seskupení row), with minus signs in the difference columns of Kapitálové příjmy and Přijaté
+    transfery, and no digits.
+  None of this was used to choose a rule, a threshold or a column; the shapes are of lines the design already names.
+- 3 November 2026, tag position and file list, before the code tag `fees-code`. (a) `fees-data-step` sits on the snapshot commit
+  ed4c1aa, which holds no code: the parsers, the model and the tests were written after it. They are therefore frozen only by
+  `fees-code`, not by the data-step tag, which differs from the sentences of the status paragraph and of "Running and verification"
+  that put the parsers under `fees-data-step`. The run's gate requires all three tags (annotated, in the order design, data step,
+  code), that the manifest and the two maps are unchanged since `fees-data-step`, and that the design text above this change log is
+  unchanged since `fees-design`. (b) The built files differ from the list of §2.8: there is no `fetch.py` (the snapshot was fetched
+  by hand and hashed, §2.8 step) and no `checks.py`; the modules are `config`, `legal`, `alloc`, `model`, `analysis`, `readings`,
+  `parse`, `xlsx`, `inputs`, `structure`, `files`, `synth`, `cli`, with the checks in `model` and `analysis`.

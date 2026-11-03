@@ -1,9 +1,11 @@
 # Licence-fee funding study
 
-Code for `docs/research/fees-design.md`, frozen at the signed tags `fees-design` and `fees-data-step`. The design is the
-registration: read it first, change log included. No source value was read to write or test this code: every test and
-the dry run use invented files with the layout of the real ones, and the real files were only looked at through labels,
-positions and counts (`--structure`).
+Code for `docs/research/fees-design.md`, frozen at the signed tags `fees-design` and `fees-data-step`; the code itself is
+frozen by `fees-code`, because `fees-data-step` sits on the snapshot commit (change log, 3 November 2026). The design is the
+registration: read it first, change log included. Every test and the dry run use invented files with the layout of the real
+ones. The real files were looked at through labels, positions and counts (`--structure`); a few masked prints showed digit-group
+shapes (magnitudes) of some lines, which the change log records under "exposures during code and review". No real value
+was used to choose a rule.
 
 - `config.py`: paths, tags, every legal amount and threshold with its source, the living-minimum amounts, the §6(3)
   notice override (empty: none found as of 3 Nov 2026), the tie threshold and the label band.
@@ -29,14 +31,14 @@ positions and counts (`--structure`).
 ## Running
 
 No package is needed to run; the PDFs are read with poppler's `pdftotext` (a system tool, required: install poppler,
-e.g. `brew install poppler`; the run records its version in the results and the author should note it at tagging) and the spreadsheets with the standard library. The tests need `pytest==9.1.1` only.
+e.g. `brew install poppler`; written against `pdftotext version 26.01.0`; the run records its version in the results and the author should note it at tagging) and the spreadsheets with the standard library. The tests need `pytest==9.1.1` only.
 
-    uv run --no-project python -I tools/fees/cli.py --synthetic            # invented files, no gate
-    uv run --no-project python -I tools/fees/cli.py --verify-files         # every file under tools/data/fees against the manifest
-    nice -n 20 uv run --no-project python -I tools/fees/cli.py --structure # labels, positions, counts of the real files
-    uv run --no-project --with pytest==9.1.1 python -I -m pytest -q -rs tools/fees
+    uv run --no-project --python 3.12 python -I tools/fees/cli.py --synthetic            # invented files, no gate
+    uv run --no-project --python 3.12 python -I tools/fees/cli.py --verify-files         # every file under tools/data/fees against the manifest
+    nice -n 20 uv run --no-project --python 3.12 python -I tools/fees/cli.py --structure # labels, positions, counts of the real files
+    uv run --no-project --python 3.12 --with pytest==9.1.1 python -I -m pytest -q -rs tools/fees
     # after the author signs the tag fees-code:
-    nice -n 20 uv run --no-project python -I tools/fees/cli.py --run --unblind    # writes docs/research/fees-results.json
+    nice -n 20 uv run --no-project --python 3.12 python -I tools/fees/cli.py --run --unblind    # writes docs/research/fees-results.json
 
 `--run` needs `--unblind` and refuses unless the tag `fees-code` exists as a tag (a branch of that name does not count)
 and is an ancestor of HEAD, `tools/fees` at HEAD equals the tag, `tools/fees` and the design text have no uncommitted
