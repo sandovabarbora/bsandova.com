@@ -102,27 +102,26 @@ def test_r2_threshold_is_strict_in_exact_decimals():
     # (1.1)(1.0) is exactly 1.10: not above 0.10 -> no trigger; one tenth more triggers
     assert not L.bill_exceeds([D("10.0")], "R2")
     assert L.bill_exceeds([D("10.1")], "R2")
-    assert not L.bill_exceeds([D("5"), D("5")], "R1") and L.bill_exceeds([D("5"), D("5.1")], "R1")
+    assert not L.bill_exceeds([D(5), D(5)], "R1") and L.bill_exceeds([D(5), D("5.1")], "R1")
 
 
 def test_price_levels_and_shock():
     infl = L.inflation_series(D("2.5"), {2026: D("2.0"), 2027: D("3.0")}, shock=1)
     assert infl[2025] == D("2.5") and infl[2026] == D("3.0") and infl[2027] == D("4.0") and infl[2029] == D("3.0")
-    pl = L.price_levels(L.inflation_series(D("2.5"), {2027: D("10")}, 0))
+    pl = L.price_levels(L.inflation_series(D("2.5"), {2027: D(10)}, 0))
     assert pl[2026] == 1 and pl[2027] == F(11, 10) and pl[2028] == F(11, 10) * F(102, 100)
 
 
 def inputs(**kw):
-    d = dict(csu_2025=D("2.5"), cnb_annual={2026: D("2.5"), 2027: D("2.0"), 2028: D("2.0")},
-             fee_line_2026={"CT": F(6_000_000_000), "CRO": F(2_000_000_000)},
-             realised_2025={"CT": F(5_400_000_000), "CRO": F(1_800_000_000)})
-    d.update(kw)
+    d = {"csu_2025": D("2.5"), "cnb_annual": {2026: D("2.5"), 2027: D("2.0"), 2028: D("2.0")},
+         "fee_line_2026": {"CT": F(6_000_000_000), "CRO": F(2_000_000_000)},
+         "realised_2025": {"CT": F(5_400_000_000), "CRO": F(1_800_000_000)}} | kw
     return L.QaInputs(**d)
 
 
 def test_paths_real_values_and_x_without_any_trigger():
     # flat 2.0 %: current law steps in July 2029 (sum 8 at 2028); the bill never triggers before 2030 data (4 x 2 = 8 < 10)
-    inp = inputs(csu_2025=D("0.0"), cnb_annual={y: D("0") for y in range(2026, 2031)})
+    inp = inputs(csu_2025=D("0.0"), cnb_annual={y: D(0) for y in range(2026, 2031)})
     r = L.qa_member(inp, 0, "R1", "A")
     assert r["current_law_steps"] == [] and r["paths_2_and_3_coincide"]
     # zero inflation: price level 1, path 1 = baseline each year, path 2 = bill
@@ -132,7 +131,7 @@ def test_paths_real_values_and_x_without_any_trigger():
 
 
 def test_half_year_step_enters_path_1_pro_rata():
-    inp = inputs(csu_2025=D("3.5"), cnb_annual={2026: D("3.5"), 2027: D("0"), 2028: D("0")})
+    inp = inputs(csu_2025=D("3.5"), cnb_annual={2026: D("3.5"), 2027: D(0), 2028: D(0)})
     # 3.5 + 3.5 = 7.0 > 6 in 2026 -> July 2027: CT 159, CRO 59; S(2027) = 6x150+6x159 = 1854, S(2026) = 1800
     r = L.qa_member(inp, 0, "R1", "A")
     assert r["current_law_steps"][0] == 2026
@@ -143,7 +142,7 @@ def test_half_year_step_enters_path_1_pro_rata():
 
 
 def test_baseline_b_indexes_the_realised_2025_revenue():
-    inp = inputs(csu_2025=D("0"), cnb_annual={})
+    inp = inputs(csu_2025=D(0), cnb_annual={})
     r = L.qa_member(inp, 0, "R1", "B")
     # CT: 5.4 bn x 1800 / (4x135 + 8x150 = 1740)
     assert r["baseline_2026"]["CT"] == F(5_400_000_000) * 1800 / 1740

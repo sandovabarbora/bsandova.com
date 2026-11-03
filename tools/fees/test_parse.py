@@ -54,7 +54,7 @@ def test_consumption_tables(snap):
     spend = P.parse_hbs_expenditure(next(iter(X.read_workbook(snap.hbs_expenditure).values())))
     ref = SY.spend_codes()
     assert set(spend) == set(ref) and spend["01.1.2"] == ref["01.1.2"]
-    first = sorted(ref, key=SY._key)[0]
+    first = min(ref, key=SY._key)
     assert spend[first] == ref[first]                                   # label on one row, numbers on the next
     assert spend["01"] == ref["01"] and spend["01"][0] != D(20)         # the structure block after "Struktura" is not read
 
@@ -84,7 +84,7 @@ def test_the_committed_maps_form_a_partition_on_the_invented_table():
         spend = {k: [F(x) for x in v] for k, v in SY.spend_codes().items()}
         vals = P.map_partition(spend, entries)
         for division in {e["coicop"][:2] for e in entries}:
-            tot = sum(v[0] for c, v in vals.items() if c.startswith(division + ".") or c == division or c.startswith(division + "~"))
+            tot = sum(v[0] for c, v in vals.items() if c.startswith((division + ".", division + "~")) or c == division)
             assert tot == spend[division][0]
 
 
