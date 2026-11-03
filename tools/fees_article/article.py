@@ -1,8 +1,8 @@
 """The licence-fee study: the article, every number from docs/research/fees-results.json.
 
 Writes texts/licence-fees.html from tools/fees_article/template.html, assets/licence-fees/charts.json and copies the
-results file to assets/licence-fees/. With --figures it also draws the static fallback 01-burden.svg (needs
-matplotlib). The study code in tools/fees is frozen at the tag fees-code-2 and is not imported.
+results file to assets/licence-fees/. With --figures it also draws the static fallbacks 01-money.svg to 05-burden.svg
+(needs matplotlib). The study code in tools/fees is frozen at the tag fees-code-2 and is not imported.
 
     uv run --no-project python -I tools/fees_article/article.py
     uv run --no-project --with matplotlib python -I tools/fees_article/article.py --figures
@@ -10,7 +10,9 @@ matplotlib). The study code in tools/fees is frozen at the tag fees-code-2 and i
 from __future__ import annotations
 
 import hashlib
+import html
 import json
+import math
 import re
 import shutil
 import sys
@@ -20,7 +22,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT / "tools" / "site"))
-from article_kit import GREY, HELD, INK, NB, n, render
+from article_kit import GREY, HELD, INK, LIGHT, NB, n, render
 
 SLUG = "licence-fees"
 RESULTS = ROOT / "docs" / "research" / "fees-results.json"
@@ -169,43 +171,188 @@ def checks_table(res: dict) -> str:
                      for a, b, c, d in rows)
 
 
-# ---------------------------------------------------------------- the figure
+# ---------------------------------------------------------------- the figures
 
-def chart(res: dict) -> dict:
-    qb = res["qb"]
-    series = [("Today, nobody exempt", qb["today"]["e0"]["burden_pct"], INK, "dash"),
-              ("Today, poorest tenth exempt", qb["today"]["e1"]["burden_pct"], GREY, "dot"),
-              ("After, average tax structure", qb["after"]["burden_pct"], HELD, None)]
-    marks = []
-    for name, ys, c, dash in series:
-        m = {"type": "line", "pts": [[i + 1, round(y, 3)] for i, y in enumerate(ys)], "c": c, "w": 2, "name": name,
-             "dots": True, "fmt": {"dp": 2, "unit": " %"}}
-        if dash:
-            m["dash"] = dash
-        marks.append(m)
-    return {"alt": "Payment as a share of mean net household income, by income decile. Today with nobody exempt the "
-                   f"share falls from {pct(qb['today']['e0']['burden_pct'][0])} in decile 1 to "
-                   f"{pct(qb['today']['e0']['burden_pct'][9])} in decile 10; with the poorest tenth exempt decile 1 pays "
-                   f"nothing; funded from the state budget it falls from {pct(qb['after']['burden_pct'][0])} to "
-                   f"{pct(qb['after']['burden_pct'][9])}.",
-            "panels": [{"h": 280,
-                        "x": {"kind": "linear", "domain": [0.6, 10.4], "ticks": list(range(1, 11)), "fmt": {"dp": 0},
-                              "label": "income decile (1 = poorest tenth of households)"},
-                        "y": {"kind": "linear", "domain": [0, 0.8], "ticks": [0, 0.2, 0.4, 0.6, 0.8],
-                              "fmt": {"dp": 1, "unit": " %"}, "label": "payment, % of mean net household income"},
-                        "marks": marks}],
-            "legend": [{"label": name, "c": c, **({"dash": dash} if dash else {})} for name, _, c, dash in series],
-            "table": {"cols": ["decile", *[f"{name}, %" for name, *_ in series]],
-                      "rows": [[i + 1, *[round(ys[i], 3) for _, ys, *_ in series]] for i in range(10)]},
+YEARS = ("2027", "2028", "2029", "2030")
+
+
+def money_paths(qa: dict) -> dict[str, list[float]]:
+    """Current law (path 1) and the bill (path 2) for ČT and ČRo together, per year, in bn CZK of 2026 prices."""
+    pr = qa["primary"]
+    out = {p: [(pr["nominal"][p]["CT"][y] + pr["nominal"][p]["CRO"][y]) / pr["price_level"][y] / 1e9 for y in YEARS]
+           for p in ("p1", "p2")}
+    for p in ("p1", "p2"):  # the yearly real amounts reproduce the study's own four-year sums
+        assert math.isclose(sum(out[p]), pr["real"][p] / 1e9, rel_tol=1e-12), p
+    assert math.isclose(sum(out["p1"]) - sum(out["p2"]), qa["x_primary_bn"], rel_tol=1e-12)
+    return out
+
+
+def money_chart(res: dict) -> dict:
+    qa = res["qa"]
+    m = money_paths(qa)
+    xs = [int(y) for y in YEARS]
+    law, bill = [round(v, 4) for v in m["p1"]], [round(v, 4) for v in m["p2"]]
+    unit = {"dp": 2, "unit": " bn CZK"}
+    gap = f"gap over 2027–2030: {bnx(qa['x_primary_bn'])}, 2026 prices"
+    mid = (law[1] + bill[1] + law[2] + bill[2]) / 4
+    return {"alt": f"ČT and ČRo together, 2027 to 2030, in 2026 prices, at the forecast inflation: current law gives "
+                   f"{bnx(law[0])} in 2027 and {bnx(law[3])} in 2030, the bill {bnx(bill[0])} and {bnx(bill[3])}; "
+                   f"over the four years current law gives {bn(qa['primary']['real']['p1'])} and the bill "
+                   f"{bn(qa['primary']['real']['p2'])}, a gap of {bnx(qa['x_primary_bn'])}.",
+            "panels": [{"h": 280, "padRight": 96,
+                        "x": {"kind": "linear", "domain": [2026.8, 2030.2], "ticks": xs, "fmt": {"dp": 0, "nogroup": True},
+                              "label": "year (primary: forecast inflation, sum reading, 2026 budgets)"},
+                        "y": {"kind": "linear", "domain": [0, 10], "ticks": [0, 2, 4, 6, 8, 10],
+                              "fmt": {"dp": 0}, "label": "bn CZK a year, 2026 prices"},
+                        "marks": [{"type": "area", "pts": [[x, b, a] for x, a, b in zip(xs, law, bill)], "c": "light",
+                                   "o": 0.45, "name": "gap", "notip": True},
+                                  {"type": "line", "pts": [[x, v] for x, v in zip(xs, law)], "c": INK, "w": 2,
+                                   "name": "current law", "end": "current law", "dots": True, "fmt": unit},
+                                  {"type": "line", "pts": [[x, v] for x, v in zip(xs, bill)], "c": HELD, "w": 2,
+                                   "name": "the bill", "end": "the bill", "dots": True, "fmt": unit},
+                                  {"type": "text", "x": 2027.12, "y": round(mid, 3), "dy": 4, "s": gap, "c": INK,
+                                   "narrow": {"s": f"gap {bnx(qa['x_primary_bn'])}"}}]}],
+            "legend": [{"label": "current law, fees, payers held fixed", "c": INK},
+                       {"label": "the bill as introduced", "c": HELD},
+                       {"label": "gap", "c": "light", "shape": "box", "o": 0.45}],
+            "table": {"cols": ["year", "current law, bn CZK (2026 prices)", "the bill, bn CZK (2026 prices)", "gap, bn CZK"],
+                      "rows": [*[[x, a, b, round(a - b, 4)] for x, a, b in zip(xs, law, bill)],
+                               ["2027–2030", round(qa["primary"]["real"]["p1"] / 1e9, 4),
+                                round(qa["primary"]["real"]["p2"] / 1e9, 4), round(qa["x_primary_bn"], 4)]]},
             "data": ["results.json"]}
 
 
-def chart_hash(res: dict) -> str:
+def first_year_rows(rc: dict) -> list[dict]:
+    today, bill, real = (rc["budgeted_fee_revenue_2026_czk"] / 1e9, rc["bill_2027_czk"] / 1e9,
+                         rc["bill_2027_in_2026_prices_czk"] / 1e9)
+    return [{"y": "fee revenue today (2026 budgets)", "x1": round(today, 4), "c": INK, "label": bnx(today),
+             "tip": f"fee revenue of ČT and ČRo in the 2026 budgets: {bnx(today)} a year"},
+            {"y": "the bill for 2027", "x1": round(bill, 4), "c": HELD, "label": bnx(bill, 3),
+             "tip": f"the bill's contribution for 2027: {bnx(bill, 3)}, or {bnx(real)} in 2026 prices"},
+            {"y": "gap, 2026 prices", "x0": round(real, 4), "x1": round(today, 4), "c": GREY,
+             "label": f"{bnx(today - real)} less",
+             "tip": f"{bnx(today)} today against the 2027 amount in 2026 prices, {bnx(real)}: {bnx(today - real)} less"}]
+
+
+def first_year_chart(res: dict) -> dict:
+    rows = first_year_rows(res["reading_c"])
+    return {"alt": f"Fee revenue of ČT and ČRo in the 2026 budgets, {rows[0]['label']} a year, against the bill's "
+                   f"{rows[1]['label']} for 2027; in 2026 prices the 2027 amount is {rows[2]['label']} than today.",
+            "panels": [{"h": 150, "padRight": 24,
+                        "x": {"kind": "linear", "domain": [0, 12], "ticks": [0, 2, 4, 6, 8, 10], "fmt": {"dp": 0},
+                              "label": "bn CZK a year"},
+                        "y": {"kind": "cat", "domain": [r["y"] for r in rows]},
+                        "marks": [{"type": "hbar", "rows": rows}]}],
+            "table": {"cols": ["", "from, bn CZK", "to, bn CZK"],
+                      "rows": [[r["y"], r.get("x0", 0), r["x1"]] for r in rows]},
+            "data": ["results.json"]}
+
+
+def ratio_rows(qb: dict) -> list[dict]:
+    a = qb["after"]
+    rows = [("fee today, nobody exempt", qb["y_hi"], INK, True),
+            ("fee today, poorest tenth exempt by entitlement", qb["y_lo"], GREY, True),
+            ("state budget, average tax mix", a["ratio_z"], HELD, True),
+            ("state budget, VAT only", a["ratio_z_vat_only"], HELD, False),
+            ("state budget, income tax only", a["ratio_z_pit_only"], HELD, False)]
+    return [{"y": lab, "x1": round(v, 4), "c": c, "label": times(v), "in_label": inl,
+             "tip": f"{lab}: {times(v)}" + ("" if inl else ", reported, not in the label")} for lab, v, c, inl in rows]
+
+
+def ratio_chart(res: dict) -> dict:
+    rows = ratio_rows(res["qb"])
+    strip = [{k: v for k, v in r.items() if k != "in_label"} for r in rows]
+    return {"alt": "The poorest tenth's share of income paid divided by the richest tenth's: the fee today "
+                   f"{rows[0]['label']} with nobody exempt and {rows[1]['label']} with the poorest tenth exempt by "
+                   f"entitlement; funded from the state budget {rows[2]['label']} at the average tax mix, "
+                   f"{rows[3]['label']} from VAT only and {rows[4]['label']} from income tax only. "
+                   "Between 0.9 and 1.1 the shares count as similar.",
+            "panels": [{"h": 230, "padRight": 40,
+                        "x": {"kind": "linear", "domain": [0, 6], "ticks": [0, 1, 2, 3, 4, 5, 6], "fmt": {"dp": 0},
+                              "label": "poorest tenth's share of income ÷ richest tenth's"},
+                        "y": {"kind": "cat", "domain": [r["y"] for r in rows]},
+                        "marks": [{"type": "span", "v0": 0.9, "v1": 1.1, "c": "grey", "o": 0.14},
+                                  {"type": "rule", "axis": "x", "v": 1, "c": "ink"},
+                                  {"type": "hbar", "rows": [r for r, x in zip(strip, rows) if x["in_label"]]},
+                                  {"type": "hbar", "o": 0.4, "rows": [r for r, x in zip(strip, rows) if not x["in_label"]]}]}],
+            "legend": [{"label": "fee today, nobody exempt", "c": INK, "shape": "box", "o": 0.85},
+                       {"label": "fee today, poorest tenth exempt", "c": GREY, "shape": "box", "o": 0.85},
+                       {"label": "state budget, in the label", "c": HELD, "shape": "box", "o": 0.85},
+                       {"label": "state budget, not in the label", "c": HELD, "shape": "box", "o": 0.4},
+                       {"label": "similar, 0.9 to 1.1; the line marks 1, the same share", "c": GREY, "shape": "box",
+                        "o": 0.14}],
+            "table": {"cols": ["funding", "ratio, poorest ÷ richest tenth", "in the label"],
+                      "rows": [[r["y"], r["x1"], "yes" if r["in_label"] else "no"] for r in rows]},
+            "data": ["results.json"]}
+
+
+def pay_series(qb: dict) -> list[tuple[str, list[float], str, str | None]]:
+    return [("Today, nobody exempt", qb["today"]["e0"]["pay_hh"], INK, "dash"),
+            ("Today, poorest tenth exempt", qb["today"]["e1"]["pay_hh"], GREY, "dot"),
+            ("After, average tax mix", qb["after"]["per_hh"], HELD, None)]
+
+
+def burden_series(qb: dict) -> list[tuple[str, list[float], str, str | None]]:
+    return [("Today, nobody exempt", qb["today"]["e0"]["burden_pct"], INK, "dash"),
+            ("Today, poorest tenth exempt", qb["today"]["e1"]["burden_pct"], GREY, "dot"),
+            ("After, average tax structure", qb["after"]["burden_pct"], HELD, None)]
+
+
+def decile_chart(series, alt: str, y: dict, fmt: dict, dp: int, unit: str) -> dict:
+    marks = []
+    for name, ys, c, dash in series:
+        m = {"type": "line", "pts": [[i + 1, round(v, dp)] for i, v in enumerate(ys)], "c": c, "w": 2, "name": name,
+             "dots": True, "fmt": fmt}
+        if dash:
+            m["dash"] = dash
+        marks.append(m)
+    return {"alt": alt,
+            "panels": [{"h": 280,
+                        "x": {"kind": "linear", "domain": [0.6, 10.4], "ticks": list(range(1, 11)), "fmt": {"dp": 0},
+                              "label": "income decile (1 = poorest tenth of households)"},
+                        "y": y, "marks": marks}],
+            "legend": [{"label": name, "c": c, **({"dash": dash} if dash else {})} for name, _, c, dash in series],
+            "table": {"cols": ["decile", *[f"{name}, {unit}" for name, *_ in series]],
+                      "rows": [[i + 1, *[round(ys[i], dp) for _, ys, *_ in series]] for i in range(10)]},
+            "data": ["results.json"]}
+
+
+def pay_chart(res: dict) -> dict:
+    qb = res["qb"]
+    e0, e1, a = (s[1] for s in pay_series(qb))
+    alt = (f"Average payment per household in CZK a year, by income decile. Today with nobody exempt every decile pays "
+           f"{czk(e0[0])}; with the poorest tenth exempt decile 1 pays nothing and the others {czk(e1[1])}; funded "
+           f"from the state budget at the average tax mix the payment rises from {czk(a[0])} in decile 1 to "
+           f"{czk(a[9])} in decile 10.")
+    y = {"kind": "linear", "domain": [0, 2500], "ticks": [0, 500, 1000, 1500, 2000, 2500], "fmt": {"dp": 0},
+         "label": "CZK a year per household"}
+    return decile_chart(pay_series(qb), alt, y, {"dp": 0, "unit": " CZK"}, 0, "CZK a year")
+
+
+def burden_chart(res: dict) -> dict:
+    qb = res["qb"]
+    alt = ("Payment as a share of mean net household income, by income decile. Today with nobody exempt the "
+           f"share falls from {pct(qb['today']['e0']['burden_pct'][0])} in decile 1 to "
+           f"{pct(qb['today']['e0']['burden_pct'][9])} in decile 10; with the poorest tenth exempt decile 1 pays "
+           f"nothing; funded from the state budget it falls from {pct(qb['after']['burden_pct'][0])} to "
+           f"{pct(qb['after']['burden_pct'][9])}.")
+    y = {"kind": "linear", "domain": [0, 0.8], "ticks": [0, 0.2, 0.4, 0.6, 0.8], "fmt": {"dp": 1, "unit": " %"},
+         "label": "payment, % of mean net household income"}
+    return decile_chart(burden_series(qb), alt, y, {"dp": 2, "unit": " %"}, 3, "%")
+
+
+# id, spec, static file; in the order of the figures on the page
+CHARTS = {"money": (money_chart, "01-money.svg"), "first-year": (first_year_chart, "02-first-year.svg"),
+          "ratios": (ratio_chart, "03-ratios.svg"), "pay": (pay_chart, "04-pay.svg"),
+          "burden": (burden_chart, "05-burden.svg")}
+
+
+def chart_hash(spec: dict) -> str:
     """Hash of the plotted numbers, written into the static SVG so a test can tell a stale figure."""
-    return hashlib.sha256(json.dumps(chart(res)["table"], sort_keys=True).encode()).hexdigest()
+    return hashlib.sha256(json.dumps(spec["table"], sort_keys=True).encode()).hexdigest()
 
 
-def static_chart(res: dict, path: Path) -> None:
+def static_charts(res: dict) -> None:
     import matplotlib
 
     matplotlib.use("Agg")
@@ -214,20 +361,61 @@ def static_chart(res: dict, path: Path) -> None:
     plt.rcParams.update({"font.family": "Helvetica", "font.size": 9, "axes.spines.top": False,
                          "axes.spines.right": False, "axes.edgecolor": GREY, "xtick.color": GREY, "ytick.color": GREY,
                          "svg.fonttype": "none", "svg.hashsalt": SLUG})
-    spec = chart(res)
-    f, ax = plt.subplots(figsize=(7.2, 3.4))
     ls = {"dash": (0, (5, 3)), "dot": (0, (1.5, 2.5)), None: "-"}
-    for m in spec["panels"][0]["marks"]:
-        xs, ys = zip(*m["pts"])
-        ax.plot(xs, ys, color=m["c"], lw=1.6, ls=ls[m.get("dash")], marker="o", ms=3.5, label=m["name"])
-    ax.set_xticks(range(1, 11))
-    ax.set_ylim(0, 0.8)
-    ax.set_xlabel("income decile (1 = poorest tenth of households)")
-    ax.set_ylabel("% of mean net household income")
-    ax.legend(frameon=False, fontsize=8, loc="upper right")
-    f.tight_layout()
-    f.savefig(path, metadata={"Date": None, "Description": f"data sha256 {chart_hash(res)}"})
-    plt.close(f)
+
+    def save(f, key: str) -> None:
+        f.tight_layout()
+        f.savefig(ASSETS / CHARTS[key][1], metadata={"Date": None, "Description": f"data sha256 {chart_hash(specs[key])}"})
+        plt.close(f)
+
+    specs = {k: fn(res) for k, (fn, _) in CHARTS.items()}
+
+    p = specs["money"]["panels"][0]
+    f, ax = plt.subplots(figsize=(7.2, 3.4))
+    area, law, bill, note = p["marks"]
+    xs = [q[0] for q in area["pts"]]
+    ax.fill_between(xs, [q[1] for q in area["pts"]], [q[2] for q in area["pts"]], color=LIGHT, alpha=0.45, lw=0)
+    for m in (law, bill):
+        ax.plot(*zip(*m["pts"]), color=m["c"], lw=1.6, marker="o", ms=3.5, label=m["name"])
+    ax.text(note["x"], note["y"], note["s"], fontsize=8, va="center")
+    ax.set_xticks(xs, [str(x) for x in xs])
+    ax.set_ylim(0, 10)
+    ax.set_ylabel("bn CZK a year, 2026 prices")
+    ax.legend(frameon=False, fontsize=8, loc="lower right")
+    save(f, "money")
+
+    for key, h in (("first-year", 1.9), ("ratios", 2.6)):
+        p = specs[key]["panels"][0]
+        rows = [(r, m.get("o", 0.85)) for m in p["marks"] if m["type"] == "hbar" for r in m["rows"]]
+        order = p["y"]["domain"]
+        f, ax = plt.subplots(figsize=(7.2, h))
+        for m in p["marks"]:
+            if m["type"] == "span":
+                ax.axvspan(m["v0"], m["v1"], color=GREY, alpha=0.14, lw=0)
+            elif m["type"] == "rule":
+                ax.axvline(m["v"], color=INK, lw=0.8)
+        for r, o in rows:
+            i = len(order) - 1 - order.index(r["y"])
+            x0 = r.get("x0", 0)
+            ax.barh(i, r["x1"] - x0, left=x0, height=0.5, color=r["c"], alpha=o)
+            ax.text(r["x1"] + 0.08, i, r["label"], va="center", fontsize=8)
+        ax.set_yticks(range(len(order)), list(reversed(order)))
+        ax.set_xlim(*p["x"]["domain"])
+        ax.set_xticks(p["x"]["ticks"])
+        ax.set_xlabel(p["x"]["label"])
+        save(f, key)
+
+    for key in ("pay", "burden"):
+        p = specs[key]["panels"][0]
+        f, ax = plt.subplots(figsize=(7.2, 3.4))
+        for m in p["marks"]:
+            ax.plot(*zip(*m["pts"]), color=m["c"], lw=1.6, ls=ls[m.get("dash")], marker="o", ms=3.5, label=m["name"])
+        ax.set_xticks(range(1, 11))
+        ax.set_ylim(*p["y"]["domain"])
+        ax.set_xlabel(p["x"]["label"])
+        ax.set_ylabel(p["y"]["label"])
+        ax.legend(frameon=False, fontsize=8, loc="upper right" if key == "burden" else "lower right")
+        save(f, key)
 
 
 # ---------------------------------------------------------------- the values
@@ -338,6 +526,7 @@ def values(res: dict) -> dict:
         "obj_code": TAG_OBJECTS["fees-code-2"], "results_commit": RESULTS_COMMIT,
         "obj_code1": TAG_OBJECTS["fees-code"], "code1_commit": FIRST_CODE_COMMIT,
         "v_python": res["versions"]["python"], "v_pdftotext": res["versions"]["pdftotext"].split()[-1],
+        **{f"alt_{k.replace('-', '_')}": html.escape(fn(res)["alt"]) for k, (fn, _) in CHARTS.items()},
     }
     # the pre-written readings of design §1, as the study code filled them, carry the same numbers
     assert f"receive {v['x']} less (2026 prices)".replace(NB, " ") in qa["reading_a"].replace(NB, " ")
@@ -358,7 +547,7 @@ def build(res: dict) -> str:
 
 
 def charts_json(res: dict) -> str:
-    return json.dumps({"burden": chart(res)}, ensure_ascii=False, separators=(",", ":"))
+    return json.dumps({k: fn(res) for k, (fn, _) in CHARTS.items()}, ensure_ascii=False, separators=(",", ":"))
 
 
 def main() -> None:
@@ -368,7 +557,7 @@ def main() -> None:
     shutil.copy(RESULTS, ASSETS / "results.json")
     (ASSETS / "charts.json").write_text(charts_json(res), encoding="utf-8")
     if "--figures" in sys.argv:
-        static_chart(res, ASSETS / "01-burden.svg")
+        static_charts(res)
     print(f"wrote {PAGE.relative_to(ROOT)} and assets/{SLUG}/")
 
 

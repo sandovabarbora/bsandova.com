@@ -51,9 +51,89 @@ def test_published_copies_match(res):
     assert (article.ASSETS / "charts.json").read_text(encoding="utf-8") == article.charts_json(res)
 
 
-def test_static_figure_was_drawn_from_the_current_numbers(res):
-    svg = (article.ASSETS / "01-burden.svg").read_text(encoding="utf-8")
-    assert f"data sha256 {article.chart_hash(res)}" in svg, "run article.py --figures"
+def test_static_figures_were_drawn_from_the_current_numbers(res):
+    for fn, name in article.CHARTS.values():
+        svg = (article.ASSETS / name).read_text(encoding="utf-8")
+        assert f"data sha256 {article.chart_hash(fn(res))}" in svg, f"{name}: run article.py --figures"
+    drawn = {p.name for p in article.ASSETS.glob("*.svg")}
+    assert drawn == {name for _, name in article.CHARTS.values()}, drawn
+
+
+def test_every_figure_has_a_chart_alt_text_a_takeaway_and_a_caption(page, res):
+    specs = json.loads(article.charts_json(res))
+    figs = re.findall(r'<figure id="fig(\d+)" data-chart="\.\./assets/licence-fees/charts\.json#([\w-]+)">(.*?)</figure>',
+                      page, re.DOTALL)
+    assert [(int(i), k) for i, k, _ in figs] == list(enumerate(article.CHARTS, 1))
+    assert page.count("<figure") == len(figs)
+    for i, key, body in figs:
+        name = article.CHARTS[key][1]
+        img = re.search(r'<img src="\.\./assets/licence-fees/([\w.-]+)" alt="([^"]+)"', body)
+        assert img and img.group(1) == name, key
+        assert html.unescape(img.group(2)) == specs[key]["alt"] and len(specs[key]["alt"]) > 80, key
+        assert re.search(r'<p class="ch-head">[^<]{20,}</p>', body), key
+        cap = re.search(r"<figcaption><b>fig\. (\d+)</b> · (.*?)</figcaption>", body, re.DOTALL)
+        assert cap and cap.group(1) == i and len(text(cap.group(2)).split()) > 20, key
+        assert "no interval" in text(cap.group(2)).lower(), key
+        assert specs[key]["table"]["rows"] and specs[key]["data"] == ["results.json"], key
+
+
+def test_in_short_points_at_figures_1_to_4(page):
+    box = re.search(r'<details class="tldr" open>(.*?)</details>', page, re.DOTALL).group(1)
+    assert "<summary>In short</summary>" in box
+    items = re.findall(r"<li>(.*?)</li>", box, re.DOTALL)
+    assert [re.search(r'href="#fig(\d+)">fig\. (\d+)<', li).groups() for li in items] == [(str(k), str(k)) for k in range(1, 5)]
+
+
+def test_money_chart_is_the_primary_paths_in_2026_prices(res):
+    qa = res["qa"]
+    pr = qa["primary"]
+    spec = article.money_chart(res)
+    area, law, bill, note = spec["panels"][0]["marks"]
+    for line, path in ((law, "p1"), (bill, "p2")):
+        ys = [(pr["nominal"][path]["CT"][y] + pr["nominal"][path]["CRO"][y]) / pr["price_level"][y] / 1e9
+              for y in article.YEARS]
+        assert [p[0] for p in line["pts"]] == [int(y) for y in article.YEARS]
+        assert [p[1] for p in line["pts"]] == [round(v, 4) for v in ys]
+        assert abs(sum(ys) - pr["real"][path] / 1e9) < 1e-9
+    assert [[p[0], p[2], p[1]] for p in area["pts"]] == [[a[0], a[1], b[1]] for a, b in zip(law["pts"], bill["pts"])]
+    assert spec["table"]["rows"][-1][1:] == [round(pr["real"]["p1"] / 1e9, 4), round(pr["real"]["p2"] / 1e9, 4),
+                                             round(qa["x_primary_bn"], 4)]
+    assert article.bnx(qa["x_primary_bn"]) in note["s"] and article.bnx(qa["x_primary_bn"]) in note["narrow"]["s"]
+    assert "2026 prices" in note["s"]
+
+
+def test_first_year_chart_is_reading_c(res):
+    rc = res["reading_c"]
+    today, bill, gap = article.first_year_chart(res)["panels"][0]["marks"][0]["rows"]
+    assert today["x1"] == round(rc["budgeted_fee_revenue_2026_czk"] / 1e9, 4) and "x0" not in today
+    assert bill["x1"] == round(rc["bill_2027_czk"] / 1e9, 4) and "x0" not in bill
+    assert (gap["x0"], gap["x1"]) == (round(rc["bill_2027_in_2026_prices_czk"] / 1e9, 4), today["x1"])
+    assert gap["label"] == article.values(res)["d_level"] + " less" and "2026 prices" in gap["y"]
+
+
+def test_ratio_chart_is_y_and_z(res):
+    qb = res["qb"]
+    a = qb["after"]
+    spec = article.ratio_chart(res)
+    marks = spec["panels"][0]["marks"]
+    span, rule, main, pale = marks
+    assert (span["v0"], span["v1"], rule["v"]) == (0.9, 1.1, 1)
+    want = [qb["y_hi"], qb["y_lo"], a["ratio_z"], a["ratio_z_vat_only"], a["ratio_z_pit_only"]]
+    rows = main["rows"] + pale["rows"]
+    assert [r["x1"] for r in rows] == [round(w, 4) for w in want]
+    assert [r["label"] for r in rows] == ["5.26", "0.00", "2.37", "4.81", "0.10"]
+    assert [r["y"] for r in rows] == spec["panels"][0]["y"]["domain"] and len(main["rows"]) == 3
+
+
+def test_decile_charts_are_the_payments_and_burdens(res):
+    qb = res["qb"]
+    for key, fields, dp in (("pay", (qb["today"]["e0"]["pay_hh"], qb["today"]["e1"]["pay_hh"], qb["after"]["per_hh"]), 0),
+                            ("burden", (qb["today"]["e0"]["burden_pct"], qb["today"]["e1"]["burden_pct"],
+                                        qb["after"]["burden_pct"]), 3)):
+        spec = article.CHARTS[key][0](res)
+        lines = spec["panels"][0]["marks"]
+        assert [[p[1] for p in m["pts"]] for m in lines] == [[round(v, dp) for v in f] for f in fields], key
+        assert [r[1:] for r in spec["table"]["rows"]] == [[round(f[i], dp) for f in fields] for i in range(10)], key
 
 
 def test_every_token_and_citation_is_filled(page):
