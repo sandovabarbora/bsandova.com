@@ -19,6 +19,7 @@ jobs:
       # suites that share module names (estimate, common, ...) run each in its own process
       - run: python -m pytest -q -rs tools/bypass
       - run: python -m pytest -q -rs tools/gnss
+      - run: python -m pytest -q -rs tools/fees
       - run: python -m pytest -q -rs tools/incentives
       - run: python -m pytest -q -rs tools/blackout
       - run: python -m pytest -q -rs tools/priorities
