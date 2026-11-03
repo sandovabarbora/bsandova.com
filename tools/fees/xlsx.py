@@ -10,6 +10,7 @@ from xml.etree import ElementTree as ET
 NS = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
       "r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships"}
 _REL = "{http://schemas.openxmlformats.org/package/2006/relationships}Relationship"
+NUMBER = "\x00number"          # what a numeric cell becomes when values are not wanted (structure checks)
 Cell = str | Decimal | None
 
 
@@ -38,7 +39,7 @@ def sheet_paths(z: zipfile.ZipFile) -> dict[str, str]:
     return out
 
 
-def _cell(c: ET.Element, shared: list[str]) -> Cell:
+def _cell(c: ET.Element, shared: list[str], values: bool = True) -> Cell:
     t = c.get("t")
     if t == "inlineStr":
         return "".join(x.text or "" for x in c.iter(f"{{{NS['m']}}}t"))
@@ -49,10 +50,10 @@ def _cell(c: ET.Element, shared: list[str]) -> Cell:
         return shared[int(v.text)]
     if t in ("str", "e", "b"):
         return v.text
-    return Decimal(v.text)
+    return Decimal(v.text) if values else NUMBER
 
 
-def read_sheet(z: zipfile.ZipFile, path: str, shared: list[str]) -> list[list[Cell]]:
+def read_sheet(z: zipfile.ZipFile, path: str, shared: list[str], values: bool = True) -> list[list[Cell]]:
     rows: list[list[Cell]] = []
     root = ET.fromstring(z.read(path))
     for row in root.iter(f"{{{NS['m']}}}row"):
@@ -64,11 +65,11 @@ def read_sheet(z: zipfile.ZipFile, path: str, shared: list[str]) -> list[list[Ce
             i = col_index(c.get("r"))
             while len(cells) <= i:
                 cells.append(None)
-            cells[i] = _cell(c, shared)
+            cells[i] = _cell(c, shared, values)
     return rows
 
 
-def read_workbook(path) -> dict[str, list[list[Cell]]]:
+def read_workbook(path, values: bool = True) -> dict[str, list[list[Cell]]]:
     with zipfile.ZipFile(path) as z:
         shared = _shared(z)
-        return {name: read_sheet(z, p, shared) for name, p in sheet_paths(z).items()}
+        return {name: read_sheet(z, p, shared, values) for name, p in sheet_paths(z).items()}
