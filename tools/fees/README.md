@@ -40,12 +40,14 @@ e.g. `brew install poppler`; written against `pdftotext version 26.01.0`; the ru
     # after the author signs the tag fees-code:
     nice -n 20 uv run --no-project --python 3.12 python -I tools/fees/cli.py --run --unblind    # writes docs/research/fees-results.json
 
-`--run` needs `--unblind` and refuses unless the tag `fees-code` exists as a tag (a branch of that name does not count)
-and is an ancestor of HEAD, `tools/fees` at HEAD equals the tag, `tools/fees` and the design text have no uncommitted
-changes, and every file under `tools/data/fees/` is in `docs/research/fees-files.sha256` with the listed hash (the two
-maps through their `../../fees/` path); a file that is missing, changed or not listed refuses. The code makes no tag.
-`results.json` carries a stamp: the manifest hash, every file hash, the map hashes and the commits of `fees-design`,
-`fees-data-step` and `fees-code`. Standard library only, one thread; run under `nice -n 20`.
+`--run` needs `--unblind` and refuses unless: the three tags `fees-design`, `fees-data-step` and `fees-code` exist as
+annotated tags (a branch of the same name does not count) and lie on one chain ending at HEAD; `tools/fees` at HEAD equals
+`fees-code`; the manifest and both maps equal `fees-data-step`; the design text above its change log equals `fees-design`;
+`tools/fees`, the design text and the manifest have no uncommitted changes; and every file under `tools/data/fees/` is in
+`docs/research/fees-files.sha256` with the listed hash (the two maps through their `../../fees/` path); a file that is missing,
+changed or not listed refuses. The code makes no tag.
+`results.json` carries a stamp: the manifest hash, every file hash, the map hashes, the commits of `fees-design`,
+`fees-data-step` and `fees-code`, HEAD and the tree hash of `tools/fees`. Standard library only, one thread; run under `nice -n 20`.
 
 ## Design to code
 
@@ -91,4 +93,6 @@ maps through their `../../fees/` path); a file that is missing, changed or not l
 
 - Firms today are reported descriptively (remainder, schedule-implied amount, ratio; no pass or fail), as the design change log of 3 Nov 2026 (before the code tag) says.
 - Checks 6 and 7 of §7 are reported as not computable (no household-level ratios in the tables; no national PIT line).
-- Items with an empty cell under Skutečnost 2025 in Tab. 2a are read as 0 and listed in the results.
+- Items with an empty cell under Skutečnost 2025 in Tab. 2a are read as 0 and listed in the results, except that a pool item
+  with an empty cell, or any pool item absent other than 1226 and 1227 (`config.POOL_ABSENT`), stops the run.
+- Tests cannot read `tools/data/fees`: a guard in `conftest.py` fails any `open` or subprocess argument under it, and a test proves it fires.
