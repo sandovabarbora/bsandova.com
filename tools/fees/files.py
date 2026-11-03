@@ -65,7 +65,7 @@ def _rel(path: Path) -> str:
 
 def check_code_frozen() -> None:
     """Exits with the reason unless: the three tags exist as annotated tags and lie on one chain (design, data step,
-    code, HEAD); tools/fees at HEAD equals `fees-code`; the manifest and both maps equal `fees-data-step`; the design text
+    code, HEAD); tools/fees at HEAD equals the code tag (`config.CODE_TAG`); the manifest and both maps equal `fees-data-step`; the design text
     above its change log equals `fees-design`; and tools/fees, the design text and the manifest are committed. A branch
     of the same name can never stand in for a tag."""
     for t in C.STAMP_TAGS:

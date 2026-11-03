@@ -1,7 +1,7 @@
 # Licence-fee funding study
 
 Code for `docs/research/fees-design.md`, frozen at the signed tags `fees-design` and `fees-data-step`; the code itself is
-frozen by `fees-code`, because `fees-data-step` sits on the snapshot commit (change log, 3 November 2026). The design is the
+frozen by `fees-code-2`, because `fees-data-step` sits on the snapshot commit (change log, 3 November 2026). The design is the
 registration: read it first, change log included. Every test and the dry run use invented files with the layout of the real
 ones. The real files were looked at through labels, positions and counts (`--structure`); a few masked prints showed digit-group
 shapes (magnitudes) of some lines, which the change log records under "exposures during code and review". No real value
@@ -37,17 +37,17 @@ e.g. `brew install poppler`; written against `pdftotext version 26.01.0`; the ru
     uv run --no-project --python 3.12 python -I tools/fees/cli.py --verify-files         # every file under tools/data/fees against the manifest
     nice -n 20 uv run --no-project --python 3.12 python -I tools/fees/cli.py --structure # labels, positions, counts of the real files
     uv run --no-project --python 3.12 --with pytest==9.1.1 python -I -m pytest -q -rs tools/fees
-    # after the author signs the tag fees-code:
+    # after the author signs the tag fees-code-2 (which replaced `fees-code`, see the change log):
     nice -n 20 uv run --no-project --python 3.12 python -I tools/fees/cli.py --run --unblind    # writes docs/research/fees-results.json
 
-`--run` needs `--unblind` and refuses unless: the three tags `fees-design`, `fees-data-step` and `fees-code` exist as
+`--run` needs `--unblind` and refuses unless: the three tags `fees-design`, `fees-data-step` and `fees-code-2` exist as
 annotated tags (a branch of the same name does not count) and lie on one chain ending at HEAD; `tools/fees` at HEAD equals
-`fees-code`; the manifest and both maps equal `fees-data-step`; the design text above its change log equals `fees-design`;
+`fees-code-2`; the manifest and both maps equal `fees-data-step`; the design text above its change log equals `fees-design`;
 `tools/fees`, the design text and the manifest have no uncommitted changes; and every file under `tools/data/fees/` is in
 `docs/research/fees-files.sha256` with the listed hash (the two maps through their `../../fees/` path); a file that is missing,
 changed or not listed refuses. The code makes no tag.
 `results.json` carries a stamp: the manifest hash, every file hash, the map hashes, the commits of `fees-design`,
-`fees-data-step` and `fees-code`, HEAD and the tree hash of `tools/fees`. Standard library only, one thread; run under `nice -n 20`.
+`fees-data-step` and `fees-code-2`, HEAD and the tree hash of `tools/fees`. Standard library only, one thread; run under `nice -n 20`.
 
 ## Design to code
 

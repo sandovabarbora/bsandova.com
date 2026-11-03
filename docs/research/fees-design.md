@@ -699,3 +699,12 @@ on HEAD with `tools/fees/` unchanged since. Check 2 of §3 runs with every alloc
   unchanged since `fees-design`. (b) The built files differ from the list of §2.8: there is no `fetch.py` (the snapshot was fetched
   by hand and hashed, §2.8 step) and no `checks.py`; the modules are `config`, `legal`, `alloc`, `model`, `analysis`, `readings`,
   `parse`, `xlsx`, `inputs`, `structure`, `files`, `synth`, `cli`, with the checks in `model` and `analysis`.
+
+**3 November 2026, after the code tag: rounding in the consumption residuals (code tag `fees-code-2`).** The first
+`--run` at `fees-code` (a6e005e) stopped before any result was computed or shown: the guard added in the code review
+(residual ≥ 0) found negative residuals (`01.1~rest`, `02.1~rest`, `04.4~rest`, `05~rest`, `07.2~rest`, `09.2~rest`,
+`11.1~rest`, `11~rest`, in one to three quintiles). A blind check, which printed only booleans, showed that every
+spending cell is in whole CZK and that every negative residual is within half a unit per rounded cell (the parent and each
+listed child), i.e. rounding in the published table. The guard now allows exactly that bound and counts such a residual as
+0; a residual below it still stops the run. Nothing else changed. No value was seen. `fees-code` stays (tags are not moved);
+the run of record uses the new tag `fees-code-2`, and `config.CODE_TAG` names it.

@@ -240,10 +240,12 @@ def test_a_partly_numeric_expenditure_row_is_an_error_not_a_fallback(snap):
 
 
 def test_a_negative_residual_is_an_error():
-    spend = {"01": [D(5)], "01.1.1": [D(2)], "01.1.2": [D(4)]}
+    spend = {"01": [D(4)], "01.1.1": [D(2)], "01.1.2": [D(4)]}
     entries = [{"coicop": c, "kind": k} for c, k in (("01.1.1", "row"), ("01.1.2", "row"), ("01~rest", "residual"))]
-    with pytest.raises(P.ParseError, match="negative"):
+    with pytest.raises(P.ParseError, match="beyond rounding"):          # -2 exceeds 3 cells x half a unit
         P.map_partition(spend, entries)
+    spend["01"] = [D(5)]                                                   # -1 is rounding: counted as 0
+    assert P.map_partition(spend, entries)["01~rest"] == [F(0)]
     spend["01"] = [D(6)]                                                   # exactly zero is fine
     assert P.map_partition(spend, entries)["01~rest"] == [F(0)]
 

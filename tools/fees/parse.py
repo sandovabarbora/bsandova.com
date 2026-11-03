@@ -289,8 +289,12 @@ def map_partition(spend: Mapping[str, Sequence[Fraction]], entries: list[dict]) 
             raise ParseError(f"residual {code} needs a child not yet computed")
         n = len(spend[parent])
         vals[code] = [Fraction(spend[parent][k]) - sum(vals[c][k] for c in under) for k in range(n)]
-        if any(v < -abs(Fraction(spend[parent][k])) / 10**9 for k, v in enumerate(vals[code])):
-            raise ParseError(f"residual {code} is negative: the listed children exceed the parent")
+        # the table is rounded to whole CZK: the children may exceed the parent by up to half a unit per rounded cell
+        # (the parent and each child); such a residual is rounding and counts as 0 (design change log, 3 Nov 2026)
+        bound = Fraction(len(under) + 1, 2)
+        if any(v < -bound for v in vals[code]):
+            raise ParseError(f"residual {code} is negative beyond rounding: the listed children exceed the parent")
+        vals[code] = [max(v, Fraction(0)) for v in vals[code]]
     return vals
 
 

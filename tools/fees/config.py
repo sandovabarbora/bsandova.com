@@ -19,7 +19,7 @@ EXCISE_MAP = HERE / "excise_map.csv"
 
 DESIGN_TAG = "fees-design"
 DATA_TAG = "fees-data-step"
-CODE_TAG = "fees-code"                              # freezes tools/fees (design "Running and verification")
+CODE_TAG = "fees-code-2"                             # freezes tools/fees (design "Running and verification")
 STAMP_TAGS = (DESIGN_TAG, DATA_TAG, CODE_TAG)
 
 BROADCASTERS = ("CT", "CRO")
