@@ -109,9 +109,10 @@ def run(inp: M.QbInputs, qa: L.QaInputs, gross_labels: dict[str, bool] | None = 
     out["seniors"] = M.seniors_cut(inp, e1)
     # ------------------------------------------------------------ checks of §3 (flag the run)
     out["checks_flag"] = {
-        "1_fee_revenue_today": {"identity_holds_by_construction": True, "remainder_plausible": firms["plausible"],
-                                "range_czk": firms["range"], "response": firms["response"],
-                                "household_payments_unvalidated": not firms["validated"]},
+        "1_fee_revenue_today": {"identity_holds_by_construction": True, "remainder_czk": firms["remainder"],
+                                "schedule_implied_czk": firms["schedule_implied"],
+                                "ratio_remainder_to_schedule": firms["ratio_remainder_to_schedule"],
+                                "note": "reported as the identity it is; no pass or fail"},
         "2_allocation_to_the_crown": {"passed": True, "total_czk": C.BILL_TOTAL, "allocations_checked": checked},
     }
     # ------------------------------------------------------------ checks of §7 (reported, never relabel)

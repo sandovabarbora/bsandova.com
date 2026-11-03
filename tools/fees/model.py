@@ -294,19 +294,18 @@ def firm_range(counts: dict[str, int], labels: dict[str, str]) -> tuple[int, int
 
 
 def firms_today(inp: QbInputs) -> dict[str, Any]:
-    hh = households(inp)
+    """Descriptive, no pass or fail (design change log, before the code tag): the remainder of the budgeted fee revenue
+    after modelled household payments, the schedule-implied amount from RES counts, and their ratio."""
     household_rev = C.HOUSEHOLD_ANNUAL["TV"] * inp.payers_tv + C.HOUSEHOLD_ANNUAL["R"] * inp.payers_r
-    remainder = inp.fee_revenue_2026 - household_rev
     out: dict[str, Any] = {"household_revenue": household_rev, "budgeted_fee_revenue": inp.fee_revenue_2026,
-                           "remainder": remainder, "households_total": sum(hh)}
+                           "remainder": inp.fee_revenue_2026 - household_rev, "schedule_implied": None,
+                           "schedule_implied_low": None, "ratio_remainder_to_schedule": None}
     if inp.employer_counts is None or inp.band_labels is None:
-        out.update(range=None, plausible=None, validated=False, reason="no employer counts")
-        out["response"] = "remainder reported only if non-negative; household payments flagged unvalidated"
         return out
     low, high = firm_range(inp.employer_counts, inp.band_labels)
-    ok = 0 <= remainder and low <= remainder <= high
-    out.update(range=(low, high), plausible=ok, validated=ok)
-    out["response"] = "remainder reported" if ok else "firms reported as the range only; household payments flagged unvalidated"
+    out.update(schedule_implied=high, schedule_implied_low=low)
+    if low == high and high:
+        out["ratio_remainder_to_schedule"] = out["remainder"] / high
     return out
 
 

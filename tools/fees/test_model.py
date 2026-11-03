@@ -192,16 +192,28 @@ def test_firm_range_from_bands(loaded):
     assert low == high == exp                                                 # no band straddles: the range is one value
 
 
-def test_firm_remainder_plausibility_and_the_response(inp):
+def test_firms_are_reported_descriptively_with_a_ratio_and_no_verdict(inp):
     f = M.firms_today(inp)
-    assert f["remainder"] == inp.fee_revenue_2026 - (1800 * inp.payers_tv + 660 * inp.payers_r)
-    assert f["plausible"] is False and f["validated"] is False and "range only" in f["response"]
-    low, _ = M.firm_range(inp.employer_counts, inp.band_labels)
-    exact = replace(inp, fee_revenue_2026=1800 * inp.payers_tv + 660 * inp.payers_r + low)
-    assert M.firms_today(exact)["plausible"] is True
-    assert M.firms_today(replace(inp, fee_revenue_2026=F(1)))["plausible"] is False          # negative remainder
+    household = 1800 * inp.payers_tv + 660 * inp.payers_r
+    assert f["remainder"] == inp.fee_revenue_2026 - household and f["household_revenue"] == household
+    low, high = M.firm_range(inp.employer_counts, inp.band_labels)
+    assert f["schedule_implied"] == high == low
+    assert f["ratio_remainder_to_schedule"] == f["remainder"] / high
+    assert not {"plausible", "validated", "response", "range"} & set(f)
     r = M.firms_today(replace(inp, employer_counts=None))
-    assert r["range"] is None and r["validated"] is False
+    assert r["schedule_implied"] is None and r["ratio_remainder_to_schedule"] is None
+    assert M.firms_today(replace(inp, fee_revenue_2026=F(1)))["remainder"] < 0          # a negative remainder is reported, not failed
+
+
+def test_firm_sentence_carries_the_figures_and_the_reasons_they_may_differ(loaded):
+    res = A.run(loaded.qb, loaded.qa, loaded.gross_labels)
+    s = res["firms"]["reading"]
+    for part in ("not every registered firm is registered for the fee", "public bodies (§3(4)) and rental-vehicle fees",
+                 "not full-time equivalents", "a ratio of", "not like for like"):
+        assert part in s
+    assert "unvalidated" not in s and "plausib" not in s
+    flag = res["checks_flag"]["1_fee_revenue_today"]
+    assert flag["identity_holds_by_construction"] is True and "schedule_implied_czk" in flag
 
 
 def test_seniors_cut_is_descriptive(inp):

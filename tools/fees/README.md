@@ -28,8 +28,8 @@ positions and counts (`--structure`).
 
 ## Running
 
-No package is needed to run; the PDFs are read with poppler's `pdftotext` (a system tool, version recorded in the
-results) and the spreadsheets with the standard library. The tests need `pytest==9.1.1` only.
+No package is needed to run; the PDFs are read with poppler's `pdftotext` (a system tool, required: install poppler,
+e.g. `brew install poppler`; the run records its version in the results and the author should note it at tagging) and the spreadsheets with the standard library. The tests need `pytest==9.1.1` only.
 
     uv run --no-project python -I tools/fees/cli.py --synthetic            # invented files, no gate
     uv run --no-project python -I tools/fees/cli.py --verify-files         # every file under tools/data/fees against the manifest
@@ -57,7 +57,7 @@ maps through their `../../fees/` path); a file that is missing, changed or not l
 | §2.5 sharing, gross lines | `config.SHARES`, `model.state_lines` (used only if gross lines exist) |
 | §2.6 inflation, deflator, shock | `parse.cnb_annual`, `legal.inflation_series`, `legal.price_levels` |
 | §2.7 paths, baselines, X | `legal.qa_member`, `legal.baseline_2026` |
-| §3 checks 1 and 2 | `model.firms_today`, `model.firm_range`, `model.CheckFailure` |
+| §3 checks 1 and 2 | `model.firms_today` (descriptive), `model.firm_range`, `model.CheckFailure` |
 | §4 range, §6 labels | `legal.qa_members`, `legal.qa_label`, `model.label_*` |
 | §7 checks 1 to 9d | `analysis.run`, key `checks_reported` |
 | §1 readings A, B, C, firms | `readings.py` |
@@ -87,7 +87,6 @@ maps through their `../../fees/` path); a file that is missing, changed or not l
 
 ## Open items and notes
 
-- The firm range of §3 is a single value on these bands (every band lies inside one schedule class), so the remainder is
-  "plausible" only if it equals that value exactly; the design's response (range only, household payments flagged unvalidated) then applies. Not changed.
+- Firms today are reported descriptively (remainder, schedule-implied amount, ratio; no pass or fail), as the design change log of 3 Nov 2026 (before the code tag) says.
 - Checks 6 and 7 of §7 are reported as not computable (no household-level ratios in the tables; no national PIT line).
 - Items with an empty cell under Skutečnost 2025 in Tab. 2a are read as 0 and listed in the results.

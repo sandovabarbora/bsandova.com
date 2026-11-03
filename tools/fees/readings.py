@@ -43,17 +43,17 @@ def reading_c(budget: Fraction, bill_2027: int, real_bill_2027: Fraction) -> str
 
 
 def reading_firms(firms: dict, f_after: int) -> str:
+    """Firms in the same sentence as the figures and the reasons the two today-figures may differ (design change log)."""
     after = (f"would carry {f2(Fraction(f_after) / 10**9)} bn CZK after (the corporate-income-tax share of the total); "
              "the two figures are not like for like.")
-    if firms.get("plausible"):
-        today = f"Firms and public bodies pay {f2(firms['remainder'] / 10**9)} bn CZK a year today (what remains of the " \
-                "budgeted fee revenue after households, public bodies included) and "
-    elif firms.get("range"):
-        lo, hi = firms["range"]
-        today = (f"Firms and public bodies pay between {f2(Fraction(lo) / 10**9)} and {f2(Fraction(hi) / 10**9)} bn CZK a "
-                 "year today (the range from employer counts and the schedule of §5; the remainder of the budgeted fee "
-                 "revenue failed the plausibility test) and ")
-    else:
-        today = ("Firms and public bodies pay an amount today that cannot be validated without employer counts (the "
-                 "household payments are unvalidated) and ")
-    return today + after
+    today = (f"Firms and public bodies pay {f2(firms['remainder'] / 10**9)} bn CZK a year today (what remains of the "
+             "budgeted fee revenue after households, public bodies included)")
+    sched = firms.get("schedule_implied")
+    if sched is not None:
+        ratio = firms.get("ratio_remainder_to_schedule")
+        today += (f"; the schedule of §5 applied to the registered employers gives {f2(Fraction(sched) / 10**9)} bn CZK"
+                  + (f", a ratio of {f2(ratio)}" if ratio is not None else "")
+                  + ", and the two may differ because not every registered firm is registered for the fee, the remainder "
+                  "includes public bodies (§3(4)) and rental-vehicle fees, and the register counts registered units, "
+                  "not full-time equivalents")
+    return today + " and " + after
