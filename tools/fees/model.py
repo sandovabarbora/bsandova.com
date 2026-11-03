@@ -46,7 +46,7 @@ class AfterSpec:
     other_like_vat: bool = False                    # check 3
     include_social: bool = False                    # check 9(a)
     cit_household_share: Fraction = Fraction(0)     # check 9(b)
-    lines: str = "net"                              # net | gross_v17 (check 7)
+    lines: str = "net"                              # net | gross_v17 | gross_v15 (check 7)
 
 
 # ---------------------------------------------------------------- today
@@ -180,17 +180,18 @@ def state_lines(inp: QbInputs, spec: AfterSpec) -> dict[str, Fraction]:
     g = inp.gross_lines
     if g is None:
         raise P.ParseError("gross lines are not available")
-    sh = C.SHARES["v17"]
+    sh = C.SHARES[spec.lines.removeprefix("gross_")]
     state = 1 - sh["regions"] / 100 - sh["municipalities"] / 100
     state_pit_work = state - C.MUNICIPAL_PIT_EMPLOYMENT / 100
     out = {"vat": g["vat"] * state, "cit": g["cit"] * state,
            "pit": g["pit_employment"] * state_pit_work + g["pit_other"] * state,
-           "excise": g["excise_mineral_oils"] * (1 - C.FUND_MINERAL_OIL / 100) * state + g["excise_other"]}
+           "excise": g["excise_mineral_oils"] * (1 - C.FUND_MINERAL_OIL / 100) + g["excise_other"]}      # excise is not shared with regions or municipalities
     out["other"], out["social"] = inp.pool["other"], inp.pool["social"]
     return out
 
 
-def after(inp: QbInputs, spec: AfterSpec = AfterSpec(), scenario: str = "base", total: int = C.BILL_TOTAL) -> dict[str, Any]:
+def after(inp: QbInputs, spec: AfterSpec | None = None, scenario: str = "base", total: int = C.BILL_TOTAL) -> dict[str, Any]:
+    spec = spec or AfterSpec()
     w = tax_weights(inp, spec)
     hh = households(inp)
     lines = state_lines(inp, spec)

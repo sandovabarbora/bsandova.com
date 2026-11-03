@@ -26,7 +26,7 @@ def reading_a(label: str, x: Fraction, xs: list[Fraction]) -> str:
 
 def reading_b(y_lo: Fraction | None, y_hi: Fraction | None, z: Fraction | None, z_vat: Fraction | None,
               z_pit: Fraction | None) -> str:
-    g = lambda v: "n/a" if v is None else f2(v)          # noqa: E731
+    g = lambda v: "n/a" if v is None else f2(v)
     return ("Today the poorest tenth of households carries between "
             f"{g(y_lo)} and {g(y_hi)} times the share of its income that the richest tenth does (the range is the two "
             "exemption bounds; exemptions are counted by entitlement, not by actual take-up). Funded from the state "

@@ -15,7 +15,7 @@ from fractions import Fraction
 from pathlib import Path
 
 import config as C
-import xlsx as X
+
 
 class ParseError(Exception):
     """A layout the parser does not recognise. Messages carry labels and counts, never values."""
@@ -207,7 +207,7 @@ class Hbs:
 def locate_hbs_characteristics(rows) -> dict:
     cols = _header_cols(rows, QUINTILE_WORDS)
     return {"cols": cols, "households": _find_row(rows, r"Počet domácností \(absol\.\)"),
-            "members": _find_row(rows, r"^\s*členů\b", flags=re.I)}
+            "members": _find_row(rows, r"^\s*členů\b", flags=re.IGNORECASE)}
 
 
 def parse_hbs_characteristics(rows) -> tuple[list[Decimal], list[Decimal]]:
@@ -414,7 +414,7 @@ def cnb_annual(quarterly: Mapping[int, list[Decimal | None]]) -> dict[int, Decim
 
 
 _CPI = re.compile(r"Průměrná roční míra inflace.{0,200}?za\s+12\s+měsíců\s+roku\s+(\d{4})\s+proti\s+průměru\s+12\s+"
-                  r"měsíců\s+roku\s+(\d{4})\s+činila\s+(?:v České republice\s+)?([-−–]?\d+(?:,\d+)?)\s*%", re.S)
+                  r"měsíců\s+roku\s+(\d{4})\s+činila\s+(?:v České republice\s+)?([-−–]?\d+(?:,\d+)?)\s*%", re.DOTALL)
 
 
 def locate_csu_cpi(text: str, year: int = 2025) -> str:

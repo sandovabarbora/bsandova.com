@@ -141,7 +141,8 @@ def run(inp: M.QbInputs, qa: L.QaInputs, gross_labels: dict[str, bool] | None = 
                                          "reason": "the SILC and consumption tables give decile and quintile means only"}
     if inp.gross_lines is not None:
         gl = variant(M.AfterSpec(lines="gross_v17"), "check7_gross_v17")
-        rep["7_sharing_2026_2027"] = {"computable": True, **gl}
+        rep["7_sharing_2026_2027"] = {"computable": True, **gl,
+                                      "gross_with_2025_shares_v15": variant(M.AfterSpec(lines="gross_v15"), "check7_gross_v15")}
     else:
         rep["7_sharing_2026_2027"] = {"computable": False, "gross_lines_in_part_c_by_label": gross_labels,
                                       "reason": "Part C has no national (gross) line for every taxed item of the pool"}
