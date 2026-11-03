@@ -20,6 +20,7 @@ jobs:
       - run: python -m pytest -q -rs tools/bypass
       - run: python -m pytest -q -rs tools/gnss
       - run: python -m pytest -q -rs tools/fees
+      - run: python -m pytest -q -rs tools/fees_article
       - run: python -m pytest -q -rs tools/incentives
       - run: python -m pytest -q -rs tools/blackout
       - run: python -m pytest -q -rs tools/priorities
