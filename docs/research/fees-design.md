@@ -551,3 +551,98 @@ on HEAD with `tools/fees/` unchanged since. Check 2 of §3 runs with every alloc
     40 % is dropped as a test; the seniors' cut is descriptive. (N8) Typographical corrections, "annual" throughout.
     Readability: the Q-B incidence rules moved to §2.4, a file list and a definition of "payer" added, and the tag
     `fees-data-step` added between snapshot and code.
+- 3 November 2026, snapshot step, before any outcome value was read. Every source of §2.8 was fetched headless and
+  hashed into `docs/research/fees-files.sha256` (170 files under `tools/data/fees/2026-11-03/`, the members of the two ČSÚ
+  archives included), with `tools/fees/vat_map.csv` and `tools/fees/excise_map.csv` (N5). Outcome tables were opened only
+  through scripts that print labels and replace every digit by `#`. The decisions below are taken from labels only;
+  the design text above is unchanged.
+  - **Open item 1, fee lines (baseline A or B).** ČT, *Rozpočet České televize na rok 2026*: the revenue summary and the
+    chapter "Televizní poplatky" carry a separate line **"příjem z televizních poplatků"**, distinct from "zúčtování fondu
+    televizních poplatků" and from "VÝNOSY". **Baseline A for ČT, on that line.** ČRo publishes no budget PDF; its 2026
+    budget is the interactive chart on the page "Hospodaření Českého rozhlasu – rozpočet 2026" (iframe
+    `projekty.rozhlas.cz/cro-rozpocet-26a/`, data in `chart.js`, chart title "Rozpočet 2026", values displayed × 1000,
+    so thousand CZK). The revenue chapter has a separate item **"Výnosy z rozhlasových poplatků"** (described as
+    "předpisy rozhlasových poplatků pro fyzické i právnické osoby vč. přirážek k rozhlasovým poplatkům"), inside the
+    group "Tržby za vlastní výkony" and distinct from "Zúčtování fondu". **Baseline A for ČRo, on that item**, as an
+    accrual line including surcharges, not adjusted. Baseline B stays computed for both (§2.7).
+  - **Open item 2, notice under §6(3).** None found: version 14 of act 348/2005 still states 55 and 150 CZK, and its
+    "Souvislosti" page lists no notice of the Ministry of Culture. e-Sbírka was not queried (it needs JavaScript). The
+    §6(2) path of the model stands; the author may confirm in e-Sbírka before the tag `fees-data-step`.
+  - **Open item 3, SILC ranking and income year.** Tab. 2 "Domácnosti podle decilového rozdělení čistých peněžních
+    příjmů na osobu" ranks per person; Tab. 3 "… na modif. spotřební jednotku OECD" ranks per consumption unit. Both say
+    "Rok 2025" for the survey and "PŘEHLED PŘÍJMŮ za rok 2024 (Kč)" for income: **income year 2024**. Tab. 2a is titled "a/
+    Složení domácností a roční příjmy na osobu" ("per capita annual income") and has no row of total household income,
+    so **the fallback of §2.4 applies: Tab. 3a (`1600212603a.xlsx`)**. Total net household income of a decile = row
+    "E. Čisté peněžní příjmy (A-B-C+D)" (per consumption unit) × row "OECD modif." (mean consumption units per
+    household); that row is the mean equivalent size reported. Household size is row "Členů", children row
+    "vyživovaných dětí". Net money income (E), not "G. Celkové čisté příjmy (E+F)" with income in kind, because it is
+    the ranking variable and §4(2) tests money income.
+  - **Open item 4, gross or net.** Part C of the 2025 closing account titles its tables "Příjem státního rozpočtu z DPH"
+    and "Příjmy státního rozpočtu z daní z příjmů fyzických osob" apart from "Celostátní inkaso DPH …" and "Celostátní
+    inkaso daní z příjmů právnických osob …", and its excise table shows "z minerálních olejů (celostátní výnos)" less
+    "převod SD z minerálních olejů do SFDI". The state-budget lines are therefore **net** of the shares of regions,
+    municipalities and the transport fund, and **are used as they stand** (§2.5, last point). Source: Part G, "Tabulka
+    č. 2a: Příjmy státního rozpočtu v druhovém třídění rozpočtové skladby (tis. Kč)", column "Skutečnost" for 2025. Pool by
+    budget item: VAT 1211; excise 1220–1229 (tobacco, mineral oils, spirits, beer, wine) and the energy taxes 1231–1233
+    (gas, solid fuels, electricity), the "energy" of §2.4; PIT 1111, 1112, 1113; CIT 1121. Out of the pool, share
+    reported: 1131 "Příjem z dorovnávacích daní" (listed under 113, not 112), 1234, 132x, 133x, 135x–138x, 140x, 152x,
+    170x. Excluded: social insurance 161x–162x (check 9a uses them). Check 7 needs gross lines; with net lines it
+    uses the "celostátní" lines of Part C where they exist, otherwise it is reported as not computable. Which line is
+    used is decided at the data step, from labels.
+  - **Open item 5, payer counts.** ČT annual report 2025, chapter "Počty evidovaných poplatníků": "K [date] měla
+    Česká televize v evidenci celkem # domácností", split SIPO / direct, and "evidované subjekty" for firms: **a TV
+    household payer count is given**. ČRo annual report 2025, chapter "Vývoj počtu evidovaných přijímačů, resp.
+    poplatníků", table "Počet evid. rozhlasových přijímačů (v ks)" with rows "Fyzické osoby – SIPO", "Fyzické osoby –
+    přímí plátci", "FYZICKÉ OSOBY", "PODNIKATELSKÉ SUBJEKTY", "CELKEM", year-end stocks: **a radio household payer count
+    is given** (row "FYZICKÉ OSOBY"). **The counts are separate for TV and radio**: π_TV from ČT, π_R from ČRo (§2.1).
+    The ČT 2024 report labels its count "televizních přijímačů", not "domácností"; only the 2025 counts enter π.
+  - **Other layout branches.** *PIT basis*: Tab. 3a has the row "C. Daň z příjmů fyzických osob", so **the first basis
+    (income tax paid)** is used; "D. Bonus u daňového zvýhodnění na děti" is not netted against it. Rows "1. Příjmy ze
+    závislé činnosti", "2. Příjmy z podnikání" and "E." also exist, so check 4 runs all three bases. *Seniors' cut*:
+    **published in part.** Tab. 10 "Domácnosti podle druhu domácnosti EU" has the columns "Domácnosti jednotlivců – 65 a
+    více let" and "Dvojice dospělých bez záv. dětí – aspoň jeden 65 let a více". The descriptive cut uses these two
+    columns and says that they cover one-person and two-adult households only; Tab. 11 (age of the household head) is
+    not used. *Exempt-share cross-check*: Tab. 5 is titled "… podle čistého příjmu po odečtení nákladů na bydlení ve
+    vztahu k životnímu minimu" (after housing costs), and its classes are 1,00–1,49, 1,50–1,99, 2,00–2,39, 2,40–2,99 … ŽM.
+    It has no edge at 2.15 and uses another income concept, so **the cross-check is not made**.
+  - **Inflation cutoff (§2.6).** On 3 November 2026 the ČNB forecast page lists summer 2026 as current, and the report
+    (now named *Zpráva o měnové politice*) has no autumn 2026 issue. **Summer 2026 is snapshotted; the cutoff remains 30
+    November 2026.** If the autumn report is out by then, it is fetched and hashed in a dated entry and replaces summer.
+    The path is the row "Spotřebitelské ceny (%, meziročně, průměr)" of the key-indicators table, quarterly to 2028 Q4,
+    so 2029 and 2030 take 2.0 %. ČSÚ's 2025 annual-average CPI comes from its statement "Průměrná roční míra inflace …
+    2025".
+  - **Employers by size band (§3).** RES tables 1–2 (`res_cr`) give only the bands 0, 1–19, 20–249 and 250+. The RES open
+    data (`res_data.csv`, field KATPO, code list 579) give 20–24, 25–49, 50–99, 100–199, 200–249, 250–499, 500–999 and
+    larger bands, which match §5(3), and **are used**: entities without a termination date (DDATZAN empty), "Neuvedeno"
+    and "Bez zaměstnanců" at multiple 0, and the band 500–999 at 100 (minimum and maximum, by the 500-employee rule).
+    No count of rental vehicles is published, so none is added.
+  - **Living minimum (§2.4, E1).** Version 27 of act 110/2006, in force on 1 January 2026, is not linked publicly. A
+    guessed URL returned the access-denied JavaScript page and was not pursued. Version 28 (31 March – 30 September 2026)
+    was fetched: 4 860 CZK for a single person, 4 470 for the first person, 4 040 for each further adult, and 3 490,
+    3 050 and 2 480 for the child bands (legal amounts). It is used unless the author finds that version 27 differs.
+    This is an **open item**.
+  - **VAT and excise maps (N5).** The maps were written from the CZ-COICOP codes and labels of consumption Tab. 3b
+    (`1600662632.xlsx`). §47 and annexes 2–3 of act 235/2004 have identical text in the versions of 1 July 2025 and 1
+    January 2026. The rows form a partition: each listed row, plus a residual per parent (parent less its listed
+    children, since "z toho:" children are not exhaustive). The rates are 21 %, 12 %, or 0 for exempt supplies (§§54–59,
+    56a), with a treatment column. A row whose label covers goods at different rates takes the basic rate, and check 3
+    bounds this. Excised rows: alcohol (02.1.x, with still wine kept although its excise rate is zero), tobacco (02.3),
+    the rest of division 02, motor fuels (07.2.2), electricity, gas, solid fuels and liquid heating fuels (04.5.1,
+    04.5.2, 04.5.4, the rest of 04.5). Heat (04.5.5) is not excised. The individually linked consumption Tab. 3a differs
+    in bytes from the copy in the archive, and the individual file is the one parsed. Tables 2a, 2d, 2e, 3e and 4e are
+    missing from the SILC archive and were fetched individually.
+  - **Limitation noted, no change.** The consumption quintiles rank households by net money income per person, the
+    SILC deciles (fallback) by consumption unit. Quintile k still goes to deciles 2k−1 and 2k, as §2.4 says.
+  - **What was seen.** No digit of any outcome table was read, except as follows. (a) A web search used to locate
+    ČRo's 2025 report returned a summary that stated: ČRo's 2025 budget balanced at 2,358 mil. CZK of costs and revenues;
+    "total revenues from broadcasting fees reached 2.316 billion crowns in 2025", exceeding "the original annual plan
+    of 2.0676 billion crowns by 248.58 million crowns", 112 % fulfilment; an investment plan of 160 mil. CZK. The 2.316 bn
+    is ČRo's realised 2025 fee revenue, an input of baseline B. No decision above depends on it. (b) One masked print
+    of ČRo's `chart.js` replaced digits one by one and so showed their count: the fee item has 7 digits (thousand CZK),
+    "Zúčtování fondu", "Ostatní provozní výnosy" and "Finanční výnosy" 5 each, "Mimořádné výnosy" 1, and "Inkasné za
+    rozhlasové poplatky" and "DPH bez nároku na odpočet" 5 each. (c) Signs and words of direction were visible beside
+    masked numbers: "+# %" for ČT's fee line against the previous budget and year and "zvýšení" in its 2026 budget,
+    "více v porovnání s rozpočtem" and "s rokem" in ČT's 2025 report, "vyšším" against plan and "-# %" for firms' plan
+    fulfilment in ČRo's 2025 report, "pokles" of receivers and a "nárůst" for natural persons there, minus signs in
+    the difference columns of Part G, and "-" in SILC Tab. 2a row D for deciles 8 and 10. Every later masked print also
+    masked signs.

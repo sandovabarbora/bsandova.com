@@ -1,0 +1,109 @@
+coicop,label_cs,kind,vat_rate_pct,vat_treatment,legal_basis_235_2004,note
+01.1.1,Obiloviny a výrobky z obilovin,row,12,reduced,"§47(3), příl. 3 (kap. 01-05, 07-23)",
+01.1.2,Maso a ostatní části zvířat,row,12,reduced,"§47(3), příl. 3",
+01.1.3,Ryby a mořské plody,row,12,reduced,"§47(3), příl. 3",
+01.1.4,"Mléko, mléčné výrobky a vejce",row,12,reduced,"§47(3), příl. 3",
+01.1.5,Oleje a tuky,row,12,reduced,"§47(3), příl. 3",
+01.1.6,Ovoce a ořechy,row,12,reduced,"§47(3), příl. 3",
+01.1.7,"Zelenina, luštěniny a brambory",row,12,reduced,"§47(3), příl. 3",
+01.1.8,Cukr a cukrovinky,row,12,reduced,"§47(3), příl. 3",
+01.1.9,"Hotová jídla, polotovary a ostatní potravinářské výrobky",row,12,reduced,"§47(3), příl. 3",
+01.1~rest,"Potraviny, zbytek",residual,12,reduced,"§47(3), příl. 3","children listed without 'z toho', residual expected near zero"
+01.2.1,Ovocné a zeleninové šťávy,row,21,basic,§47(3); příl. 3 excludes beverages,
+01.2.2,Káva a kávové náhražky,row,12,reduced,"§47(3), příl. 3 (kap. 09)","coffee as goods, not a served beverage"
+01.2.3,Čaj,row,12,reduced,"§47(3), příl. 3 (kap. 09)",
+01.2.5,Minerální a stolní vody,row,21,basic,§47(3); příl. 3 code 2201 covers only drinking water supplied by mains,
+01.2.6,Limonády,row,21,basic,§47(3); příl. 3 excludes beverages,
+01.2~rest,"Nealkoholické nápoje, zbytek",residual,21,basic,mixed: cocoa (12) and other beverages (21); basic rate for mixed rows,
+01~rest,"Potraviny a nealkoholické nápoje, zbytek",residual,21,basic,mixed services; basic rate for mixed rows,
+02.1.1,Destiláty a likéry,row,21,basic,§47(3),
+02.1.2,Víno,row,21,basic,§47(3),still wine carries a zero excise rate; the row is kept as alcohol per §2.4 of the design
+02.1.3,Pivo,row,21,basic,§47(3),
+02.1.9,Ostatní alkoholické nápoje,row,21,basic,§47(3),
+02.1~rest,"Alkoholické nápoje, zbytek",residual,21,basic,§47(3),
+02.3,Tabák,row,21,basic,§47(3),
+02~rest,"Alkoholické nápoje, tabák, zbytek",residual,21,basic,§47(3),alcohol production services and other items of the division
+03.1,Odívání,row,21,basic,§47(3),
+03.2,Obuv,row,21,basic,§47(3),
+03~rest,"Odívání a obuv, zbytek",residual,21,basic,§47(3),
+04.1.1,Nájemné za hlavní bydlení,row,0,exempt_no_credit,§56a (nájem nemovité věci),
+04.1~rest,"Nájemné za bydlení, zbytek",residual,0,exempt_no_credit,§56a,short-term lets and parking (21) not separated
+04.3,"Drobné opravy, údržba a zabezpečení bydlení",row,21,basic,§47(3)-(4); no reduced rate for housing repairs in the 2025 text,
+04.4.1,Vodné a stočné,row,12,reduced,"§47(4), příl. 2 (CZ-CPA 36.00.2, 37)",
+04.4.2,Sběr a odvoz odpadu,row,0,outside_scope,"municipal waste charge, not a taxable supply of a public body",private collection at 21 % not separated
+04.4.4,Ostatní služby související s bydlením,row,21,basic,§47(4),
+04.4~rest,"Dodávka vody a jiné služby související s bydlením, zbytek",residual,21,basic,§47(4),
+04.5.1,Elektřina,row,21,basic,§47(3),
+04.5.2,Plyn,row,21,basic,§47(3),
+04.5.4,Pevná paliva,row,21,basic,§47(3),firewood is not excised and is not separated
+04.5.5,Teplo a teplá voda,row,12,reduced,§47(3) (teplo a chlad),heat is not excised; upstream fuel taxes not traced
+04.5~rest,"Elektřina, plyn a ostatní paliva, zbytek",residual,21,basic,§47(3),liquid heating fuels
+04~rest,"Bydlení, voda, energie, paliva, zbytek",residual,21,basic,basic rate for mixed rows,
+05.1,Nábytek a zařízení domácnosti,row,21,basic,§47(3),
+05.2,Bytový textil,row,21,basic,§47(3),
+05.3,Domácí spotřebiče,row,21,basic,§47(3),
+05.4,"Skleněné, stolní a kuchyňské potřeby pro domácnost",row,21,basic,§47(3),
+05.5,"Nářadí, nástroje a vybavení pro dům a zahradu",row,21,basic,§47(3),
+05.6,Zboží a služby pro domácnost,row,21,basic,§47(3)-(4),
+05~rest,"Vybavení, zařízení a služby pro domácnost, zbytek",residual,21,basic,§47(3)-(4),
+06.1,Léčiva a zdravotnické potřeby,row,12,reduced,"§47(3), příl. 3 (kap. 30, zdravotnické prostředky)",non-prescription health goods at 21 % not separated
+06.2.2,Ambulantní stomatologická péče,row,0,exempt_no_credit,§58 (zdravotní služby),
+06.2~rest,"Ambulantní zdravotní péče, zbytek",residual,0,exempt_no_credit,§58,
+06.3,Ústavní zdravotní péče,row,0,exempt_no_credit,§58,
+06.4,Jiné služby zdravotní péče,row,0,exempt_no_credit,§58,
+06~rest,"Zdraví, zbytek",residual,0,exempt_no_credit,§58,
+07.1,Nákup osobních dopravních prostředků,row,21,basic,§47(3),
+07.2.1,Díly a příslušenství pro osobní dopravní prostředky,row,21,basic,§47(3),
+07.2.2,Pohonné hmoty a maziva pro osobní dopravní prostředky,row,21,basic,§47(3),
+07.2.3,Údržba a opravy osobních dopravních prostředků,row,21,basic,§47(4),
+07.2.4,Ostatní služby pro osobní dopravní prostředky,row,21,basic,§47(4),"motorway vignette and tolls are charges, not separated"
+07.2~rest,"Provoz osobních dopravních prostředků, zbytek",residual,21,basic,§47(3)-(4),
+07.3.1,Kolejová osobní doprava,row,12,reduced,"§47(4), příl. 2 (CZ-CPA 49, hromadná doprava)",
+07.3.2,Silniční osobní doprava,row,12,reduced,"§47(4), příl. 2 (CZ-CPA 49, hromadná doprava)",taxi at 21 % not separated
+07.3.3,Letecká osobní doprava,row,0,exempt_with_credit,§70 (international passenger transport),domestic flights at 21 % not separated
+07.3.5,Kombinovaná osobní doprava,row,12,reduced,"§47(4), příl. 2 (CZ-CPA 49)",
+07.3~rest,"Osobní doprava, zbytek",residual,21,basic,basic rate for mixed rows,
+07.4,Přepravní služby,row,21,basic,§47(4),
+07~rest,"Doprava, zbytek",residual,21,basic,§47(3)-(4),
+08.1,Informační a telekomunikační zařízení a příslušenství,row,21,basic,§47(3),
+08.2,Software,row,21,basic,§47(4),
+08.3.2,Mobilní telefonní služby,row,21,basic,§47(4),
+08.3.3,Služby internetového připojení a ukládání dat,row,21,basic,§47(4),
+08.3.4,Balíčky telekomunikačních služeb,row,21,basic,§47(4),
+08.3~rest,"Informační a telekomunikační služby, zbytek",residual,21,basic,§47(4),"universal postal services (§52, exempt) not separated"
+08~rest,"Informace a telekomunikace, zbytek",residual,21,basic,§47(3)-(4),
+09.1,Zboží dlouhodobé spotřeby pro rekreaci,row,21,basic,§47(3),
+09.2.1,"Hry, hračky a potřeby pro zájmové činnosti",row,21,basic,§47(3),
+09.2.2,"Vybavení pro sport, kempování a venkovní rekreaci",row,21,basic,§47(3),
+09.2~rest,"Jiné zboží pro rekreaci, zbytek",residual,21,basic,§47(3),
+09.3.1,"Výrobky pro zahradu, rostliny a květiny",row,21,basic,"mixed: live plants 0601-0602 (12), cut flowers and garden products (21); basic rate for mixed rows",
+09.3.2,Domácí zvířata a potřeby pro zvířata,row,21,basic,"mixed: animals and feed (12), pet products (21); basic rate for mixed rows",
+09.3~rest,"Výrobky pro zahradu, rostliny a domácí zvířata, zbytek",residual,21,basic,basic rate for mixed rows,
+09.4.5,Veterinární a ostatní služby pro zvířata,row,21,basic,§47(4); not a §58 health service,
+09.4.6,Služby pro rekreaci a sport,row,12,reduced,"§47(4), příl. 2 (CZ-CPA 93.11-93.29)",sport instruction at 21 % not separated
+09.4~rest,"Rekreační služby, zbytek",residual,21,basic,basic rate for mixed rows,"games of chance (§60, exempt) not separated"
+09.5,Hudební nástroje a záznamová média s audiovizuálním obsahem,row,21,basic,§47(3),
+09.6.1,"Kina, divadla a koncerty",row,12,reduced,"§47(4), příl. 2 (vstupné)",
+09.6.2,"Muzea, knihovny a jiná kulturní zařízení",row,12,reduced,"§47(4), příl. 2 (vstupné)",
+09.6~rest,"Kulturní služby, zbytek",residual,21,basic,basic rate for mixed rows,TV and radio licence fees (outside VAT) and subscriptions (21) not separated
+09.7,"Noviny, knihy a papírnické zboží",row,21,basic,"mixed: books (§71i, 0), newspapers (příl. 3, 12), stationery (21); basic rate for mixed rows",
+09.8,Organizovaná dovolená a zájezdy,row,21,basic,"§89 (zvláštní režim cestovní služby, daň z přirážky)","margin scheme: the rate applies to the margin only, so the VAT content is overstated"
+09~rest,"Rekreace, sport a kultura, zbytek",residual,21,basic,basic rate for mixed rows,
+10,Služby v oblasti vzdělávání,row,0,exempt_no_credit,§57 (výchova a vzdělávání),
+11.1.1,"Restaurace, kavárny a podobná zařízení",row,12,reduced,"§47(4), příl. 2 (CZ-CPA 56)",drinks other than water and selected drinks at 21 % not separated
+11.1.2,"Jídelny, kantýny a menzy",row,12,reduced,"§47(4), příl. 2 (CZ-CPA 56)",
+11.1~rest,"Stravovací služby, zbytek",residual,12,reduced,"§47(4), příl. 2 (CZ-CPA 56)",
+11.2,Ubytovací služby,row,12,reduced,"§47(4), příl. 2 (CZ-CPA 55)",
+11~rest,"Stravovací a ubytovací služby, zbytek",residual,12,reduced,"§47(4), příl. 2",
+12.1.3,Pojištění související s bydlením,row,0,exempt_no_credit,§55,
+12.1.4,Pojištění související s dopravou,row,0,exempt_no_credit,§55,
+12.1~rest,"Pojištění, zbytek",residual,0,exempt_no_credit,§55,
+12.2,Finanční služby,row,0,exempt_no_credit,§54,explicit fees at 21 % not separated
+12~rest,"Pojištění a finanční služby, zbytek",residual,0,exempt_no_credit,§54-55,
+13.1.2,Předměty pro osobní péči,row,21,basic,§47(3),
+13.1.3,Služby pro osobní péči,row,21,basic,§47(4),
+13.1~rest,"Osobní péče, zbytek",residual,21,basic,§47(3)-(4),
+13.2,Ostatní osobní předměty,row,21,basic,§47(3),"child car seats (příl. 3, 12) not separated"
+13.3,Sociální péče,row,0,exempt_no_credit,§59 (sociální pomoc),
+13.9,Ostatní služby,row,21,basic,§47(4),"funeral services (příl. 2, 12) not separated"
+13~rest,"Osobní a sociální péče, různé zboží a služby, zbytek",residual,21,basic,basic rate for mixed rows,
