@@ -25,7 +25,11 @@ def jsonable(x: Any) -> Any:
     return x
 
 
-def pct(xs):
+def exact(x: Fraction | None) -> str | None:
+    return None if x is None else f"{x.numerator}/{x.denominator}"
+
+
+def pct(xs: list[Fraction]) -> list[Fraction]:
     return [x * 100 for x in xs]
 
 
@@ -34,23 +38,25 @@ def qa_section(qa: L.QaInputs, window_start: int) -> dict[str, Any]:
     xs = [m["x"] for m in ms]
     prim = next(m for m in ms if (m["shock"], m["reading"], m["baseline"]) == tuple(C.PRIMARY.values()))
     return {"window_start": window_start, "label": L.qa_label(xs), "x_primary_bn": prim["x"], "x_min_bn": min(xs),
-            "x_max_bn": max(xs), "primary": prim, "members": ms,
+            "x_max_bn": max(xs), "x_primary_bn_exact": exact(prim["x"]), "x_min_bn_exact": exact(min(xs)),
+            "x_max_bn_exact": exact(max(xs)), "primary": prim, "members": ms,
             "paths_2_and_3_coincide_in_primary": prim["paths_2_and_3_coincide"],
             "reading_a": R.reading_a(L.qa_label(xs), prim["x"], xs)}
 
 
 def qa_compact(sec: dict) -> dict:
     return {"window_start": sec["window_start"], "label": sec["label"], "x_primary_bn": sec["x_primary_bn"],
-            "x_min_bn": sec["x_min_bn"], "x_max_bn": sec["x_max_bn"],
+            "x_min_bn": sec["x_min_bn"], "x_max_bn": sec["x_max_bn"], "x_primary_bn_exact": sec["x_primary_bn_exact"],
             "members": [{k: m[k] for k in ("shock", "reading", "baseline", "x", "x_13", "x_23", "current_law_steps",
-                                           "bill_triggers", "paths_2_and_3_coincide")} for m in sec["members"]]}
+                                           "bill_triggers", "paths_2_and_3_coincide")} | {"x_exact": exact(m["x"])}
+                        for m in sec["members"]]}
 
 
-def qb_labels(y_lo, y_hi, z) -> dict[str, str]:
+def qb_labels(y_lo: Fraction | None, y_hi: Fraction | None, z: Fraction | None) -> dict[str, str]:
     return {"today": M.label_today(y_lo, y_hi), "after": M.label_after(z), "change": M.label_change(z, y_lo, y_hi)}
 
 
-def y_range(inp: M.QbInputs, pi_one: bool = False):
+def y_range(inp: M.QbInputs, pi_one: bool = False) -> tuple[dict[str, Any], dict[str, Any]]:
     e1 = M.fee_today(inp, M.exempt_flags(inp.silc), pi_one)
     e0 = M.fee_today(inp, None, pi_one)
     return e0, e1
@@ -63,12 +69,15 @@ def run(inp: M.QbInputs, qa: L.QaInputs, gross_labels: dict[str, bool] | None = 
     out["qa"] = {k: v for k, v in qa_main.items() if k != "members"} | {"members": qa_compact(qa_main)["members"]}
     prim = qa_main["primary"]
     pl27 = prim["price_level"][2027]
+    # ------------------------------------------------------------ firms (their sentence goes into readings B and C)
+    firms = M.firms_today(inp)
     # ------------------------------------------------------------ Q-B today
     e0, e1 = y_range(inp)
     flags = M.exempt_flags(inp.silc)
     y_lo, y_hi = e1["ratio"], e0["ratio"]
     base = M.after(inp)
     z = base["ratio"]
+    firm_sentence = R.reading_firms(firms, base["firms"])
     z_vat = M.after(inp, scenario="vat_only")["ratio"]
     z_pit = M.after(inp, scenario="pit_only")["ratio"]
     checked = ["base", "vat_only", "pit_only"]
@@ -85,26 +94,26 @@ def run(inp: M.QbInputs, qa: L.QaInputs, gross_labels: dict[str, bool] | None = 
         "e1_payer_shortfall": {"tv": e1["shortfall_tv"], "radio": e1["shortfall_r"]},
         "today": {"e0": {"pay_hh": e0["pay_hh"], "burden_pct": pct(e0["burden"]), "ratio_y": y_hi},
                   "e1": {"pay_hh": e1["pay_hh"], "burden_pct": pct(e1["burden"]), "ratio_y": y_lo}},
-        "y_lo": y_lo, "y_hi": y_hi, "y_order_ok": (y_lo is not None and y_hi is not None and y_lo <= y_hi),
-        "after": {"per_hh": base["per_hh"], "burden_pct": pct(base["burden"]), "ratio_z": z,
+        "y_lo": y_lo, "y_hi": y_hi, "y_lo_exact": exact(y_lo), "y_hi_exact": exact(y_hi), "y_order_ok": (y_lo is not None and y_hi is not None and y_lo <= y_hi),
+        "after": {"per_hh": base["per_hh"], "burden_pct": pct(base["burden"]), "ratio_z": z, "ratio_z_exact": exact(z),
                   "parts_by_tax_czk": base["parts"], "firms_czk": base["firms"],
                   "decile_total_czk": base["decile_total"],
                   "ratio_z_vat_only": z_vat, "ratio_z_pit_only": z_pit,
+                  "ratio_z_vat_only_exact": exact(z_vat), "ratio_z_pit_only_exact": exact(z_pit),
                   "out_of_pool_share_of_state_tax_lines": M.out_of_pool_share(inp.pool),
                   "pool_lines_czk": {k: v for k, v in inp.pool.items()}},
         "labels": labels,
         "monotonicity": {"today_e0": M.monotonicity(e0["burden"]), "today_e1": M.monotonicity(e1["burden"]),
                          "after_base": M.monotonicity(base["burden"])},
-        "reading_b": R.reading_b(y_lo, y_hi, z, z_vat, z_pit),
+        "reading_b": R.reading_b(y_lo, y_hi, z, z_vat, z_pit, firm_sentence),
         "debt_scenario": "if the amount is borrowed, current households carry nothing now",
     }
     # ------------------------------------------------------------ reading C and firms
     budget = inp.fee_revenue_2026
     out["reading_c"] = {"budgeted_fee_revenue_2026_czk": budget, "bill_2027_czk": C.BILL_TOTAL,
                         "bill_2027_in_2026_prices_czk": Fraction(C.BILL_TOTAL) / pl27,
-                        "text": R.reading_c(budget, C.BILL_TOTAL, Fraction(C.BILL_TOTAL) / pl27)}
-    firms = M.firms_today(inp)
-    out["firms"] = {**firms, "after_czk": base["firms"], "reading": R.reading_firms(firms, base["firms"])}
+                        "text": R.reading_c(budget, C.BILL_TOTAL, Fraction(C.BILL_TOTAL) / pl27, firm_sentence)}
+    out["firms"] = {**firms, "after_czk": base["firms"], "reading": firm_sentence}
     # ------------------------------------------------------------ seniors
     out["seniors"] = M.seniors_cut(inp, e1)
     # ------------------------------------------------------------ checks of §3 (flag the run)
@@ -112,6 +121,7 @@ def run(inp: M.QbInputs, qa: L.QaInputs, gross_labels: dict[str, bool] | None = 
         "1_fee_revenue_today": {"identity_holds_by_construction": True, "remainder_czk": firms["remainder"],
                                 "schedule_implied_czk": firms["schedule_implied"],
                                 "ratio_remainder_to_schedule": firms["ratio_remainder_to_schedule"],
+                                "ratio_remainder_to_schedule_exact": exact(firms["ratio_remainder_to_schedule"]),
                                 "note": "reported as the identity it is; no pass or fail"},
         "2_allocation_to_the_crown": {"passed": True, "total_czk": C.BILL_TOTAL, "allocations_checked": checked},
     }
@@ -128,7 +138,7 @@ def run(inp: M.QbInputs, qa: L.QaInputs, gross_labels: dict[str, bool] | None = 
         checked.append(name)
         yl, yh = y_pair or (y_lo, y_hi)
         lab = qb_labels(yl, yh, res["ratio"])
-        return {"ratio_z": res["ratio"], "burden_pct": pct(res["burden"]), "firms_czk": res["firms"], "labels": lab,
+        return {"ratio_z": res["ratio"], "ratio_z_exact": exact(res["ratio"]), "burden_pct": pct(res["burden"]), "firms_czk": res["firms"], "labels": lab,
                 "differs_from_primary": lab != labels}
 
     rep["3_vat_uniform_rate"] = variant(M.AfterSpec(vat_mode="uniform"), "check3_uniform_vat")

@@ -241,15 +241,16 @@ def out_of_pool_share(pool: dict[str, Fraction]) -> Fraction:
 
 # ---------------------------------------------------------------- labels (§6)
 
-def _band(r: Fraction | None, positive_if_none: bool = True) -> str:
+def _band(r: Fraction | None) -> str:
+    """An undefined ratio (the richest tenth's burden is 0) is read as above the band, everywhere."""
     lo, hi = C.SIMILAR_BAND
     if r is None:
-        return "higher" if positive_if_none else "lower"
+        return "higher"
     return "higher" if r > hi else "lower" if r < lo else "similar"
 
 
 def label_today(y_lo: Fraction | None, y_hi: Fraction | None) -> str:
-    bands = {_band(y_lo, False), _band(y_hi, False)}
+    bands = {_band(y_lo), _band(y_hi)}
     if len(bands) > 1:
         return "depends on the assumption"
     b = bands.pop()

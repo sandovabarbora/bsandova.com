@@ -205,15 +205,34 @@ def test_firms_are_reported_descriptively_with_a_ratio_and_no_verdict(inp):
     assert M.firms_today(replace(inp, fee_revenue_2026=F(1)))["remainder"] < 0          # a negative remainder is reported, not failed
 
 
-def test_firm_sentence_carries_the_figures_and_the_reasons_they_may_differ(loaded):
+def test_firm_sentence_has_the_caveat_before_the_after_figure_and_is_embedded_in_readings_b_and_c(loaded):
     res = A.run(loaded.qb, loaded.qa, loaded.gross_labels)
     s = res["firms"]["reading"]
+    today, after = s.split(". After, ")
     for part in ("not every registered firm is registered for the fee", "public bodies (§3(4)) and rental-vehicle fees",
-                 "not full-time equivalents", "a ratio of", "not like for like"):
-        assert part in s
+                 "not full-time equivalents", "times that"):
+        assert part in today
+    assert "not like for like" not in today and "not like for like" in after and "corporate-income-tax" in after
     assert "unvalidated" not in s and "plausib" not in s
+    assert s in res["qb"]["reading_b"] and s in res["reading_c"]["text"]
     flag = res["checks_flag"]["1_fee_revenue_today"]
     assert flag["identity_holds_by_construction"] is True and "schedule_implied_czk" in flag
+
+
+def test_negative_remainder_is_stated_as_a_remainder_not_as_a_payment(loaded):
+    qb = replace(loaded.qb, fee_revenue_2026=F(1))
+    s = A.run(qb, loaded.qa, loaded.gross_labels)["firms"]["reading"]
+    assert "the remainder is negative, so no figure for firms today is given" in s
+    assert not s.startswith("Firms and public bodies pay") and s.startswith("The remainder of the budgeted fee revenue")
+
+
+def test_undefined_ratio_is_read_as_above_the_band_everywhere():
+    burden = [F(1)] * 9 + [F(0)]
+    assert M.ratio(burden) is None
+    assert M.label_after(None) == "higher"
+    assert M.label_today(None, None) == "the poorest tenth carries a higher share of its income than the richest tenth"
+    assert M.label_today(None, F(1, 2)) == "depends on the assumption"
+    assert M.label_change(None, F(1), F(1)) == "higher after" and M.label_change(F(1), None, None) == "higher after"
 
 
 def test_seniors_cut_is_descriptive(inp):
@@ -247,3 +266,13 @@ def test_gross_check_runs_when_lines_are_available(loaded):
     qb = replace(loaded.qb, gross_lines=gross)
     res = A.run(qb, loaded.qa, loaded.gross_labels)
     assert res["checks_reported"]["7_sharing_2026_2027"]["computable"] is True
+
+
+def test_exact_strings_sit_next_to_the_floats(loaded):
+    res = A.run(loaded.qb, loaded.qa, loaded.gross_labels)
+    x = res["qa"]["x_primary_bn"]
+    num, den = res["qa"]["x_primary_bn_exact"].split("/")
+    assert F(int(num), int(den)) == x
+    assert F(*map(int, res["qb"]["y_hi_exact"].split("/"))) == res["qb"]["y_hi"]
+    assert F(*map(int, res["qb"]["after"]["ratio_z_exact"].split("/"))) == res["qb"]["after"]["ratio_z"]
+    assert all("x_exact" in m for m in res["qa"]["members"])
