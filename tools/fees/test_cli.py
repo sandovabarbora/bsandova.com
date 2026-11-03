@@ -20,68 +20,143 @@ def git(repo, *args):
     return subprocess.run(["git", "-C", str(repo), *args], capture_output=True, text=True, check=True).stdout
 
 
+DESIGN_TEXT = "intro\n\n## 2. Rules\nrule\n\n## Change log\n- first entry\n"
+
+
 @pytest.fixture
 def repo(tmp_path, monkeypatch):
+    """A throwaway repository holding the design commit tagged `fees-design`; `snapshot` and `freeze` add the rest."""
     r = tmp_path / "repo"
     (r / "tools/fees").mkdir(parents=True)
     (r / "docs/research").mkdir(parents=True)
     (r / "tools/fees/code.py").write_text("x = 1\n")
-    (r / "docs/research/fees-design.md").write_text("design\n")
+    (r / "tools/fees/vat_map.csv").write_text("v\n")
+    (r / "tools/fees/excise_map.csv").write_text("e\n")
+    (r / "docs/research/fees-design.md").write_text(DESIGN_TEXT)
+    (r / "docs/research/fees-files.sha256").write_text("# header\n")
     (r / ".gitignore").write_text("tools/data/fees/\n")
     git(r.parent, "init", "-q", "-b", "main", str(r))
     for k, v in (("user.email", "t@example.com"), ("user.name", "t"), ("commit.gpgsign", "false"), ("tag.gpgsign", "false")):
         git(r, "config", k, v)
     git(r, "add", "-A")
     git(r, "commit", "-qm", "design")
+    git(r, "tag", "-a", "-m", "design", C.DESIGN_TAG)
     for name, value in (("ROOT", r), ("DATA", r / "tools/data/fees"), ("DESIGN", r / "docs/research/fees-design.md"),
-                        ("MANIFEST", r / "docs/research/fees-files.sha256"),
-                        ("RESULTS", r / "docs/research/fees-results.json")):
+                        ("MANIFEST", r / "docs/research/fees-files.sha256"), ("VAT_MAP", r / "tools/fees/vat_map.csv"),
+                        ("EXCISE_MAP", r / "tools/fees/excise_map.csv"), ("RESULTS", r / "docs/research/fees-results.json")):
         monkeypatch.setattr(C, name, value)
     (r / "tools/data/fees/2026-11-03").mkdir(parents=True)
     return r
+
+
+def snapshot(repo):
+    git(repo, "add", "-A")
+    git(repo, "commit", "-q", "--allow-empty", "-m", "snapshot")
+    git(repo, "tag", "-a", "-m", "data", C.DATA_TAG)
+
+
+def code_tag(repo, annotated=True):
+    git(repo, "tag", *(["-a", "-m", "code"] if annotated else []), C.CODE_TAG)
+
+
+def freeze(repo):
+    snapshot(repo)
+    git(repo, "commit", "-q", "--allow-empty", "-m", "code")
+    code_tag(repo)
 
 
 def refusal(match):
     return pytest.raises(SystemExit, match=match)
 
 
-def test_no_tag_no_run(repo):
-    with refusal("does not exist"):
+@pytest.mark.parametrize("missing", [C.DESIGN_TAG, C.DATA_TAG, C.CODE_TAG])
+def test_each_of_the_three_tags_is_required(repo, missing):
+    freeze(repo)
+    F.check_code_frozen()
+    git(repo, "tag", "-d", missing)
+    with refusal(f"the tag {missing} does not exist"):
         F.check_code_frozen()
 
 
 def test_a_branch_of_the_same_name_is_not_the_tag(repo):
+    snapshot(repo)
     git(repo, "branch", C.CODE_TAG)
     with refusal("does not exist"):
         F.check_code_frozen()
 
 
-def test_tag_must_be_an_ancestor_of_head(repo):
+def test_tags_must_be_annotated(repo):
+    snapshot(repo)
+    code_tag(repo, annotated=False)
+    with refusal("not an annotated tag"):
+        F.check_code_frozen()
+
+
+def test_the_tags_must_lie_on_one_chain_in_order(repo):
+    code_tag(repo)                                                      # the code tag before the data-step tag
+    snapshot(repo)
+    with refusal("fees-data-step is not an ancestor of fees-code"):
+        F.check_code_frozen()
+
+
+def test_code_tag_must_be_an_ancestor_of_head(repo):
+    snapshot(repo)
     git(repo, "checkout", "-q", "-b", "other")
     git(repo, "commit", "-q", "--allow-empty", "-m", "elsewhere")
-    git(repo, "tag", C.CODE_TAG)
+    code_tag(repo)
     git(repo, "checkout", "-q", "main")
     git(repo, "commit", "-q", "--allow-empty", "-m", "main moves on")
     with refusal("not an ancestor"):
         F.check_code_frozen()
 
 
-def test_tools_at_head_must_equal_the_tag(repo):
-    git(repo, "tag", C.CODE_TAG)
+def test_tools_at_head_must_equal_the_code_tag(repo):
+    freeze(repo)
     (repo / "tools/fees/code.py").write_text("x = 2\n")
     git(repo, "commit", "-qam", "change the code after the tag")
-    with refusal("differs from the tag"):
+    with refusal("differs from the tag fees-code"):
         F.check_code_frozen()
 
 
-def test_uncommitted_changes_in_tools_or_design_refuse(repo):
-    git(repo, "tag", C.CODE_TAG)
+def test_manifest_and_maps_must_equal_the_data_step_tag(repo):
+    snapshot(repo)
+    (repo / "docs/research/fees-files.sha256").write_text("# header\nchanged\n")
+    git(repo, "commit", "-qam", "manifest changed after the data step")
+    code_tag(repo)
+    with refusal("manifest or a map differs from the tag fees-data-step"):
+        F.check_code_frozen()
+
+
+def test_a_map_changed_before_the_code_tag_is_still_refused(repo):
+    snapshot(repo)
+    (repo / "tools/fees/vat_map.csv").write_text("v2\n")
+    git(repo, "commit", "-qam", "map changed")
+    code_tag(repo)
+    with refusal("manifest or a map differs"):
+        F.check_code_frozen()
+
+
+def test_design_text_above_the_change_log_must_equal_the_design_tag(repo):
+    snapshot(repo)
+    (repo / "docs/research/fees-design.md").write_text(DESIGN_TEXT + "- appended entry\n")
+    git(repo, "commit", "-qam", "log entry")
+    code_tag(repo)
+    F.check_code_frozen()                                               # appending to the change log is allowed
+    git(repo, "tag", "-d", C.CODE_TAG)
+    (repo / "docs/research/fees-design.md").write_text(DESIGN_TEXT.replace("rule", "other rule") + "- appended entry\n")
+    git(repo, "commit", "-qam", "rule edited")
+    code_tag(repo)
+    with refusal("above its change log differs"):
+        F.check_code_frozen()
+
+
+@pytest.mark.parametrize("path,text", [("docs/research/fees-design.md", DESIGN_TEXT + "- x\n"),
+                                       ("tools/fees/new.py", "y = 1\n"),
+                                       ("docs/research/fees-files.sha256", "# header\nedited\n")])
+def test_uncommitted_changes_in_tools_design_or_manifest_refuse(repo, path, text):
+    freeze(repo)
     F.check_code_frozen()                                               # frozen and clean: passes
-    (repo / "docs/research/fees-design.md").write_text("edited\n")
-    with refusal("uncommitted"):
-        F.check_code_frozen()
-    git(repo, "checkout", "--", "docs/research/fees-design.md")
-    (repo / "tools/fees/new.py").write_text("y = 1\n")
+    (repo / path).write_text(text)
     with refusal("uncommitted"):
         F.check_code_frozen()
 
@@ -119,7 +194,7 @@ def test_maps_outside_the_data_folder_are_hashed_through_a_relative_path(repo):
 
 def test_gate_needs_both_the_freeze_and_the_hashes(repo):
     write_manifest(repo, {"2026-11-03/a.txt": b"one"})
-    git(repo, "tag", C.CODE_TAG)
+    freeze(repo)
     F.gate()
     (repo / "tools/data/fees/2026-11-03/a.txt").write_bytes(b"changed")
     with refusal("does not match"):
@@ -139,21 +214,17 @@ def test_run_refuses_without_unblind_and_never_touches_the_sources(repo, monkeyp
 
 def test_run_after_the_gate_writes_results_with_the_stamp(repo, monkeypatch, tmp_path):
     write_manifest(repo, {"2026-11-03/a.txt": b"one"})
-    (repo / "tools/fees/vat_map.csv").write_text("v\n")
-    (repo / "tools/fees/excise_map.csv").write_text("e\n")
-    for name in ("VAT_MAP", "EXCISE_MAP"):
-        monkeypatch.setattr(C, name, repo / "tools/fees" / ("vat_map.csv" if name == "VAT_MAP" else "excise_map.csv"))
-    git(repo, "add", "-A")
-    git(repo, "commit", "-qm", "maps")
-    git(repo, "tag", C.CODE_TAG)
+    freeze(repo)
     monkeypatch.setattr(I, "real_sources", lambda: SY.make_snapshot(tmp_path / "snap"))
     monkeypatch.setattr(cli, "results_for", lambda src: {"qa": {"label": "x"}})
     cli.main(["--run", "--unblind"])
     res = json.loads(C.RESULTS.read_text())
     st = res["design"]["stamp"]
-    assert st["tag_commits"][C.CODE_TAG] == git(repo, "rev-parse", f"refs/tags/{C.CODE_TAG}^{{commit}}").strip()
-    assert st["tag_commits"][C.DESIGN_TAG] is None                      # absent in the throwaway repository, recorded as such
-    assert set(st) == {"manifest_sha256", "files_sha256", "maps_sha256", "tag_commits"}
+    for t in C.STAMP_TAGS:
+        assert st["tag_commits"][t] == git(repo, "rev-parse", f"refs/tags/{t}^{{commit}}").strip()
+    assert st["head"] == git(repo, "rev-parse", "HEAD").strip()
+    assert st["tools_fees_tree"] == git(repo, "rev-parse", "HEAD:tools/fees").strip()
+    assert set(st) == {"manifest_sha256", "files_sha256", "maps_sha256", "tag_commits", "head", "tools_fees_tree"}
     assert list(st["files_sha256"]) == ["2026-11-03/a.txt"]
 
 
@@ -163,7 +234,6 @@ def test_synthetic_run_needs_no_gate_and_writes_aggregates_only(tmp_path):
     assert res["synthetic"] is True and len(res["qa"]["members"]) == 12
     assert res["checks_flag"]["2_allocation_to_the_crown"]["passed"] is True
     assert "households" in res["qb"] and "decile_total_czk" in res["qb"]["after"]
-    assert not C.RESULTS.exists() or C.RESULTS.stat().st_mtime_ns > 0          # the real file is the conftest's to guard
 
 
 def test_structure_stage_shows_labels_and_counts_but_no_value(monkeypatch, tmp_path, capsys):
@@ -196,3 +266,15 @@ def test_structure_stage_refuses_when_a_file_changed(repo):
     (repo / "tools/data/fees/2026-11-03/a.txt").write_bytes(b"changed")
     with refusal("refusing to look at the files"):
         cli.main(["--structure"])
+
+
+def test_the_blinding_guard_fires_on_open_and_on_a_subprocess_argument():
+    real = C.DATA.resolve() / "2026-11-03" / "x.csv"
+    with pytest.raises(AssertionError, match="real snapshot"), open(real, encoding="utf-8"):
+        pass
+    with pytest.raises(AssertionError, match="real snapshot"):
+        real.read_text()
+    with pytest.raises(AssertionError, match="subprocess"):
+        subprocess.run(["pdftotext", "-layout", str(real), "-"], check=False)
+    with pytest.raises(AssertionError, match="subprocess"):
+        subprocess.run(["cat", f"--file={real}"], check=False)
