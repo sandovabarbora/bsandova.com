@@ -49,7 +49,11 @@ def test_committed_page_is_what_the_results_render(page):
 def test_published_copies_match(res):
     assert (article.ASSETS / "results.json").read_bytes() == article.RESULTS.read_bytes()
     assert (article.ASSETS / "charts.json").read_text(encoding="utf-8") == article.charts_json(res)
-    assert (article.ASSETS / "01-burden.svg").exists()
+
+
+def test_static_figure_was_drawn_from_the_current_numbers(res):
+    svg = (article.ASSETS / "01-burden.svg").read_text(encoding="utf-8")
+    assert f"data sha256 {article.chart_hash(res)}" in svg, "run article.py --figures"
 
 
 def test_every_token_and_citation_is_filled(page):
@@ -80,12 +84,12 @@ def test_y_range_carries_the_entitlement_caveat_in_the_same_sentence(page, v):
     assert reading_b and all("take-up" in s and "crude" in s and "pays nothing" in s for s in reading_b)
 
 
-def test_firm_figures_carry_the_not_like_for_like_caveat(page, v):
-    for key in ("f_today", "f_after"):
-        claims = [s for s in sentences(page) if plain(v[key]) in s and "firms and public bodies" in s.lower()]
-        assert claims, key
-        for s in claims:
-            assert "not like for like" in s or "identity" in s or "by construction" in s, s
+def test_firm_comparison_sits_in_one_sentence_with_its_caveat(page, v):
+    both = [s for s in sentences(page) if plain(v["f_today"]) in s and plain(v["f_after"]) in s]
+    assert both and all("not like for like" in s for s in both), both
+    for s in sentences(page):
+        if plain(v["f_after"]) in s and "firms and public bodies" in s.lower():
+            assert plain(v["f_today"]) in s and "not like for like" in s, s
 
 
 def test_x_is_always_in_2026_prices(page, v):
@@ -95,11 +99,17 @@ def test_x_is_always_in_2026_prices(page, v):
         assert "2026 prices" in s, s
 
 
-def test_z_is_tied_to_its_tax_structure(page, v):
+def test_z_is_tied_to_its_tax_structure_and_followed_by_its_assumptions(page, v):
     claims = [s for s in sentences(page) if f"{v['z']} times" in s]
     assert claims
     for s in claims:
         assert "average" in s or "mix of" in s, s
+    ss = sentences(page)
+    i = next(k for k, s in enumerate(ss) if s.startswith("Funded from the state budget at the average tax structure"))
+    nxt = ss[i + 1]
+    for part in ("VAT and excise fall wholly on households", "corporate income tax stays with firms",
+                 "social insurance is left out", "spend the same", "checks"):
+        assert part in nxt, part
 
 
 def test_conditional_on_the_bill_as_introduced(page):
@@ -109,17 +119,18 @@ def test_conditional_on_the_bill_as_introduced(page):
     assert "30 November 2026" in t and "run again" in t
 
 
-def test_author_position_is_disclosed_once_in_the_methods_note(page):
+def test_author_position_is_disclosed_once_and_visibly_in_the_methods_section(page):
     t = text(page)
     assert t.count("favours keeping the licence fee and raising it") == 1
     i = page.index("favours keeping the licence fee")
-    assert page.rfind('id="reproduction"', 0, i) > 0
+    assert page.rfind("<h2>How this was done</h2>", 0, i) > page.rfind("<details", 0, i)
 
 
 def test_no_causal_or_editorial_language(page):
     t = text(page).lower()
     for word in (r"\bcaused?\b", r"\bcauses\b", r"\bleads? to\b", r"\bresults? in(?!\s+results\.json)", r"\bimpact",
-                 r"\bunfair", r"\bfairer\b", r"\bshould\b", r"\bmust\b"):
+                 r"\bunfair", r"\bfairer\b", r"\bshould\b", r"\bmust\b", r"disfavour", r"points the same way",
+                 r"\bfavour(?!s current law|s keeping)"):
         assert not re.search(word, t), word
 
 
@@ -170,3 +181,29 @@ def test_deck_is_the_listed_finding_and_the_title_matches(page):
     deck = text(re.search(r'<p class="deck">(.*?)</p>', page).group(1))
     assert deck == finding and len(deck.split()) <= 35
     assert f"<title>{title}</title>" in page and f"<i>{title}</i>" in page
+
+
+def test_tags_are_described_as_public_and_fees_code_as_superseded(page):
+    t = text(page)
+    assert "The tags are the author's own and are in the public repository; commit times are self-reported." in t
+    assert "superseded by fees-code-2" in re.sub(r"\s+", " ", t)
+
+
+def test_deck_and_og_carry_both_parts(page, v):
+    deck = text(re.search(r'<p class="deck">(.*?)</p>', page).group(1))
+    assert plain(v["x"]) in deck and "poorest tenth" in deck and "exemption-free" in deck and "exempting" in deck
+    for name in ('property="og:description"', 'name="description"'):
+        og = plain(re.search(name + r' content="([^"]*)"', page).group(1))
+        assert plain(v["x"]) in og and f"{v['y_lo']} to {v['y_hi']}" in og and v["z"] in og, name
+
+
+def test_part_a_is_not_set_against_part_b(page):
+    for s in sentences(page):
+        if "bill gives" in s:
+            assert " yet " not in f" {s.lower()} ", s
+
+
+def test_labels_are_quoted_in_running_text(page):
+    t = text(page)
+    for lab in ('"bill lower"', '"depends on the assumption"', '"higher"'):
+        assert f"label is {lab}" in t or f"label after is {lab}" in t or f"labelled {lab}" in t, lab

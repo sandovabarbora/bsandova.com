@@ -9,6 +9,7 @@ matplotlib). The study code in tools/fees is frozen at the tag fees-code-2 and i
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import shutil
@@ -19,7 +20,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT / "tools" / "site"))
-from article_kit import GREY, HELD, LIGHT, NB, n, render
+from article_kit import GREY, HELD, INK, NB, n, render
 
 SLUG = "licence-fees"
 RESULTS = ROOT / "docs" / "research" / "fees-results.json"
@@ -27,15 +28,17 @@ PAGE = ROOT / "texts" / f"{SLUG}.html"
 ASSETS = ROOT / "assets" / SLUG
 # tag objects are not in the results file, and CI checks out without tags
 TAG_OBJECTS = {"fees-design": "70c452705e44f7f91cdf661bc942ee6eb9bcd64c",
+               "fees-code": "ceee4784cd96db5ccc3070b2d11530eb7320d848",
                "fees-data-step": "ac458a9bd4e3474ac929f49643e903506598b992",
                "fees-code-2": "d766c746824d9380cbc5aca1ac20ef30bce9ae20"}
 RESULTS_COMMIT = "592caa7"
+FIRST_CODE_COMMIT = "a6e005e"  # fees-code, superseded by fees-code-2
 CORAL = "#c0503f"
 DEPENDS = "depends on the assumption"
 HIGHER_TODAY = "the poorest tenth carries a higher share of its income than the richest tenth"
 SHOCK = {-1: "−1 pp", 0: "forecast", 1: "+1 pp"}
 READING = {"R1": "sum", "R2": "compounded"}
-BASELINE = {"A": "A, 2026 budgets", "B": "B, 2025 outturn indexed"}
+BASELINE = {"A": "2026 budgets", "B": "2025 outturn, indexed"}
 LABEL_CHECKS = [  # key in checks_reported, label in the table
     ("3_vat_uniform_rate", "3 · VAT at one uniform effective rate"),
     ("3_other_taxes_like_vat", "3 · other taxes allocated like VAT"),
@@ -141,23 +144,25 @@ def checks_table(res: dict) -> str:
                  f'{bn(c2["bill_total_czk"])}</small>'), "–", "ratio unchanged"))
     for key, lab in LABEL_CHECKS[:2]:
         c = cr[key]
-        rows.append((lab, f'Z {times(c["ratio_z"])}<small>firms {bn(c["firms_czk"])}</small>',
-                     c["labels"]["after"], "same as primary"))
+        rows.append((lab, (f'Z {times(c["ratio_z"])}<small>firms {bn(c["firms_czk"])} after, not like for like with '
+                           f"today's remainder</small>"), c["labels"]["after"], "same as primary"))
     for k, lab in (("work", "4 · PIT by employment and self-employment income"), ("net", "4 · PIT by net income")):
         c = cr["4_pit_basis"][k]
         rows.append((lab, f'Z {times(c["ratio_z"])}', c["labels"]["after"], "same as primary"))
     c5 = cr["5_payer_share_one"]
-    rows.append(("5 · every household a payer (π = 1)", f'Y {times(c5["y_lo"])} to {times(c5["y_hi"])}',
+    rows.append(("5 · every household a payer (π = 1)", (f'Y {times(c5["y_lo"])} to {times(c5["y_hi"])}<small>exemptions '
+                                                          'counted by entitlement</small>'),
                  c5["labels"]["today"], "same as primary"))
     rows.append(("6 · mean of household ratios", "not computable", "–", cr["6_mean_of_household_ratios"]["reason"]))
     rows.append(("7 · sharing percentages of 2026–2027", "not computable", "–", cr["7_sharing_2026_2027"]["reason"]))
     rows.append(("8 · seniors' cut", "described in the text", "–", "no label"))
     for key, lab in LABEL_CHECKS[2:]:
         c = cr[key]
-        firms = f'<small>firms {bn(c["firms_czk"])}</small>' if c["firms_czk"] != qb["after"]["firms_czk"] else ""
+        firms = (f'<small>firms {bn(c["firms_czk"])} after, not like for like with today\'s remainder</small>'
+                 if c["firms_czk"] != qb["after"]["firms_czk"] else "")
         rows.append((lab, f'Z {times(c["ratio_z"])}{firms}', c["labels"]["after"], "same as primary"))
     d = cr["9d_no_exemption"]
-    rows.append(("9d · no exemption for any decile", f'Y {times(d["y"])}',
+    rows.append(("9d · no exemption for any decile", f'Y {times(d["y"])}<small>the no-exemption bound of the range</small>',
                  f'today: {d["labels"]["today"]}; change: {d["labels"]["change"]} <b>≠</b>',
                  f'primary: today {prim["today"]}, change {prim["change"]}; both reported'))
     return "\n".join(f'  <tr><td>{a}</td><td class="v">{b}</td><td>{c}</td><td><small>{d}</small></td></tr>'
@@ -168,8 +173,8 @@ def checks_table(res: dict) -> str:
 
 def chart(res: dict) -> dict:
     qb = res["qb"]
-    series = [("Today, nobody exempt (E0)", qb["today"]["e0"]["burden_pct"], GREY, "dash"),
-              ("Today, poorest tenth exempt (E1)", qb["today"]["e1"]["burden_pct"], LIGHT, "dot"),
+    series = [("Today, nobody exempt", qb["today"]["e0"]["burden_pct"], INK, "dash"),
+              ("Today, poorest tenth exempt", qb["today"]["e1"]["burden_pct"], GREY, "dot"),
               ("After, average tax structure", qb["after"]["burden_pct"], HELD, None)]
     marks = []
     for name, ys, c, dash in series:
@@ -195,6 +200,11 @@ def chart(res: dict) -> dict:
             "data": ["results.json"]}
 
 
+def chart_hash(res: dict) -> str:
+    """Hash of the plotted numbers, written into the static SVG so a test can tell a stale figure."""
+    return hashlib.sha256(json.dumps(chart(res)["table"], sort_keys=True).encode()).hexdigest()
+
+
 def static_chart(res: dict, path: Path) -> None:
     import matplotlib
 
@@ -216,7 +226,7 @@ def static_chart(res: dict, path: Path) -> None:
     ax.set_ylabel("% of mean net household income")
     ax.legend(frameon=False, fontsize=8, loc="upper right")
     f.tight_layout()
-    f.savefig(path, metadata={"Date": None})
+    f.savefig(path, metadata={"Date": None, "Description": f"data sha256 {chart_hash(res)}"})
     plt.close(f)
 
 
@@ -262,6 +272,14 @@ def values(res: dict) -> dict:
     assert res["qb"]["income_year"] == 2024 and qb["survey_year"] == 2025
     assert fi["household_revenue"] + fi["remainder"] == fi["budgeted_fee_revenue"] == rc["budgeted_fee_revenue_2026_czk"]
     assert qb["after"]["firms_czk"] == qb["after"]["parts_by_tax_czk"]["cit"] == fi["after_czk"]
+    z = qb["after"]["ratio_z"]
+    # the observed directions of the reverse checks, stated in the text against design §8
+    assert cr["9a_social_insurance_in_pool"]["ratio_z"] < z      # leaving social insurance out raises Z
+    assert cr["9b_cit_half_to_households"]["ratio_z"] < z        # CIT on firms only raises Z, as expected
+    assert cr["9c_interpolated_consumption"]["ratio_z"] > z      # the equal split lowers Z, against the expectation
+    assert cr["3_vat_uniform_rate"]["ratio_z"] > z and cr["3_other_taxes_like_vat"]["ratio_z"] > z
+    assert next(m["x"] for m in members if (m["shock"], m["reading"], m["baseline"]) == (0, "R1", "B")) < qa["x_primary_bn"]
+    assert min(members, key=lambda m: m["x"])["baseline"] == "B"  # baseline B sets the low end of the range
     stamp = res["design"]["stamp"]["tag_commits"]
     assert stamp["fees-code-2"].startswith("7c6b692") and stamp["fees-design"].startswith("325cc53")
 
@@ -275,7 +293,7 @@ def values(res: dict) -> dict:
         "law_sum": n(float(inf["2025"] + inf["2026"] + inf["2027"]), 2),
         "bill_sum": n(float(inf["2026"] + inf["2027"] + inf["2028"] + inf["2029"]), 2),
         "ct26": bn(pr["baseline_2026"]["CT"]), "cro26": bn(pr["baseline_2026"]["CRO"], 3),
-        "ct25": bn(res["inputs"]["realised_2025_czk"]["CT"]), "cro25": bn(res["inputs"]["realised_2025_czk"]["CRO"]),
+        "ct25": bn(res["inputs"]["realised_2025_czk"]["CT"]), "cro25": bn(res["inputs"]["realised_2025_czk"]["CRO"], 3),
         "members_table": members_table(qa), "paths_table": paths_table(pr),
         # reading C
         "b_today": bn(rc["budgeted_fee_revenue_2026_czk"]), "bill27": bn(rc["bill_2027_czk"], 3),
@@ -318,6 +336,7 @@ def values(res: dict) -> dict:
         "tag_design": stamp["fees-design"], "tag_data": stamp["fees-data-step"], "tag_code": stamp["fees-code-2"],
         "obj_design": TAG_OBJECTS["fees-design"], "obj_data": TAG_OBJECTS["fees-data-step"],
         "obj_code": TAG_OBJECTS["fees-code-2"], "results_commit": RESULTS_COMMIT,
+        "obj_code1": TAG_OBJECTS["fees-code"], "code1_commit": FIRST_CODE_COMMIT,
         "v_python": res["versions"]["python"], "v_pdftotext": res["versions"]["pdftotext"].split()[-1],
     }
     # the pre-written readings of design §1, as the study code filled them, carry the same numbers
