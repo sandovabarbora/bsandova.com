@@ -657,3 +657,25 @@ on HEAD with `tools/fees/` unchanged since. Check 2 of §3 runs with every alloc
   - **Fact note, effective date of the bill.** Press reports of 1 November 2026 (tvguru.cz, citing Seznam Zprávy) say that the
     bill's effective date is now expected during 2027 or from January 2028, not 1 January 2027. As §8 says, the comparison stays
     "as introduced" over 2027-2030; the article will state the expected delay.
+- 3 November 2026, before the code tag `fees-code` and before any outcome value was read. The design text above is unchanged.
+  - **Firms today (§3 check 1, §1 firms sentence).** The RES size bands (code list 579) coincide with the classes of the §5 schedule,
+    so the firm "range" of §3 is a single value, and a plausibility test with no tolerance would always fail. Replacement, decided
+    before any value was seen: firms today are reported **descriptively**. The study reports the remainder (budgeted fee revenue less
+    modelled household payments), the schedule-implied amount (RES employer counts x the §5 multiple x the monthly fees x 12) and their
+    ratio, with no pass or fail. The article names, in the same sentence as the figures, why they may differ: not every registered firm
+    is registered for the fee; the remainder includes public bodies (§3(4)) and rental-vehicle fees; RES counts registered units, not
+    full-time equivalents. Household payments are no longer labelled "validated" or "unvalidated". Check 1 is reported as the
+    identity it is.
+  - **Checks 6 and 7 of §7.** They cannot be computed from the published tables: the tables give decile and quintile means only
+    (check 6), and Part C has no national PIT line (check 7). Both are reported as "not computable". The code for check 7 stays.
+  - **Other resolutions made when the code was written.** (a) Shock scope: the inflation shock of §2.6 applies from 2026 on, forecast
+    and 2.0 % part alike; the published 2025 figure is not shifted. (b) Bill timing: a crossing in year Y raises the amount from Y+1
+    only for 2028 and later, because §10a(3) fixes the 2027 amount. (c) Living minimum composition: the single-person amount applies
+    only to a decile whose mean household is exactly one person without children; otherwise first adult, further adults, and children
+    at the mean of the age-band amounts. (d) The annual ČNB value is the exact mean of the four quarterly values, a missing quarter
+    takes 2.0 %, and cells are rounded to six decimals only to remove spreadsheet float noise. (e) E0 payer share above 1 is left
+    uncapped and flagged; only the E1 cap at 1 follows §2.4. (f) Items of Tab. 2a with an empty cell under Skutečnost 2025 are read
+    as 0 and listed in the results. (g) The seniors' cut is descriptive, today only, for one-person and two-adult households, with no
+    "after" figure. (h) PDFs are read with poppler's `pdftotext`, version recorded in the results. (i) Reading A when the label is
+    "about equal" is worded: "If the bill passes as introduced, ČT and ČRo would receive the same over 2027-2030 as under current
+    law, within 0.1 bn CZK (2026 prices)."
