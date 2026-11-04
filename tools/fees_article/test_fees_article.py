@@ -33,8 +33,13 @@ def text(page: str) -> str:
     return html.unescape(re.sub(r"<[^>]+>", " ", s)).replace(NB, " ")
 
 
+def unquoted(page: str) -> str:
+    """The page without the registered readings, which are quoted verbatim and carry their conditions beside them."""
+    return re.sub(r'<blockquote class="registered">.*?</blockquote>', " ", page, flags=re.DOTALL)
+
+
 def sentences(page: str) -> list[str]:
-    blocks = re.findall(r"<(p|li|dd)\b[^>]*>(.*?)</\1>", page, re.DOTALL)
+    blocks = re.findall(r"<(p|li|dd)\b[^>]*>(.*?)</\1>", unquoted(page), re.DOTALL)
     return [x for _, b in blocks for x in re.split(r"(?<=[a-z0-9)%])\. (?=[A-ZČŘŠŽ])", re.sub(r"\s+", " ", text(b)))]
 
 
@@ -72,7 +77,7 @@ def test_every_figure_has_a_chart_alt_text_a_takeaway_and_a_caption(page, res):
         assert html.unescape(img.group(2)) == specs[key]["alt"] and len(specs[key]["alt"]) > 80, key
         assert re.search(r'<p class="ch-head">[^<]{20,}</p>', body), key
         cap = re.search(r"<figcaption><b>fig\. (\d+)</b> · (.*?)</figcaption>", body, re.DOTALL)
-        assert cap and cap.group(1) == i and len(text(cap.group(2)).split()) > 20, key
+        assert cap and cap.group(1) == i and 8 <= len(text(cap.group(2)).split()) <= 30, key
         assert "no interval" in text(cap.group(2)).lower(), key
         assert specs[key]["table"]["rows"] and specs[key]["data"] == ["results.json"], key
 
@@ -172,11 +177,68 @@ def test_firm_comparison_sits_in_one_sentence_with_its_caveat(page, v):
             assert plain(v["f_today"]) in s and "not like for like" in s, s
 
 
-def test_x_is_always_in_2026_prices(page, v):
+def test_x_is_always_in_2026_prices_with_payers_held_fixed(page, v):
     claims = [s for s in sentences(page) if plain(v["x"]) in s]
     assert claims
+    deck = text(re.search(r'<p class="deck">(.*?)</p>', page).group(1))
     for s in claims:
         assert "2026 prices" in s, s
+        assert "payers held fixed" in s or s == deck, s  # the deck is the listed finding, capped at 35 words
+
+
+MONTHS = "January|February|March|April|May|June|July|August|September|October|November|December"
+
+
+def visible_story(page: str) -> str:
+    """What a reader sees between the metadata and the folded details: prose, takeaways and captions, no tables."""
+    a = page.index("</details>", page.index('class="meta-more"'))
+    body = page[a:page.index('<section id="reproduction">')]
+    return re.sub(r"<table\b[^>]*>.*?</table>", " ", body, flags=re.DOTALL)
+
+
+def main_story(page: str) -> str:
+    return re.sub(r"<figure\b[^>]*>.*?</figure>", " ", visible_story(page), flags=re.DOTALL)
+
+
+def counted_numbers(s: str) -> list[str]:
+    s = re.sub(rf"(\d{{1,2}} )?({MONTHS}) \d{{4}}|\b(19|20)\d\d(–(19|20)\d\d)?\b", " ", s)
+    return re.findall(r"\d{1,3}(?: \d{3})+(?:\.\d+)?|\d+(?:\.\d+)?", s)
+
+
+def test_main_story_is_short_with_short_paragraphs(page, v):
+    seen = visible_story(page)
+    words = len(text(seen).split())
+    assert 750 <= words <= 900, words  # captions and takeaways included
+    for name in ("y_hi", "z"):  # each summary ratio at most twice
+        assert len(re.findall(rf"(?<![\d.]){re.escape(v[name])}(?![\d])", text(seen))) <= 2, name
+    for i, cap in re.findall(r"<figcaption><b>fig\. (\d)</b> · (.*?)</figcaption>", seen, re.DOTALL):
+        assert len(text(cap).split()) <= 30, i
+    story = main_story(page)
+    for _, b in re.findall(r"<(p|li)\b[^>]*>(.*?)</\1>", story, re.DOTALL):
+        t = re.sub(r"\s+", " ", text(b)).strip()
+        assert len(t.split()) <= 55, t
+        assert len(counted_numbers(t)) <= 3, (counted_numbers(t), t)
+
+
+def test_visible_text_has_no_codes(page):
+    head = page.index("<article")
+    seen = re.sub(r'<details class="appendix">.*?</details>|<details class="meta-more">.*?</details>|<table\b.*?</table>',
+                  " ", page[head:page.index('id="refs"')], flags=re.DOTALL)
+    t = text(seen)
+    for pat in (r"\b(X|Y|Z|Q-A|Q-B|E0|E1|R1|R2)\b", r"\bpp\b", "§", r"\bdeciles?\b", r"\blabel (after )?is\b",
+                r"\bprimary\b"):
+        assert not re.search(pat, t), (pat, re.search(rf".{{0,40}}{pat}.{{0,40}}", t).group(0))
+
+
+def test_registered_readings_are_quoted_verbatim_with_their_conditions(page, res):
+    block = re.search(r'<blockquote class="registered">(.*?)</blockquote>\s*<p class="note">(.*?)</p>', page, re.DOTALL)
+    assert block
+    quoted = [html.unescape(q) for q in re.findall(r"<p>(.*?)</p>", block.group(1), re.DOTALL)]
+    assert quoted == [res["qa"]["reading_a"], res["qb"]["reading_b"], res["reading_c"]["text"]]
+    note = text(block.group(2))
+    for part in ("payers held fixed", "crude", "not like for like"):
+        assert part in note, part
+    assert page.rfind('<details class="appendix">', 0, block.start()) > page.index('<section id="reproduction">')
 
 
 def test_z_is_tied_to_its_tax_structure_and_followed_by_its_assumptions(page, v):
@@ -287,3 +349,37 @@ def test_labels_are_quoted_in_running_text(page):
     t = text(page)
     for lab in ('"bill lower"', '"depends on the assumption"', '"higher"'):
         assert f"label is {lab}" in t or f"label after is {lab}" in t or f"labelled {lab}" in t, lab
+
+
+def section(page: str, h2: str) -> str:
+    a = page.index(f"<h2>{h2}</h2>")
+    return page[a:page.index("</section>", a)]
+
+
+def test_each_result_section_ends_with_its_label_meaning(page):
+    money, who = section(page, "The money for ČT and ČRo"), section(page, "Who would pay")
+    assert page.count('<p class="verdict">') == 2
+    for sec, parts in ((money, ("rules set before the results", "less money", "all 12")),  # "bill lower"
+                       (who, ("rules set before the results", "higher share of its income than the richest",  # "higher"
+                              "depends on how many poor households are exempt"))):  # "depends on the assumption"
+        last = re.findall(r"<p[^>]*>(.*?)</p>", sec, re.DOTALL)[-1]
+        assert f'<p class="verdict">{last}</p>' in sec, last
+        for part in parts:
+            assert part in text(last), part
+    assert "counts as" not in text(money + who)
+
+
+def test_who_pays_opens_in_crowns_before_any_ratio(page, v):
+    who = section(page, "Who would pay")
+    t = text(who)
+    first_ratio = min(t.index(v["y_hi"]), t.index(v["z"]))
+    assert t.index(plain(v["pay_e0"])) < first_ratio and t.index(plain(v["pa_d1"])) < first_ratio
+    figs = re.findall(r'data-chart="[^"]*#([\w-]+)"', who)
+    assert figs == ["pay", "ratios"]
+    k = t.index(v["y_hi"])  # the exemption caveat in the ratio's sentence or the next
+    assert "entitlement" in t[k:k + 400] and "pay nothing today" in t[k:k + 400]
+
+
+def test_burden_figure_is_folded_in_the_details(page):
+    i = page.index('<figure id="fig5"')
+    assert page.rfind('<details class="appendix">', 0, i) > page.index('<section id="reproduction">')
