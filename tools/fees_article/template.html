@@ -34,6 +34,7 @@
 .ht-wrap{overflow-x:auto;max-width:100%}
 .note{font:400 12px/1.6 var(--mono);color:#666}
 .tldr p{font:400 12px/1.6 var(--mono);color:#666;margin:.2rem 0 .6rem}
+.text p.verdict{border-left:2px solid #34507c;padding-left:.9rem}
 .text details.appendix{margin:1.2rem 0;border-top:1px solid #e6e6e6;padding-top:.6rem}
 .text details.appendix>summary{cursor:pointer;font:500 15px/1.4 var(--sans)}
 .text details.appendix h3{font:500 14px var(--sans);margin:1.2rem 0 .3rem}
@@ -60,13 +61,13 @@
   <ul>
     <li><b>The money.</b> Over 2027–2030 the bill gives ČT and ČRo {{x}} less than current law, in 2026 prices with payers held fixed (<a href="#fig1">fig. 1</a>).</li>
     <li><b>The first year.</b> In 2027 the bill gives {{d_level}} less than today's fee revenue, in 2026 prices (<a href="#fig2">fig. 2</a>).</li>
-    <li><b>Who carries the most.</b> Funded from the average tax mix, the poorest tenth would carry {{z}} times the richest tenth's share of income; whether that is more or less than today depends on how many poor households are exempt (<a href="#fig3">fig. 3</a>).</li>
-    <li><b>In crowns.</b> Funded from taxes, the payment would rise with income, from {{pa_d1}} to {{pa_d10}} a year per household (<a href="#fig4">fig. 4</a>).</li>
+    <li><b>In crowns.</b> Funded from taxes, the payment would rise with income, from {{pa_d1}} to {{pa_d10}} a year per household (<a href="#fig3">fig. 3</a>).</li>
+    <li><b>Who carries the most.</b> Funded from the average tax mix, the poorest tenth would carry {{z}} times the richest tenth's share of income; whether that is more or less than today depends on how many poor households are exempt (<a href="#fig4">fig. 4</a>).</li>
   </ul>
   <p>Arithmetic on published averages, for the bill as introduced. Nothing here is about the independence, quality or reach of the broadcasters.</p>
 </details>
 <dl class="meta">
-  <div><dt>published</dt><dd>3 November 2026 · updated 3 November 2026 · <a href="../changelog/#licence-fees">version 3</a></dd></div>
+  <div><dt>published</dt><dd>3 November 2026 · updated 4 November 2026 · <a href="../changelog/#licence-fees">version 3</a></dd></div>
 </dl>
 <details class="meta-more">
   <summary>About this study</summary>
@@ -81,73 +82,59 @@
 </details>
 
 <section>
-<p>Czech public television (ČT) and public radio (ČRo) are paid mainly from licence fees. A household with a TV pays 150 CZK a month and one with a radio 55 CZK, unless it is exempt. Firms pay by their number of employees[[act348]].</p>
-<p>A government bill, Sněmovní tisk 231, would scrap the fees. The state budget would pay both broadcasters a fixed contribution instead, 7 807 592 000 CZK in 2027[[bill]].</p>
-<p>This article asks two questions. Would the broadcasters get more or less than under current law? And who would carry the cost, compared with now? The answers come from published figures, under rules set before any result was seen.</p>
-<p>The bill's stage was checked on 3 November 2026. After its first reading, a committee paused its debate; it can resume from 24 December 2026[[bill]]. Press reports expect the bill to start during 2027 or from January 2028[[press]]. Everything here describes the bill as introduced.</p>
+<p>ČT and ČRo, Czech public television and radio, are paid mainly from licence fees: 150 CZK a month for a household with a TV, 55 CZK with a radio, unless exempt[[act348]].</p>
+<p>A government bill, Sněmovní tisk 231, would replace them with a fixed contribution from the state budget[[bill]]. Would the broadcasters get more or less, and who would carry the cost?</p>
+<p>Its stage was checked on 3 November 2026: the bill as introduced sits in committee until at least 24 December 2026[[bill]], and press reports expect a start during 2027 or from January 2028[[press]].</p>
 </section>
 
 <section>
 <h2>The money for ČT and ČRo</h2>
 <figure id="fig1" data-chart="../assets/licence-fees/charts.json#money">
-  <p class="ch-head">Current law gives the broadcasters more than the bill in every year from 2027 to 2030: {{x}} more over the four years, in 2026 prices, with the number of payers held fixed.</p>
+  <p class="ch-head">Current law gives more than the bill in every year: {{x}} more over 2027–2030, in 2026 prices, with payers held fixed.</p>
   <img src="../assets/licence-fees/01-money.svg" alt="{{alt_money}}" loading="lazy">
-  <figcaption><b>fig. 1</b> · ČT and ČRo together, bn CZK a year in 2026 prices. Black: current law, starting from the fee revenue in the broadcasters' 2026 budgets and rising only by the law's own inflation rule, with the number of payers held fixed. Blue: the bill as introduced, with its inflation clause. Shaded: the gap. Inflation as forecast by the ČNB in summer 2026. Across all 12 combinations tried, the four-year gap in 2026 prices runs from {{x_min}} to {{x_max}} bn CZK. No interval. Data: the bill[[bill]], ČT and ČRo budgets[[ctbudget]][[crobudget]], ČNB[[cnb]].</figcaption>
+  <figcaption><b>fig. 1</b> · Both broadcasters, bn CZK a year in 2026 prices, payers held fixed. Inflation as forecast; no interval.</figcaption>
 </figure>
-<p>Under current law the fees rise by 6 % once inflation has added up to more than 6 % since the last rise. The bill fixes its 2027 amount. It rises only once inflation since 2026 adds up to more than 10 %.</p>
-<p>At the forecast, the fees would rise once, on 1 July 2028. The bill's amount would not rise at all by 2030.</p>
-<p>The forecast does not decide the result. The study also tried higher and lower inflation, two readings of the bill's clause and two starting points. The bill gives less in all 12 combinations. By the rules set before the results, that counts as less money under the bill.</p>
+<p>Current law raises the fees by 6 % each time inflation adds up to 6 %; the bill raises its 2027 amount only after 10 %. At the forecast, the fees would rise on 1 July 2028 and the bill's amount not at all by 2030.</p>
 <figure id="fig2" data-chart="../assets/licence-fees/charts.json#first-year">
-  <p class="ch-head">In the first year, too, the bill gives less: in 2026 prices, its 2027 amount is {{d_level}} below today's fee revenue.</p>
+  <p class="ch-head">In 2027 alone, the bill gives {{d_level}} less than today's fee revenue, in 2026 prices.</p>
   <img src="../assets/licence-fees/02-first-year.svg" alt="{{alt_first_year}}" loading="lazy">
-  <figcaption><b>fig. 2</b> · ČT and ČRo together, bn CZK a year. Today: fee revenue in the broadcasters' 2026 budgets[[ctbudget]][[crobudget]]. The bill: its contribution for 2027, in CZK of 2027[[bill]]. The gap compares today's amount with the 2027 amount in 2026 prices, {{bill27_real}}, at the ČNB summer 2026 forecast[[cnb]]. No interval.</figcaption>
+  <figcaption><b>fig. 2</b> · Both broadcasters, bn CZK a year: the 2026 budgets against the bill for 2027. No interval.</figcaption>
 </figure>
-<p>Today the broadcasters' budgets expect {{b_today}} a year from the fees. The bill gives {{bill27}} for 2027. Its explanatory report says this equals their fee income of 2024, before the last fee rise[[bill]].</p>
+<p>The broadcasters' 2026 budgets expect {{b_today}} from the fees; the bill gives {{bill27}} for 2027[[bill]].</p>
+<p class="verdict">By the rules set before the results, the bill gives less money in all 12 combinations of inflation, clause reading and starting point tried.</p>
 </section>
 
 <section>
 <h2>Who would pay</h2>
-<figure id="fig3" data-chart="../assets/licence-fees/charts.json#ratios">
-  <p class="ch-head">Funded from the average mix of state taxes, the poorest tenth of households would pay {{z}} times as large a share of its income as the richest tenth; whether that is more or less than today depends on how many poor households are exempt.</p>
-  <img src="../assets/licence-fees/03-ratios.svg" alt="{{alt_ratios}}" loading="lazy">
-  <figcaption><b>fig. 3</b> · The share of its income that the poorest tenth of households pays, divided by the share the richest tenth pays. A value of 1 means the same share; shaded, the band from 0.9 to 1.1 that counts as similar. Today: if nobody were exempt, or if all of the poorest tenth were exempt and so paid nothing, with exemptions counted by entitlement, not by who claims them. The true value lies between, so the comparison with today depends on the assumption. From the state budget: the average mix of state taxes gives the result; VAT alone and income tax alone are shown for comparison (pale). Modelled from published averages for tenths and fifths of households, no interval. Data: ČSÚ[[silc]][[spending]], state closing account 2025[[szu]].</figcaption>
+<p>If nobody were exempt, the fee would average {{pay_e0}} a year per household: {{b0_d1}} of a poorest-tenth household's income, {{b0_d10}} of a richest-tenth one's.</p>
+<p>From the average mix of taxes, a household in the poorest tenth would pay {{pa_d1}} a year, one in the richest {{pa_d10}}.</p>
+<figure id="fig3" data-chart="../assets/licence-fees/charts.json#pay">
+  <p class="ch-head">Without exemptions, the fee costs every household about the same; taxes cost more as income rises.</p>
+  <img src="../assets/licence-fees/03-pay.svg" alt="{{alt_pay}}" loading="lazy">
+  <figcaption><b>fig. 3</b> · Average payment per household, CZK a year, by income tenth. Modelled from published averages; no interval.</figcaption>
 </figure>
-<p>A flat fee takes a bigger share of a small income than of a large one. Taxes are spread by what households spend and earn instead.</p>
-<p>If nobody were exempt from the fee, the poorest tenth of households would pay {{y_hi}} times as large a share of its income as the richest tenth.</p>
-<p>Counting exemptions by entitlement, not by actual take-up, today's figure lies between {{y_lo}} and {{y_hi}} times the share; the low end is crude, because it treats all of the poorest tenth as exempt, so it pays nothing. How many poor households claim the exemption is not known.</p>
-<p>So, by the rules set before the results, today's position counts as depending on the assumption.</p>
-<p>From the state budget, the answer depends on which taxes pay. With the average mix of taxes it is {{z}}. With VAT alone it would be {{z_vat}}, with income tax alone {{z_pit}}.</p>
-<p>By the same rules, the average mix counts as the poorest tenth carrying a higher share of its income than the richest.</p>
-<p>Would the switch lighten or add to the load on the poorest tenth? Against a fee nobody is exempt from, budget funding takes a smaller share from them. Against a fee that exempts all of them, they pay nothing today and something after. The data cannot say which is closer to the truth.</p>
-<figure id="fig4" data-chart="../assets/licence-fees/charts.json#pay">
-  <p class="ch-head">In crowns, the fee costs every paying household the same; funded from taxes, the payment rises with income, to {{pa_d10}} a year in the richest tenth.</p>
-  <img src="../assets/licence-fees/04-pay.svg" alt="{{alt_pay}}" loading="lazy">
-  <figcaption><b>fig. 4</b> · Average payment per household, CZK a year, for each tenth of households by income (ČSÚ income survey 2025, income of 2024). Today: the 2026 fees times the share of households registered as payers, if nobody were exempt (dashed, black) or if all of the poorest tenth were exempt by entitlement, their payers spread over the other nine tenths (dotted, grey). After: the bill's 2027 total split by 2025 state tax revenue at the average mix of taxes (blue). Modelled from published averages, not records of real households; no interval. Data: ČSÚ[[silc]][[spending]], state closing account 2025[[szu]], ČT and ČRo annual reports[[ctbudget]][[crobudget]].</figcaption>
+<p>Against income, today's fee weighs up to {{y_hi}} times as heavily on the poorest tenth as on the richest; budget funding from the average mix of taxes, {{z}} times. "Up to", because exemptions are counted by entitlement: if all of the poorest tenth were exempt, they would pay nothing today.</p>
+<figure id="fig4" data-chart="../assets/licence-fees/charts.json#ratios">
+  <p class="ch-head">Funded from the average mix of taxes the ratio would be {{z}}; today's lies between the two exemption bounds.</p>
+  <img src="../assets/licence-fees/04-ratios.svg" alt="{{alt_ratios}}" loading="lazy">
+  <figcaption><b>fig. 4</b> · The poorest tenth's share of income paid ÷ the richest tenth's; 1 is the same share. Exemptions by entitlement; no interval.</figcaption>
 </figure>
-<p>If nobody were exempt, the fee would average {{pay_e0}} a year per household. From the average mix of taxes, a household in the poorest tenth would pay {{pa_d1}}.</p>
-<figure id="fig5" data-chart="../assets/licence-fees/charts.json#burden">
-  <p class="ch-head">If nobody were exempt, the fee would take the largest share of income from the poorest tenth; funded from taxes, the share still falls with income, but less steeply.</p>
-  <img src="../assets/licence-fees/05-burden.svg" alt="{{alt_burden}}" loading="lazy">
-  <figcaption><b>fig. 5</b> · Average payment per household as a share of the group's average net household income, in per cent, for each tenth of households by income (ČSÚ income survey 2025, income of 2024). Today: the 2026 fees times the share of households registered as payers, if nobody were exempt (dashed, black) or if all of the poorest tenth were exempt by entitlement (dotted, grey). After: the bill's 2027 total split by 2025 state tax revenue (blue). Modelled from published averages, not records of real households; no interval. Data: ČSÚ[[silc]][[spending]], state closing account 2025[[szu]], ČT and ČRo annual reports[[ctbudget]][[crobudget]].</figcaption>
-</figure>
-<p>As a share of income, the payment from taxes falls as income rises, at almost every step (fig. 5). Firms and older households are described under <a href="#reproduction">Details and reproduction</a>.</p>
+<p class="verdict">By the rules set before the results, under budget funding the poorest tenth would carry a higher share of its income than the richest; against today, it depends on how many poor households are exempt.</p>
 </section>
 
 <section>
 <h2>What this does not show</h2>
 <ul>
-<li>It works from published averages for groups of households, not from records of real households.</li>
-<li>Exemptions are counted by who is entitled, not by who claims them.</li>
-<li>VAT and excise are assumed to fall wholly on households and company tax wholly on firms; social insurance is left out. The government could also pay from other taxes, from debt or by cutting other spending.</li>
-<li>Inflation is the ČNB summer 2026 forecast. If the autumn report is out by 30 November 2026, the study is run again and this page updated.</li>
-<li>It covers the bill as introduced over 2027–2030, not a later start or amendments, and says nothing about the broadcasters' independence, quality or reach.</li>
+<li>Published averages for groups of households, not household records; exemptions counted by entitlement.</li>
+<li>VAT and excise fall wholly on households, company tax on firms; the state could also borrow or cut spending.</li>
+<li>Inflation is the ČNB summer 2026 forecast; the study is run again if the autumn report is out by 30 November 2026.</li>
+<li>Only the bill as introduced; nothing on the broadcasters' independence or quality. Firms and older households are in the details.</li>
 </ul>
 </section>
 
 <section>
 <h2>How this was done</h2>
-<p>The questions, the rules and the way each result is labelled were fixed in a design and registered with signed tags before any result was computed. The money compares each broadcaster's 2026 budget, moved by the law's fee rule, with the bill's amounts, in 2026 prices[[cpi]].</p>
-<p>For households, the study uses ČSÚ's 2025 income and spending surveys, split into ten equal groups by income. The bill's total is spread over the main state taxes by their 2025 revenue.</p>
+<p>The rules and labels were registered with signed tags before any result was computed[[cpi]].</p>
 <p>The author has said publicly that she favours keeping the licence fee and raising it; the study was registered before any outcome table was opened so that this view could not shape the result, and the design states which way each simplification pushes the result relative to it.</p>
 </section>
 
@@ -212,6 +199,7 @@
   <summary>Who pays in full: payer shares, exemptions, taxes, firms, seniors and the table by decile</summary>
 <p>Today's payment is the fee times the share of households registered as payers. Those shares are {{pi_tv}} for TV and {{pi_r}} for radio, from {{payers_tv}} and {{payers_r}} household payers in the 2025 annual reports against {{households}} households. The law exempts households whose net income is below 2.15 times their living minimum, but only after they declare it, so how many are exempt in fact is unknown. Two bounds are used, both counting exemptions by entitlement. In the no-exemption case nobody is exempt. In the exempt-decile case a whole decile is exempt if its mean income is below the threshold, and decile 1 if no decile is; in this run only decile 1 was exempt, and its payers are spread over the other nine deciles.</p>
 <p>After, the bill's total is split across taxes in proportion to the state budget's own 2025 tax revenue: VAT {{vat}}, excise duties {{excise}}, personal income tax {{pit}} and corporate income tax {{cit}}. VAT and excise are given to households by their spending on each category, from ČSÚ's 2025 spending survey by quintile; personal income tax by the income tax each decile pays; and corporate income tax to firms. Social insurance is left out because it is earmarked for pensions and health care.</p>
+<p>Counting exemptions by entitlement, not by actual take-up, the poorest tenth carries between {{y_lo}} and {{y_hi}} times the share of its income that the richest tenth does today; the low end is crude, because it treats all of the poorest tenth as exempt, so it pays nothing. If nobody were exempt, the fee takes {{b0_d1}} of the poorest tenth's mean income and {{b0_d10}} of the richest tenth's.</p>
 <p>Funded from the state budget at the average tax structure it would be {{z}} times; from VAT alone it would be {{z_vat}} times, and from personal income tax alone {{z_pit}} times. That average-structure figure rests on four assumptions: VAT and excise fall wholly on households, corporate income tax stays with firms, social insurance is left out, and both deciles of a spending quintile spend the same; the checks below change the last three of them. If the amount is borrowed, current households carry nothing now.</p>
 <p>At the average tax structure the poorest tenth would carry a higher share of its income than the richest, {{ba_d1}} against {{ba_d10}}. The burden falls at every step but one, from decile 6 ({{ba_d6}}) to decile 7 ({{ba_d7}}), where it rises a little. With the poorest tenth exempt, deciles 2 to 10 pay {{pay_e1}} a year on average.</p>
 <p>Against the fee with nobody exempt, budget funding is less regressive: Z is {{z_over_y}} times Y. Against the fee with the whole poorest tenth exempt, the poorest tenth pays nothing today and something after. The true exempt share lies between the two bounds, and the data cannot place it.</p>
@@ -222,6 +210,12 @@
 <p>Seniors appear only as a description, for the two household types in which ČSÚ's tables identify them. One-person households aged 65 or more ({{s1_hh}}, mean net income {{s1_inc}} a year) pay on average {{s1_b0}} of their income with nobody exempt and {{s1_b1}} with the poorest tenth exempt. Two-adult households with at least one person aged 65 or more ({{s2_hh}}, {{s2_inc}}) pay {{s2_b0}} and {{s2_b1}}.</p>
 <p>Neither group's mean income is below the exemption threshold, so no senior group is exempt by the decile rule, although individual seniors in them may be entitled to it. The figures cover only these two household types, today only. A press claim that seniors pay about 40 % of fee revenue has no traceable source and is not tested.</p>
 <h3>By decile</h3>
+<figure id="fig5" data-chart="../assets/licence-fees/charts.json#burden">
+  <p class="ch-head">If nobody were exempt, the fee would take the largest share of income from the poorest tenth; funded from taxes, the share still falls with income, but less steeply.</p>
+  <img src="../assets/licence-fees/05-burden.svg" alt="{{alt_burden}}" loading="lazy">
+  <figcaption><b>fig. 5</b> · Average payment as a share of average net household income, per cent, for each tenth of households. Modelled from published averages; no interval.</figcaption>
+</figure>
+<p>As a share of income, the payment from taxes falls as income rises at every step but one (fig. 5).</p>
 <div class="ht-wrap">
 <table class="ht">
   <thead><tr><th>Decile</th><th>Mean net household income, 2024</th><th>Today, nobody exempt <small>CZK a year · % of income</small></th><th>Today, poorest tenth exempt by entitlement</th><th>After, average tax structure</th></tr></thead>
@@ -269,6 +263,14 @@
 <p>Every ceiling, rounding and allocation is done in integers or exact fractions. The current-law rule restarts its window at the year of an increase and the bill's clause at the year of the crossing, as the two texts say; a second trigger within 2027–2030 is computed. The household deciles come from ČSÚ's income-survey table that ranks households by net money income per modified OECD consumption unit; total household income is income per consumption unit times consumption units per household. The living minimum is that in force on 1 January 2026 (4 860 CZK a month for a single person). The state-budget tax lines of the 2025 closing account are already net of the shares of regions and municipalities and are used as they stand.</p>
 <h3>Deviations and exposures, told in full in the change log</h3>
 <p>The firm "range" of the design collapsed to a single value, because the register's size bands match the fee schedule, so a plausibility test would always fail; before any value was seen, firms were made descriptive, the remainder against the schedule-implied amount. Checks 6 and 7 were found not computable before the code tag. The snapshot tag <code>fees-data-step</code> sits on the snapshot commit, which holds no code, so the parsers are frozen only by the code tag. At the snapshot step a web search used to find ČRo's 2025 annual report returned a summary stating ČRo's realised 2025 fee revenue, {{cro25}}; it is an input of the 2025-outturn starting point, which sets the low end of the Q-A range, and no rule or choice depended on it. Masked prints of some source lines showed the number of digits of a few figures to the drafting assistant, and the reviewer of the code saw the digit-group shape of some rows of the state closing account; both are recorded in the design, before the code tag, and none was used to choose a rule. The first run at the tag <code>fees-code</code> stopped before computing any result, because rounding in the published spending table made some residuals slightly negative; the guard now allows that rounding, nothing else changed, and the run of record uses the new tag <code>fees-code-2</code>. The rise of the living minimum to 5 500 CZK from 1 October 2026 is not used, as the pinned rule says. The expected delay of the bill's start was recorded before any result was computed.</p>
+</details>
+<details class="appendix">
+  <summary>Figure notes: sources and keys</summary>
+<p>Fig. 1 · Black: current law, starting from the fee revenue in the broadcasters' 2026 budgets and rising only by the law's own inflation rule, with the number of payers held fixed. Blue: the bill as introduced, with its inflation clause. Shaded: the gap. Primary combination: the ČNB summer 2026 forecast, the sum reading of the clause and the 2026 budgets as the starting point; across all 12 combinations the four-year gap in 2026 prices, payers held fixed, runs from {{x_min}} to {{x_max}} bn CZK. Data: the bill[[bill]], ČT and ČRo budgets[[ctbudget]][[crobudget]], ČNB[[cnb]].</p>
+<p>Fig. 2 · Today: fee revenue in the broadcasters' 2026 budgets[[ctbudget]][[crobudget]]. The bill: its contribution for 2027, in CZK of 2027[[bill]]. The gap compares today's amount with the 2027 amount in 2026 prices, {{bill27_real}}, at the ČNB summer 2026 forecast[[cnb]].</p>
+<p>Fig. 3 · Tenths of households by income per consumption unit, ČSÚ income survey 2025, income of 2024[[silc]]. Today: the 2026 fees (1 800 CZK TV and 660 CZK radio a year) times the share of households registered as payers, {{pi_tv}} for TV and {{pi_r}} for radio, with nobody exempt (dashed, black) or with all of the poorest tenth exempt by entitlement, their payers spread over the other nine tenths (dotted, grey). After: the bill's 2027 total split by 2025 state tax revenue at the average mix of taxes (blue)[[szu]][[spending]]. Not records of real households.</p>
+<p>Fig. 4 · Today: if nobody were exempt (black), or if all of the poorest tenth were exempt and so paid nothing (grey), exemptions counted by entitlement, not by who claims them. From the state budget: the average mix of taxes gives the registered result (blue); VAT alone and income tax alone are shown for comparison (pale). Shaded: the band from 0.9 to 1.1 that counts as similar. Data: ČSÚ[[silc]][[spending]], state closing account 2025[[szu]].</p>
+<p>Fig. 5 · As fig. 3, divided by each tenth's mean net household income; dashed, black, nobody exempt; dotted, grey, the poorest tenth exempt by entitlement; blue, after. Data: ČSÚ[[silc]][[spending]], state closing account 2025[[szu]], ČT and ČRo annual reports[[ctbudget]][[crobudget]].</p>
 </details>
 <details class="appendix">
   <summary>Reproduction</summary>

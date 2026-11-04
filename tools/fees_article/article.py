@@ -343,7 +343,7 @@ def burden_chart(res: dict) -> dict:
 
 # id, spec, static file; in the order of the figures on the page
 CHARTS = {"money": (money_chart, "01-money.svg"), "first-year": (first_year_chart, "02-first-year.svg"),
-          "ratios": (ratio_chart, "03-ratios.svg"), "pay": (pay_chart, "04-pay.svg"),
+          "pay": (pay_chart, "03-pay.svg"), "ratios": (ratio_chart, "04-ratios.svg"),
           "burden": (burden_chart, "05-burden.svg")}
 
 
