@@ -429,6 +429,7 @@ def values(res: dict) -> dict:
     # the text states these; fail loudly if a re-run changed them
     assert qa["label"] == "bill lower" and len(members) == 12 and all(m["x"] >= 0.1 for m in members)
     assert qa["x_min_bn"] == min(m["x"] for m in members) and qa["x_max_bn"] == qa["x_primary_bn"]
+    assert (pr["nominal"]["p2"]["CT"]["2027"], pr["nominal"]["p2"]["CRO"]["2027"]) == (5741826000, 2065766000)
     assert pr["current_law_steps"] == [2027] and pr["bill_triggers"] == {"CT": [], "CRO": []}
     assert qa["paths_2_and_3_coincide_in_primary"] and pr["x_23"] == 0
     for m in members:
@@ -472,8 +473,14 @@ def values(res: dict) -> dict:
     assert stamp["fees-code-2"].startswith("7c6b692") and stamp["fees-design"].startswith("325cc53")
 
     real_bill = rc["bill_2027_in_2026_prices_czk"]
+    # the gap as a share of what current law gives over 2027-2030, both in 2026 prices
+    x_share = 100 * qa["x_primary_bn"] / (pr["real"]["p1"] / 1e9)
+    assert math.isclose(x_share, 100 * (pr["real"]["p1"] - pr["real"]["p2"]) / pr["real"]["p1"], rel_tol=1e-9)
+    assert round(x_share) == 18
     v = {
         "x": bnx(qa["x_primary_bn"]), "x_min": n(qa["x_min_bn"], 2), "x_max": n(qa["x_max_bn"], 2),
+        "x_share": n(x_share, 0) + NB + "%",
+        "bill_ct_bn": bnx(pr["nominal"]["p2"]["CT"]["2027"] / 1e9), "bill_cro_bn": bnx(pr["nominal"]["p2"]["CRO"]["2027"] / 1e9),
         "x_b": bnx(next(m["x"] for m in members if (m["shock"], m["reading"], m["baseline"]) == (0, "R1", "B"))),
         "p1_real": bn(pr["real"]["p1"]), "p2_real": bn(pr["real"]["p2"]),
         "inf25": n(float(inf["2025"]), 1), "inf26": n(float(inf["2026"]), 2), "inf27": n(float(inf["2027"]), 2),

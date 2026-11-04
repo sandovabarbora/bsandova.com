@@ -208,7 +208,7 @@ def counted_numbers(s: str) -> list[str]:
 def test_main_story_is_short_with_short_paragraphs(page, v):
     seen = visible_story(page)
     words = len(text(seen).split())
-    assert 500 <= words <= 700, words  # captions and takeaways included
+    assert 750 <= words <= 900, words  # captions and takeaways included
     for name in ("y_hi", "z"):  # each summary ratio at most twice
         assert len(re.findall(rf"(?<![\d.]){re.escape(v[name])}(?![\d])", text(seen))) <= 2, name
     for i, cap in re.findall(r"<figcaption><b>fig\. (\d)</b> · (.*?)</figcaption>", seen, re.DOTALL):
