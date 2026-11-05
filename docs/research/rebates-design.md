@@ -286,3 +286,17 @@ The bands are round numbers chosen before any outcome column was read; the one p
   foreign cast costs before 6 May 2016, 66 % of the tax after) is not a rate on eligible costs and is not used.
   Versions 1–9 of the consolidated act were not readable (paywalled); the rate is read from the promulgated act and
   the amending acts.
+- 5 November 2026, official figure for Q5 (§2.11), pinned before any outcome column was read. A separate agent
+  searched the Fund's annual reports 2016–2025 and the Czech Film Commission site, and reported labels, pages and
+  bases with every figure masked; the drafting assistant has seen no value. No single series covers 2016–2025. Pinned:
+  the annual-report figure "Součet uznatelných nákladů, tj. předpokládaná investice všech projektů, které se v roce …
+  alokovaly" for 2020 (report 2020, p. 38) and 2021 (report 2021, p. 35), basis the year of the evidence certificate,
+  planned costs; and "Žádosti o evidenci podané v … – uznatelné náklady = investice v ČR celkem" for 2025 (report 2025,
+  annex p. 84), basis the year the evidence application was filed, planned costs. Not used: 2016–2018 (paid projects
+  by payout year, a different basis), 2019 (realisation year, coverage unclear), 2022–2024 (prose or chart, rounded,
+  basis unclear), and the Film Commission turnover table (a producers' association figure, not limited to incentive
+  projects). Because the pinned basis is the evidence year, Q5 is also reported by the year of the evidence
+  certificate (the 2025 figure is set beside it with its different basis stated); the registration-year series of §1
+  stays as registered. The three values are read into `tools/rebates/config.py` at the estimation-code step and are
+  logged then; they inform no label. The searching agent saw these reports' values, including yearly totals of paid
+  incentives; none was passed on.
