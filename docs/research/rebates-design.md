@@ -300,3 +300,22 @@ The bands are round numbers chosen before any outcome column was read; the one p
   stays as registered. The three values are read into `tools/rebates/config.py` at the estimation-code step and are
   logged then; they inform no label. The searching agent saw these reports' values, including yearly totals of paid
   incentives; none was passed on.
+- 5 November 2026, data step (before the `rebates-data-step` tag; no estimation code exists yet). The parser reads
+  word positions (`pdftotext -tsv`) and assigns cells by the header of each page. Results of the structure checks are
+  in `docs/research/rebates-structure.json`: §3 checks 1, 2, 3 and 7 pass; check 6 flags, because list A has 509
+  rows, all distinct, against the 507 of §0 — two evidence numbers are printed without the slash (`11P2019`,
+  `10P2021`) and the pattern match of §0 missed them. The registered comparison count stays 507 and the run stays
+  flagged; the flag is explained in the methods note. Check 7: 4 of 508 (A) and 1 of 462 (B) deadlines deviate from
+  4 years ± 31 days; 92P/2021 has no listed deadline and takes the §2.4 fallback.
+- 5 November 2026, exposures in the data step. (1) While the code-writing agent inspected the layout, a faulty mask
+  showed it two outcome cells of one project (60P/2016): a change-of-evidence date and four of the six digits of its
+  allocation. (2) To check the column assignment, the agent counted non-empty cells per outcome column (masked
+  shapes): this shows, per list, how many projects have an allocation, a cancellation date, a 1st and a 2nd/only
+  decision date and a paid amount — status counts, no money. Neither changes a rule.
+- 5 November 2026, the real columns differ from §2.2, decided before any estimation code. The lists print one
+  allocation ("Alokace") and one new allocation ("Nová alokace"), not split by instalment; the two instalment columns
+  are the incentive amounts of the 1st and the 2nd/only decision, beside their dates. Therefore: P0 = Alokace; P1 =
+  Nová alokace where listed, else Alokace; "has an allocation" = Alokace > 0. The decision amounts are read but feed
+  no rule. Amounts with haléře are read as exact Fractions (§2.2 said integers). Where an evidence-certificate cell
+  holds two dates (33P/2017, 65P/2019), Q2 starts at the earlier. Change dates feed no rule; the one unreadable change
+  cell (24P/2019) is pinned as unreadable.
