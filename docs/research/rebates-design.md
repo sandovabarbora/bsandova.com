@@ -275,3 +275,14 @@ The bands are round numbers chosen before any outcome column was read; the one p
 - 5 November 2026: design rewritten twice after an independent methods review (process pinned from the Fund's
   applicant guide; mature population, bounds and checks); no outcome column was read. This is before the
   `rebates-design` tag.
+- 5 November 2026, snapshot step (after the `rebates-design` tag): the four files of §2.1 were fetched again and
+  hashed into `docs/research/rebates-files.sha256`; the Fund's page still links the same two lists (states of 30
+  January and 7 October 2026), so no newer list is used. No outcome column was read.
+- 5 November 2026, headline rate pinned (§2.9) from the law texts, also snapshotted: 20 % of eligible costs for
+  registration requests before 1 January 2025 (act 496/2012 as promulgated, §43(4)(a); act 139/2016, point 74, for
+  requests from 6 May 2016, transitional provision 3); 25 %, or 35 % for animation, for requests from 1 January 2025
+  (act 480/2024, points 201–202, transitional provision 24). The highest rate in force for the low end of the Q5 range
+  is therefore 20 % before 2025 (the range collapses there) and 35 % from 2025. The rebate on withholding tax (10 % of
+  foreign cast costs before 6 May 2016, 66 % of the tax after) is not a rate on eligible costs and is not used.
+  Versions 1–9 of the consolidated act were not readable (paywalled); the rate is read from the promulgated act and
+  the amending acts.
