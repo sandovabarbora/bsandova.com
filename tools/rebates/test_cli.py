@@ -1,5 +1,5 @@
 """The stages: the data step on invented lists (counts and booleans, no outcome value), its refusal on a changed
-snapshot, the blinding flag and the gate before --run, the placeholder estimation, and the guard of conftest.py."""
+snapshot, the blinding flag and the gate before --run, the results after it, and the guard of conftest.py."""
 from __future__ import annotations
 
 import json
@@ -10,6 +10,7 @@ import analysis as A
 import cli
 import config as C
 import files as F
+import parse as P
 import pytest
 import synth as SY
 from test_files import freeze, repo, write_manifest  # noqa: F401  (the fixture)
@@ -89,14 +90,16 @@ def test_run_refuses_without_unblind_and_never_touches_the_lists(repo, monkeypat
     assert not C.RESULTS.exists()
 
 
-def test_run_after_the_gate_reaches_the_placeholder(repo, monkeypatch):  # noqa: F811
+def test_run_after_the_gate_writes_the_results_with_their_stamp(repo, monkeypatch, tmp_path):  # noqa: F811
     write_manifest(repo, {"2026-11-05/a.pdf": b"one"})
     freeze(repo)
-    monkeypatch.setattr(cli, "load", lambda *a, **k: {})
-    with pytest.raises(NotImplementedError, match="estimation code comes after rebates-data-step"):
-        cli.main(["--run", "--unblind"])
-    with pytest.raises(NotImplementedError):
-        A.run({})
+    specs = SY.make_lists(tmp_path / "snap")
+    monkeypatch.setattr(cli, "load", lambda *a, **k: {s.name: P.parse_list(s.path, s.name) for s in specs})
+    cli.main(["--run", "--unblind"])
+    res = json.loads(C.RESULTS.read_text())
+    assert res["label"] == res["q1"]["label"] == A.run(cli.load())["label"]
+    assert res["design"]["stamp"]["tag_commits"][C.CODE_TAG] == res["design"]["stamp"]["head"]
+    assert "check_6" in res["flags"]                          # the invented lists differ from the counts of §0
 
 
 def test_the_blinding_guard_fires_on_open_and_on_a_subprocess_argument():
