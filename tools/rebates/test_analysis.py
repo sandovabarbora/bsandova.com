@@ -275,3 +275,82 @@ def test_run_refuses_on_a_data_step_stop(tmp_path):
     lists = {s.name: P.parse_list(s.path, s.name) for s in specs}
     with pytest.raises(SystemExit, match="check_2"):
         A.run(lists, specs)
+
+
+# ---------------------------------------------------------------- review fixes: §6, Q4, check 4, exact values
+
+LB = dt.date(2026, 10, 7)                                   # list B's date
+
+
+def section_6_fixture():
+    return [
+        mature(ev="1P/2016", allocation=100, paid=90, decision_2_date=dt.date(2021, 1, 1)),          # decided
+        mature(ev="2P/2016", allocation=100, cancellation_date=dt.date(2018, 1, 1)),                 # cancelled
+        mature(ev="3P/2017", allocation=200),                                                         # lapsed
+        # decided at a 90-day margin, payout pending at 180 and 365
+        mature(ev="1P/2023", list_name="B", list_date=LB, allocation=100, paid=60, decision_2_date=LB - 120 * DAY),
+        project(ev="2P/2023", list_name="B", list_date=LB, allocation=100, paid=50, deadline=LB,
+                decision_2_date=LB - 400 * DAY),                                                      # decided, open
+        project(ev="3P/2023", list_name="B", list_date=LB, allocation=100, deadline=LB),             # open
+    ]
+
+
+def test_section_6_by_hand():
+    s = A.section_6(section_6_fixture())
+    two = s["2_without_cancelled"]
+    assert (two["projects"], two["promised"], two["paid"]) == (3, 400, 150)
+    assert two["r_low"] == F(150, 400) and two["r_high"] == F(90 + 200 + 100, 400)
+    a, b = s["3_by_list"]["A"], s["3_by_list"]["B"]
+    assert a["r_low"] == F(90, 400) and a["r_high"] == F(290, 400) and a["band"] == A.SUBSTANTIALLY_LESS
+    assert b["projects"] == 1 and b["r_low"] == F(60, 100) and b["r_high"] == 1 and b["band"] == A.DEPENDS
+    assert s["5_all_decided"] == {"projects": 2, "r": F(90 + 50, 200)}                # 1P/2023 is pending at 180
+    assert s["6_r_floor"] == {"projects": 6, "r": F(200, 700)}
+    q1 = {k: s["8_margin"][k]["q1"] for k in (90, 365)} | {180: A.banded(A.q1(section_6_fixture()))}
+    assert q1[90]["r_low"] == F(150, 500) and q1[90]["r_high"] == F(90 + 200 + 60, 500)
+    assert q1[180]["r_low"] == F(150, 500) and q1[180]["r_high"] == F(90 + 200 + 100, 500)
+    assert q1[365]["r_high"] == q1[180]["r_high"] and q1[365]["projects"] == 4
+    for k in (90, 365):
+        assert s["8_margin"][k]["q3"]["B"]["open_projects"] == 1 and s["8_margin"][k]["q3"]["B"]["o"] == 100
+    seven = s["7_q2_list_a"]
+    assert seven["projects"] == 3 and seven["censored"] == 0
+    assert seven["events"] == {A.DECISION: 1, A.CANCELLATION: 1, A.LAPSE: 1}
+    assert seven["horizons_years"][1]["at_risk"] == 3
+
+
+def test_q4_top_5_share_on_seven_projects():
+    ps = [mature(ev=f"{i}P/2016", allocation=10 * i, paid=10 * i, decision_2_date=dt.date(2021, 1, 1))
+          for i in range(1, 8)]
+    q = A.q4(ps)
+    assert q["top_share"]["share_of_p0"] == F(70 + 60 + 50 + 40 + 30, 280)
+    assert q["median_p0"] == 40 and q["above_median"]["projects"] == 3 and q["at_or_below_median"]["projects"] == 4
+    assert q["without_largest"]["left_out"] == "7P/2016" and q["without_largest"]["promised"] == 210
+
+
+def test_q4_ties_rank_the_earlier_registered_project_first():
+    dec = {"allocation": 100, "decision_2_date": dt.date(2021, 1, 1)}
+    ps = [mature(ev=e, **dec) for e in ("1P/2017", "10P/2016", "9P/2016")]
+    assert [p.evidence for p in sorted(ps, key=A.rank_key)] == ["9P/2016", "10P/2016", "1P/2017"]
+    assert A.q4(ps)["without_largest"]["left_out"] == "9P/2016"
+    odd = [mature(ev=e, **dec) for e in ("11P2019", "199/P/2025", "64/2023")]
+    assert [p.evidence for p in sorted(odd, key=A.rank_key)] == ["11P2019", "64/2023", "199/P/2025"]
+
+
+def test_check_4_counts_projects_without_a_deadline_towards_the_flag():
+    ok = [mature(ev=f"{i}P/2016") for i in range(97)]
+    no_d = [mature(ev=f"{i}P/2017", deadline=None) for i in range(3)]
+    c = A.check_4(ok + no_d)
+    assert c["breaches"] == 0 and len(c["without_deadline"]) == 3 and c["counted"] == 3 and c["flag"]
+    assert not A.check_4([*ok, mature(ev="1P/2018"), *no_d[:2]])["flag"]                      # 2 of 100: not above 2 %
+
+
+def test_the_label_ratios_are_also_written_exactly():
+    q = A.q1(four_statuses())
+    assert q["r_low_exact"] == {"num": 17, "den": 45}
+    res = A.plain(A.q3([], {"r_low": F(1, 3), "r_high": None}))
+    assert res["r1"]["r_low_exact"] == {"num": 1, "den": 3} and res["r1"]["r_high_exact"] is None
+    assert res["r1"]["r_low"] == 0.333333
+
+
+def test_q5_counts_projects_skipped_for_a_missing_evidence_date():
+    q = A.q5([mature(ev="1P/2016", allocation=20), mature(ev="2P/2016", allocation=20, evidence_date=())])
+    assert q["by_evidence_year"]["skipped_without_year"] == 1 and q["by_registration_year"]["skipped_without_year"] == 0
