@@ -319,3 +319,33 @@ The bands are round numbers chosen before any outcome column was read; the one p
   no rule. Amounts with haléře are read as exact Fractions (§2.2 said integers). Where an evidence-certificate cell
   holds two dates (33P/2017, 65P/2019), Q2 starts at the earlier. Change dates feed no rule; the one unreadable change
   cell (24P/2019) is pinned as unreadable.
+- 6 November 2026, estimation-code step (after the `rebates-data-step` tag; no outcome column of the lists read).
+  The three official Q5 figures of the 5 November entry were read from the snapshotted annual reports and pinned in
+  `config.OFFICIAL_Q5`: 6,957,401,841 CZK for 2020 (report 2020, p. 38) and 6,244,202,515 CZK for 2021 (report 2021,
+  p. 35), both "Součet uznatelných nákladů, tj. předpokládaná investice všech projektů, které se v roce … alokovaly",
+  basis the evidence year, planned costs; and 9,376,844,134 CZK for 2025 (report 2025, annex p. 84, "Žádosti o
+  evidenci podané v 2025 – uznatelné náklady = investice v ČR celkem"), basis the year the evidence application was
+  filed. Exposure: the same pages print, next to these, the total allocation of evidence certificates issued in 2020
+  and in 2021, the total allocation requested by evidence applications filed in 2025, and on p. 84 the requested
+  allocations of a few 2025 projects whose evidence proceedings were interrupted. These are the Fund's published
+  figures, not the lists' outcome columns; they change no rule and set no label.
+- 6 November 2026, readings fixed in the estimation code where the text above leaves room (before the `rebates-code`
+  tag, no outcome column read). (1) Q2 event kinds follow the §2.5 status: a project with a 2nd/only decision date
+  has the decision as its event at that date, even if it comes after D_eff + 180 days or after a cancellation; else a
+  cancellation date is a cancellation; else a mature project lapses at D_eff + 180 days; else it is censored at its
+  list date. Each list's projects are censored at their own list date, and the two lists are pooled. A project whose
+  event falls before its start (a date-order breach) is left out of Q2 and listed; one without a start date likewise.
+  At a tie, censorings of the same day count as at risk; "at risk at a horizon" is time ≥ the horizon; the 50 % time
+  is the first event time at which the decision curve reaches 1/2, reported only if at least 30 are at risk then. The
+  curve is computed in exact Fractions. (2) The 180-day margin of §6 check 8 is changed everywhere it appears at
+  once: mature (§2.5), payout pending (§2.5), lapse (§2.10) and the Q3 "older than 180 days" rule; Q1, Q2 horizons and
+  Q3 are reported at 90 and 365 days. (3) "Registration year" (§1 Q5, §6 check 4) is the four-digit suffix of the
+  evidence number (§2.2); the evidence year of the 5 November entry is the year of the earlier evidence-certificate
+  date. (4) §3 check 4 uses the earlier evidence-certificate date and the chain of the dates present; its 2 % is of
+  all listed projects. (5) §3 check 5 lists every project with V > P1 and flags on decided projects, meaning those
+  with a 2nd/only decision date (decided or payout pending). (6) §6 check 5 is on the "decided" status of §2.5 (a
+  decision at least 180 days old), mature or not. (7) The Q4 median is exact (the mean of the two middle P0 for an
+  even count); the top 5 and the largest project are ranked by P0, ties broken by evidence number. (8) Q5 cancelled
+  projects are those with the §2.5 cancelled status, whether mature or not; the rate of each project is that of its
+  own request date. (9) A variant of §6 shows the band its bounds would get, beside the headline and never in its
+  place. (10) A stop of the data-step checks (§3 checks 1, 2, 3, 6) also stops `--run`.
