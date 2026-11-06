@@ -1,0 +1,155 @@
+{
+ "check_1_row_parse": {
+  "passed": true,
+  "rows": {
+   "A": 509,
+   "B": 462
+  },
+  "unreadable_cells_pinned": [
+   [
+    "A",
+    "24P/2019",
+    "change_date"
+   ]
+  ]
+ },
+ "check_2_unique_numbers": {
+  "duplicates": [],
+  "stop": false,
+  "pairs_same_title_tax_id_request": []
+ },
+ "check_3_year_coverage": {
+  "suffix_2022": [],
+  "suffix_outside_stated_years": {
+   "A": [],
+   "B": []
+  },
+  "request_2022_other_suffix": [],
+  "stop": false,
+  "flag": false
+ },
+ "check_6_counts": {
+  "A": {
+   "rows": 509,
+   "distinct_numbers": 509,
+   "expected_rows": 507,
+   "rows_equal_distinct": true,
+   "equals_expected": false
+  },
+  "B": {
+   "rows": 462,
+   "distinct_numbers": 462,
+   "expected_rows": 462,
+   "rows_equal_distinct": true,
+   "equals_expected": true
+  },
+  "stop": false,
+  "flag": true
+ },
+ "check_7_deadline": {
+  "A": {
+   "with_both_dates": 508,
+   "days_min": 1096,
+   "days_median": 1461.0,
+   "days_max": 1584,
+   "deviating_from_4_years_pm_31_days": 4,
+   "deviating_numbers": [
+    "14P/2020",
+    "42P/2019",
+    "66P/2019",
+    "98P/2019"
+   ],
+   "flag": false
+  },
+  "B": {
+   "with_both_dates": 462,
+   "days_min": 1428,
+   "days_median": 1461.0,
+   "days_max": 1472,
+   "deviating_from_4_years_pm_31_days": 1,
+   "deviating_numbers": [
+    "105P/2025"
+   ],
+   "flag": false
+  },
+  "flag": false
+ },
+ "coverage": {
+  "A": {
+   "pages": 6,
+   "odd_format_numbers": [
+    "10P2021",
+    "11P2019"
+   ],
+   "rows_without_tax_id": [
+    "86P/2018"
+   ],
+   "rows_without_applicant": [],
+   "rows_without_registration_date": [],
+   "rows_without_deadline": [
+    "92P/2021"
+   ],
+   "rows_without_deadline_or_registration_date": [],
+   "rows_with_several_evidence_dates": [
+    "33P/2017",
+    "65P/2019"
+   ],
+   "numbers_per_suffix_year": {
+    "2016": 37,
+    "2017": 75,
+    "2018": 112,
+    "2019": 117,
+    "2020": 70,
+    "2021": 98
+   }
+  },
+  "B": {
+   "pages": 6,
+   "odd_format_numbers": [
+    "199/P/2025",
+    "64/2023"
+   ],
+   "rows_without_tax_id": [
+    "67P/2025"
+   ],
+   "rows_without_applicant": [],
+   "rows_without_registration_date": [],
+   "rows_without_deadline": [],
+   "rows_without_deadline_or_registration_date": [],
+   "rows_with_several_evidence_dates": [],
+   "numbers_per_suffix_year": {
+    "2023": 151,
+    "2024": 98,
+    "2025": 213
+   }
+  }
+ },
+ "stops": [],
+ "flags": [
+  "check_6"
+ ],
+ "evidence_numbers_in_a_flag_or_stop": [],
+ "lists": {
+  "A": {
+   "file": "list-A-2016-2021-30012026.pdf",
+   "list_date": "2026-01-30",
+   "stated_years": [
+    2016,
+    2021
+   ]
+  },
+  "B": {
+   "file": "list-B-2023-2026-07102026.pdf",
+   "list_date": "2026-10-07",
+   "stated_years": [
+    2023,
+    2026
+   ]
+  }
+ },
+ "manifest_sha256": "5b468070e2a6fe0dd951cde9369eb8a19c8805b1c209d5d39c1beb9b3e83973d",
+ "versions": {
+  "python": "3.12.12",
+  "pdftotext": "pdftotext version 26.01.0"
+ }
+}

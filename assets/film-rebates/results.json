@@ -1,0 +1,1057 @@
+{
+ "label": "nearly all paid",
+ "q1": {
+  "projects": 351,
+  "promised": 6024647829,
+  "paid": 5744853774,
+  "r_low": 0.953558,
+  "r_high": 0.958174,
+  "r_low_exact": {
+   "num": 1914951258,
+   "den": 2008215943
+  },
+  "r_high_exact": {
+   "num": 5772659872,
+   "den": 6024647829
+  },
+  "label": "nearly all paid",
+  "decomposition": {
+   "shortfall": 279794055,
+   "parts": {
+    "a_cancelled_paid_0": 17487776,
+    "b_cancelled_paid_above_0": 0,
+    "c_decided_paid_below_p0": 419392575,
+    "d_lapsed_paid_0_no_1st_decision": 27756860,
+    "d_lapsed_paid_0_with_1st_decision": 0,
+    "d_lapsed_paid_above_0_no_1st_decision": 0,
+    "d_lapsed_paid_above_0_with_1st_decision": 49238,
+    "e_decided_payout_pending": 0,
+    "f_decided_paid_above_p0": -184892394
+   },
+   "shares": {
+    "a_cancelled_paid_0": 0.062502,
+    "b_cancelled_paid_above_0": 0.0,
+    "c_decided_paid_below_p0": 1.498933,
+    "d_lapsed_paid_0_no_1st_decision": 0.099205,
+    "d_lapsed_paid_0_with_1st_decision": 0.0,
+    "d_lapsed_paid_above_0_no_1st_decision": 0.0,
+    "d_lapsed_paid_above_0_with_1st_decision": 0.000176,
+    "e_decided_payout_pending": 0.0,
+    "f_decided_paid_above_p0": -0.660816
+   }
+  },
+  "status_counts": {
+   "decided": 341,
+   "decided_payout_pending": 0,
+   "cancelled": 2,
+   "lapsed_or_undecided": 8
+  },
+  "status_shares": {
+   "decided": 0.97151,
+   "decided_payout_pending": 0.0,
+   "cancelled": 0.005698,
+   "lapsed_or_undecided": 0.022792
+  },
+  "median_paid_over_p0": 0.986001
+ },
+ "q2": {
+  "start": "evidence",
+  "margin_days": 180,
+  "projects": 642,
+  "events": {
+   "decision": 526,
+   "cancellation": 2,
+   "lapse": 8
+  },
+  "censored": 106,
+  "without_start_date": [],
+  "event_before_start": [],
+  "horizons_years": {
+   "1": {
+    "at_risk": 330,
+    "estimable": true,
+    "cumulative_incidence": {
+     "decision": 0.435904,
+     "cancellation": 0.003398,
+     "lapse": 0.0
+    }
+   },
+   "2": {
+    "at_risk": 91,
+    "estimable": true,
+    "cumulative_incidence": {
+     "decision": 0.797892,
+     "cancellation": 0.003398,
+     "lapse": 0.003699
+    }
+   },
+   "3": {
+    "at_risk": 37,
+    "estimable": true,
+    "cumulative_incidence": {
+     "decision": 0.896602,
+     "cancellation": 0.003398,
+     "lapse": 0.005866
+    }
+   },
+   "4": {
+    "at_risk": 7,
+    "estimable": false,
+    "cumulative_incidence": "not estimable"
+   },
+   "5": {
+    "at_risk": 0,
+    "estimable": false,
+    "cumulative_incidence": "not estimable"
+   }
+  },
+  "years_to_50_percent_decided": 1.130732
+ },
+ "q2_from_request": {
+  "start": "request",
+  "margin_days": 180,
+  "projects": 642,
+  "events": {
+   "decision": 526,
+   "cancellation": 2,
+   "lapse": 8
+  },
+  "censored": 106,
+  "without_start_date": [],
+  "event_before_start": [],
+  "horizons_years": {
+   "1": {
+    "at_risk": 536,
+    "estimable": true,
+    "cumulative_incidence": {
+     "decision": 0.148823,
+     "cancellation": 0.0,
+     "lapse": 0.0
+    }
+   },
+   "2": {
+    "at_risk": 239,
+    "estimable": true,
+    "cumulative_incidence": {
+     "decision": 0.551368,
+     "cancellation": 0.001709,
+     "lapse": 0.0
+    }
+   },
+   "3": {
+    "at_risk": 120,
+    "estimable": true,
+    "cumulative_incidence": {
+     "decision": 0.753721,
+     "cancellation": 0.001709,
+     "lapse": 0.0
+    }
+   },
+   "4": {
+    "at_risk": 46,
+    "estimable": true,
+    "cumulative_incidence": {
+     "decision": 0.870226,
+     "cancellation": 0.003747,
+     "lapse": 0.0
+    }
+   },
+   "5": {
+    "at_risk": 2,
+    "estimable": false,
+    "cumulative_incidence": "not estimable"
+   }
+  },
+  "years_to_50_percent_decided": 1.831622
+ },
+ "q3": {
+  "s2026": 1611972229,
+  "r1": {
+   "r_low": 0.990457,
+   "r_high": 0.995519,
+   "r_low_exact": {
+    "num": 5744853774,
+    "den": 5800204633
+   },
+   "r_high_exact": {
+    "num": 5774214411,
+    "den": 5800204633
+   }
+  },
+  "lists": {
+   "A": {
+    "open_projects": 6,
+    "o": 4608977.0,
+    "o_ratio_to_s2026": 0.002859,
+    "o_r_low": 4527467.290134,
+    "o_r_low_ratio_to_s2026": 0.002809,
+    "o_r_high": 4570703.782694,
+    "o_r_high_ratio_to_s2026": 0.002835,
+    "mature_lapsed_projects": 8,
+    "mature_lapsed_remainder": 29360637.0,
+    "mature_lapsed_ratio_to_s2026": 0.018214
+   },
+   "B": {
+    "open_projects": 142,
+    "o": 1946354870.0,
+    "o_ratio_to_s2026": 1.207437,
+    "o_r_low": 1925246404.206939,
+    "o_r_low_ratio_to_s2026": 1.194342,
+    "o_r_high": 1936175360.522285,
+    "o_r_high_ratio_to_s2026": 1.201122,
+    "mature_lapsed_projects": 0,
+    "mature_lapsed_remainder": 0,
+    "mature_lapsed_ratio_to_s2026": 0.0
+   }
+  }
+ },
+ "q4": {
+  "projects": 351,
+  "median_p0": 4861804.0,
+  "above_median": {
+   "projects": 175,
+   "promised": 5554387941,
+   "paid": 5280456698,
+   "r_low": 0.950682,
+   "r_high": 0.953777
+  },
+  "at_or_below_median": {
+   "projects": 176,
+   "promised": 470259888,
+   "paid": 464397076,
+   "r_low": 0.987533,
+   "r_high": 1.010107
+  },
+  "top_share": {
+   "n": 5,
+   "share_of_p0": 0.243163
+  },
+  "without_largest": {
+   "left_out": "14P/2020",
+   "projects": 350,
+   "promised": 5605567925,
+   "paid": 5397110359,
+   "r_low": 0.962812,
+   "r_high": 0.967773
+  }
+ },
+ "q5": {
+  "by_registration_year": {
+   "main": {
+    "2016": {
+     "projects": 32,
+     "p0": 462751896,
+     "base": 2313759480.0,
+     "base_low": 2313759480.0
+    },
+    "2017": {
+     "projects": 61,
+     "p0": 671689386,
+     "base": 3358446930.0,
+     "base_low": 3358446930.0
+    },
+    "2018": {
+     "projects": 92,
+     "p0": 1396991735,
+     "base": 6984958675.0,
+     "base_low": 6984958675.0
+    },
+    "2019": {
+     "projects": 83,
+     "p0": 1664156135,
+     "base": 8320780675.0,
+     "base_low": 8320780675.0
+    },
+    "2020": {
+     "projects": 45,
+     "p0": 1118340464,
+     "base": 5591702320.0,
+     "base_low": 5591702320.0
+    },
+    "2021": {
+     "projects": 83,
+     "p0": 2175002519,
+     "base": 10875012595.0,
+     "base_low": 10875012595.0
+    },
+    "2023": {
+     "projects": 82,
+     "p0": 1498054236,
+     "base": 7490271180.0,
+     "base_low": 7490271180.0
+    },
+    "2024": {
+     "projects": 54,
+     "p0": 607481379,
+     "base": 3037406895.0,
+     "base_low": 3037406895.0
+    },
+    "2025": {
+     "projects": 108,
+     "p0": 2752968621,
+     "base": 11011874484.0,
+     "base_low": 7865624631.428571
+    }
+   },
+   "cancelled": {
+    "2019": {
+     "projects": 2,
+     "p0": 17487776,
+     "base": 87438880.0,
+     "base_low": 87438880.0
+    }
+   },
+   "skipped_without_year": 0
+  },
+  "by_evidence_year": {
+   "main": {
+    "2017": {
+     "projects": 67,
+     "p0": 958292646,
+     "base": 4791463230.0,
+     "base_low": 4791463230.0
+    },
+    "2018": {
+     "projects": 73,
+     "p0": 1035755681,
+     "base": 5178778405.0,
+     "base_low": 5178778405.0
+    },
+    "2019": {
+     "projects": 59,
+     "p0": 956834860,
+     "base": 4784174300.0,
+     "base_low": 4784174300.0
+    },
+    "2020": {
+     "projects": 61,
+     "p0": 1212378942,
+     "base": 6061894710.0,
+     "base_low": 6061894710.0
+    },
+    "2021": {
+     "projects": 75,
+     "p0": 1181805449,
+     "base": 5909027245.0,
+     "base_low": 5909027245.0
+    },
+    "2022": {
+     "projects": 40,
+     "p0": 1544642781,
+     "base": 7723213905.0,
+     "base_low": 7723213905.0
+    },
+    "2023": {
+     "projects": 42,
+     "p0": 1407582186,
+     "base": 7037910930.0,
+     "base_low": 7037910930.0
+    },
+    "2024": {
+     "projects": 85,
+     "p0": 1126550492,
+     "base": 5632752460.0,
+     "base_low": 5632752460.0
+    },
+    "2025": {
+     "projects": 77,
+     "p0": 1453452023,
+     "base": 5964741985.0,
+     "base_low": 4476149836.428571
+    },
+    "2026": {
+     "projects": 61,
+     "p0": 1470141311,
+     "base": 5900256064.0,
+     "base_low": 4242598360.0
+    }
+   },
+   "cancelled": {
+    "2020": {
+     "projects": 1,
+     "p0": 10999648,
+     "base": 54998240.0,
+     "base_low": 54998240.0
+    },
+    "2022": {
+     "projects": 1,
+     "p0": 6488128,
+     "base": 32440640.0,
+     "base_low": 32440640.0
+    }
+   },
+   "skipped_without_year": 0
+  },
+  "official": {
+   "2020": {
+    "czk": 6957401841,
+    "basis": "evidence year",
+    "source": "annual report 2020, p. 38: Součet uznatelných nákladů, tj. předpokládaná investice všech projektů, které se v roce 2020 alokovaly"
+   },
+   "2021": {
+    "czk": 6244202515,
+    "basis": "evidence year",
+    "source": "annual report 2021, p. 35: Součet uznatelných nákladů, tj. předpokládaná investice všech projektů, které se v roce 2021 alokovaly"
+   },
+   "2025": {
+    "czk": 9376844134,
+    "basis": "year the evidence application was filed",
+    "source": "annual report 2025, annex p. 84: Žádosti o evidenci podané v 2025 – uznatelné náklady = investice v ČR celkem"
+   }
+  }
+ },
+ "counts": {
+  "A": {
+   "rows": 509,
+   "mature": {
+    "decided": 341,
+    "decided_payout_pending": 0,
+    "cancelled": 2,
+    "lapsed_or_undecided": 8
+   },
+   "open": {
+    "decided": 41,
+    "decided_payout_pending": 4,
+    "cancelled": 0,
+    "lapsed_or_undecided": 2
+   },
+   "without_allocation": {
+    "decided": 0,
+    "decided_payout_pending": 0,
+    "cancelled": 1,
+    "lapsed_or_undecided": 110
+   }
+  },
+  "B": {
+   "rows": 462,
+   "mature": {
+    "decided": 0,
+    "decided_payout_pending": 0,
+    "cancelled": 0,
+    "lapsed_or_undecided": 0
+   },
+   "open": {
+    "decided": 102,
+    "decided_payout_pending": 38,
+    "cancelled": 0,
+    "lapsed_or_undecided": 104
+   },
+   "without_allocation": {
+    "decided": 0,
+    "decided_payout_pending": 0,
+    "cancelled": 7,
+    "lapsed_or_undecided": 211
+   }
+  },
+  "cancelled_and_decided": [
+   "33P/2017",
+   "65P/2019"
+  ]
+ },
+ "checks_3": {
+  "check_4_date_order": {
+   "projects": 971,
+   "breaches": 1,
+   "breach_numbers": [
+    "81P/2021"
+   ],
+   "without_deadline": [],
+   "counted": 1,
+   "flag": false
+  },
+  "check_5_paid_above_p1": {
+   "paid_above_p1": [
+    "100P/2025",
+    "101P/2018",
+    "101P/2023",
+    "104P/2018",
+    "107P/2018",
+    "108P/2019",
+    "108P/2023",
+    "109P/2018",
+    "10P/2023",
+    "10P2021",
+    "117P/2019",
+    "124P/2023",
+    "125P/2023",
+    "126P/2023",
+    "12P/2019",
+    "136P/2025",
+    "13P/2019",
+    "14P/2017",
+    "14P/2020",
+    "14P/2023",
+    "150P/2023",
+    "159P/2025",
+    "15P/2020",
+    "16P/2017",
+    "16P/2024",
+    "17P/2018",
+    "17P/2019",
+    "17P/2021",
+    "18P/2019",
+    "196P/2025",
+    "19P/2019",
+    "19P/2024",
+    "19P/2025",
+    "1P/2017",
+    "1P/2021",
+    "20P/2019",
+    "21P/2018",
+    "21P/2020",
+    "21P/2023",
+    "23P/2021",
+    "24P/2017",
+    "24P/2021",
+    "25P/2025",
+    "26P/2017",
+    "26P/2018",
+    "26P/2019",
+    "27P/2021",
+    "27P/2023",
+    "28P/2020",
+    "28P/2021",
+    "29P/2019",
+    "29P/2023",
+    "2P/2019",
+    "30P/2021",
+    "31P/2017",
+    "31P/2019",
+    "31P/2024",
+    "32P/2017",
+    "32P/2018",
+    "32P/2019",
+    "32P/2021",
+    "33P/2018",
+    "33P/2020",
+    "33P/2021",
+    "34P/2017",
+    "35P/2021",
+    "35P/2023",
+    "36P/2019",
+    "36P/2020",
+    "38P/2020",
+    "38P/2021",
+    "38P/2024",
+    "3P/2019",
+    "3P/2021",
+    "40P/2019",
+    "40P/2020",
+    "40P/2021",
+    "41P/2020",
+    "41P/2021",
+    "42P/2017",
+    "42P/2019",
+    "42P/2020",
+    "42P/2021",
+    "43P/2021",
+    "43P/2025",
+    "44P/2017",
+    "45P/2018",
+    "45P/2019",
+    "45P/2021",
+    "46P/2021",
+    "46P/2023",
+    "47P/2018",
+    "47P/2020",
+    "47P/2023",
+    "47P/2025",
+    "48P/2017",
+    "48P/2018",
+    "49P/2017",
+    "49P/2018",
+    "49P/2020",
+    "49P/2021",
+    "4P/2025",
+    "50P/2024",
+    "51P/2017",
+    "51P/2018",
+    "51P/2021",
+    "51P/2024",
+    "52P/2018",
+    "52P/2021",
+    "53P/2024",
+    "54P/2017",
+    "54P/2024",
+    "55P/2020",
+    "55P/2021",
+    "57P/2017",
+    "57P/2019",
+    "57P/2021",
+    "57P/2025",
+    "58P/2018",
+    "58P/2019",
+    "59P/2021",
+    "5P/2020",
+    "60P/2017",
+    "60P/2020",
+    "60P/2021",
+    "60P/2024",
+    "61P/2020",
+    "62P/2021",
+    "62P/2024",
+    "64P/2017",
+    "64P/2020",
+    "65P/2020",
+    "65P/2023",
+    "66P/2019",
+    "66P/2020",
+    "66P/2023",
+    "67P/2018",
+    "67P/2020",
+    "67P/2023",
+    "67P/2024",
+    "68P/2018",
+    "68P/2020",
+    "69P/2018",
+    "69P/2023",
+    "6P/2018",
+    "6P/2021",
+    "70P/2020",
+    "71P/2018",
+    "72P/2018",
+    "72P/2021",
+    "73P/2016",
+    "74P/2021",
+    "74P/2024",
+    "74P/2025",
+    "75P/2017",
+    "75P/2024",
+    "76P/2018",
+    "76P/2021",
+    "76P/2024",
+    "77P/2016",
+    "77P/2021",
+    "79P/2024",
+    "7P/2017",
+    "7P/2018",
+    "7P/2020",
+    "7P/2021",
+    "7P/2025",
+    "80P/2018",
+    "82P/2018",
+    "83P/2016",
+    "83P/2021",
+    "84P/2019",
+    "85P/2018",
+    "85P/2019",
+    "85P/2025",
+    "86P/2019",
+    "86P/2023",
+    "87P/2018",
+    "87P/2024",
+    "88P/2018",
+    "88P/2025",
+    "89P/2018",
+    "89P/2019",
+    "89P/2021",
+    "8P/2018",
+    "8P/2025",
+    "91P/2016",
+    "91P/2018",
+    "92P/2018",
+    "92P/2023",
+    "93P/2018",
+    "94P/2023",
+    "95P/2023",
+    "96P/2018",
+    "97P/2024",
+    "98P/2021",
+    "98P/2023",
+    "99P/2018",
+    "99P/2021",
+    "9P/2017",
+    "9P/2019",
+    "9P/2021"
+   ],
+   "decided_projects": 526,
+   "decided_paid_above_p1": 201,
+   "flag": true
+  },
+  "data_step": {
+   "check_3_year_coverage": {
+    "suffix_2022": [],
+    "suffix_outside_stated_years": {
+     "A": [],
+     "B": []
+    },
+    "request_2022_other_suffix": [],
+    "stop": false,
+    "flag": false
+   },
+   "check_6_counts": {
+    "A": {
+     "rows": 509,
+     "distinct_numbers": 509,
+     "expected_rows": 507,
+     "rows_equal_distinct": true,
+     "equals_expected": false
+    },
+    "B": {
+     "rows": 462,
+     "distinct_numbers": 462,
+     "expected_rows": 462,
+     "rows_equal_distinct": true,
+     "equals_expected": true
+    },
+    "stop": false,
+    "flag": true
+   },
+   "check_7_deadline": {
+    "A": {
+     "with_both_dates": 508,
+     "days_min": 1096,
+     "days_median": 1461.0,
+     "days_max": 1584,
+     "deviating_from_4_years_pm_31_days": 4,
+     "deviating_numbers": [
+      "14P/2020",
+      "42P/2019",
+      "66P/2019",
+      "98P/2019"
+     ],
+     "flag": false
+    },
+    "B": {
+     "with_both_dates": 462,
+     "days_min": 1428,
+     "days_median": 1461.0,
+     "days_max": 1472,
+     "deviating_from_4_years_pm_31_days": 1,
+     "deviating_numbers": [
+      "105P/2025"
+     ],
+     "flag": false
+    },
+    "flag": false
+   }
+  }
+ },
+ "checks_6": {
+  "1_on_p1": {
+   "projects": 351,
+   "promised": 5800204633.0,
+   "paid": 5744853774,
+   "r_low": 0.990457,
+   "r_high": 0.995519,
+   "band": "nearly all paid"
+  },
+  "2_without_cancelled": {
+   "projects": 349,
+   "promised": 6007160053,
+   "paid": 5744853774,
+   "r_low": 0.956334,
+   "r_high": 0.960963,
+   "band": "nearly all paid"
+  },
+  "3_by_list": {
+   "A": {
+    "projects": 351,
+    "promised": 6024647829,
+    "paid": 5744853774,
+    "r_low": 0.953558,
+    "r_high": 0.958174,
+    "band": "nearly all paid"
+   },
+   "B": {
+    "projects": 0,
+    "promised": 0,
+    "paid": 0,
+    "r_low": null,
+    "r_high": null,
+    "band": null
+   }
+  },
+  "4_by_registration_year": {
+   "2016": {
+    "projects": 32,
+    "promised": 462751896,
+    "paid": 449900890,
+    "r_low": 0.972229,
+    "r_high": 0.972229
+   },
+   "2017": {
+    "projects": 61,
+    "promised": 671689386,
+    "paid": 693938754,
+    "r_low": 1.033124,
+    "r_high": 1.033124
+   },
+   "2018": {
+    "projects": 92,
+    "promised": 1396991735,
+    "paid": 1235413802,
+    "r_low": 0.884339,
+    "r_high": 0.894585
+   },
+   "2019": {
+    "projects": 85,
+    "promised": 1681643911,
+    "paid": 1651053791,
+    "r_low": 0.981809,
+    "r_high": 0.988969
+   },
+   "2020": {
+    "projects": 41,
+    "promised": 996403099,
+    "paid": 934346126,
+    "r_low": 0.937719,
+    "r_high": 0.939176
+   },
+   "2021": {
+    "projects": 40,
+    "promised": 815167802,
+    "paid": 780200411,
+    "r_low": 0.957104,
+    "r_high": 0.957104
+   }
+  },
+  "5_all_decided": {
+   "projects": 484,
+   "r": 0.971563
+  },
+  "6_r_floor": {
+   "projects": 642,
+   "r": 0.81121
+  },
+  "7_q2_list_a": {
+   "start": "evidence",
+   "margin_days": 180,
+   "projects": 398,
+   "events": {
+    "decision": 386,
+    "cancellation": 2,
+    "lapse": 8
+   },
+   "censored": 2,
+   "without_start_date": [],
+   "event_before_start": [],
+   "horizons_years": {
+    "1": {
+     "at_risk": 210,
+     "estimable": true,
+     "cumulative_incidence": {
+      "decision": 0.467337,
+      "cancellation": 0.005025,
+      "lapse": 0.0
+     }
+    },
+    "2": {
+     "at_risk": 70,
+     "estimable": true,
+     "cumulative_incidence": {
+      "decision": 0.813054,
+      "cancellation": 0.005025,
+      "lapse": 0.005053
+     }
+    },
+    "3": {
+     "at_risk": 33,
+     "estimable": true,
+     "cumulative_incidence": {
+      "decision": 0.904014,
+      "cancellation": 0.005025,
+      "lapse": 0.00758
+     }
+    },
+    "4": {
+     "at_risk": 7,
+     "estimable": false,
+     "cumulative_incidence": "not estimable"
+    },
+    "5": {
+     "at_risk": 0,
+     "estimable": false,
+     "cumulative_incidence": "not estimable"
+    }
+   },
+   "years_to_50_percent_decided": 1.075975
+  },
+  "8_margin": {
+   "90": {
+    "q1": {
+     "projects": 373,
+     "promised": 6794428747,
+     "paid": 6560647988,
+     "r_low": 0.965592,
+     "r_high": 0.970283,
+     "band": "nearly all paid"
+    },
+    "q2": {
+     "1": {
+      "at_risk": 330,
+      "estimable": true,
+      "cumulative_incidence": {
+       "decision": 0.435904,
+       "cancellation": 0.003398,
+       "lapse": 0.0
+      }
+     },
+     "2": {
+      "at_risk": 90,
+      "estimable": true,
+      "cumulative_incidence": {
+       "decision": 0.798023,
+       "cancellation": 0.003398,
+       "lapse": 0.005539
+      }
+     },
+     "3": {
+      "at_risk": 37,
+      "estimable": true,
+      "cumulative_incidence": {
+       "decision": 0.896833,
+       "cancellation": 0.003398,
+       "lapse": 0.005539
+      }
+     },
+     "4": {
+      "at_risk": 4,
+      "estimable": false,
+      "cumulative_incidence": "not estimable"
+     },
+     "5": {
+      "at_risk": 0,
+      "estimable": false,
+      "cumulative_incidence": "not estimable"
+     }
+    },
+    "q3": {
+     "A": {
+      "open_projects": 3,
+      "o": 537757,
+      "o_ratio_to_s2026": 0.000334,
+      "o_r_low": 501362.326249,
+      "o_r_low_ratio_to_s2026": 0.000311,
+      "o_r_high": 521691.750336,
+      "o_r_high_ratio_to_s2026": 0.000324,
+      "mature_lapsed_projects": 9,
+      "mature_lapsed_remainder": 33422423.0,
+      "mature_lapsed_ratio_to_s2026": 0.020734
+     },
+     "B": {
+      "open_projects": 128,
+      "o": 1944689662.0,
+      "o_ratio_to_s2026": 1.206404,
+      "o_r_low": 1925123650.584614,
+      "o_r_low_ratio_to_s2026": 1.194266,
+      "o_r_high": 1935814080.396187,
+      "o_r_high_ratio_to_s2026": 1.200898,
+      "mature_lapsed_projects": 0,
+      "mature_lapsed_remainder": 0,
+      "mature_lapsed_ratio_to_s2026": 0.0
+     }
+    }
+   },
+   "365": {
+    "q1": {
+     "projects": 311,
+     "promised": 5208409598,
+     "paid": 4961648147,
+     "r_low": 0.952622,
+     "r_high": 0.957961,
+     "band": "nearly all paid"
+    },
+    "q2": {
+     "1": {
+      "at_risk": 330,
+      "estimable": true,
+      "cumulative_incidence": {
+       "decision": 0.435904,
+       "cancellation": 0.003398,
+       "lapse": 0.0
+      }
+     },
+     "2": {
+      "at_risk": 91,
+      "estimable": true,
+      "cumulative_incidence": {
+       "decision": 0.797736,
+       "cancellation": 0.003398,
+       "lapse": 0.00417
+      }
+     },
+     "3": {
+      "at_risk": 37,
+      "estimable": true,
+      "cumulative_incidence": {
+       "decision": 0.896158,
+       "cancellation": 0.003398,
+       "lapse": 0.006704
+      }
+     },
+     "4": {
+      "at_risk": 8,
+      "estimable": false,
+      "cumulative_incidence": "not estimable"
+     },
+     "5": {
+      "at_risk": 0,
+      "estimable": false,
+      "cumulative_incidence": "not estimable"
+     }
+    },
+    "q3": {
+     "A": {
+      "open_projects": 13,
+      "o": 5020062.0,
+      "o_ratio_to_s2026": 0.003114,
+      "o_r_low": 4792202.502428,
+      "o_r_low_ratio_to_s2026": 0.002973,
+      "o_r_high": 4892912.832855,
+      "o_r_high_ratio_to_s2026": 0.003035,
+      "mature_lapsed_projects": 8,
+      "mature_lapsed_remainder": 29360637.0,
+      "mature_lapsed_ratio_to_s2026": 0.018214
+     },
+     "B": {
+      "open_projects": 169,
+      "o": 1949740342.0,
+      "o_ratio_to_s2026": 1.209537,
+      "o_r_low": 1923450669.329167,
+      "o_r_low_ratio_to_s2026": 1.193228,
+      "o_r_high": 1936649368.432713,
+      "o_r_high_ratio_to_s2026": 1.201416,
+      "mature_lapsed_projects": 0,
+      "mature_lapsed_remainder": 0,
+      "mature_lapsed_ratio_to_s2026": 0.0
+     }
+    }
+   }
+  }
+ },
+ "flags": [
+  "check_6",
+  "check_5"
+ ],
+ "design": {
+  "file": "docs/research/rebates-design.md",
+  "stamp": {
+   "manifest_sha256": "5b468070e2a6fe0dd951cde9369eb8a19c8805b1c209d5d39c1beb9b3e83973d",
+   "files_sha256": {
+    "2026-11-05/list-A-2016-2021-30012026.pdf": "472751f1ba6a1548c102e68387632364c617e055498bd7f513fb90937f40d734",
+    "2026-11-05/list-B-2023-2026-07102026.pdf": "06d96de1ee61500d784db50e05673173a7f0b93212db15af33ae1be4168e989b",
+    "2026-11-05/notice-27032026.pdf": "1b67c6cf72fcccbf1a0ebad02e5fdc65ed3de98f2cbf94b9ded903d35cdc30ff",
+    "2026-11-05/guide-2025.pdf": "d556cb43f637d000ee48f59a22ee71848aeda80449b9025d96e7ec62c1fa3a50",
+    "2026-11-05/law/act-496-2012-promulgated.html": "76852647d7bc4d2366e120d052362d71d29040f6eed6fc1d7f2bdc06e74ebbc0",
+    "2026-11-05/law/act-139-2016.html": "d5c1338c183423e032404e054a7169f04c7d9d635d7ad92ee743594401a05dc9",
+    "2026-11-05/law/act-480-2024.html": "3405e6bacdf8277f5f2969a610d5e63d06711def75902acf7b2b93389e94702a",
+    "2026-11-05/law/act-496-2012-history.html": "180b81ad9dbe825717d93a8457564060980ed172632d9bc8bef194e43eb064ea",
+    "2026-11-05/annual/annual-reports-2018-2022.zip": "3a1a1712590709bab64e4e7ad5577916b1e560606cdddfe11e035b9708e7a589",
+    "2026-11-05/annual/annual-report-2025.pdf": "9078c856533202d2043c54fb176219f3ba124b3018a94be001a29bd935aa9f7a"
+   },
+   "tag_commits": {
+    "rebates-design": "df6e65408e902beda8666c1179b231f39d23975d",
+    "rebates-data-step": "a6ff893fa1234c1f32423363262bcb4569240420",
+    "rebates-code": "dd30f238a86e39c3e81585d104d73f1493070b27"
+   },
+   "head": "dd30f238a86e39c3e81585d104d73f1493070b27",
+   "tools_rebates_tree": "6a822f19390f681380393df530d79deea2697447"
+  }
+ },
+ "versions": {
+  "python": "3.12.12",
+  "pdftotext": "pdftotext version 26.01.0"
+ },
+ "generated": "2026-11-06T11:23:01Z"
+}
