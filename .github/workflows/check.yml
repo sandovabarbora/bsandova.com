@@ -26,3 +26,4 @@ jobs:
       - run: python -m pytest -q -rs tools/priorities
       - run: python -m pytest -q -rs tools/memes
       - run: python -m pytest -q -rs tools/rebates
+      - run: python -m pytest -q -rs tools/rebates_article
