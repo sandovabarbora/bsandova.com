@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import datetime as dt
 import itertools
+import re
 from collections import Counter
 from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass
@@ -94,6 +95,17 @@ def ratio(num: Money, den: Money) -> Fraction | None:
     return Fraction(num) / den if den else None
 
 
+def exact(r: Fraction | None) -> dict | None:
+    # the ratios that decide the label, unrounded, so that a value at a band edge can be read as it is
+    return None if r is None else {"num": r.numerator, "den": r.denominator}
+
+
+def rank_key(p: Project) -> tuple:
+    # largest P0 first; among equal P0 the earlier-registered project first, by (registration year, number), so that
+    # 9P/2016 comes before 10P/2016 and both before 1P/2017
+    return -p.p0, p.row.year, int(re.match(r"\d+", p.evidence)[0])
+
+
 def median(xs: Iterable[Money]) -> Fraction | None:
     # exact: statistics.median turns the mean of two ints into a float, and Q4 splits on "strictly greater"
     s = sorted(xs)
@@ -171,7 +183,8 @@ def q1(ps: Sequence[Project], margin: int = C.MARGIN_DAYS) -> dict:
     mature = [p for p in ps if p.has_allocation and p.mature(margin)]
     b = bounds(mature, margin)
     n = Counter(p.status(margin) for p in mature)
-    return {**b, "label": label(b["r_low"], b["r_high"]), "decomposition": decomposition(mature, margin),
+    return {**b, "r_low_exact": exact(b["r_low"]), "r_high_exact": exact(b["r_high"]),
+            "label": label(b["r_low"], b["r_high"]), "decomposition": decomposition(mature, margin),
             "status_counts": {s: n[s] for s in STATUSES},
             "status_shares": {s: ratio(n[s], len(mature)) for s in STATUSES},
             "median_paid_over_p0": median(Fraction(p.v) / p.p0 for p in mature)}
@@ -266,7 +279,8 @@ def q3(ps: Sequence[Project], r1: dict, margin: int = C.MARGIN_DAYS) -> dict:
         fig |= {"mature_lapsed_projects": len(lapsed), "mature_lapsed_remainder": m,
                 "mature_lapsed_ratio_to_s2026": ratio(m, C.S2026)}
         out[name] = fig
-    return {"s2026": C.S2026, "r1": {k: r1[k] for k in ("r_low", "r_high")}, "lists": out}
+    r1_out = {k: r1[k] for k in ("r_low", "r_high")} | {f"{k}_exact": exact(r1[k]) for k in ("r_low", "r_high")}
+    return {"s2026": C.S2026, "r1": r1_out, "lists": out}
 
 
 # ---------------------------------------------------------------- Q4
@@ -276,7 +290,7 @@ def q4(ps: Sequence[Project], margin: int = C.MARGIN_DAYS) -> dict:
     if not mature:
         return {"projects": 0}
     med = median(p.p0 for p in mature)
-    ranked = sorted(mature, key=lambda p: (p.p0, p.evidence), reverse=True)
+    ranked = sorted(mature, key=rank_key)
     total = sum((p.p0 for p in mature), 0)
     return {"projects": len(mature), "median_p0": med,
             "above_median": bounds((p for p in mature if p.p0 > med), margin),
@@ -289,10 +303,13 @@ def q4(ps: Sequence[Project], margin: int = C.MARGIN_DAYS) -> dict:
 
 def q5(ps: Sequence[Project], margin: int = C.MARGIN_DAYS) -> dict:
     def series(year_of: Callable[[Project], int | None]) -> dict:
-        out: dict[str, dict[int, dict]] = {"main": {}, "cancelled": {}}
+        out: dict = {"main": {}, "cancelled": {}, "skipped_without_year": 0}
         for p in ps:
+            if not p.has_allocation:
+                continue
             y = year_of(p)
-            if not p.has_allocation or y is None:
+            if y is None:
+                out["skipped_without_year"] += 1
                 continue
             cell = out[CANCELLED if p.status(margin) == CANCELLED else "main"].setdefault(
                 y, {"projects": 0, "p0": 0, "base": 0, "base_low": 0})
@@ -300,7 +317,7 @@ def q5(ps: Sequence[Project], margin: int = C.MARGIN_DAYS) -> dict:
             cell["p0"] += p.p0
             cell["base"] += Fraction(p.p0) / C.headline_rate(p.row.request_date)
             cell["base_low"] += Fraction(p.p0) / C.highest_rate(p.row.request_date)
-        return {k: dict(sorted(v.items())) for k, v in out.items()}
+        return {k: dict(sorted(v.items())) if isinstance(v, dict) else v for k, v in out.items()}
 
     return {"by_registration_year": series(lambda p: p.row.year),
             "by_evidence_year": series(lambda p: p.start.year if p.start else None),
@@ -316,9 +333,11 @@ def check_4(ps: Sequence[Project]) -> dict:
         chain = [d for d in (r.request_date, r.registration_date, p.start, r.decision_1_date, r.decision_2_date) if d]
         if any(a > b for a, b in itertools.pairwise(chain)):
             breaches.append(p.evidence)
+    no_d = sorted(p.evidence for p in ps if p.deadline is None)
+    # §3 check 4: "Projects without a D are counted here", so they count towards the 2 % beside the breaches
+    counted = len(breaches) + len(no_d)
     return {"projects": len(ps), "breaches": len(breaches), "breach_numbers": sorted(breaches),
-            "without_deadline": sorted(p.evidence for p in ps if p.deadline is None),
-            "flag": len(breaches) > C.DATE_ORDER_FLAG_SHARE * len(ps)}
+            "without_deadline": no_d, "counted": counted, "flag": counted > C.DATE_ORDER_FLAG_SHARE * len(ps)}
 
 
 def check_5(ps: Sequence[Project]) -> dict:
