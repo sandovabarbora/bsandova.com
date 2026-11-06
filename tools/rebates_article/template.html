@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Do Czech film incentives get paid in full?</title>
-<meta name="description" content="A pre-specified census of the State Audiovisual Fund's incentive projects: of {{promised}} allocated to {{n_mature}} projects registered 2016–2021 whose deadline has passed, {{r}} was paid; projects registered since 2023 still hold {{o_b}} allocated and not yet paid, {{o_ratio}} times the Fund's 2026 incentive budget.">
+<meta name="description" content="A pre-specified census of the State Audiovisual Fund's incentive projects: of {{promised}} allocated to {{n_mature}} projects registered 2016–2021 whose deadline has passed, {{r}} was paid; projects registered since 2023 still have {{o_b}} allocated and not yet paid, {{o_ratio}} times the Fund's 2026 incentive budget.">
 <meta property="og:title" content="Do Czech film incentives get paid in full?">
-<meta property="og:description" content="Pre-specified: of {{promised}} promised to {{n_mature}} film and TV projects whose deadline has passed, {{r}} was paid. Newer projects still hold {{o_b}}, {{o_ratio}} times the Fund's whole 2026 incentive budget.">
+<meta property="og:description" content="Pre-specified: of {{promised}} allocated to {{n_mature}} film and TV projects whose deadline has passed, {{r}} was paid. Newer projects still have {{o_b}} allocated and not yet paid, {{o_ratio}} times the Fund's whole 2026 incentive budget.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://bsandova.com/texts/film-rebates">
 <meta property="og:image" content="https://bsandova.com/assets/og/home.jpg">
@@ -46,11 +46,11 @@
 <header class="text-head">
   <p class="kicker">Research · Pre-specified · Czech film production incentives, 2016–2026</p>
   <h1>Do Czech film incentives <em>get paid in full?</em></h1>
-  <p class="deck">Of the money promised to film and TV productions whose deadline has passed, {{r}} was paid; projects registered since 2023 still hold more than a year's budget.</p>
+  <p class="deck">Of the money allocated to film and TV productions whose deadline has passed, {{r}} was paid; projects registered since 2023 have more than a year's budget allocated and not yet paid.</p>
   <dl class="facts">
     <div><dt>Paid</dt><dd>{{r}} <small>of {{promised}} allocated to {{n_mature}} projects registered 2016–2021 whose deadline has passed · nearly all paid, by a rule set before the results</small></dd></div>
     <div><dt>Waiting</dt><dd>{{t50}} <small>until half of the projects had a final decision, counted from the allocation</small></dd></div>
-    <div><dt>Still promised</dt><dd>{{o_b}} <small>allocated and not yet paid to {{n_open_b}} projects registered 2023–2026 · {{o_ratio}} times the Fund's 2026 incentive budget</small></dd></div>
+    <div><dt>Allocated, not yet paid</dt><dd>{{o_b}} <small>to {{n_open_b}} projects registered 2023–2025 · {{o_ratio}} times the Fund's 2026 incentive budget</small></dd></div>
     <div><dt>Big and small</dt><dd>{{big}} <small>paid to the larger half of projects, against {{small}} to the smaller half</small></dd></div>
   </dl>
 </header>
@@ -59,9 +59,9 @@
   <ul>
     <li><b>Paid.</b> Projects whose deadline has passed were allocated {{promised}} and paid {{paid}}, {{r}} (<a href="#fig1">fig. 1</a>).</li>
     <li><b>Waiting.</b> Half had a final decision about {{t50_months}} months after their allocation, and {{ci3}} within three years (<a href="#fig2">fig. 2</a>).</li>
-    <li><b>Still promised.</b> Newer projects hold {{o_b}} not yet paid, {{o_ratio}} times the 2026 budget (<a href="#fig3">fig. 3</a>).</li>
+    <li><b>Allocated, not yet paid.</b> Newer projects have {{o_b}} allocated and not yet paid, {{o_ratio}} times the 2026 budget (<a href="#fig3">fig. 3</a>).</li>
     <li><b>Big and small.</b> The larger projects got a smaller share of their allocation than the smaller ones (<a href="#fig4">fig. 4</a>).</li>
-    <li><b>Planned costs.</b> The allocations imply planned costs {{gap20}} and {{gap21}} below the Fund's own figures for 2020 and 2021 (<a href="#fig5">fig. 5</a>).</li>
+    <li><b>Planned costs.</b> The allocations imply planned costs that differ from the Fund's own figures, {{gap20}} and {{gap21}} lower for 2020 and 2021 (<a href="#fig5">fig. 5</a>).</li>
   </ul>
   <p>Arithmetic on the Fund's own lists of projects. Nothing here says whether the incentives pay off for the state.</p>
 </details>
@@ -73,7 +73,7 @@
 <dl class="meta">
   <div><dt>status</dt><dd>research, pre-specified analysis (registered by signed tags, self-timestamped); a descriptive census of the Fund's project lists with no causal claim</dd></div>
   <div><dt>registration</dt><dd>design registered by the signed annotated tag <code>rebates-design</code>, tag object <code>{{obj_design}}</code>, on commit <code>{{tag_design}}</code> of 5 November 2026, before any outcome column of the lists was read. The code that reads the lists was tagged <code>rebates-data-step</code> (tag object <code>{{obj_data}}</code>, commit <code>{{tag_data}}</code>) before the estimation code was written, and the estimation code <code>rebates-code</code> (tag object <code>{{obj_code}}</code>, commit <code>{{tag_code}}</code>) before any result was computed. The results were committed at <code>{{results_commit}}</code>. The tags are the author's own and are in the public repository; commit times are self-reported. Deviations are in <a href="../changelog/#film-rebates-changes">the change log</a>.</dd></div>
-  <div><dt>data</dt><dd>the Fund's two lists of incentive projects, states of 30 January 2026 (registered 2016–2021) and 7 October 2026 (registered 2023–2026)[[lista]][[listb]]; the applicant guide[[guide]]; the Fund's notice of 27 March 2026[[notice]]; the acts for the rates[[act496]][[act139]][[act480]]; the annual reports[[ar2018]][[ar2025]]. Fetched on 5 November 2026; hashes in <code>docs/research/rebates-files.sha256</code>. Results in <a href="../assets/film-rebates/results.json">results.json</a>.</dd></div>
+  <div><dt>data</dt><dd>the Fund's two lists of incentive projects, states of 30 January 2026 (registered 2016–2021) and 7 October 2026 (registered 2023–2025)[[lista]][[listb]]; the applicant guide[[guide]]; the Fund's notice of 27 March 2026[[notice]]; the acts for the rates[[act496]][[act139]][[act480]]; the annual reports[[ar2018]][[ar2025]]. Fetched on 5 November 2026; hashes in <code>docs/research/rebates-files.sha256</code>. Results in <a href="../assets/film-rebates/results.json">results.json</a>.</dd></div>
   <div><dt>code</dt><dd><a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/rebates">tools/rebates/</a> at the tag <code>rebates-code</code>; this page from <a href="https://github.com/sandovabarbora/bsandova.com/tree/main/tools/rebates_article">tools/rebates_article/</a> at the commit that publishes it</dd></div>
   <div><dt>disclosure</dt><dd>The author builds production software for film crews (FilmRunner).</dd></div>
   <div><dt>cite as</dt><dd>Šandová, B. (2026). <i>Do Czech film incentives get paid in full?</i> bsandova.com/texts/film-rebates, version 1.</dd></div>
@@ -83,19 +83,19 @@
 
 <section>
 <p>Say a foreign series shoots in Prague. If it spends enough here, the State Audiovisual Fund pays it back a share of the costs: 20 % for projects registered before 2025, and 25 %, or 35 % for animation, from then on[[act496]][[act480]].</p>
-<p>The promise comes early. When a project enters the scheme, the Fund sets aside an allocation from the producer's planned costs. The money comes only after the shoot, when the producer applies with the costs actually spent, within four years of registering[[guide]].</p>
-<p>So how much of what is promised is paid in the end, how long does it take, and how much is still owed on paper? The Fund lists every project, with what it allocated and what it paid[[lista]][[listb]].</p>
+<p>The allocation comes early: when a project enters the scheme, the Fund sets money aside from the producer's planned costs. It pays only after the shoot, on the costs actually spent, within four years of registering[[guide]].</p>
+<p>How much of what is allocated is paid in the end, how long does it take, and how much is still set aside? The Fund lists every project, with what it allocated and paid[[lista]][[listb]].</p>
 </section>
 
 <section>
 <h2>How much was paid</h2>
 <p>{{n_mature}} projects, all registered between 2016 and 2021, are past their deadline by at least half a year, so their outcome should be in. They were allocated {{promised}} and paid {{paid}}: {{r_low}}.</p>
 <figure id="fig1" data-chart="../assets/film-rebates/charts.json#paid">
-  <p class="ch-head">Of {{promised}} allocated, {{paid}} was paid; most of the difference is projects that spent less than planned.</p>
+  <p class="ch-head">Of {{promised}} allocated, {{paid}} was paid; most of the difference is decided projects paid below their allocation.</p>
   <img src="../assets/film-rebates/01-paid.svg" alt="{{alt_paid}}" loading="lazy">
   <figcaption><b>fig. 1</b> · Projects past their deadline, bn CZK: allocated, the steps down to paid, and paid. All listed projects; no interval.</figcaption>
 </figure>
-<p>An allocation is a ceiling, not a bill. The rebate is a share of what was really spent, so a project that spent less gets less. Decided projects paid below their allocation account for {{below}}. Those paid above it, mostly within a margin the rules allow, give back {{above}}.</p>
+<p>An allocation is a ceiling, not a bill: the rebate is a share of the costs claimed. Decided projects paid below their first allocation account for {{below}}; some projects were paid above their first allocation, which gives back {{above}}.</p>
 <p>The rest is small: {{undecided}} sits with {{n_undecided}} projects that have no final decision past their deadline, and {{cancelled}} with {{n_cancelled}} cancelled ones. If the undecided were paid in full, the share would be {{r_high}}.</p>
 <p>{{decided_share}} of the projects got a final decision. The typical project received {{median}} of its allocation.</p>
 <p class="verdict">By the rule set before the results, the label is "nearly all paid": {{r}}. That clears the rule's 95 % line, but only narrowly.</p>
@@ -110,20 +110,20 @@
   <figcaption><b>fig. 2</b> · Share of {{n_q2}} projects with a final decision, by years since the allocation or the first request. No interval.</figcaption>
 </figure>
 <p>Counted from the first request to join the scheme, half took {{t50r}}, and {{cir4}} had a decision within four.</p>
-<p>Projects still waiting are counted only for as long as they have been followed, and a cancellation or a passed deadline ends a project's wait without a decision. Beyond the years shown, too few projects are left to tell.</p>
+<p>Projects still waiting count only for as long as they have been followed; beyond the years shown, too few are left to tell.</p>
 </section>
 
 <section>
-<h2>Money already promised</h2>
-<p>On 7 October 2026, {{n_open_b}} projects registered between 2023 and 2026 were still waiting for a final decision or payment. Their allocations not yet paid add up to {{o_b}}[[listb]].</p>
+<h2>Allocated and not yet paid</h2>
+<p>On 7 October 2026, {{n_open_b}} projects registered between 2023 and 2025 were still waiting for a final decision or payment. Their allocations not yet paid add up to {{o_b}}[[listb]].</p>
 <figure id="fig3" data-chart="../assets/film-rebates/charts.json#committed">
   <p class="ch-head">Projects registered since 2023 hold {{o_b}} not yet paid, more than the whole 2026 budget.</p>
   <img src="../assets/film-rebates/03-committed.svg" alt="{{alt_committed}}" loading="lazy">
   <figcaption><b>fig. 3</b> · Allocated and not yet paid on 7 October 2026, against the 2026 incentive budget, bn CZK. No interval.</figcaption>
 </figure>
 <p>The Fund's whole incentive budget for 2026 is {{s2026}}[[notice]], so this is {{o_ratio}} times a year's money. If these projects end as the older ones did, about {{o_r}} would be paid.</p>
-<p>It is promised money, not a debt: some projects will spend less and some will be cancelled. The lists show no payment schedule either, so the figure does not say how many years of budget it will take.</p>
-<p>On 27 March 2026 the Fund stopped taking new registrations, saying the 2026 budget was fully committed to those already in the scheme[[notice]]. The figure fits that, but this study does not test whether old promises crowd out new ones.</p>
+<p>It is money set aside, not a debt: some projects will be paid less and some cancelled. The lists show no payment schedule, so it does not say how many years of budget it will take.</p>
+<p>On 27 March 2026 the Fund stopped taking new registrations, saying the 2026 budget was fully committed to those already in the scheme[[notice]]. The figure fits that, but this study does not test whether old allocations crowd out new ones.</p>
 </section>
 
 <section>
@@ -138,30 +138,34 @@
 </section>
 
 <section>
-<h2>The planned costs behind the promises</h2>
+<h2>The planned costs behind the allocations</h2>
 <p>An allocation divided by the rebate rate gives the planned costs it was set from. For projects allocated in 2020 that is {{b20}}, against {{o20}} in the Fund's annual report; for 2021, {{b21}} against {{o21}}[[ar2018]].</p>
 <figure id="fig5" data-chart="../assets/film-rebates/charts.json#base">
-  <p class="ch-head">The allocations imply planned costs {{gap20}} and {{gap21}} below the Fund's own figures for 2020 and 2021.</p>
+  <p class="ch-head">The allocations imply planned costs that differ from the Fund's own figures for 2020 and 2021.</p>
   <img src="../assets/film-rebates/05-base.svg" alt="{{alt_base}}" loading="lazy">
   <figcaption><b>fig. 5</b> · Planned eligible costs, bn CZK: allocation ÷ rate from the lists, against the annual reports. No interval.</figcaption>
 </figure>
 <p>For 2025 the report counts applications filed that year, {{o25}}[[ar2025]], and the lists have no matching date. Projects registered in 2025 give {{r25}}, those allocated in 2025 {{e25}}. Each range runs from counting every project registered in 2025 at the animation rate of 35 % to counting it at the headline 25 %[[act480]].</p>
-<p>These are planned costs, not money spent, and they do not say whether the incentives pay for themselves.</p>
+<p>Which way the gap should go is not known: animation at 35 % and the rebate on withholding tax push the figure from the lists up, the 450 m CZK cap per project pushes it down, and registration years do not match calendar years. These are planned costs, not money spent, and they do not say whether the incentives pay for themselves.</p>
 </section>
 
 <section>
 <h2>What this does not show</h2>
 <ul>
-<li>Whether the incentives pay off: the lists hold promises and payments, not spending, jobs or taxes, and nothing on what would have been shot here anyway.</li>
+<li>Whether the incentives pay off: the lists hold allocations and payments, not spending, jobs or taxes, and nothing on what would have been shot here anyway.</li>
 <li>Why a project got less than its allocation: the lists do not separate lower spending from a cut, and a shortfall is not read as the Fund failing to pay.</li>
-<li>Whether old promises leave too little for new projects: that needs the Fund's payment schedule.</li>
+<li>Whether old allocations leave too little for new projects: that needs the Fund's payment schedule.</li>
+<li>Paid is a current total: clawbacks may or may not be netted in it.</li>
+<li>No origin: the lists do not say whether a project is a foreign service production or a Czech one, so there is no split by origin.</li>
+<li>The money not yet paid is not a bound: the new regime is excluded, which pushes it down, and delayed payouts of old projects may sit in the undecided figure, reported separately.</li>
+<li>Two list dates: the list of projects registered 2016–2021 is from 30 January 2026, so its open projects may have closed since; the two lists are reported apart.</li>
 <li>Projects entered under the law in force from 2026, which are not in the lists.</li>
 </ul>
 </section>
 
 <section>
 <h2>How this was done</h2>
-<p>The questions, the rule for the label and the checks were registered with signed tags before any amount in the lists was read, and the code was frozen before it ran. The lists are every registered project, not a sample, so there are no intervals.</p>
+<p>The questions, the rule for the label and the checks were registered with signed tags before any amount in the lists was read, and the code was frozen before it ran. The lists hold every project on the Fund's two lists, not a sample, so there are no intervals.</p>
 <p>The run is flagged twice, as the design requires, and the flags change no label. One list has 509 rows, not the 507 counted at registration, because two project numbers are printed without a slash. And {{over_p1}} of {{n_decided_all}} decided projects were paid more than their latest allocation: {{within_both}} by no more than 5 % and 1 m CZK, the margin the rules allow, and {{over_5}} by more than 5 % but less than 1 m CZK; {{excess}} in all.</p>
 <p>The author builds production software for film crews (FilmRunner).</p>
 </section>
@@ -187,13 +191,13 @@
 <h3>Deviations</h3>
 <p>The lists print one allocation and one new allocation, not split by instalment as the design assumed; the first allocation is the promise, the new one where printed the latest promise, and amounts with haléře are read exactly. Where one cell holds two evidence dates, the wait starts at the earlier. The design left ten readings open, from how an event is dated to how ties are broken; each was fixed and logged before the code was frozen, and an independent review of the code led to further fixes before the tag. All are in the change log.</p>
 <h3>Exposures</h3>
-<p>Before registration, a web-search summary showed one project's allocation and payment, about 0.77 paid; no rule used it. While the reading code was written, a faulty mask showed the assistant two outcome cells of one project, a change date and four digits of an allocation, and the code counted how many cells in each outcome column are filled, which gives the number of decided and cancelled projects but no money. The annual-report pages with the planned costs also print the total allocations of those years. All are recorded in the design before the code tag; none changed a rule.</p>
+<p>Before registration, a web-search summary showed one project's allocation and payment, about 0.77 paid; no rule used it. While the reading code was written, a faulty mask showed the assistant two outcome cells of one project, a change date and four digits of an allocation, and the code counted how many cells in each outcome column are filled, which gives the number of decided and cancelled projects but no money. The annual-report pages with the planned costs also print the total allocations of those years, and p. 84 of the 2025 report the requested allocations of a few interrupted 2025 projects; the agent that searched the annual reports saw their yearly totals of paid incentives and passed none on. Before registration, press figures (about 9.3 bn CZK of applications in 2025, a claim of four billion brought to Czechia, a 2026 split between incentives and selective support) and the rates on the Fund's English page were heard; the lists' column headers, counts by year, masked number patterns and the titles of their first four rows were read; and only the counts by year of an older list of 15 March 2024. All are recorded in the design before the code tag; none changed a rule.</p>
 </details>
 <details class="appendix">
   <summary>Figure notes: sources and keys</summary>
-<p>Fig. 1 · Projects past their deadline from the list of 30 January 2026[[lista]]. Black: allocated. Red: decided projects paid below the allocation. Blue step: decided projects paid above it. Grey: projects with no final decision past the deadline, and cancelled projects. Blue: paid.</p>
-<p>Fig. 2 · Both lists[[lista]][[listb]], all {{n_q2}} projects with an allocation. Blue: years from the evidence certificate, which sets the allocation. Grey, dashed: years from the registration request. Dotted: half.</p>
-<p>Fig. 3 · Red: allocated and not yet paid for projects registered 2023–2026 still waiting for a decision or payment, list of 7 October 2026[[listb]]. Black: the 2026 incentive subsidy[[notice]].</p>
+<p>Fig. 1 · Projects past their deadline from the list of 30 January 2026[[lista]]. Black: allocated. Red: decided projects paid below their first allocation. Blue step: decided projects paid above it, also measured against the first allocation. Grey: projects with no final decision past the deadline, and cancelled projects. Blue: paid.</p>
+<p>Fig. 2 · Both lists[[lista]][[listb]], all {{n_q2}} projects with an allocation. Blue: years from the certificate that sets the allocation. Grey, dashed: years from the registration request. Dotted: half.</p>
+<p>Fig. 3 · Red: allocated and not yet paid for projects registered 2023–2025 still waiting for a decision or payment, list of 7 October 2026[[listb]]. Black: the 2026 incentive subsidy[[notice]].</p>
 <p>Fig. 4 · Projects past their deadline[[lista]]; larger and smaller half split at the median allocation, {{median_p0}}. The dot is the middle of the range. Dotted: 95 %, the line of the label; solid: 100 %.</p>
 <p>Fig. 5 · Blue: the sum of allocations divided by the headline rate in force when each project asked to register, 20 % before 2025 and 25 % from 2025[[act496]][[act139]][[act480]]; pale: the 2025 range down to the 35 % animation rate. Cancelled projects left out. Black: planned eligible costs in the annual reports, for projects allocated in 2020 and 2021[[ar2018]] and for evidence applications filed in 2025[[ar2025]].</p>
 </details>

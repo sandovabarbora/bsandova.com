@@ -66,8 +66,8 @@ def paid_rows(res: dict) -> list[dict]:
     undecided = sum(v for k, v in p.items() if k.startswith("d_"))
     cancelled = p["a_cancelled_paid_0"] + p["b_cancelled_paid_above_0"]
     assert p["e_decided_payout_pending"] == 0
-    steps = [("decided, paid below the allocation", -below, CORAL),
-             ("decided, paid above the allocation", above, HELD),
+    steps = [("decided, paid below the first allocation", -below, CORAL),
+             ("decided, paid above the first allocation", above, HELD),
              ("no final decision past the deadline", -undecided, GREY),
              ("cancelled", -cancelled, GREY)]
     rows = [{"y": "allocated", "x1": round(promised / 1e9, 4), "c": INK, "label": bn(promised),
@@ -88,8 +88,8 @@ def paid_chart(res: dict) -> dict:
     rows = paid_rows(res)
     q1 = res["q1"]
     return {"alt": f"The {q1['projects']} projects whose deadline has passed were allocated {rows[0]['label']} and "
-                   f"paid {rows[-1]['label']}. Decided projects paid below their allocation take off "
-                   f"{rows[1]['label'].lstrip('−')} CZK, those paid above it add back {rows[2]['label'].lstrip('+')} CZK, "
+                   f"paid {rows[-1]['label']}. Decided projects paid below their first allocation take off "
+                   f"{rows[1]['label'].lstrip('−')} CZK, decided projects paid above their first allocation add back {rows[2]['label'].lstrip('+')} CZK, "
                    f"projects with no final decision take off {rows[3]['label'].lstrip('−')} CZK and cancelled ones "
                    f"{rows[4]['label'].lstrip('−')} CZK.",
             "panels": [{"h": 230, "padRight": 70,
@@ -104,7 +104,7 @@ def paid_chart(res: dict) -> dict:
 
 def time_series(res: dict) -> list[tuple[str, list[list[float]], str, str | None]]:
     out = []
-    for key, name, c, dash in (("q2", "from the evidence certificate", HELD, None),
+    for key, name, c, dash in (("q2", "from the certificate that sets the allocation", HELD, None),
                                ("q2_from_request", "from the registration request", GREY, "dash")):
         h = res[key]["horizons_years"]
         pts = [[0, 0.0]] + [[int(y), round(100 * e["cumulative_incidence"]["decision"], 2)]
@@ -123,7 +123,7 @@ def time_chart(res: dict) -> dict:
             mk["dash"] = dash
         marks.append(mk)
     ev, rq = series[0][1], series[1][1]
-    return {"alt": f"Share of projects with a final incentive decision. Counted from the evidence certificate: "
+    return {"alt": f"Share of projects with a final incentive decision. Counted from the certificate that sets the allocation: "
                    f"{n(ev[1][1], 0)} % after 1 year, {n(ev[2][1], 0)} % after 2 and {n(ev[3][1], 0)} % after 3. "
                    f"Counted from the registration request: {n(rq[1][1], 0)} %, {n(rq[2][1], 0)} %, "
                    f"{n(rq[3][1], 0)} % and {n(rq[4][1], 0)} % after 1 to 4 years. Later years have too few projects "
@@ -144,7 +144,7 @@ def time_chart(res: dict) -> dict:
 def committed_rows(res: dict) -> list[dict]:
     b, s = res["q3"]["lists"]["B"], res["q3"]["s2026"]
     return [{"y": "still allocated, not yet paid", "x1": round(b["o"] / 1e9, 4), "c": CORAL, "label": bn(b["o"]),
-             "tip": f"{b['open_projects']} projects registered 2023–2026 still waiting: {bn(b['o'])}"},
+             "tip": f"{b['open_projects']} projects registered 2023–2025 still waiting: {bn(b['o'])}"},
             {"y": "the Fund's whole 2026 incentive budget", "x1": round(s / 1e9, 4), "c": INK, "label": bn(s),
              "tip": f"the 2026 incentive subsidy: {bn(s)}"}]
 
@@ -152,7 +152,7 @@ def committed_rows(res: dict) -> list[dict]:
 def committed_chart(res: dict) -> dict:
     rows = committed_rows(res)
     b = res["q3"]["lists"]["B"]
-    return {"alt": f"Projects registered 2023–2026 still had {rows[0]['label']} allocated and not yet paid on "
+    return {"alt": f"Projects registered 2023–2025 still had {rows[0]['label']} allocated and not yet paid on "
                    f"7 October 2026, {n(b['o_ratio_to_s2026'], 2)} times the Fund's whole 2026 incentive budget of "
                    f"{rows[1]['label']}.",
             "panels": [{"h": 120, "padRight": 24,
