@@ -362,3 +362,12 @@ The bands are round numbers chosen before any outcome column was read; the one p
   population like the headline's (checks 1, 2, 3 and 8), because §5 defines the bands on that pair; checks 5 and 6
   are single ratios and check 7 a curve, which §5 does not band, and check 4 has bounds per registration year, small
   cells that a band per year would turn into many labels the design does not register.
+- 6 November 2026, the run. `--run --unblind` ran once at `rebates-code` (dd30f23) and wrote
+  `docs/research/rebates-results.json`. Q1 label: "nearly all paid" (R_low 0.9536, R_high 0.9582; 351 mature
+  projects, all in list A). The run is flagged by §3 check 6 (509 against 507 rows, logged at the data step) and by §3
+  check 5: 201 of 526 projects with a 2nd/only decision have V > P1. A descriptive look after the run, which changes
+  no number or label: 198 of the 201 exceed P1 by no more than 5 % and no more than 1 m CZK, inside the tolerance
+  of the applicant guide (§0: a ŽOP higher than the allocation "by more than 5 % or by more than 1 m CZK" is cut);
+  3 exceed it by more than 5 % but by less than 1 m CZK, so they are inside the tolerance only if "or" is read as
+  needing both; none exceeds 1 m CZK (the largest excess is 0.87 m CZK). The excess sums to 27.8 m CZK. Q4 shows the
+  above-median projects at R 0.951–0.954 and the rest at 0.988–1.010. The flags stay and are explained in the methods note.
