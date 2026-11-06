@@ -349,3 +349,16 @@ The bands are round numbers chosen before any outcome column was read; the one p
   projects are those with the §2.5 cancelled status, whether mature or not; the rate of each project is that of its
   own request date. (9) A variant of §6 shows the band its bounds would get, beside the headline and never in its
   place. (10) A stop of the data-step checks (§3 checks 1, 2, 3, 6) also stops `--run`.
+- 6 November 2026, after an independent code review (before the `rebates-code` tag, no outcome column read). (1) §3
+  check 4 now follows its text: projects without a D are counted towards the 2 % beside the date-order breaches; the
+  output keeps the two lists apart and gives their sum. (2) The Q4 tie order is now (registration year, number)
+  ascending among equal P0, so the earlier-registered project ranks first (9P/2016 before 10P/2016 before 1P/2017);
+  this replaces reading (7) of the entry above, which broke ties by evidence number as text, descending. (3) The
+  R_low and R_high that decide the Q1 label, and the R1 bounds of Q3, are also written as exact fractions beside the
+  rounded floats. (4) Q5 by evidence year reports how many projects with an allocation it skips for a missing
+  evidence date. (5) On reading (5) of the entry above: the check 5 denominator includes payout-pending projects, so
+  the flag is slightly less likely than with the strict "decided" status; the numerator is taken on the same set.
+  (6) On reading (9): a band is given only to the §6 variants that are a pair of R_low and R_high over a whole
+  population like the headline's (checks 1, 2, 3 and 8), because §5 defines the bands on that pair; checks 5 and 6
+  are single ratios and check 7 a curve, which §5 does not band, and check 4 has bounds per registration year, small
+  cells that a band per year would turn into many labels the design does not register.
