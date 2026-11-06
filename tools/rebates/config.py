@@ -76,3 +76,29 @@ PAID_FLAG_SHARE = Fraction(2, 100)                  # check 5 (estimation step)
 # value stays unread): (list, evidence number, column). Such a cell counts as listed and has no value. Any other
 # unreadable cell stops the run (§3 check 1). 24P/2019: a change date printed as "##.##.####/####.####".
 UNREADABLE_CELLS = frozenset({("A", "24P/2019", "change_date")})
+
+# ---- §2.10 ----
+DAYS_PER_YEAR = Fraction(36525, 100)
+HORIZON_YEARS = (1, 2, 3, 4, 5)
+MIN_AT_RISK = 30
+
+# ---- §5: label bands on R_low and R_high (never loosened) ----
+NEARLY_ALL = Fraction(95, 100)
+MOST = Fraction(80, 100)
+
+# ---- §1 Q4 ----
+TOP_N = 5
+
+# ---- §2.11: official planned-cost figures for Q5, pinned in the change log of 5 November 2026 and read at the
+# estimation-code step (published aggregates, not outcome columns). Year -> (CZK, basis, source). ----
+OFFICIAL_Q5 = {
+    2020: (6_957_401_841, "evidence year",
+           ("annual report 2020, p. 38: Součet uznatelných nákladů, tj. předpokládaná investice všech projektů, "
+            "které se v roce 2020 alokovaly")),
+    2021: (6_244_202_515, "evidence year",
+           ("annual report 2021, p. 35: Součet uznatelných nákladů, tj. předpokládaná investice všech projektů, "
+            "které se v roce 2021 alokovaly")),
+    2025: (9_376_844_134, "year the evidence application was filed",
+           ("annual report 2025, annex p. 84: Žádosti o evidenci podané v 2025 – uznatelné náklady = investice v "
+            "ČR celkem")),
+}
