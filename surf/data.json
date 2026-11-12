@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-11",
+ "generated": "2026-11-12",
  "truth": "meteofrance_wave analysis (lead 0) \u2014 a proxy, not a buoy",
  "spots": [
   "ericeira",
@@ -69,7 +69,8 @@
   "2026-11-08",
   "2026-11-09",
   "2026-11-10",
-  "2026-11-11"
+  "2026-11-11",
+  "2026-11-12"
  ],
  "surfable_rule": {
   "swell_max_m": [
@@ -92,16 +93,16 @@
  },
  "climatology": {
   "ericeira": {
-   "days": 150,
+   "days": 151,
    "from": "2026-06-14",
-   "to": "2026-11-10",
-   "surfable_share": 0.193,
+   "to": "2026-11-11",
+   "surfable_share": 0.192,
    "surfable_share_by_rule": {
-    "period 7 s": 0.32,
-    "period 9 s": 0.127,
-    "wind 20": 0.18,
-    "wind 30": 0.2,
-    "height 0.8\u20133.0": 0.273
+    "period 7 s": 0.318,
+    "period 9 s": 0.126,
+    "wind 20": 0.179,
+    "wind 30": 0.199,
+    "height 0.8\u20133.0": 0.272
    },
    "weeks": [
     {
@@ -260,24 +261,24 @@
     },
     {
      "week": "2026-W46",
-     "n": 2,
+     "n": 3,
      "surfable": 0,
-     "swell_max_mean": 3.9,
+     "swell_max_mean": 3.74,
      "period_mean": 8.8
     }
    ]
   },
   "peniche": {
-   "days": 150,
+   "days": 151,
    "from": "2026-06-14",
-   "to": "2026-11-10",
-   "surfable_share": 0.207,
+   "to": "2026-11-11",
+   "surfable_share": 0.205,
    "surfable_share_by_rule": {
-    "period 7 s": 0.347,
-    "period 9 s": 0.107,
-    "wind 20": 0.187,
-    "wind 30": 0.207,
-    "height 0.8\u20133.0": 0.253
+    "period 7 s": 0.344,
+    "period 9 s": 0.106,
+    "wind 20": 0.185,
+    "wind 30": 0.205,
+    "height 0.8\u20133.0": 0.252
    },
    "weeks": [
     {
@@ -436,24 +437,24 @@
     },
     {
      "week": "2026-W46",
-     "n": 2,
+     "n": 3,
      "surfable": 0,
-     "swell_max_mean": 3.54,
-     "period_mean": 8.8
+     "swell_max_mean": 3.37,
+     "period_mean": 8.7
     }
    ]
   },
   "sagres": {
-   "days": 150,
+   "days": 151,
    "from": "2026-06-14",
-   "to": "2026-11-10",
-   "surfable_share": 0.227,
+   "to": "2026-11-11",
+   "surfable_share": 0.225,
    "surfable_share_by_rule": {
-    "period 7 s": 0.333,
-    "period 9 s": 0.153,
-    "wind 20": 0.213,
-    "wind 30": 0.24,
-    "height 0.8\u20133.0": 0.267
+    "period 7 s": 0.331,
+    "period 9 s": 0.152,
+    "wind 20": 0.212,
+    "wind 30": 0.238,
+    "height 0.8\u20133.0": 0.265
    },
    "weeks": [
     {
@@ -612,234 +613,195 @@
     },
     {
      "week": "2026-W46",
-     "n": 2,
+     "n": 3,
      "surfable": 0,
-     "swell_max_mean": 3.95,
-     "period_mean": 8.6
+     "swell_max_mean": 3.85,
+     "period_mean": 8.7
     }
    ]
   }
  },
  "latest": {
   "ericeira": {
-   "issued": "2026-11-11",
+   "issued": "2026-11-12",
    "days": [
     {
-     "date": "2026-11-11",
+     "date": "2026-11-12",
      "lead": 0,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 3.4,
-       "swell_mean": 2.79,
-       "period_mean": 8.31,
-       "dir_mean": 264.0,
-       "wave_max": 3.54,
-       "wind_mean": 17.75,
-       "wind_dir": 213.0
-      },
-      "gwam": {
-       "swell_max": 3.12,
-       "swell_mean": 2.91,
-       "period_mean": 9.45,
-       "dir_mean": 258.0,
-       "wave_max": 3.2,
-       "wind_mean": 17.75,
-       "wind_dir": 213.0
-      },
-      "ewam": {
-       "swell_max": 2.7,
-       "swell_mean": 2.57,
-       "period_mean": 9.74,
-       "dir_mean": 268.0,
-       "wave_max": 2.88,
-       "wind_mean": 17.75,
-       "wind_dir": 213.0
-      }
-     },
-     "swell_max_mean": 3.07,
-     "swell_max_spread": 0.7,
-     "period_mean": 9.2,
-     "wind_mean": 17.75,
-     "wind_dir": 213.0,
-     "surfable_votes": 0
-    },
-    {
-     "date": "2026-11-12",
-     "lead": 1,
-     "models": {
-      "meteofrance_wave": {
-       "swell_max": 3.36,
-       "swell_mean": 2.84,
-       "period_mean": 7.95,
+       "swell_max": 2.9,
+       "swell_mean": 2.66,
+       "period_mean": 7.73,
        "dir_mean": 285.0,
-       "wave_max": 3.66,
-       "wind_mean": 20.12,
-       "wind_dir": 247.0
+       "wave_max": 3.6,
+       "wind_mean": 19.05,
+       "wind_dir": 249.0
       },
       "gwam": {
-       "swell_max": 3.22,
-       "swell_mean": 3.16,
-       "period_mean": 9.59,
-       "dir_mean": 249.0,
-       "wave_max": 3.42,
-       "wind_mean": 20.12,
-       "wind_dir": 247.0
+       "swell_max": 3.34,
+       "swell_mean": 3.18,
+       "period_mean": 9.64,
+       "dir_mean": 246.0,
+       "wave_max": 3.5,
+       "wind_mean": 19.05,
+       "wind_dir": 249.0
       },
       "ewam": {
-       "swell_max": 2.84,
-       "swell_mean": 2.78,
-       "period_mean": 9.31,
-       "dir_mean": 263.0,
-       "wave_max": 2.98,
-       "wind_mean": 20.12,
-       "wind_dir": 247.0
+       "swell_max": 2.82,
+       "swell_mean": 2.77,
+       "period_mean": 9.32,
+       "dir_mean": 261.0,
+       "wave_max": 3.0,
+       "wind_mean": 19.05,
+       "wind_dir": 249.0
       }
      },
-     "swell_max_mean": 3.14,
+     "swell_max_mean": 3.02,
      "swell_max_spread": 0.52,
-     "period_mean": 9.0,
-     "wind_mean": 20.12,
-     "wind_dir": 247.0,
+     "period_mean": 8.9,
+     "wind_mean": 19.05,
+     "wind_dir": 249.0,
      "surfable_votes": 0
     },
     {
      "date": "2026-11-13",
-     "lead": 2,
+     "lead": 1,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 3.44,
-       "swell_mean": 2.85,
-       "period_mean": 7.14,
-       "dir_mean": 277.0,
-       "wave_max": 3.64,
-       "wind_mean": 13.95,
-       "wind_dir": 236.0
+       "swell_max": 3.02,
+       "swell_mean": 2.57,
+       "period_mean": 6.97,
+       "dir_mean": 284.0,
+       "wave_max": 3.48,
+       "wind_mean": 15.59,
+       "wind_dir": 250.0
       },
       "gwam": {
-       "swell_max": 2.82,
-       "swell_mean": 2.52,
-       "period_mean": 8.74,
-       "dir_mean": 269.0,
-       "wave_max": 2.98,
-       "wind_mean": 13.95,
-       "wind_dir": 236.0
+       "swell_max": 2.96,
+       "swell_mean": 2.62,
+       "period_mean": 8.91,
+       "dir_mean": 270.0,
+       "wave_max": 3.22,
+       "wind_mean": 15.59,
+       "wind_dir": 250.0
       },
       "ewam": {
-       "swell_max": 2.66,
-       "swell_mean": 2.37,
-       "period_mean": 8.68,
-       "dir_mean": 274.0,
-       "wave_max": 2.76,
-       "wind_mean": 13.95,
-       "wind_dir": 236.0
+       "swell_max": 2.76,
+       "swell_mean": 2.47,
+       "period_mean": 8.78,
+       "dir_mean": 275.0,
+       "wave_max": 3.0,
+       "wind_mean": 15.59,
+       "wind_dir": 250.0
       }
      },
-     "swell_max_mean": 2.97,
-     "swell_max_spread": 0.78,
+     "swell_max_mean": 2.91,
+     "swell_max_spread": 0.26,
      "period_mean": 8.2,
-     "wind_mean": 13.95,
-     "wind_dir": 236.0,
+     "wind_mean": 15.59,
+     "wind_dir": 250.0,
      "surfable_votes": 0
     },
     {
      "date": "2026-11-14",
-     "lead": 3,
+     "lead": 2,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 1.58,
-       "swell_mean": 1.21,
-       "period_mean": 6.65,
-       "dir_mean": 264.0,
-       "wave_max": 2.02,
-       "wind_mean": 12.91,
-       "wind_dir": 276.0
+       "swell_max": 1.66,
+       "swell_mean": 1.57,
+       "period_mean": 5.44,
+       "dir_mean": 275.0,
+       "wave_max": 2.08,
+       "wind_mean": 11.27,
+       "wind_dir": 272.0
       },
       "gwam": {
-       "swell_max": 1.84,
-       "swell_mean": 1.79,
-       "period_mean": 7.79,
+       "swell_max": 1.86,
+       "swell_mean": 1.78,
+       "period_mean": 7.82,
        "dir_mean": 277.0,
-       "wave_max": 1.9,
-       "wind_mean": 12.91,
-       "wind_dir": 276.0
+       "wave_max": 1.96,
+       "wind_mean": 11.27,
+       "wind_dir": 272.0
       },
       "ewam": {
-       "swell_max": 1.7,
+       "swell_max": 1.76,
        "swell_mean": 1.7,
-       "period_mean": 8.2,
-       "dir_mean": 276.0,
-       "wave_max": 1.68,
-       "wind_mean": 12.91,
-       "wind_dir": 276.0
+       "period_mean": 7.56,
+       "dir_mean": 278.0,
+       "wave_max": 1.8,
+       "wind_mean": 11.27,
+       "wind_dir": 272.0
       }
      },
-     "swell_max_mean": 1.71,
-     "swell_max_spread": 0.26,
-     "period_mean": 7.5,
-     "wind_mean": 12.91,
-     "wind_dir": 276.0,
-     "surfable_votes": 1
+     "swell_max_mean": 1.76,
+     "swell_max_spread": 0.2,
+     "period_mean": 6.9,
+     "wind_mean": 11.27,
+     "wind_dir": 272.0,
+     "surfable_votes": 0
     },
     {
      "date": "2026-11-15",
-     "lead": 4,
+     "lead": 3,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 2.18,
-       "swell_mean": 1.57,
-       "period_mean": 6.0,
-       "dir_mean": 283.0,
-       "wave_max": 2.74,
-       "wind_mean": 14.74,
-       "wind_dir": 228.0
+       "swell_max": 1.94,
+       "swell_mean": 1.61,
+       "period_mean": 6.53,
+       "dir_mean": 287.0,
+       "wave_max": 2.92,
+       "wind_mean": 16.37,
+       "wind_dir": 217.0
       },
       "gwam": {
-       "swell_max": 1.92,
-       "swell_mean": 1.73,
-       "period_mean": 7.61,
+       "swell_max": 1.56,
+       "swell_mean": 1.47,
+       "period_mean": 7.67,
        "dir_mean": 282.0,
-       "wave_max": 2.04,
-       "wind_mean": 14.74,
-       "wind_dir": 228.0
+       "wave_max": 1.78,
+       "wind_mean": 16.37,
+       "wind_dir": 217.0
       },
       "ewam": {
-       "swell_max": null,
-       "swell_mean": null,
-       "period_mean": null,
-       "dir_mean": null,
-       "wave_max": null,
-       "wind_mean": 14.74,
-       "wind_dir": 228.0
+       "swell_max": 1.42,
+       "swell_mean": 1.42,
+       "period_mean": 7.65,
+       "dir_mean": 286.0,
+       "wave_max": 1.42,
+       "wind_mean": 16.37,
+       "wind_dir": 217.0
       }
      },
-     "swell_max_mean": 2.05,
-     "swell_max_spread": 0.26,
-     "period_mean": 6.8,
-     "wind_mean": 14.74,
-     "wind_dir": 228.0,
+     "swell_max_mean": 1.64,
+     "swell_max_spread": 0.52,
+     "period_mean": 7.3,
+     "wind_mean": 16.37,
+     "wind_dir": 217.0,
      "surfable_votes": 0
     },
     {
      "date": "2026-11-16",
-     "lead": 5,
+     "lead": 4,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 2.9,
-       "swell_mean": 2.55,
-       "period_mean": 7.6,
-       "dir_mean": 275.0,
-       "wave_max": 3.16,
-       "wind_mean": 25.0,
-       "wind_dir": 214.0
+       "swell_max": 2.78,
+       "swell_mean": 2.26,
+       "period_mean": 7.57,
+       "dir_mean": 282.0,
+       "wave_max": 2.94,
+       "wind_mean": 10.11,
+       "wind_dir": 162.0
       },
       "gwam": {
-       "swell_max": 2.1,
-       "swell_mean": 1.89,
-       "period_mean": 8.3,
-       "dir_mean": 278.0,
-       "wave_max": 2.64,
-       "wind_mean": 25.0,
-       "wind_dir": 214.0
+       "swell_max": 2.04,
+       "swell_mean": 1.9,
+       "period_mean": 8.35,
+       "dir_mean": 270.0,
+       "wave_max": 2.48,
+       "wind_mean": 10.11,
+       "wind_dir": 162.0
       },
       "ewam": {
        "swell_max": null,
@@ -847,38 +809,38 @@
        "period_mean": null,
        "dir_mean": null,
        "wave_max": null,
-       "wind_mean": 25.0,
-       "wind_dir": 214.0
+       "wind_mean": 10.11,
+       "wind_dir": 162.0
       }
      },
-     "swell_max_mean": 2.5,
-     "swell_max_spread": 0.8,
+     "swell_max_mean": 2.41,
+     "swell_max_spread": 0.74,
      "period_mean": 8.0,
-     "wind_mean": 25.0,
-     "wind_dir": 214.0,
+     "wind_mean": 10.11,
+     "wind_dir": 162.0,
      "surfable_votes": 1
     },
     {
      "date": "2026-11-17",
-     "lead": 6,
+     "lead": 5,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 2.34,
-       "swell_mean": 2.24,
-       "period_mean": 7.35,
-       "dir_mean": 271.0,
-       "wave_max": 2.42,
-       "wind_mean": 22.61,
-       "wind_dir": 244.0
+       "swell_max": 2.04,
+       "swell_mean": 1.81,
+       "period_mean": 7.06,
+       "dir_mean": 267.0,
+       "wave_max": 2.3,
+       "wind_mean": 14.88,
+       "wind_dir": 267.0
       },
       "gwam": {
-       "swell_max": 2.46,
-       "swell_mean": 2.34,
-       "period_mean": 8.69,
-       "dir_mean": 272.0,
-       "wave_max": 2.68,
-       "wind_mean": 22.61,
-       "wind_dir": 244.0
+       "swell_max": 2.64,
+       "swell_mean": 2.43,
+       "period_mean": 8.4,
+       "dir_mean": 268.0,
+       "wave_max": 2.98,
+       "wind_mean": 14.88,
+       "wind_dir": 267.0
       },
       "ewam": {
        "swell_max": null,
@@ -886,238 +848,238 @@
        "period_mean": null,
        "dir_mean": null,
        "wave_max": null,
-       "wind_mean": 22.61,
-       "wind_dir": 244.0
+       "wind_mean": 14.88,
+       "wind_dir": 267.0
       }
      },
-     "swell_max_mean": 2.4,
-     "swell_max_spread": 0.12,
-     "period_mean": 8.0,
-     "wind_mean": 22.61,
-     "wind_dir": 244.0,
-     "surfable_votes": 1
+     "swell_max_mean": 2.34,
+     "swell_max_spread": 0.6,
+     "period_mean": 7.7,
+     "wind_mean": 14.88,
+     "wind_dir": 267.0,
+     "surfable_votes": 0
+    },
+    {
+     "date": "2026-11-18",
+     "lead": 6,
+     "models": {
+      "meteofrance_wave": {
+       "swell_max": 2.4,
+       "swell_mean": 1.89,
+       "period_mean": 7.25,
+       "dir_mean": 283.0,
+       "wave_max": 2.82,
+       "wind_mean": 27.99,
+       "wind_dir": 264.0
+      },
+      "gwam": {
+       "swell_max": 4.76,
+       "swell_mean": 4.11,
+       "period_mean": 12.53,
+       "dir_mean": 304.0,
+       "wave_max": 5.22,
+       "wind_mean": 27.99,
+       "wind_dir": 264.0
+      },
+      "ewam": {
+       "swell_max": null,
+       "swell_mean": null,
+       "period_mean": null,
+       "dir_mean": null,
+       "wave_max": null,
+       "wind_mean": 27.99,
+       "wind_dir": 264.0
+      }
+     },
+     "swell_max_mean": 3.58,
+     "swell_max_spread": 2.36,
+     "period_mean": 9.9,
+     "wind_mean": 27.99,
+     "wind_dir": 264.0,
+     "surfable_votes": 0
     }
    ]
   },
   "peniche": {
-   "issued": "2026-11-11",
+   "issued": "2026-11-12",
    "days": [
     {
-     "date": "2026-11-11",
+     "date": "2026-11-12",
      "lead": 0,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 2.98,
-       "swell_mean": 2.62,
-       "period_mean": 8.65,
-       "dir_mean": 278.0,
-       "wave_max": 3.2,
-       "wind_mean": 17.13,
-       "wind_dir": 203.0
+       "swell_max": 2.68,
+       "swell_mean": 2.46,
+       "period_mean": 7.75,
+       "dir_mean": 279.0,
+       "wave_max": 3.32,
+       "wind_mean": 23.95,
+       "wind_dir": 240.0
       },
       "gwam": {
-       "swell_max": 2.76,
+       "swell_max": 2.72,
        "swell_mean": 2.56,
-       "period_mean": 10.0,
-       "dir_mean": 273.0,
-       "wave_max": 2.84,
-       "wind_mean": 17.13,
-       "wind_dir": 203.0
-      },
-      "ewam": {
-       "swell_max": 2.76,
-       "swell_mean": 2.57,
-       "period_mean": 10.03,
-       "dir_mean": 275.0,
-       "wave_max": 2.84,
-       "wind_mean": 17.13,
-       "wind_dir": 203.0
-      }
-     },
-     "swell_max_mean": 2.83,
-     "swell_max_spread": 0.22,
-     "period_mean": 9.6,
-     "wind_mean": 17.13,
-     "wind_dir": 203.0,
-     "surfable_votes": 0
-    },
-    {
-     "date": "2026-11-12",
-     "lead": 1,
-     "models": {
-      "meteofrance_wave": {
-       "swell_max": 3.06,
-       "swell_mean": 2.61,
-       "period_mean": 8.01,
-       "dir_mean": 282.0,
-       "wave_max": 3.38,
-       "wind_mean": 23.79,
-       "wind_dir": 239.0
-      },
-      "gwam": {
-       "swell_max": 2.76,
-       "swell_mean": 2.61,
-       "period_mean": 9.39,
-       "dir_mean": 267.0,
+       "period_mean": 9.36,
+       "dir_mean": 265.0,
        "wave_max": 2.94,
-       "wind_mean": 23.79,
-       "wind_dir": 239.0
+       "wind_mean": 23.95,
+       "wind_dir": 240.0
       },
       "ewam": {
        "swell_max": 2.84,
-       "swell_mean": 2.71,
-       "period_mean": 9.44,
-       "dir_mean": 266.0,
+       "swell_mean": 2.7,
+       "period_mean": 9.41,
+       "dir_mean": 264.0,
        "wave_max": 2.92,
-       "wind_mean": 23.79,
-       "wind_dir": 239.0
+       "wind_mean": 23.95,
+       "wind_dir": 240.0
       }
      },
-     "swell_max_mean": 2.89,
-     "swell_max_spread": 0.3,
-     "period_mean": 8.9,
-     "wind_mean": 23.79,
-     "wind_dir": 239.0,
+     "swell_max_mean": 2.75,
+     "swell_max_spread": 0.16,
+     "period_mean": 8.8,
+     "wind_mean": 23.95,
+     "wind_dir": 240.0,
      "surfable_votes": 0
     },
     {
      "date": "2026-11-13",
-     "lead": 2,
+     "lead": 1,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 3.12,
-       "swell_mean": 2.57,
-       "period_mean": 7.08,
-       "dir_mean": 276.0,
-       "wave_max": 3.34,
-       "wind_mean": 16.89,
-       "wind_dir": 229.0
+       "swell_max": 2.9,
+       "swell_mean": 2.43,
+       "period_mean": 6.9,
+       "dir_mean": 277.0,
+       "wave_max": 3.26,
+       "wind_mean": 19.53,
+       "wind_dir": 244.0
       },
       "gwam": {
-       "swell_max": 2.62,
-       "swell_mean": 2.3,
-       "period_mean": 8.72,
+       "swell_max": 2.72,
+       "swell_mean": 2.4,
+       "period_mean": 8.82,
        "dir_mean": 275.0,
-       "wave_max": 2.74,
-       "wind_mean": 16.89,
-       "wind_dir": 229.0
+       "wave_max": 2.98,
+       "wind_mean": 19.53,
+       "wind_dir": 244.0
       },
       "ewam": {
-       "swell_max": 2.64,
-       "swell_mean": 2.3,
-       "period_mean": 8.86,
-       "dir_mean": 275.0,
-       "wave_max": 2.7,
-       "wind_mean": 16.89,
-       "wind_dir": 229.0
+       "swell_max": 2.86,
+       "swell_mean": 2.46,
+       "period_mean": 8.88,
+       "dir_mean": 276.0,
+       "wave_max": 2.96,
+       "wind_mean": 19.53,
+       "wind_dir": 244.0
       }
      },
-     "swell_max_mean": 2.79,
-     "swell_max_spread": 0.5,
+     "swell_max_mean": 2.83,
+     "swell_max_spread": 0.18,
      "period_mean": 8.2,
-     "wind_mean": 16.89,
-     "wind_dir": 229.0,
+     "wind_mean": 19.53,
+     "wind_dir": 244.0,
      "surfable_votes": 0
     },
     {
      "date": "2026-11-14",
-     "lead": 3,
+     "lead": 2,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 1.34,
-       "swell_mean": 1.1,
-       "period_mean": 6.61,
-       "dir_mean": 262.0,
-       "wave_max": 1.84,
-       "wind_mean": 14.03,
-       "wind_dir": 267.0
+       "swell_max": 1.5,
+       "swell_mean": 1.45,
+       "period_mean": 5.42,
+       "dir_mean": 273.0,
+       "wave_max": 1.94,
+       "wind_mean": 13.69,
+       "wind_dir": 261.0
       },
       "gwam": {
-       "swell_max": 1.7,
-       "swell_mean": 1.64,
-       "period_mean": 7.77,
-       "dir_mean": 282.0,
-       "wave_max": 1.74,
-       "wind_mean": 14.03,
-       "wind_dir": 267.0
+       "swell_max": 1.72,
+       "swell_mean": 1.66,
+       "period_mean": 7.72,
+       "dir_mean": 280.0,
+       "wave_max": 1.78,
+       "wind_mean": 13.69,
+       "wind_dir": 261.0
       },
       "ewam": {
-       "swell_max": 1.62,
-       "swell_mean": 1.62,
-       "period_mean": 8.45,
-       "dir_mean": 278.0,
-       "wave_max": 1.62,
-       "wind_mean": 14.03,
-       "wind_dir": 267.0
+       "swell_max": 1.66,
+       "swell_mean": 1.61,
+       "period_mean": 7.73,
+       "dir_mean": 279.0,
+       "wave_max": 1.7,
+       "wind_mean": 13.69,
+       "wind_dir": 261.0
       }
      },
-     "swell_max_mean": 1.55,
-     "swell_max_spread": 0.36,
-     "period_mean": 7.6,
-     "wind_mean": 14.03,
-     "wind_dir": 267.0,
-     "surfable_votes": 1
+     "swell_max_mean": 1.63,
+     "swell_max_spread": 0.22,
+     "period_mean": 7.0,
+     "wind_mean": 13.69,
+     "wind_dir": 261.0,
+     "surfable_votes": 0
     },
     {
      "date": "2026-11-15",
-     "lead": 4,
+     "lead": 3,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 2.06,
-       "swell_mean": 1.57,
-       "period_mean": 6.36,
-       "dir_mean": 282.0,
-       "wave_max": 2.76,
-       "wind_mean": 18.23,
-       "wind_dir": 213.0
+       "swell_max": 1.9,
+       "swell_mean": 1.6,
+       "period_mean": 6.72,
+       "dir_mean": 285.0,
+       "wave_max": 2.92,
+       "wind_mean": 22.75,
+       "wind_dir": 205.0
       },
       "gwam": {
-       "swell_max": 1.92,
-       "swell_mean": 1.73,
-       "period_mean": 7.65,
-       "dir_mean": 284.0,
-       "wave_max": 2.0,
-       "wind_mean": 18.23,
-       "wind_dir": 213.0
+       "swell_max": 1.52,
+       "swell_mean": 1.41,
+       "period_mean": 7.71,
+       "dir_mean": 285.0,
+       "wave_max": 1.64,
+       "wind_mean": 22.75,
+       "wind_dir": 205.0
       },
       "ewam": {
-       "swell_max": null,
-       "swell_mean": null,
-       "period_mean": null,
-       "dir_mean": null,
-       "wave_max": null,
-       "wind_mean": 18.23,
-       "wind_dir": 213.0
+       "swell_max": 1.34,
+       "swell_mean": 1.34,
+       "period_mean": 7.95,
+       "dir_mean": 289.0,
+       "wave_max": 1.34,
+       "wind_mean": 22.75,
+       "wind_dir": 205.0
       }
      },
-     "swell_max_mean": 1.99,
-     "swell_max_spread": 0.14,
-     "period_mean": 7.0,
-     "wind_mean": 18.23,
-     "wind_dir": 213.0,
+     "swell_max_mean": 1.59,
+     "swell_max_spread": 0.56,
+     "period_mean": 7.5,
+     "wind_mean": 22.75,
+     "wind_dir": 205.0,
      "surfable_votes": 0
     },
     {
      "date": "2026-11-16",
-     "lead": 5,
+     "lead": 4,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 2.6,
-       "swell_mean": 2.31,
-       "period_mean": 7.59,
+       "swell_max": 2.68,
+       "swell_mean": 2.23,
+       "period_mean": 7.27,
        "dir_mean": 276.0,
-       "wave_max": 2.92,
-       "wind_mean": 24.76,
-       "wind_dir": 215.0
+       "wave_max": 2.74,
+       "wind_mean": 12.19,
+       "wind_dir": 176.0
       },
       "gwam": {
-       "swell_max": 2.1,
-       "swell_mean": 1.86,
-       "period_mean": 8.34,
-       "dir_mean": 277.0,
-       "wave_max": 2.36,
-       "wind_mean": 24.76,
-       "wind_dir": 215.0
+       "swell_max": 1.88,
+       "swell_mean": 1.81,
+       "period_mean": 8.62,
+       "dir_mean": 276.0,
+       "wave_max": 2.16,
+       "wind_mean": 12.19,
+       "wind_dir": 176.0
       },
       "ewam": {
        "swell_max": null,
@@ -1125,38 +1087,38 @@
        "period_mean": null,
        "dir_mean": null,
        "wave_max": null,
-       "wind_mean": 24.76,
-       "wind_dir": 215.0
+       "wind_mean": 12.19,
+       "wind_dir": 176.0
       }
      },
-     "swell_max_mean": 2.35,
-     "swell_max_spread": 0.5,
-     "period_mean": 8.0,
-     "wind_mean": 24.76,
-     "wind_dir": 215.0,
+     "swell_max_mean": 2.28,
+     "swell_max_spread": 0.8,
+     "period_mean": 7.9,
+     "wind_mean": 12.19,
+     "wind_dir": 176.0,
      "surfable_votes": 1
     },
     {
      "date": "2026-11-17",
-     "lead": 6,
+     "lead": 5,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 2.18,
-       "swell_mean": 2.04,
-       "period_mean": 7.38,
-       "dir_mean": 272.0,
-       "wave_max": 2.28,
-       "wind_mean": 21.26,
-       "wind_dir": 245.0
+       "swell_max": 1.9,
+       "swell_mean": 1.68,
+       "period_mean": 6.96,
+       "dir_mean": 266.0,
+       "wave_max": 2.12,
+       "wind_mean": 14.87,
+       "wind_dir": 261.0
       },
       "gwam": {
-       "swell_max": 2.34,
-       "swell_mean": 2.22,
-       "period_mean": 8.84,
-       "dir_mean": 278.0,
-       "wave_max": 2.4,
-       "wind_mean": 21.26,
-       "wind_dir": 245.0
+       "swell_max": 2.36,
+       "swell_mean": 2.28,
+       "period_mean": 8.78,
+       "dir_mean": 283.0,
+       "wave_max": 2.58,
+       "wind_mean": 14.87,
+       "wind_dir": 261.0
       },
       "ewam": {
        "swell_max": null,
@@ -1164,238 +1126,238 @@
        "period_mean": null,
        "dir_mean": null,
        "wave_max": null,
-       "wind_mean": 21.26,
-       "wind_dir": 245.0
+       "wind_mean": 14.87,
+       "wind_dir": 261.0
       }
      },
-     "swell_max_mean": 2.26,
-     "swell_max_spread": 0.16,
-     "period_mean": 8.1,
-     "wind_mean": 21.26,
-     "wind_dir": 245.0,
+     "swell_max_mean": 2.13,
+     "swell_max_spread": 0.46,
+     "period_mean": 7.9,
+     "wind_mean": 14.87,
+     "wind_dir": 261.0,
      "surfable_votes": 1
+    },
+    {
+     "date": "2026-11-18",
+     "lead": 6,
+     "models": {
+      "meteofrance_wave": {
+       "swell_max": 2.46,
+       "swell_mean": 1.9,
+       "period_mean": 7.93,
+       "dir_mean": 286.0,
+       "wave_max": 2.86,
+       "wind_mean": 24.95,
+       "wind_dir": 258.0
+      },
+      "gwam": {
+       "swell_max": 5.02,
+       "swell_mean": 4.42,
+       "period_mean": 12.82,
+       "dir_mean": 303.0,
+       "wave_max": 5.38,
+       "wind_mean": 24.95,
+       "wind_dir": 258.0
+      },
+      "ewam": {
+       "swell_max": null,
+       "swell_mean": null,
+       "period_mean": null,
+       "dir_mean": null,
+       "wave_max": null,
+       "wind_mean": 24.95,
+       "wind_dir": 258.0
+      }
+     },
+     "swell_max_mean": 3.74,
+     "swell_max_spread": 2.56,
+     "period_mean": 10.4,
+     "wind_mean": 24.95,
+     "wind_dir": 258.0,
+     "surfable_votes": 0
     }
    ]
   },
   "sagres": {
-   "issued": "2026-11-11",
+   "issued": "2026-11-12",
    "days": [
     {
-     "date": "2026-11-11",
+     "date": "2026-11-12",
      "lead": 0,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 3.7,
-       "swell_mean": 2.9,
-       "period_mean": 8.17,
+       "swell_max": 2.72,
+       "swell_mean": 2.5,
+       "period_mean": 7.85,
        "dir_mean": 252.0,
-       "wave_max": 4.3,
-       "wind_mean": 27.91,
-       "wind_dir": 223.0
+       "wave_max": 3.62,
+       "wind_mean": 20.82,
+       "wind_dir": 263.0
       },
       "gwam": {
-       "swell_max": 4.22,
-       "swell_mean": 3.31,
-       "period_mean": 9.57,
-       "dir_mean": 249.0,
-       "wave_max": 4.52,
-       "wind_mean": 27.91,
-       "wind_dir": 223.0
-      },
-      "ewam": {
-       "swell_max": 4.28,
-       "swell_mean": 3.1,
-       "period_mean": 9.45,
-       "dir_mean": 242.0,
-       "wave_max": 4.46,
-       "wind_mean": 27.91,
-       "wind_dir": 223.0
-      }
-     },
-     "swell_max_mean": 4.07,
-     "swell_max_spread": 0.58,
-     "period_mean": 9.1,
-     "wind_mean": 27.91,
-     "wind_dir": 223.0,
-     "surfable_votes": 0
-    },
-    {
-     "date": "2026-11-12",
-     "lead": 1,
-     "models": {
-      "meteofrance_wave": {
-       "swell_max": 2.84,
-       "swell_mean": 2.65,
-       "period_mean": 7.82,
-       "dir_mean": 268.0,
+       "swell_max": 3.52,
+       "swell_mean": 3.13,
+       "period_mean": 9.62,
+       "dir_mean": 248.0,
        "wave_max": 3.66,
-       "wind_mean": 19.86,
-       "wind_dir": 263.0
-      },
-      "gwam": {
-       "swell_max": 3.36,
-       "swell_mean": 3.05,
-       "period_mean": 9.46,
-       "dir_mean": 250.0,
-       "wave_max": 3.48,
-       "wind_mean": 19.86,
+       "wind_mean": 20.82,
        "wind_dir": 263.0
       },
       "ewam": {
-       "swell_max": 3.26,
-       "swell_mean": 2.85,
-       "period_mean": 9.43,
-       "dir_mean": 242.0,
-       "wave_max": 3.32,
-       "wind_mean": 19.86,
+       "swell_max": 3.4,
+       "swell_mean": 2.95,
+       "period_mean": 9.58,
+       "dir_mean": 241.0,
+       "wave_max": 3.52,
+       "wind_mean": 20.82,
        "wind_dir": 263.0
       }
      },
-     "swell_max_mean": 3.15,
-     "swell_max_spread": 0.52,
-     "period_mean": 8.9,
-     "wind_mean": 19.86,
+     "swell_max_mean": 3.21,
+     "swell_max_spread": 0.8,
+     "period_mean": 9.0,
+     "wind_mean": 20.82,
      "wind_dir": 263.0,
      "surfable_votes": 0
     },
     {
      "date": "2026-11-13",
-     "lead": 2,
+     "lead": 1,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 3.18,
-       "swell_mean": 2.54,
-       "period_mean": 7.59,
-       "dir_mean": 293.0,
-       "wave_max": 3.32,
-       "wind_mean": 11.59,
-       "wind_dir": 250.0
+       "swell_max": 2.52,
+       "swell_mean": 2.16,
+       "period_mean": 7.53,
+       "dir_mean": 301.0,
+       "wave_max": 3.16,
+       "wind_mean": 14.39,
+       "wind_dir": 266.0
       },
       "gwam": {
-       "swell_max": 2.62,
-       "swell_mean": 2.37,
-       "period_mean": 9.02,
-       "dir_mean": 272.0,
-       "wave_max": 2.68,
-       "wind_mean": 11.59,
-       "wind_dir": 250.0
+       "swell_max": 2.7,
+       "swell_mean": 2.47,
+       "period_mean": 9.15,
+       "dir_mean": 274.0,
+       "wave_max": 2.78,
+       "wind_mean": 14.39,
+       "wind_dir": 266.0
       },
       "ewam": {
-       "swell_max": 2.34,
-       "swell_mean": 2.11,
-       "period_mean": 9.08,
-       "dir_mean": 262.0,
-       "wave_max": 2.36,
-       "wind_mean": 11.59,
-       "wind_dir": 250.0
+       "swell_max": 2.42,
+       "swell_mean": 2.19,
+       "period_mean": 9.2,
+       "dir_mean": 263.0,
+       "wave_max": 2.46,
+       "wind_mean": 14.39,
+       "wind_dir": 266.0
       }
      },
-     "swell_max_mean": 2.71,
-     "swell_max_spread": 0.84,
+     "swell_max_mean": 2.55,
+     "swell_max_spread": 0.28,
      "period_mean": 8.6,
-     "wind_mean": 11.59,
-     "wind_dir": 250.0,
+     "wind_mean": 14.39,
+     "wind_dir": 266.0,
      "surfable_votes": 1
     },
     {
      "date": "2026-11-14",
-     "lead": 3,
+     "lead": 2,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 1.28,
-       "swell_mean": 1.13,
-       "period_mean": 6.69,
-       "dir_mean": 269.0,
-       "wave_max": 2.0,
-       "wind_mean": 15.11,
-       "wind_dir": 292.0
+       "swell_max": 1.36,
+       "swell_mean": 1.22,
+       "period_mean": 6.71,
+       "dir_mean": 262.0,
+       "wave_max": 1.96,
+       "wind_mean": 12.79,
+       "wind_dir": 293.0
       },
       "gwam": {
-       "swell_max": 1.82,
-       "swell_mean": 1.61,
-       "period_mean": 7.6,
-       "dir_mean": 269.0,
-       "wave_max": 1.84,
-       "wind_mean": 15.11,
-       "wind_dir": 292.0
+       "swell_max": 1.76,
+       "swell_mean": 1.57,
+       "period_mean": 7.89,
+       "dir_mean": 272.0,
+       "wave_max": 1.78,
+       "wind_mean": 12.79,
+       "wind_dir": 293.0
       },
       "ewam": {
-       "swell_max": 1.64,
-       "swell_mean": 1.64,
-       "period_mean": 7.9,
-       "dir_mean": 257.0,
-       "wave_max": 1.64,
-       "wind_mean": 15.11,
-       "wind_dir": 292.0
+       "swell_max": 1.58,
+       "swell_mean": 1.39,
+       "period_mean": 7.98,
+       "dir_mean": 261.0,
+       "wave_max": 1.58,
+       "wind_mean": 12.79,
+       "wind_dir": 293.0
       }
      },
-     "swell_max_mean": 1.58,
-     "swell_max_spread": 0.54,
-     "period_mean": 7.4,
-     "wind_mean": 15.11,
-     "wind_dir": 292.0,
+     "swell_max_mean": 1.57,
+     "swell_max_spread": 0.4,
+     "period_mean": 7.5,
+     "wind_mean": 12.79,
+     "wind_dir": 293.0,
      "surfable_votes": 0
     },
     {
      "date": "2026-11-15",
-     "lead": 4,
+     "lead": 3,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 1.32,
-       "swell_mean": 1.11,
-       "period_mean": 5.71,
-       "dir_mean": 287.0,
-       "wave_max": 1.74,
-       "wind_mean": 9.12,
-       "wind_dir": 238.0
+       "swell_max": 1.62,
+       "swell_mean": 1.12,
+       "period_mean": 5.37,
+       "dir_mean": 293.0,
+       "wave_max": 1.8,
+       "wind_mean": 12.66,
+       "wind_dir": 225.0
       },
       "gwam": {
-       "swell_max": 1.46,
-       "swell_mean": 1.39,
-       "period_mean": 7.55,
-       "dir_mean": 281.0,
-       "wave_max": 1.46,
-       "wind_mean": 9.12,
-       "wind_dir": 238.0
+       "swell_max": 1.28,
+       "swell_mean": 1.25,
+       "period_mean": 7.75,
+       "dir_mean": 280.0,
+       "wave_max": 1.3,
+       "wind_mean": 12.66,
+       "wind_dir": 225.0
       },
       "ewam": {
-       "swell_max": null,
-       "swell_mean": null,
-       "period_mean": null,
-       "dir_mean": null,
-       "wave_max": null,
-       "wind_mean": 9.12,
-       "wind_dir": 238.0
+       "swell_max": 1.1,
+       "swell_mean": 1.1,
+       "period_mean": 7.75,
+       "dir_mean": 268.0,
+       "wave_max": 1.1,
+       "wind_mean": 12.66,
+       "wind_dir": 225.0
       }
      },
-     "swell_max_mean": 1.39,
-     "swell_max_spread": 0.14,
-     "period_mean": 6.6,
-     "wind_mean": 9.12,
-     "wind_dir": 238.0,
+     "swell_max_mean": 1.33,
+     "swell_max_spread": 0.52,
+     "period_mean": 7.0,
+     "wind_mean": 12.66,
+     "wind_dir": 225.0,
      "surfable_votes": 0
     },
     {
      "date": "2026-11-16",
-     "lead": 5,
+     "lead": 4,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 2.6,
-       "swell_mean": 2.32,
-       "period_mean": 7.48,
-       "dir_mean": 284.0,
-       "wave_max": 2.74,
-       "wind_mean": 14.83,
-       "wind_dir": 221.0
+       "swell_max": 2.34,
+       "swell_mean": 2.03,
+       "period_mean": 7.42,
+       "dir_mean": 288.0,
+       "wave_max": 2.9,
+       "wind_mean": 8.24,
+       "wind_dir": 237.0
       },
       "gwam": {
-       "swell_max": 1.62,
-       "swell_mean": 1.55,
-       "period_mean": 7.7,
-       "dir_mean": 285.0,
-       "wave_max": 1.94,
-       "wind_mean": 14.83,
-       "wind_dir": 221.0
+       "swell_max": 1.78,
+       "swell_mean": 1.71,
+       "period_mean": 7.84,
+       "dir_mean": 276.0,
+       "wave_max": 1.92,
+       "wind_mean": 8.24,
+       "wind_dir": 237.0
       },
       "ewam": {
        "swell_max": null,
@@ -1403,38 +1365,38 @@
        "period_mean": null,
        "dir_mean": null,
        "wave_max": null,
-       "wind_mean": 14.83,
-       "wind_dir": 221.0
+       "wind_mean": 8.24,
+       "wind_dir": 237.0
       }
      },
-     "swell_max_mean": 2.11,
-     "swell_max_spread": 0.98,
+     "swell_max_mean": 2.06,
+     "swell_max_spread": 0.56,
      "period_mean": 7.6,
-     "wind_mean": 14.83,
-     "wind_dir": 221.0,
+     "wind_mean": 8.24,
+     "wind_dir": 237.0,
      "surfable_votes": 0
     },
     {
      "date": "2026-11-17",
-     "lead": 6,
+     "lead": 5,
      "models": {
       "meteofrance_wave": {
-       "swell_max": 2.2,
-       "swell_mean": 2.08,
-       "period_mean": 7.33,
-       "dir_mean": 277.0,
-       "wave_max": 2.28,
-       "wind_mean": 21.61,
-       "wind_dir": 254.0
+       "swell_max": 2.22,
+       "swell_mean": 1.95,
+       "period_mean": 7.07,
+       "dir_mean": 274.0,
+       "wave_max": 2.34,
+       "wind_mean": 18.23,
+       "wind_dir": 265.0
       },
       "gwam": {
-       "swell_max": 2.18,
-       "swell_mean": 2.06,
-       "period_mean": 8.26,
-       "dir_mean": 276.0,
-       "wave_max": 2.48,
-       "wind_mean": 21.61,
-       "wind_dir": 254.0
+       "swell_max": 2.32,
+       "swell_mean": 1.96,
+       "period_mean": 8.03,
+       "dir_mean": 264.0,
+       "wave_max": 2.74,
+       "wind_mean": 18.23,
+       "wind_dir": 265.0
       },
       "ewam": {
        "swell_max": null,
@@ -1442,16 +1404,55 @@
        "period_mean": null,
        "dir_mean": null,
        "wave_max": null,
-       "wind_mean": 21.61,
-       "wind_dir": 254.0
+       "wind_mean": 18.23,
+       "wind_dir": 265.0
       }
      },
-     "swell_max_mean": 2.19,
-     "swell_max_spread": 0.02,
-     "period_mean": 7.8,
-     "wind_mean": 21.61,
-     "wind_dir": 254.0,
+     "swell_max_mean": 2.27,
+     "swell_max_spread": 0.1,
+     "period_mean": 7.5,
+     "wind_mean": 18.23,
+     "wind_dir": 265.0,
      "surfable_votes": 1
+    },
+    {
+     "date": "2026-11-18",
+     "lead": 6,
+     "models": {
+      "meteofrance_wave": {
+       "swell_max": 1.54,
+       "swell_mean": 1.52,
+       "period_mean": 6.99,
+       "dir_mean": 281.0,
+       "wave_max": 1.82,
+       "wind_mean": 22.29,
+       "wind_dir": 262.0
+      },
+      "gwam": {
+       "swell_max": 3.98,
+       "swell_mean": 3.05,
+       "period_mean": 11.1,
+       "dir_mean": 296.0,
+       "wave_max": 4.28,
+       "wind_mean": 22.29,
+       "wind_dir": 262.0
+      },
+      "ewam": {
+       "swell_max": null,
+       "swell_mean": null,
+       "period_mean": null,
+       "dir_mean": null,
+       "wave_max": null,
+       "wind_mean": 22.29,
+       "wind_dir": 262.0
+      }
+     },
+     "swell_max_mean": 2.76,
+     "swell_max_spread": 2.44,
+     "period_mean": 9.0,
+     "wind_mean": 22.29,
+     "wind_dir": 262.0,
+     "surfable_votes": 0
     }
    ]
   }
@@ -1460,35 +1461,35 @@
   "ericeira": {
    "ewam": {
     "0": {
-     "n": 57,
+     "n": 58,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.245,
-     "bias_swell": -0.024,
-     "rmse_swell": 0.308,
+     "mae_swell": 0.253,
+     "bias_swell": -0.036,
+     "rmse_swell": 0.32,
      "mae_period": 1.49,
      "spearman_swell": 0.931,
      "mae_swell_ci95": [
-      0.182,
-      0.301
+      0.183,
+      0.324
      ],
      "bias_swell_ci95": [
-      -0.104,
-      0.034
+      -0.134,
+      0.031
      ],
      "binary": {
-      "n": 57,
+      "n": 58,
       "hits": 21,
       "misses": 3,
       "false_alarms": 17,
-      "correct_negatives": 16,
+      "correct_negatives": 17,
       "pod": 0.875,
       "far": 0.447,
       "p_surfable_given_yes": 0.553,
-      "p_surfable_given_no": 0.158,
-      "base_rate": 0.421,
+      "p_surfable_given_no": 0.15,
+      "base_rate": 0.414,
       "p_surfable_given_yes_ci95": [
        0.324,
        0.774
@@ -1496,7 +1497,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 57,
+       "n": 58,
        "hits": 27,
        "false_alarms": 13,
        "pod": 0.871,
@@ -1504,7 +1505,7 @@
        "p_surfable_given_yes": 0.675
       },
       "period 9 s": {
-       "n": 57,
+       "n": 58,
        "hits": 14,
        "false_alarms": 18,
        "pod": 0.824,
@@ -1512,7 +1513,7 @@
        "p_surfable_given_yes": 0.438
       },
       "wind 20": {
-       "n": 57,
+       "n": 58,
        "hits": 20,
        "false_alarms": 18,
        "pod": 0.87,
@@ -1520,7 +1521,7 @@
        "p_surfable_given_yes": 0.526
       },
       "wind 30": {
-       "n": 57,
+       "n": 58,
        "hits": 21,
        "false_alarms": 17,
        "pod": 0.84,
@@ -1528,45 +1529,45 @@
        "p_surfable_given_yes": 0.553
       },
       "height 0.8\u20133.0": {
-       "n": 57,
+       "n": 58,
        "hits": 31,
-       "false_alarms": 17,
+       "false_alarms": 18,
        "pod": 1.0,
-       "far": 0.354,
-       "p_surfable_given_yes": 0.646
+       "far": 0.367,
+       "p_surfable_given_yes": 0.633
       }
      }
     },
     "1": {
-     "n": 56,
+     "n": 57,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.256,
-     "bias_swell": -0.096,
-     "rmse_swell": 0.325,
+     "mae_swell": 0.262,
+     "bias_swell": -0.106,
+     "rmse_swell": 0.333,
      "mae_period": 1.33,
-     "spearman_swell": 0.94,
+     "spearman_swell": 0.942,
      "mae_swell_ci95": [
       0.182,
-      0.328
+      0.341
      ],
      "bias_swell_ci95": [
-      -0.198,
-      0.011
+      -0.215,
+      0.01
      ],
      "binary": {
-      "n": 56,
+      "n": 57,
       "hits": 23,
       "misses": 0,
       "false_alarms": 19,
-      "correct_negatives": 14,
+      "correct_negatives": 15,
       "pod": 1.0,
       "far": 0.452,
       "p_surfable_given_yes": 0.548,
       "p_surfable_given_no": 0.0,
-      "base_rate": 0.411,
+      "base_rate": 0.404,
       "p_surfable_given_yes_ci95": [
        0.357,
        0.742
@@ -1574,7 +1575,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 56,
+       "n": 57,
        "hits": 29,
        "false_alarms": 15,
        "pod": 0.967,
@@ -1582,7 +1583,7 @@
        "p_surfable_given_yes": 0.659
       },
       "period 9 s": {
-       "n": 56,
+       "n": 57,
        "hits": 17,
        "false_alarms": 19,
        "pod": 1.0,
@@ -1590,7 +1591,7 @@
        "p_surfable_given_yes": 0.472
       },
       "wind 20": {
-       "n": 56,
+       "n": 57,
        "hits": 22,
        "false_alarms": 19,
        "pod": 1.0,
@@ -1598,7 +1599,7 @@
        "p_surfable_given_yes": 0.537
       },
       "wind 30": {
-       "n": 56,
+       "n": 57,
        "hits": 24,
        "false_alarms": 19,
        "pod": 1.0,
@@ -1606,45 +1607,45 @@
        "p_surfable_given_yes": 0.558
       },
       "height 0.8\u20133.0": {
-       "n": 56,
+       "n": 57,
        "hits": 30,
-       "false_alarms": 18,
+       "false_alarms": 19,
        "pod": 1.0,
-       "far": 0.375,
-       "p_surfable_given_yes": 0.625
+       "far": 0.388,
+       "p_surfable_given_yes": 0.612
       }
      }
     },
     "2": {
-     "n": 55,
+     "n": 56,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.278,
-     "bias_swell": -0.156,
-     "rmse_swell": 0.363,
+     "mae_swell": 0.282,
+     "bias_swell": -0.163,
+     "rmse_swell": 0.367,
      "mae_period": 1.28,
-     "spearman_swell": 0.934,
+     "spearman_swell": 0.937,
      "mae_swell_ci95": [
       0.201,
-      0.35
+      0.357
      ],
      "bias_swell_ci95": [
-      -0.273,
-      -0.024
+      -0.28,
+      -0.031
      ],
      "binary": {
-      "n": 55,
+      "n": 56,
       "hits": 23,
       "misses": 0,
       "false_alarms": 17,
-      "correct_negatives": 15,
+      "correct_negatives": 16,
       "pod": 1.0,
       "far": 0.425,
       "p_surfable_given_yes": 0.575,
       "p_surfable_given_no": 0.0,
-      "base_rate": 0.418,
+      "base_rate": 0.411,
       "p_surfable_given_yes_ci95": [
        0.379,
        0.769
@@ -1652,7 +1653,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 55,
+       "n": 56,
        "hits": 28,
        "false_alarms": 13,
        "pod": 0.966,
@@ -1660,7 +1661,7 @@
        "p_surfable_given_yes": 0.683
       },
       "period 9 s": {
-       "n": 55,
+       "n": 56,
        "hits": 17,
        "false_alarms": 18,
        "pod": 1.0,
@@ -1668,7 +1669,7 @@
        "p_surfable_given_yes": 0.486
       },
       "wind 20": {
-       "n": 55,
+       "n": 56,
        "hits": 22,
        "false_alarms": 18,
        "pod": 1.0,
@@ -1676,7 +1677,7 @@
        "p_surfable_given_yes": 0.55
       },
       "wind 30": {
-       "n": 55,
+       "n": 56,
        "hits": 24,
        "false_alarms": 17,
        "pod": 1.0,
@@ -1684,45 +1685,45 @@
        "p_surfable_given_yes": 0.585
       },
       "height 0.8\u20133.0": {
-       "n": 55,
+       "n": 56,
        "hits": 30,
-       "false_alarms": 16,
+       "false_alarms": 17,
        "pod": 1.0,
-       "far": 0.348,
-       "p_surfable_given_yes": 0.652
+       "far": 0.362,
+       "p_surfable_given_yes": 0.638
       }
      }
     },
     "3": {
-     "n": 54,
+     "n": 55,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.399,
-     "bias_swell": -0.326,
-     "rmse_swell": 0.528,
+     "mae_swell": 0.398,
+     "bias_swell": -0.327,
+     "rmse_swell": 0.526,
      "mae_period": 1.2,
-     "spearman_swell": 0.874,
+     "spearman_swell": 0.88,
      "mae_swell_ci95": [
       0.277,
-      0.51
+      0.506
      ],
      "bias_swell_ci95": [
-      -0.458,
+      -0.457,
       -0.177
      ],
      "binary": {
-      "n": 54,
+      "n": 55,
       "hits": 23,
       "misses": 0,
       "false_alarms": 19,
-      "correct_negatives": 12,
+      "correct_negatives": 13,
       "pod": 1.0,
       "far": 0.452,
       "p_surfable_given_yes": 0.548,
       "p_surfable_given_no": 0.0,
-      "base_rate": 0.426,
+      "base_rate": 0.418,
       "p_surfable_given_yes_ci95": [
        0.343,
        0.762
@@ -1730,7 +1731,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 54,
+       "n": 55,
        "hits": 28,
        "false_alarms": 15,
        "pod": 0.933,
@@ -1738,7 +1739,7 @@
        "p_surfable_given_yes": 0.651
       },
       "period 9 s": {
-       "n": 54,
+       "n": 55,
        "hits": 17,
        "false_alarms": 17,
        "pod": 1.0,
@@ -1746,7 +1747,7 @@
        "p_surfable_given_yes": 0.5
       },
       "wind 20": {
-       "n": 54,
+       "n": 55,
        "hits": 22,
        "false_alarms": 18,
        "pod": 1.0,
@@ -1754,7 +1755,7 @@
        "p_surfable_given_yes": 0.55
       },
       "wind 30": {
-       "n": 54,
+       "n": 55,
        "hits": 24,
        "false_alarms": 20,
        "pod": 1.0,
@@ -1762,7 +1763,7 @@
        "p_surfable_given_yes": 0.545
       },
       "height 0.8\u20133.0": {
-       "n": 54,
+       "n": 55,
        "hits": 30,
        "false_alarms": 17,
        "pod": 1.0,
@@ -1774,35 +1775,35 @@
    },
    "gwam": {
     "0": {
-     "n": 57,
+     "n": 58,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
      "mae_swell": 0.285,
-     "bias_swell": 0.005,
-     "rmse_swell": 0.443,
-     "mae_period": 1.59,
-     "spearman_swell": 0.865,
+     "bias_swell": -0.001,
+     "rmse_swell": 0.441,
+     "mae_period": 1.58,
+     "spearman_swell": 0.872,
      "mae_swell_ci95": [
-      0.221,
-      0.345
+      0.222,
+      0.344
      ],
      "bias_swell_ci95": [
-      -0.102,
-      0.1
+      -0.112,
+      0.096
      ],
      "binary": {
-      "n": 57,
+      "n": 58,
       "hits": 21,
       "misses": 3,
       "false_alarms": 19,
-      "correct_negatives": 14,
+      "correct_negatives": 15,
       "pod": 0.875,
       "far": 0.475,
       "p_surfable_given_yes": 0.525,
-      "p_surfable_given_no": 0.176,
-      "base_rate": 0.421,
+      "p_surfable_given_no": 0.167,
+      "base_rate": 0.414,
       "p_surfable_given_yes_ci95": [
        0.294,
        0.75
@@ -1810,7 +1811,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 57,
+       "n": 58,
        "hits": 28,
        "false_alarms": 14,
        "pod": 0.903,
@@ -1818,7 +1819,7 @@
        "p_surfable_given_yes": 0.667
       },
       "period 9 s": {
-       "n": 57,
+       "n": 58,
        "hits": 14,
        "false_alarms": 19,
        "pod": 0.824,
@@ -1826,7 +1827,7 @@
        "p_surfable_given_yes": 0.424
       },
       "wind 20": {
-       "n": 57,
+       "n": 58,
        "hits": 20,
        "false_alarms": 19,
        "pod": 0.87,
@@ -1834,7 +1835,7 @@
        "p_surfable_given_yes": 0.513
       },
       "wind 30": {
-       "n": 57,
+       "n": 58,
        "hits": 21,
        "false_alarms": 19,
        "pod": 0.84,
@@ -1842,7 +1843,7 @@
        "p_surfable_given_yes": 0.525
       },
       "height 0.8\u20133.0": {
-       "n": 57,
+       "n": 58,
        "hits": 31,
        "false_alarms": 17,
        "pod": 1.0,
@@ -1852,35 +1853,35 @@
      }
     },
     "1": {
-     "n": 56,
+     "n": 57,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.288,
-     "bias_swell": -0.07,
-     "rmse_swell": 0.449,
-     "mae_period": 1.42,
-     "spearman_swell": 0.864,
+     "mae_swell": 0.292,
+     "bias_swell": -0.078,
+     "rmse_swell": 0.45,
+     "mae_period": 1.41,
+     "spearman_swell": 0.871,
      "mae_swell_ci95": [
-      0.215,
-      0.368
+      0.216,
+      0.373
      ],
      "bias_swell_ci95": [
-      -0.188,
-      0.055
+      -0.204,
+      0.049
      ],
      "binary": {
-      "n": 56,
+      "n": 57,
       "hits": 23,
       "misses": 0,
       "false_alarms": 17,
-      "correct_negatives": 16,
+      "correct_negatives": 17,
       "pod": 1.0,
       "far": 0.425,
       "p_surfable_given_yes": 0.575,
       "p_surfable_given_no": 0.0,
-      "base_rate": 0.411,
+      "base_rate": 0.404,
       "p_surfable_given_yes_ci95": [
        0.375,
        0.762
@@ -1888,7 +1889,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 56,
+       "n": 57,
        "hits": 29,
        "false_alarms": 14,
        "pod": 0.967,
@@ -1896,7 +1897,7 @@
        "p_surfable_given_yes": 0.674
       },
       "period 9 s": {
-       "n": 56,
+       "n": 57,
        "hits": 17,
        "false_alarms": 18,
        "pod": 1.0,
@@ -1904,7 +1905,7 @@
        "p_surfable_given_yes": 0.486
       },
       "wind 20": {
-       "n": 56,
+       "n": 57,
        "hits": 22,
        "false_alarms": 17,
        "pod": 1.0,
@@ -1912,7 +1913,7 @@
        "p_surfable_given_yes": 0.564
       },
       "wind 30": {
-       "n": 56,
+       "n": 57,
        "hits": 24,
        "false_alarms": 17,
        "pod": 1.0,
@@ -1920,45 +1921,45 @@
        "p_surfable_given_yes": 0.585
       },
       "height 0.8\u20133.0": {
-       "n": 56,
+       "n": 57,
        "hits": 30,
-       "false_alarms": 17,
+       "false_alarms": 18,
        "pod": 1.0,
-       "far": 0.362,
-       "p_surfable_given_yes": 0.638
+       "far": 0.375,
+       "p_surfable_given_yes": 0.625
       }
      }
     },
     "2": {
-     "n": 55,
+     "n": 56,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.304,
-     "bias_swell": -0.127,
-     "rmse_swell": 0.464,
+     "mae_swell": 0.299,
+     "bias_swell": -0.125,
+     "rmse_swell": 0.46,
      "mae_period": 1.37,
-     "spearman_swell": 0.861,
+     "spearman_swell": 0.868,
      "mae_swell_ci95": [
-      0.234,
-      0.385
+      0.232,
+      0.372
      ],
      "bias_swell_ci95": [
-      -0.254,
-      0.015
+      -0.246,
+      0.014
      ],
      "binary": {
-      "n": 55,
+      "n": 56,
       "hits": 22,
       "misses": 1,
       "false_alarms": 17,
-      "correct_negatives": 15,
+      "correct_negatives": 16,
       "pod": 0.957,
       "far": 0.436,
       "p_surfable_given_yes": 0.564,
-      "p_surfable_given_no": 0.062,
-      "base_rate": 0.418,
+      "p_surfable_given_no": 0.059,
+      "base_rate": 0.411,
       "p_surfable_given_yes_ci95": [
        0.357,
        0.76
@@ -1966,7 +1967,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 55,
+       "n": 56,
        "hits": 27,
        "false_alarms": 14,
        "pod": 0.931,
@@ -1974,7 +1975,7 @@
        "p_surfable_given_yes": 0.659
       },
       "period 9 s": {
-       "n": 55,
+       "n": 56,
        "hits": 16,
        "false_alarms": 18,
        "pod": 0.941,
@@ -1982,7 +1983,7 @@
        "p_surfable_given_yes": 0.471
       },
       "wind 20": {
-       "n": 55,
+       "n": 56,
        "hits": 21,
        "false_alarms": 18,
        "pod": 0.955,
@@ -1990,7 +1991,7 @@
        "p_surfable_given_yes": 0.538
       },
       "wind 30": {
-       "n": 55,
+       "n": 56,
        "hits": 23,
        "false_alarms": 17,
        "pod": 0.958,
@@ -1998,7 +1999,7 @@
        "p_surfable_given_yes": 0.575
       },
       "height 0.8\u20133.0": {
-       "n": 55,
+       "n": 56,
        "hits": 30,
        "false_alarms": 15,
        "pod": 1.0,
@@ -2008,35 +2009,35 @@
      }
     },
     "3": {
-     "n": 54,
+     "n": 55,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
      "mae_swell": 0.271,
-     "bias_swell": -0.091,
-     "rmse_swell": 0.335,
+     "bias_swell": -0.095,
+     "rmse_swell": 0.334,
      "mae_period": 1.35,
-     "spearman_swell": 0.912,
+     "spearman_swell": 0.916,
      "mae_swell_ci95": [
       0.216,
-      0.313
+      0.311
      ],
      "bias_swell_ci95": [
-      -0.193,
-      0.038
+      -0.194,
+      0.035
      ],
      "binary": {
-      "n": 54,
+      "n": 55,
       "hits": 23,
       "misses": 0,
       "false_alarms": 16,
-      "correct_negatives": 15,
+      "correct_negatives": 16,
       "pod": 1.0,
       "far": 0.41,
       "p_surfable_given_yes": 0.59,
       "p_surfable_given_no": 0.0,
-      "base_rate": 0.426,
+      "base_rate": 0.418,
       "p_surfable_given_yes_ci95": [
        0.364,
        0.8
@@ -2044,7 +2045,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 54,
+       "n": 55,
        "hits": 28,
        "false_alarms": 12,
        "pod": 0.933,
@@ -2052,7 +2053,7 @@
        "p_surfable_given_yes": 0.7
       },
       "period 9 s": {
-       "n": 54,
+       "n": 55,
        "hits": 17,
        "false_alarms": 17,
        "pod": 1.0,
@@ -2060,7 +2061,7 @@
        "p_surfable_given_yes": 0.5
       },
       "wind 20": {
-       "n": 54,
+       "n": 55,
        "hits": 22,
        "false_alarms": 16,
        "pod": 1.0,
@@ -2068,7 +2069,7 @@
        "p_surfable_given_yes": 0.579
       },
       "wind 30": {
-       "n": 54,
+       "n": 55,
        "hits": 24,
        "false_alarms": 16,
        "pod": 1.0,
@@ -2076,7 +2077,7 @@
        "p_surfable_given_yes": 0.6
       },
       "height 0.8\u20133.0": {
-       "n": 54,
+       "n": 55,
        "hits": 30,
        "false_alarms": 16,
        "pod": 1.0,
@@ -2086,35 +2087,35 @@
      }
     },
     "4": {
-     "n": 53,
+     "n": 54,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.301,
-     "bias_swell": -0.158,
-     "rmse_swell": 0.383,
-     "mae_period": 1.23,
-     "spearman_swell": 0.912,
+     "mae_swell": 0.296,
+     "bias_swell": -0.156,
+     "rmse_swell": 0.38,
+     "mae_period": 1.24,
+     "spearman_swell": 0.915,
      "mae_swell_ci95": [
-      0.223,
-      0.369
+      0.219,
+      0.36
      ],
      "bias_swell_ci95": [
-      -0.258,
+      -0.254,
       -0.028
      ],
      "binary": {
-      "n": 53,
+      "n": 54,
       "hits": 22,
       "misses": 1,
       "false_alarms": 18,
-      "correct_negatives": 12,
+      "correct_negatives": 13,
       "pod": 0.957,
       "far": 0.45,
       "p_surfable_given_yes": 0.55,
-      "p_surfable_given_no": 0.077,
-      "base_rate": 0.434,
+      "p_surfable_given_no": 0.071,
+      "base_rate": 0.426,
       "p_surfable_given_yes_ci95": [
        0.345,
        0.76
@@ -2122,7 +2123,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 53,
+       "n": 54,
        "hits": 28,
        "false_alarms": 15,
        "pod": 0.933,
@@ -2130,7 +2131,7 @@
        "p_surfable_given_yes": 0.651
       },
       "period 9 s": {
-       "n": 53,
+       "n": 54,
        "hits": 16,
        "false_alarms": 15,
        "pod": 0.941,
@@ -2138,7 +2139,7 @@
        "p_surfable_given_yes": 0.516
       },
       "wind 20": {
-       "n": 53,
+       "n": 54,
        "hits": 21,
        "false_alarms": 19,
        "pod": 0.955,
@@ -2146,7 +2147,7 @@
        "p_surfable_given_yes": 0.525
       },
       "wind 30": {
-       "n": 53,
+       "n": 54,
        "hits": 23,
        "false_alarms": 19,
        "pod": 0.958,
@@ -2154,7 +2155,7 @@
        "p_surfable_given_yes": 0.548
       },
       "height 0.8\u20133.0": {
-       "n": 53,
+       "n": 54,
        "hits": 30,
        "false_alarms": 14,
        "pod": 1.0,
@@ -2164,35 +2165,35 @@
      }
     },
     "5": {
-     "n": 52,
+     "n": 53,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.344,
-     "bias_swell": -0.183,
+     "mae_swell": 0.347,
+     "bias_swell": -0.189,
      "rmse_swell": 0.478,
-     "mae_period": 1.23,
-     "spearman_swell": 0.852,
+     "mae_period": 1.22,
+     "spearman_swell": 0.859,
      "mae_swell_ci95": [
       0.246,
-      0.455
+      0.458
      ],
      "bias_swell_ci95": [
-      -0.335,
-      -0.042
+      -0.338,
+      -0.047
      ],
      "binary": {
-      "n": 52,
+      "n": 53,
       "hits": 22,
       "misses": 0,
       "false_alarms": 19,
-      "correct_negatives": 11,
+      "correct_negatives": 12,
       "pod": 1.0,
       "far": 0.463,
       "p_surfable_given_yes": 0.537,
       "p_surfable_given_no": 0.0,
-      "base_rate": 0.423,
+      "base_rate": 0.415,
       "p_surfable_given_yes_ci95": [
        0.324,
        0.771
@@ -2200,7 +2201,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 52,
+       "n": 53,
        "hits": 27,
        "false_alarms": 16,
        "pod": 0.931,
@@ -2208,7 +2209,7 @@
        "p_surfable_given_yes": 0.628
       },
       "period 9 s": {
-       "n": 52,
+       "n": 53,
        "hits": 17,
        "false_alarms": 18,
        "pod": 1.0,
@@ -2216,7 +2217,7 @@
        "p_surfable_given_yes": 0.486
       },
       "wind 20": {
-       "n": 52,
+       "n": 53,
        "hits": 21,
        "false_alarms": 19,
        "pod": 1.0,
@@ -2224,7 +2225,7 @@
        "p_surfable_given_yes": 0.525
       },
       "wind 30": {
-       "n": 52,
+       "n": 53,
        "hits": 23,
        "false_alarms": 18,
        "pod": 1.0,
@@ -2232,45 +2233,45 @@
        "p_surfable_given_yes": 0.561
       },
       "height 0.8\u20133.0": {
-       "n": 52,
+       "n": 53,
        "hits": 29,
-       "false_alarms": 15,
+       "false_alarms": 16,
        "pod": 1.0,
-       "far": 0.341,
-       "p_surfable_given_yes": 0.659
+       "far": 0.356,
+       "p_surfable_given_yes": 0.644
       }
      }
     },
     "6": {
-     "n": 51,
+     "n": 52,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.349,
-     "bias_swell": -0.058,
+     "mae_swell": 0.351,
+     "bias_swell": -0.048,
      "rmse_swell": 0.462,
      "mae_period": 1.36,
-     "spearman_swell": 0.833,
+     "spearman_swell": 0.84,
      "mae_swell_ci95": [
       0.272,
       0.434
      ],
      "bias_swell_ci95": [
-      -0.166,
-      0.068
+      -0.163,
+      0.075
      ],
      "binary": {
-      "n": 51,
+      "n": 52,
       "hits": 20,
       "misses": 1,
       "false_alarms": 18,
-      "correct_negatives": 12,
+      "correct_negatives": 13,
       "pod": 0.952,
       "far": 0.474,
       "p_surfable_given_yes": 0.526,
-      "p_surfable_given_no": 0.077,
-      "base_rate": 0.412,
+      "p_surfable_given_no": 0.071,
+      "base_rate": 0.404,
       "p_surfable_given_yes_ci95": [
        0.294,
        0.767
@@ -2278,7 +2279,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 51,
+       "n": 52,
        "hits": 26,
        "false_alarms": 15,
        "pod": 0.929,
@@ -2286,7 +2287,7 @@
        "p_surfable_given_yes": 0.634
       },
       "period 9 s": {
-       "n": 51,
+       "n": 52,
        "hits": 15,
        "false_alarms": 19,
        "pod": 0.938,
@@ -2294,7 +2295,7 @@
        "p_surfable_given_yes": 0.441
       },
       "wind 20": {
-       "n": 51,
+       "n": 52,
        "hits": 19,
        "false_alarms": 18,
        "pod": 0.95,
@@ -2302,7 +2303,7 @@
        "p_surfable_given_yes": 0.514
       },
       "wind 30": {
-       "n": 51,
+       "n": 52,
        "hits": 21,
        "false_alarms": 17,
        "pod": 0.955,
@@ -2310,7 +2311,7 @@
        "p_surfable_given_yes": 0.553
       },
       "height 0.8\u20133.0": {
-       "n": 51,
+       "n": 52,
        "hits": 27,
        "false_alarms": 14,
        "pod": 0.964,
@@ -2322,35 +2323,35 @@
    },
    "meteofrance_wave": {
     "0": {
-     "n": 57,
+     "n": 58,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": true,
-     "mae_swell": 0.114,
-     "bias_swell": -0.054,
-     "rmse_swell": 0.145,
+     "mae_swell": 0.112,
+     "bias_swell": -0.053,
+     "rmse_swell": 0.144,
      "mae_period": 0.31,
      "spearman_swell": 0.985,
      "mae_swell_ci95": [
       0.087,
-      0.137
+      0.132
      ],
      "bias_swell_ci95": [
-      -0.086,
+      -0.081,
       -0.027
      ],
      "binary": {
-      "n": 57,
+      "n": 58,
       "hits": 22,
       "misses": 2,
       "false_alarms": 2,
-      "correct_negatives": 31,
+      "correct_negatives": 32,
       "pod": 0.917,
       "far": 0.083,
       "p_surfable_given_yes": 0.917,
-      "p_surfable_given_no": 0.061,
-      "base_rate": 0.421,
+      "p_surfable_given_no": 0.059,
+      "base_rate": 0.414,
       "p_surfable_given_yes_ci95": [
        0.8,
        1.0
@@ -2358,7 +2359,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 57,
+       "n": 58,
        "hits": 28,
        "false_alarms": 3,
        "pod": 0.903,
@@ -2366,7 +2367,7 @@
        "p_surfable_given_yes": 0.903
       },
       "period 9 s": {
-       "n": 57,
+       "n": 58,
        "hits": 14,
        "false_alarms": 2,
        "pod": 0.824,
@@ -2374,7 +2375,7 @@
        "p_surfable_given_yes": 0.875
       },
       "wind 20": {
-       "n": 57,
+       "n": 58,
        "hits": 21,
        "false_alarms": 3,
        "pod": 0.913,
@@ -2382,7 +2383,7 @@
        "p_surfable_given_yes": 0.875
       },
       "wind 30": {
-       "n": 57,
+       "n": 58,
        "hits": 22,
        "false_alarms": 2,
        "pod": 0.88,
@@ -2390,7 +2391,7 @@
        "p_surfable_given_yes": 0.917
       },
       "height 0.8\u20133.0": {
-       "n": 57,
+       "n": 58,
        "hits": 29,
        "false_alarms": 1,
        "pod": 0.935,
@@ -2400,35 +2401,35 @@
      }
     },
     "1": {
-     "n": 56,
+     "n": 57,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": true,
-     "mae_swell": 0.169,
-     "bias_swell": -0.086,
-     "rmse_swell": 0.202,
+     "mae_swell": 0.168,
+     "bias_swell": -0.082,
+     "rmse_swell": 0.201,
      "mae_period": 0.41,
-     "spearman_swell": 0.96,
+     "spearman_swell": 0.962,
      "mae_swell_ci95": [
       0.13,
-      0.204
+      0.203
      ],
      "bias_swell_ci95": [
-      -0.108,
-      -0.06
+      -0.107,
+      -0.056
      ],
      "binary": {
-      "n": 56,
+      "n": 57,
       "hits": 20,
       "misses": 3,
       "false_alarms": 2,
-      "correct_negatives": 31,
+      "correct_negatives": 32,
       "pod": 0.87,
       "far": 0.091,
       "p_surfable_given_yes": 0.909,
-      "p_surfable_given_no": 0.088,
-      "base_rate": 0.411,
+      "p_surfable_given_no": 0.086,
+      "base_rate": 0.404,
       "p_surfable_given_yes_ci95": [
        0.742,
        1.0
@@ -2436,7 +2437,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 56,
+       "n": 57,
        "hits": 28,
        "false_alarms": 3,
        "pod": 0.933,
@@ -2444,7 +2445,7 @@
        "p_surfable_given_yes": 0.903
       },
       "period 9 s": {
-       "n": 56,
+       "n": 57,
        "hits": 14,
        "false_alarms": 2,
        "pod": 0.824,
@@ -2452,7 +2453,7 @@
        "p_surfable_given_yes": 0.875
       },
       "wind 20": {
-       "n": 56,
+       "n": 57,
        "hits": 19,
        "false_alarms": 3,
        "pod": 0.864,
@@ -2460,7 +2461,7 @@
        "p_surfable_given_yes": 0.864
       },
       "wind 30": {
-       "n": 56,
+       "n": 57,
        "hits": 20,
        "false_alarms": 3,
        "pod": 0.833,
@@ -2468,7 +2469,7 @@
        "p_surfable_given_yes": 0.87
       },
       "height 0.8\u20133.0": {
-       "n": 56,
+       "n": 57,
        "hits": 27,
        "false_alarms": 1,
        "pod": 0.9,
@@ -2478,35 +2479,35 @@
      }
     },
     "2": {
-     "n": 55,
+     "n": 56,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": true,
-     "mae_swell": 0.201,
-     "bias_swell": -0.137,
-     "rmse_swell": 0.25,
-     "mae_period": 0.46,
-     "spearman_swell": 0.95,
+     "mae_swell": 0.2,
+     "bias_swell": -0.133,
+     "rmse_swell": 0.248,
+     "mae_period": 0.45,
+     "spearman_swell": 0.953,
      "mae_swell_ci95": [
-      0.169,
+      0.168,
       0.231
      ],
      "bias_swell_ci95": [
-      -0.167,
-      -0.105
+      -0.162,
+      -0.098
      ],
      "binary": {
-      "n": 55,
+      "n": 56,
       "hits": 20,
       "misses": 3,
       "false_alarms": 3,
-      "correct_negatives": 29,
+      "correct_negatives": 30,
       "pod": 0.87,
       "far": 0.13,
       "p_surfable_given_yes": 0.87,
-      "p_surfable_given_no": 0.094,
-      "base_rate": 0.418,
+      "p_surfable_given_no": 0.091,
+      "base_rate": 0.411,
       "p_surfable_given_yes_ci95": [
        0.688,
        1.0
@@ -2514,7 +2515,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 55,
+       "n": 56,
        "hits": 26,
        "false_alarms": 6,
        "pod": 0.897,
@@ -2522,7 +2523,7 @@
        "p_surfable_given_yes": 0.812
       },
       "period 9 s": {
-       "n": 55,
+       "n": 56,
        "hits": 13,
        "false_alarms": 3,
        "pod": 0.765,
@@ -2530,7 +2531,7 @@
        "p_surfable_given_yes": 0.812
       },
       "wind 20": {
-       "n": 55,
+       "n": 56,
        "hits": 19,
        "false_alarms": 4,
        "pod": 0.864,
@@ -2538,7 +2539,7 @@
        "p_surfable_given_yes": 0.826
       },
       "wind 30": {
-       "n": 55,
+       "n": 56,
        "hits": 20,
        "false_alarms": 3,
        "pod": 0.833,
@@ -2546,7 +2547,7 @@
        "p_surfable_given_yes": 0.87
       },
       "height 0.8\u20133.0": {
-       "n": 55,
+       "n": 56,
        "hits": 27,
        "false_alarms": 3,
        "pod": 0.9,
@@ -2556,35 +2557,35 @@
      }
     },
     "3": {
-     "n": 54,
+     "n": 55,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": true,
-     "mae_swell": 0.233,
-     "bias_swell": -0.186,
-     "rmse_swell": 0.286,
+     "mae_swell": 0.232,
+     "bias_swell": -0.18,
+     "rmse_swell": 0.284,
      "mae_period": 0.48,
-     "spearman_swell": 0.958,
+     "spearman_swell": 0.96,
      "mae_swell_ci95": [
       0.179,
-      0.278
+      0.275
      ],
      "bias_swell_ci95": [
-      -0.232,
-      -0.134
+      -0.23,
+      -0.125
      ],
      "binary": {
-      "n": 54,
+      "n": 55,
       "hits": 20,
       "misses": 3,
       "false_alarms": 4,
-      "correct_negatives": 27,
+      "correct_negatives": 28,
       "pod": 0.87,
       "far": 0.167,
       "p_surfable_given_yes": 0.833,
-      "p_surfable_given_no": 0.1,
-      "base_rate": 0.426,
+      "p_surfable_given_no": 0.097,
+      "base_rate": 0.418,
       "p_surfable_given_yes_ci95": [
        0.607,
        1.0
@@ -2592,7 +2593,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 54,
+       "n": 55,
        "hits": 26,
        "false_alarms": 7,
        "pod": 0.867,
@@ -2600,7 +2601,7 @@
        "p_surfable_given_yes": 0.788
       },
       "period 9 s": {
-       "n": 54,
+       "n": 55,
        "hits": 13,
        "false_alarms": 2,
        "pod": 0.765,
@@ -2608,7 +2609,7 @@
        "p_surfable_given_yes": 0.867
       },
       "wind 20": {
-       "n": 54,
+       "n": 55,
        "hits": 19,
        "false_alarms": 5,
        "pod": 0.864,
@@ -2616,7 +2617,7 @@
        "p_surfable_given_yes": 0.792
       },
       "wind 30": {
-       "n": 54,
+       "n": 55,
        "hits": 20,
        "false_alarms": 4,
        "pod": 0.833,
@@ -2624,7 +2625,7 @@
        "p_surfable_given_yes": 0.833
       },
       "height 0.8\u20133.0": {
-       "n": 54,
+       "n": 55,
        "hits": 26,
        "false_alarms": 3,
        "pod": 0.867,
@@ -2634,35 +2635,35 @@
      }
     },
     "4": {
-     "n": 53,
+     "n": 54,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": true,
-     "mae_swell": 0.304,
-     "bias_swell": -0.247,
-     "rmse_swell": 0.403,
+     "mae_swell": 0.299,
+     "bias_swell": -0.243,
+     "rmse_swell": 0.399,
      "mae_period": 0.41,
-     "spearman_swell": 0.899,
+     "spearman_swell": 0.904,
      "mae_swell_ci95": [
-      0.207,
-      0.381
+      0.204,
+      0.378
      ],
      "bias_swell_ci95": [
-      -0.339,
+      -0.336,
       -0.131
      ],
      "binary": {
-      "n": 53,
+      "n": 54,
       "hits": 19,
       "misses": 4,
       "false_alarms": 7,
-      "correct_negatives": 23,
+      "correct_negatives": 24,
       "pod": 0.826,
       "far": 0.269,
       "p_surfable_given_yes": 0.731,
-      "p_surfable_given_no": 0.148,
-      "base_rate": 0.434,
+      "p_surfable_given_no": 0.143,
+      "base_rate": 0.426,
       "p_surfable_given_yes_ci95": [
        0.571,
        0.909
@@ -2670,7 +2671,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 53,
+       "n": 54,
        "hits": 26,
        "false_alarms": 6,
        "pod": 0.867,
@@ -2678,7 +2679,7 @@
        "p_surfable_given_yes": 0.812
       },
       "period 9 s": {
-       "n": 53,
+       "n": 54,
        "hits": 10,
        "false_alarms": 2,
        "pod": 0.588,
@@ -2686,7 +2687,7 @@
        "p_surfable_given_yes": 0.833
       },
       "wind 20": {
-       "n": 53,
+       "n": 54,
        "hits": 18,
        "false_alarms": 8,
        "pod": 0.818,
@@ -2694,7 +2695,7 @@
        "p_surfable_given_yes": 0.692
       },
       "wind 30": {
-       "n": 53,
+       "n": 54,
        "hits": 19,
        "false_alarms": 7,
        "pod": 0.792,
@@ -2702,7 +2703,7 @@
        "p_surfable_given_yes": 0.731
       },
       "height 0.8\u20133.0": {
-       "n": 53,
+       "n": 54,
        "hits": 28,
        "false_alarms": 7,
        "pod": 0.933,
@@ -2712,35 +2713,35 @@
      }
     },
     "5": {
-     "n": 52,
+     "n": 53,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": true,
-     "mae_swell": 0.328,
-     "bias_swell": -0.223,
-     "rmse_swell": 0.432,
+     "mae_swell": 0.323,
+     "bias_swell": -0.22,
+     "rmse_swell": 0.428,
      "mae_period": 0.61,
-     "spearman_swell": 0.885,
+     "spearman_swell": 0.89,
      "mae_swell_ci95": [
-      0.224,
-      0.426
+      0.218,
+      0.419
      ],
      "bias_swell_ci95": [
-      -0.319,
-      -0.106
+      -0.313,
+      -0.103
      ],
      "binary": {
-      "n": 52,
+      "n": 53,
       "hits": 16,
       "misses": 6,
       "false_alarms": 8,
-      "correct_negatives": 22,
+      "correct_negatives": 23,
       "pod": 0.727,
       "far": 0.333,
       "p_surfable_given_yes": 0.667,
-      "p_surfable_given_no": 0.214,
-      "base_rate": 0.423,
+      "p_surfable_given_no": 0.207,
+      "base_rate": 0.415,
       "p_surfable_given_yes_ci95": [
        0.444,
        0.923
@@ -2748,7 +2749,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 52,
+       "n": 53,
        "hits": 24,
        "false_alarms": 9,
        "pod": 0.828,
@@ -2756,7 +2757,7 @@
        "p_surfable_given_yes": 0.727
       },
       "period 9 s": {
-       "n": 52,
+       "n": 53,
        "hits": 10,
        "false_alarms": 4,
        "pod": 0.588,
@@ -2764,7 +2765,7 @@
        "p_surfable_given_yes": 0.714
       },
       "wind 20": {
-       "n": 52,
+       "n": 53,
        "hits": 15,
        "false_alarms": 9,
        "pod": 0.714,
@@ -2772,7 +2773,7 @@
        "p_surfable_given_yes": 0.625
       },
       "wind 30": {
-       "n": 52,
+       "n": 53,
        "hits": 16,
        "false_alarms": 8,
        "pod": 0.696,
@@ -2780,7 +2781,7 @@
        "p_surfable_given_yes": 0.667
       },
       "height 0.8\u20133.0": {
-       "n": 52,
+       "n": 53,
        "hits": 25,
        "false_alarms": 5,
        "pod": 0.862,
@@ -2790,35 +2791,35 @@
      }
     },
     "6": {
-     "n": 51,
+     "n": 52,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": true,
-     "mae_swell": 0.359,
-     "bias_swell": -0.242,
-     "rmse_swell": 0.471,
-     "mae_period": 0.71,
-     "spearman_swell": 0.884,
+     "mae_swell": 0.363,
+     "bias_swell": -0.249,
+     "rmse_swell": 0.473,
+     "mae_period": 0.7,
+     "spearman_swell": 0.888,
      "mae_swell_ci95": [
-      0.251,
-      0.455
+      0.259,
+      0.46
      ],
      "bias_swell_ci95": [
-      -0.362,
-      -0.13
+      -0.37,
+      -0.136
      ],
      "binary": {
-      "n": 51,
+      "n": 52,
       "hits": 18,
       "misses": 3,
       "false_alarms": 6,
-      "correct_negatives": 24,
+      "correct_negatives": 25,
       "pod": 0.857,
       "far": 0.25,
       "p_surfable_given_yes": 0.75,
-      "p_surfable_given_no": 0.111,
-      "base_rate": 0.412,
+      "p_surfable_given_no": 0.107,
+      "base_rate": 0.404,
       "p_surfable_given_yes_ci95": [
        0.462,
        1.0
@@ -2826,7 +2827,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 51,
+       "n": 52,
        "hits": 23,
        "false_alarms": 8,
        "pod": 0.821,
@@ -2834,7 +2835,7 @@
        "p_surfable_given_yes": 0.742
       },
       "period 9 s": {
-       "n": 51,
+       "n": 52,
        "hits": 10,
        "false_alarms": 4,
        "pod": 0.625,
@@ -2842,7 +2843,7 @@
        "p_surfable_given_yes": 0.714
       },
       "wind 20": {
-       "n": 51,
+       "n": 52,
        "hits": 17,
        "false_alarms": 6,
        "pod": 0.85,
@@ -2850,7 +2851,7 @@
        "p_surfable_given_yes": 0.739
       },
       "wind 30": {
-       "n": 51,
+       "n": 52,
        "hits": 18,
        "false_alarms": 6,
        "pod": 0.818,
@@ -2858,12 +2859,12 @@
        "p_surfable_given_yes": 0.75
       },
       "height 0.8\u20133.0": {
-       "n": 51,
+       "n": 52,
        "hits": 25,
-       "false_alarms": 5,
+       "false_alarms": 6,
        "pod": 0.893,
-       "far": 0.167,
-       "p_surfable_given_yes": 0.833
+       "far": 0.194,
+       "p_surfable_given_yes": 0.806
       }
      }
     }
@@ -2872,35 +2873,35 @@
   "peniche": {
    "ewam": {
     "0": {
-     "n": 57,
+     "n": 58,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.315,
-     "bias_swell": 0.221,
-     "rmse_swell": 0.401,
-     "mae_period": 1.93,
+     "mae_swell": 0.314,
+     "bias_swell": 0.212,
+     "rmse_swell": 0.399,
+     "mae_period": 1.92,
      "spearman_swell": 0.907,
      "mae_swell_ci95": [
       0.25,
-      0.382
+      0.381
      ],
      "bias_swell_ci95": [
-      0.14,
-      0.296
+      0.125,
+      0.293
      ],
      "binary": {
-      "n": 57,
+      "n": 58,
       "hits": 19,
       "misses": 5,
       "false_alarms": 17,
-      "correct_negatives": 16,
+      "correct_negatives": 17,
       "pod": 0.792,
       "far": 0.472,
       "p_surfable_given_yes": 0.528,
-      "p_surfable_given_no": 0.238,
-      "base_rate": 0.421,
+      "p_surfable_given_no": 0.227,
+      "base_rate": 0.414,
       "p_surfable_given_yes_ci95": [
        0.324,
        0.737
@@ -2908,7 +2909,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 57,
+       "n": 58,
        "hits": 28,
        "false_alarms": 10,
        "pod": 0.824,
@@ -2916,7 +2917,7 @@
        "p_surfable_given_yes": 0.737
       },
       "period 9 s": {
-       "n": 57,
+       "n": 58,
        "hits": 11,
        "false_alarms": 22,
        "pod": 0.786,
@@ -2924,7 +2925,7 @@
        "p_surfable_given_yes": 0.333
       },
       "wind 20": {
-       "n": 57,
+       "n": 58,
        "hits": 17,
        "false_alarms": 15,
        "pod": 0.773,
@@ -2932,7 +2933,7 @@
        "p_surfable_given_yes": 0.531
       },
       "wind 30": {
-       "n": 57,
+       "n": 58,
        "hits": 19,
        "false_alarms": 17,
        "pod": 0.792,
@@ -2940,45 +2941,45 @@
        "p_surfable_given_yes": 0.528
       },
       "height 0.8\u20133.0": {
-       "n": 57,
+       "n": 58,
        "hits": 29,
-       "false_alarms": 16,
+       "false_alarms": 17,
        "pod": 0.967,
-       "far": 0.356,
-       "p_surfable_given_yes": 0.644
+       "far": 0.37,
+       "p_surfable_given_yes": 0.63
       }
      }
     },
     "1": {
-     "n": 56,
+     "n": 57,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.262,
-     "bias_swell": 0.133,
-     "rmse_swell": 0.317,
+     "mae_swell": 0.26,
+     "bias_swell": 0.127,
+     "rmse_swell": 0.315,
      "mae_period": 1.74,
-     "spearman_swell": 0.917,
+     "spearman_swell": 0.921,
      "mae_swell_ci95": [
-      0.223,
-      0.3
+      0.222,
+      0.297
      ],
      "bias_swell_ci95": [
-      0.055,
-      0.221
+      0.045,
+      0.219
      ],
      "binary": {
-      "n": 56,
+      "n": 57,
       "hits": 21,
       "misses": 2,
       "false_alarms": 17,
-      "correct_negatives": 16,
+      "correct_negatives": 17,
       "pod": 0.913,
       "far": 0.447,
       "p_surfable_given_yes": 0.553,
-      "p_surfable_given_no": 0.111,
-      "base_rate": 0.411,
+      "p_surfable_given_no": 0.105,
+      "base_rate": 0.404,
       "p_surfable_given_yes_ci95": [
        0.353,
        0.75
@@ -2986,7 +2987,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 56,
+       "n": 57,
        "hits": 29,
        "false_alarms": 11,
        "pod": 0.906,
@@ -2994,7 +2995,7 @@
        "p_surfable_given_yes": 0.725
       },
       "period 9 s": {
-       "n": 56,
+       "n": 57,
        "hits": 13,
        "false_alarms": 24,
        "pod": 0.929,
@@ -3002,7 +3003,7 @@
        "p_surfable_given_yes": 0.351
       },
       "wind 20": {
-       "n": 56,
+       "n": 57,
        "hits": 19,
        "false_alarms": 16,
        "pod": 0.905,
@@ -3010,7 +3011,7 @@
        "p_surfable_given_yes": 0.543
       },
       "wind 30": {
-       "n": 56,
+       "n": 57,
        "hits": 21,
        "false_alarms": 18,
        "pod": 0.913,
@@ -3018,85 +3019,7 @@
        "p_surfable_given_yes": 0.538
       },
       "height 0.8\u20133.0": {
-       "n": 56,
-       "hits": 29,
-       "false_alarms": 15,
-       "pod": 1.0,
-       "far": 0.341,
-       "p_surfable_given_yes": 0.659
-      }
-     }
-    },
-    "2": {
-     "n": 55,
-     "weeks": 9,
-     "descriptive": false,
-     "readable": true,
-     "self_verification": false,
-     "mae_swell": 0.251,
-     "bias_swell": 0.062,
-     "rmse_swell": 0.312,
-     "mae_period": 1.65,
-     "spearman_swell": 0.909,
-     "mae_swell_ci95": [
-      0.215,
-      0.29
-     ],
-     "bias_swell_ci95": [
-      -0.031,
-      0.173
-     ],
-     "binary": {
-      "n": 55,
-      "hits": 22,
-      "misses": 1,
-      "false_alarms": 18,
-      "correct_negatives": 14,
-      "pod": 0.957,
-      "far": 0.45,
-      "p_surfable_given_yes": 0.55,
-      "p_surfable_given_no": 0.067,
-      "base_rate": 0.418,
-      "p_surfable_given_yes_ci95": [
-       0.345,
-       0.75
-      ]
-     },
-     "robustness": {
-      "period 7 s": {
-       "n": 55,
-       "hits": 30,
-       "false_alarms": 12,
-       "pod": 0.938,
-       "far": 0.286,
-       "p_surfable_given_yes": 0.714
-      },
-      "period 9 s": {
-       "n": 55,
-       "hits": 13,
-       "false_alarms": 24,
-       "pod": 0.929,
-       "far": 0.649,
-       "p_surfable_given_yes": 0.351
-      },
-      "wind 20": {
-       "n": 55,
-       "hits": 20,
-       "false_alarms": 16,
-       "pod": 0.952,
-       "far": 0.444,
-       "p_surfable_given_yes": 0.556
-      },
-      "wind 30": {
-       "n": 55,
-       "hits": 22,
-       "false_alarms": 19,
-       "pod": 0.957,
-       "far": 0.463,
-       "p_surfable_given_yes": 0.537
-      },
-      "height 0.8\u20133.0": {
-       "n": 55,
+       "n": 57,
        "hits": 29,
        "false_alarms": 16,
        "pod": 1.0,
@@ -3105,36 +3028,114 @@
       }
      }
     },
-    "3": {
-     "n": 54,
+    "2": {
+     "n": 56,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.314,
-     "bias_swell": -0.135,
-     "rmse_swell": 0.422,
-     "mae_period": 1.58,
-     "spearman_swell": 0.842,
+     "mae_swell": 0.247,
+     "bias_swell": 0.06,
+     "rmse_swell": 0.309,
+     "mae_period": 1.65,
+     "spearman_swell": 0.913,
      "mae_swell_ci95": [
-      0.239,
-      0.381
+      0.212,
+      0.282
      ],
      "bias_swell_ci95": [
-      -0.25,
+      -0.031,
+      0.173
+     ],
+     "binary": {
+      "n": 56,
+      "hits": 22,
+      "misses": 1,
+      "false_alarms": 18,
+      "correct_negatives": 15,
+      "pod": 0.957,
+      "far": 0.45,
+      "p_surfable_given_yes": 0.55,
+      "p_surfable_given_no": 0.062,
+      "base_rate": 0.411,
+      "p_surfable_given_yes_ci95": [
+       0.345,
+       0.75
+      ]
+     },
+     "robustness": {
+      "period 7 s": {
+       "n": 56,
+       "hits": 30,
+       "false_alarms": 12,
+       "pod": 0.938,
+       "far": 0.286,
+       "p_surfable_given_yes": 0.714
+      },
+      "period 9 s": {
+       "n": 56,
+       "hits": 13,
+       "false_alarms": 24,
+       "pod": 0.929,
+       "far": 0.649,
+       "p_surfable_given_yes": 0.351
+      },
+      "wind 20": {
+       "n": 56,
+       "hits": 20,
+       "false_alarms": 16,
+       "pod": 0.952,
+       "far": 0.444,
+       "p_surfable_given_yes": 0.556
+      },
+      "wind 30": {
+       "n": 56,
+       "hits": 22,
+       "false_alarms": 19,
+       "pod": 0.957,
+       "far": 0.463,
+       "p_surfable_given_yes": 0.537
+      },
+      "height 0.8\u20133.0": {
+       "n": 56,
+       "hits": 29,
+       "false_alarms": 17,
+       "pod": 1.0,
+       "far": 0.37,
+       "p_surfable_given_yes": 0.63
+      }
+     }
+    },
+    "3": {
+     "n": 55,
+     "weeks": 9,
+     "descriptive": false,
+     "readable": true,
+     "self_verification": false,
+     "mae_swell": 0.309,
+     "bias_swell": -0.131,
+     "rmse_swell": 0.418,
+     "mae_period": 1.59,
+     "spearman_swell": 0.849,
+     "mae_swell_ci95": [
+      0.238,
+      0.369
+     ],
+     "bias_swell_ci95": [
+      -0.237,
       -0.005
      ],
      "binary": {
-      "n": 54,
+      "n": 55,
       "hits": 23,
       "misses": 0,
       "false_alarms": 19,
-      "correct_negatives": 12,
+      "correct_negatives": 13,
       "pod": 1.0,
       "far": 0.452,
       "p_surfable_given_yes": 0.548,
       "p_surfable_given_no": 0.0,
-      "base_rate": 0.426,
+      "base_rate": 0.418,
       "p_surfable_given_yes_ci95": [
        0.333,
        0.769
@@ -3142,7 +3143,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 54,
+       "n": 55,
        "hits": 31,
        "false_alarms": 11,
        "pod": 0.939,
@@ -3150,7 +3151,7 @@
        "p_surfable_given_yes": 0.738
       },
       "period 9 s": {
-       "n": 54,
+       "n": 55,
        "hits": 14,
        "false_alarms": 25,
        "pod": 1.0,
@@ -3158,7 +3159,7 @@
        "p_surfable_given_yes": 0.359
       },
       "wind 20": {
-       "n": 54,
+       "n": 55,
        "hits": 21,
        "false_alarms": 19,
        "pod": 1.0,
@@ -3166,7 +3167,7 @@
        "p_surfable_given_yes": 0.525
       },
       "wind 30": {
-       "n": 54,
+       "n": 55,
        "hits": 23,
        "false_alarms": 22,
        "pod": 1.0,
@@ -3174,7 +3175,7 @@
        "p_surfable_given_yes": 0.511
       },
       "height 0.8\u20133.0": {
-       "n": 54,
+       "n": 55,
        "hits": 28,
        "false_alarms": 17,
        "pod": 0.966,
@@ -3186,35 +3187,35 @@
    },
    "gwam": {
     "0": {
-     "n": 57,
+     "n": 58,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
      "mae_swell": 0.296,
-     "bias_swell": 0.221,
-     "rmse_swell": 0.379,
-     "mae_period": 1.75,
-     "spearman_swell": 0.918,
+     "bias_swell": 0.213,
+     "rmse_swell": 0.377,
+     "mae_period": 1.74,
+     "spearman_swell": 0.919,
      "mae_swell_ci95": [
-      0.234,
-      0.364
+      0.235,
+      0.361
      ],
      "bias_swell_ci95": [
-      0.148,
-      0.286
+      0.12,
+      0.284
      ],
      "binary": {
-      "n": 57,
+      "n": 58,
       "hits": 18,
       "misses": 6,
       "false_alarms": 18,
-      "correct_negatives": 15,
+      "correct_negatives": 16,
       "pod": 0.75,
       "far": 0.5,
       "p_surfable_given_yes": 0.5,
-      "p_surfable_given_no": 0.286,
-      "base_rate": 0.421,
+      "p_surfable_given_no": 0.273,
+      "base_rate": 0.414,
       "p_surfable_given_yes_ci95": [
        0.292,
        0.706
@@ -3222,7 +3223,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 57,
+       "n": 58,
        "hits": 27,
        "false_alarms": 10,
        "pod": 0.794,
@@ -3230,7 +3231,7 @@
        "p_surfable_given_yes": 0.73
       },
       "period 9 s": {
-       "n": 57,
+       "n": 58,
        "hits": 10,
        "false_alarms": 22,
        "pod": 0.714,
@@ -3238,7 +3239,7 @@
        "p_surfable_given_yes": 0.312
       },
       "wind 20": {
-       "n": 57,
+       "n": 58,
        "hits": 16,
        "false_alarms": 15,
        "pod": 0.727,
@@ -3246,7 +3247,7 @@
        "p_surfable_given_yes": 0.516
       },
       "wind 30": {
-       "n": 57,
+       "n": 58,
        "hits": 18,
        "false_alarms": 18,
        "pod": 0.75,
@@ -3254,45 +3255,45 @@
        "p_surfable_given_yes": 0.5
       },
       "height 0.8\u20133.0": {
-       "n": 57,
+       "n": 58,
        "hits": 29,
-       "false_alarms": 17,
+       "false_alarms": 18,
        "pod": 0.967,
-       "far": 0.37,
-       "p_surfable_given_yes": 0.63
+       "far": 0.383,
+       "p_surfable_given_yes": 0.617
       }
      }
     },
     "1": {
-     "n": 56,
+     "n": 57,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.279,
-     "bias_swell": 0.09,
-     "rmse_swell": 0.413,
+     "mae_swell": 0.277,
+     "bias_swell": 0.086,
+     "rmse_swell": 0.41,
      "mae_period": 1.57,
-     "spearman_swell": 0.875,
+     "spearman_swell": 0.881,
      "mae_swell_ci95": [
-      0.224,
-      0.359
+      0.222,
+      0.355
      ],
      "bias_swell_ci95": [
-      -0.007,
-      0.17
+      -0.013,
+      0.166
      ],
      "binary": {
-      "n": 56,
+      "n": 57,
       "hits": 20,
       "misses": 3,
       "false_alarms": 17,
-      "correct_negatives": 16,
+      "correct_negatives": 17,
       "pod": 0.87,
       "far": 0.459,
       "p_surfable_given_yes": 0.541,
-      "p_surfable_given_no": 0.158,
-      "base_rate": 0.411,
+      "p_surfable_given_no": 0.15,
+      "base_rate": 0.404,
       "p_surfable_given_yes_ci95": [
        0.346,
        0.741
@@ -3300,7 +3301,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 56,
+       "n": 57,
        "hits": 28,
        "false_alarms": 11,
        "pod": 0.875,
@@ -3308,7 +3309,7 @@
        "p_surfable_given_yes": 0.718
       },
       "period 9 s": {
-       "n": 56,
+       "n": 57,
        "hits": 13,
        "false_alarms": 22,
        "pod": 0.929,
@@ -3316,7 +3317,7 @@
        "p_surfable_given_yes": 0.371
       },
       "wind 20": {
-       "n": 56,
+       "n": 57,
        "hits": 18,
        "false_alarms": 16,
        "pod": 0.857,
@@ -3324,7 +3325,7 @@
        "p_surfable_given_yes": 0.529
       },
       "wind 30": {
-       "n": 56,
+       "n": 57,
        "hits": 20,
        "false_alarms": 18,
        "pod": 0.87,
@@ -3332,45 +3333,45 @@
        "p_surfable_given_yes": 0.526
       },
       "height 0.8\u20133.0": {
-       "n": 56,
+       "n": 57,
        "hits": 29,
-       "false_alarms": 15,
+       "false_alarms": 16,
        "pod": 1.0,
-       "far": 0.341,
-       "p_surfable_given_yes": 0.659
+       "far": 0.356,
+       "p_surfable_given_yes": 0.644
       }
      }
     },
     "2": {
-     "n": 55,
+     "n": 56,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.267,
-     "bias_swell": 0.027,
-     "rmse_swell": 0.409,
-     "mae_period": 1.48,
-     "spearman_swell": 0.872,
+     "mae_swell": 0.265,
+     "bias_swell": 0.03,
+     "rmse_swell": 0.405,
+     "mae_period": 1.49,
+     "spearman_swell": 0.878,
      "mae_swell_ci95": [
       0.202,
-      0.353
+      0.347
      ],
      "bias_swell_ci95": [
-      -0.082,
-      0.127
+      -0.072,
+      0.128
      ],
      "binary": {
-      "n": 55,
+      "n": 56,
       "hits": 22,
       "misses": 1,
       "false_alarms": 19,
-      "correct_negatives": 13,
+      "correct_negatives": 14,
       "pod": 0.957,
       "far": 0.463,
       "p_surfable_given_yes": 0.537,
-      "p_surfable_given_no": 0.071,
-      "base_rate": 0.418,
+      "p_surfable_given_no": 0.067,
+      "base_rate": 0.411,
       "p_surfable_given_yes_ci95": [
        0.333,
        0.745
@@ -3378,7 +3379,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 55,
+       "n": 56,
        "hits": 30,
        "false_alarms": 12,
        "pod": 0.938,
@@ -3386,7 +3387,7 @@
        "p_surfable_given_yes": 0.714
       },
       "period 9 s": {
-       "n": 55,
+       "n": 56,
        "hits": 13,
        "false_alarms": 23,
        "pod": 0.929,
@@ -3394,7 +3395,7 @@
        "p_surfable_given_yes": 0.361
       },
       "wind 20": {
-       "n": 55,
+       "n": 56,
        "hits": 20,
        "false_alarms": 17,
        "pod": 0.952,
@@ -3402,7 +3403,7 @@
        "p_surfable_given_yes": 0.541
       },
       "wind 30": {
-       "n": 55,
+       "n": 56,
        "hits": 22,
        "false_alarms": 20,
        "pod": 0.957,
@@ -3410,7 +3411,7 @@
        "p_surfable_given_yes": 0.524
       },
       "height 0.8\u20133.0": {
-       "n": 55,
+       "n": 56,
        "hits": 29,
        "false_alarms": 17,
        "pod": 1.0,
@@ -3420,35 +3421,35 @@
      }
     },
     "3": {
-     "n": 54,
+     "n": 55,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.231,
-     "bias_swell": 0.054,
-     "rmse_swell": 0.279,
+     "mae_swell": 0.228,
+     "bias_swell": 0.055,
+     "rmse_swell": 0.277,
      "mae_period": 1.48,
-     "spearman_swell": 0.924,
+     "spearman_swell": 0.927,
      "mae_swell_ci95": [
       0.2,
-      0.26
+      0.256
      ],
      "bias_swell_ci95": [
       -0.025,
-      0.144
+      0.143
      ],
      "binary": {
-      "n": 54,
+      "n": 55,
       "hits": 23,
       "misses": 0,
       "false_alarms": 15,
-      "correct_negatives": 16,
+      "correct_negatives": 17,
       "pod": 1.0,
       "far": 0.395,
       "p_surfable_given_yes": 0.605,
       "p_surfable_given_no": 0.0,
-      "base_rate": 0.426,
+      "base_rate": 0.418,
       "p_surfable_given_yes_ci95": [
        0.375,
        0.83
@@ -3456,7 +3457,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 54,
+       "n": 55,
        "hits": 31,
        "false_alarms": 7,
        "pod": 0.939,
@@ -3464,7 +3465,7 @@
        "p_surfable_given_yes": 0.816
       },
       "period 9 s": {
-       "n": 54,
+       "n": 55,
        "hits": 14,
        "false_alarms": 20,
        "pod": 1.0,
@@ -3472,7 +3473,7 @@
        "p_surfable_given_yes": 0.412
       },
       "wind 20": {
-       "n": 54,
+       "n": 55,
        "hits": 21,
        "false_alarms": 17,
        "pod": 1.0,
@@ -3480,7 +3481,7 @@
        "p_surfable_given_yes": 0.553
       },
       "wind 30": {
-       "n": 54,
+       "n": 55,
        "hits": 23,
        "false_alarms": 17,
        "pod": 1.0,
@@ -3488,7 +3489,7 @@
        "p_surfable_given_yes": 0.575
       },
       "height 0.8\u20133.0": {
-       "n": 54,
+       "n": 55,
        "hits": 28,
        "false_alarms": 16,
        "pod": 0.966,
@@ -3498,35 +3499,35 @@
      }
     },
     "4": {
-     "n": 53,
+     "n": 54,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.237,
-     "bias_swell": -0.015,
-     "rmse_swell": 0.297,
-     "mae_period": 1.36,
-     "spearman_swell": 0.915,
+     "mae_swell": 0.239,
+     "bias_swell": -0.008,
+     "rmse_swell": 0.298,
+     "mae_period": 1.38,
+     "spearman_swell": 0.918,
      "mae_swell_ci95": [
-      0.192,
-      0.294
+      0.193,
+      0.296
      ],
      "bias_swell_ci95": [
-      -0.089,
-      0.076
+      -0.077,
+      0.084
      ],
      "binary": {
-      "n": 53,
+      "n": 54,
       "hits": 22,
       "misses": 1,
       "false_alarms": 17,
-      "correct_negatives": 13,
+      "correct_negatives": 14,
       "pod": 0.957,
       "far": 0.436,
       "p_surfable_given_yes": 0.564,
-      "p_surfable_given_no": 0.071,
-      "base_rate": 0.434,
+      "p_surfable_given_no": 0.067,
+      "base_rate": 0.426,
       "p_surfable_given_yes_ci95": [
        0.367,
        0.75
@@ -3534,7 +3535,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 53,
+       "n": 54,
        "hits": 31,
        "false_alarms": 10,
        "pod": 0.939,
@@ -3542,7 +3543,7 @@
        "p_surfable_given_yes": 0.756
       },
       "period 9 s": {
-       "n": 53,
+       "n": 54,
        "hits": 13,
        "false_alarms": 20,
        "pod": 0.929,
@@ -3550,7 +3551,7 @@
        "p_surfable_given_yes": 0.394
       },
       "wind 20": {
-       "n": 53,
+       "n": 54,
        "hits": 19,
        "false_alarms": 16,
        "pod": 0.905,
@@ -3558,7 +3559,7 @@
        "p_surfable_given_yes": 0.543
       },
       "wind 30": {
-       "n": 53,
+       "n": 54,
        "hits": 22,
        "false_alarms": 19,
        "pod": 0.957,
@@ -3566,7 +3567,7 @@
        "p_surfable_given_yes": 0.537
       },
       "height 0.8\u20133.0": {
-       "n": 53,
+       "n": 54,
        "hits": 28,
        "false_alarms": 16,
        "pod": 0.966,
@@ -3576,35 +3577,35 @@
      }
     },
     "5": {
-     "n": 52,
+     "n": 53,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.317,
-     "bias_swell": -0.037,
-     "rmse_swell": 0.419,
-     "mae_period": 1.38,
-     "spearman_swell": 0.852,
+     "mae_swell": 0.315,
+     "bias_swell": -0.04,
+     "rmse_swell": 0.416,
+     "mae_period": 1.37,
+     "spearman_swell": 0.859,
      "mae_swell_ci95": [
       0.232,
-      0.417
+      0.413
      ],
      "bias_swell_ci95": [
-      -0.166,
+      -0.169,
       0.078
      ],
      "binary": {
-      "n": 52,
+      "n": 53,
       "hits": 20,
       "misses": 2,
       "false_alarms": 20,
-      "correct_negatives": 10,
+      "correct_negatives": 11,
       "pod": 0.909,
       "far": 0.5,
       "p_surfable_given_yes": 0.5,
-      "p_surfable_given_no": 0.167,
-      "base_rate": 0.423,
+      "p_surfable_given_no": 0.154,
+      "base_rate": 0.415,
       "p_surfable_given_yes_ci95": [
        0.303,
        0.759
@@ -3612,7 +3613,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 52,
+       "n": 53,
        "hits": 27,
        "false_alarms": 14,
        "pod": 0.844,
@@ -3620,7 +3621,7 @@
        "p_surfable_given_yes": 0.659
       },
       "period 9 s": {
-       "n": 52,
+       "n": 53,
        "hits": 13,
        "false_alarms": 22,
        "pod": 0.929,
@@ -3628,7 +3629,7 @@
        "p_surfable_given_yes": 0.371
       },
       "wind 20": {
-       "n": 52,
+       "n": 53,
        "hits": 18,
        "false_alarms": 21,
        "pod": 0.9,
@@ -3636,7 +3637,7 @@
        "p_surfable_given_yes": 0.462
       },
       "wind 30": {
-       "n": 52,
+       "n": 53,
        "hits": 20,
        "false_alarms": 20,
        "pod": 0.909,
@@ -3644,45 +3645,45 @@
        "p_surfable_given_yes": 0.5
       },
       "height 0.8\u20133.0": {
-       "n": 52,
+       "n": 53,
        "hits": 28,
-       "false_alarms": 18,
+       "false_alarms": 19,
        "pod": 1.0,
-       "far": 0.391,
-       "p_surfable_given_yes": 0.609
+       "far": 0.404,
+       "p_surfable_given_yes": 0.596
       }
      }
     },
     "6": {
-     "n": 51,
+     "n": 52,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.365,
-     "bias_swell": 0.062,
-     "rmse_swell": 0.479,
-     "mae_period": 1.5,
-     "spearman_swell": 0.803,
+     "mae_swell": 0.373,
+     "bias_swell": 0.076,
+     "rmse_swell": 0.487,
+     "mae_period": 1.51,
+     "spearman_swell": 0.811,
      "mae_swell_ci95": [
-      0.284,
-      0.461
+      0.287,
+      0.471
      ],
      "bias_swell_ci95": [
-      -0.071,
-      0.189
+      -0.041,
+      0.2
      ],
      "binary": {
-      "n": 51,
+      "n": 52,
       "hits": 19,
       "misses": 3,
       "false_alarms": 18,
-      "correct_negatives": 11,
+      "correct_negatives": 12,
       "pod": 0.864,
       "far": 0.486,
       "p_surfable_given_yes": 0.514,
-      "p_surfable_given_no": 0.214,
-      "base_rate": 0.431,
+      "p_surfable_given_no": 0.2,
+      "base_rate": 0.423,
       "p_surfable_given_yes_ci95": [
        0.3,
        0.75
@@ -3690,7 +3691,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 51,
+       "n": 52,
        "hits": 28,
        "false_alarms": 13,
        "pod": 0.903,
@@ -3698,7 +3699,7 @@
        "p_surfable_given_yes": 0.683
       },
       "period 9 s": {
-       "n": 51,
+       "n": 52,
        "hits": 12,
        "false_alarms": 21,
        "pod": 0.923,
@@ -3706,7 +3707,7 @@
        "p_surfable_given_yes": 0.364
       },
       "wind 20": {
-       "n": 51,
+       "n": 52,
        "hits": 18,
        "false_alarms": 19,
        "pod": 0.9,
@@ -3714,7 +3715,7 @@
        "p_surfable_given_yes": 0.486
       },
       "wind 30": {
-       "n": 51,
+       "n": 52,
        "hits": 19,
        "false_alarms": 18,
        "pod": 0.864,
@@ -3722,7 +3723,7 @@
        "p_surfable_given_yes": 0.514
       },
       "height 0.8\u20133.0": {
-       "n": 51,
+       "n": 52,
        "hits": 27,
        "false_alarms": 14,
        "pod": 0.964,
@@ -3734,35 +3735,35 @@
    },
    "meteofrance_wave": {
     "0": {
-     "n": 57,
+     "n": 58,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": true,
-     "mae_swell": 0.105,
+     "mae_swell": 0.104,
      "bias_swell": -0.039,
-     "rmse_swell": 0.139,
+     "rmse_swell": 0.138,
      "mae_period": 0.27,
-     "spearman_swell": 0.975,
+     "spearman_swell": 0.976,
      "mae_swell_ci95": [
-      0.079,
-      0.131
+      0.078,
+      0.129
      ],
      "bias_swell_ci95": [
-      -0.065,
+      -0.064,
       -0.012
      ],
      "binary": {
-      "n": 57,
+      "n": 58,
       "hits": 23,
       "misses": 1,
       "false_alarms": 1,
-      "correct_negatives": 32,
+      "correct_negatives": 33,
       "pod": 0.958,
       "far": 0.042,
       "p_surfable_given_yes": 0.958,
-      "p_surfable_given_no": 0.03,
-      "base_rate": 0.421,
+      "p_surfable_given_no": 0.029,
+      "base_rate": 0.414,
       "p_surfable_given_yes_ci95": [
        0.882,
        1.0
@@ -3770,7 +3771,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 57,
+       "n": 58,
        "hits": 31,
        "false_alarms": 1,
        "pod": 0.912,
@@ -3778,7 +3779,7 @@
        "p_surfable_given_yes": 0.969
       },
       "period 9 s": {
-       "n": 57,
+       "n": 58,
        "hits": 12,
        "false_alarms": 4,
        "pod": 0.857,
@@ -3786,7 +3787,7 @@
        "p_surfable_given_yes": 0.75
       },
       "wind 20": {
-       "n": 57,
+       "n": 58,
        "hits": 21,
        "false_alarms": 1,
        "pod": 0.955,
@@ -3794,7 +3795,7 @@
        "p_surfable_given_yes": 0.955
       },
       "wind 30": {
-       "n": 57,
+       "n": 58,
        "hits": 23,
        "false_alarms": 1,
        "pod": 0.958,
@@ -3802,45 +3803,45 @@
        "p_surfable_given_yes": 0.958
       },
       "height 0.8\u20133.0": {
-       "n": 57,
+       "n": 58,
        "hits": 29,
-       "false_alarms": 0,
+       "false_alarms": 1,
        "pod": 0.967,
-       "far": 0.0,
-       "p_surfable_given_yes": 1.0
+       "far": 0.033,
+       "p_surfable_given_yes": 0.967
       }
      }
     },
     "1": {
-     "n": 56,
+     "n": 57,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": true,
-     "mae_swell": 0.168,
-     "bias_swell": -0.084,
-     "rmse_swell": 0.203,
-     "mae_period": 0.37,
-     "spearman_swell": 0.957,
+     "mae_swell": 0.166,
+     "bias_swell": -0.081,
+     "rmse_swell": 0.201,
+     "mae_period": 0.36,
+     "spearman_swell": 0.959,
      "mae_swell_ci95": [
-      0.126,
-      0.21
+      0.123,
+      0.209
      ],
      "bias_swell_ci95": [
-      -0.119,
-      -0.047
+      -0.116,
+      -0.044
      ],
      "binary": {
-      "n": 56,
+      "n": 57,
       "hits": 21,
       "misses": 2,
       "false_alarms": 2,
-      "correct_negatives": 31,
+      "correct_negatives": 32,
       "pod": 0.913,
       "far": 0.087,
       "p_surfable_given_yes": 0.913,
-      "p_surfable_given_no": 0.061,
-      "base_rate": 0.411,
+      "p_surfable_given_no": 0.059,
+      "base_rate": 0.404,
       "p_surfable_given_yes_ci95": [
        0.769,
        1.0
@@ -3848,7 +3849,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 56,
+       "n": 57,
        "hits": 28,
        "false_alarms": 3,
        "pod": 0.875,
@@ -3856,7 +3857,7 @@
        "p_surfable_given_yes": 0.903
       },
       "period 9 s": {
-       "n": 56,
+       "n": 57,
        "hits": 11,
        "false_alarms": 3,
        "pod": 0.786,
@@ -3864,7 +3865,7 @@
        "p_surfable_given_yes": 0.786
       },
       "wind 20": {
-       "n": 56,
+       "n": 57,
        "hits": 19,
        "false_alarms": 3,
        "pod": 0.905,
@@ -3872,7 +3873,7 @@
        "p_surfable_given_yes": 0.864
       },
       "wind 30": {
-       "n": 56,
+       "n": 57,
        "hits": 21,
        "false_alarms": 2,
        "pod": 0.913,
@@ -3880,7 +3881,7 @@
        "p_surfable_given_yes": 0.913
       },
       "height 0.8\u20133.0": {
-       "n": 56,
+       "n": 57,
        "hits": 27,
        "false_alarms": 2,
        "pod": 0.931,
@@ -3890,35 +3891,35 @@
      }
     },
     "2": {
-     "n": 55,
+     "n": 56,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": true,
-     "mae_swell": 0.192,
-     "bias_swell": -0.121,
-     "rmse_swell": 0.248,
-     "mae_period": 0.44,
-     "spearman_swell": 0.943,
+     "mae_swell": 0.191,
+     "bias_swell": -0.117,
+     "rmse_swell": 0.246,
+     "mae_period": 0.43,
+     "spearman_swell": 0.945,
      "mae_swell_ci95": [
-      0.154,
-      0.23
+      0.153,
+      0.227
      ],
      "bias_swell_ci95": [
-      -0.166,
-      -0.072
+      -0.162,
+      -0.067
      ],
      "binary": {
-      "n": 55,
+      "n": 56,
       "hits": 21,
       "misses": 2,
       "false_alarms": 4,
-      "correct_negatives": 28,
+      "correct_negatives": 29,
       "pod": 0.913,
       "far": 0.16,
       "p_surfable_given_yes": 0.84,
-      "p_surfable_given_no": 0.067,
-      "base_rate": 0.418,
+      "p_surfable_given_no": 0.065,
+      "base_rate": 0.411,
       "p_surfable_given_yes_ci95": [
        0.636,
        1.0
@@ -3926,7 +3927,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 55,
+       "n": 56,
        "hits": 29,
        "false_alarms": 4,
        "pod": 0.906,
@@ -3934,7 +3935,7 @@
        "p_surfable_given_yes": 0.879
       },
       "period 9 s": {
-       "n": 55,
+       "n": 56,
        "hits": 10,
        "false_alarms": 5,
        "pod": 0.714,
@@ -3942,7 +3943,7 @@
        "p_surfable_given_yes": 0.667
       },
       "wind 20": {
-       "n": 55,
+       "n": 56,
        "hits": 19,
        "false_alarms": 4,
        "pod": 0.905,
@@ -3950,7 +3951,7 @@
        "p_surfable_given_yes": 0.826
       },
       "wind 30": {
-       "n": 55,
+       "n": 56,
        "hits": 21,
        "false_alarms": 5,
        "pod": 0.913,
@@ -3958,7 +3959,7 @@
        "p_surfable_given_yes": 0.808
       },
       "height 0.8\u20133.0": {
-       "n": 55,
+       "n": 56,
        "hits": 28,
        "false_alarms": 4,
        "pod": 0.966,
@@ -3968,35 +3969,35 @@
      }
     },
     "3": {
-     "n": 54,
+     "n": 55,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": true,
-     "mae_swell": 0.218,
-     "bias_swell": -0.157,
+     "mae_swell": 0.22,
+     "bias_swell": -0.149,
      "rmse_swell": 0.272,
-     "mae_period": 0.5,
-     "spearman_swell": 0.947,
+     "mae_period": 0.49,
+     "spearman_swell": 0.949,
      "mae_swell_ci95": [
-      0.16,
+      0.166,
       0.263
      ],
      "bias_swell_ci95": [
-      -0.22,
-      -0.088
+      -0.215,
+      -0.077
      ],
      "binary": {
-      "n": 54,
+      "n": 55,
       "hits": 20,
       "misses": 3,
       "false_alarms": 5,
-      "correct_negatives": 26,
+      "correct_negatives": 27,
       "pod": 0.87,
       "far": 0.2,
       "p_surfable_given_yes": 0.8,
-      "p_surfable_given_no": 0.103,
-      "base_rate": 0.426,
+      "p_surfable_given_no": 0.1,
+      "base_rate": 0.418,
       "p_surfable_given_yes_ci95": [
        0.636,
        0.941
@@ -4004,7 +4005,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 54,
+       "n": 55,
        "hits": 29,
        "false_alarms": 5,
        "pod": 0.879,
@@ -4012,7 +4013,7 @@
        "p_surfable_given_yes": 0.853
       },
       "period 9 s": {
-       "n": 54,
+       "n": 55,
        "hits": 11,
        "false_alarms": 3,
        "pod": 0.786,
@@ -4020,7 +4021,7 @@
        "p_surfable_given_yes": 0.786
       },
       "wind 20": {
-       "n": 54,
+       "n": 55,
        "hits": 18,
        "false_alarms": 7,
        "pod": 0.857,
@@ -4028,7 +4029,7 @@
        "p_surfable_given_yes": 0.72
       },
       "wind 30": {
-       "n": 54,
+       "n": 55,
        "hits": 20,
        "false_alarms": 5,
        "pod": 0.87,
@@ -4036,7 +4037,7 @@
        "p_surfable_given_yes": 0.8
       },
       "height 0.8\u20133.0": {
-       "n": 54,
+       "n": 55,
        "hits": 26,
        "false_alarms": 6,
        "pod": 0.897,
@@ -4046,35 +4047,35 @@
      }
     },
     "4": {
-     "n": 53,
+     "n": 54,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": true,
-     "mae_swell": 0.276,
-     "bias_swell": -0.221,
-     "rmse_swell": 0.371,
-     "mae_period": 0.51,
-     "spearman_swell": 0.901,
+     "mae_swell": 0.273,
+     "bias_swell": -0.215,
+     "rmse_swell": 0.368,
+     "mae_period": 0.5,
+     "spearman_swell": 0.906,
      "mae_swell_ci95": [
-      0.188,
-      0.348
+      0.187,
+      0.346
      ],
      "bias_swell_ci95": [
-      -0.303,
-      -0.118
+      -0.296,
+      -0.116
      ],
      "binary": {
-      "n": 53,
+      "n": 54,
       "hits": 21,
       "misses": 2,
       "false_alarms": 6,
-      "correct_negatives": 24,
+      "correct_negatives": 25,
       "pod": 0.913,
       "far": 0.222,
       "p_surfable_given_yes": 0.778,
-      "p_surfable_given_no": 0.077,
-      "base_rate": 0.434,
+      "p_surfable_given_no": 0.074,
+      "base_rate": 0.426,
       "p_surfable_given_yes_ci95": [
        0.636,
        0.933
@@ -4082,7 +4083,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 53,
+       "n": 54,
        "hits": 30,
        "false_alarms": 4,
        "pod": 0.909,
@@ -4090,7 +4091,7 @@
        "p_surfable_given_yes": 0.882
       },
       "period 9 s": {
-       "n": 53,
+       "n": 54,
        "hits": 9,
        "false_alarms": 1,
        "pod": 0.643,
@@ -4098,7 +4099,7 @@
        "p_surfable_given_yes": 0.9
       },
       "wind 20": {
-       "n": 53,
+       "n": 54,
        "hits": 18,
        "false_alarms": 6,
        "pod": 0.857,
@@ -4106,7 +4107,7 @@
        "p_surfable_given_yes": 0.75
       },
       "wind 30": {
-       "n": 53,
+       "n": 54,
        "hits": 21,
        "false_alarms": 6,
        "pod": 0.913,
@@ -4114,7 +4115,7 @@
        "p_surfable_given_yes": 0.778
       },
       "height 0.8\u20133.0": {
-       "n": 53,
+       "n": 54,
        "hits": 27,
        "false_alarms": 8,
        "pod": 0.931,
@@ -4124,35 +4125,35 @@
      }
     },
     "5": {
-     "n": 52,
+     "n": 53,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": true,
-     "mae_swell": 0.314,
-     "bias_swell": -0.221,
-     "rmse_swell": 0.42,
-     "mae_period": 0.62,
-     "spearman_swell": 0.874,
+     "mae_swell": 0.311,
+     "bias_swell": -0.214,
+     "rmse_swell": 0.417,
+     "mae_period": 0.61,
+     "spearman_swell": 0.88,
      "mae_swell_ci95": [
-      0.211,
-      0.4
+      0.21,
+      0.398
      ],
      "bias_swell_ci95": [
-      -0.308,
-      -0.115
+      -0.304,
+      -0.11
      ],
      "binary": {
-      "n": 52,
+      "n": 53,
       "hits": 19,
       "misses": 3,
       "false_alarms": 6,
-      "correct_negatives": 24,
+      "correct_negatives": 25,
       "pod": 0.864,
       "far": 0.24,
       "p_surfable_given_yes": 0.76,
-      "p_surfable_given_no": 0.111,
-      "base_rate": 0.423,
+      "p_surfable_given_no": 0.107,
+      "base_rate": 0.415,
       "p_surfable_given_yes_ci95": [
        0.538,
        1.0
@@ -4160,7 +4161,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 52,
+       "n": 53,
        "hits": 27,
        "false_alarms": 7,
        "pod": 0.844,
@@ -4168,7 +4169,7 @@
        "p_surfable_given_yes": 0.794
       },
       "period 9 s": {
-       "n": 52,
+       "n": 53,
        "hits": 10,
        "false_alarms": 3,
        "pod": 0.714,
@@ -4176,7 +4177,7 @@
        "p_surfable_given_yes": 0.769
       },
       "wind 20": {
-       "n": 52,
+       "n": 53,
        "hits": 17,
        "false_alarms": 8,
        "pod": 0.85,
@@ -4184,7 +4185,7 @@
        "p_surfable_given_yes": 0.68
       },
       "wind 30": {
-       "n": 52,
+       "n": 53,
        "hits": 19,
        "false_alarms": 6,
        "pod": 0.864,
@@ -4192,7 +4193,7 @@
        "p_surfable_given_yes": 0.76
       },
       "height 0.8\u20133.0": {
-       "n": 52,
+       "n": 53,
        "hits": 25,
        "false_alarms": 7,
        "pod": 0.893,
@@ -4202,35 +4203,35 @@
      }
     },
     "6": {
-     "n": 51,
+     "n": 52,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": true,
-     "mae_swell": 0.344,
-     "bias_swell": -0.231,
-     "rmse_swell": 0.437,
-     "mae_period": 0.72,
-     "spearman_swell": 0.904,
+     "mae_swell": 0.347,
+     "bias_swell": -0.236,
+     "rmse_swell": 0.438,
+     "mae_period": 0.71,
+     "spearman_swell": 0.907,
      "mae_swell_ci95": [
-      0.254,
-      0.422
+      0.259,
+      0.425
      ],
      "bias_swell_ci95": [
-      -0.339,
+      -0.342,
       -0.133
      ],
      "binary": {
-      "n": 51,
+      "n": 52,
       "hits": 20,
       "misses": 2,
       "false_alarms": 5,
-      "correct_negatives": 24,
+      "correct_negatives": 25,
       "pod": 0.909,
       "far": 0.2,
       "p_surfable_given_yes": 0.8,
-      "p_surfable_given_no": 0.077,
-      "base_rate": 0.431,
+      "p_surfable_given_no": 0.074,
+      "base_rate": 0.423,
       "p_surfable_given_yes_ci95": [
        0.538,
        1.0
@@ -4238,7 +4239,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 51,
+       "n": 52,
        "hits": 26,
        "false_alarms": 5,
        "pod": 0.839,
@@ -4246,7 +4247,7 @@
        "p_surfable_given_yes": 0.839
       },
       "period 9 s": {
-       "n": 51,
+       "n": 52,
        "hits": 9,
        "false_alarms": 3,
        "pod": 0.692,
@@ -4254,7 +4255,7 @@
        "p_surfable_given_yes": 0.75
       },
       "wind 20": {
-       "n": 51,
+       "n": 52,
        "hits": 18,
        "false_alarms": 6,
        "pod": 0.9,
@@ -4262,7 +4263,7 @@
        "p_surfable_given_yes": 0.75
       },
       "wind 30": {
-       "n": 51,
+       "n": 52,
        "hits": 20,
        "false_alarms": 5,
        "pod": 0.909,
@@ -4270,12 +4271,12 @@
        "p_surfable_given_yes": 0.8
       },
       "height 0.8\u20133.0": {
-       "n": 51,
+       "n": 52,
        "hits": 26,
-       "false_alarms": 5,
+       "false_alarms": 6,
        "pod": 0.929,
-       "far": 0.161,
-       "p_surfable_given_yes": 0.839
+       "far": 0.188,
+       "p_surfable_given_yes": 0.812
       }
      }
     }
@@ -4284,35 +4285,35 @@
   "sagres": {
    "ewam": {
     "0": {
-     "n": 57,
+     "n": 58,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.404,
-     "bias_swell": -0.333,
-     "rmse_swell": 0.543,
-     "mae_period": 0.99,
-     "spearman_swell": 0.774,
+     "mae_swell": 0.407,
+     "bias_swell": -0.316,
+     "rmse_swell": 0.544,
+     "mae_period": 0.98,
+     "spearman_swell": 0.785,
      "mae_swell_ci95": [
-      0.295,
-      0.513
+      0.299,
+      0.519
      ],
      "bias_swell_ci95": [
-      -0.489,
-      -0.195
+      -0.449,
+      -0.184
      ],
      "binary": {
-      "n": 57,
+      "n": 58,
       "hits": 23,
       "misses": 5,
       "false_alarms": 11,
-      "correct_negatives": 18,
+      "correct_negatives": 19,
       "pod": 0.821,
       "far": 0.324,
       "p_surfable_given_yes": 0.676,
-      "p_surfable_given_no": 0.217,
-      "base_rate": 0.491,
+      "p_surfable_given_no": 0.208,
+      "base_rate": 0.483,
       "p_surfable_given_yes_ci95": [
        0.536,
        0.826
@@ -4320,7 +4321,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 57,
+       "n": 58,
        "hits": 32,
        "false_alarms": 8,
        "pod": 0.889,
@@ -4328,7 +4329,7 @@
        "p_surfable_given_yes": 0.8
       },
       "period 9 s": {
-       "n": 57,
+       "n": 58,
        "hits": 17,
        "false_alarms": 8,
        "pod": 0.81,
@@ -4336,7 +4337,7 @@
        "p_surfable_given_yes": 0.68
       },
       "wind 20": {
-       "n": 57,
+       "n": 58,
        "hits": 23,
        "false_alarms": 10,
        "pod": 0.852,
@@ -4344,7 +4345,7 @@
        "p_surfable_given_yes": 0.697
       },
       "wind 30": {
-       "n": 57,
+       "n": 58,
        "hits": 24,
        "false_alarms": 12,
        "pod": 0.828,
@@ -4352,7 +4353,7 @@
        "p_surfable_given_yes": 0.667
       },
       "height 0.8\u20133.0": {
-       "n": 57,
+       "n": 58,
        "hits": 30,
        "false_alarms": 10,
        "pod": 0.909,
@@ -4362,35 +4363,35 @@
      }
     },
     "1": {
-     "n": 56,
+     "n": 57,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.436,
-     "bias_swell": -0.364,
-     "rmse_swell": 0.576,
-     "mae_period": 0.82,
-     "spearman_swell": 0.79,
+     "mae_swell": 0.446,
+     "bias_swell": -0.34,
+     "rmse_swell": 0.586,
+     "mae_period": 0.81,
+     "spearman_swell": 0.801,
      "mae_swell_ci95": [
-      0.297,
-      0.562
+      0.308,
+      0.576
      ],
      "bias_swell_ci95": [
-      -0.533,
-      -0.172
+      -0.502,
+      -0.158
      ],
      "binary": {
-      "n": 56,
+      "n": 57,
       "hits": 23,
       "misses": 4,
       "false_alarms": 10,
-      "correct_negatives": 19,
+      "correct_negatives": 20,
       "pod": 0.852,
       "far": 0.303,
       "p_surfable_given_yes": 0.697,
-      "p_surfable_given_no": 0.174,
-      "base_rate": 0.482,
+      "p_surfable_given_no": 0.167,
+      "base_rate": 0.474,
       "p_surfable_given_yes_ci95": [
        0.545,
        0.852
@@ -4398,7 +4399,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 56,
+       "n": 57,
        "hits": 30,
        "false_alarms": 8,
        "pod": 0.882,
@@ -4406,7 +4407,7 @@
        "p_surfable_given_yes": 0.789
       },
       "period 9 s": {
-       "n": 56,
+       "n": 57,
        "hits": 15,
        "false_alarms": 7,
        "pod": 0.714,
@@ -4414,7 +4415,7 @@
        "p_surfable_given_yes": 0.682
       },
       "wind 20": {
-       "n": 56,
+       "n": 57,
        "hits": 23,
        "false_alarms": 8,
        "pod": 0.885,
@@ -4422,7 +4423,7 @@
        "p_surfable_given_yes": 0.742
       },
       "wind 30": {
-       "n": 56,
+       "n": 57,
        "hits": 24,
        "false_alarms": 10,
        "pod": 0.857,
@@ -4430,7 +4431,7 @@
        "p_surfable_given_yes": 0.706
       },
       "height 0.8\u20133.0": {
-       "n": 56,
+       "n": 57,
        "hits": 30,
        "false_alarms": 10,
        "pod": 0.938,
@@ -4440,35 +4441,35 @@
      }
     },
     "2": {
-     "n": 55,
+     "n": 56,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.491,
-     "bias_swell": -0.412,
-     "rmse_swell": 0.625,
-     "mae_period": 0.76,
-     "spearman_swell": 0.768,
+     "mae_swell": 0.495,
+     "bias_swell": -0.392,
+     "rmse_swell": 0.627,
+     "mae_period": 0.75,
+     "spearman_swell": 0.78,
      "mae_swell_ci95": [
-      0.352,
-      0.613
+      0.356,
+      0.617
      ],
      "bias_swell_ci95": [
-      -0.594,
-      -0.213
+      -0.551,
+      -0.194
      ],
      "binary": {
-      "n": 55,
+      "n": 56,
       "hits": 22,
       "misses": 5,
       "false_alarms": 9,
-      "correct_negatives": 19,
+      "correct_negatives": 20,
       "pod": 0.815,
       "far": 0.29,
       "p_surfable_given_yes": 0.71,
-      "p_surfable_given_no": 0.208,
-      "base_rate": 0.491,
+      "p_surfable_given_no": 0.2,
+      "base_rate": 0.482,
       "p_surfable_given_yes_ci95": [
        0.571,
        0.857
@@ -4476,7 +4477,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 55,
+       "n": 56,
        "hits": 27,
        "false_alarms": 9,
        "pod": 0.794,
@@ -4484,7 +4485,7 @@
        "p_surfable_given_yes": 0.75
       },
       "period 9 s": {
-       "n": 55,
+       "n": 56,
        "hits": 16,
        "false_alarms": 8,
        "pod": 0.762,
@@ -4492,7 +4493,7 @@
        "p_surfable_given_yes": 0.667
       },
       "wind 20": {
-       "n": 55,
+       "n": 56,
        "hits": 22,
        "false_alarms": 6,
        "pod": 0.846,
@@ -4500,7 +4501,7 @@
        "p_surfable_given_yes": 0.786
       },
       "wind 30": {
-       "n": 55,
+       "n": 56,
        "hits": 23,
        "false_alarms": 8,
        "pod": 0.821,
@@ -4508,7 +4509,7 @@
        "p_surfable_given_yes": 0.742
       },
       "height 0.8\u20133.0": {
-       "n": 55,
+       "n": 56,
        "hits": 30,
        "false_alarms": 9,
        "pod": 0.938,
@@ -4518,59 +4519,59 @@
      }
     },
     "3": {
-     "n": 54,
+     "n": 55,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.567,
-     "bias_swell": -0.551,
-     "rmse_swell": 0.701,
+     "mae_swell": 0.577,
+     "bias_swell": -0.562,
+     "rmse_swell": 0.712,
      "mae_period": 0.71,
-     "spearman_swell": 0.751,
+     "spearman_swell": 0.765,
      "mae_swell_ci95": [
-      0.41,
-      0.708
+      0.419,
+      0.727
      ],
      "bias_swell_ci95": [
-      -0.703,
-      -0.385
+      -0.727,
+      -0.395
      ],
      "binary": {
-      "n": 54,
+      "n": 55,
       "hits": 23,
       "misses": 4,
-      "false_alarms": 9,
+      "false_alarms": 10,
       "correct_negatives": 18,
       "pod": 0.852,
-      "far": 0.281,
-      "p_surfable_given_yes": 0.719,
+      "far": 0.303,
+      "p_surfable_given_yes": 0.697,
       "p_surfable_given_no": 0.182,
-      "base_rate": 0.5,
+      "base_rate": 0.491,
       "p_surfable_given_yes_ci95": [
-       0.55,
-       0.881
+       0.525,
+       0.857
       ]
      },
      "robustness": {
       "period 7 s": {
-       "n": 54,
+       "n": 55,
        "hits": 25,
-       "false_alarms": 8,
+       "false_alarms": 9,
        "pod": 0.714,
-       "far": 0.242,
-       "p_surfable_given_yes": 0.758
+       "far": 0.265,
+       "p_surfable_given_yes": 0.735
       },
       "period 9 s": {
-       "n": 54,
+       "n": 55,
        "hits": 14,
-       "false_alarms": 6,
+       "false_alarms": 7,
        "pod": 0.667,
-       "far": 0.3,
-       "p_surfable_given_yes": 0.7
+       "far": 0.333,
+       "p_surfable_given_yes": 0.667
       },
       "wind 20": {
-       "n": 54,
+       "n": 55,
        "hits": 22,
        "false_alarms": 7,
        "pod": 0.846,
@@ -4578,55 +4579,55 @@
        "p_surfable_given_yes": 0.759
       },
       "wind 30": {
-       "n": 54,
+       "n": 55,
        "hits": 24,
-       "false_alarms": 9,
+       "false_alarms": 10,
        "pod": 0.857,
-       "far": 0.273,
-       "p_surfable_given_yes": 0.727
+       "far": 0.294,
+       "p_surfable_given_yes": 0.706
       },
       "height 0.8\u20133.0": {
-       "n": 54,
+       "n": 55,
        "hits": 31,
-       "false_alarms": 9,
+       "false_alarms": 10,
        "pod": 0.969,
-       "far": 0.225,
-       "p_surfable_given_yes": 0.775
+       "far": 0.244,
+       "p_surfable_given_yes": 0.756
       }
      }
     }
    },
    "gwam": {
     "0": {
-     "n": 57,
+     "n": 58,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.268,
-     "bias_swell": 0.05,
-     "rmse_swell": 0.34,
+     "mae_swell": 0.273,
+     "bias_swell": 0.059,
+     "rmse_swell": 0.345,
      "mae_period": 1.04,
-     "spearman_swell": 0.895,
+     "spearman_swell": 0.9,
      "mae_swell_ci95": [
       0.213,
-      0.337
+      0.346
      ],
      "bias_swell_ci95": [
-      -0.082,
-      0.148
+      -0.054,
+      0.149
      ],
      "binary": {
-      "n": 57,
+      "n": 58,
       "hits": 28,
       "misses": 0,
       "false_alarms": 16,
-      "correct_negatives": 13,
+      "correct_negatives": 14,
       "pod": 1.0,
       "far": 0.364,
       "p_surfable_given_yes": 0.636,
       "p_surfable_given_no": 0.0,
-      "base_rate": 0.491,
+      "base_rate": 0.483,
       "p_surfable_given_yes_ci95": [
        0.471,
        0.781
@@ -4634,7 +4635,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 57,
+       "n": 58,
        "hits": 36,
        "false_alarms": 10,
        "pod": 1.0,
@@ -4642,7 +4643,7 @@
        "p_surfable_given_yes": 0.783
       },
       "period 9 s": {
-       "n": 57,
+       "n": 58,
        "hits": 20,
        "false_alarms": 9,
        "pod": 0.952,
@@ -4650,7 +4651,7 @@
        "p_surfable_given_yes": 0.69
       },
       "wind 20": {
-       "n": 57,
+       "n": 58,
        "hits": 27,
        "false_alarms": 14,
        "pod": 1.0,
@@ -4658,7 +4659,7 @@
        "p_surfable_given_yes": 0.659
       },
       "wind 30": {
-       "n": 57,
+       "n": 58,
        "hits": 29,
        "false_alarms": 17,
        "pod": 1.0,
@@ -4666,7 +4667,7 @@
        "p_surfable_given_yes": 0.63
       },
       "height 0.8\u20133.0": {
-       "n": 57,
+       "n": 58,
        "hits": 32,
        "false_alarms": 17,
        "pod": 0.97,
@@ -4676,35 +4677,35 @@
      }
     },
     "1": {
-     "n": 56,
+     "n": 57,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.257,
-     "bias_swell": -0.007,
-     "rmse_swell": 0.336,
-     "mae_period": 0.91,
-     "spearman_swell": 0.914,
+     "mae_swell": 0.268,
+     "bias_swell": 0.009,
+     "rmse_swell": 0.355,
+     "mae_period": 0.9,
+     "spearman_swell": 0.919,
      "mae_swell_ci95": [
       0.214,
-      0.329
+      0.364
      ],
      "bias_swell_ci95": [
-      -0.143,
-      0.108
+      -0.097,
+      0.115
      ],
      "binary": {
-      "n": 56,
+      "n": 57,
       "hits": 27,
       "misses": 0,
       "false_alarms": 19,
-      "correct_negatives": 10,
+      "correct_negatives": 11,
       "pod": 1.0,
       "far": 0.413,
       "p_surfable_given_yes": 0.587,
       "p_surfable_given_no": 0.0,
-      "base_rate": 0.482,
+      "base_rate": 0.474,
       "p_surfable_given_yes_ci95": [
        0.439,
        0.711
@@ -4712,7 +4713,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 56,
+       "n": 57,
        "hits": 34,
        "false_alarms": 14,
        "pod": 1.0,
@@ -4720,7 +4721,7 @@
        "p_surfable_given_yes": 0.708
       },
       "period 9 s": {
-       "n": 56,
+       "n": 57,
        "hits": 20,
        "false_alarms": 12,
        "pod": 0.952,
@@ -4728,7 +4729,7 @@
        "p_surfable_given_yes": 0.625
       },
       "wind 20": {
-       "n": 56,
+       "n": 57,
        "hits": 26,
        "false_alarms": 16,
        "pod": 1.0,
@@ -4736,7 +4737,7 @@
        "p_surfable_given_yes": 0.619
       },
       "wind 30": {
-       "n": 56,
+       "n": 57,
        "hits": 28,
        "false_alarms": 19,
        "pod": 1.0,
@@ -4744,7 +4745,7 @@
        "p_surfable_given_yes": 0.596
       },
       "height 0.8\u20133.0": {
-       "n": 56,
+       "n": 57,
        "hits": 32,
        "false_alarms": 17,
        "pod": 1.0,
@@ -4754,35 +4755,35 @@
      }
     },
     "2": {
-     "n": 55,
+     "n": 56,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.26,
-     "bias_swell": -0.057,
-     "rmse_swell": 0.355,
+     "mae_swell": 0.264,
+     "bias_swell": -0.048,
+     "rmse_swell": 0.358,
      "mae_period": 0.83,
-     "spearman_swell": 0.888,
+     "spearman_swell": 0.893,
      "mae_swell_ci95": [
       0.208,
-      0.335
+      0.342
      ],
      "bias_swell_ci95": [
-      -0.195,
-      0.081
+      -0.167,
+      0.083
      ],
      "binary": {
-      "n": 55,
+      "n": 56,
       "hits": 27,
       "misses": 0,
       "false_alarms": 15,
-      "correct_negatives": 13,
+      "correct_negatives": 14,
       "pod": 1.0,
       "far": 0.357,
       "p_surfable_given_yes": 0.643,
       "p_surfable_given_no": 0.0,
-      "base_rate": 0.491,
+      "base_rate": 0.482,
       "p_surfable_given_yes_ci95": [
        0.545,
        0.73
@@ -4790,7 +4791,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 55,
+       "n": 56,
        "hits": 34,
        "false_alarms": 13,
        "pod": 1.0,
@@ -4798,7 +4799,7 @@
        "p_surfable_given_yes": 0.723
       },
       "period 9 s": {
-       "n": 55,
+       "n": 56,
        "hits": 20,
        "false_alarms": 14,
        "pod": 0.952,
@@ -4806,7 +4807,7 @@
        "p_surfable_given_yes": 0.588
       },
       "wind 20": {
-       "n": 55,
+       "n": 56,
        "hits": 25,
        "false_alarms": 12,
        "pod": 0.962,
@@ -4814,7 +4815,7 @@
        "p_surfable_given_yes": 0.676
       },
       "wind 30": {
-       "n": 55,
+       "n": 56,
        "hits": 28,
        "false_alarms": 14,
        "pod": 1.0,
@@ -4822,7 +4823,7 @@
        "p_surfable_given_yes": 0.667
       },
       "height 0.8\u20133.0": {
-       "n": 55,
+       "n": 56,
        "hits": 32,
        "false_alarms": 13,
        "pod": 1.0,
@@ -4832,35 +4833,35 @@
      }
     },
     "3": {
-     "n": 54,
+     "n": 55,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.261,
-     "bias_swell": -0.092,
-     "rmse_swell": 0.371,
-     "mae_period": 0.77,
-     "spearman_swell": 0.877,
+     "mae_swell": 0.271,
+     "bias_swell": -0.105,
+     "rmse_swell": 0.383,
+     "mae_period": 0.76,
+     "spearman_swell": 0.884,
      "mae_swell_ci95": [
-      0.199,
-      0.34
+      0.201,
+      0.359
      ],
      "bias_swell_ci95": [
-      -0.243,
-      0.041
+      -0.267,
+      0.029
      ],
      "binary": {
-      "n": 54,
+      "n": 55,
       "hits": 27,
       "misses": 0,
       "false_alarms": 18,
-      "correct_negatives": 9,
+      "correct_negatives": 10,
       "pod": 1.0,
       "far": 0.4,
       "p_surfable_given_yes": 0.6,
       "p_surfable_given_no": 0.0,
-      "base_rate": 0.5,
+      "base_rate": 0.491,
       "p_surfable_given_yes_ci95": [
        0.462,
        0.714
@@ -4868,7 +4869,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 54,
+       "n": 55,
        "hits": 34,
        "false_alarms": 11,
        "pod": 0.971,
@@ -4876,7 +4877,7 @@
        "p_surfable_given_yes": 0.756
       },
       "period 9 s": {
-       "n": 54,
+       "n": 55,
        "hits": 19,
        "false_alarms": 12,
        "pod": 0.905,
@@ -4884,7 +4885,7 @@
        "p_surfable_given_yes": 0.613
       },
       "wind 20": {
-       "n": 54,
+       "n": 55,
        "hits": 25,
        "false_alarms": 17,
        "pod": 0.962,
@@ -4892,7 +4893,7 @@
        "p_surfable_given_yes": 0.595
       },
       "wind 30": {
-       "n": 54,
+       "n": 55,
        "hits": 28,
        "false_alarms": 18,
        "pod": 1.0,
@@ -4900,45 +4901,45 @@
        "p_surfable_given_yes": 0.609
       },
       "height 0.8\u20133.0": {
-       "n": 54,
+       "n": 55,
        "hits": 32,
-       "false_alarms": 15,
+       "false_alarms": 16,
        "pod": 1.0,
-       "far": 0.319,
-       "p_surfable_given_yes": 0.681
+       "far": 0.333,
+       "p_surfable_given_yes": 0.667
       }
      }
     },
     "4": {
-     "n": 53,
+     "n": 54,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.26,
-     "bias_swell": -0.077,
-     "rmse_swell": 0.353,
+     "mae_swell": 0.269,
+     "bias_swell": -0.089,
+     "rmse_swell": 0.364,
      "mae_period": 0.76,
-     "spearman_swell": 0.842,
+     "spearman_swell": 0.851,
      "mae_swell_ci95": [
-      0.2,
-      0.326
+      0.206,
+      0.346
      ],
      "bias_swell_ci95": [
-      -0.176,
-      0.05
+      -0.192,
+      0.036
      ],
      "binary": {
-      "n": 53,
+      "n": 54,
       "hits": 27,
       "misses": 0,
       "false_alarms": 16,
-      "correct_negatives": 10,
+      "correct_negatives": 11,
       "pod": 1.0,
       "far": 0.372,
       "p_surfable_given_yes": 0.628,
       "p_surfable_given_no": 0.0,
-      "base_rate": 0.509,
+      "base_rate": 0.5,
       "p_surfable_given_yes_ci95": [
        0.529,
        0.733
@@ -4946,7 +4947,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 53,
+       "n": 54,
        "hits": 35,
        "false_alarms": 11,
        "pod": 1.0,
@@ -4954,7 +4955,7 @@
        "p_surfable_given_yes": 0.761
       },
       "period 9 s": {
-       "n": 53,
+       "n": 54,
        "hits": 19,
        "false_alarms": 10,
        "pod": 0.905,
@@ -4962,7 +4963,7 @@
        "p_surfable_given_yes": 0.655
       },
       "wind 20": {
-       "n": 53,
+       "n": 54,
        "hits": 22,
        "false_alarms": 14,
        "pod": 0.846,
@@ -4970,7 +4971,7 @@
        "p_surfable_given_yes": 0.611
       },
       "wind 30": {
-       "n": 53,
+       "n": 54,
        "hits": 28,
        "false_alarms": 15,
        "pod": 1.0,
@@ -4978,45 +4979,45 @@
        "p_surfable_given_yes": 0.651
       },
       "height 0.8\u20133.0": {
-       "n": 53,
+       "n": 54,
        "hits": 32,
-       "false_alarms": 12,
+       "false_alarms": 13,
        "pod": 1.0,
-       "far": 0.273,
-       "p_surfable_given_yes": 0.727
+       "far": 0.289,
+       "p_surfable_given_yes": 0.711
       }
      }
     },
     "5": {
-     "n": 52,
+     "n": 53,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.301,
-     "bias_swell": -0.072,
-     "rmse_swell": 0.426,
-     "mae_period": 0.76,
-     "spearman_swell": 0.819,
+     "mae_swell": 0.315,
+     "bias_swell": -0.091,
+     "rmse_swell": 0.446,
+     "mae_period": 0.75,
+     "spearman_swell": 0.829,
      "mae_swell_ci95": [
       0.245,
-      0.403
+      0.447
      ],
      "bias_swell_ci95": [
-      -0.192,
-      0.05
+      -0.225,
+      0.047
      ],
      "binary": {
-      "n": 52,
+      "n": 53,
       "hits": 25,
       "misses": 1,
       "false_alarms": 14,
-      "correct_negatives": 12,
+      "correct_negatives": 13,
       "pod": 0.962,
       "far": 0.359,
       "p_surfable_given_yes": 0.641,
-      "p_surfable_given_no": 0.077,
-      "base_rate": 0.5,
+      "p_surfable_given_no": 0.071,
+      "base_rate": 0.491,
       "p_surfable_given_yes_ci95": [
        0.474,
        0.789
@@ -5024,7 +5025,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 52,
+       "n": 53,
        "hits": 34,
        "false_alarms": 10,
        "pod": 1.0,
@@ -5032,7 +5033,7 @@
        "p_surfable_given_yes": 0.773
       },
       "period 9 s": {
-       "n": 52,
+       "n": 53,
        "hits": 18,
        "false_alarms": 10,
        "pod": 0.9,
@@ -5040,7 +5041,7 @@
        "p_surfable_given_yes": 0.643
       },
       "wind 20": {
-       "n": 52,
+       "n": 53,
        "hits": 25,
        "false_alarms": 13,
        "pod": 0.962,
@@ -5048,7 +5049,7 @@
        "p_surfable_given_yes": 0.658
       },
       "wind 30": {
-       "n": 52,
+       "n": 53,
        "hits": 26,
        "false_alarms": 13,
        "pod": 0.963,
@@ -5056,45 +5057,45 @@
        "p_surfable_given_yes": 0.667
       },
       "height 0.8\u20133.0": {
-       "n": 52,
+       "n": 53,
        "hits": 30,
-       "false_alarms": 13,
+       "false_alarms": 14,
        "pod": 0.968,
-       "far": 0.302,
-       "p_surfable_given_yes": 0.698
+       "far": 0.318,
+       "p_surfable_given_yes": 0.682
       }
      }
     },
     "6": {
-     "n": 51,
+     "n": 52,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": false,
-     "mae_swell": 0.32,
-     "bias_swell": 0.018,
-     "rmse_swell": 0.42,
+     "mae_swell": 0.325,
+     "bias_swell": 0.007,
+     "rmse_swell": 0.422,
      "mae_period": 0.9,
-     "spearman_swell": 0.734,
+     "spearman_swell": 0.749,
      "mae_swell_ci95": [
-      0.259,
-      0.382
+      0.262,
+      0.388
      ],
      "bias_swell_ci95": [
-      -0.099,
-      0.156
+      -0.106,
+      0.13
      ],
      "binary": {
-      "n": 51,
+      "n": 52,
       "hits": 26,
       "misses": 0,
       "false_alarms": 10,
-      "correct_negatives": 15,
+      "correct_negatives": 16,
       "pod": 1.0,
       "far": 0.278,
       "p_surfable_given_yes": 0.722,
       "p_surfable_given_no": 0.0,
-      "base_rate": 0.51,
+      "base_rate": 0.5,
       "p_surfable_given_yes_ci95": [
        0.6,
        0.861
@@ -5102,7 +5103,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 51,
+       "n": 52,
        "hits": 32,
        "false_alarms": 11,
        "pod": 0.97,
@@ -5110,7 +5111,7 @@
        "p_surfable_given_yes": 0.744
       },
       "period 9 s": {
-       "n": 51,
+       "n": 52,
        "hits": 17,
        "false_alarms": 12,
        "pod": 0.85,
@@ -5118,7 +5119,7 @@
        "p_surfable_given_yes": 0.586
       },
       "wind 20": {
-       "n": 51,
+       "n": 52,
        "hits": 25,
        "false_alarms": 11,
        "pod": 1.0,
@@ -5126,7 +5127,7 @@
        "p_surfable_given_yes": 0.694
       },
       "wind 30": {
-       "n": 51,
+       "n": 52,
        "hits": 27,
        "false_alarms": 9,
        "pod": 1.0,
@@ -5134,7 +5135,7 @@
        "p_surfable_given_yes": 0.75
       },
       "height 0.8\u20133.0": {
-       "n": 51,
+       "n": 52,
        "hits": 30,
        "false_alarms": 9,
        "pod": 0.968,
@@ -5146,35 +5147,35 @@
    },
    "meteofrance_wave": {
     "0": {
-     "n": 57,
+     "n": 58,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": true,
-     "mae_swell": 0.102,
-     "bias_swell": -0.076,
-     "rmse_swell": 0.144,
-     "mae_period": 0.24,
-     "spearman_swell": 0.976,
+     "mae_swell": 0.101,
+     "bias_swell": -0.074,
+     "rmse_swell": 0.143,
+     "mae_period": 0.25,
+     "spearman_swell": 0.977,
      "mae_swell_ci95": [
-      0.08,
-      0.122
+      0.079,
+      0.12
      ],
      "bias_swell_ci95": [
-      -0.103,
+      -0.096,
       -0.049
      ],
      "binary": {
-      "n": 57,
+      "n": 58,
       "hits": 27,
       "misses": 1,
       "false_alarms": 2,
-      "correct_negatives": 27,
+      "correct_negatives": 28,
       "pod": 0.964,
       "far": 0.069,
       "p_surfable_given_yes": 0.931,
-      "p_surfable_given_no": 0.036,
-      "base_rate": 0.491,
+      "p_surfable_given_no": 0.034,
+      "base_rate": 0.483,
       "p_surfable_given_yes_ci95": [
        0.867,
        1.0
@@ -5182,7 +5183,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 57,
+       "n": 58,
        "hits": 33,
        "false_alarms": 5,
        "pod": 0.917,
@@ -5190,7 +5191,7 @@
        "p_surfable_given_yes": 0.868
       },
       "period 9 s": {
-       "n": 57,
+       "n": 58,
        "hits": 17,
        "false_alarms": 3,
        "pod": 0.81,
@@ -5198,7 +5199,7 @@
        "p_surfable_given_yes": 0.85
       },
       "wind 20": {
-       "n": 57,
+       "n": 58,
        "hits": 26,
        "false_alarms": 2,
        "pod": 0.963,
@@ -5206,7 +5207,7 @@
        "p_surfable_given_yes": 0.929
       },
       "wind 30": {
-       "n": 57,
+       "n": 58,
        "hits": 28,
        "false_alarms": 2,
        "pod": 0.966,
@@ -5214,7 +5215,7 @@
        "p_surfable_given_yes": 0.933
       },
       "height 0.8\u20133.0": {
-       "n": 57,
+       "n": 58,
        "hits": 33,
        "false_alarms": 0,
        "pod": 1.0,
@@ -5224,35 +5225,35 @@
      }
     },
     "1": {
-     "n": 56,
+     "n": 57,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": true,
-     "mae_swell": 0.152,
-     "bias_swell": -0.131,
-     "rmse_swell": 0.211,
+     "mae_swell": 0.156,
+     "bias_swell": -0.122,
+     "rmse_swell": 0.215,
      "mae_period": 0.36,
-     "spearman_swell": 0.971,
+     "spearman_swell": 0.972,
      "mae_swell_ci95": [
-      0.114,
-      0.188
+      0.118,
+      0.196
      ],
      "bias_swell_ci95": [
-      -0.165,
-      -0.1
+      -0.148,
+      -0.092
      ],
      "binary": {
-      "n": 56,
+      "n": 57,
       "hits": 24,
       "misses": 3,
       "false_alarms": 2,
-      "correct_negatives": 27,
+      "correct_negatives": 28,
       "pod": 0.889,
       "far": 0.077,
       "p_surfable_given_yes": 0.923,
-      "p_surfable_given_no": 0.1,
-      "base_rate": 0.482,
+      "p_surfable_given_no": 0.097,
+      "base_rate": 0.474,
       "p_surfable_given_yes_ci95": [
        0.867,
        1.0
@@ -5260,7 +5261,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 56,
+       "n": 57,
        "hits": 32,
        "false_alarms": 4,
        "pod": 0.941,
@@ -5268,7 +5269,7 @@
        "p_surfable_given_yes": 0.889
       },
       "period 9 s": {
-       "n": 56,
+       "n": 57,
        "hits": 19,
        "false_alarms": 2,
        "pod": 0.905,
@@ -5276,7 +5277,7 @@
        "p_surfable_given_yes": 0.905
       },
       "wind 20": {
-       "n": 56,
+       "n": 57,
        "hits": 23,
        "false_alarms": 2,
        "pod": 0.885,
@@ -5284,7 +5285,7 @@
        "p_surfable_given_yes": 0.92
       },
       "wind 30": {
-       "n": 56,
+       "n": 57,
        "hits": 25,
        "false_alarms": 2,
        "pod": 0.893,
@@ -5292,7 +5293,7 @@
        "p_surfable_given_yes": 0.926
       },
       "height 0.8\u20133.0": {
-       "n": 56,
+       "n": 57,
        "hits": 30,
        "false_alarms": 2,
        "pod": 0.938,
@@ -5302,35 +5303,35 @@
      }
     },
     "2": {
-     "n": 55,
+     "n": 56,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": true,
-     "mae_swell": 0.207,
-     "bias_swell": -0.17,
-     "rmse_swell": 0.268,
-     "mae_period": 0.5,
-     "spearman_swell": 0.955,
+     "mae_swell": 0.213,
+     "bias_swell": -0.157,
+     "rmse_swell": 0.275,
+     "mae_period": 0.49,
+     "spearman_swell": 0.957,
      "mae_swell_ci95": [
-      0.165,
-      0.253
+      0.17,
+      0.261
      ],
      "bias_swell_ci95": [
-      -0.222,
-      -0.131
+      -0.206,
+      -0.117
      ],
      "binary": {
-      "n": 55,
+      "n": 56,
       "hits": 25,
       "misses": 2,
       "false_alarms": 5,
-      "correct_negatives": 23,
+      "correct_negatives": 24,
       "pod": 0.926,
       "far": 0.167,
       "p_surfable_given_yes": 0.833,
-      "p_surfable_given_no": 0.08,
-      "base_rate": 0.491,
+      "p_surfable_given_no": 0.077,
+      "base_rate": 0.482,
       "p_surfable_given_yes_ci95": [
        0.75,
        0.938
@@ -5338,7 +5339,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 55,
+       "n": 56,
        "hits": 30,
        "false_alarms": 8,
        "pod": 0.882,
@@ -5346,7 +5347,7 @@
        "p_surfable_given_yes": 0.789
       },
       "period 9 s": {
-       "n": 55,
+       "n": 56,
        "hits": 18,
        "false_alarms": 5,
        "pod": 0.857,
@@ -5354,7 +5355,7 @@
        "p_surfable_given_yes": 0.783
       },
       "wind 20": {
-       "n": 55,
+       "n": 56,
        "hits": 23,
        "false_alarms": 3,
        "pod": 0.885,
@@ -5362,7 +5363,7 @@
        "p_surfable_given_yes": 0.885
       },
       "wind 30": {
-       "n": 55,
+       "n": 56,
        "hits": 26,
        "false_alarms": 4,
        "pod": 0.929,
@@ -5370,7 +5371,7 @@
        "p_surfable_given_yes": 0.867
       },
       "height 0.8\u20133.0": {
-       "n": 55,
+       "n": 56,
        "hits": 30,
        "false_alarms": 3,
        "pod": 0.938,
@@ -5380,35 +5381,35 @@
      }
     },
     "3": {
-     "n": 54,
+     "n": 55,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": true,
-     "mae_swell": 0.21,
-     "bias_swell": -0.179,
-     "rmse_swell": 0.278,
+     "mae_swell": 0.213,
+     "bias_swell": -0.183,
+     "rmse_swell": 0.281,
      "mae_period": 0.56,
-     "spearman_swell": 0.947,
+     "spearman_swell": 0.95,
      "mae_swell_ci95": [
-      0.166,
-      0.255
+      0.171,
+      0.259
      ],
      "bias_swell_ci95": [
-      -0.233,
-      -0.131
+      -0.237,
+      -0.136
      ],
      "binary": {
-      "n": 54,
+      "n": 55,
       "hits": 23,
       "misses": 4,
       "false_alarms": 6,
-      "correct_negatives": 21,
+      "correct_negatives": 22,
       "pod": 0.852,
       "far": 0.207,
       "p_surfable_given_yes": 0.793,
-      "p_surfable_given_no": 0.16,
-      "base_rate": 0.5,
+      "p_surfable_given_no": 0.154,
+      "base_rate": 0.491,
       "p_surfable_given_yes_ci95": [
        0.667,
        0.933
@@ -5416,7 +5417,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 54,
+       "n": 55,
        "hits": 30,
        "false_alarms": 9,
        "pod": 0.857,
@@ -5424,7 +5425,7 @@
        "p_surfable_given_yes": 0.769
       },
       "period 9 s": {
-       "n": 54,
+       "n": 55,
        "hits": 17,
        "false_alarms": 5,
        "pod": 0.81,
@@ -5432,7 +5433,7 @@
        "p_surfable_given_yes": 0.773
       },
       "wind 20": {
-       "n": 54,
+       "n": 55,
        "hits": 21,
        "false_alarms": 6,
        "pod": 0.808,
@@ -5440,7 +5441,7 @@
        "p_surfable_given_yes": 0.778
       },
       "wind 30": {
-       "n": 54,
+       "n": 55,
        "hits": 24,
        "false_alarms": 6,
        "pod": 0.857,
@@ -5448,7 +5449,7 @@
        "p_surfable_given_yes": 0.8
       },
       "height 0.8\u20133.0": {
-       "n": 54,
+       "n": 55,
        "hits": 28,
        "false_alarms": 3,
        "pod": 0.875,
@@ -5458,35 +5459,35 @@
      }
     },
     "4": {
-     "n": 53,
+     "n": 54,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": true,
-     "mae_swell": 0.251,
-     "bias_swell": -0.221,
-     "rmse_swell": 0.328,
+     "mae_swell": 0.259,
+     "bias_swell": -0.23,
+     "rmse_swell": 0.338,
      "mae_period": 0.55,
-     "spearman_swell": 0.933,
+     "spearman_swell": 0.937,
      "mae_swell_ci95": [
-      0.205,
-      0.296
+      0.209,
+      0.312
      ],
      "bias_swell_ci95": [
-      -0.282,
-      -0.149
+      -0.3,
+      -0.155
      ],
      "binary": {
-      "n": 53,
+      "n": 54,
       "hits": 24,
       "misses": 3,
       "false_alarms": 7,
-      "correct_negatives": 19,
+      "correct_negatives": 20,
       "pod": 0.889,
       "far": 0.226,
       "p_surfable_given_yes": 0.774,
-      "p_surfable_given_no": 0.136,
-      "base_rate": 0.509,
+      "p_surfable_given_no": 0.13,
+      "base_rate": 0.5,
       "p_surfable_given_yes_ci95": [
        0.655,
        0.923
@@ -5494,7 +5495,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 53,
+       "n": 54,
        "hits": 29,
        "false_alarms": 6,
        "pod": 0.829,
@@ -5502,7 +5503,7 @@
        "p_surfable_given_yes": 0.829
       },
       "period 9 s": {
-       "n": 53,
+       "n": 54,
        "hits": 16,
        "false_alarms": 3,
        "pod": 0.762,
@@ -5510,7 +5511,7 @@
        "p_surfable_given_yes": 0.842
       },
       "wind 20": {
-       "n": 53,
+       "n": 54,
        "hits": 19,
        "false_alarms": 5,
        "pod": 0.731,
@@ -5518,7 +5519,7 @@
        "p_surfable_given_yes": 0.792
       },
       "wind 30": {
-       "n": 53,
+       "n": 54,
        "hits": 25,
        "false_alarms": 6,
        "pod": 0.893,
@@ -5526,45 +5527,45 @@
        "p_surfable_given_yes": 0.806
       },
       "height 0.8\u20133.0": {
-       "n": 53,
+       "n": 54,
        "hits": 28,
-       "false_alarms": 5,
+       "false_alarms": 6,
        "pod": 0.875,
-       "far": 0.152,
-       "p_surfable_given_yes": 0.848
+       "far": 0.176,
+       "p_surfable_given_yes": 0.824
       }
      }
     },
     "5": {
-     "n": 52,
+     "n": 53,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": true,
-     "mae_swell": 0.267,
-     "bias_swell": -0.201,
-     "rmse_swell": 0.345,
+     "mae_swell": 0.272,
+     "bias_swell": -0.207,
+     "rmse_swell": 0.349,
      "mae_period": 0.65,
-     "spearman_swell": 0.934,
+     "spearman_swell": 0.937,
      "mae_swell_ci95": [
-      0.218,
-      0.316
+      0.22,
+      0.326
      ],
      "bias_swell_ci95": [
-      -0.258,
-      -0.134
+      -0.264,
+      -0.139
      ],
      "binary": {
-      "n": 52,
+      "n": 53,
       "hits": 23,
       "misses": 3,
       "false_alarms": 4,
-      "correct_negatives": 22,
+      "correct_negatives": 23,
       "pod": 0.885,
       "far": 0.148,
       "p_surfable_given_yes": 0.852,
-      "p_surfable_given_no": 0.12,
-      "base_rate": 0.5,
+      "p_surfable_given_no": 0.115,
+      "base_rate": 0.491,
       "p_surfable_given_yes_ci95": [
        0.75,
        0.969
@@ -5572,7 +5573,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 52,
+       "n": 53,
        "hits": 28,
        "false_alarms": 5,
        "pod": 0.824,
@@ -5580,7 +5581,7 @@
        "p_surfable_given_yes": 0.848
       },
       "period 9 s": {
-       "n": 52,
+       "n": 53,
        "hits": 17,
        "false_alarms": 3,
        "pod": 0.85,
@@ -5588,7 +5589,7 @@
        "p_surfable_given_yes": 0.85
       },
       "wind 20": {
-       "n": 52,
+       "n": 53,
        "hits": 23,
        "false_alarms": 4,
        "pod": 0.885,
@@ -5596,7 +5597,7 @@
        "p_surfable_given_yes": 0.852
       },
       "wind 30": {
-       "n": 52,
+       "n": 53,
        "hits": 24,
        "false_alarms": 3,
        "pod": 0.889,
@@ -5604,7 +5605,7 @@
        "p_surfable_given_yes": 0.889
       },
       "height 0.8\u20133.0": {
-       "n": 52,
+       "n": 53,
        "hits": 29,
        "false_alarms": 3,
        "pod": 0.935,
@@ -5614,35 +5615,35 @@
      }
     },
     "6": {
-     "n": 51,
+     "n": 52,
      "weeks": 9,
      "descriptive": false,
      "readable": true,
      "self_verification": true,
-     "mae_swell": 0.311,
-     "bias_swell": -0.227,
-     "rmse_swell": 0.404,
-     "mae_period": 0.68,
-     "spearman_swell": 0.89,
+     "mae_swell": 0.325,
+     "bias_swell": -0.242,
+     "rmse_swell": 0.425,
+     "mae_period": 0.69,
+     "spearman_swell": 0.896,
      "mae_swell_ci95": [
-      0.237,
-      0.387
+      0.239,
+      0.419
      ],
      "bias_swell_ci95": [
-      -0.313,
-      -0.148
+      -0.35,
+      -0.152
      ],
      "binary": {
-      "n": 51,
+      "n": 52,
       "hits": 22,
       "misses": 4,
       "false_alarms": 6,
-      "correct_negatives": 19,
+      "correct_negatives": 20,
       "pod": 0.846,
       "far": 0.214,
       "p_surfable_given_yes": 0.786,
-      "p_surfable_given_no": 0.174,
-      "base_rate": 0.51,
+      "p_surfable_given_no": 0.167,
+      "base_rate": 0.5,
       "p_surfable_given_yes_ci95": [
        0.69,
        0.917
@@ -5650,7 +5651,7 @@
      },
      "robustness": {
       "period 7 s": {
-       "n": 51,
+       "n": 52,
        "hits": 28,
        "false_alarms": 6,
        "pod": 0.848,
@@ -5658,7 +5659,7 @@
        "p_surfable_given_yes": 0.824
       },
       "period 9 s": {
-       "n": 51,
+       "n": 52,
        "hits": 15,
        "false_alarms": 6,
        "pod": 0.75,
@@ -5666,7 +5667,7 @@
        "p_surfable_given_yes": 0.714
       },
       "wind 20": {
-       "n": 51,
+       "n": 52,
        "hits": 21,
        "false_alarms": 7,
        "pod": 0.84,
@@ -5674,7 +5675,7 @@
        "p_surfable_given_yes": 0.75
       },
       "wind 30": {
-       "n": 51,
+       "n": 52,
        "hits": 23,
        "false_alarms": 5,
        "pod": 0.852,
@@ -5682,7 +5683,7 @@
        "p_surfable_given_yes": 0.821
       },
       "height 0.8\u20133.0": {
-       "n": 51,
+       "n": 52,
        "hits": 29,
        "false_alarms": 4,
        "pod": 0.935,
@@ -5697,16 +5698,16 @@
  "baselines": {
   "ericeira": {
    "0": {
-    "n": 57,
-    "brier": 0.1832,
-    "brier_climatology": 0.2958,
-    "bss_vs_climatology": 0.38,
-    "brier_persistence": 0.2982,
+    "n": 58,
+    "brier": 0.1801,
+    "brier_climatology": 0.2918,
+    "bss_vs_climatology": 0.383,
+    "brier_persistence": 0.2931,
     "bss_vs_persistence": 0.386,
     "reliability": [
      {
       "forecast_p": 0.0,
-      "n": 14,
+      "n": 15,
       "observed": 0.0
      },
      {
@@ -5727,16 +5728,16 @@
     ]
    },
    "1": {
-    "n": 56,
-    "brier": 0.1607,
-    "brier_climatology": 0.2894,
-    "bss_vs_climatology": 0.445,
-    "brier_persistence": 0.4643,
+    "n": 57,
+    "brier": 0.1579,
+    "brier_climatology": 0.2854,
+    "bss_vs_climatology": 0.447,
+    "brier_persistence": 0.4561,
     "bss_vs_persistence": 0.654,
     "reliability": [
      {
       "forecast_p": 0.0,
-      "n": 14,
+      "n": 15,
       "observed": 0.0
      },
      {
@@ -5757,16 +5758,16 @@
     ]
    },
    "2": {
-    "n": 55,
-    "brier": 0.1758,
-    "brier_climatology": 0.294,
-    "bss_vs_climatology": 0.402,
-    "brier_persistence": 0.4727,
+    "n": 56,
+    "brier": 0.1726,
+    "brier_climatology": 0.2899,
+    "bss_vs_climatology": 0.404,
+    "brier_persistence": 0.4643,
     "bss_vs_persistence": 0.628,
     "reliability": [
      {
       "forecast_p": 0.0,
-      "n": 15,
+      "n": 16,
       "observed": 0.0
      },
      {
@@ -5782,16 +5783,16 @@
     ]
    },
    "3": {
-    "n": 54,
-    "brier": 0.177,
-    "brier_climatology": 0.2988,
-    "bss_vs_climatology": 0.408,
-    "brier_persistence": 0.5185,
+    "n": 55,
+    "brier": 0.1737,
+    "brier_climatology": 0.2945,
+    "bss_vs_climatology": 0.41,
+    "brier_persistence": 0.5091,
     "bss_vs_persistence": 0.659,
     "reliability": [
      {
       "forecast_p": 0.0,
-      "n": 11,
+      "n": 12,
       "observed": 0.0
      },
      {
@@ -5812,17 +5813,17 @@
     ]
    },
    "4": {
-    "n": 53,
-    "brier": 0.217,
-    "brier_climatology": 0.3037,
-    "bss_vs_climatology": 0.286,
-    "brier_persistence": 0.4528,
+    "n": 54,
+    "brier": 0.213,
+    "brier_climatology": 0.2992,
+    "bss_vs_climatology": 0.288,
+    "brier_persistence": 0.4444,
     "bss_vs_persistence": 0.521,
     "reliability": [
      {
       "forecast_p": 0.0,
-      "n": 13,
-      "observed": 0.077
+      "n": 14,
+      "observed": 0.071
      },
      {
       "forecast_p": 0.5,
@@ -5837,16 +5838,16 @@
     ]
    },
    "5": {
-    "n": 52,
-    "brier": 0.2356,
-    "brier_climatology": 0.297,
-    "bss_vs_climatology": 0.207,
-    "brier_persistence": 0.5,
-    "bss_vs_persistence": 0.529,
+    "n": 53,
+    "brier": 0.2311,
+    "brier_climatology": 0.2926,
+    "bss_vs_climatology": 0.21,
+    "brier_persistence": 0.5094,
+    "bss_vs_persistence": 0.546,
     "reliability": [
      {
       "forecast_p": 0.0,
-      "n": 11,
+      "n": 12,
       "observed": 0.0
      },
      {
@@ -5862,16 +5863,16 @@
     ]
    },
    "6": {
-    "n": 51,
-    "brier": 0.1863,
-    "brier_climatology": 0.2901,
-    "bss_vs_climatology": 0.358,
-    "brier_persistence": 0.5294,
+    "n": 52,
+    "brier": 0.1827,
+    "brier_climatology": 0.2856,
+    "bss_vs_climatology": 0.36,
+    "brier_persistence": 0.5192,
     "bss_vs_persistence": 0.648,
     "reliability": [
      {
       "forecast_p": 0.0,
-      "n": 11,
+      "n": 12,
       "observed": 0.0
      },
      {
@@ -5889,16 +5890,16 @@
   },
   "peniche": {
    "0": {
-    "n": 57,
-    "brier": 0.1871,
-    "brier_climatology": 0.2896,
-    "bss_vs_climatology": 0.354,
-    "brier_persistence": 0.3333,
+    "n": 58,
+    "brier": 0.1839,
+    "brier_climatology": 0.2862,
+    "bss_vs_climatology": 0.357,
+    "brier_persistence": 0.3276,
     "bss_vs_persistence": 0.439,
     "reliability": [
      {
       "forecast_p": 0.0,
-      "n": 15,
+      "n": 16,
       "observed": 0.0
      },
      {
@@ -5919,16 +5920,16 @@
     ]
    },
    "1": {
-    "n": 56,
-    "brier": 0.1766,
-    "brier_climatology": 0.2835,
-    "bss_vs_climatology": 0.377,
-    "brier_persistence": 0.4643,
+    "n": 57,
+    "brier": 0.1735,
+    "brier_climatology": 0.2801,
+    "bss_vs_climatology": 0.381,
+    "brier_persistence": 0.4561,
     "bss_vs_persistence": 0.62,
     "reliability": [
      {
       "forecast_p": 0.0,
-      "n": 16,
+      "n": 17,
       "observed": 0.0
      },
      {
@@ -5949,16 +5950,16 @@
     ]
    },
    "2": {
-    "n": 55,
-    "brier": 0.2,
-    "brier_climatology": 0.2879,
-    "bss_vs_climatology": 0.305,
-    "brier_persistence": 0.4364,
+    "n": 56,
+    "brier": 0.1964,
+    "brier_climatology": 0.2843,
+    "bss_vs_climatology": 0.309,
+    "brier_persistence": 0.4286,
     "bss_vs_persistence": 0.542,
     "reliability": [
      {
       "forecast_p": 0.0,
-      "n": 13,
+      "n": 14,
       "observed": 0.0
      },
      {
@@ -5979,16 +5980,16 @@
     ]
    },
    "3": {
-    "n": 54,
-    "brier": 0.1852,
-    "brier_climatology": 0.2924,
-    "bss_vs_climatology": 0.367,
-    "brier_persistence": 0.4815,
+    "n": 55,
+    "brier": 0.1818,
+    "brier_climatology": 0.2888,
+    "bss_vs_climatology": 0.37,
+    "brier_persistence": 0.4727,
     "bss_vs_persistence": 0.615,
     "reliability": [
      {
       "forecast_p": 0.0,
-      "n": 12,
+      "n": 13,
       "observed": 0.0
      },
      {
@@ -6009,16 +6010,16 @@
     ]
    },
    "4": {
-    "n": 53,
-    "brier": 0.1792,
-    "brier_climatology": 0.2972,
-    "bss_vs_climatology": 0.397,
-    "brier_persistence": 0.4528,
+    "n": 54,
+    "brier": 0.1759,
+    "brier_climatology": 0.2933,
+    "bss_vs_climatology": 0.4,
+    "brier_persistence": 0.4444,
     "bss_vs_persistence": 0.604,
     "reliability": [
      {
       "forecast_p": 0.0,
-      "n": 13,
+      "n": 14,
       "observed": 0.0
      },
      {
@@ -6034,16 +6035,16 @@
     ]
    },
    "5": {
-    "n": 52,
-    "brier": 0.2067,
-    "brier_climatology": 0.2908,
-    "bss_vs_climatology": 0.289,
-    "brier_persistence": 0.5,
-    "bss_vs_persistence": 0.587,
+    "n": 53,
+    "brier": 0.2028,
+    "brier_climatology": 0.2869,
+    "bss_vs_climatology": 0.293,
+    "brier_persistence": 0.5094,
+    "bss_vs_persistence": 0.602,
     "reliability": [
      {
       "forecast_p": 0.0,
-      "n": 10,
+      "n": 11,
       "observed": 0.0
      },
      {
@@ -6059,16 +6060,16 @@
     ]
    },
    "6": {
-    "n": 51,
-    "brier": 0.1765,
-    "brier_climatology": 0.2956,
-    "bss_vs_climatology": 0.403,
-    "brier_persistence": 0.549,
+    "n": 52,
+    "brier": 0.1731,
+    "brier_climatology": 0.2916,
+    "bss_vs_climatology": 0.407,
+    "brier_persistence": 0.5385,
     "bss_vs_persistence": 0.679,
     "reliability": [
      {
       "forecast_p": 0.0,
-      "n": 10,
+      "n": 11,
       "observed": 0.0
      },
      {
@@ -6086,16 +6087,16 @@
   },
   "sagres": {
    "0": {
-    "n": 57,
-    "brier": 0.1111,
-    "brier_climatology": 0.3197,
-    "bss_vs_climatology": 0.652,
-    "brier_persistence": 0.3158,
+    "n": 58,
+    "brier": 0.1092,
+    "brier_climatology": 0.3161,
+    "bss_vs_climatology": 0.655,
+    "brier_persistence": 0.3103,
     "bss_vs_persistence": 0.648,
     "reliability": [
      {
       "forecast_p": 0.0,
-      "n": 10,
+      "n": 11,
       "observed": 0.0
      },
      {
@@ -6116,16 +6117,16 @@
     ]
    },
    "1": {
-    "n": 56,
-    "brier": 0.131,
-    "brier_climatology": 0.3148,
-    "bss_vs_climatology": 0.584,
-    "brier_persistence": 0.4464,
+    "n": 57,
+    "brier": 0.1287,
+    "brier_climatology": 0.3112,
+    "bss_vs_climatology": 0.587,
+    "brier_persistence": 0.4386,
     "bss_vs_persistence": 0.707,
     "reliability": [
      {
       "forecast_p": 0.0,
-      "n": 9,
+      "n": 10,
       "observed": 0.0
      },
      {
@@ -6146,16 +6147,16 @@
     ]
    },
    "2": {
-    "n": 55,
-    "brier": 0.1495,
-    "brier_climatology": 0.3196,
-    "bss_vs_climatology": 0.532,
-    "brier_persistence": 0.4182,
+    "n": 56,
+    "brier": 0.1468,
+    "brier_climatology": 0.3158,
+    "bss_vs_climatology": 0.535,
+    "brier_persistence": 0.4107,
     "bss_vs_persistence": 0.643,
     "reliability": [
      {
       "forecast_p": 0.0,
-      "n": 12,
+      "n": 13,
       "observed": 0.0
      },
      {
@@ -6176,12 +6177,12 @@
     ]
    },
    "3": {
-    "n": 54,
-    "brier": 0.1708,
-    "brier_climatology": 0.3245,
-    "bss_vs_climatology": 0.474,
-    "brier_persistence": 0.4259,
-    "bss_vs_persistence": 0.599,
+    "n": 55,
+    "brier": 0.1697,
+    "brier_climatology": 0.3206,
+    "bss_vs_climatology": 0.471,
+    "brier_persistence": 0.4182,
+    "bss_vs_persistence": 0.594,
     "reliability": [
      {
       "forecast_p": 0.0,
@@ -6190,8 +6191,8 @@
      },
      {
       "forecast_p": 0.3333333333333333,
-      "n": 9,
-      "observed": 0.111
+      "n": 10,
+      "observed": 0.1
      },
      {
       "forecast_p": 0.6666666666666666,
@@ -6206,16 +6207,16 @@
     ]
    },
    "4": {
-    "n": 53,
-    "brier": 0.1887,
-    "brier_climatology": 0.3297,
-    "bss_vs_climatology": 0.428,
-    "brier_persistence": 0.434,
+    "n": 54,
+    "brier": 0.1852,
+    "brier_climatology": 0.3256,
+    "bss_vs_climatology": 0.431,
+    "brier_persistence": 0.4259,
     "bss_vs_persistence": 0.565,
     "reliability": [
      {
       "forecast_p": 0.0,
-      "n": 10,
+      "n": 11,
       "observed": 0.0
      },
      {
@@ -6231,16 +6232,16 @@
     ]
    },
    "5": {
-    "n": 52,
-    "brier": 0.1346,
-    "brier_climatology": 0.3245,
-    "bss_vs_climatology": 0.585,
-    "brier_persistence": 0.5,
+    "n": 53,
+    "brier": 0.1321,
+    "brier_climatology": 0.3204,
+    "bss_vs_climatology": 0.588,
+    "brier_persistence": 0.4906,
     "bss_vs_persistence": 0.731,
     "reliability": [
      {
       "forecast_p": 0.0,
-      "n": 11,
+      "n": 12,
       "observed": 0.0
      },
      {
@@ -6256,16 +6257,16 @@
     ]
    },
    "6": {
-    "n": 51,
-    "brier": 0.1471,
-    "brier_climatology": 0.3299,
-    "bss_vs_climatology": 0.554,
-    "brier_persistence": 0.5882,
+    "n": 52,
+    "brier": 0.1442,
+    "brier_climatology": 0.3256,
+    "bss_vs_climatology": 0.557,
+    "brier_persistence": 0.5769,
     "bss_vs_persistence": 0.75,
     "reliability": [
      {
       "forecast_p": 0.0,
-      "n": 14,
+      "n": 15,
       "observed": 0.0
      },
      {
@@ -6286,475 +6287,475 @@
  "pooled": {
   "meteofrance_wave": {
    "0": {
-    "n": 171,
+    "n": 174,
     "weeks": 9,
     "descriptive": false,
     "readable": true,
-    "mae_swell": 0.107,
+    "mae_swell": 0.106,
     "mae_swell_ci95": [
      0.082,
-     0.127
+     0.123
     ],
     "bias_swell": -0.056,
     "bias_swell_ci95": [
-     -0.078,
+     -0.077,
      -0.034
     ],
-    "spearman_swell": 0.98,
+    "spearman_swell": 0.981,
     "spearman_swell_ci95": [
-     0.942,
-     0.99
+     0.945,
+     0.991
     ],
-    "positive_error_share": 0.257,
+    "positive_error_share": 0.259,
     "positive_error_share_ci95": [
-     0.192,
+     0.196,
      0.323
     ]
    },
    "1": {
-    "n": 168,
+    "n": 171,
     "weeks": 9,
     "descriptive": false,
     "readable": true,
     "mae_swell": 0.163,
     "mae_swell_ci95": [
-     0.127,
+     0.128,
      0.197
     ],
-    "bias_swell": -0.1,
+    "bias_swell": -0.095,
     "bias_swell_ci95": [
-     -0.126,
-     -0.074
+     -0.121,
+     -0.068
     ],
-    "spearman_swell": 0.963,
+    "spearman_swell": 0.965,
     "spearman_swell_ci95": [
      0.912,
-     0.98
+     0.981
     ],
-    "positive_error_share": 0.262,
+    "positive_error_share": 0.275,
     "positive_error_share_ci95": [
-     0.199,
-     0.316
+     0.21,
+     0.327
     ]
    },
    "2": {
-    "n": 165,
-    "weeks": 9,
-    "descriptive": false,
-    "readable": true,
-    "mae_swell": 0.2,
-    "mae_swell_ci95": [
-     0.168,
-     0.231
-    ],
-    "bias_swell": -0.143,
-    "bias_swell_ci95": [
-     -0.183,
-     -0.107
-    ],
-    "spearman_swell": 0.951,
-    "spearman_swell_ci95": [
-     0.896,
-     0.969
-    ],
-    "positive_error_share": 0.176,
-    "positive_error_share_ci95": [
-     0.137,
-     0.227
-    ]
-   },
-   "3": {
-    "n": 162,
-    "weeks": 9,
-    "descriptive": false,
-    "readable": true,
-    "mae_swell": 0.22,
-    "mae_swell_ci95": [
-     0.171,
-     0.264
-    ],
-    "bias_swell": -0.174,
-    "bias_swell_ci95": [
-     -0.227,
-     -0.119
-    ],
-    "spearman_swell": 0.955,
-    "spearman_swell_ci95": [
-     0.923,
-     0.968
-    ],
-    "positive_error_share": 0.16,
-    "positive_error_share_ci95": [
-     0.103,
-     0.227
-    ]
-   },
-   "4": {
-    "n": 159,
-    "weeks": 9,
-    "descriptive": false,
-    "readable": true,
-    "mae_swell": 0.277,
-    "mae_swell_ci95": [
-     0.203,
-     0.337
-    ],
-    "bias_swell": -0.23,
-    "bias_swell_ci95": [
-     -0.301,
-     -0.136
-    ],
-    "spearman_swell": 0.922,
-    "spearman_swell_ci95": [
-     0.865,
-     0.949
-    ],
-    "positive_error_share": 0.182,
-    "positive_error_share_ci95": [
-     0.117,
-     0.273
-    ]
-   },
-   "5": {
-    "n": 156,
-    "weeks": 9,
-    "descriptive": false,
-    "readable": true,
-    "mae_swell": 0.303,
-    "mae_swell_ci95": [
-     0.224,
-     0.373
-    ],
-    "bias_swell": -0.215,
-    "bias_swell_ci95": [
-     -0.291,
-     -0.125
-    ],
-    "spearman_swell": 0.902,
-    "spearman_swell_ci95": [
-     0.793,
-     0.946
-    ],
-    "positive_error_share": 0.218,
-    "positive_error_share_ci95": [
-     0.175,
-     0.273
-    ]
-   },
-   "6": {
-    "n": 153,
-    "weeks": 9,
-    "descriptive": false,
-    "readable": true,
-    "mae_swell": 0.338,
-    "mae_swell_ci95": [
-     0.251,
-     0.419
-    ],
-    "bias_swell": -0.233,
-    "bias_swell_ci95": [
-     -0.332,
-     -0.14
-    ],
-    "spearman_swell": 0.9,
-    "spearman_swell_ci95": [
-     0.837,
-     0.931
-    ],
-    "positive_error_share": 0.255,
-    "positive_error_share_ci95": [
-     0.121,
-     0.38
-    ]
-   }
-  },
-  "gwam": {
-   "0": {
-    "n": 171,
-    "weeks": 9,
-    "descriptive": false,
-    "readable": true,
-    "mae_swell": 0.283,
-    "mae_swell_ci95": [
-     0.239,
-     0.335
-    ],
-    "bias_swell": 0.092,
-    "bias_swell_ci95": [
-     -0.003,
-     0.168
-    ],
-    "spearman_swell": 0.886,
-    "spearman_swell_ci95": [
-     0.811,
-     0.931
-    ],
-    "positive_error_share": 0.655,
-    "positive_error_share_ci95": [
-     0.542,
-     0.76
-    ]
-   },
-   "1": {
     "n": 168,
     "weeks": 9,
     "descriptive": false,
     "readable": true,
-    "mae_swell": 0.275,
+    "mae_swell": 0.201,
     "mae_swell_ci95": [
-     0.226,
-     0.339
+     0.171,
+     0.232
     ],
-    "bias_swell": 0.005,
+    "bias_swell": -0.135,
     "bias_swell_ci95": [
-     -0.105,
-     0.108
+     -0.171,
+     -0.101
     ],
-    "spearman_swell": 0.874,
+    "spearman_swell": 0.953,
     "spearman_swell_ci95": [
-     0.756,
-     0.933
+     0.901,
+     0.972
     ],
-    "positive_error_share": 0.571,
+    "positive_error_share": 0.19,
     "positive_error_share_ci95": [
-     0.431,
-     0.726
+     0.155,
+     0.242
     ]
    },
-   "2": {
+   "3": {
     "n": 165,
+    "weeks": 9,
+    "descriptive": false,
+    "readable": true,
+    "mae_swell": 0.222,
+    "mae_swell_ci95": [
+     0.173,
+     0.264
+    ],
+    "bias_swell": -0.171,
+    "bias_swell_ci95": [
+     -0.224,
+     -0.118
+    ],
+    "spearman_swell": 0.957,
+    "spearman_swell_ci95": [
+     0.924,
+     0.97
+    ],
+    "positive_error_share": 0.17,
+    "positive_error_share_ci95": [
+     0.111,
+     0.247
+    ]
+   },
+   "4": {
+    "n": 162,
     "weeks": 9,
     "descriptive": false,
     "readable": true,
     "mae_swell": 0.277,
     "mae_swell_ci95": [
-     0.228,
-     0.339
+     0.205,
+     0.335
     ],
-    "bias_swell": -0.052,
+    "bias_swell": -0.229,
     "bias_swell_ci95": [
-     -0.173,
-     0.067
+     -0.301,
+     -0.137
     ],
-    "spearman_swell": 0.868,
+    "spearman_swell": 0.926,
     "spearman_swell_ci95": [
-     0.735,
-     0.928
+     0.866,
+     0.954
     ],
-    "positive_error_share": 0.485,
+    "positive_error_share": 0.185,
     "positive_error_share_ci95": [
-     0.326,
-     0.66
+     0.121,
+     0.275
     ]
    },
-   "3": {
-    "n": 162,
-    "weeks": 9,
-    "descriptive": false,
-    "readable": true,
-    "mae_swell": 0.254,
-    "mae_swell_ci95": [
-     0.224,
-     0.285
-    ],
-    "bias_swell": -0.043,
-    "bias_swell_ci95": [
-     -0.142,
-     0.072
-    ],
-    "spearman_swell": 0.903,
-    "spearman_swell_ci95": [
-     0.855,
-     0.929
-    ],
-    "positive_error_share": 0.451,
-    "positive_error_share_ci95": [
-     0.316,
-     0.615
-    ]
-   },
-   "4": {
+   "5": {
     "n": 159,
     "weeks": 9,
     "descriptive": false,
     "readable": true,
-    "mae_swell": 0.266,
+    "mae_swell": 0.302,
     "mae_swell_ci95": [
-     0.209,
-     0.32
+     0.224,
+     0.37
     ],
-    "bias_swell": -0.083,
+    "bias_swell": -0.214,
     "bias_swell_ci95": [
-     -0.17,
-     0.029
+     -0.29,
+     -0.126
     ],
-    "spearman_swell": 0.899,
+    "spearman_swell": 0.907,
     "spearman_swell_ci95": [
-     0.828,
-     0.933
+     0.799,
+     0.95
     ],
-    "positive_error_share": 0.434,
+    "positive_error_share": 0.22,
     "positive_error_share_ci95": [
-     0.288,
-     0.603
-    ]
-   },
-   "5": {
-    "n": 156,
-    "weeks": 9,
-    "descriptive": false,
-    "readable": true,
-    "mae_swell": 0.321,
-    "mae_swell_ci95": [
-     0.251,
-     0.406
-    ],
-    "bias_swell": -0.097,
-    "bias_swell_ci95": [
-     -0.223,
-     0.032
-    ],
-    "spearman_swell": 0.846,
-    "spearman_swell_ci95": [
-     0.673,
-     0.911
-    ],
-    "positive_error_share": 0.474,
-    "positive_error_share_ci95": [
-     0.352,
-     0.613
+     0.178,
+     0.276
     ]
    },
    "6": {
-    "n": 153,
+    "n": 156,
     "weeks": 9,
     "descriptive": false,
     "readable": true,
     "mae_swell": 0.345,
     "mae_swell_ci95": [
-     0.283,
+     0.254,
+     0.43
+    ],
+    "bias_swell": -0.242,
+    "bias_swell_ci95": [
+     -0.341,
+     -0.14
+    ],
+    "spearman_swell": 0.903,
+    "spearman_swell_ci95": [
+     0.838,
+     0.938
+    ],
+    "positive_error_share": 0.25,
+    "positive_error_share_ci95": [
+     0.117,
+     0.377
+    ]
+   }
+  },
+  "gwam": {
+   "0": {
+    "n": 174,
+    "weeks": 9,
+    "descriptive": false,
+    "readable": true,
+    "mae_swell": 0.284,
+    "mae_swell_ci95": [
+     0.239,
+     0.337
+    ],
+    "bias_swell": 0.09,
+    "bias_swell_ci95": [
+     -0.003,
+     0.166
+    ],
+    "spearman_swell": 0.891,
+    "spearman_swell_ci95": [
+     0.814,
+     0.935
+    ],
+    "positive_error_share": 0.649,
+    "positive_error_share_ci95": [
+     0.533,
+     0.76
+    ]
+   },
+   "1": {
+    "n": 171,
+    "weeks": 9,
+    "descriptive": false,
+    "readable": true,
+    "mae_swell": 0.279,
+    "mae_swell_ci95": [
+     0.227,
+     0.348
+    ],
+    "bias_swell": 0.006,
+    "bias_swell_ci95": [
+     -0.095,
+     0.107
+    ],
+    "spearman_swell": 0.88,
+    "spearman_swell_ci95": [
+     0.762,
+     0.94
+    ],
+    "positive_error_share": 0.567,
+    "positive_error_share_ci95": [
+     0.428,
+     0.719
+    ]
+   },
+   "2": {
+    "n": 168,
+    "weeks": 9,
+    "descriptive": false,
+    "readable": true,
+    "mae_swell": 0.276,
+    "mae_swell_ci95": [
+     0.228,
+     0.335
+    ],
+    "bias_swell": -0.048,
+    "bias_swell_ci95": [
+     -0.161,
+     0.069
+    ],
+    "spearman_swell": 0.874,
+    "spearman_swell_ci95": [
+     0.742,
+     0.933
+    ],
+    "positive_error_share": 0.488,
+    "positive_error_share_ci95": [
+     0.34,
+     0.661
+    ]
+   },
+   "3": {
+    "n": 165,
+    "weeks": 9,
+    "descriptive": false,
+    "readable": true,
+    "mae_swell": 0.257,
+    "mae_swell_ci95": [
+     0.225,
+     0.289
+    ],
+    "bias_swell": -0.048,
+    "bias_swell_ci95": [
+     -0.151,
+     0.069
+    ],
+    "spearman_swell": 0.908,
+    "spearman_swell_ci95": [
+     0.855,
+     0.934
+    ],
+    "positive_error_share": 0.448,
+    "positive_error_share_ci95": [
+     0.316,
+     0.603
+    ]
+   },
+   "4": {
+    "n": 162,
+    "weeks": 9,
+    "descriptive": false,
+    "readable": true,
+    "mae_swell": 0.268,
+    "mae_swell_ci95": [
+     0.212,
+     0.323
+    ],
+    "bias_swell": -0.084,
+    "bias_swell_ci95": [
+     -0.169,
+     0.029
+    ],
+    "spearman_swell": 0.904,
+    "spearman_swell_ci95": [
+     0.834,
+     0.936
+    ],
+    "positive_error_share": 0.432,
+    "positive_error_share_ci95": [
+     0.288,
+     0.6
+    ]
+   },
+   "5": {
+    "n": 159,
+    "weeks": 9,
+    "descriptive": false,
+    "readable": true,
+    "mae_swell": 0.326,
+    "mae_swell_ci95": [
+     0.251,
      0.414
     ],
-    "bias_swell": 0.007,
+    "bias_swell": -0.106,
     "bias_swell_ci95": [
-     -0.102,
-     0.122
+     -0.241,
+     0.02
     ],
-    "spearman_swell": 0.804,
+    "spearman_swell": 0.853,
     "spearman_swell_ci95": [
-     0.658,
-     0.881
+     0.685,
+     0.915
     ],
-    "positive_error_share": 0.575,
+    "positive_error_share": 0.465,
     "positive_error_share_ci95": [
-     0.481,
+     0.34,
+     0.598
+    ]
+   },
+   "6": {
+    "n": 156,
+    "weeks": 9,
+    "descriptive": false,
+    "readable": true,
+    "mae_swell": 0.35,
+    "mae_swell_ci95": [
+     0.287,
+     0.418
+    ],
+    "bias_swell": 0.012,
+    "bias_swell_ci95": [
+     -0.095,
+     0.124
+    ],
+    "spearman_swell": 0.814,
+    "spearman_swell_ci95": [
+     0.662,
+     0.889
+    ],
+    "positive_error_share": 0.577,
+    "positive_error_share_ci95": [
+     0.485,
      0.685
     ]
    }
   },
   "ewam": {
    "0": {
+    "n": 174,
+    "weeks": 9,
+    "descriptive": false,
+    "readable": true,
+    "mae_swell": 0.325,
+    "mae_swell_ci95": [
+     0.255,
+     0.386
+    ],
+    "bias_swell": -0.047,
+    "bias_swell_ci95": [
+     -0.141,
+     0.029
+    ],
+    "spearman_swell": 0.835,
+    "spearman_swell_ci95": [
+     0.746,
+     0.89
+    ],
+    "positive_error_share": 0.46,
+    "positive_error_share_ci95": [
+     0.37,
+     0.546
+    ]
+   },
+   "1": {
     "n": 171,
     "weeks": 9,
     "descriptive": false,
     "readable": true,
-    "mae_swell": 0.321,
+    "mae_swell": 0.323,
     "mae_swell_ci95": [
-     0.253,
-     0.382
+     0.254,
+     0.389
     ],
-    "bias_swell": -0.045,
+    "bias_swell": -0.106,
     "bias_swell_ci95": [
-     -0.142,
-     0.031
+     -0.208,
+     0.008
     ],
-    "spearman_swell": 0.828,
+    "spearman_swell": 0.831,
     "spearman_swell_ci95": [
-     0.739,
-     0.88
+     0.738,
+     0.89
     ],
-    "positive_error_share": 0.462,
+    "positive_error_share": 0.404,
     "positive_error_share_ci95": [
-     0.372,
-     0.548
+     0.296,
+     0.542
     ]
    },
-   "1": {
+   "2": {
     "n": 168,
     "weeks": 9,
     "descriptive": false,
     "readable": true,
-    "mae_swell": 0.318,
+    "mae_swell": 0.342,
     "mae_swell_ci95": [
-     0.251,
-     0.381
+     0.275,
+     0.405
     ],
-    "bias_swell": -0.109,
+    "bias_swell": -0.165,
     "bias_swell_ci95": [
-     -0.219,
-     0.008
+     -0.276,
+     -0.028
     ],
-    "spearman_swell": 0.823,
+    "spearman_swell": 0.824,
     "spearman_swell_ci95": [
-     0.731,
-     0.876
+     0.713,
+     0.882
     ],
-    "positive_error_share": 0.405,
+    "positive_error_share": 0.351,
     "positive_error_share_ci95": [
-     0.295,
-     0.545
+     0.231,
+     0.488
     ]
    },
-   "2": {
+   "3": {
     "n": 165,
     "weeks": 9,
     "descriptive": false,
     "readable": true,
-    "mae_swell": 0.34,
+    "mae_swell": 0.428,
     "mae_swell_ci95": [
-     0.275,
-     0.404
+     0.314,
+     0.53
     ],
-    "bias_swell": -0.169,
-    "bias_swell_ci95": [
-     -0.286,
-     -0.028
-    ],
-    "spearman_swell": 0.816,
-    "spearman_swell_ci95": [
-     0.713,
-     0.869
-    ],
-    "positive_error_share": 0.352,
-    "positive_error_share_ci95": [
-     0.228,
-     0.491
-    ]
-   },
-   "3": {
-    "n": 162,
-    "weeks": 9,
-    "descriptive": false,
-    "readable": true,
-    "mae_swell": 0.426,
-    "mae_swell_ci95": [
-     0.313,
-     0.529
-    ],
-    "bias_swell": -0.337,
+    "bias_swell": -0.34,
     "bias_swell_ci95": [
      -0.463,
-     -0.197
+     -0.2
     ],
-    "spearman_swell": 0.787,
+    "spearman_swell": 0.797,
     "spearman_swell_ci95": [
-     0.686,
-     0.853
+     0.688,
+     0.869
     ],
-    "positive_error_share": 0.235,
+    "positive_error_share": 0.236,
     "positive_error_share_ci95": [
-     0.123,
-     0.354
+     0.127,
+     0.353
     ]
    },
    "4": {
@@ -6780,127 +6781,127 @@
  "spread": {
   "0": {
    "members": 3,
+   "n": 174,
+   "weeks": 9,
+   "descriptive": false,
+   "readable": true,
+   "share_spread_le_0_3": 0.477,
+   "share_spread_le_0_3_ci95": [
+    0.376,
+    0.595
+   ],
+   "share_spread_gt_0_5": 0.253,
+   "share_spread_gt_0_5_ci95": [
+    0.145,
+    0.349
+   ]
+  },
+  "1": {
+   "members": 3,
    "n": 171,
    "weeks": 9,
    "descriptive": false,
    "readable": true,
    "share_spread_le_0_3": 0.48,
    "share_spread_le_0_3_ci95": [
-    0.376,
-    0.597
+    0.387,
+    0.562
    ],
-   "share_spread_gt_0_5": 0.246,
+   "share_spread_gt_0_5": 0.222,
    "share_spread_gt_0_5_ci95": [
-    0.135,
-    0.345
+    0.141,
+    0.301
    ]
   },
-  "1": {
+  "2": {
    "members": 3,
    "n": 168,
    "weeks": 9,
    "descriptive": false,
    "readable": true,
-   "share_spread_le_0_3": 0.482,
+   "share_spread_le_0_3": 0.5,
    "share_spread_le_0_3_ci95": [
-    0.39,
-    0.565
-   ],
-   "share_spread_gt_0_5": 0.214,
-   "share_spread_gt_0_5_ci95": [
-    0.137,
-    0.287
-   ]
-  },
-  "2": {
-   "members": 3,
-   "n": 165,
-   "weeks": 9,
-   "descriptive": false,
-   "readable": true,
-   "share_spread_le_0_3": 0.497,
-   "share_spread_le_0_3_ci95": [
-    0.426,
+    0.429,
     0.578
    ],
-   "share_spread_gt_0_5": 0.194,
+   "share_spread_gt_0_5": 0.196,
    "share_spread_gt_0_5_ci95": [
-    0.128,
+    0.13,
     0.26
    ]
   },
   "3": {
    "members": 3,
+   "n": 165,
+   "weeks": 9,
+   "descriptive": false,
+   "readable": true,
+   "share_spread_le_0_3": 0.394,
+   "share_spread_le_0_3_ci95": [
+    0.314,
+    0.476
+   ],
+   "share_spread_gt_0_5": 0.285,
+   "share_spread_gt_0_5_ci95": [
+    0.188,
+    0.385
+   ]
+  },
+  "4": {
+   "members": 2,
    "n": 162,
    "weeks": 9,
    "descriptive": false,
    "readable": true,
-   "share_spread_le_0_3": 0.395,
+   "share_spread_le_0_3": 0.685,
    "share_spread_le_0_3_ci95": [
-    0.313,
-    0.478
+    0.6,
+    0.761
    ],
-   "share_spread_gt_0_5": 0.278,
+   "share_spread_gt_0_5": 0.074,
    "share_spread_gt_0_5_ci95": [
-    0.188,
-    0.373
+    0.029,
+    0.124
    ]
   },
-  "4": {
+  "5": {
    "members": 2,
    "n": 159,
    "weeks": 9,
    "descriptive": false,
    "readable": true,
-   "share_spread_le_0_3": 0.679,
+   "share_spread_le_0_3": 0.629,
    "share_spread_le_0_3_ci95": [
-    0.599,
-    0.755
+    0.487,
+    0.736
    ],
-   "share_spread_gt_0_5": 0.075,
+   "share_spread_gt_0_5": 0.119,
    "share_spread_gt_0_5_ci95": [
-    0.03,
-    0.126
+    0.056,
+    0.21
    ]
   },
-  "5": {
+  "6": {
    "members": 2,
    "n": 156,
    "weeks": 9,
    "descriptive": false,
    "readable": true,
-   "share_spread_le_0_3": 0.641,
+   "share_spread_le_0_3": 0.5,
    "share_spread_le_0_3_ci95": [
-    0.491,
-    0.742
+    0.412,
+    0.583
    ],
-   "share_spread_gt_0_5": 0.115,
+   "share_spread_gt_0_5": 0.212,
    "share_spread_gt_0_5_ci95": [
-    0.054,
-    0.202
-   ]
-  },
-  "6": {
-   "members": 2,
-   "n": 153,
-   "weeks": 9,
-   "descriptive": false,
-   "readable": true,
-   "share_spread_le_0_3": 0.51,
-   "share_spread_le_0_3_ci95": [
-    0.427,
-    0.593
-   ],
-   "share_spread_gt_0_5": 0.203,
-   "share_spread_gt_0_5_ci95": [
-    0.133,
-    0.269
+    0.136,
+    0.285
    ]
   }
  },
  "quality": {
-  "issues": 58,
-  "expected_issues": 59,
+  "issues": 59,
+  "expected_issues": 60,
   "missing_issue_dates": [
    "2026-10-07"
   ],
@@ -6915,13 +6916,13 @@
    "ewam": 0
   },
   "disagreement_gt_1m": {
-   "share": 0.032,
-   "n": 1218
+   "share": 0.034,
+   "n": 1239
   },
   "analysis_days": {
-   "ericeira": 150,
-   "peniche": 150,
-   "sagres": 150
+   "ericeira": 151,
+   "peniche": 151,
+   "sagres": 151
   },
   "analysis_gaps": {
    "ericeira": [],
