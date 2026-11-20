@@ -115,6 +115,7 @@
   const $ = id => document.getElementById(id);
   const el = (t, a = {}, txt) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt; return e; };
   const day = s => new Date(s + 'T12:00').toLocaleDateString('en-GB', {day: 'numeric', month: 'long'});
+  const esc = v => String(v).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
   const pct = (v, d = 1) => (v * 100).toFixed(d) + '%';
   const sgn = v => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(1);
   const tip = $('tip');
@@ -142,7 +143,7 @@
     svg.append(el('rect', {x: 89, y: 39.5, width: 3.3, height: 6, fill: 'none', stroke: 'var(--fg)', 'stroke-width': .5}));
     [...p.shots].sort((a, b) => a[3] - b[3] || b[2] - a[2]).forEach(([x, y, q, g, t]) => {
       const d = el('circle', {cx: Math.max(0, Math.min(100, x)), cy: 42.5 - y, r: (.9 + Math.sqrt(q) * 5.2).toFixed(2), fill: g ? 'var(--coral)' : c, 'fill-opacity': g ? 1 : .45});
-      hover(d, `${nm} · ${g ? 'goal' : 'no goal'}<br>${t} · xG ${q.toFixed(2)}`); svg.append(d);
+      hover(d, `${nm} · ${g ? 'goal' : 'no goal'}<br>${esc(t)} · xG ${q.toFixed(2)}`); svg.append(d);
     });
     box.append(svg); $('maps').append(box);
   }
@@ -163,7 +164,7 @@
     [...f].sort((a, b) => (me(a[0]) ? 1 : 0) - (me(b[0]) ? 1 : 0)).forEach(([id, n, gx, sd, nm, t]) => {
       const m = me(id);
       const d = el('circle', {cx: x(n), cy: y(gx), r: m ? 7 : 3, fill: m ? m[1] : 'var(--fg-2)', 'fill-opacity': m ? 1 : .5});
-      hover(d, `${nm} · ${t}<br>${n} shots · ${sgn(gx)} goals vs xG`); svg.append(d);
+      hover(d, `${esc(nm)} · ${esc(t)}<br>${n} shots · ${sgn(gx)} goals vs xG`); svg.append(d);
       if (m) svg.append(el('text', {x: x(n) + 11, y: y(gx) + 4, class: 'lbl', fill: m[1]}, m[0].toUpperCase()));
     });
     const fa = X.funnel_above;
@@ -216,12 +217,12 @@
       const yy = top + i * rh, c = r.t === 'BOS' ? 'var(--bos)' : r.t === 'COL' ? 'var(--col)' : null;
       svg.append(el('text', {x: L1 - 8, y: yy + 12, 'text-anchor': 'end', class: c ? 'lbl' : 'axis', fill: c || 'var(--fg-2)'}, r.t));
       const b = el('rect', {x: Math.min(xb(0), xb(r.resid)), y: yy + 3, width: Math.abs(xb(r.resid) - xb(0)), height: rh - 6, fill: c || 'var(--fg)', 'fill-opacity': c ? 1 : .55});
-      hover(b, `${r.name}: ${r.pts} points in ${r.gp} games<br>goals ${r.gf}-${r.ga} usually earn ${r.expected}<br>${sgn(r.resid)} points · ${r.extra_time} games past regulation`); svg.append(b);
+      hover(b, `${esc(r.name)}: ${r.pts} points in ${r.gp} games<br>goals ${r.gf}-${r.ga} usually earn ${r.expected}<br>${sgn(r.resid)} points · ${r.extra_time} games past regulation`); svg.append(b);
       svg.append(el('rect', {x: xp(100 - 1.2816 * r.pdo_sd), y: yy + 6, width: xp(100 + 1.2816 * r.pdo_sd) - xp(100 - 1.2816 * r.pdo_sd), height: rh - 12, fill: 'var(--line)', 'fill-opacity': .7}));
-      const d = el('circle', {cx: xp(r.pdo), cy: yy + rh / 2, r: 4.5, fill: c || 'var(--fg)'}); hover(d, `${r.name} · 5-on-5 PDO ${r.pdo}`); svg.append(d);
+      const d = el('circle', {cx: xp(r.pdo), cy: yy + rh / 2, r: 4.5, fill: c || 'var(--fg)'}); hover(d, `${esc(r.name)} · 5-on-5 PDO ${r.pdo}`); svg.append(d);
     });
     const t0 = rows[0], tl = rows[rows.length - 1];
-    $('tm-p').insertAdjacentHTML('beforeend', ` ${t0.name} lead the list at ${sgn(t0.resid)} points with ${t0.extra_time} games past regulation; ${tl.name} trail at ${sgn(tl.resid)}.`);
+    $('tm-p').insertAdjacentHTML('beforeend', ` ${esc(t0.name)} lead the list at ${sgn(t0.resid)} points with ${t0.extra_time} games past regulation; ${esc(tl.name)} trail at ${sgn(tl.resid)}.`);
   })();
 
   // method
@@ -231,7 +232,7 @@
   <p><b>Expected goals.</b> Logistic regression on ${X.attempts.toLocaleString('en')} unblocked shots: distance, angle, shot type, rebounds (a shot within 3 seconds of a save by the same team), tips, and skaters on each side. Empty-net shots and shootouts are excluded. Five-fold validation grouped by game: AUC ${X.auc} (${X.auc_distance} on distance alone), log loss ${X.log_loss} against ${X.log_loss_base} for a constant rate. Summed xG ${X.sum_xg} against ${X.goals} goals; on shots rated above 0.2 it predicts ${pct(X.high_bin.pred)} and ${pct(X.high_bin.obs)} went in. By team, xG misses goals by ${X.team_mad_pct}% on average, about what chance gives, though arena scorers record locations differently. The band assumes league-average shot quality.</p>
   <p><b>Shooting rate.</b> Beta-binomial prior on forwards with 30+ shots on goal, 2023-24 to 2025-26. A 100-shot cutoff moves Nečas from ${pct(ns.mean)} to ${pct(P.necas.shrink.league_100.mean)}. The career column uses each player’s own pre-season record, weighted as 150 to 600 shots.</p>
   <p><b>Milestones.</b> Each run resamples his games, then draws points per game over the remaining schedule. Dividing the points needed by his last-82 rate (${sp.rate_last82}) gives a similar date. Missed games are drawn one at a time, so a long injury is not modelled.</p>
-  <p><b>Teams.</b> Expected points share GF^k / (GF^k + GA^k), k = ${T.k} fitted on ${T.k_n} team seasons with official goal totals (which count one goal for a shootout win); applied here to goals without shootouts. Exponents 1.8 to 2.2 put ${T.rows[0].name} between ${sgn(T.rows[0].resid_range[0])} and ${sgn(T.rows[0].resid_range[1])} points. PDO uses 5-on-5 shots on goal (league 5-on-5 shooting ${T.sh5}%), with a binomial chance band per team.</p>
+  <p><b>Teams.</b> Expected points share GF^k / (GF^k + GA^k), k = ${T.k} fitted on ${T.k_n} team seasons with official goal totals (which count one goal for a shootout win); applied here to goals without shootouts. Exponents 1.8 to 2.2 put ${esc(T.rows[0].name)} between ${sgn(T.rows[0].resid_range[0])} and ${sgn(T.rows[0].resid_range[1])} points. PDO uses 5-on-5 shots on goal (league 5-on-5 shooting ${T.sh5}%), with a binomial chance band per team.</p>
   <p><b>Limits.</b> All of this is association and says nothing about why a player scores. The model does not see the pass before a shot, screens or the goalie. A few dozen games per player is a small sample.</p>`;
 })().catch(e => console.warn('nhl:', e));
 </script>
