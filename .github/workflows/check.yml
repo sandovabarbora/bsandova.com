@@ -13,6 +13,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
       - run: pip install -q pytest && python -m pytest -q surf/tests weather/tests ask/test_eval_guard.py tools/site/test_status_check.py tools/site/test_home.py   # the verifiers' tests, the eval guard, the status verdicts and the home page catalogue
+      - run: pip install -q -r nhl/requirements.txt && python -m pytest -q nhl/tests   # the NHL tracker's parser and estimators
       - run: pip install -q -r tools/requirements-tests.txt
       # the study suites (made-up data) and the golden-master pins; pins whose inputs live only in tools/data skip here
       - run: python -m pytest -q -rs tools/rain tools/heat tools/late tools/bunch tools/gehl tools/transfer tools/dst tools/eurovision tools/eras tools/procurement tools/un
