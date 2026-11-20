@@ -14,7 +14,7 @@ and rebuilt.
 | `index.html`, `texts/` | The site: front page and articles (static HTML, no framework) |
 | `docs/works.toml` | Every work on the front page: its label, finding, topic, series and whether it is one of the films at the top (`top = n`); `tools/site/home.py` writes the films, Latest and By topic into `index.html` and one page per topic into `topics/`, and the standard check fails if they differ or an article is missing |
 | `texts/prague-*.html` | *Prague, measured*: the hub and Parts 1–5 |
-| `surf/`, `weather/`, `status/`, `watch/`, `library/`, `atlantic/`, `changelog/` | Live pages; `surf/` and `weather/` also hold their daily collectors and verifiers |
+| `surf/`, `weather/`, `nhl/`, `status/`, `watch/`, `library/`, `atlantic/`, `changelog/` | Live pages; `surf/`, `weather/` and `nhl/` also hold their daily collectors and verifiers |
 | `assets/` | Published data behind every figure (JSON/CSV), chart and map specs, photos, PDFs; `charts.js` and `map.js` draw them |
 | `style.css`, `text.css`, `a24.css`, `404.html`, `favicon.ico` | Shared styles and site furniture |
 | `tools/site/` | Build and upkeep: editorial-standard check, changelog, sitemap, feed, top bar, OG cards, paper figures, PDFs, status check |

@@ -1,0 +1,27 @@
+name: nhl tracker
+on:
+  schedule:
+    - cron: "15 10 * * *"   # 10:15 UTC, after the last West Coast games are final
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write   # to dispatch the deploy: pushes made with GITHUB_TOKEN do not trigger other workflows
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -q -r nhl/requirements.txt
+      - run: python -m nhl.collect
+      - run: python -m nhl.analysis
+      - run: |
+          git config user.name "nhl-collector"
+          git config user.email "nhl-collector@users.noreply.github.com"
+          git add nhl/data nhl/data.json
+          git commit -m "nhl: $(date -u +%F)" || echo "nothing to commit"
+          git push
+      - run: gh workflow run deploy.yml
+        env:
+          GH_TOKEN: ${{ github.token }}
